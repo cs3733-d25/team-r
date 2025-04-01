@@ -1,4 +1,4 @@
-export function TwentyFloor4(){
+export function TwentyFloorFour(){
     return(
         <ul>
             <li>Electromyography</li>
@@ -10,3 +10,5 @@ export function TwentyFloor4(){
         </ul>
     )
 }
+
+export default TwentyFloorFour;
