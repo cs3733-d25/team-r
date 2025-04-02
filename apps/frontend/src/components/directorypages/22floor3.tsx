@@ -1,29 +1,33 @@
+import {displaydept} from "./22floor4.tsx";
+
 export function Floor22_3() {
     return (
-        <div className={"floor-22-3"}>
+        <div className={'floor-22-3'}>
             Floor 3:
             <ul>
-                <li>
+                <li onClick={() => displaydept('Multi Specialty Clinic')}>
                     Multi Specialty Clinic
-                    <ul>
-                        <li>Allergy</li>
-                        <li>Cardiac Arrythmia</li>
-                        <li>Dermatology</li>
-                        <li>Endocrinology</li>
-                        <li>Gastroenterology</li>
-                        <li>Kidney (Renal) Medicine</li>
-                        <li>Neurology</li>
-                        <li>Neurosurgery</li>
-                        <li>Ophthalmology</li>
-                        <li>Optometry</li>
-                        <li>Pulmonology</li>
-                        <li>Rheumatology</li>
-                        <li>Vein Care Services</li>
-                        <li>Women's Health</li>
-                    </ul>
                 </li>
-                <li>Patient Financial Services</li>
+                <li onClick={() => displaydept('Allergy')}>Allergy</li>
+                <li onClick={() => displaydept('Cardiac Arrythmia')}>Cardiac Arrythmia</li>
+                <li onClick={() => displaydept('Dermatology')}>Dermatology</li>
+                <li onClick={() => displaydept('Endocrinology')}>Endocrinology</li>
+                <li onClick={() => displaydept('Gastroenterology')}>Gastroenterology</li>
+                <li onClick={() => displaydept('Kidney (Renal) Medicine')}>
+                    Kidney (Renal) Medicine
+                </li>
+                <li onClick={() => displaydept('Neurology')}>Neurology</li>
+                <li onClick={() => displaydept('Neurosurgery')}>Neurosurgery</li>
+                <li onClick={() => displaydept('Ophthalmology')}>Ophthalmology</li>
+                <li onClick={() => displaydept('Optometry')}>Optometry</li>
+                <li onClick={() => displaydept('Pulmonology')}>Pulmonology</li>
+                <li onClick={() => displaydept('Rheumatology')}>Rheumatology</li>
+                <li onClick={() => displaydept('Vein Care Services')}>Vein Care Services</li>
+                <li onClick={() => displaydept("Women's Health")}>Women's Health</li>
+                <li onClick={() => displaydept('Patient Financial Services')}>
+                    Patient Financial Services
+                </li>
             </ul>
         </div>
-    )
+    );
 }

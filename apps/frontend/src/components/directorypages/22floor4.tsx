@@ -1,9 +1,8 @@
-
+export const displaydept = (dept: string) => {
+    document.body.innerHTML = dept;
+};
 
 export function Floor22_4() {
-    const displaydept = (dept: string) => {
-        document.body.innerHTML = dept;
-    };
     return (
         <div className={"floor-22-4"}>
             Floor 4:
