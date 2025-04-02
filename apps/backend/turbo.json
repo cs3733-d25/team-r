@@ -1,19 +1,19 @@
 {
-    "$schema": "https://turbo.build/schema.json",
-    "extends": ["//"],
-    "tasks": {
-        "deploy": {
-            "env": ["BACKEND_PORT"]
-        },
-        "dev": {
-            "env": [
-                "BACKEND_PORT",
-                "POSTGRES_URL",
-                "POSTGRES_USER",
-                "POSTGRES_PASSWORD",
-                "POSTGRES_DB",
-                "POSTGRES_PORT"
-            ]
-        }
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "deploy": {
+      "env": ["BACKEND_PORT"]
+    },
+    "dev": {
+      "env": [
+        "BACKEND_PORT",
+        "POSTGRES_URL",
+        "POSTGRES_USER",
+        "POSTGRES_PASSWORD",
+        "POSTGRES_DB",
+        "POSTGRES_PORT"
+      ]
     }
+  }
 }

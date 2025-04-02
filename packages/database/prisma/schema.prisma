@@ -17,3 +17,78 @@ model Score {
   time  DateTime
   score Int
 }
+
+// Enums
+enum UserType {
+  PATIENT
+  EMPLOYEE
+}
+
+enum EmployeeRole {
+  DOCTOR
+  NURSE
+  IT_SUPPORT
+  MAINTENANCE
+  ADMINISTRATOR
+}
+
+enum Department {
+  CARDIOLOGY
+  NEUROLOGY
+  IT
+  FACILITIES
+  ADMINISTRATION
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+// Tables
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String
+  userType   UserType @default(PATIENT)
+  updatedAt  DateTime @default(now())
+
+  Employee   Employee? //@relation(fields: [employeeId], references: [id])
+  employeeId Int?      @unique
+  Patient    Patient?  //@relation(fields: [patientId], references: [id])
+  patientId  Int?      @unique
+}
+
+model Employee {
+  id         Int           @id @default(autoincrement())
+  employeeId String        @unique
+  firstName  String
+  lastName   String
+  department Department?
+  role       EmployeeRole?
+  onShift    Boolean       @default(false)
+
+  user       User         @relation(fields: [userId], references: [id])
+  userId     Int          @unique
+
+  patients   Patient[]     @relation("AssignedDoctor")
+}
+
+model Patient {
+  id                Int     @id @default(autoincrement())
+  patientId         String  @unique
+  firstName        String
+  lastName         String
+  dateOfBirth      DateTime
+  gender           Gender?
+  phone            String?
+
+  user             User    @relation(fields: [userId], references: [id])
+  userId           Int     @unique
+
+  assignedDoctor   Employee? @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+  assignedDoctorId Int?
+}
