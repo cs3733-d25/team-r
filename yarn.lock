@@ -753,7 +753,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:6.5.0":
+"@prisma/client@npm:6.5.0, @prisma/client@npm:^6.5.0":
   version: 6.5.0
   resolution: "@prisma/client@npm:6.5.0"
   peerDependencies:
@@ -5482,7 +5482,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:6.5.0":
+"prisma@npm:6.5.0, prisma@npm:^6.5.0":
   version: 6.5.0
   resolution: "prisma@npm:6.5.0"
   dependencies:
@@ -6196,6 +6196,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "softeng-startercode-d25@workspace:."
   dependencies:
+    "@prisma/client": "npm:^6.5.0"
     "@types/node": "npm:^22.13.13"
     "@vitest/ui": "npm:^3.0.9"
     "@yarnpkg/pnpify": "npm:^4.1.4"
@@ -6207,6 +6208,7 @@ __metadata:
     husky: "npm:^9.1.7"
     prettier: "npm:^3.5.3"
     prettier-config-custom: "workspace:*"
+    prisma: "npm:^6.5.0"
     ts-config-custom: "workspace:*"
     ts-node: "npm:^9.1.1"
     turbo: "npm:*"

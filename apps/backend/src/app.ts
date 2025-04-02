@@ -6,6 +6,7 @@ import healthcheckRouter from "./routes/healthcheck";
 import employeeRouter from "./routes/employee.ts";
 import servicereqRouter from "./routes/servicereqs.ts";
 import assignedRouter from "./routes/assigned.ts";
+import highscoreRouter from "./routes/score.ts";
 import { API_ROUTES } from "common/src/constants";
 
 const app: Express = express(); // Setup the backend
@@ -27,7 +28,7 @@ app.use(cookieParser()); // Cookie parser
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
 app.use(API_ROUTES.HEALTHCHECK, healthcheckRouter);
-//app.use(API_ROUTES.SCORE, highscoreRouter);
+app.use(API_ROUTES.SCORE, highscoreRouter);
 app.use(API_ROUTES.EMPLOYEE, employeeRouter);
 app.use(API_ROUTES.SERVICE, servicereqRouter);
 app.use(API_ROUTES.ASSIGNED, assignedRouter);

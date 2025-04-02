@@ -10,7 +10,7 @@ export default defineConfig({
         },
         //to connect port 3000 and 3001
         proxy: {
-            '/api': 'http://localhost:3001', // Proxy all requests starting with /employee to the backend
+            '/api': 'http://localhost:3001', // Proxy all requests starting with /api to the backend
         },
     },
     test: {
