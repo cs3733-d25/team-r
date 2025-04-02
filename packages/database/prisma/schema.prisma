@@ -1,5 +1,3 @@
-// This is your Prisma schema file, learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider   = "prisma-client-js"
   output     = "../.prisma/client"
@@ -8,12 +6,79 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  url      = env("DATABASE_URL")
 }
 
-// Example table used in the express router example
-model Score {
-  id    Int      @id @default(autoincrement())
-  time  DateTime
-  score Int
+// Enum Definitions
+enum UserType {
+  PATIENT
+  EMPLOYEE
+}
+
+enum EmployeeRole {
+  DOCTOR
+  NURSE
+  IT_SUPPORT
+  MAINTENANCE
+  ADMINISTRATOR
+}
+
+enum Department {
+  CARDIOLOGY
+  NEUROLOGY
+  IT
+  FACILITIES
+  ADMINISTRATION
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+// Data Models
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String
+  userType  UserType   @default(PATIENT)
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  employee  Employee?
+  patient   Patient?
+
+  @@map("users")
+}
+
+model Employee {
+  id              Int             @id @default(autoincrement())
+  employeeId      String          @unique @map("employee_id")
+  firstName       String          @map("first_name")
+  lastName        String          @map("last_name")
+  department      Department
+  role            EmployeeRole
+  onShift         Boolean         @default(false) @map("on_shift")
+  userId          Int             @unique
+  user            User            @relation(fields: [userId], references: [id])
+  patients        Patient[]       @relation("AssignedDoctor")
+
+  @@map("employees")
+}
+
+model Patient {
+  id                Int          @id @default(autoincrement())
+  patientId         String       @unique @map("patient_id")
+  firstName         String       @map("first_name")
+  lastName          String       @map("last_name")
+  dateOfBirth       DateTime     @map("date_of_birth")
+  gender            Gender
+  phone             String?
+  userId            Int          @unique
+  user              User         @relation(fields: [userId], references: [id])
+  assignedDoctorId  Int?
+  assignedDoctor    Employee?    @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+
+  @@map("patients")
 }
