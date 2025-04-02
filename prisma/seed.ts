@@ -1,5 +1,5 @@
-import {PrismaClient} from "../packages/database";
-import {UserType, Department, EmployeeRole, Gender, RequestStatus, RequestPriority, DeviceStatus } from "../packages/database";
+import { PrismaClient } from "../packages/database";
+import { UserType, Department, EmployeeRole, Gender, RequestStatus, RequestPriority, DeviceStatus } from "../packages/database";
 
 const prisma = new PrismaClient();
 
@@ -9,216 +9,309 @@ async function main() {
         data: {
             email: 'employee1@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE,
-        },
+            userType: UserType.EMPLOYEE
+        }
     });
 
     const user2 = await prisma.user.create({
         data: {
             email: 'employee2@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE,
-        },
+            userType: UserType.EMPLOYEE
+        }
     });
 
     const user3 = await prisma.user.create({
         data: {
             email: 'employee3@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE,
-        },
+            userType: UserType.EMPLOYEE
+        }
     });
 
     const user4 = await prisma.user.create({
         data: {
             email: 'employee4@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE,
-        },
+            userType: UserType.EMPLOYEE
+        }
     });
 
     const user5 = await prisma.user.create({
         data: {
             email: 'employee5@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE,
-        },
+            userType: UserType.EMPLOYEE
+        }
     });
 
-    // Create employees
+    const user6 = await prisma.user.create({
+        data: {
+            email: 'patient1@example.com',
+            password: 'password123',
+            userType: UserType.PATIENT
+        }
+    });
+
+    const user7 = await prisma.user.create({
+        data: {
+            email: 'patient2@example.com',
+            password: 'password123',
+            userType: UserType.PATIENT
+        }
+    });
+
+    // Create employees with correct schema fields
     const employee1 = await prisma.employee.create({
         data: {
-            employeeId: 'E1001',
+            employeeId: 'EMP001',
             firstName: 'John',
             lastName: 'Doe',
             department: Department.CARDIOLOGY,
             role: EmployeeRole.DOCTOR,
             onShift: true,
-            userId: user1.id,
-        },
+            user: {
+                connect: { id: user1.id }
+            }
+        }
     });
 
     const employee2 = await prisma.employee.create({
         data: {
-            employeeId: 'E1002',
+            employeeId: 'EMP002',
             firstName: 'Jane',
             lastName: 'Smith',
             department: Department.NEUROLOGY,
             role: EmployeeRole.NURSE,
             onShift: false,
-            userId: user2.id,
-        },
+            user: {
+                connect: { id: user2.id }
+            }
+        }
     });
 
     const employee3 = await prisma.employee.create({
         data: {
-            employeeId: 'E1003',
+            employeeId: 'EMP003',
             firstName: 'Michael',
             lastName: 'Brown',
             department: Department.IT,
             role: EmployeeRole.IT_SUPPORT,
             onShift: true,
-            userId: user3.id,
-        },
+            user: {
+                connect: { id: user3.id }
+            }
+        }
     });
 
     const employee4 = await prisma.employee.create({
         data: {
-            employeeId: 'E1004',
+            employeeId: 'EMP004',
             firstName: 'Emily',
             lastName: 'Davis',
             department: Department.FACILITIES,
             role: EmployeeRole.MAINTENANCE,
             onShift: true,
-            userId: user4.id,
-        },
+            user: {
+                connect: { id: user4.id }
+            }
+        }
     });
 
     const employee5 = await prisma.employee.create({
         data: {
-            employeeId: 'E1005',
+            employeeId: 'EMP005',
             firstName: 'David',
             lastName: 'Martinez',
             department: Department.ADMINISTRATION,
             role: EmployeeRole.ADMINISTRATOR,
             onShift: false,
-            userId: user5.id,
-        },
+            user: {
+                connect: { id: user5.id }
+            }
+        }
     });
 
     // Create patients
     await prisma.patient.create({
         data: {
-            patientId: 'P2001',
+            patientId: 'PAT001',
             firstName: 'Alice',
             lastName: 'Johnson',
             dateOfBirth: new Date('1990-05-15'),
             gender: Gender.FEMALE,
             phone: '123-456-7890',
-            userId: user2.id,
-            assignedDoctorId: employee1.id,
-        },
+            user: {
+                connect: { id: user6.id }
+            },
+            assignedDoctor: {
+                connect: { employeeId: employee1.employeeId }
+            }
+        }
     });
 
     await prisma.patient.create({
         data: {
-            patientId: 'P2002',
+            patientId: 'PAT002',
             firstName: 'Bob',
             lastName: 'Williams',
             dateOfBirth: new Date('1985-09-25'),
             gender: Gender.MALE,
             phone: '987-654-3210',
-            userId: user1.id,
-            assignedDoctorId: employee2.id,
-        },
-    });
-
-    await prisma.patient.create({
-        data: {
-            patientId: 'P2003',
-            firstName: 'Charlie',
-            lastName: 'Davis',
-            dateOfBirth: new Date('2000-12-20'),
-            gender: Gender.MALE,
-            phone: '555-987-6543',
-            userId: user3.id,
-            assignedDoctorId: employee3.id,
-        },
-    });
-
-    await prisma.patient.create({
-        data: {
-            patientId: 'P2004',
-            firstName: 'Diana',
-            lastName: 'Miller',
-            dateOfBirth: new Date('1980-01-30'),
-            gender: Gender.FEMALE,
-            phone: '555-321-4321',
-            userId: user4.id,
-            assignedDoctorId: employee4.id,
-        },
-    });
-
-    await prisma.patient.create({
-        data: {
-            patientId: 'P2005',
-            firstName: 'Eva',
-            lastName: 'Clark',
-            dateOfBirth: new Date('1995-07-10'),
-            gender: Gender.FEMALE,
-            phone: '555-987-1234',
-            userId: user5.id,
-            assignedDoctorId: employee5.id,
-        },
+            user: {
+                connect: { id: user7.id }
+            },
+            assignedDoctor: {
+                connect: { employeeId: employee2.employeeId }
+            }
+        }
     });
 
     // Create medical devices
     await prisma.medicalDevice.createMany({
         data: [
-            {
-                medicalDeviceType: 'X-Ray Machine',
-                currentLocation: 'Radiology Room 1',
-                currentStatus: DeviceStatus.available,
-            },
-            {
-                medicalDeviceType: 'MRI Scanner',
-                currentLocation: 'Imaging Center',
-                currentStatus: DeviceStatus.in_use,
-            },
-            {
-                medicalDeviceType: 'Defibrillator',
-                currentLocation: 'Emergency Room',
-                currentStatus: DeviceStatus.available,
-            },
-            {
-                medicalDeviceType: 'Ultrasound Machine',
-                currentLocation: 'Maternity Ward',
-                currentStatus: DeviceStatus.maintenance,
-            }
+            { medicalDeviceType: 'X-Ray Machine', currentLocation: 'Imaging Room 1', currentStatus: DeviceStatus.available },
+            { medicalDeviceType: 'Defibrillator', currentLocation: 'Emergency Room', currentStatus: DeviceStatus.available },
+            { medicalDeviceType: 'EKG Machine', currentLocation: 'Storage Room 2', currentStatus: DeviceStatus.available },
+            { medicalDeviceType: 'Ventilator', currentLocation: 'ICU Storage', currentStatus: DeviceStatus.available },
+            { medicalDeviceType: 'Infusion Pump', currentLocation: 'Pharmacy Storage', currentStatus: DeviceStatus.available },
+            { medicalDeviceType: 'Ultrasound Machine', currentLocation: 'Maternity Ward', currentStatus: DeviceStatus.maintenance }
         ]
     });
 
     // Create device requests
-    await prisma.deviceRequest.create({
-        data: {
-            deviceType: 'Defibrillator',
-            priority: RequestPriority.high,
-            deliveryLocation: 'Emergency Room',
-            employeeId: employee1.id,
-            assignedEmployeeId: employee3.id,
-            status: RequestStatus.completed,
-            requestAcceptedTime: new Date(),
-            requestCompletedTime: new Date(),
-        }
+    await prisma.deviceRequest.createMany({
+        data: [
+            {
+                deviceType: 'Defibrillator',
+                priority: RequestPriority.high,
+                employeeId: String(employee1.employeeId),
+                deliveryLocation: 'ER Bay 3',
+                requestTime: new Date('2023-05-01T09:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-01T09:05:00Z'),
+                assignedEmployeeId: employee4.employeeId,
+                requestCompletedTime: new Date('2023-05-01T09:15:00Z'),
+                status: RequestStatus.completed,
+                comments: 'Urgent need for cardiac arrest patient'
+            },
+            {
+                deviceType: 'X-Ray Machine',
+                priority: RequestPriority.medium,
+                employeeId: String(employee2.employeeId),
+                deliveryLocation: 'Imaging Room 1',
+                requestTime: new Date('2023-05-02T10:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-02T10:05:00Z'),
+                assignedEmployeeId: employee3.employeeId,
+                requestCompletedTime: new Date('2023-05-02T10:20:00Z'),
+                status: RequestStatus.completed,
+                comments: 'Routine checkup for chest pain'
+            },
+            {
+                deviceType: 'EKG Machine',
+                priority: RequestPriority.low,
+                employeeId: String(employee3.employeeId),
+                deliveryLocation: 'Cardiology Room 1',
+                requestTime: new Date('2023-05-03T11:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-03T11:05:00Z'),
+                assignedEmployeeId: employee5.employeeId,
+                requestCompletedTime: new Date('2023-05-03T11:10:00Z'),
+                status: RequestStatus.pending,
+                comments: 'Patient requires heart rate monitoring'
+            },
+            {
+                deviceType: 'Ventilator',
+                priority: RequestPriority.high,
+                employeeId: String(employee4.employeeId),
+                deliveryLocation: 'ICU',
+                requestTime: new Date('2023-05-04T12:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-04T12:05:00Z'),
+                assignedEmployeeId: employee1.employeeId,
+                requestCompletedTime: new Date('2023-05-04T12:30:00Z'),
+                status: RequestStatus.in_progress,
+                comments: 'Critical care required for COVID patient'
+            },
+            {
+                deviceType: 'Infusion Pump',
+                priority: RequestPriority.medium,
+                employeeId: String(employee5.employeeId),
+                deliveryLocation: 'Pharmacy Storage',
+                requestTime: new Date('2023-05-05T13:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-05T13:05:00Z'),
+                assignedEmployeeId: employee2.employeeId,
+                requestCompletedTime: new Date('2023-05-05T13:10:00Z'),
+                status: RequestStatus.completed,
+                comments: 'For administering fluids to patient post-surgery'
+            },
+            {
+                deviceType: 'Defibrillator',
+                priority: RequestPriority.high,
+                employeeId: String(employee2.employeeId),
+                deliveryLocation: 'ER Bay 4',
+                requestTime: new Date('2023-05-06T14:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-06T14:05:00Z'),
+                assignedEmployeeId: employee4.employeeId,
+                requestCompletedTime: new Date('2023-05-06T14:20:00Z'),
+                status: RequestStatus.completed,
+                comments: 'Urgent need for cardiac arrest patient'
+            },
+            {
+                deviceType: 'Ultrasound Machine',
+                priority: RequestPriority.low,
+                employeeId: String(employee1.employeeId),
+                deliveryLocation: 'Maternity Ward',
+                requestTime: new Date('2023-05-07T15:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-07T15:05:00Z'),
+                assignedEmployeeId: employee3.employeeId,
+                requestCompletedTime: new Date('2023-05-07T15:30:00Z'),
+                status: RequestStatus.pending,
+                comments: 'Routine checkup for pregnancy ultrasound'
+            },
+            {
+                deviceType: 'X-Ray Machine',
+                priority: RequestPriority.medium,
+                employeeId: String(employee3.employeeId),
+                deliveryLocation: 'Imaging Room 2',
+                requestTime: new Date('2023-05-08T16:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-08T16:05:00Z'),
+                assignedEmployeeId: employee5.employeeId,
+                requestCompletedTime: new Date('2023-05-08T16:20:00Z'),
+                status: RequestStatus.in_progress,
+                comments: 'Checkup for bone fracture'
+            },
+            {
+                deviceType: 'EKG Machine',
+                priority: RequestPriority.high,
+                employeeId: String(employee4.employeeId),
+                deliveryLocation: 'Cardiology Room 2',
+                requestTime: new Date('2023-05-09T17:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-09T17:05:00Z'),
+                assignedEmployeeId: employee1.employeeId,
+                requestCompletedTime: new Date('2023-05-09T17:15:00Z'),
+                status: RequestStatus.completed,
+                comments: 'Emergency cardiac evaluation needed'
+            },
+            {
+                deviceType: 'Defibrillator',
+                priority: RequestPriority.high,
+                employeeId: String(employee5.employeeId),
+                deliveryLocation: 'ER Bay 5',
+                requestTime: new Date('2023-05-10T18:00:00Z'),
+                requestAcceptedTime: new Date('2023-05-10T18:05:00Z'),
+                assignedEmployeeId: employee2.employeeId,
+                requestCompletedTime: new Date('2023-05-10T18:30:00Z'),
+                status: RequestStatus.cancelled,
+                comments: 'Cancelled due to unavailable equipment'
+            }
+        ]
     });
 
-    console.log('Data seeded successfully!');
+    console.log('Database seeded successfully!');
 }
 
 main()
     .catch((e) => {
         console.error(e);
-        process.exit(1);
+        return Promise.reject(e); // Return the error instead of exiting the process
     })
     .finally(async () => {
         await prisma.$disconnect();
