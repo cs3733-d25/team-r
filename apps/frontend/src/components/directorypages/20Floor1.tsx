@@ -1,12 +1,13 @@
+import {displaydept} from "./22floor4.tsx";
 export function TwentyFloorOne(){
     return(
         <ul>
-            <li>Blood Draw/Phlebotomy</li>
-            <li>Pharmacy</li>
-            <li>Radiology</li>
-            <li>Cardiovascular Services</li>
-            <li>Urology</li>
-            <li>Urgent Care Center</li>
+            <li onClick={() => displaydept("Blood Draw/Phlebotomy")}>Blood Draw/Phlebotomy</li>
+            <li onClick={() => displaydept("Pharmacy")}>Pharmacy</li>
+            <li onClick={() => displaydept("Radiology")}>Radiology</li>
+            <li onClick={() => displaydept("Cardiovascular Services")}>Cardiovascular Services</li>
+            <li onClick={() => displaydept("Urology")}>Urology</li>
+            <li onClick={() => displaydept("Urgent Care Center")}>Urgent Care Center</li>
         </ul>
     )
 }
