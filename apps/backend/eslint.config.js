@@ -1,3 +1,3 @@
-import customConfig from 'eslint-config-custom';
+import customConfig from "eslint-config-custom";
 
 export default customConfig;
