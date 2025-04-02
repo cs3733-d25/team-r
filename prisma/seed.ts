@@ -1,4 +1,5 @@
-import { PrismaClient, UserType, EmployeeRole, Department, Gender, RequestPriority, RequestStatus, DeviceStatus } from '@prisma/client';
+import {PrismaClient} from "../packages/database";
+import {UserType, Department, EmployeeRole, Gender, RequestStatus, RequestPriority, DeviceStatus } from "../packages/database";
 
 const prisma = new PrismaClient();
 

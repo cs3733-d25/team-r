@@ -2,6 +2,9 @@
   "private": true,
   "name": "softeng-startercode-d25",
   "version": "1.0.1",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "dev": "dotenv -e .env -- turbo run dev",
     "dev:wpi": "dotenv -e .env.wpi -- turbo run dev",
@@ -27,6 +30,7 @@
     "prettier": "^3.5.3",
     "prettier-config-custom": "workspace:*",
     "ts-config-custom": "workspace:*",
+    "ts-node": "^9.1.1",
     "turbo": "*",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
