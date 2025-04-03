@@ -3,7 +3,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import ExamplePage from './routes/ExamplePage.tsx';
 import FormPage from './routes/FormPage.tsx';
 import HomePage from './routes/HomePage.tsx';
-import HomeHeader from "./components/HomeHeader.tsx";
+import HomeHeader from './components/HomeHeader.tsx';
+import Directory from './routes/maindirectory.tsx';
 
 function RootLayout() {
     return (
@@ -12,8 +13,8 @@ function RootLayout() {
                 title="Home Page"
                 homelabel="| Home |"
                 homelabelLink="/"
-                formlabel={" Service Request |"}
-                formlabelLink={"/servicereqs"}
+                formlabel={' Service Request |'}
+                formlabelLink={'/servicereqs'}
             />
             <Outlet />
         </div>
@@ -33,8 +34,13 @@ const router = createBrowserRouter([
             {
                 path: '/servicereqs',
                 element: <FormPage />,
-            }
-        ]
+            },
+            {
+                path: '/directory',
+                errorElement: <div />,
+                element: <Directory />,
+            },
+        ],
     },
 ]);
 
