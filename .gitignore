@@ -31,7 +31,6 @@ out
 !.yarn/releases/
 !.yarn/sdks/
 !.yarn/versions/
-.yarnrc.yml
 .pnp.loader.cjs
 .pnp.loader.mjs
 

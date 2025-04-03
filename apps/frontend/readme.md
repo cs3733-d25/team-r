@@ -17,7 +17,7 @@
         - [Public and Assets Folders](#public-and-assets-folders)
         - [routes](#routes)
         - [main.tsx](#maintsx)
-            <!-- TOC -->
+              <!-- TOC -->
 
 This package defines the backend server, and the RESTful API it
 represents. It also includes the packages used.
