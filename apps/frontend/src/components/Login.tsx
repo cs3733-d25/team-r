@@ -5,9 +5,6 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        storeLogin(email, password);
-    }
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="bg-gray-100 p-5 rounded-lg shadow-md text-center">
@@ -55,7 +52,7 @@ function Login() {
                         </button>
                         <button
                             type="submit"
-                            onClick={handleLogin}
+                            onClick={() => storeLogin(email, password)}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                         >
                             Login
