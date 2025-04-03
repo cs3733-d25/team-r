@@ -13,7 +13,7 @@ function RootLayout() {
                 homelabel="| Home |"
                 homelabelLink="/"
                 formlabel={" Service Request |"}
-                formlabelLink={"/servicereq"}
+                formlabelLink={"/servicereqs"}
             />
             <Outlet />
         </div>
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
                 element: <ExamplePage />,
             },
             {
-                path: '/servicereq',
+                path: '/servicereqs',
                 element: <FormPage />,
             }
         ]

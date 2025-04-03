@@ -11,7 +11,7 @@ const HomePage = () => {
                 homelabel={"home test."}
                 homelabelLink={"/test"}
                 formlabel={"Service Request"}
-                formlabelLink={"/form"}
+                formlabelLink={"/servicereqs"}
             />
             <h1 className="font-bold text-xl pb-4">Home Page</h1>
             <ExampleComponent></ExampleComponent>

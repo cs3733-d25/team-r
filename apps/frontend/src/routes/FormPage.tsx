@@ -1,13 +1,13 @@
 import React from 'react';
-import ExampleComponent from "../components/ExampleComponent.tsx";
-import HomeHeader from "../components/HomeHeader";
-import SanitationForm from "../components/SanitationForm.tsx";
+import DeviceReqForm from "../components/DeviceReqForm.tsx";
+
+
 
 
 const FormPage = () => {
     return (
         <div className="p-10">
-            <SanitationForm ></SanitationForm>
+            <DeviceReqForm ></DeviceReqForm>
         </div>
     );
 };
