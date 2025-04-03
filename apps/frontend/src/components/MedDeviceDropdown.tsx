@@ -27,6 +27,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selectedValue, onChange }) => {
                         Select a device
                     </option>
                 )}
+                <option value="">Select a device</option>
                 <option value="Defibrillator">Defibrillator</option>
                 <option value="X-Ray Machine">X-Ray Machine</option>
                 <option value="EKG Machine">EKG Machine</option>
