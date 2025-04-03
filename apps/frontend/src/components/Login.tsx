@@ -1,9 +1,24 @@
 import storeLogin from "../hooks/storeLogin.ts";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = (e: React.FormEvent) => {
+        e.preventDefault();
+        storeLogin(email, password);
+        navigate('/directory');
+    }
+
+    const handleGuestLogin = (e: React.FormEvent) => {
+        e.preventDefault();
+        storeLogin(email, password);
+        navigate('/directory');
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">
@@ -46,13 +61,14 @@ function Login() {
                     <div className="flex justify-between">
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-xs"
+                            onClick={(e) => handleGuestLogin(e)}
                         >
-                            Guest Login
+                            Continue as Guest
                         </button>
                         <button
                             type="submit"
-                            onClick={() => storeLogin(email, password)}
+                            onClick={(e) => handleLogin(e)}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                         >
                             Login
