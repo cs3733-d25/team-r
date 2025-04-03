@@ -1,14 +1,15 @@
 import React from 'react';
-import DeviceReqForm from "../components/DeviceReqForm.tsx";
-
-
-
+import DeviceReqForm from '../components/DeviceReqForm.tsx';
+import NavBar from '../components/NavBar.tsx';
 
 const FormPage = () => {
     return (
-        <div className="p-10">
-            <DeviceReqForm ></DeviceReqForm>
-        </div>
+        <>
+            <NavBar />
+            <div className="p-10">
+                <DeviceReqForm></DeviceReqForm>
+            </div>
+        </>
     );
 };
 

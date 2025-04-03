@@ -1,26 +1,9 @@
 import React from 'react';
 
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FormPage from './routes/FormPage.tsx';
-import HomePage from './routes/HomePage.tsx';
-import HomeHeader from './components/HomeHeader.tsx';
-import Directory from './routes/maindirectory.tsx';
+import Directory from './routes/Directory.tsx';
 import Login from './components/Login.tsx';
-
-// function RootLayout() {
-//     return (
-//         <div>
-//             <HomeHeader
-//                 title="Home Page"
-//                 homelabel="| Home |"
-//                 homelabelLink="/"
-//                 formlabel={' Service Request |'}
-//                 formlabelLink={'/servicereqs'}
-//             />
-//             <Outlet />
-//         </div>
-//     );
-// }
 
 
 
