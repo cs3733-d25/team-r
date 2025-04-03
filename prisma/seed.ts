@@ -64,7 +64,7 @@ async function main() {
     // Create employees with correct schema fields
     const employee1 = await prisma.employee.create({
         data: {
-            employeeId: 'EMP001',
+            id: user1.id,
             firstName: 'John',
             lastName: 'Doe',
             department: Department.CARDIOLOGY,
@@ -78,7 +78,7 @@ async function main() {
 
     const employee2 = await prisma.employee.create({
         data: {
-            employeeId: 'EMP002',
+            id: user2.id,
             firstName: 'Jane',
             lastName: 'Smith',
             department: Department.NEUROLOGY,
@@ -92,7 +92,7 @@ async function main() {
 
     const employee3 = await prisma.employee.create({
         data: {
-            employeeId: 'EMP003',
+            id: user3.id,
             firstName: 'Michael',
             lastName: 'Brown',
             department: Department.IT,
@@ -106,7 +106,7 @@ async function main() {
 
     const employee4 = await prisma.employee.create({
         data: {
-            employeeId: 'EMP004',
+            id: user4.id,
             firstName: 'Emily',
             lastName: 'Davis',
             department: Department.FACILITIES,
@@ -120,7 +120,7 @@ async function main() {
 
     const employee5 = await prisma.employee.create({
         data: {
-            employeeId: 'EMP005',
+            id: user5.id,
             firstName: 'David',
             lastName: 'Martinez',
             department: Department.ADMINISTRATION,
@@ -135,7 +135,7 @@ async function main() {
     // Create patients
     await prisma.patient.create({
         data: {
-            patientId: 'PAT001',
+            id: user6.id,
             firstName: 'Alice',
             lastName: 'Johnson',
             dateOfBirth: new Date('1990-05-15'),
@@ -145,14 +145,14 @@ async function main() {
                 connect: { id: user6.id }
             },
             assignedDoctor: {
-                connect: { employeeId: employee1.employeeId }
+                connect: { id: employee1.Id }
             }
         }
     });
 
     await prisma.patient.create({
         data: {
-            patientId: 'PAT002',
+            id: user7.i,
             firstName: 'Bob',
             lastName: 'Williams',
             dateOfBirth: new Date('1985-09-25'),
@@ -162,7 +162,7 @@ async function main() {
                 connect: { id: user7.id }
             },
             assignedDoctor: {
-                connect: { employeeId: employee2.employeeId }
+                connect: { id: employee2.id }
             }
         }
     });
@@ -185,11 +185,11 @@ async function main() {
             {
                 deviceType: 'Defibrillator',
                 priority: RequestPriority.high,
-                employeeId: String(employee1.employeeId),
+                employeeId: employee1.id,
                 deliveryLocation: 'ER Bay 3',
                 requestTime: new Date('2023-05-01T09:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-01T09:05:00Z'),
-                assignedEmployeeId: employee4.employeeId,
+                assignedEmployeeId: employee4.id,
                 requestCompletedTime: new Date('2023-05-01T09:15:00Z'),
                 status: RequestStatus.completed,
                 comments: 'Urgent need for cardiac arrest patient'
@@ -197,7 +197,7 @@ async function main() {
             {
                 deviceType: 'X-Ray Machine',
                 priority: RequestPriority.medium,
-                employeeId: String(employee2.employeeId),
+                employeeId: employee2.id,
                 deliveryLocation: 'Imaging Room 1',
                 requestTime: new Date('2023-05-02T10:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-02T10:05:00Z'),
