@@ -59,7 +59,7 @@ enum DeviceStatus {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        Int   @id @default(autoincrement())
   email     String   @unique
   password  String
   userType  UserType @default(PATIENT)
@@ -70,7 +70,7 @@ model User {
 }
 
 model Employee {
-  id          String       @id @default(uuid())
+  id          Int       @id
   firstName   String
   lastName    String
   department  Department?
@@ -84,14 +84,14 @@ model Employee {
 }
 
 model Patient {
-  id               String      @id @default(uuid())
+  id               Int      @id
   firstName        String
   lastName         String
   dateOfBirth      DateTime
   gender           Gender?
   phone            String?
   assignedDoctor   Employee?  @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
-  assignedDoctorId String?
+  assignedDoctorId Int?
   user             User       @relation(fields: [id], references: [id], onDelete: Cascade)
 }
 
