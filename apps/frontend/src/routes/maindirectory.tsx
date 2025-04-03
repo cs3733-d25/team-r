@@ -9,30 +9,46 @@ import TwentyFloorFour from "../components/directorypages/20Floor4.tsx";
 
 export function Directory() {
     return (
-        <div className={"directory"}>
-            <table>
-                <tr>
-                    <th>20 Patriot</th>
-                    <th>22 Patriot</th>
-                </tr>
-                <tr>
-                    <td><TwentyFloorOne /></td>
-                    <td><Floor22_1 /></td>
-                </tr>
-                <tr>
-                    <td><TwentyFloorTwo /></td>
-                    <td><Floor22_2 /></td>
-                </tr>
-                <tr>
-                    <td><TwentyFloorThree /></td>
-                    <td><Floor22_3 /></td>
-                </tr>
-                <tr>
-                    <td><TwentyFloorFour /></td>
-                    <td><Floor22_4 /></td>
-                </tr>
-            </table>
-        </div>
+            <div className={"flex min-h-screen justify-center bg-[#b8e4e4]"}>
+                <table className={"text-2xl font-bold"}>
+                    <tr className={"border-b"}>
+                        <th className={"text-6xl border-r pr-10"}>20 Patriot</th>
+                        <th className={"text-6xl pl-10"}>22 Patriot</th>
+                    </tr>
+                    <tr>
+                        <td className={"text-3xl text-right"}>Floor</td>
+                        <td><h2 className={"text-3xl text-left pl-2"}>1</h2></td>
+                    </tr>
+                    <tr className={"border-b"}>
+                        <td className={"border-r align-top pr-10"}><TwentyFloorOne /></td>
+                        <td className={"text-right align-top pl-10"}><Floor22_1 /></td>
+                    </tr>
+                    <tr>
+                        <td className={"text-3xl text-right"}>Floor</td>
+                        <td><h2 className={"text-3xl text-left pl-2"}>2</h2></td>
+                    </tr>
+                    <tr className={"border-b"}>
+                        <td className={"border-r align-top pr-10"}><TwentyFloorTwo /></td>
+                        <td className={"text-right align-top pl-10"}><Floor22_2 /></td>
+                    </tr>
+                    <tr>
+                        <td className={"text-3xl text-right"}>Floor</td>
+                        <td><h2 className={"text-3xl text-left pl-2"}>3</h2></td>
+                    </tr>
+                    <tr className={"border-b"}>
+                        <td className={"border-r align-top pr-10"}><TwentyFloorThree /></td>
+                        <td className={"text-right align-top pl-10"}><Floor22_3 /></td>
+                    </tr>
+                    <tr>
+                        <td className={"text-3xl text-right"}>Floor</td>
+                        <td><h2 className={"text-3xl text-left pl-2"}>4</h2></td>
+                    </tr>
+                    <tr>
+                        <td className={"border-r align-top pr-10"}><TwentyFloorFour /></td>
+                        <td className={"text-right align-top pl-10"}><Floor22_4 /></td>
+                    </tr>
+                </table>
+            </div>
     )
 }
 

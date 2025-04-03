@@ -11,7 +11,3 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
 }
-
-table, tr, td, th {
-    border: 3px solid gray;
-}
