@@ -64,7 +64,6 @@ async function main() {
     // Create employees with correct schema fields
     const employee1 = await prisma.employee.create({
         data: {
-            id: user1.id,
             firstName: 'John',
             lastName: 'Doe',
             department: Department.CARDIOLOGY,
@@ -78,7 +77,6 @@ async function main() {
 
     const employee2 = await prisma.employee.create({
         data: {
-            id: user2.id,
             firstName: 'Jane',
             lastName: 'Smith',
             department: Department.NEUROLOGY,
@@ -92,7 +90,6 @@ async function main() {
 
     const employee3 = await prisma.employee.create({
         data: {
-            id: user3.id,
             firstName: 'Michael',
             lastName: 'Brown',
             department: Department.IT,
@@ -106,7 +103,6 @@ async function main() {
 
     const employee4 = await prisma.employee.create({
         data: {
-            id: user4.id,
             firstName: 'Emily',
             lastName: 'Davis',
             department: Department.FACILITIES,
@@ -120,7 +116,6 @@ async function main() {
 
     const employee5 = await prisma.employee.create({
         data: {
-            id: user5.id,
             firstName: 'David',
             lastName: 'Martinez',
             department: Department.ADMINISTRATION,
@@ -135,7 +130,6 @@ async function main() {
     // Create patients
     await prisma.patient.create({
         data: {
-            id: user6.id,
             firstName: 'Alice',
             lastName: 'Johnson',
             dateOfBirth: new Date('1990-05-15'),
@@ -152,7 +146,6 @@ async function main() {
 
     await prisma.patient.create({
         data: {
-            id: user7.id,
             firstName: 'Bob',
             lastName: 'Williams',
             dateOfBirth: new Date('1985-09-25'),
@@ -323,7 +316,7 @@ async function main() {
 main()
     .catch((e) => {
         console.error(e);
-        return Promise.reject(e); // Return the error instead of exiting the process
+        return Promise.reject(e);
     })
     .finally(async () => {
         await prisma.$disconnect();

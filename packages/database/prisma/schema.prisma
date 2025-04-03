@@ -120,5 +120,5 @@ model MedicalDevice {
   currentStatus     DeviceStatus @default(available)
   lastUpdated       DateTime     @default(now())
 
-  @@map("medical_devices")
+  // @@map("medical_devices")
 }
