@@ -1,4 +1,13 @@
+import storeLogin from "../hooks/storeLogin.ts";
+import { useState } from "react";
+
 function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = () => {
+        storeLogin(email, password);
+    }
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="bg-gray-100 p-5 rounded-lg shadow-md text-center">
@@ -15,6 +24,8 @@ function Login() {
                             <input
                                 type="email"
                                 name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 className="w-full p-2 border border-gray-300 bg-white rounded"
                             />
                         </label>
@@ -25,6 +36,8 @@ function Login() {
                             <input
                                 type="password"
                                 name="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className="w-full p-2 border border-gray-300 bg-white rounded"
                             />
                         </label>
@@ -42,6 +55,7 @@ function Login() {
                         </button>
                         <button
                             type="submit"
+                            onClick={handleLogin}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                         >
                             Login
