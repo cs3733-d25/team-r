@@ -201,7 +201,7 @@ async function main() {
                 deliveryLocation: 'Imaging Room 1',
                 requestTime: new Date('2023-05-02T10:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-02T10:05:00Z'),
-                assignedEmployeeId: employee3.employeeId,
+                assignedEmployeeId: employee3.id,
                 requestCompletedTime: new Date('2023-05-02T10:20:00Z'),
                 status: RequestStatus.completed,
                 comments: 'Routine checkup for chest pain'
@@ -209,11 +209,11 @@ async function main() {
             {
                 deviceType: 'EKG Machine',
                 priority: RequestPriority.low,
-                employeeId: String(employee3.employeeId),
+                employeeId: employee3.id,
                 deliveryLocation: 'Cardiology Room 1',
                 requestTime: new Date('2023-05-03T11:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-03T11:05:00Z'),
-                assignedEmployeeId: employee5.employeeId,
+                assignedEmployeeId: employee5.id,
                 requestCompletedTime: new Date('2023-05-03T11:10:00Z'),
                 status: RequestStatus.pending,
                 comments: 'Patient requires heart rate monitoring'
@@ -221,11 +221,11 @@ async function main() {
             {
                 deviceType: 'Ventilator',
                 priority: RequestPriority.high,
-                employeeId: String(employee4.employeeId),
+                employeeId: employee4.id,
                 deliveryLocation: 'ICU',
                 requestTime: new Date('2023-05-04T12:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-04T12:05:00Z'),
-                assignedEmployeeId: employee1.employeeId,
+                assignedEmployeeId: employee1.id,
                 requestCompletedTime: new Date('2023-05-04T12:30:00Z'),
                 status: RequestStatus.in_progress,
                 comments: 'Critical care required for COVID patient'
@@ -233,11 +233,11 @@ async function main() {
             {
                 deviceType: 'Infusion Pump',
                 priority: RequestPriority.medium,
-                employeeId: String(employee5.employeeId),
+                employeeId: employee5.id,
                 deliveryLocation: 'Pharmacy Storage',
                 requestTime: new Date('2023-05-05T13:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-05T13:05:00Z'),
-                assignedEmployeeId: employee2.employeeId,
+                assignedEmployeeId: employee2.id,
                 requestCompletedTime: new Date('2023-05-05T13:10:00Z'),
                 status: RequestStatus.completed,
                 comments: 'For administering fluids to patient post-surgery'
@@ -245,11 +245,11 @@ async function main() {
             {
                 deviceType: 'Defibrillator',
                 priority: RequestPriority.high,
-                employeeId: String(employee2.employeeId),
+                employeeId: employee2.id,
                 deliveryLocation: 'ER Bay 4',
                 requestTime: new Date('2023-05-06T14:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-06T14:05:00Z'),
-                assignedEmployeeId: employee4.employeeId,
+                assignedEmployeeId: employee4.id,
                 requestCompletedTime: new Date('2023-05-06T14:20:00Z'),
                 status: RequestStatus.completed,
                 comments: 'Urgent need for cardiac arrest patient'
@@ -257,11 +257,11 @@ async function main() {
             {
                 deviceType: 'Ultrasound Machine',
                 priority: RequestPriority.low,
-                employeeId: String(employee1.employeeId),
+                employeeId: employee1.id,
                 deliveryLocation: 'Maternity Ward',
                 requestTime: new Date('2023-05-07T15:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-07T15:05:00Z'),
-                assignedEmployeeId: employee3.employeeId,
+                assignedEmployeeId: employee3.id,
                 requestCompletedTime: new Date('2023-05-07T15:30:00Z'),
                 status: RequestStatus.pending,
                 comments: 'Routine checkup for pregnancy ultrasound'
@@ -269,11 +269,11 @@ async function main() {
             {
                 deviceType: 'X-Ray Machine',
                 priority: RequestPriority.medium,
-                employeeId: String(employee3.employeeId),
+                employeeId: employee3.id,
                 deliveryLocation: 'Imaging Room 2',
                 requestTime: new Date('2023-05-08T16:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-08T16:05:00Z'),
-                assignedEmployeeId: employee5.employeeId,
+                assignedEmployeeId: employee5.id,
                 requestCompletedTime: new Date('2023-05-08T16:20:00Z'),
                 status: RequestStatus.in_progress,
                 comments: 'Checkup for bone fracture'
@@ -281,11 +281,11 @@ async function main() {
             {
                 deviceType: 'EKG Machine',
                 priority: RequestPriority.high,
-                employeeId: String(employee4.employeeId),
+                employeeId: employee4.id,
                 deliveryLocation: 'Cardiology Room 2',
                 requestTime: new Date('2023-05-09T17:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-09T17:05:00Z'),
-                assignedEmployeeId: employee1.employeeId,
+                assignedEmployeeId: employee1.id,
                 requestCompletedTime: new Date('2023-05-09T17:15:00Z'),
                 status: RequestStatus.completed,
                 comments: 'Emergency cardiac evaluation needed'
@@ -293,14 +293,26 @@ async function main() {
             {
                 deviceType: 'Defibrillator',
                 priority: RequestPriority.high,
-                employeeId: String(employee5.employeeId),
+                employeeId: employee5.id,
                 deliveryLocation: 'ER Bay 5',
                 requestTime: new Date('2023-05-10T18:00:00Z'),
                 requestAcceptedTime: new Date('2023-05-10T18:05:00Z'),
-                assignedEmployeeId: employee2.employeeId,
+                assignedEmployeeId: employee2.id,
                 requestCompletedTime: new Date('2023-05-10T18:30:00Z'),
                 status: RequestStatus.cancelled,
                 comments: 'Cancelled due to unavailable equipment'
+            },
+            {
+                deviceType: 'Infusion Pump',
+                priority: RequestPriority.medium,
+                employeeId: employee2.id,
+                deliveryLocation: 'Patient Room 205',
+                requestTime: new Date(),
+                requestAcceptedTime: null,
+                assignedEmployeeId: null,
+                requestCompletedTime: null,
+                status: RequestStatus.pending,
+                comments: 'Patient requiring continuous medication delivery.'
             }
         ]
     });
