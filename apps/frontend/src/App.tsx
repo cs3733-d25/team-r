@@ -8,8 +8,13 @@ function App() {
         {
             path: '/',
             errorElement: <div />,
-            element: <Directory />,
+            element: <ExamplePage />,
         },
+        {
+            path: '/directory',
+            errorElement: <div />,
+            element: <Directory />
+        }
     ]);
 
     return <RouterProvider router={router} />;
