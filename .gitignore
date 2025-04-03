@@ -7,6 +7,12 @@
 **/.prisma
 **/dist
 
+# Compiled JavaScript files from TypeScript
+apps/frontend/src/**/*.js
+apps/frontend/src/**/*.js.map
+packages/**/*.js
+packages/**/*.js.map
+
 out
 
 # testing

@@ -1,15 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ExamplePage from './routes/ExamplePage.tsx';
+import Login from "./components/Login.tsx";
 function App() {
-    var router = createBrowserRouter([
-        {
-            path: '/',
-            errorElement: _jsx("div", {}),
-            element: _jsx(ExamplePage, {}),
-        },
-    ]);
-    return _jsx(RouterProvider, { router: router });
+    return (_jsx(Login, {}));
 }
 export default App;
