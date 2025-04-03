@@ -1,10 +1,8 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import ExamplePage from './routes/ExamplePage.tsx';
-import EmailPassword from "./components/EmailPassword.tsx";
+import Login from "./components/Login.tsx";
 
 function App() {
-    return (<EmailPassword />
+    return (<Login />
     );
 }
 
