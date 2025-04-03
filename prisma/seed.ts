@@ -145,14 +145,14 @@ async function main() {
                 connect: { id: user6.id }
             },
             assignedDoctor: {
-                connect: { id: employee1.Id }
+                connect: { id: employee1.id }
             }
         }
     });
 
     await prisma.patient.create({
         data: {
-            id: user7.i,
+            id: user7.id,
             firstName: 'Bob',
             lastName: 'Williams',
             dateOfBirth: new Date('1985-09-25'),
