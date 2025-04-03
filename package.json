@@ -18,7 +18,8 @@
     "build": "turbo run build",
     "setup": "bash ./scripts/setup.sh",
     "deploy": "bash ./scripts/deploy.sh",
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed": "dotenv -e ${PROJECT_CWD}/.env -- npx ts-node ./prisma/seed.ts"
   },
   "devDependencies": {
     "@types/node": "^22.13.13",
