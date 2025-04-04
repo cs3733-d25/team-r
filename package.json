@@ -2,6 +2,9 @@
   "private": true,
   "name": "softeng-startercode-d25",
   "version": "1.0.1",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "scripts": {
     "dev": "dotenv -e .env -- turbo run dev",
     "dev:wpi": "dotenv -e .env.wpi -- turbo run dev",
@@ -15,9 +18,11 @@
     "build": "turbo run build",
     "setup": "bash ./scripts/setup.sh",
     "deploy": "bash ./scripts/deploy.sh",
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed"
   },
   "devDependencies": {
+    "@prisma/client": "^6.5.0",
     "@types/node": "^22.13.13",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
@@ -28,7 +33,9 @@
     "husky": "^9.1.7",
     "prettier": "^3.5.3",
     "prettier-config-custom": "workspace:*",
+    "prisma": "^6.5.0",
     "ts-config-custom": "workspace:*",
+    "ts-node": "^9.1.1",
     "turbo": "*",
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
@@ -55,5 +62,18 @@
     "configs/*",
     "packages/*"
   ],
-  "packageManager": "yarn@4.7.0+sha512.5a0afa1d4c1d844b3447ee3319633797bcd6385d9a44be07993ae52ff4facabccafb4af5dcd1c2f9a94ac113e5e9ff56f6130431905884414229e284e37bb7c9"
+  "packageManager": "yarn@4.7.0+sha512.5a0afa1d4c1d844b3447ee3319633797bcd6385d9a44be07993ae52ff4facabccafb4af5dcd1c2f9a94ac113e5e9ff56f6130431905884414229e284e37bb7c9",
+  "description": "This document contains an outline of the entire repo, the tooling in the repo, and explanations of the provided tooling, including why it was selected.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cs3733-d25/team-r.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cs3733-d25/team-r/issues"
+  },
+  "homepage": "https://github.com/cs3733-d25/team-r#readme"
 }
