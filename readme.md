@@ -314,7 +314,7 @@ issues, and enforces some style guidelines. WebStorm directly integrates with
 ESLint, and can give you quality warnings from ESLint directly in your
 IDE.
 
-ESLint is defined by its config, `.eslintrc.cjs`. You **SHOULD NEVER** modify the top level
+ESLint is defined by its config, `eslint.config.js`. You **SHOULD NEVER** modify the top level
 .eslintrc.cjs file. It exists exclusively for the benefit of your IDE, importing the custom
 package in `configs`. You probably won't need to modify your ESLint config directly,
 but if you want to change your style rules, you can do so there. Each project also contains its own .eslintrc.cjs,
@@ -350,7 +350,7 @@ run `yarn run lint:fix` and examine the output to find the issue.
 
 If you absolutely need to skip the autochecks, you can run `git commit --no-verify`
 
-Husky's config is in `.husky`, with an auto-install script in `package.json`.
+Husky's config is in `.husky`.
 
 You probably won't need to touch your Husky config.
 
@@ -373,20 +373,9 @@ This is useful for a few reasons:
    and across systems
 5. It simplifies interactions between multiple programs (for us, the backend, frontend, and database).
 
-The Docker configuration in this repository has a few configurations items:
-
-- `Dockerfile` which provides instructions to Docker to create both production
-  and development virtual machine images from the repository state
-- `.dockerignore` which defines files that the `Dockerfile` should ignore
-- `docker-compose.dev.yaml` which provides instructions to Docker to run the images (and a PostgreSQL database) in
-  a re-usable way, and a way that enables your code edits to move to the VM in real-time
-- `docker-compose.prod.yaml` which provides instructions to Docker to run the images in a
-  re-usable way that creates the smallest possible images
-- `docker-compose.test.yaml` which provides instructions to Docker to run images (and a PostgreSQL database) for testing
-
-It is recommended that the Yarn `dev`, `prod`, `test` and their associated `dev:stop`, `prod:stop`, and `test:stop` configurations
-be used to start the containers, or the WebStorm run configurations `Start Prod`,
-`Start Dev`, and `Start Tests` be used to start the containers.
+You can run `yarn run docker` to build and run a local Docker container with your application (using the settings from `/docker/docker-compose.yml`).
+You can run `yarn run deploy` to build a Docker container for AWS and push it to AWS ECR (Elastic Container Registry).
+You can run this container using AWS ECS, with properly configured environment variables.
 
 You should not modify or move any of the Docker files unless you are absolutely sure
 you know what you are doing.
@@ -398,15 +387,6 @@ See https://docs.docker.com for Docker documentation
 PostgreSQL is a modern, highly performant SQL database. It is completely
 open-source, and the most widely used SQL database.
 
-In the development environment, the database is accessible via any standard
-query console, using the credentials username: "dev", password: "dev", and database: dev on localhost:5432.
-
-In the production environment, the database is **not accessible** outside the Docker
-container network. This means that nothing except for your backend code can access the database. This
-is how most production databases are configured.
-
-PostgreSQL is configured through `docker-compose....yaml` for both production and development.
-
 See https://www.postgresql.org/docs/ for details on PostgreSQL specific commands
 
 ### Traefik
@@ -415,9 +395,6 @@ Traefik is a "reverse-proxy"—that means it receives traffic and routes
 it to the appropriate place. This is used in production to appropriately route
 requests to the frontend or the backend. It also provides automatic TSL (https) configuration
 in production, greatly enhancing security.
-
-Traefik can be configured in `docker-compose.prod.yaml`. You probably
-shouldn't need to change its configuration.
 
 Details on Traefik can be found here: https://doc.traefik.io/traefik/
 
@@ -433,8 +410,7 @@ Vitetest is configured by the following files:
 - `vitest.workspace.ts`, which defines where vitest can look for projects that
   will have test files
 - `vitest.config.ts` which is the configuration file for vitest.
-  Similar to vite in the
-  frontend, this requires special file watching options to work in Docker
+  Similar to vite in the frontend.
 
 ## Miscellaneous
 
