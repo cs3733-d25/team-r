@@ -69,7 +69,7 @@ function Login() {
                     <div className="flex justify-between">
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-xs"
+                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 active:bg-green-800 text-xs"
                             onClick={(e) => handleGuestLogin(e)}
                         >
                             Continue as Guest
@@ -77,7 +77,7 @@ function Login() {
                         <button
                             type="submit"
                             onClick={(e) => handleLogin(e)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
                         >
                             Login
                         </button>
