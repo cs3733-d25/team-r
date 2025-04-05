@@ -3,7 +3,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FormPage from './routes/FormPage.tsx';
 import Directory from './routes/Directory.tsx';
-import Login from './components/Login.tsx';
+import Login from './routes/Login.tsx';
 
 
 

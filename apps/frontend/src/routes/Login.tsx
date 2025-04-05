@@ -4,19 +4,27 @@ import { useNavigate } from "react-router-dom";
 
 
 function Login() {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const [incorrectLogin, setIncorrectLogin] = useState(false); //to add a popup if the user logs in incorrectly
 
+    //function to login user to the application if they sign in as admin
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        storeLogin(email, password);
-        navigate('/directory');
+        storeLogin(username, password);
+        if (username == "admin" && password == "admin") {
+            navigate('/directory'); //successful login
+        }
+        else {
+            //unsuccessful login
+            setIncorrectLogin(true);
+        }
     }
 
+    //function to ignore login and continue as guest
     const handleGuestLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        storeLogin(email, password);
         navigate('/directory');
     }
 
@@ -32,12 +40,12 @@ function Login() {
                 <form className="space-y-4">
                     <div>
                         <label className="block mb-1 text-left">
-                            Email:
+                            Username:
                             <input
-                                type="email"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                type="username"
+                                name="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 className="w-full p-2 border border-gray-300 bg-white rounded"
                             />
                         </label>
@@ -75,7 +83,17 @@ function Login() {
                         </button>
                     </div>
                 </form>
+                {incorrectLogin && ( //for adding popup if the user logs in with the wrong username and/or password
+                    <div>
+                        <br />
+                        <div className={"flex items-center bg-[#ff0000]/50 justify-center w-full rounded-md"}>
+                            <p className={"inline text-xl p-1 font-bold text-[#c50101] opacity-100"}>!</p>
+                            <p className={"inline text-xs p-1 font-bold text-[#151A1A]"}>Username and/or password are incorrect.</p>
+                        </div>
+                    </div>
+                )}
             </div>
+
         </div>
     );
 }
