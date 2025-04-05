@@ -1,11 +1,11 @@
 import React from 'react';
 import DeviceReqForm from '../components/DeviceReqForm.tsx';
-import NavBar from '../components/NavBar.tsx';
+import Navbar from '../components/Navbar.tsx';
 
 const FormPage = () => {
     return (
         <>
-            <NavBar />
+            <Navbar />
             <div className="p-10">
                 <DeviceReqForm></DeviceReqForm>
             </div>
