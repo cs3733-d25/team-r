@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FormPage from './routes/FormPage.tsx';
 import Directory from './routes/Directory.tsx';
 import Login from './routes/Login.tsx';
+import HomePage from "./routes/HomePage.tsx";
 
 
 
@@ -12,7 +13,7 @@ function App() {
         {
             path: '/',
             errorElement: <div />,
-            element: <Login />,
+            element: <HomePage />,
         },
         {
             path: '/login',

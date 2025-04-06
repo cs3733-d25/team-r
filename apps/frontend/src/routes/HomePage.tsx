@@ -1,20 +1,15 @@
 import React from 'react';
-import ExampleComponent from "../components/ExampleComponent.tsx";
-import HomeHeader from "../components/HomeHeader";
+import NavBar from "../components/NavBar.tsx";
 
 
 const HomePage = () => {
     return (
-        <div className="p-10">
-            <HomeHeader
-                title={"Home"}
-                homelabel={"home test."}
-                homelabelLink={"/test"}
-                formlabel={"Service Request"}
-                formlabelLink={"/servicereqs"}
-            />
-            <h1 className="font-bold text-xl pb-4">Home Page</h1>
-            <ExampleComponent></ExampleComponent>
+        <div className={"bg-[#449aa4] flex-col h-screen"}>
+            <NavBar page={"login"} />
+            {/*Image taken from Mass General Brigham website home page*/}
+            <div className={"bg-[url(/heropage.jpeg)] bg-no-repeat bg-cover h-6/7"}>
+
+            </div>
         </div>
     );
 };

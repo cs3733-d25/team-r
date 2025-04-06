@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function NavBar() {
+function NavBar(props) {
     const location = useLocation();
 
     const navigationLinks = [
-        { name: 'Home', path: '/login' },
+        { name: 'Home', path: '/' },
         { name: 'Directory', path: '/directory' },
         // May need to change service req path later
         { name: 'Request Service', path: '/servicereqs' },
@@ -29,21 +29,31 @@ function NavBar() {
                     {/* Desktop nav Links */}
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-4">
-                            {navigationLinks.map((link) => (
+                            {props.page == 'login' ? (
+                                <Link
+                                    key={'Login'}
+                                    to={'/login'}
+                                    className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-[#b8e4e4] hover:bg-[#306c73] hover:text-white'}
+                                >
+                                    {'Login'}
+                                </Link>
+                            ) : (
+                                navigationLinks.map((link) => (
                                 <Link
                                     key={link.path}
                                     to={link.path}
                                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                                         location.pathname === link.path
                                             ? /* Again i don't like using a manual hex code but i have no
-                                               * other option at atm*/
-                                              'bg-[#234d52] text-white'
+                                                   * other option at atm*/
+                                            'bg-[#234d52] text-white'
                                             : 'text-white hover:bg-[#306c73] hover:text-white'
                                     }`}
                                 >
                                     {link.name}
                                 </Link>
-                            ))}
+                            ))
+                            )}
                         </div>
                     </div>
                 </div>
