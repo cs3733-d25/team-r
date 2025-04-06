@@ -1,7 +1,6 @@
-import storeLogin from "../hooks/storeLogin.ts";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar.tsx";
+import NavBar from "../../components/Navbar.tsx";
 
 
 function Login() {
@@ -9,6 +8,15 @@ function Login() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const [incorrectLogin, setIncorrectLogin] = useState(false); //to add a popup if the user logs in incorrectly
+
+    const storeLogin = (username: string, password: string) => {
+        try {
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
+        } catch (e) {
+            console.error('Error storing login data:', e);
+        }
+    }
 
     //function to login user to the application if they sign in as admin
     const handleLogin = (e: React.FormEvent) => {

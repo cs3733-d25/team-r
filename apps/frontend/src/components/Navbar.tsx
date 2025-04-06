@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavBarProps {
     page: string;
 }
 
-function NavBar(props: NavBarProps) {
+function Navbar(props: NavBarProps) {
     const location = useLocation();
 
     const navigationLinks = [

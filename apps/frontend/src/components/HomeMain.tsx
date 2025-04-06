@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from "./NavBar.tsx";
+import NavBar from "./Navbar.tsx";
 
 export function HomeMain() {
     return (
