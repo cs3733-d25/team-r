@@ -12,7 +12,7 @@ router.get("/", async function (req:Request, res:Response){
     try{
         const user = await PrismaClient.user.findUnique({
             where: {
-                email: enteredUsername,
+                username: enteredUsername,
             }
         })
         //check if the username has password associated
