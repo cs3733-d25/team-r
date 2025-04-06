@@ -60,7 +60,7 @@ enum DeviceStatus {
 
 model User {
   id        Int      @id @default(autoincrement())
-  username  String
+  username  String   
   password  String
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
