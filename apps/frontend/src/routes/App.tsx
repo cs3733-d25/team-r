@@ -5,6 +5,7 @@ import FormPage from '../features/MedDeviceRequest/FormPage.tsx';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import MapView from '../features/MapView/MapView.tsx';
+import SanitationForm from "../features/SanitationForm/SanitationForm.tsx";
 
 
 
@@ -19,6 +20,7 @@ function App() {
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <MapView /> },
+                { path: 'sanitationFrom' , element: <SanitationForm /> },
             ],
         }
     ]);
