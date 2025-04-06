@@ -1,17 +1,17 @@
-import { Floor22_1 } from '../components/directorypages/22floor1.tsx';
-import { Floor22_2 } from '../components/directorypages/22floor2.tsx';
-import { Floor22_3 } from '../components/directorypages/22floor3.tsx';
-import { Floor22_4 } from '../components/directorypages/22floor4.tsx';
-import TwentyFloorOne from '../components/directorypages/20Floor1.tsx';
-import TwentyFloorTwo from '../components/directorypages/20Floor2.tsx';
-import TwentyFloorThree from '../components/directorypages/20Floor3.tsx';
-import TwentyFloorFour from '../components/directorypages/20Floor4.tsx';
-import NavBar from "../components/NavBar.tsx";
+import { Floor22_1 } from './directorypages/22floor1.tsx';
+import { Floor22_2 } from './directorypages/22floor2.tsx';
+import { Floor22_3 } from './directorypages/22floor3.tsx';
+import { Floor22_4 } from './directorypages/22floor4.tsx';
+import TwentyFloorOne from './directorypages/20Floor1.tsx';
+import TwentyFloorTwo from './directorypages/20Floor2.tsx';
+import TwentyFloorThree from './directorypages/20Floor3.tsx';
+import TwentyFloorFour from './directorypages/20Floor4.tsx';
+import Navbar from "../../components/Navbar.tsx";
 
 export function Directory() {
     return (
         <>
-            <NavBar/>
+            <Navbar/>
             <div className={'flex min-h-screen justify-center bg-[#b8e4e4]'}>
                 <table className={'text-2xl font-bold'}>
                     <tbody>

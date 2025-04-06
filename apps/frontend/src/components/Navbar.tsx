@@ -1,14 +1,18 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function NavBar() {
+interface NavBarProps {
+    page: string;
+}
+
+function Navbar(props: NavBarProps) {
     const location = useLocation();
 
     const navigationLinks = [
-        { name: 'Home', path: '/login' },
+        { name: 'Home', path: '/' },
         { name: 'Directory', path: '/directory' },
         // May need to change service req path later
         { name: 'Request Service', path: '/servicereqs' },
+        { name: 'Map', path: '/mapView' },
     ];
 
     return (
@@ -21,7 +25,7 @@ function NavBar() {
                     {/* Logo/Brand */}
                     <div className="flex-shrink-0">
                         <Link to="/" className="flex items-center">
-                            <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
+                            <img className="logo w-10" src="../../public/mgb.png" alt="Mass General Brigham" />
                             <span className="ml-2 text-xl font-bold">Mass General Brigham</span>
                         </Link>
                     </div>
@@ -29,7 +33,16 @@ function NavBar() {
                     {/* Desktop nav Links */}
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-4">
-                            {navigationLinks.map((link) => (
+                            {props.page == 'login' ? (
+                                <Link
+                                    key={'Login'}
+                                    to={'/login'}
+                                    className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-[#b8e4e4] hover:bg-[#306c73] hover:text-white'}
+                                >
+                                    {'Login'}
+                                </Link>
+                            ) : (
+                                navigationLinks.map((link) => (
                                 <Link
                                     key={link.path}
                                     to={link.path}
@@ -43,7 +56,8 @@ function NavBar() {
                                 >
                                     {link.name}
                                 </Link>
-                            ))}
+                            ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -52,4 +66,4 @@ function NavBar() {
     );
 }
 
-export default NavBar;
+export default Navbar;

@@ -60,7 +60,7 @@ enum DeviceStatus {
 
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
+  username  String   @unique
   password  String
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
@@ -121,4 +121,17 @@ model MedicalDevice {
   lastUpdated       DateTime     @default(now())
 
   // @@map("medical_devices")
+}
+
+model SanitationRequest {
+  requestId      Int             @id @default(autoincrement())
+  sanitationType String
+  priority       RequestPriority
+  department     Department?
+  roomNumber     String
+  requestTime    DateTime        @default(now())
+  comments       String?
+  status         RequestStatus   @default(pending)
+
+  // take in user from login and track Sanitation requests
 }
