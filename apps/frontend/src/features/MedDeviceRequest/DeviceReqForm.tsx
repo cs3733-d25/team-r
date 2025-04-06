@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MedDeviceDropdown from "./MedDeviceDropdown.tsx";
-import PriorityRequest from "./PriorityRequest.tsx";
+import PriorityRequest from "../../components/PriorityRequest.tsx";
 
 interface DeviceRequest {
     selectDevice: string;

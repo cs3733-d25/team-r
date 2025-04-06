@@ -1,4 +1,3 @@
-import storeLogin from "../hooks/storeLogin.ts";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +6,14 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
+    const storeLogin = (username: string, password: string) => {
+        try {
+            localStorage.setItem(username, password);
+        } catch (error) {
+            console.error("Error storing login data: ", error);
+        }
+    }
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
