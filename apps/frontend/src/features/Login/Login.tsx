@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar.tsx";
 
@@ -7,7 +7,15 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const [incorrectLogin, setIncorrectLogin] = useState(false); //to add a popup if the user logs in incorrectly
+
+    const [incorrectLogin, setIncorrectLogin] = useState(''); //to add a popup if the user logs in incorrectly
+    useEffect(() => {
+        fetch('/api/login')
+            .then(res => res.json())
+            .then((data) => setIncorrectLogin(data.message))
+    })
+
+    
 
     const storeLogin = (username: string, password: string) => {
         try {
@@ -22,13 +30,14 @@ function Login() {
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         storeLogin(username, password);
+        /*
         if (username == "admin" && password == "admin") {
             navigate('/directory'); //successful login
         }
         else {
             //unsuccessful login
             setIncorrectLogin(true);
-        }
+        }*/
     }
 
     //function to ignore login and continue as guest
@@ -43,7 +52,7 @@ function Login() {
                 <NavBar page={"login"}/>
             </div>
             <div className="flex justify-center items-center bg-[url(/heropage.jpeg)] bg-gray-500 bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
-                <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center">
+                <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100">
                     <div className={'flex items-center justify-center p-2'}>
                         <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
                         <div className={'text-xl font-bold font-sans'}>
@@ -96,7 +105,7 @@ function Login() {
                             </button>
                         </div>
                     </form>
-                    {incorrectLogin && ( //for adding popup if the user logs in with the wrong username and/or password
+                    {incorrectLogin == "User verified" && ( //for adding popup if the user logs in with the wrong username and/or password
                         <div>
                             <br />
                             <div className={"flex items-center bg-[#ff0000]/50 justify-center w-full rounded-md"}>
