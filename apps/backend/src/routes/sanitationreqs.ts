@@ -5,7 +5,7 @@ const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
   try {
-    const request = await PrismaClient.deviceRequest.findMany();
+    const request = await PrismaClient.sanitationRequest.findMany();
     console.log(request);
     res.status(200).json(request); // Send sanitation data as JSON
   } catch (error) {
