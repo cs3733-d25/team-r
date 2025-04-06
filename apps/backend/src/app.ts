@@ -6,6 +6,8 @@ import healthcheckRouter from "./routes/healthcheck";
 import employeeRouter from "./routes/employee.ts";
 import servicereqRouter from "./routes/servicereqs.ts";
 import assignedRouter from "./routes/assigned.ts";
+
+import loginRouter from "./routes/login.ts";
 import sanitationRouter from "./routes/sanitationreqs.ts";
 import { API_ROUTES } from "common/src/constants";
 
@@ -31,6 +33,7 @@ app.use(API_ROUTES.HEALTHCHECK, healthcheckRouter);
 app.use(API_ROUTES.EMPLOYEE, employeeRouter);
 app.use(API_ROUTES.SERVICE, servicereqRouter);
 app.use(API_ROUTES.ASSIGNED, assignedRouter);
+app.use(API_ROUTES.LOGIN, loginRouter);
 app.use(API_ROUTES.SANITATION, sanitationRouter);
 
 /**
