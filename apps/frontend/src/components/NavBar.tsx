@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function NavBar(props) {
+interface NavBarProps {
+    page: string;
+}
+
+function NavBar(props: NavBarProps) {
     const location = useLocation();
 
     const navigationLinks = [
