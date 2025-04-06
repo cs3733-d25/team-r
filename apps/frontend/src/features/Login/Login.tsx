@@ -46,7 +46,7 @@ function Login() {
                 <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center">
                     <div className={'flex items-center justify-center p-2'}>
                         <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
-                        <div className={'text-xl font-bold'}>
+                        <div className={'text-xl font-bold font-sans'}>
                             <h2>Mass General Brigham</h2>
                         </div>
                     </div>
