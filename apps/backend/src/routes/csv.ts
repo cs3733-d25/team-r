@@ -32,7 +32,7 @@ router.post("/import", async (req: Request, res: Response) => {
         const records = parseCSV(csvFile);
 
         const transformation = records.map((row) => ({
-            id: row.ID,
+            id: parseInt(row.ID),
             name: row.Name,
             type: row.Type,
             location: row.Location
