@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar.tsx";
+import axios from "axios";
 
 
 function Login() {
@@ -9,11 +10,35 @@ function Login() {
     const navigate = useNavigate();
 
     const [incorrectLogin, setIncorrectLogin] = useState(''); //to add a popup if the user logs in incorrectly
-    useEffect(() => {
-        fetch('/api/login')
-            .then(res => res.json())
-            .then((data) => setIncorrectLogin(data.message))
-    })
+
+    // useEffect(() => {
+    //     fetch('/api/login')
+    //         .then(res => res.json())
+    //         .then((data) => setIncorrectLogin(data.message))
+    // })
+
+async function handleLogin(){
+    if (!username || !password) return;
+    try {
+        console.log("sending username and password to the server");
+
+        //axios will handle the content-type and header for you, just need to set the body
+        const response = await axios.post("/api/login/", {
+            username: username,
+            password: password
+        })
+        console.log("username and password sent to the server");
+        //check the response from the server to handle user errors
+        console.log(response.data);
+        if(response.data.message == "User verified"){
+            console.log("yippee user is verified");
+            navigate('/directory');
+        }
+        //clear();
+    } catch (error) {
+        console.log(error);
+    }
+}
 
     
 
@@ -27,18 +52,18 @@ function Login() {
     }
 
     //function to login user to the application if they sign in as admin
-    const handleLogin = (e: React.FormEvent) => {
-        e.preventDefault();
-        storeLogin(username, password);
-        /*
-        if (username == "admin" && password == "admin") {
-            navigate('/directory'); //successful login
-        }
-        else {
-            //unsuccessful login
-            setIncorrectLogin(true);
-        }*/
-    }
+    // const handleLogin = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     storeLogin(username, password);
+    //     /*
+    //     if (username == "admin" && password == "admin") {
+    //         navigate('/directory'); //successful login
+    //     }
+    //     else {
+    //         //unsuccessful login
+    //         setIncorrectLogin(true);
+    //     }*/
+    // }
 
     //function to ignore login and continue as guest
     const handleGuestLogin = (e: React.FormEvent) => {
@@ -98,7 +123,10 @@ function Login() {
                             </button>
                             <button
                                 type="submit"
-                                onClick={(e) => handleLogin(e)}
+                                onClick={(e) => {
+                                e.preventDefault();
+                                handleLogin();
+                            }}
                                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
                             >
                                 Login
