@@ -1,4 +1,8 @@
-// takes in a CSV string and returns an array of objects where each object represents a row
+/**
+ * Takes in a CSV string and returns an array of objects where each object represents a row.
+ * @param {string} csv - the CSV string to parse
+ * @returns {Record<string, string>[]} - an array of objects representing the rows in the CSV
+ */
 export function parseCSV(csv: string): Record<string, string>[] {
     // split into lines
     const [headerLine, ...lines] = csv.trim().split("\n");

@@ -1,3 +1,8 @@
+/**
+ * Converts an array of objects to a CSV string.
+ * @param {Object[]} data - the array of objects to convert into CSV format
+ * @returns {string} - the CSV string representation of the input data
+ */
 function toCSV(data: any[]): string {
     if (data.length === 0) return '';
 
