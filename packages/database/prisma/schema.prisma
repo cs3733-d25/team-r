@@ -139,7 +139,7 @@ model SanitationRequest {
 }
 
 model Directory {
-  id       Int
+  id       Int    @id @default(autoincrement())
   name     String
   type     String
   location String
