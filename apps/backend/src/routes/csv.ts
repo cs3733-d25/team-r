@@ -2,6 +2,7 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
 
 const router: Router = express.Router();
@@ -10,16 +11,9 @@ const router: Router = express.Router();
 router.get("/export", async (req: Request, res: Response) => {
     try {
         const directoryData = await PrismaClient.directory.findMany();
-        const csv = stringify(directoryData, {
-            header: true,
-            columns: {
-                id: "ID",
-                name: "Name",
-                type: "Type",
-                department: "Department",
-            }
-        });
+        const csv = toCSV(directoryData);
 
+        // set response headers
         res.setHeader("Content-Type", "text/csv");
         res.setHeader("Content-Disposition", "attachment; filename=directory.csv");
         res.status(200).send(csv);
