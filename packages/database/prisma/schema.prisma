@@ -144,10 +144,3 @@ model Directory {
   type     String
   location String
 }
-
-model Directory {
-  id       Int    @id @default(autoincrement())
-  name     String
-  type     String
-  location String
-}
