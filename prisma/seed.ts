@@ -140,7 +140,7 @@ async function main() {
     const employee6 = await prisma.employee.create({
         data: {
             firstName: 'Wilson',
-            lastName: 'wong',
+            lastName: 'Wong',
             department: Department.ADMINISTRATION,
             role: EmployeeRole.ADMINISTRATOR,
             onShift: false,
