@@ -60,7 +60,7 @@ enum DeviceStatus {
 
 model User {
   id        Int      @id @default(autoincrement())
-  username  String   
+  username  String
   password  String
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
@@ -134,4 +134,11 @@ model SanitationRequest {
   status         RequestStatus   @default(pending)
 
   // take in user from login and track Sanitation requests
+}
+
+model Directory {
+  id       Int    @id @default(autoincrement())
+  name     String
+  type     String
+  location String
 }
