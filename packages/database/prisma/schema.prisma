@@ -65,8 +65,9 @@ model User {
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
 
-  employee Employee?
-  patient  Patient?
+  employee          Employee?
+  patient           Patient?
+  SanitationRequest SanitationRequest[]
 }
 
 model Employee {
@@ -134,7 +135,7 @@ model SanitationRequest {
   status         RequestStatus   @default(pending)
 
   userId Int
-  user   User @relation(fields: [userId], references: [userId])
+  user   User @relation(fields: [userId], references: [id])
 }
 
 model Directory {
