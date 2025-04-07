@@ -4,6 +4,6 @@ export const API_ROUTES = {
     SERVICE: '/api/servicereq',
     ASSIGNED: '/api/assigned',
     LOGIN: '/api/login',
-    SANITATION: '/api/sanitation'
+    SANITATION: '/api/sanitation',
+    CSV: '/api/csv'
 };
-
