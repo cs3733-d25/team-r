@@ -7,7 +7,7 @@ async function main() {
     // Create users
     const user1 = await prisma.user.create({
         data: {
-            email: 'employee1@example.com',
+            username: 'employee1@example.com',
             password: 'password123',
             userType: UserType.EMPLOYEE
         }
@@ -15,7 +15,7 @@ async function main() {
 
     const user2 = await prisma.user.create({
         data: {
-            email: 'employee2@example.com',
+            username: 'employee2@example.com',
             password: 'password123',
             userType: UserType.EMPLOYEE
         }
@@ -23,7 +23,7 @@ async function main() {
 
     const user3 = await prisma.user.create({
         data: {
-            email: 'employee3@example.com',
+            username: 'employee3@example.com',
             password: 'password123',
             userType: UserType.EMPLOYEE
         }
@@ -31,7 +31,7 @@ async function main() {
 
     const user4 = await prisma.user.create({
         data: {
-            email: 'employee4@example.com',
+            username: 'employee4@example.com',
             password: 'password123',
             userType: UserType.EMPLOYEE
         }
@@ -39,7 +39,7 @@ async function main() {
 
     const user5 = await prisma.user.create({
         data: {
-            email: 'employee5@example.com',
+            username: 'employee5@example.com',
             password: 'password123',
             userType: UserType.EMPLOYEE
         }
@@ -47,7 +47,7 @@ async function main() {
 
     const user6 = await prisma.user.create({
         data: {
-            email: 'patient1@example.com',
+            username: 'patient1@example.com',
             password: 'password123',
             userType: UserType.PATIENT
         }
@@ -55,7 +55,7 @@ async function main() {
 
     const user7 = await prisma.user.create({
         data: {
-            email: 'patient2@example.com',
+            username: 'patient2@example.com',
             password: 'password123',
             userType: UserType.PATIENT
         }
