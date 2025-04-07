@@ -9,6 +9,7 @@ import assignedRouter from "./routes/assigned.ts";
 import csvRouter from "./routes/csv.ts";
 import loginRouter from "./routes/login.ts";
 import sanitationRouter from "./routes/sanitationreqs.ts";
+import bfsRouter from "./routes/bfs.ts";
 import { API_ROUTES } from "common/src/constants";
 
 const app: Express = express(); // Setup the backend
@@ -36,6 +37,7 @@ app.use(API_ROUTES.ASSIGNED, assignedRouter);
 app.use(API_ROUTES.LOGIN, loginRouter);
 app.use(API_ROUTES.SANITATION, sanitationRouter);
 app.use(API_ROUTES.CSV, csvRouter);
+app.use(API_ROUTES.BFS, bfsRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
