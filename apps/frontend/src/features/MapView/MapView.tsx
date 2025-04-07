@@ -3,10 +3,7 @@ import { APIProvider, Map, MapCameraChangedEvent } from '@vis.gl/react-google-ma
 
 function MapView() {
 
-    // currently reading as undefined, need to check if the env variable is set correctly
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-    // console.log(apiKey)
 
     return (
         <div className="flex flex-col h-screen">
@@ -15,8 +12,8 @@ function MapView() {
                 <APIProvider apiKey={apiKey} onLoad={() => console.log('Maps API has loaded.')}>
                     <div className="w-full h-full">
                         <Map
-                            defaultZoom={13}
-                            defaultCenter={{ lat: -33.860664, lng: 151.208138 }}
+                            defaultZoom={15}
+                            defaultCenter={{ lat: 42.27434988431181, lng: -71.80801625486968 }}
                             onCameraChanged={(ev: MapCameraChangedEvent) =>
                                 console.log('camera changed:', ev.detail.center, 'zoom:', ev.detail.zoom)
                             }
