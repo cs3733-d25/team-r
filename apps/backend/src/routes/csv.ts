@@ -2,60 +2,57 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { parseCSV } from "common/src/parseCSV.ts";
 
 const router: Router = express.Router();
-
-// fetch all directory records in database
-router.get("/", async (req: Request, res: Response) => {
-    try {
-        const entries = await PrismaClient.directoryEntry.findMany();
-        res.status(200).json(entries);
-    } catch (error) {
-        console.error("Error fetching directory data:", error);
-        res.status(500).json({ error: "Failed to fetch directory" });
-    }
-})
 
 // export directory data as CSV
 router.get("/export", async (req: Request, res: Response) => {
     try {
-        const entries = await PrismaClient.directoryEntry.findMany();
-
-        // check if any entries exist
-        if (!entries.length) {
-            return res.status(404).json({ error: "No entries found" });
-        }
-
-        // format CSV data
-        const columns = Object.keys(entries[0]);
-        const csvData = [columns.join(",")];
-
-        entries.forEach((entry) => {
-            const row = columns.map((col) => {
-                const val = entry[col] !== null? entry[col] : "";
-                return `"${String(val).replace(/"/g, '""')}"`;
-            });
-            csvData.push(row.join(","));
+        const directoryData = await PrismaClient.directory.findMany();
+        const csv = stringify(directoryData, {
+            header: true,
+            columns: {
+                id: "ID",
+                name: "Name",
+                type: "Type",
+                department: "Department",
+            }
         });
 
-        // Generate filename with timestamp
-        const filename = `directory-export-${Date.now()}.csv`;
-        // Create full file path in exports directory
-        const filepath = path.join(__dirname, "../../exports", filename);
-
-        fs.writeFileSync(filepath, csvData.join("\n"));
-
-        // Send file as download and delete temp file after
-        res.download(filepath, filename, (err) => {
-            if (err) console.error("Download error:", err);
-            // Clean up: delete the temporary file
-            fs.unlinkSync(filepath);
-        });
+        res.setHeader("Content-Type", "text/csv");
+        res.setHeader("Content-Disposition", "attachment; filename=directory.csv");
+        res.status(200).send(csv);
     } catch (error) {
         console.error("Error exporting directory data:", error);
-        res.status(500).json({ error: "Failed to export directory" });
+        res.sendStatus(500)
     }
-})
-
+});
 
 // import directory from CSV
+router.post("/import", async (req: Request, res: Response) => {
+    try {
+        const absolutePath = path.join(__dirname, "../../data/csv/Directory.csv");
+        const csvFile = fs.readFileSync(absolutePath, "utf8");
+
+        const records = parseCSV(csvFile);
+
+        const transformation = records.map((row) => ({
+            id: row.ID,
+            name: row.Name,
+            type: row.Type,
+            location: row.Location
+        }));
+
+        await PrismaClient.directory.createMany({
+            data: transformation
+        });
+
+        res.sendStatus(200);
+    } catch (error) {
+        console.error("Error importing directory data:", error);
+        res.sendStatus(500);
+    }
+});
+
+export default router;
