@@ -18,7 +18,10 @@
         "dev": {
             "dependsOn": ["^build:dev"],
             "cache": false,
-            "persistent": true
+            "persistent": true,
+            "env": [
+                "VITE_GOOGLE_MAPS_API_KEY"
+            ]
         },
         "deploy": {
             "dependsOn": ["^build"],

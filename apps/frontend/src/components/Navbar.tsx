@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavBarProps {
-    page: string;
+    page?: string;
 }
 
 function Navbar(props: NavBarProps) {
