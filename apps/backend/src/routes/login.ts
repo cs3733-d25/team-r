@@ -33,16 +33,16 @@ router.post("/", async function (req: Request, res: Response) {
         res.status(200).json({
           //we can send multiple fields to the client
           message: "User verified",
-          userType: user.userType
+          userType: user.userType,
         });
       } else {
-        res.status(200).json({ message: "Incorrect password" });
+        res.status(200).json({ message: "The password entered is incorrect." });
       }
     } else {
-      res.status(200).json({ message: "User not found" });
+      res.status(200).json({ message: "User not found." });
     }
   } catch (error) {
-    res.status(200).json({ message: "error" });
+    res.status(200).json({ message: "Error: something went wrong." });
   }
 });
 

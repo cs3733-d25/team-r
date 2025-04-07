@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/Navbar.tsx";
 import axios from "axios";
@@ -10,12 +10,6 @@ function Login() {
     const navigate = useNavigate();
 
     const [incorrectLogin, setIncorrectLogin] = useState(''); //to add a popup if the user logs in incorrectly
-
-    // useEffect(() => {
-    //     fetch('/api/login')
-    //         .then(res => res.json())
-    //         .then((data) => setIncorrectLogin(data.message))
-    // })
 
 ////////////////////////////////////////////////////////////////////////////
 async function handleLogin(){
@@ -42,6 +36,9 @@ async function handleLogin(){
             console.log("yippee user is verified");
             navigate('/directory');
         }
+        else {
+            setIncorrectLogin(response.data.message);
+        }
         //clear();
     } catch (error) {
         console.log(error);
@@ -58,20 +55,6 @@ async function handleLogin(){
             console.error('Error storing login data:', e);
         }
     }
-
-    //function to login user to the application if they sign in as admin
-    // const handleLogin = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     storeLogin(username, password);
-    //     /*
-    //     if (username == "admin" && password == "admin") {
-    //         navigate('/directory'); //successful login
-    //     }
-    //     else {
-    //         //unsuccessful login
-    //         setIncorrectLogin(true);
-    //     }*/
-    // }
 
     //function to ignore login and continue as guest
     const handleGuestLogin = (e: React.FormEvent) => {
@@ -123,7 +106,7 @@ async function handleLogin(){
                         </div>
                         <div className="flex justify-between">
                             <button
-                                type="submit"
+                                type="button"
                                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 active:bg-green-800 text-xs"
                                 onClick={(e) => handleGuestLogin(e)}
                             >
@@ -141,12 +124,12 @@ async function handleLogin(){
                             </button>
                         </div>
                     </form>
-                    {incorrectLogin == "User verified" && ( //for adding popup if the user logs in with the wrong username and/or password
+                    {incorrectLogin && ( //for adding popup if the user logs in with the wrong username and/or password
                         <div>
                             <br />
                             <div className={"flex items-center bg-[#ff0000]/50 justify-center w-full rounded-md"}>
                                 <p className={"inline text-xl p-1 font-bold text-[#c50101] opacity-100"}>!</p>
-                                <p className={"inline text-xs p-1 font-bold text-[#151A1A]"}>Username and/or password are incorrect.</p>
+                                <p className={"inline text-xs p-1 font-bold text-[#151A1A]"}>{incorrectLogin}</p> {/* displays error message from server */}
                             </div>
                         </div>
                     )}
