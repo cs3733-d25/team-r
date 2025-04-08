@@ -16,6 +16,61 @@ function Navbar(props: NavBarProps) {
         {name: 'CSV Files', path: '/csv' },
     ];
 
+    function loginDesktopButton() {
+        return(
+            <Link
+                key={'Login'}
+                to={'/login'}
+                className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-[#b8e4e4] hover:bg-[#306c73] hover:text-white'}
+            >
+                Login
+            </Link>
+        )
+    }
+
+    function loginMobileButton() {
+        return (
+            <Link
+                key={'Login'}
+                to={'login'}
+                  className={'px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white'}>
+                {'Login'}
+            </Link>
+        )
+    }
+
+    function desktopLinks() {
+        return (
+            navigationLinks.map((link) => (
+                <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                        location.pathname === link.path
+                            ? /* Again i don't like using a manual hex code but i have no
+                                               * other option at atm*/
+                            'bg-[#234d52] text-white'
+                            : 'text-white hover:bg-[#306c73] hover:text-white'
+                    }`}
+                >
+                    {link.name}
+                </Link>
+            ))
+        )
+    }
+
+    function mobileLinks() {
+        return (
+            navigationLinks.map((link) => (
+                <Link key={link.path}
+                      to={link.path}
+                      className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
+                    {link.name}
+                </Link>
+            ))
+        )
+    }
+
     return (
         /*NEED TO FIGURE OUT TAILWIND CONFIG ASAP
          * these colors should be added to it instead
@@ -35,32 +90,17 @@ function Navbar(props: NavBarProps) {
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-4">
                             {props.page == 'login' ? (
-                                <Link
-                                    key={'Login'}
-                                    to={'/login'}
-                                    className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-[#b8e4e4] hover:bg-[#306c73] hover:text-white'}
-                                >
-                                    {'Login'}
-                                </Link>
+                                loginDesktopButton()
                             ) : (
-                                navigationLinks.map((link) => (
-                                <Link
-                                    key={link.path}
-                                    to={link.path}
-                                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                                        location.pathname === link.path
-                                            ? /* Again i don't like using a manual hex code but i have no
-                                               * other option at atm*/
-                                              'bg-[#234d52] text-white'
-                                            : 'text-white hover:bg-[#306c73] hover:text-white'
-                                    }`}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))
+                                desktopLinks()
                             )}
                         </div>
                     </div>
+                </div>
+                <div id={"hamburg"} className={"transition-all duration-300 md:hidden"}>
+                    <ul className={"flex flex-col"}>
+                        {props.page == 'login' ? loginMobileButton() : mobileLinks() }
+                    </ul>
                 </div>
             </div>
         </nav>
