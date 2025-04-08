@@ -8,7 +8,7 @@ function Navbar(props: NavBarProps) {
     const location = useLocation();
 
     const navigationLinks = [
-        { name: 'Home', path: '/' },
+        { name: 'Home', path: '/home' },
         { name: 'Directory', path: '/directory' },
         // May need to change service req path later
         { name: 'Request Service', path: '/servicereqs' },
