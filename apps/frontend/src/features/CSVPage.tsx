@@ -11,10 +11,6 @@ export function CSVPage() {
         },[]);
 
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-
-
-
-
         if (e.target.files?.[0]) {
             setFile(e.target.files[0]);
         }
@@ -32,15 +28,9 @@ export function CSVPage() {
     }
     const handleSave=async()=>{
         if(file != null){
-
-
             try {
                 const sendOff = await axios.post('/api/csv/import', file)
                 console.log("CSV file is sent off! :)", sendOff);
-
-
-
-
             } catch (error) {
                 console.error("CSV File Sendoff didn't work :(")
             }
@@ -70,22 +60,8 @@ export function CSVPage() {
                 });
         }
     }
-
-    function setHeader(){
-        let headers = ;
-        if (directoryTable.length > 0){
-            headers = Object.keys(directoryTable[0]);
-        } else{
-            headers = [];
-        }
-        return headers;
-    }
-
-
-
-
     return (
-        <div className={'flex-col justify-center'} >
+        <div className={'flex-col'} >
             <Navbar page={'csv'} />
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
@@ -95,7 +71,7 @@ export function CSVPage() {
                 <tr className={'text-lg'}>
                     <th className={"p-5"}>ID</th>
                     <th className={"p-5"}>Name</th>
-                    <th className={"p-5"}>Type</th>
+                    <th className={"p-5"}>Floor Number</th>
                     <th className={"p-5"}>Location</th>
                 </tr>
                 </thead>
@@ -103,19 +79,11 @@ export function CSVPage() {
                 {directoryTable.map((row,index) =>
                     ( <tr key = {index}>
                         {Object.values(row).map((val,i)=>(
-                            <td key={i}>{val}</td>
+                            <td key={i} className={"pl-5"}>{val}</td>
                             ))
                         }
 
                     </tr>)) }
-
-
-
-
-
-
-
-
                 </tbody>
             </table>
             <br />
@@ -130,14 +98,15 @@ export function CSVPage() {
                         className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}
                     ></input>
                 </div>
-                <div className={'absolute right-1/4'}>
+                <div className={'flex absolute right-1/4'}>
                     <label htmlFor="ExportCSV">ExportCSV File:  </label>
                     <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}>Export</button>
                 </div>
-                <div className={'absolute left-1/4 pt-6'}>
+                <div className={'flex absolute left-1/4 pt-6 pb-20'}>
                     <label htmlFor="SaveCSV">Save: </label>
                     <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}>Save</button>
                 </div>
+
             </form>
         </div>
     );
