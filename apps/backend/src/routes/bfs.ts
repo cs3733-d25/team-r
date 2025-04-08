@@ -114,14 +114,36 @@ class Pathfinder {
 
 }
 
-
-
-
 const hospitalGraph = new Graph();
 // add all hospital node data and outside data
-hospitalGraph.addNode({id: 'parking21324', name: 'Parking A', type: 'parking'});
-hospitalGraph.addEdge('abc', 'def');
+hospitalGraph.addNode({id: 'p1', name: 'Extended Parking', type: 'parking'})
+hospitalGraph.addNode({id: 'p2', name: 'Patient Parking', type: 'parking'});
+hospitalGraph.addNode({id: 'p3', name: 'Valet Parking', type: 'parking'});
 
+hospitalGraph.addNode({id: 'e1', name: '22 Patriot Place', type: 'entrance'});
+hospitalGraph.addNode({id: 'e2', name: '20A Patriot Place', type: 'entrance'});
+hospitalGraph.addNode({id: 'e3', name: '20B Patriot Place', type: 'entrance'});
+
+hospitalGraph.addNode({id: 'r1', name: '20', type: 'reception'});
+hospitalGraph.addNode({id: 'r2', name: '22A', type: 'reception'});
+hospitalGraph.addNode({id: 'r3', name: '22B', type: 'reception'});
+
+//edges
+hospitalGraph.addEdge('p1', 'p2');
+hospitalGraph.addEdge('p1', 'e1');
+
+hospitalGraph.addEdge('p2', 'e2');
+hospitalGraph.addEdge('p2', 'e3');
+
+hospitalGraph.addEdge('p3', 'e1');
+hospitalGraph.addEdge('p3', 'e2');
+
+hospitalGraph.addEdge('e1', 'e2');
+hospitalGraph.addEdge('e1', 'r1');
+hospitalGraph.addEdge('e2', 'r2');
+hospitalGraph.addEdge('e3', 'r3');
+
+hospitalGraph.addEdge('r2', 'r3');
 /*
 const testGraph = new Graph();
 
