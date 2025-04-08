@@ -20,12 +20,6 @@ class Node implements NodeData {
         this.type = data.type;
     }
 
-    // addNewNeighbor(data: NodeData): void {
-    //     this.neighbors.push(new Node(data));
-    // }
-    // addExistingNeighbor(node: Node): void {
-    //
-    // }
 }
 
 class Graph {
@@ -57,21 +51,6 @@ class Graph {
     getNeighbors(nodeId: string): string[] {
         return Array.from(this.adjacencyList.get(nodeId) || []);
     }
-
-    /*
-        getNodeByName(nodeName: string): Node | null {
-            for (let i = 0; i < this.nodes.length; i++) {
-                let curNode = this.nodes[i];
-                if (curNode.name === nodeName) {
-                    return curNode;
-                }
-            }
-            return null;
-        }
-
-    }
-
-    */
 
 }
 class Pathfinder {
@@ -144,22 +123,7 @@ hospitalGraph.addEdge('e2', 'r2');
 hospitalGraph.addEdge('e3', 'r3');
 
 hospitalGraph.addEdge('r2', 'r3');
-/*
-const testGraph = new Graph();
 
-testGraph.addNode({ id: "A", name: "Entrance", type: "Door" });
-testGraph.addNode({ id: "B", name: "Reception", type: "Room" });
-testGraph.addNode({ id: "C", name: "Radiology", type: "Department" });
-
-testGraph.addEdge("A", "B");
-testGraph.addEdge("B", "C");
-
-const pathfinder = new Pathfinder(testGraph);
-const path = pathfinder.BFS("A", "C");
-
-console.log("BFS path from A to C:", path);
-
-*/
 
 const pathFinder = new Pathfinder(hospitalGraph);
 
