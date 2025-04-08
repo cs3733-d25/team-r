@@ -1,19 +1,23 @@
 import {useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../../components/Navbar.tsx";
 
 
 export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
-    const [file, setFile] = useState<File | null>(null);
+    const [csvfile, setFile] = useState<File | null>(null);
+
+    function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
-        },[]);
-
+        }, []);
+    }
+    displayTable();
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0]) {
             setFile(e.target.files[0]);
         }
+
     };
     async function retrieveFromDatabase() {
         try{
@@ -27,10 +31,20 @@ export function CSVPage() {
         }
     }
     const handleSave=async()=>{
-        if(file != null){
+        if(csvfile != null){
+            const formData = new FormData();
+            formData.append('csvfile', csvfile);
             try {
-                const sendOff = await axios.post('/api/csv/import', file)
+                console.log("CSV file is trying to send off! :)")
+                const sendOff = await axios.post('/api/csv/import', formData, {
+                    headers:{
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+
+
                 console.log("CSV file is sent off! :)", sendOff);
+                displayTable();
             } catch (error) {
                 console.error("CSV File Sendoff didn't work :(")
             }
@@ -69,10 +83,10 @@ export function CSVPage() {
            <table className = {"mx-auto"}>
                 <thead >
                 <tr className={'text-lg'}>
-                    <th className={"p-5"}>ID</th>
-                    <th className={"p-5"}>Name</th>
-                    <th className={"p-5"}>Floor Number</th>
-                    <th className={"p-5"}>Location</th>
+                    <th className={"pl-5"}>ID</th>
+                    <th className={"pl-5"}>Name</th>
+                    <th className={"pl-5"}>Floor Number</th>
+                    <th className={"pl-5"}>Location</th>
                 </tr>
                 </thead>
                 <tbody>
