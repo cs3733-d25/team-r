@@ -149,3 +149,19 @@ model Directory {
   floorNumber Int
   building    Buildings
 }
+
+model Node {
+  id        Int          @id @default(autoincrement())
+  name      String       @unique
+  type      String
+  neighbors Edge[] @relation("FromConnection")
+  connectedTo Edge[] @relation("ToConnection")
+}
+
+model Edge {
+  id     Int      @id @default(autoincrement())
+  fromId Int
+  toId   Int
+  from   Node @relation("FromConnection", fields: [fromId], references: [id])
+  to     Node @relation("ToConnection", fields: [toId], references: [id])
+}

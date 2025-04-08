@@ -5,5 +5,6 @@ export const API_ROUTES = {
     ASSIGNED: '/api/assigned',
     LOGIN: '/api/login',
     SANITATION: '/api/sanitation',
-    CSV: '/api/csv'
+    CSV: '/api/csv',
+    BFS: '/api/bfs'
 };
