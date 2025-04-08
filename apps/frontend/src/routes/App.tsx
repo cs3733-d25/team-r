@@ -15,6 +15,7 @@ function App() {
             errorElement: <p>Page not found</p>,
             children: [
                 { index: true, element: <HomeMain /> },
+                { path: 'home', element: <HomeMain status={"logged-in"} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
