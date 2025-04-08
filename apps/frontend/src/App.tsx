@@ -8,7 +8,7 @@ function App() {
         {
             path: '/',
             errorElement: <div />,
-            element: <SaniationRequestForm />,
+            element: <SanitationRequestForm  />,
         },
     ]);
 

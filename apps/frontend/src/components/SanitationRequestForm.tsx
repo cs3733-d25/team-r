@@ -45,7 +45,7 @@ const SanitationRequestForm = () => {
       }
     };
 
-  const HandleChange = (e: React.ChangeEVent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
