@@ -15,13 +15,24 @@ function Navbar(props: NavBarProps) {
         { name: 'Map', path: '/mapView' },
     ];
 
-    function loginButton() {
+    function loginDesktopButton() {
         return(
             <Link
                 key={'Login'}
                 to={'/login'}
                 className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-[#b8e4e4] hover:bg-[#306c73] hover:text-white'}
             >
+                Login
+            </Link>
+        )
+    }
+
+    function loginMobileButton() {
+        return (
+            <Link
+                key={'Login'}
+                to={'login'}
+                  className={'px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white'}>
                 {'Login'}
             </Link>
         )
@@ -52,7 +63,7 @@ function Navbar(props: NavBarProps) {
             navigationLinks.map((link) => (
                 <Link key={link.path}
                       to={link.path}
-                      className={``}>
+                      className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
                     {link.name}
                 </Link>
             ))
@@ -78,21 +89,16 @@ function Navbar(props: NavBarProps) {
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-4">
                             {props.page == 'login' ? (
-                                loginButton()
+                                loginDesktopButton()
                             ) : (
                                 desktopLinks()
                             )}
                         </div>
                     </div>
-                    <div className={"md:hidden"}>
-                        <button data-toggle="collapse" data-target="#hamburg" type="button" className={"btn btn-primary collapse-active:bg-primary-active inline-flex items-center justify-center p-2 bg-gray-500"}>
-                            a
-                        </button>
-                    </div>
                 </div>
                 <div id={"hamburg"} className={"transition-all duration-300 md:hidden"}>
                     <ul className={"flex flex-col"}>
-                        {mobileLinks()}
+                        {props.page == 'login' ? loginMobileButton() : mobileLinks() }
                     </ul>
                 </div>
             </div>
