@@ -1,6 +1,6 @@
 import {useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../../components/Navbar.tsx";
 
 
 export function CSVPage() {

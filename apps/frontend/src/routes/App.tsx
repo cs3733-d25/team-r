@@ -7,7 +7,7 @@ import Login from '../features/Login/Login.tsx';
 import MapView from '../features/MapView/MapView.tsx';
 import SanitationForm from '../features/SanitationForm/SanitationForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
-import CSVPage from "../features/CSVPage.tsx";
+import CSVPage from "../features/CSVFiles/CSVPage.tsx";
 
 function App() {
     const router = createBrowserRouter([
