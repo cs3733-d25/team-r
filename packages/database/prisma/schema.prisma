@@ -58,9 +58,14 @@ enum DeviceStatus {
   maintenance
 }
 
+enum Buildings {
+  PATRIOT_PLACE_20
+  PATRIOT_PLACE_22
+}
+
 model User {
   id        Int      @id @default(autoincrement())
-  username  String    @unique
+  username  String   @unique
   password  String
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
@@ -139,8 +144,8 @@ model SanitationRequest {
 }
 
 model Directory {
-  id       Int    @id @default(autoincrement())
-  name     String
-  type     String
-  location String
+  id          Int       @id @default(autoincrement())
+  name        String
+  floorNumber Int
+  building    Buildings
 }
