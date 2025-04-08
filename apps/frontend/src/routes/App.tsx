@@ -7,6 +7,7 @@ import Login from '../features/Login/Login.tsx';
 import MapView from '../features/MapView/MapView.tsx';
 import SanitationForm from '../features/SanitationForm/SanitationForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
+import CSVPage from "../features/CSVPage.tsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -15,11 +16,13 @@ function App() {
             errorElement: <p>Page not found</p>,
             children: [
                 { index: true, element: <HomeMain /> },
+                { path: 'home', element: <HomeMain status={"logged-in"} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <MapView /> },
                 { path: 'sanitationFrom', element: <SanitationForm /> },
+                {path: 'csv', element:<CSVPage/>}
             ],
         },
     ]);

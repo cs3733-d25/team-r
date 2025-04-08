@@ -58,16 +58,21 @@ enum DeviceStatus {
   maintenance
 }
 
+enum Buildings {
+  PATRIOT_PLACE_20
+  PATRIOT_PLACE_22
+}
+
 model User {
   id        Int      @id @default(autoincrement())
-  username  String    @unique
+  username  String   @unique
   password  String
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
 
-  employee          Employee?
-  patient           Patient?
-  SanitationRequest SanitationRequest[]
+  employee           Employee?
+  patient            Patient?
+  sanitationRequests SanitationRequest[] @relation("sanitationRequests")
 }
 
 model Employee {
@@ -134,15 +139,15 @@ model SanitationRequest {
   comments       String?
   status         RequestStatus   @default(pending)
 
+  user   User @relation("sanitationRequests", fields: [userId], references: [id])
   userId Int
-  user   User @relation(fields: [userId], references: [id])
 }
 
 model Directory {
-  id       Int    @id @default(autoincrement())
-  name     String
-  type     String
-  location String
+  id          Int       @id @default(autoincrement())
+  name        String
+  floorNumber Int
+  building    Buildings
 }
 
 model Node {
