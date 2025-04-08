@@ -1,5 +1,3 @@
-// This is your Prisma schema file, learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider   = "prisma-client-js"
   output     = "../.prisma/client"
@@ -11,9 +9,138 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-// Example table used in the express router example
-model Score {
-  id    Int      @id @default(autoincrement())
-  time  DateTime
-  score Int
+enum UserType {
+  PATIENT
+  EMPLOYEE
+}
+
+enum EmployeeRole {
+  DOCTOR
+  NURSE
+  IT_SUPPORT
+  MAINTENANCE
+  ADMINISTRATOR
+}
+
+enum Department {
+  CARDIOLOGY
+  NEUROLOGY
+  IT
+  FACILITIES
+  ADMINISTRATION
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum RequestPriority {
+  low
+  medium
+  high
+}
+
+enum RequestStatus {
+  pending
+  accepted
+  in_progress
+  completed
+  cancelled
+}
+
+enum DeviceStatus {
+  available
+  in_use
+  maintenance
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String    @unique
+  password  String
+  userType  UserType @default(PATIENT)
+  updatedAt DateTime @default(now())
+
+  employee          Employee?
+  patient           Patient?
+  SanitationRequest SanitationRequest[]
+}
+
+model Employee {
+  id         Int           @id
+  firstName  String
+  lastName   String
+  department Department?
+  role       EmployeeRole?
+  onShift    Boolean       @default(false)
+  user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  assignedPatients Patient[]       @relation("AssignedDoctor")
+  assignedRequests DeviceRequest[] @relation("AssignedRequests")
+  createdRequests  DeviceRequest[] @relation("CreatedRequests")
+}
+
+model Patient {
+  id               Int       @id
+  firstName        String
+  lastName         String
+  dateOfBirth      DateTime
+  gender           Gender?
+  phone            String?
+  assignedDoctor   Employee? @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+  assignedDoctorId Int?
+  user             User      @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model DeviceRequest {
+  requestId            Int             @id @default(autoincrement())
+  deviceType           String
+  priority             RequestPriority
+  deliveryLocation     String
+  deliveryTime         DateTime?
+  requestTime          DateTime        @default(now())
+  requestAcceptedTime  DateTime?
+  requestCompletedTime DateTime?
+  status               RequestStatus   @default(pending)
+  comments             String?
+
+  employee           Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
+  employeeId         Int
+  assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
+  assignedEmployeeId Int?
+}
+
+model MedicalDevice {
+  medicalDeviceId   Int          @id @default(autoincrement())
+  medicalDeviceType String
+  currentLocation   String
+  currentStatus     DeviceStatus @default(available)
+  lastUpdated       DateTime     @default(now())
+
+  // @@map("medical_devices")
+}
+
+model SanitationRequest {
+  requestId      Int             @id @default(autoincrement())
+  sanitationType String
+  priority       RequestPriority
+  department     Department?
+  roomNumber     String
+  requestTime    DateTime        @default(now())
+  comments       String?
+  status         RequestStatus   @default(pending)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Directory {
+  id       Int    @id @default(autoincrement())
+  name     String
+  type     String
+  location String
 }
