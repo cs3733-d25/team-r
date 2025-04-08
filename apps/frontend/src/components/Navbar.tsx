@@ -85,12 +85,12 @@ function Navbar(props: NavBarProps) {
                         </div>
                     </div>
                     <div className={"md:hidden"}>
-                        <button data-toggle="collapse" data-target="#hamburg" type="button" className={"inline-flex items-center justify-center p-2 bg-gray-500"}>
+                        <button data-toggle="collapse" data-target="#hamburg" type="button" className={"btn btn-primary collapse-active:bg-primary-active inline-flex items-center justify-center p-2 bg-gray-500"}>
                             a
                         </button>
                     </div>
                 </div>
-                <div id={"hamburg"} className={"md:hidden"}>
+                <div id={"hamburg"} className={"transition-all duration-300 md:hidden"}>
                     <ul className={"flex flex-col"}>
                         {mobileLinks()}
                     </ul>
