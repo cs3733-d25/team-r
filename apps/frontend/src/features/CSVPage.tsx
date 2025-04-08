@@ -4,17 +4,14 @@ import Navbar from "../components/Navbar.tsx";
 
 
 export function CSVPage() {
-    const [directoryTable, setDirectoryTable] = useState([{id:0, name:"", floorNumber:0,building: ""}]);
+    const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [file, setFile] = useState<File | null>(null);
-    function fetchTable()
-    {
         useEffect(() => {
-            fetch('https:/api/directory')
+            fetch('http://localhost:3001/api/directory')
                 .then((res) => res.json())
                 .then((data) => setDirectoryTable(data.directory));
         });
-    }
-    fetchTable();
+
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 
 
@@ -25,7 +22,7 @@ export function CSVPage() {
         }
     };
     const handleSave=async()=>{
-        if(file != null && file.name.toLowerCase().endsWith('.csv')){
+        if(file != null){
 
 
             try {
@@ -38,7 +35,6 @@ export function CSVPage() {
             } catch (error) {
                 console.error("CSV File Sendoff didn't work :(")
             }
-            fetchTable()
         }
         else{
             alert("Please Select a CSV file");
@@ -70,7 +66,7 @@ export function CSVPage() {
 
 
     return (
-        <div className={'flex-col justify-center'}>
+        <div className={'flex-col justify-center'} >
             <Navbar page={'csv'} />
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
