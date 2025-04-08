@@ -7,10 +7,8 @@ export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [file, setFile] = useState<File | null>(null);
         useEffect(() => {
-            fetch('http://localhost:3001/api/directory')
-                .then((res) => res.json())
-                .then((data) => setDirectoryTable(data.directory));
-        });
+            retrieveFromDatabase()
+        },[]);
 
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 
@@ -21,6 +19,17 @@ export function CSVPage() {
             setFile(e.target.files[0]);
         }
     };
+    async function retrieveFromDatabase() {
+        try{
+            const response = await axios.get("/api/csv/")
+            console.log("response from / get", response.data)
+            setDirectoryTable(response.data);
+            console.log(response.data.data)
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
     const handleSave=async()=>{
         if(file != null){
 
@@ -71,7 +80,7 @@ export function CSVPage() {
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
             <h2 className = {"text-xl text-center"}>Directory Table:</h2>
-            <table className = {"mx-auto"}>
+           <table className = {"mx-auto"}>
                 <thead >
                 <tr className={'text-lg'}>
                     <th className={"p-5"}>ID</th>
@@ -81,12 +90,13 @@ export function CSVPage() {
                 </tr>
                 </thead>
                 <tbody>
-                {directoryTable.map((row) =>
-                    ( <tr>
-                        <td  className={"pl-5"}>{row.id}</td>
-                        <td className={"pl-5"}>{row.name}</td>
-                        <td className={"pl-5"}>{row.floorNumber}</td>
-                        <td className={"pl-5"}>{row.building}</td>
+                {directoryTable.map((row,index) =>
+                    ( <tr key = {index}>
+                        {Object.values(row).map((val,i)=>(
+                            <td key={i}>{val}</td>
+                            ))
+                        }
+
                     </tr>)) }
 
 
