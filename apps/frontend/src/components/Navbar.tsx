@@ -13,6 +13,7 @@ function Navbar(props: NavBarProps) {
         // May need to change service req path later
         { name: 'Request Service', path: '/servicereqs' },
         { name: 'Map', path: '/mapView' },
+        {name: 'CSV Files', path: '/csv' },
     ];
 
     return (

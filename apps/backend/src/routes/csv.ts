@@ -56,4 +56,22 @@ router.post("/import", async (req: Request, res: Response) => {
   }
 });
 
+//get all data for display
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const currentDirectory = await PrismaClient.directory.findMany();
+    //console.log("current directory", currentDirectory);
+    if (currentDirectory != null) {
+      res.status(200).json({
+        currentDirectory,
+      });
+    } else {
+      res.sendStatus(200).json({ message: "Directory not found" });
+    }
+  } catch (error) {
+    console.log("error in /");
+    res.sendStatus(500);
+  }
+});
+
 export default router;
