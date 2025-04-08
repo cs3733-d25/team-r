@@ -2383,6 +2383,25 @@ const RAW_RUNTIME_STATE =
           "react"\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.5.2", {\
+        "packageLocation": "./.yarn/__virtual__/@vis.gl-react-google-maps-virtual-68423cb2f1/0/cache/@vis.gl-react-google-maps-npm-1.5.2-2e542704a4-3349eb1e71.zip/node_modules/@vis.gl/react-google-maps/",\
+        "packageDependencies": [\
+          ["@vis.gl/react-google-maps", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.5.2"],\
+          ["@types/google.maps", "npm:3.58.1"],\
+          ["@types/react", "npm:18.3.20"],\
+          ["@types/react-dom", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:18.3.5"],\
+          ["fast-deep-equal", "npm:3.1.3"],\
+          ["react", "npm:18.3.1"],\
+          ["react-dom", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["@vitejs/plugin-react-swc", [\
@@ -4737,6 +4756,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react-dom", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:18.3.5"],\
           ["@types/react-router-bootstrap", "npm:0.26.6"],\
           ["@types/react-router-dom", "npm:5.3.3"],\
+          ["@vis.gl/react-google-maps", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.5.2"],\
           ["@vitejs/plugin-react-swc", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:3.8.1"],\
           ["axios", "npm:1.8.4"],\
           ["common", "workspace:packages/common"],\
