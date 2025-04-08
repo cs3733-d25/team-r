@@ -61,6 +61,15 @@ async function main() {
         }
     });
 
+    //create user admin for iteration 1 testing
+    const user8 = await prisma.user.create({
+        data: {
+            username: 'admin',
+            password: 'admin',
+            userType: UserType.EMPLOYEE
+        }
+    });
+
     // Create employees with correct schema fields
     const employee1 = await prisma.employee.create({
         data: {
@@ -123,6 +132,20 @@ async function main() {
             onShift: false,
             user: {
                 connect: { id: user5.id }
+            }
+        }
+    });
+
+    //employee data for admin user - iteration 1 testing
+    const employee6 = await prisma.employee.create({
+        data: {
+            firstName: 'Wilson',
+            lastName: 'Wong',
+            department: Department.ADMINISTRATION,
+            role: EmployeeRole.ADMINISTRATOR,
+            onShift: false,
+            user: {
+                connect: { id: user8.id }
             }
         }
     });
