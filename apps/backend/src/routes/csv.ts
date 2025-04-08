@@ -4,6 +4,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
+import { Buildings } from "../../../../packages/database";
 
 const router: Router = express.Router();
 
@@ -23,19 +24,25 @@ router.get("/export", async (req: Request, res: Response) => {
   }
 });
 
+// a function to cast a string to a Buildings enum type
+function parseBuilding(value: string): Buildings {
+  return Buildings[value as keyof typeof Buildings];
+}
+
 // import directory from CSV
 router.post("/import", async (req: Request, res: Response) => {
   try {
-    const absolutePath = path.join(__dirname, "../../data/csv/Directory.csv");
-    const csvFile = fs.readFileSync(absolutePath, "utf8");
+    // const absolutePath = path.join(__dirname, "../../data/csv/Directory.csv");
+    // const csvFile = fs.readFileSync(absolutePath, "utf8");
 
-    const records = parseCSV(csvFile);
+    // const records = parseCSV(csvFile);
+    const records = parseCSV(req.body.toString());
 
     const transformation = records.map((row) => ({
       id: parseInt(row.ID),
       name: row.Name,
-      type: row.Type,
-      location: row.Location,
+      floorNumber: parseInt(row.floor),
+      building: parseBuilding(row.Location),
     }));
 
     await PrismaClient.directory.createMany({
