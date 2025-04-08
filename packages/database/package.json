@@ -26,6 +26,7 @@
         "studio:prod": "dotenv -e ${PROJECT_CWD}/.env.prod prisma studio"
     },
     "devDependencies": {
+        "@types/multer": "^1",
         "@yarnpkg/pnpify": "^4.0.0-rc.45",
         "eslint": "*",
         "eslint-config-custom": "*",
@@ -37,6 +38,7 @@
     "dependencies": {
         "@prisma/client": "6.5.0",
         "dotenv": "*",
-        "dotenv-cli": "*"
+        "dotenv-cli": "*",
+        "multer": "^1.4.5-lts.2"
     }
 }
