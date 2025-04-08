@@ -8,35 +8,60 @@ import {
 } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from 'react';
 
-
 function MapView() {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    const patriotPlace = "Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035"
-    const chestnutHill = "850 Boylston St, Chestnut Hill, MA 02467"
+    const patriotPlace = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
+    const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(patriotPlace);
+    const [startingLocation, setStartingLocation] = useState<string>('');
 
-    console.log(selectedLocation)
+    console.log(selectedLocation);
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
             <div className="flex-grow w-full">
                 <div className="flex items-center justify-between w-full p-2">
-                    <div>
-                        <h3 className={'font-sans'}>Select a location:</h3>
+                    <label>Starting location:</label>
+                    <div className={'flex space-x-2 p-2 justify-end'}>
+                        <input
+                            value={startingLocation}
+                            className="ml-2 p-2 border border-gray-300 rounded"
+                            type="text"
+                            onChange={(e) => setStartingLocation(e.target.value)}
+                        />
+                       {/* Lol so right now the starting location automatically updates
+                       as you enter it so a button is not needed, we should figure out
+                       which behavior we want*/}
+                       {/* <button
+                            type="button"
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
+                            onClick={() => {
+                                setStartingLocation(startingLocation)
+                            }}
+                        >
+                            Submit
+                        </button>*/}
                     </div>
+                </div>
+                <div className="flex items-center justify-between w-full p-2">
+                    <h3 className={'font-sans'}>Select an MGH location:</h3>
                     <div className="flex p-2 justify-end">
-                        <div className={"flex space-x-2"}>
+                        <div className={'flex space-x-2'}>
                             <button
                                 type="button"
                                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
-                                onClick={() => {setSelectedLocation(patriotPlace)}}
+                                onClick={() => {
+                                    setSelectedLocation(patriotPlace);
+                                }}
                             >
                                 Patriot Place
                             </button>
                             <button
                                 type="button"
                                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
-                                onClick={() => {setSelectedLocation(chestnutHill)}}
+                                onClick={() => {
+                                    setSelectedLocation(chestnutHill);
+                                }}
                             >
                                 Chestnut Hill
                             </button>
@@ -47,7 +72,7 @@ function MapView() {
                 <APIProvider apiKey={apiKey} onLoad={() => console.log('Maps API has loaded.')}>
                     <div className="w-full h-full">
                         <Map
-                            defaultZoom={15}
+                            defaultZoom={8}
                             defaultCenter={{ lat: 42.27434988431181, lng: -71.80801625486968 }}
                             onCameraChanged={(ev: MapCameraChangedEvent) =>
                                 console.log(
@@ -60,7 +85,7 @@ function MapView() {
                             style={{ width: '100%', height: '100%' }}
                             fullscreenControl={false}
                         />
-                        <Directions selectedLocation={selectedLocation}/>
+                        <Directions selectedLocation={selectedLocation} startingLocation={startingLocation} />
                     </div>
                 </APIProvider>
             </div>
@@ -68,17 +93,11 @@ function MapView() {
     );
 }
 
-function Directions(props: { selectedLocation: string }) {
+function Directions(props: { selectedLocation: string, startingLocation: string }) {
     const map = useMap();
     const routesLibrary = useMapsLibrary('routes');
     const [directionService, setDirectionService] = useState<google.maps.DirectionsService>();
     const [directionRenderer, setDirectionRenderer] = useState<google.maps.DirectionsRenderer>();
-    // need to remove unecessary states below
-    const [routes, setRoutes] = useState<google.maps.DirectionsRoute[]>([]);
-    const [routeIndex, setRouteIndex] = useState(0);
-    const selected = routes[routeIndex];
-    const leg = selected?.legs[0];
-
     useEffect(() => {
         if (!map || !routesLibrary) return;
         setDirectionService(new routesLibrary.DirectionsService());
@@ -90,15 +109,14 @@ function Directions(props: { selectedLocation: string }) {
 
         directionService
             .route({
-                origin: '100 Institute Rd, Worcester, MA 01609',
+                origin: props.startingLocation,
                 destination: props.selectedLocation,
                 travelMode: google.maps.TravelMode.DRIVING,
-                provideRouteAlternatives: true,
             })
             .then((response) => {
                 directionRenderer.setDirections(response);
             });
-    }, [directionService, directionRenderer, props.selectedLocation]);
+    }, [directionService, directionRenderer, props.selectedLocation, props.startingLocation]);
 
     return null;
 }
