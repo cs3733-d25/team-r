@@ -12,11 +12,13 @@ interface NodeData {
 class Node implements NodeData {
     id: string;
     name: string;
-    neighbors: string[] = [];
+    type: string;
+    neighbors: string[] = []; //neighbors (edges -> other nodes)
 
     constructor(data: NodeData) {
         this.id = data.id;
         this.name = data.name;
+        this.type = data.type;
     }
 
     addNeighbor(neighborId: string): void {
@@ -25,29 +27,51 @@ class Node implements NodeData {
 }
 
 class Graph {
-    private nodes: Node[] = [];
+    private nodes: Node[] = []; //a list of the nodes
     private nodeIndex: number = 0;
     private adjacencyList: Node[] = [];
     private adjacentIndex: number = 0;
 
-    addNode(nodeData: NodeData): Boolean {
-        if (this.nodeIndex < this.nodes.length) {
-            nodes[nodeIndex] = nodeData;
-            nodeIndex++;
-            return true;
-        }
-        return false;
+    addNode(nodeData: NodeData): Node {
+        const newNode = new Node(nodeData);
+        this.nodes.push(newNode);
+        return newNode;
     }
 
+    //give proper ID of each NODE to connect
+    addEdge(node1Id: string, node2Id: string): Boolean {
+        const node1 = this.nodes.getNodeByID(node1Id);
+        const node2 = this.nodes.getNodeByID(node1Id);
+        node1.addNeighbor(node2Id);
+        node2.addNeighbor(node1Id);
+
+        return true;
+    }
+
+    getNodeByID(nodeId: string): Node | null {
+        for (let i = 0; i < this.nodes.length; i++) {
+            let curNode = this.nodes[i];
+            if (curNode.id === nodeId) {
+                return curNode;
+            }
+        }
+        return null;
+    }
+    getNodeByName(nodeName: string): Node | null {
+        for (let i = 0; i < this.nodes.length; i++) {
+            let curNode = this.nodes[i];
+            if (curNode.name === nodeName) {
+                return curNode;
+            }
+        }
+        return null;
+    }
+
+    getNeighbors(nodeId: String): string[] | undefined {
 
 
-
-    addEdge(node1Id: string, node2Id: string): Boolean {}
-
-    getNeighbors(nodeId: String): string[] {}
+    }
 }
-
-
 
 
 class Pathfinder{
