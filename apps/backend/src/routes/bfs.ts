@@ -1,6 +1,4 @@
-//we are getting starting and endpoint from front end
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
 const router: Router = express.Router();
 
 interface NodeData {
@@ -19,7 +17,6 @@ class Node implements NodeData {
         this.name = data.name;
         this.type = data.type;
     }
-
 }
 
 class Graph {
@@ -32,13 +29,22 @@ class Graph {
     }
 
     addEdge(node1Id: string, node2Id: string): boolean {
-        //get each node by ID from first mapping
-        // if (!this.adjacencyList.has(node1Id)) this.adjacencyList.set(id1, new Set());
-        // if (!this.adjacencyList.has(node2Id)) this.adjacencyList.set(id2, new Set());
+        if (this.nodes.has(node1Id) && this.nodes.has(node2Id)) {
+            // Ensure both nodes exist in the graph
 
-        if (this.nodes.has(node1Id) && this.nodes.has(node2Id)) { //if valid node ID
-            this.adjacencyList.get(node1Id)!.add(node2Id); //add string ID of 2nd to 1st
-            this.adjacencyList.get(node2Id)!.add(node1Id); //add string ID of 1st to 2nd
+            // If the adjacency list for node1Id is undefined, initialize it as a new Set
+            if (!this.adjacencyList.has(node1Id)) {
+                this.adjacencyList.set(node1Id, new Set());
+            }
+
+            // Similarly, ensure the adjacency list for node2Id is initialized
+            if (!this.adjacencyList.has(node2Id)) {
+                this.adjacencyList.set(node2Id, new Set());
+            }
+
+            // Add the edges to both nodes
+            this.adjacencyList.get(node1Id)!.add(node2Id);
+            this.adjacencyList.get(node2Id)!.add(node1Id);
             return true;
         }
         return false;
@@ -49,7 +55,8 @@ class Graph {
     }
 
     getNeighbors(nodeId: string): string[] {
-        return Array.from(this.adjacencyList.get(nodeId) || []);
+        const neighborsSet = this.adjacencyList.get(nodeId);
+        return neighborsSet ? Array.from(neighborsSet) : [];  // Safely return an empty array if the neighbors don't exist
     }
 
 }
@@ -87,8 +94,6 @@ class Pathfinder {
         }
 
         return []; // No path found
-
-
     }
 
 }
@@ -130,21 +135,19 @@ const pathFinder = new Pathfinder(hospitalGraph);
 
 router.post("/", async function (req: Request, res: Response) {
     const {startingPoint, endingPoint} = req.body;
-    console.log("hello algorithm");
+    console.log("Starting BFS algorithm");
 
     try {
         const pf = pathFinder.BFS(startingPoint, endingPoint);
-        if (pf) {
+        if (pf.length > 0) {
             res.status(200).json(pf);
         } else {
-            res.status(404).json({message: "Shortest path not found"});
+            res.status(404).json({message: "Path not found between " + startingPoint + " and " + endingPoint + " and " + endingPoint});
         }
     } catch (error) {
-        console.error("Pathfinding:", error);
+        console.error("Pathfinding error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 export default router;
-
-
