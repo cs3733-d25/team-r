@@ -13,7 +13,6 @@ class Node implements NodeData {
     id: string;
     name: string;
     type: string;
-    neighbors: string[] = []; //neighbors (edges -> other nodes)
 
     constructor(data: NodeData) {
         this.id = data.id;
@@ -21,42 +20,45 @@ class Node implements NodeData {
         this.type = data.type;
     }
 
-    addNeighbor(neighborId: string): void {
-        this.neighbors.push(neighborId);
-    }
+    // addNewNeighbor(data: NodeData): void {
+    //     this.neighbors.push(new Node(data));
+    // }
+    // addExistingNeighbor(node: Node): void {
+    //
+    // }
 }
 
 class Graph {
-    private nodes: Node[] = []; //a list of the nodes
-    private nodeIndex: number = 0;
-    private adjacencyList: Node[] = [];
-    private adjacentIndex: number = 0;
+    private nodes: Map<string, Node> = new Map(); // id -> Node
+    private adjacencyList: Map<string, Set<string>> = new Map(); // id -> Set (a list) of neighbor ids
 
-    addNode(nodeData: NodeData): Node {
-        const newNode = new Node(nodeData);
-        this.nodes.push(newNode);
-        return newNode;
+    addNode(node: Node): void {
+        this.nodes.set(node.id, node); //add id and node pair
+        this.adjacencyList.set(node.id, new Set());
     }
 
-    //give proper ID of each NODE to connect
-    addEdge(node1Id: string, node2Id: string): Boolean {
-        const node1 = this.nodes.getNodeByID(node1Id);
-        const node2 = this.nodes.getNodeByID(node1Id);
-        node1.addNeighbor(node2Id);
-        node2.addNeighbor(node1Id);
+    addEdge(node1Id: string, node2Id: string): boolean {
+        //get each node by ID from first mapping
+        // if (!this.adjacencyList.has(node1Id)) this.adjacencyList.set(id1, new Set());
+        // if (!this.adjacencyList.has(node2Id)) this.adjacencyList.set(id2, new Set());
 
-        return true;
+        if (this.nodes.has(node1Id) && this.nodes.has(node2Id)) { //if valid node ID
+            this.adjacencyList.get(node1Id)!.add(node2Id); //add string ID of 2nd to 1st
+            this.adjacencyList.get(node2Id)!.add(node1Id); //add string ID of 1st to 2nd
+            return true;
+        }
+        return false;
     }
 
     getNodeByID(nodeId: string): Node | null {
-        for (let i = 0; i < this.nodes.length; i++) {
-            let curNode = this.nodes[i];
-            if (curNode.id === nodeId) {
-                return curNode;
-            }
-        }
-        return null;
+        return this.nodes.get(nodeId) || null;
     }
+
+    getNeighbors(nodeId: string): string[] {
+        return Array.from(this.adjacencyList.get(nodeId) || []);
+    }
+
+
     getNodeByName(nodeName: string): Node | null {
         for (let i = 0; i < this.nodes.length; i++) {
             let curNode = this.nodes[i];
@@ -67,10 +69,6 @@ class Graph {
         return null;
     }
 
-    getNeighbors(nodeId: String): string[] | undefined {
-
-
-    }
 }
 
 
@@ -81,7 +79,22 @@ class Pathfinder{
         this.graph = graph;
     }
 
-    BFSShortestPath(start: string, end: string): string {
+    BFS(start: string, end: string): string[] {
+        const visited = new Set<string>;
+        const queue: string[][] = [[start]];
+
+        while (queue.length > 0) {
+            const path = queue.shift();
+            if(!path) continue;
+
+            const currentID = path[path.length-1];
+
+            if(currentID === end){
+                return path;
+            }
+
+        }
+        
 
     }
 }
@@ -90,7 +103,7 @@ class Pathfinder{
 const hospitalGraph = new Graph();
 // add all hospital node data and outside data
 hospitalGraph.addNode({id: 'parking21324', name: 'Parking A', type: 'parking'});
-hospitalGraph.addEdge({})
+hospitalGraph.addEdge('abc', 'def');
 
 const pathFinder = new Pathfinder(hospitalGraph);
 
@@ -99,15 +112,16 @@ router.post("/", async function (req: Request, res: Response) {
     console.log("hello algorithm");
 
     try {
-        const pf = new Pathfinder();
-        //console.log(e);
-        const path = pf.findPath(startingPoint, endingPoint);
-        res.status(200).json(path); // Send path data as JSON
+        const pf = pathFinder.BFS(startingPoint, endingPoint);
+        if (pf) {
+            res.status(200).json(pf);
+        } else {
+            res.status(404).json({message: "Shortest path not found"});
+        }
     } catch (error) {
         console.error("Pathfinding:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
 
 export default router;
