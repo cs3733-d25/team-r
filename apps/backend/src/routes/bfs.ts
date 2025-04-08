@@ -58,21 +58,23 @@ class Graph {
         return Array.from(this.adjacencyList.get(nodeId) || []);
     }
 
-
-    getNodeByName(nodeName: string): Node | null {
-        for (let i = 0; i < this.nodes.length; i++) {
-            let curNode = this.nodes[i];
-            if (curNode.name === nodeName) {
-                return curNode;
+    /*
+        getNodeByName(nodeName: string): Node | null {
+            for (let i = 0; i < this.nodes.length; i++) {
+                let curNode = this.nodes[i];
+                if (curNode.name === nodeName) {
+                    return curNode;
+                }
             }
+            return null;
         }
-        return null;
+
     }
 
+    */
+
 }
-
-
-class Pathfinder{
+class Pathfinder {
     private graph: Graph;
 
     constructor(graph: Graph) {
@@ -85,19 +87,34 @@ class Pathfinder{
 
         while (queue.length > 0) {
             const path = queue.shift();
-            if(!path) continue;
+            if (!path) continue;
 
-            const currentID = path[path.length-1];
+            const currentID = path[path.length - 1];
 
-            if(currentID === end){
+            if (currentID === end) {
                 return path;
             }
 
+            if (!visited.has(currentID)) {
+                visited.add(currentID);
+                const neighbors = this.graph.getNeighbors(currentID);
+
+                for (const neighborId of neighbors) {
+                    if (!visited.has(neighborId)) {
+                        queue.push([...path, neighborId]);
+                    }
+                }
+            }
         }
-        
+
+        return []; // No path found
+
 
     }
+
 }
+
+
 
 
 const hospitalGraph = new Graph();
@@ -105,7 +122,25 @@ const hospitalGraph = new Graph();
 hospitalGraph.addNode({id: 'parking21324', name: 'Parking A', type: 'parking'});
 hospitalGraph.addEdge('abc', 'def');
 
+/*
+const testGraph = new Graph();
+
+testGraph.addNode({ id: "A", name: "Entrance", type: "Door" });
+testGraph.addNode({ id: "B", name: "Reception", type: "Room" });
+testGraph.addNode({ id: "C", name: "Radiology", type: "Department" });
+
+testGraph.addEdge("A", "B");
+testGraph.addEdge("B", "C");
+
+const pathfinder = new Pathfinder(testGraph);
+const path = pathfinder.BFS("A", "C");
+
+console.log("BFS path from A to C:", path);
+
+*/
+
 const pathFinder = new Pathfinder(hospitalGraph);
+
 
 router.post("/", async function (req: Request, res: Response) {
     const {startingPoint, endingPoint} = req.body;
@@ -125,3 +160,5 @@ router.post("/", async function (req: Request, res: Response) {
 });
 
 export default router;
+
+
