@@ -80,7 +80,8 @@ function Navbar(props: NavBarProps) {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo/Brand */}
                     <div className="flex-shrink-0">
-                        <Link to="/" className="flex items-center">
+                        <Link to={props.page == 'login' ? ("/") : ("/home")}
+                              className="flex items-center">
                             <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
                             <span className="ml-2 text-xl font-bold">Mass General Brigham</span>
                         </Link>
