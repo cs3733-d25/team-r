@@ -19,7 +19,7 @@ function App() {
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <MapView /> },
-                { path: 'sanitationFrom', element: <SanitationForm /> },
+                { path: 'sanitationForm', element: <SanitationForm /> },
             ],
         },
     ]);
