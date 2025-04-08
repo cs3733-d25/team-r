@@ -337,7 +337,6 @@ async function main() {
         data: [
             {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Pharmacy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Radiology", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Cardiovascular Services", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Urology", floorNumber: 1, building: "PATRIOT_PLACE_20"},
