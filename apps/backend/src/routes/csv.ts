@@ -5,8 +5,14 @@ import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
 import { Buildings } from "../../../../packages/database";
+import multer from "multer";
+
 
 const router: Router = express.Router();
+
+// Set up Multer storage and file handling
+const storage = multer.memoryStorage(); // Store the file in memory for easier processing
+const upload = multer({ storage: storage, limits: { fileSize: 10 * 1024 * 1024 } }); // Limit file size to 10MB
 
 // export directory data as CSV
 router.get("/export", async (req: Request, res: Response) => {
@@ -30,12 +36,24 @@ function parseBuilding(value: string): Buildings {
 }
 
 // import directory from CSV
-router.post("/import", async (req: Request, res: Response) => {
+router.post("/import", upload.single('csvfile'), async (req: Request, res: Response) => {
   try {
     // const absolutePath = path.join(__dirname, "../../data/csv/Directory.csv");
     // const csvFile = fs.readFileSync(absolutePath, "utf8");
 
     // const records = parseCSV(csvFile);
+    // The uploaded file is available in req.file.buffer
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    const csvFileBuffer = req.file.buffer;
+
+    // Convert buffer to string (UTF-8)
+    const csvData = csvFileBuffer.toString('utf-8');
+
+    // Parse the CSV data
+    const records = parseCSV(csvData);
+
     const records = parseCSV(req.body.toString());
 
     const transformation = records.map((row) => ({
