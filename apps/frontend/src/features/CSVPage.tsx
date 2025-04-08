@@ -23,8 +23,8 @@ export function CSVPage() {
         try{
             const response = await axios.get("/api/csv/")
             console.log("response from / get", response.data)
-            setDirectoryTable(response.data);
-            console.log(response.data.data)
+            setDirectoryTable(response.data.currentDirectory);
+            console.log(response.data.currentDirectory)
         }
         catch(error){
             console.log(error);
@@ -69,6 +69,16 @@ export function CSVPage() {
                     console.error("CSV Didn't fully download :(");
                 });
         }
+    }
+
+    function setHeader(){
+        let headers = ;
+        if (directoryTable.length > 0){
+            headers = Object.keys(directoryTable[0]);
+        } else{
+            headers = [];
+        }
+        return headers;
     }
 
 

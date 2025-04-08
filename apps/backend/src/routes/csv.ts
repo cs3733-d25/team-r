@@ -61,16 +61,9 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const currentDirectory = await PrismaClient.directory.findMany();
     //console.log("current directory", currentDirectory);
-    select: {
-      id: true,
-          floorNumber: true,
-
-
-    }
     if (currentDirectory != null) {
       res.status(200).json({
-        id: currentDirectory.id,
-        name: currentDirectory.name,
+        currentDirectory,
       });
     } else {
       res.sendStatus(200).json({ message: "Directory not found" });

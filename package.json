@@ -44,6 +44,7 @@
     "vitest": "^3.0.9"
   },
   "dependencies": {
+    "@vis.gl/react-google-maps": "^1.5.2",
     "common": "workspace:*",
     "dotenv": "^16.4.7",
     "dotenv-cli": "^7.4.4",
