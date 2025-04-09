@@ -8,7 +8,7 @@ export function Floor22_3() {
                     Multi Specialty Clinic
                 </li>
                 <li>Allergy</li>
-                <li >Cardiac Arrythmia</li>
+                <li>Cardiac Arrythmia</li>
                 <li >Dermatology</li>
                 <li>Endocrinology</li>
                 <li>Gastroenterology</li>

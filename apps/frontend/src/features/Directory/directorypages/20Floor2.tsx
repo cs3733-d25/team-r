@@ -22,7 +22,7 @@ export function TwentyFloorTwo(){
                 <li>Speech - Language</li>
 
             <li>Clinical Lab</li>
-            <li>Surgi-Care</li>
+            <li >Surgi-Care</li>
         </ul>
     )
 }

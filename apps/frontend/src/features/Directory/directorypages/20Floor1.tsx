@@ -2,7 +2,7 @@
 export function TwentyFloorOne(){
     return(
         <ul>
-            <li>Blood Draw/Phlebotomy</li>
+            <li >Blood Draw/Phlebotomy</li>
             <li>Pharmacy</li>
             <li>Radiology</li>
             <li>Cardiovascular Services</li>

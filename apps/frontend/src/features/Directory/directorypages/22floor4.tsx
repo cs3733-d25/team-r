@@ -4,7 +4,7 @@ export function Floor22_4() {
     return (
         <div className={"floor-22-4"}>
             <ul>
-                <li>Blood Draw/Phlebotomy</li>
+                <li >Blood Draw/Phlebotomy</li>
                 <li>Community Room</li>
                 <li>Primary Care</li>
             </ul>

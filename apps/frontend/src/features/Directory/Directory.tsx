@@ -71,7 +71,7 @@ export function Directory() {
                         <td className={'border-r align-top pr-10'}>
                             <TwentyFloorFour />
                         </td>
-                        <td className={'text-right align-top pl-10'}>
+                        <td className={'text-right align-top pl-10 '}>
                             <Floor22_4 />
                         </td>
                     </tr>
