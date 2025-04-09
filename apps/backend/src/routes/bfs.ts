@@ -7,7 +7,7 @@ interface NodeData {
     type: string;
 }
 
-class Node implements NodeData {
+class Node implements NodeData { //Node class for nodes in a graph, edges aren't here and are in graph class
     id: string;
     name: string;
     type: string;
@@ -19,28 +19,28 @@ class Node implements NodeData {
     }
 }
 
-class Graph {
+class Graph { //stores all nodes and each of their neighbors
     private nodes: Map<string, Node> = new Map(); // id -> Node
     private adjacencyList: Map<string, Set<string>> = new Map(); // id -> Set (a list) of neighbor ids
 
-    addNode(node: Node): void {
+    addNode(node: Node): void { //add node to the graph
         this.nodes.set(node.id, node); //add id and node pair
         this.adjacencyList.set(node.id, new Set());
     }
 
-    addEdge(node1Id: string, node2Id: string): boolean {
+    addEdge(node1Id: string, node2Id: string): boolean { //add edge between two nodes using their string IDs
         if (this.nodes.has(node1Id) && this.nodes.has(node2Id)) {
             // Ensure both nodes exist in the graph
-
-            // If the adjacency list for node1Id is undefined, initialize it as a new Set
-            if (!this.adjacencyList.has(node1Id)) {
-                this.adjacencyList.set(node1Id, new Set());
-            }
-
-            // Similarly, ensure the adjacency list for node2Id is initialized
-            if (!this.adjacencyList.has(node2Id)) {
-                this.adjacencyList.set(node2Id, new Set());
-            }
+            //
+            // // If the adjacency list for node1Id is undefined, initialize it as a new Set
+            // if (!this.adjacencyList.has(node1Id)) {
+            //     this.adjacencyList.set(node1Id, new Set());
+            // }
+            //
+            // // Similarly, ensure the adjacency list for node2Id is initialized
+            // if (!this.adjacencyList.has(node2Id)) {
+            //     this.adjacencyList.set(node2Id, new Set());
+            // }
 
             // Add the edges to both nodes
             this.adjacencyList.get(node1Id)!.add(node2Id);
@@ -54,40 +54,40 @@ class Graph {
         return this.nodes.get(nodeId) || null;
     }
 
-    getNeighbors(nodeId: string): string[] {
+    getNeighbors(nodeId: string): string[] { //return all neighbors of a node as string list
         const neighborsSet = this.adjacencyList.get(nodeId);
         return neighborsSet ? Array.from(neighborsSet) : [];  // Safely return an empty array if the neighbors don't exist
     }
 
 }
-class Pathfinder {
-    private graph: Graph;
+class Pathfinder { //does the Breadth First Search (BFS)
+    private graph: Graph; //take a graph to do BFS on
 
     constructor(graph: Graph) {
         this.graph = graph;
     }
 
     BFS(start: string, end: string): string[] {
-        const visited = new Set<string>;
-        const queue: string[][] = [[start]];
+        const visited = new Set<string>; //visited list
+        const queue: string[][] = [[start]]; //where to go next
 
-        while (queue.length > 0) {
+        while (queue.length > 0) { //while we have nodes to visit
             const path = queue.shift();
             if (!path) continue;
 
             const currentID = path[path.length - 1];
 
-            if (currentID === end) {
+            if (currentID === end) { //at destination
                 return path;
             }
 
-            if (!visited.has(currentID)) {
-                visited.add(currentID);
+            if (!visited.has(currentID)) { //have we been here? If not...
+                visited.add(currentID); //add to visited list
                 const neighbors = this.graph.getNeighbors(currentID);
 
                 for (const neighborId of neighbors) {
                     if (!visited.has(neighborId)) {
-                        queue.push([...path, neighborId]);
+                        queue.push([...path, neighborId]); //add neighbors to the queue
                     }
                 }
             }
@@ -99,40 +99,44 @@ class Pathfinder {
 }
 
 const hospitalGraph = new Graph();
+
 // add all hospital node data and outside data
+//parking
 hospitalGraph.addNode({id: 'p1', name: 'Extended Parking', type: 'parking'})
 hospitalGraph.addNode({id: 'p2', name: 'Patient Parking', type: 'parking'});
 hospitalGraph.addNode({id: 'p3', name: 'Valet Parking', type: 'parking'});
-
+//entrances
 hospitalGraph.addNode({id: 'e1', name: '22 Patriot Place', type: 'entrance'});
 hospitalGraph.addNode({id: 'e2', name: '20A Patriot Place', type: 'entrance'});
 hospitalGraph.addNode({id: 'e3', name: '20B Patriot Place', type: 'entrance'});
-
+//reception
 hospitalGraph.addNode({id: 'r1', name: '20', type: 'reception'});
 hospitalGraph.addNode({id: 'r2', name: '22A', type: 'reception'});
 hospitalGraph.addNode({id: 'r3', name: '22B', type: 'reception'});
 
-//edges
+//add all edges between nodes on the graph
+//NOTE: p = parking, e = entrance, r = reception
+//p1
 hospitalGraph.addEdge('p1', 'p2');
 hospitalGraph.addEdge('p1', 'e1');
-
+//p2
 hospitalGraph.addEdge('p2', 'e2');
 hospitalGraph.addEdge('p2', 'e3');
-
+//p3
 hospitalGraph.addEdge('p3', 'e1');
 hospitalGraph.addEdge('p3', 'e2');
-
+//e1-3
 hospitalGraph.addEdge('e1', 'e2');
 hospitalGraph.addEdge('e1', 'r1');
 hospitalGraph.addEdge('e2', 'r2');
 hospitalGraph.addEdge('e3', 'r3');
-
+//r2
 hospitalGraph.addEdge('r2', 'r3');
 
 
 const pathFinder = new Pathfinder(hospitalGraph);
 
-
+//send data to front end
 router.post("/", async function (req: Request, res: Response) {
     const {startingPoint, endingPoint} = req.body;
     console.log("Starting BFS algorithm");
