@@ -1,15 +1,29 @@
 import { useEffect, useRef } from 'react';
 
+/**
+ * ImageCanvas component renders an image on a canvas and allows for drawing markers on it
+ * x and y coordinates are relative to the canvas size
+ * label is optional
+ */
 interface Marker {
     x: number;
     y: number;
     label?: string;
 }
 
+/**
+ * Props for the ImageCanvas component
+ * @property markers - Array of markers to be drawn on the canvas
+ */
 interface ImageCanvasProps {
     markers?: Marker[];
 }
 
+/**
+ * ImageCanvas component
+ * @param markers - Array of markers to be drawn on the canvas
+ * @constructor
+ */
 function ImageCanvas({ markers }: ImageCanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -22,7 +36,7 @@ function ImageCanvas({ markers }: ImageCanvasProps) {
         ctx.fillStyle = "red";
         ctx.fill();
 
-        // Optionally, add a label near the marker
+        // Add label if provided
         if (label) {
             ctx.font = 'bolder 25px Arial';
             ctx.fillStyle = 'black';
@@ -30,6 +44,7 @@ function ImageCanvas({ markers }: ImageCanvasProps) {
         }
     };
 
+    // useEffect to draw the image and markers on the canvas
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -38,6 +53,7 @@ function ImageCanvas({ markers }: ImageCanvasProps) {
         if (!ctx) return;
 
         const img = new Image();
+        // Use floor plan image as background of canvas
         img.src = '/FinalFloorPlan-It1.png';
         img.onload = () => {
             // Get the display dimensions from CSS
@@ -61,6 +77,7 @@ function ImageCanvas({ markers }: ImageCanvasProps) {
         };
     }, [markers]);
 
+    // returning the drawn canvas with optional markers
     return (
         <canvas
             ref={canvasRef}
