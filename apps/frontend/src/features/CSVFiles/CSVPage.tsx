@@ -121,16 +121,15 @@ export function CSVPage() {
                         name="ImportCSV"
                         accept=".csv"
                         onChange={handleFileChange}
-                        className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}
+                        className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}
                     ></input>
                 </div>
                 <div className={'flex absolute right-1/4'}>
                     <label htmlFor="ExportCSV">ExportCSV File:  </label>
-                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}>Export</button>
+                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}>Export</button>
                 </div>
-                <div className={'flex absolute left-1/4 pt-6 pb-20'}>
-                    <label htmlFor="SaveCSV">Save: </label>
-                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}>Save</button>
+                <div className={'flex absolute left-1/2 pt-8 pb-20'}>
+                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}>Save</button>
                 </div>
 
             </form>
