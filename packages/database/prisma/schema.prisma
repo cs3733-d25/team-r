@@ -23,11 +23,11 @@ enum EmployeeRole {
 }
 
 enum Department {
-  CARDIOLOGY
-  NEUROLOGY
-  IT
-  FACILITIES
-  ADMINISTRATION
+  SPECIALTY_CLINIC
+  IMAGING_SUITE
+  PHLEBOTOMY
+  PHARMACY
+  AMBULATORY_URGENCARE
 }
 
 enum Gender {
@@ -151,15 +151,15 @@ model Directory {
 }
 
 model Node {
-  id        Int          @id @default(autoincrement())
-  name      String       @unique
-  type      String
-  neighbors Edge[] @relation("FromConnection")
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  type        String
+  neighbors   Edge[] @relation("FromConnection")
   connectedTo Edge[] @relation("ToConnection")
 }
 
 model Edge {
-  id     Int      @id @default(autoincrement())
+  id     Int  @id @default(autoincrement())
   fromId Int
   toId   Int
   from   Node @relation("FromConnection", fields: [fromId], references: [id])
