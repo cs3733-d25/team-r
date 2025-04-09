@@ -112,22 +112,21 @@ export function CSVPage() {
             </table>
             <br />
             <form>
-                <div className={'absolute left-1/4'}>
+                <div className={'absolute left-1/4 mr-10'}>
                     <label htmlFor="ImportCSV">Import CSV File:  </label>
                     <input
                         type="file"
                         name="ImportCSV"
                         accept=".csv"
                         onChange={handleFileChange}
-                        className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}
+                        className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 "}
                     ></input>
                 </div>
-                <div className={'flex absolute right-1/4'}>
-                    <label htmlFor="ExportCSV">ExportCSV File:  </label>
-                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}>Export</button>
+                <div className={'flex absolute right-1/4 ml-10'}>
+                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}>Export</button>
                 </div>
-                <div className={'flex absolute left-1/2 pt-8 pb-20'}>
-                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}>Save</button>
+                <div className={'flex absolute left-1/4 pt-15 pb-20'}>
+                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}>Save</button>
                 </div>
 
             </form>
