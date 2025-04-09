@@ -9,6 +9,8 @@ import {
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ImageCanvas from '../../components/ImageCanvas.tsx';
+import InternalMap from "../../components/InternalMap.tsx";
+
 
 /**
  * MapView component, returns both the Google map and canvas image (floor plan)
@@ -76,13 +78,43 @@ function MapView() {
     /*TODO: figure out what the return of this function is and how to use it.
     *  does it return a json that we can then access? How can we access the
     *  fields of the object? */
-    async function findDirectionsBFS() {
-        const response = await axios.post('/api/bfs', {
-            // converting the parking lot and department to the corresponding node IDs
-            startPoint: getParkingLotNode(parkingLot),
-            endPoint: getNearestReceptionNode(department),
-        });
+    // async function findDirectionsBFS() {
+    //     const response = await axios.post('/api/bfs', {
+    //         // converting the parking lot and department to the corresponding node IDs
+    //         startPoint: getParkingLotNode(parkingLot),
+    //         endPoint: getNearestReceptionNode(department),
+    //     });
+    //
+
+  async function findDirectionBFS() {
+    try {
+      // Only should go if both parking lot and department are selectedLocation
+      if (!parkingLot || !department) {
+        alert("please select a parking lot and a department");
+        return;
+      }
+
+      const startNode = getParkingLotNode(parkingLot);
+      const endNode = getNearestReceptionNode(department);
+
+      console.log(`Finding path from ${startNode} (${parkingLot}) to ${endNode} (${department})`);
+
+      const response = await axios.post('/api/bfs', {
+        // irrc backend should want a startingPoint/endingPoint hopefully not a smoothbrain moment
+        startingPoint: startNode,
+        endingPoint: endNode,
+      });
+
+      // loging our response data
+      console.log('path found:', response.data);
+
+      //alertig user
+      alert(`Path found: ${response.data.join(' → ')}`);
+    } catch (error) {
+      console.error('Error finding path:', error);
+      alert('An error occurred while finding the path.');
     }
+  }
 
     // Main rendering of the MapView component
     return (
@@ -197,7 +229,10 @@ function MapView() {
                     need to find a way to perma link coordinates or prevent map size from changing*/}
                 {/*These markers are here as I was trying to find the x and y value for each node, these should be removed once a
                 suitable way to link node and marker parameters are found*/}
-                <ImageCanvas
+
+                {/*manually showing images depending on the parking lot and department*/}
+                <InternalMap parkingLot={getParkingLotNode(parkingLot)} reception={getNearestReceptionNode(department)}/>
+                {/*<ImageCanvas
                     markers={[
                         {
                             x: 130,
@@ -235,7 +270,7 @@ function MapView() {
                             label: 'Reception 3',
                         },
                     ]}
-                />
+                />*/}
             </div>
         </div>
     );
