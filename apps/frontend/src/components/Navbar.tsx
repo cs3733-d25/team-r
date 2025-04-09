@@ -14,7 +14,7 @@ function Navbar(props: NavBarProps) {
         // { name: 'Request Service', path: '/servicereqs' },
         { name: 'Map', path: '/mapView' },
         { name: 'Sanitation', path: '/sanitation'},
-        {name: 'CSV Files', path: '/csv' },
+        { name: 'CSV Files', path: '/csv' },
     ];
 
     function loginDesktopButton() {
@@ -42,33 +42,45 @@ function Navbar(props: NavBarProps) {
 
     function desktopLinks() {
         return (
-            navigationLinks.map((link) => (
-                <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                        location.pathname === link.path
-                            ? /* Again i don't like using a manual hex code but i have no
-                                               * other option at atm*/
-                            'bg-[#234d52] text-white'
-                            : 'text-white hover:bg-[#306c73] hover:text-white'
-                    }`}
-                >
-                    {link.name}
+            <div className="ml-10 flex items-center space-x-4">
+                {navigationLinks.map((link) => (
+                    <Link
+                        key={link.path}
+                        to={link.path}
+                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                            location.pathname === link.path
+                                ? /* Again i don't like using a manual hex code but i have no
+                                                   * other option at atm*/
+                                'bg-mgb-blue-800 text-white'
+                                : 'text-white hover:bg-mgb-blue-700'
+                        }`}
+                    >
+                        {link.name}
+                    </Link>
+                ))}
+                <Link key={"Logout"} to={"/"}
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-mgb-brown-500 text-white hover:bg-mgb-brown-700 active:bg-mgb-brown-800`}>
+                    Logout
                 </Link>
-            ))
+            </div>
         )
     }
 
     function mobileLinks() {
         return (
-            navigationLinks.map((link) => (
-                <Link key={link.path}
-                      to={link.path}
+            <ul className={"flex flex-col"}>
+                {navigationLinks.map((link) => (
+                    <Link key={link.path}
+                          to={link.path}
+                          className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
+                        {link.name}
+                    </Link>
+                ))}
+                <Link key={"Logout"} to={"/"}
                       className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
-                    {link.name}
+                      Logout
                 </Link>
-            ))
+            </ul>
         )
     }
 
@@ -90,19 +102,15 @@ function Navbar(props: NavBarProps) {
 
                     {/* Desktop nav Links */}
                     <div className="hidden md:block">
-                        <div className="ml-10 flex items-center space-x-4">
                             {props.page == 'login' ? (
                                 loginDesktopButton()
                             ) : (
                                 desktopLinks()
                             )}
-                        </div>
                     </div>
                 </div>
                 <div id={"hamburg"} className={"transition-all duration-300 md:hidden"}>
-                    <ul className={"flex flex-col"}>
-                        {props.page == 'login' ? loginMobileButton() : mobileLinks() }
-                    </ul>
+                    {props.page == 'login' ? loginMobileButton() : mobileLinks() }
                 </div>
             </div>
         </nav>
