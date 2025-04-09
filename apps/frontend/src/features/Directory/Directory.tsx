@@ -12,7 +12,7 @@ export function Directory() {
     return (
         <>
             <Navbar/>
-            <div className={'flex min-h-screen justify-center bg-mgb-light-blue'}>
+            <div className={'flex min-h-screen justify-center'}>
                 <table className={'text-2xl font-bold'}>
                     <tbody>
                     <tr className={'border-b'}>
