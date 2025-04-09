@@ -4,13 +4,12 @@ import Navbar from '../../components/Navbar.tsx';
 import { RequestPriority } from "../../../../../packages/database";
 
 enum Department {
-  EMERGENCY = 'EMERGENCY',
+
   CARDIOLOGY = 'CARDIOLOGY',
   NEUROLOGY = 'NEUROLOGY',
-  PEDIATRICS = 'PEDIATRICS',
-  RADIOLOGY = 'RADIOLOGY',
-  SURGERY = 'SURGERY',
-  ONCOLOGY = 'ONCOLOGY'
+  IT = 'IT',
+  FACILITIES = 'FACILITIES',
+  ADMINISTRATION = 'ADMINISTRATION'
 }
 
 const SanitationRequestForm = () => {
