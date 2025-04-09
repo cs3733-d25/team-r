@@ -8,6 +8,7 @@ import {
 } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import ImageCanvas from '../../components/ImageCanvas.tsx';
 
 function MapView() {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -126,7 +127,7 @@ function MapView() {
                                     ev.detail.zoom
                                 )
                             }
-                            className={"w-full h-full"}
+                            className={'w-full h-full'}
                             fullscreenControl={false}
                         />
                         <Directions
@@ -135,7 +136,7 @@ function MapView() {
                         />
                     </div>
                 </APIProvider>
-                <div className={"flex flex-col w-full items-center py-4"}>
+                <div className={'flex flex-col w-full items-center py-4'}>
                     <h1 className={'text-6xl font-bold'}>Arrived?</h1>
                     <p>Select your parking lot for guidance to your department!</p>
                 </div>
@@ -153,10 +154,44 @@ function MapView() {
                         </select>
                     </div>
                 </div>
-                <img
-                    className="w-1/2 h-auto object-cover mx-auto"
-                    src="/FinalFloorPlan-It1.png"
-                    alt="Hospital Map"
+                <ImageCanvas
+                    markers={[
+                        {
+                            x: 130,
+                            y: 150,
+                            label: 'Google Maps Dropoff',
+                        },
+                        {
+                            x: 200,
+                            y: 450,
+                            label: 'Patient Parking',
+                        },
+                        {
+                            x: 200,
+                            y: 580,
+                            label: 'Extended Parking',
+                        },
+                        {
+                            x: 540,
+                            y: 270,
+                            label: 'Valet Parking',
+                        },
+                        {
+                            x: 400,
+                            y: 320,
+                            label: 'Reception 1',
+                        },
+                        {
+                            x: 500,
+                            y: 470,
+                            label: 'Reception 2',
+                        },
+                        {
+                            x: 675,
+                            y: 620,
+                            label: 'Reception 3',
+                        },
+                    ]}
                 />
             </div>
         </div>
