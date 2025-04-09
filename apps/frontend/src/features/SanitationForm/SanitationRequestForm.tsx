@@ -16,7 +16,7 @@ enum Department {
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     sanitationType: '',
-    priority: RequestPriority.MEDIUM,
+    priority: RequestPriority.medium,
     department: Department.EMERGENCY,
     room: '',
     comments: '',
@@ -47,7 +47,7 @@ const SanitationRequestForm = () => {
         // Reset form
         setFormData({
           sanitationType: '',
-          priority: RequestPriority.MEDIUM,
+          priority: RequestPriority.medium,
           department: Department.EMERGENCY,
           room: '',
           comments: '',
