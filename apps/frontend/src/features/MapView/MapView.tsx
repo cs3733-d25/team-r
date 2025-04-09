@@ -7,6 +7,7 @@ import {
     useMapsLibrary,
 } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function MapView() {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -14,7 +15,45 @@ function MapView() {
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(patriotPlace);
     const [startingLocation, setStartingLocation] = useState<string>('');
-    const [departments, setDepartments] = useState<string>('');
+    const [department, setDepartment] = useState<string>('');
+    const [parkingLot, setParkingLot] = useState<string>('');
+
+    const getNearestReception = (department: string) => {
+        switch (department) {
+            case 'Specialty Clinic':
+                return 'r3';
+            case 'Imaging Suite':
+                return 'r2';
+            case 'Phlebotomy':
+                return 'r2';
+            case 'Pharmacy':
+                return 'r2';
+            case 'Ambulatory/Urgent Care':
+                return 'r2';
+            default:
+                return '';
+        }
+    };
+
+    const getParkingLot = (parkingLot: string) => {
+        switch (parkingLot) {
+            case 'Extended Parking':
+                return 'p1';
+            case 'Patient Parking':
+                return 'p2';
+            case 'Valet Parking':
+                return 'p3';
+            default:
+                return '';
+        }
+    };
+
+    async function findDirectionsBFS(startPoint: string, endPoint: string) {
+        const response = await axios.post('/api/bfs', {
+            startPoint: getParkingLot(parkingLot),
+            endPoint: getNearestReception(department),
+        });
+    }
 
     console.log(selectedLocation);
     return (
@@ -36,7 +75,7 @@ function MapView() {
                     <label>Department:</label>
                     <div className={'flex space-x-2 p-2 justify-end'}>
                         <select
-                            onChange={(e) => setDepartments(e.target.value)}
+                            onChange={(e) => setDepartment(e.target.value)}
                             className="ml-2 p-2 border border-gray-300 rounded"
                         >
                             <option value="">Select a department...</option>
@@ -75,7 +114,7 @@ function MapView() {
                 </div>
 
                 <APIProvider apiKey={apiKey} onLoad={() => console.log('Maps API has loaded.')}>
-                    <div className="w-full h-full">
+                    <div className="w-full h-[70vh]">
                         <Map
                             defaultZoom={8}
                             defaultCenter={{ lat: 42.27434988431181, lng: -71.80801625486968 }}
@@ -87,7 +126,7 @@ function MapView() {
                                     ev.detail.zoom
                                 )
                             }
-                            style={{ width: '100%', height: '100%' }}
+                            className={"w-full h-full"}
                             fullscreenControl={false}
                         />
                         <Directions
@@ -96,6 +135,29 @@ function MapView() {
                         />
                     </div>
                 </APIProvider>
+                <div className={"flex flex-col w-full items-center py-4"}>
+                    <h1 className={'text-6xl font-bold'}>Arrived?</h1>
+                    <p>Select your parking lot for guidance to your department!</p>
+                </div>
+                <div className="flex items-center justify-between w-full p-2">
+                    <label>Parking Lot:</label>
+                    <div className={'flex space-x-2 p-2 justify-end'}>
+                        <select
+                            onChange={(e) => setParkingLot(e.target.value)}
+                            className="ml-2 p-2 border border-gray-300 rounded"
+                        >
+                            <option value="">Select a parking lot...</option>
+                            <option>Extended Parking</option>
+                            <option>Patient Parking</option>
+                            <option>Valet Parking</option>
+                        </select>
+                    </div>
+                </div>
+                <img
+                    className="w-1/2 h-auto object-cover mx-auto"
+                    src="/FinalFloorPlan-It1.png"
+                    alt="Hospital Map"
+                />
             </div>
         </div>
     );
