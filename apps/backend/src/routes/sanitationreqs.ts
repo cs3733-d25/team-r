@@ -2,6 +2,7 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
+import { RequestPriority } from "../../../../packages/database";
 
 const router: Router = express.Router();
 
@@ -16,18 +17,25 @@ router.get("/", async function (req: Request, res: Response) {
   }
 });
 
+// a function to cast a string to a RequestPriority enum type
+function parseRequestPriority(value: string): RequestPriority {
+  return RequestPriority[value as keyof typeof RequestPriority];
+}
+
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a sanitation request");
   const request = req.body;
-  console.log("Room: " + request.roomNumber);
+  console.log("Room: " + request.room);
   try {
     // assumes that the request is formatted with the exact fields as the SanitationRequest table in the prisma schema (packages/database/prisma/schema.prisma)
+    console.log(parseRequestPriority(request.priority));
+    console.log(request.priority);
     const createRequest = await PrismaClient.sanitationRequest.create({
       data: {
         sanitationType: request.sanitationType,
-        priority: request.priority,
+        priority: parseRequestPriority(request.priority),
         department: request.department,
-        roomNumber: request.roomNumber,
+        roomNumber: request.room,
         comments: request.comments,
         user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },

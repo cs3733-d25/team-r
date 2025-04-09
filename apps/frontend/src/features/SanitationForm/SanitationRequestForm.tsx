@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar.tsx';
+import { RequestPriority } from "../../../../../packages/database";
 
-enum RequestPriority {
+/*enum RequestPriority {
   LOW = 'LOW',
   MEDIUM = 'MEDIUM',
   HIGH = 'HIGH',
   URGENT = 'URGENT'
-}
+}*/
 
 enum Department {
   EMERGENCY = 'Emergency',
@@ -22,10 +23,11 @@ enum Department {
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     sanitationType: '',
-    priority: RequestPriority.MEDIUM,
+    priority: RequestPriority.medium,
     department: Department.EMERGENCY,
     room: '', // Changed from roomNumber to room to match backend
-    comments: ''
+    comments: '',
+    userID: 8 // 8 is the admin user according the prisma file, but this should be pulled from a login cookie or something in the future
   });
 
   const [submitStatus, setSubmitStatus] = useState<{
@@ -49,10 +51,11 @@ const SanitationRequestForm = () => {
         // Reset form
         setFormData({
           sanitationType: '',
-          priority: RequestPriority.MEDIUM,
+          priority: RequestPriority.medium,
           department: Department.EMERGENCY,
           room: '',
-          comments: ''
+          comments: '',
+          userID: 8
         });
       }
     } catch (error) {
