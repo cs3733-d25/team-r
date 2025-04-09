@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ImageCanvas from '../../components/ImageCanvas.tsx';
 
+
 /**
  * MapView component, returns both the Google map and canvas image (floor plan)
  * @constructor
@@ -76,13 +77,43 @@ function MapView() {
     /*TODO: figure out what the return of this function is and how to use it.
     *  does it return a json that we can then access? How can we access the
     *  fields of the object? */
-    async function findDirectionsBFS() {
-        const response = await axios.post('/api/bfs', {
-            // converting the parking lot and department to the corresponding node IDs
-            startPoint: getParkingLotNode(parkingLot),
-            endPoint: getNearestReceptionNode(department),
-        });
+    // async function findDirectionsBFS() {
+    //     const response = await axios.post('/api/bfs', {
+    //         // converting the parking lot and department to the corresponding node IDs
+    //         startPoint: getParkingLotNode(parkingLot),
+    //         endPoint: getNearestReceptionNode(department),
+    //     });
+    //
+
+  async function findDirectionBFS() {
+    try {
+      // Only should go if both parking lot and department are selectedLocation
+      if (!parkingLot || !department) {
+        alert("please select a parking lot and a department");
+        return;
+      }
+
+      const startNode = getParkingLotNode(parkingLot);
+      const endNode = getNearestReceptionNode(department);
+
+      console.log(`Finding path from ${startNode} (${parkingLot}) to ${endNode} (${department})`);
+
+      const response = await axios.post('/api/bfs', {
+        // irrc backend should want a startingPoint/endingPoint hopefully not a smoothbrain moment
+        startingPoint: startNode,
+        endingPoint: endNode,
+      });
+
+      // loging our response data
+      console.log('path found:', response.data);
+
+      //alertig user
+      alert(`Path found: ${response.data.join(' → ')}`);
+    } catch (error) {
+      console.error('Error finding path:', error);
+      alert('An error occurred while finding the path.');
     }
+  }
 
     // Main rendering of the MapView component
     return (
