@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ImageCanvas from '../../components/ImageCanvas.tsx';
+import InternalMap from "../../components/InternalMap.tsx";
 
 /**
  * MapView component, returns both the Google map and canvas image (floor plan)
@@ -197,7 +198,10 @@ function MapView() {
                     need to find a way to perma link coordinates or prevent map size from changing*/}
                 {/*These markers are here as I was trying to find the x and y value for each node, these should be removed once a
                 suitable way to link node and marker parameters are found*/}
-                <ImageCanvas
+
+                {/*manually showing images depending on the parking lot and department*/}
+                <InternalMap parkingLot={getParkingLotNode(parkingLot)} reception={getNearestReceptionNode(department)}/>
+                {/*<ImageCanvas
                     markers={[
                         {
                             x: 130,
@@ -235,7 +239,7 @@ function MapView() {
                             label: 'Reception 3',
                         },
                     ]}
-                />
+                />*/}
             </div>
         </div>
     );
