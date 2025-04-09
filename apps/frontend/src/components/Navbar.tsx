@@ -70,11 +70,14 @@ function Navbar(props: NavBarProps) {
         return (
             <ul className={"flex flex-col"}>
                 {navigationLinks.map((link) => (
-                    <Link key={link.path}
-                          to={link.path}
-                          className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
-                        {link.name}
-                    </Link>
+                    <>
+                        <Link key={link.path}
+                              to={link.path}
+                              className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
+                            {link.name}
+                        </Link>
+                        <hr className={"h-px bg-mgb-light-blue border-0"}></hr>
+                    </>
                 ))}
                 <Link key={"Logout"} to={"/"}
                       className={`px-3 py-2 font-medium transition-colors duration-200 text-black w-17 underline hover:text-white`}>
@@ -89,7 +92,7 @@ function Navbar(props: NavBarProps) {
          * these colors should be added to it instead
          * of manually using them with hex here*/
         <nav className="bg-mgb-blue text-white shadow-lg">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo/Brand */}
                     <div className="flex-shrink-0">
@@ -101,7 +104,7 @@ function Navbar(props: NavBarProps) {
                     </div>
 
                     {/* Desktop nav Links */}
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                             {props.page == 'login' ? (
                                 loginDesktopButton()
                             ) : (
@@ -109,7 +112,8 @@ function Navbar(props: NavBarProps) {
                             )}
                     </div>
                 </div>
-                <div id={"hamburg"} className={"transition-all duration-300 md:hidden"}>
+                {/* Mobile/small screen nav Links */}
+                <div id={"hamburg"} className={"transition-all duration-300 lg:hidden"}>
                     {props.page == 'login' ? loginMobileButton() : mobileLinks() }
                 </div>
             </div>
