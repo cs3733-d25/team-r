@@ -10,7 +10,7 @@ export function HomeMain(props: HomeMainProps) {
         <div className={"bg-mgb-blue flex-col h-screen"}>
             {props.status == 'logged-in' ? (
                 <NavBar />
-            ) : (<NavBar page={"login"} />)}
+            ) : (<NavBar page={"home"} />)}
             {/*Image taken from Mass General Brigham website home page*/}
             <div className={"bg-[url(/heropage.jpeg)] bg-no-repeat bg-cover h-6/7 justify-items-center"}>
                 <div className={"flex-col text-center w-5/8 bg-mgb-light-blue/80"}>
