@@ -19,7 +19,7 @@ function MapView() {
     const [department, setDepartment] = useState<string>('');
     const [parkingLot, setParkingLot] = useState<string>('');
 
-    const getNearestReception = (department: string) => {
+    const getNearestReceptionNode = (department: string) => {
         switch (department) {
             case 'Specialty Clinic':
                 return 'r3';
@@ -36,7 +36,7 @@ function MapView() {
         }
     };
 
-    const getParkingLot = (parkingLot: string) => {
+    const getParkingLotNode = (parkingLot: string) => {
         switch (parkingLot) {
             case 'Extended Parking':
                 return 'p1';
@@ -49,10 +49,10 @@ function MapView() {
         }
     };
 
-    async function findDirectionsBFS(startPoint: string, endPoint: string) {
+    async function findDirectionsBFS() {
         const response = await axios.post('/api/bfs', {
-            startPoint: getParkingLot(parkingLot),
-            endPoint: getNearestReception(department),
+            startPoint: getParkingLotNode(parkingLot),
+            endPoint: getNearestReceptionNode(department),
         });
     }
 
@@ -68,7 +68,7 @@ function MapView() {
                             value={startingLocation}
                             className="ml-2 p-2 border border-gray-300 rounded"
                             type="text"
-                            onChange={(e) => setStartingLocation(e.target.value)}
+                            onChange={() => setStartingLocation(startingLocation)}
                         />
                     </div>
                 </div>
@@ -76,7 +76,7 @@ function MapView() {
                     <label>Department:</label>
                     <div className={'flex space-x-2 p-2 justify-end'}>
                         <select
-                            onChange={(e) => setDepartment(e.target.value)}
+                            onChange={() => setDepartment(department)}
                             className="ml-2 p-2 border border-gray-300 rounded"
                         >
                             <option value="">Select a department...</option>
@@ -144,7 +144,7 @@ function MapView() {
                     <label>Parking Lot:</label>
                     <div className={'flex space-x-2 p-2 justify-end'}>
                         <select
-                            onChange={(e) => setParkingLot(e.target.value)}
+                            onChange={() => setParkingLot(parkingLot)}
                             className="ml-2 p-2 border border-gray-300 rounded"
                         >
                             <option value="">Select a parking lot...</option>
