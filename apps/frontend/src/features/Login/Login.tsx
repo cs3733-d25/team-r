@@ -63,7 +63,7 @@ async function handleLogin(){
     }
 
     return (
-        <div className={"bg-[#449aa4] flex-col h-screen"}>
+        <div className={"bg-mgb-blue flex-col h-screen"}>
             <div className={""}>
                 <NavBar page={"login"}/>
             </div>

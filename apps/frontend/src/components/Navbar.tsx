@@ -22,7 +22,7 @@ function Navbar(props: NavBarProps) {
             <Link
                 key={'Login'}
                 to={'/login'}
-                className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-[#b8e4e4] hover:bg-[#306c73] hover:text-white'}
+                className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-mgb-light-blue hover:bg-[#306c73] hover:text-white'}
             >
                 Login
             </Link>
