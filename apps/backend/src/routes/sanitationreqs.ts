@@ -32,8 +32,10 @@ router.post("/", async function (req: Request, res: Response) {
   console.log("Room: " + request.room);
   try {
     // assumes that the request is formatted with the exact fields as the SanitationRequest table in the prisma schema (packages/database/prisma/schema.prisma)
-    console.log(parseRequestPriority(request.priority));
-    console.log(request.priority);
+    // console.log(parseRequestPriority(request.priority));
+    // console.log(request.priority);
+    // console.log(request.department);
+    console.log(parseDepartment(request.department));
     const createRequest = await PrismaClient.sanitationRequest.create({
       data: {
         sanitationType: request.sanitationType,
