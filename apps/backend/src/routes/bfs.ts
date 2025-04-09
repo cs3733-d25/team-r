@@ -5,18 +5,40 @@ interface NodeData {
     id: string;
     name: string;
     type: string;
+    xPos : number;
+    yPos : number;
 }
 
 class Node implements NodeData { //Node class for nodes in a graph, edges aren't here and are in graph class
     id: string;
     name: string;
     type: string;
+    xPos : number;
+    yPos : number;
 
     constructor(data: NodeData) {
         this.id = data.id;
         this.name = data.name;
         this.type = data.type;
+        this.xPos = data.xPos;
+        this.yPos = data.yPos;
     }
+    //currently causes problems when adding nodes to graphs
+    // setXPos(xPos : number) {
+    //     this.xPos = xPos;
+    //     return this.xPos;
+    // }
+    // setYPos(yPos : number) {
+    //     this.yPos = yPos;
+    //     return this.yPos;
+    // }
+    // getXPos() : number {
+    //     return this.xPos;
+    // }
+    // getYPos() : number {
+    //     return this.yPos;
+    // }
+
 }
 
 class Graph { //stores all nodes and each of their neighbors
@@ -92,36 +114,44 @@ class Pathfinder { //does the Breadth First Search (BFS)
                 }
             }
         }
-
         return []; // No path found
     }
-
 }
 
 const hospitalGraph = new Graph();
 
 // add all hospital node data and outside data
 //parking
-hospitalGraph.addNode({id: 'p1', name: 'Extended Parking', type: 'parking'})
-hospitalGraph.addNode({id: 'p2', name: 'Patient Parking', type: 'parking'});
-hospitalGraph.addNode({id: 'p3', name: 'Valet Parking', type: 'parking'});
+hospitalGraph.addNode({id: 'p1', name: 'Extended Parking', type: 'parking', xPos: 0, yPos: 0})
+hospitalGraph.addNode({id: 'p2', name: 'Patient Parking', type: 'parking', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'p3', name: 'Valet Parking', type: 'parking', xPos: 0, yPos: 0});
 //entrances
-hospitalGraph.addNode({id: 'e1', name: '22 Patriot Place', type: 'entrance'});
-hospitalGraph.addNode({id: 'e2', name: '20A Patriot Place', type: 'entrance'});
-hospitalGraph.addNode({id: 'e3', name: '20B Patriot Place', type: 'entrance'});
+hospitalGraph.addNode({id: 'e1', name: '22 Patriot Place', type: 'entrance', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'e2', name: '20A Patriot Place', type: 'entrance', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'e3', name: '20B Patriot Place', type: 'entrance', xPos: 0, yPos: 0});
 //reception
-hospitalGraph.addNode({id: 'r1', name: '20', type: 'reception'});
-hospitalGraph.addNode({id: 'r2', name: '22A', type: 'reception'});
-hospitalGraph.addNode({id: 'r3', name: '22B', type: 'reception'});
+hospitalGraph.addNode({id: 'r1', name: 'Reception 20', type: 'reception', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'r2', name: 'Reception 22-1', type: 'reception', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'r3', name: 'Reception 22-2', type: 'reception', xPos: 0, yPos: 0});
+//hallway (internal)
+hospitalGraph.addNode({id: 'h1', name: 'Hallway 22-1', type: 'reception', xPos: 0, yPos: 0}); //22 patriot place
+hospitalGraph.addNode({id: 'h2', name: 'Hallway 22-2', type: 'reception', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'h3', name: 'Hallway 22-3', type: 'reception', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'h4', name: 'Hallway 22-4', type: 'reception', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'h5', name: 'Hallway 22-5', type: 'reception', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 'h6', name: 'Hallway 22-6', type: 'reception', xPos: 0, yPos: 0});
+//sidewalk
+hospitalGraph.addNode({id: 's1', name: '22-1', type: 'sidewalk', xPos: 0, yPos: 0});
+hospitalGraph.addNode({id: 's2', name: '22-2', type: 'sidewalk', xPos: 0, yPos: 0});
 
 //add all edges between nodes on the graph
-//NOTE: p = parking, e = entrance, r = reception
+//NOTE: p = parking, e = entrance, r = reception, h = hallway, s = sidewalk
 //p1
 hospitalGraph.addEdge('p1', 'p2');
-hospitalGraph.addEdge('p1', 'e1');
 //p2
+hospitalGraph.addEdge('p2', 'e1');
 hospitalGraph.addEdge('p2', 'e2');
-hospitalGraph.addEdge('p2', 'e3');
+hospitalGraph.addEdge('p2', 's1');
 //p3
 hospitalGraph.addEdge('p3', 'e1');
 hospitalGraph.addEdge('p3', 'e2');
@@ -129,13 +159,23 @@ hospitalGraph.addEdge('p3', 'e2');
 hospitalGraph.addEdge('e1', 'e2');
 hospitalGraph.addEdge('e1', 'r1');
 hospitalGraph.addEdge('e2', 'r2');
-hospitalGraph.addEdge('e3', 'r3');
-//r2
-hospitalGraph.addEdge('r2', 'r3');
+//h
+hospitalGraph.addEdge('r2', 'h1');
+hospitalGraph.addEdge('h1', 'h2');
+hospitalGraph.addEdge('h2', 'h3');
+hospitalGraph.addEdge('h3', 'h4');
+hospitalGraph.addEdge('h4', 'h5');
+hospitalGraph.addEdge('h5', 'h6');
+//more connections
+hospitalGraph.addEdge('h2', 'r3');
+hospitalGraph.addEdge('h6', 'e3');
+//sidewalk outside 22 place
+hospitalGraph.addEdge('s1', 's2');
+hospitalGraph.addEdge('s2', 'e3');
+
 
 
 const pathFinder = new Pathfinder(hospitalGraph);
-
 //send data to front end
 router.post("/", async function (req: Request, res: Response) {
     const {startingPoint, endingPoint} = req.body;
