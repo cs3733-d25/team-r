@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar.tsx';
-import { RequestPriority } from "../../../../../packages/database";
 
 enum Department {
-
   CARDIOLOGY = 'CARDIOLOGY',
   NEUROLOGY = 'NEUROLOGY',
   IT = 'IT',
@@ -12,11 +10,17 @@ enum Department {
   ADMINISTRATION = 'ADMINISTRATION'
 }
 
+enum RequestPriority {
+  low = 'low',
+  medium = 'medium',
+  high = 'high'
+}
+
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     sanitationType: '',
     priority: RequestPriority.medium,
-    department: Department.EMERGENCY,
+    department: Department.ADMINISTRATION,
     room: '',
     comments: '',
     userID: 8
@@ -47,7 +51,7 @@ const SanitationRequestForm = () => {
         setFormData({
           sanitationType: '',
           priority: RequestPriority.medium,
-          department: Department.EMERGENCY,
+          department: Department.ADMINISTRATION,
           room: '',
           comments: '',
           userID: 8
