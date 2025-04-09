@@ -100,7 +100,8 @@ export function CSVPage() {
     {(newPlace && row.building===("PATRIOT_PLACE_20"))? <th colSpan={2} className={"items-center text-center text-lg pl-30 border-t"}>20 Patriot Place</th>:null}
     <tr key = {index} className = {`${newFloor? "border-t":""}`}>
                        <td className={"border-r"}>{row.name}</td>
-                        {newFloor?  <td className = {"text-lg"}>{row.floorNumber} </td>:null}
+        {(newPlace && row.building===("PATRIOT_PLACE_22"))? <th colSpan={2} className={"items-center text-center text-lg pl-30 border-t"}>22 Patriot Place</th>:null}
+        {(newPlace && row.building===("PATRIOT_PLACE_20"))? <th colSpan={2} className={"items-center text-center text-lg pl-30 border-t"}>20 Patriot Place</th>:null}
 
                     </tr>
 
