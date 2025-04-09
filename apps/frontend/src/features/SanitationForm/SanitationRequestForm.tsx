@@ -3,11 +3,11 @@ import axios from 'axios';
 import Navbar from '../../components/Navbar.tsx';
 
 enum Department {
-  CARDIOLOGY = 'CARDIOLOGY',
-  NEUROLOGY = 'NEUROLOGY',
-  IT = 'IT',
-  FACILITIES = 'FACILITIES',
-  ADMINISTRATION = 'ADMINISTRATION'
+  SPECIALTY_CLINIC = 'SPECIALTY CLINIC',
+  IMAGING_SUITE = 'IMAGING SUITE',
+  PHLEBOTOMY = 'PHLEBOTOMY',
+  PHARMACY = 'PHARMACY',
+  AMBULATORY_URGENCARE = 'AMBULATORY_URGENCARE'
 }
 
 enum RequestPriority {
@@ -31,7 +31,7 @@ const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     sanitationType: '',
     priority: RequestPriority.medium,
-    department: Department.ADMINISTRATION,
+    department: Department.AMBULATORY_URGENCARE,
     room: '',
     comments: '',
     userID: 8
@@ -71,7 +71,7 @@ const SanitationRequestForm = () => {
         setFormData({
           sanitationType: '',
           priority: RequestPriority.medium,
-          department: Department.ADMINISTRATION,
+          department: Department.AMBULATORY_URGENCARE,
           room: '',
           comments: '',
           userID: 8
