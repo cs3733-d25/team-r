@@ -1,15 +1,8 @@
 import Navbar from '../../components/Navbar.tsx';
-import {
-    APIProvider,
-    Map,
-    MapCameraChangedEvent,
-    useMap,
-    useMapsLibrary,
-} from '@vis.gl/react-google-maps';
-import { useEffect, useState } from 'react';
+import {APIProvider, Map, MapCameraChangedEvent, useMap, useMapsLibrary,} from '@vis.gl/react-google-maps';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
-import ImageCanvas from '../../components/ImageCanvas.tsx';
-import InternalMap from "../../components/InternalMap.tsx";
+import InternalMap from '../../components/InternalMap.tsx';
 
 /**
  * MapView component, returns both the Google map and canvas image (floor plan)
@@ -74,9 +67,10 @@ function MapView() {
     /**
      * findDirectionsBFS calls the BFS API to find the directions from the parking lot to the department
      */
+
     /*TODO: figure out what the return of this function is and how to use it.
-    *  does it return a json that we can then access? How can we access the
-    *  fields of the object? */
+     *  does it return a json that we can then access? How can we access the
+     *  fields of the object? */
     async function findDirectionsBFS() {
         const response = await axios.post('/api/bfs', {
             // converting the parking lot and department to the corresponding node IDs
@@ -89,118 +83,143 @@ function MapView() {
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
+            <div className={"text-4xl text-center p-4 font-bold"}>
+                <p>Navigate to a Mass General Brigham location</p>
+            </div>
             <div className="flex-grow w-full">
-                {/*Starting location input div*/}
-                <div className="flex items-center justify-between w-full p-2">
-                    <label>Starting location:</label>
-                    <div className={'flex space-x-2 p-2 justify-end'}>
-                        <input
-                            value={startingLocation}
-                            className="ml-2 p-2 border border-gray-300 rounded"
-                            type="text"
-                            onChange={(e) => setStartingLocation(e.target.value)}
-                        />
-                    </div>
-                </div>
-                {/*Department dropdown div*/}
-                <div className="flex items-center justify-between w-full p-2">
-                    <label>Department:</label>
-                    <div className={'flex space-x-2 p-2 justify-end'}>
-                        <select
-                            onChange={(e) => setDepartment(e.target.value)}
-                            className="ml-2 p-2 border border-gray-300 rounded"
-                        >
-                            {/*TODO: pull departments from DB instead of this*/}
-                            <option value="">Select a department...</option>
-                            <option>Specialty Clinic</option>
-                            <option>Imaging Suite</option>
-                            <option>Phlebotomy</option>
-                            <option>Pharmacy</option>
-                            <option>Ambulatory/Urgent Care</option>
-                        </select>
-                    </div>
-                </div>
-                {/*Select a location div*/}
-                <div className="flex items-center justify-between w-full p-2">
-                    <h3 className={'font-sans'}>Select an MGH location:</h3>
-                    <div className="flex p-2 justify-end">
-                        <div className={'flex space-x-2'}>
-                            <button
-                                type="button"
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
-                                onClick={() => {
-                                    setSelectedLocation(patriotPlace);
-                                }}
-                            >
-                                Patriot Place
-                            </button>
-                            <button
-                                type="button"
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
-                                onClick={() => {
-                                    setSelectedLocation(chestnutHill);
-                                }}
-                            >
-                                Chestnut Hill
-                            </button>
+                {/* Google Maps Section with side-by-side layout */}
+                <div className="flex flex-col md:flex-row w-full gap-4 p-4 items-center">
+                    {/* Left side - Input controls */}
+                    <div className="w-full md:w-1/3 flex flex-col space-y-4">
+                        {/*Starting location input div*/}
+                        <div className="flex flex-col space-y-2 w-full">
+                            <label className="font-medium">Enter your starting location:</label>
+                            <input
+                                value={startingLocation}
+                                className="p-2 border border-gray-300 rounded w-full"
+                                type="text"
+                                onChange={(e) => setStartingLocation(e.target.value)}
+                                placeholder="Enter your starting location"
+                            />
+                        </div>
+
+                        {/*Select a location div*/}
+                        <div className="flex flex-col space-y-2 w-full">
+                            <h3 className="font-medium">Select an MGH location:</h3>
+                            <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
+                                <button
+                                    type="button"
+                                    className={`px-4 py-2 text-white rounded flex-1 box-border ${selectedLocation === patriotPlace ? 'bg-blue-700 border-black border-4' : 'bg-blue-500 hover:bg-blue-700'}`}
+                                    onClick={() => setSelectedLocation(patriotPlace)}
+                                >
+                                    Patriot Place
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`px-4 py-2 text-white rounded flex-1 box-border ${selectedLocation === chestnutHill ? 'bg-blue-700 border-black border-4' : 'bg-blue-500 hover:bg-blue-700'}`}
+                                    onClick={() => setSelectedLocation(chestnutHill)}
+                                >
+                                    Chestnut Hill
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {/*Google maps part*/}
-                <APIProvider apiKey={apiKey} onLoad={() => console.log('Maps API has loaded.')}>
-                    <div className="w-full h-[70vh]">
-                        <Map
-                            defaultZoom={8}
-                            defaultCenter={{ lat: 42.27434988431181, lng: -71.80801625486968 }}
-                            onCameraChanged={(ev: MapCameraChangedEvent) =>
-                                console.log(
-                                    'camera changed:',
-                                    ev.detail.center,
-                                    'zoom:',
-                                    ev.detail.zoom
-                                )
-                            }
-                            className={'w-full h-full'}
-                            fullscreenControl={false}
-                        />
-                        <Directions
-                            selectedLocation={selectedLocation}
-                            startingLocation={startingLocation}
-                        />
+
+                    {/* Right side - Google Maps */}
+                    <div className="w-full md:w-2/3 h-[50vh] md:h-[70vh]">
+                        <APIProvider
+                            apiKey={apiKey}
+                            onLoad={() => console.log('Maps API has loaded.')}
+                        >
+                            <Map
+                                defaultZoom={8}
+                                defaultCenter={{ lat: 42.27434988431181, lng: -71.80801625486968 }}
+                                onCameraChanged={(ev: MapCameraChangedEvent) =>
+                                    console.log(
+                                        'camera changed:',
+                                        ev.detail.center,
+                                        'zoom:',
+                                        ev.detail.zoom
+                                    )
+                                }
+                                className={'w-full h-full'}
+                                fullscreenControl={false}
+                            />
+                            <Directions
+                                selectedLocation={selectedLocation}
+                                startingLocation={startingLocation}
+                            />
+                        </APIProvider>
                     </div>
-                </APIProvider>
-                {/*Start of internal map part (Arrived?)*/}
+                </div>
+
+                {/* -- START INTERNAL MAPPING PART -- */}
+
                 <div className={'flex flex-col w-full items-center py-4'}>
-                    <h1 className={'text-6xl font-bold'}>Arrived?</h1>
+                    <h1 className={'text-5xl font-bold'}>Arrived?</h1>
                     <p>Select your parking lot for guidance to your department!</p>
                 </div>
-                {/*Select a parking lot div*/}
-                <div className="flex items-center justify-between w-full p-2">
-                    <label>Parking Lot:</label>
-                    <div className={'flex space-x-2 p-2 justify-end'}>
-                        <select
-                            onChange={(e) => setParkingLot(e.target.value)}
-                            className="ml-2 p-2 border border-gray-300 rounded"
-                        >
-                            {/*TODO: pull parking lots from DB (if present)*/}
-                            <option value="">Select a parking lot...</option>
-                            <option>Extended Parking</option>
-                            <option>Patient Parking</option>
-                            <option>Valet Parking</option>
-                        </select>
+                {/* Container for side-by-side layout */}
+                <div className="flex flex-col md:flex-row w-full gap-4 p-4 justify-center">
+                    {/* Left side - Form controls */}
+                    <div className="w-full md:w-1/3 flex flex-col space-y-4">
+                        {/*Select a parking lot div*/}
+                        <div className="flex flex-col space-y-2">
+                            <label className="font-medium">
+                                Which parking lot did you park in?
+                            </label>
+                            <select
+                                onChange={(e) => setParkingLot(e.target.value)}
+                                className="p-2 border border-gray-300 rounded"
+                                value={parkingLot}
+                            >
+                                {/*TODO: pull parking lots from DB (if present)*/}
+                                <option value="">Select a parking lot...</option>
+                                <option>Extended Parking</option>
+                                <option>Patient Parking</option>
+                                <option>Valet Parking</option>
+                            </select>
+                        </div>
+
+                        {/*Department dropdown div*/}
+                        <div className="flex flex-col space-y-2">
+                            <label className="font-medium">
+                                Which department are you travelling to?
+                            </label>
+                            <select
+                                onChange={(e) => setDepartment(e.target.value)}
+                                className="p-2 border border-gray-300 rounded"
+                                value={department}
+                            >
+                                {/*TODO: pull departments from DB instead of this*/}
+                                <option value="">Select a department...</option>
+                                <option>Specialty Clinic</option>
+                                <option>Imaging Suite</option>
+                                <option>Phlebotomy</option>
+                                <option>Pharmacy</option>
+                                <option>Ambulatory/Urgent Care</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Right side - Internal Map */}
+                    <div className="w-full md:w-2/3">
+                        {/*Canvas that contains markers for internal routing*/}
+                        {/*TODO: create markers for each entrance*/}
+                        {/*TODO: figure how to take output from bfs algo and draw the corresponding markers*/}
+                        {/*TODO: figure out how to then connect markers with a line*/}
+                        {/*TODO: Marker coordinates are based off image size, and image changes size depending on screen
+        {/*These markers are here as I was trying to find the x and y value for each node, these should be removed once a
+            need to find a way to perma link coordinates or prevent map size from changing
+                        suitable way to link node and marker parameters are found*/}
+
+                        {/*manually showing images depending on the parking lot and department*/}
+                        <InternalMap
+                            parkingLot={getParkingLotNode(parkingLot)}
+                            reception={getNearestReceptionNode(department)}
+                        />
                     </div>
                 </div>
-                {/*Canvas that contains markers for internal routing*/}
-                {/*TODO: create markers for each entrance*/}
-                {/*TODO: figure how to take output from bfs algo and draw the corresponding markers*/}
-                {/*TODO: figure out how to then connect markers with a line*/}
-                {/*TODO: Marker coordinates are based off image size, and image changes size depending on screen
-                    need to find a way to perma link coordinates or prevent map size from changing*/}
-                {/*These markers are here as I was trying to find the x and y value for each node, these should be removed once a
-                suitable way to link node and marker parameters are found*/}
-
-                {/*manually showing images depending on the parking lot and department*/}
-                <InternalMap parkingLot={getParkingLotNode(parkingLot)} reception={getNearestReceptionNode(department)}/>
                 {/*<ImageCanvas
                     markers={[
                         {
