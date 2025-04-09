@@ -96,7 +96,7 @@ function Navbar(props: NavBarProps) {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo/Brand */}
                     <div className="flex-shrink-0">
-                        <Link to={props.page == 'login' ? ("/") : ("/home")}
+                        <Link to={props.page == 'home' ? ("/") : ("/home")}
                               className="flex items-center">
                             <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
                             <span className="ml-2 text-xl font-bold">Mass General Brigham</span>
@@ -105,16 +105,16 @@ function Navbar(props: NavBarProps) {
 
                     {/* Desktop nav Links */}
                     <div className="hidden lg:block">
-                            {props.page == 'login' ? (
+                            {props.page == 'home' ? (
                                 loginDesktopButton()
-                            ) : (
+                            ) : props.page != 'login' && (
                                 desktopLinks()
                             )}
                     </div>
                 </div>
                 {/* Mobile/small screen nav Links */}
                 <div id={"hamburg"} className={"transition-all duration-300 lg:hidden"}>
-                    {props.page == 'login' ? loginMobileButton() : mobileLinks() }
+                    {props.page == 'home' ? loginMobileButton() : mobileLinks() }
                 </div>
             </div>
         </nav>
