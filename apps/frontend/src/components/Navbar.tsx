@@ -11,7 +11,7 @@ function Navbar(props: NavBarProps) {
         { name: 'Home', path: '/home' },
         { name: 'Directory', path: '/directory' },
         // May need to change service req path later
-        { name: 'Request Service', path: '/servicereqs' },
+        // { name: 'Request Service', path: '/servicereqs' },
         { name: 'Map', path: '/mapView' },
         { name: 'Sanitation', path: '/sanitation'},
         {name: 'CSV Files', path: '/csv' },
