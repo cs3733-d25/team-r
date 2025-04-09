@@ -2,7 +2,7 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
-import { RequestPriority } from "../../../../packages/database";
+import { RequestPriority, Department } from "../../../../packages/database";
 
 const router: Router = express.Router();
 
@@ -21,6 +21,10 @@ router.get("/", async function (req: Request, res: Response) {
 function parseRequestPriority(value: string): RequestPriority {
   return RequestPriority[value as keyof typeof RequestPriority];
 }
+// a function to cast a string to a Department enum type
+function parseDepartment(value: string): Department {
+  return Department[value as keyof typeof Department];
+}
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a sanitation request");
@@ -34,7 +38,7 @@ router.post("/", async function (req: Request, res: Response) {
       data: {
         sanitationType: request.sanitationType,
         priority: parseRequestPriority(request.priority),
-        department: request.department,
+        department: parseDepartment(request.department),
         roomNumber: request.room,
         comments: request.comments,
         user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
