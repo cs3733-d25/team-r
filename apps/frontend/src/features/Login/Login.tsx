@@ -63,12 +63,12 @@ async function handleLogin(){
     }
 
     return (
-        <div className={"bg-[#449aa4] flex-col h-screen"}>
+        <div className={"bg-mgb-blue flex-col h-screen"}>
             <div className={""}>
                 <NavBar page={"login"}/>
             </div>
             <div className="flex justify-center items-center bg-[url(/heropage.jpeg)] bg-gray-500 bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
-                <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100">
+                <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">
                     <div className={'flex items-center justify-center p-2'}>
                         <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
                         <div className={'text-xl font-bold font-sans'}>

@@ -11,3 +11,30 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
 }
+
+@theme {
+    /*The base MGB colors - mgb-blue-500 doesn't exist because it is just mgb-blue*/
+    --color-mgb-light-blue: #b8e4e4;
+    --color-mgb-blue: #449aa4;
+    --color-mgb-dark-blue: #003a96;
+
+    /*Assorted shades of brown from brown-500 which is split complementary to mgb-blue*/
+    --color-mgb-brown-100: #FF8E69;
+    --color-mgb-brown-200: #F08662;
+    --color-mgb-brown-300: #DE7C5B;
+    --color-mgb-brown-400: #CC7254;
+    --color-mgb-brown-500: #A35B43;
+    --color-mgb-brown-600: #8A4D38;
+    --color-mgb-brown-700: #703F2E;
+    --color-mgb-brown-800: #573024;
+    --color-mgb-brown-900: #3D2219;
+
+    /*The other side of the split complementary brown - maybe to be used somewhere? kinda ugly though*/
+    --color-mgb-other-brown: #A37C43;
+
+    /*A couple of darker shades of mgb-blue for highlighting actions*/
+    --color-mgb-blue-600: #38828A;
+    --color-mgb-blue-700: #2E6A70;
+    --color-mgb-blue-800: #245257;
+    --color-mgb-blue-900: #193A3D;
+}

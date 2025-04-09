@@ -70,12 +70,13 @@ async function main() {
         }
     });
 
+    /*
     // Create employees with correct schema fields
     const employee1 = await prisma.employee.create({
         data: {
             firstName: 'John',
             lastName: 'Doe',
-            department: Department.CARDIOLOGY,
+            department: Department.AMBULATORY_URGENCARE,
             role: EmployeeRole.DOCTOR,
             onShift: true,
             user: {
@@ -88,7 +89,7 @@ async function main() {
         data: {
             firstName: 'Jane',
             lastName: 'Smith',
-            department: Department.NEUROLOGY,
+            department: Department.SPECIALTY_CLINIC,
             role: EmployeeRole.NURSE,
             onShift: false,
             user: {
@@ -101,7 +102,7 @@ async function main() {
         data: {
             firstName: 'Michael',
             lastName: 'Brown',
-            department: Department.IT,
+            department: Department.SPECIALTY_CLINIC,
             role: EmployeeRole.IT_SUPPORT,
             onShift: true,
             user: {
@@ -114,7 +115,7 @@ async function main() {
         data: {
             firstName: 'Emily',
             lastName: 'Davis',
-            department: Department.FACILITIES,
+            department: Department.SPECIALTY_CLINIC,
             role: EmployeeRole.MAINTENANCE,
             onShift: true,
             user: {
@@ -127,7 +128,7 @@ async function main() {
         data: {
             firstName: 'David',
             lastName: 'Martinez',
-            department: Department.ADMINISTRATION,
+            department: Department.SPECIALTY_CLINIC,
             role: EmployeeRole.ADMINISTRATOR,
             onShift: false,
             user: {
@@ -141,15 +142,15 @@ async function main() {
         data: {
             firstName: 'Wilson',
             lastName: 'Wong',
-            department: Department.ADMINISTRATION,
+            department: Department.SPECIALTY_CLINIC,
             role: EmployeeRole.ADMINISTRATOR,
             onShift: false,
             user: {
                 connect: { id: user8.id }
             }
         }
-    });
-
+    });*/
+/*
     // Create patients
     await prisma.patient.create({
         data: {
@@ -181,7 +182,7 @@ async function main() {
                 connect: { id: employee2.id }
             }
         }
-    });
+    });*/
 
     // Create medical devices
     await prisma.medicalDevice.createMany({
@@ -195,6 +196,7 @@ async function main() {
         ]
     });
 
+    /*
     // Create device requests
     await prisma.deviceRequest.createMany({
         data: [
@@ -337,7 +339,6 @@ async function main() {
         data: [
             {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Pharmacy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Radiology", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Cardiovascular Services", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Urology", floorNumber: 1, building: "PATRIOT_PLACE_20"},
@@ -401,7 +402,7 @@ async function main() {
             {name: "Primary Care", floorNumber: 4, building: "PATRIOT_PLACE_22"},
         ]
     })
-
+*/
     console.log('Database seeded successfully!');
 }
 
