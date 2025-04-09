@@ -33,7 +33,7 @@ const InternalMap: React.FC<InternalMapProps> = ({ parkingLot, reception }) => {
                 />
             ) : (
                 <img
-                    src="/FinalFloorPlan-It1.png"
+                    src="/FinalFloorPlan-It1-resize.png"
                     alt="Default Map"
                     className="rounded-xl shadow-md max-w-full"
                 />
