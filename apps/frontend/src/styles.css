@@ -11,3 +11,9 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
 }
+
+@theme {
+    --color-mgb-light-blue: #b8e4e4;
+    --color-mgb-blue: #449aa4;
+    --color-mgb-dark-blue: #003a96;
+}
