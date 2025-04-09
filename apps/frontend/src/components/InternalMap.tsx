@@ -29,13 +29,13 @@ const InternalMap: React.FC<InternalMapProps> = ({ parkingLot, reception }) => {
                 <img
                     src={imagePath}
                     alt={`Map for ${parkingLot.toUpperCase()} - ${reception.toUpperCase()}`}
-                    className="rounded-xl shadow-md"
+                    className="rounded-xl shadow-md max-w-full"
                 />
             ) : (
                 <img
                     src="/FinalFloorPlan-It1-resize.png"
                     alt="Default Map"
-                    className="rounded-xl shadow-md"
+                    className="rounded-xl shadow-md max-w-full"
                 />
             )}
         </div>
