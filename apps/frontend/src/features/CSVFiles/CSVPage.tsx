@@ -7,18 +7,21 @@ export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [csvfile, setFile] = useState<File | null>(null);
 
+
     function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
         }, []);
     }
     displayTable();
+
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0]) {
             setFile(e.target.files[0]);
         }
 
     };
+
     async function retrieveFromDatabase() {
         try{
             const response = await axios.get("/api/csv/")
@@ -80,24 +83,33 @@ export function CSVPage() {
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
             <h2 className = {"text-xl text-center"}>Directory Table:</h2>
-           <table className = {"mx-auto"}>
-                <thead >
-                <tr className={'text-lg'}>
-                    <th className={"pl-5"}>ID</th>
+           <table className = {"mx-auto w-200"}>
+                <thead className = {"border-b"}>
+                <tr className={'text-lg border-b'}>
                     <th className={"pl-5"}>Name</th>
                     <th className={"pl-5"}>Floor Number</th>
-                    <th className={"pl-5"}>Location</th>
+                </tr>
+                <tr>
+                    <th colSpan={2} className={"items-center text-center text-lg pl-30"}>20 Patriot Place</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className = {"text-center"}>
                 {directoryTable.map((row,index) =>
-                    ( <tr key = {index}>
-                        {Object.values(row).map((val,i)=>(
-                            <td key={i} className={"pl-5"}>{val}</td>
-                            ))
-                        }
+                { const newFloor = index === 0 || row.floorNumber != directoryTable[index-1].floorNumber;
+                    const newPlace = index !== 0 && row.building != directoryTable[index-1].building;
+                    return(
+<>
+    {newPlace?<th colSpan={2} className={"items-center text-center text-lg pl-30 border-t"}>22 Patriot Place</th>:null}
+    <tr key = {index} className = {`${newFloor? "border-t":""}`}>
+                       <td className={"border-r"}>{row.name}</td>
+                        {newFloor?  <td className = {"text-lg"}>{row.floorNumber} </td>:null}
 
-                    </tr>)) }
+                    </tr>
+
+</>
+                    );
+
+                })}
                 </tbody>
             </table>
             <br />
@@ -109,16 +121,15 @@ export function CSVPage() {
                         name="ImportCSV"
                         accept=".csv"
                         onChange={handleFileChange}
-                        className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}
+                        className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}
                     ></input>
                 </div>
                 <div className={'flex absolute right-1/4'}>
                     <label htmlFor="ExportCSV">ExportCSV File:  </label>
-                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}>Export</button>
+                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}>Export</button>
                 </div>
-                <div className={'flex absolute left-1/4 pt-6 pb-20'}>
-                    <label htmlFor="SaveCSV">Save: </label>
-                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"border border-gray-200 bg-gray-200 rounded cursor-pointer"}>Save</button>
+                <div className={'flex absolute left-1/2 pt-8 pb-20'}>
+                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"bg-blue-500 rounded hover:bg-blue-600 active:bg-blue-800 cursor-pointer"}>Save</button>
                 </div>
 
             </form>
