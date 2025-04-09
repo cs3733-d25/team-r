@@ -3,31 +3,24 @@ import axios from 'axios';
 import Navbar from '../../components/Navbar.tsx';
 import { RequestPriority } from "../../../../../packages/database";
 
-/*enum RequestPriority {
-  LOW = 'LOW',
-  MEDIUM = 'MEDIUM',
-  HIGH = 'HIGH',
-  URGENT = 'URGENT'
-}*/
-
 enum Department {
-  EMERGENCY = 'Emergency',
-  CARDIOLOGY = 'Cardiology',
-  NEUROLOGY = 'Neurology',
-  PEDIATRICS = 'Pediatrics',
-  RADIOLOGY = 'Radiology',
-  SURGERY = 'Surgery',
-  ONCOLOGY = 'Oncology'
+  EMERGENCY = 'EMERGENCY',
+  CARDIOLOGY = 'CARDIOLOGY',
+  NEUROLOGY = 'NEUROLOGY',
+  PEDIATRICS = 'PEDIATRICS',
+  RADIOLOGY = 'RADIOLOGY',
+  SURGERY = 'SURGERY',
+  ONCOLOGY = 'ONCOLOGY'
 }
 
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     sanitationType: '',
-    priority: RequestPriority.medium,
+    priority: RequestPriority.MEDIUM,
     department: Department.EMERGENCY,
-    room: '', // Changed from roomNumber to room to match backend
+    room: '',
     comments: '',
-    userID: 8 // 8 is the admin user according the prisma file, but this should be pulled from a login cookie or something in the future
+    userID: 8
   });
 
   const [submitStatus, setSubmitStatus] = useState<{
@@ -40,7 +33,10 @@ const SanitationRequestForm = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post('/api/sanitation', formData);
+      const response = await axios.post('/api/sanitation', {
+        ...formData,
+        priority: formData.priority.toString()
+      });
 
       if (response.status === 200) {
         setSubmitStatus({
@@ -51,7 +47,7 @@ const SanitationRequestForm = () => {
         // Reset form
         setFormData({
           sanitationType: '',
-          priority: RequestPriority.medium,
+          priority: RequestPriority.MEDIUM,
           department: Department.EMERGENCY,
           room: '',
           comments: '',
