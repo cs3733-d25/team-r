@@ -81,7 +81,8 @@ function ImageCanvas({ markers }: ImageCanvasProps) {
     return (
         <canvas
             ref={canvasRef}
-            className="mx-auto border border-gray-300 w-2/3 h-auto"
+            // TODO: Height is messing up market placement, consider setting a fixed height
+            className="mx-auto border border-gray-300 w-2/3 h-screen"
             style={{ display: 'block' }}
         ></canvas>
     );

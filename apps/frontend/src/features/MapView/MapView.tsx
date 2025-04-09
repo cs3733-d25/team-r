@@ -97,7 +97,7 @@ function MapView() {
                             value={startingLocation}
                             className="ml-2 p-2 border border-gray-300 rounded"
                             type="text"
-                            onChange={() => setStartingLocation(startingLocation)}
+                            onChange={(e) => setStartingLocation(e.target.value)}
                         />
                     </div>
                 </div>
@@ -106,7 +106,7 @@ function MapView() {
                     <label>Department:</label>
                     <div className={'flex space-x-2 p-2 justify-end'}>
                         <select
-                            onChange={() => setDepartment(department)}
+                            onChange={(e) => setDepartment(e.target.value)}
                             className="ml-2 p-2 border border-gray-300 rounded"
                         >
                             {/*TODO: pull departments from DB instead of this*/}
@@ -178,7 +178,7 @@ function MapView() {
                     <label>Parking Lot:</label>
                     <div className={'flex space-x-2 p-2 justify-end'}>
                         <select
-                            onChange={() => setParkingLot(parkingLot)}
+                            onChange={(e) => setParkingLot(e.target.value)}
                             className="ml-2 p-2 border border-gray-300 rounded"
                         >
                             {/*TODO: pull parking lots from DB (if present)*/}
@@ -193,6 +193,8 @@ function MapView() {
                 {/*TODO: create markers for each entrance*/}
                 {/*TODO: figure how to take output from bfs algo and draw the corresponding markers*/}
                 {/*TODO: figure out how to then connect markers with a line*/}
+                {/*TODO: Marker coordinates are based off image size, and image changes size depending on screen
+                    need to find a way to perma link coordinates or prevent map size from changing*/}
                 {/*These markers are here as I was trying to find the x and y value for each node, these should be removed once a
                 suitable way to link node and marker parameters are found*/}
                 <ImageCanvas
