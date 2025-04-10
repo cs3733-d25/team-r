@@ -26,7 +26,7 @@ export function Directory() {
                         </td>
                         <td className={'text-left border-r align-top pl-5 pr-5'}>
                             <Floor22_1 />
-                        </td>
+                        </td >
                         <td className={' text-center text-2xl pl-5'}>Floor 1</td>
                     </tr>
                     <tr className={'border-b'}>
