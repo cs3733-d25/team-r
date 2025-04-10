@@ -90,7 +90,7 @@ export function CSVPage() {
                     <th className={"pl-5"}>Floor Number</th>
                 </tr>
                 </thead>
-                <tbody className = {"text-center"}>
+                <tbody className = {"text-left"}>
                 {directoryTable.map((row,index) =>
                 { const newFloor = index === 0 || row.floorNumber != directoryTable[index-1].floorNumber;
                     const newPlace = index === 0 || row.building != directoryTable[index-1].building;
