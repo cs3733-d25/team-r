@@ -17,64 +17,44 @@ export function Directory() {
                 <table className={'text-l'}>
                     <tbody>
                     <tr className={'border-b'}>
-                        <th className={'text-4xl pr-10 pt-5'}>20 Patriot</th>
-                        <th className={'text-4xl pl-10 pt-5'}>22 Patriot</th>
-                    </tr>
-                    <tr>
-                        <td className={'text-3xl text-right'}>Floor</td>
-                        <td>
-                            <h2 className={'text-3xl text-left pl-2'}>1</h2>
-                        </td>
+                        <th className={'text-4xl text-center pt-5'}>20 Patriot</th>
+                        <th className={'text-4xl text-center pt-5'}>22 Patriot</th>
                     </tr>
                     <tr className={'border-b'}>
-                        <td className={'border-r align-top pr-10'}>
+                        <td className={'border-r text-left align-top pr-5'}>
                             <TwentyFloorOne />
                         </td>
-                        <td className={'text-right align-top pl-10'}>
+                        <td className={'text-left border-r align-top pl-5 pr-5'}>
                             <Floor22_1 />
                         </td>
-                    </tr>
-                    <tr>
-                        <td className={'text-3xl text-right'}>Floor</td>
-                        <td>
-                            <h2 className={'text-3xl text-left pl-2'}>2</h2>
-                        </td>
+                        <td className={' text-center text-2xl pl-5'}>Floor 1</td>
                     </tr>
                     <tr className={'border-b'}>
-                        <td className={'border-r align-top pr-10'}>
+                        <td className={'border-r text-left align-top pr-5'}>
                             <TwentyFloorTwo />
                         </td>
-                        <td className={'text-right align-top pl-10'}>
+                        <td className={'text-left border-r align-top pl-5 pr-5'}>
                             <Floor22_2 />
                         </td>
-                    </tr>
-                    <tr>
-                        <td className={'text-3xl text-right'}>Floor</td>
-                        <td>
-                            <h2 className={'text-3xl text-left pl-2'}>3</h2>
-                        </td>
+                        <td className={' text-center text-2xl pl-5'}>Floor 2</td>
                     </tr>
                     <tr className={'border-b'}>
-                        <td className={'border-r align-top pr-10'}>
+                        <td className={'border-r text-left align-top pr-5'}>
                             <TwentyFloorThree />
                         </td>
-                        <td className={'text-right align-top pl-10'}>
+                        <td className={'text-left border-r align-top pl-5 pr-5'}>
                             <Floor22_3 />
                         </td>
+                        <td className={' text-center text-2xl pl-5'}>Floor 3</td>
                     </tr>
                     <tr>
-                        <td className={'text-3xl text-right'}>Floor</td>
-                        <td>
-                            <h2 className={'text-3xl text-left pl-2'}>4</h2>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className={'border-r align-top pr-10'}>
+                        <td className={'border-r align-top text-left pr-5'}>
                             <TwentyFloorFour />
                         </td>
-                        <td className={'text-right align-top pl-10 '}>
+                        <td className={'text-left border-r align-top pl-5 pr-5'}>
                             <Floor22_4 />
                         </td>
+                        <td className={' text-center text-2xl pl-5'}>Floor 4</td>
                     </tr>
                     </tbody>
                 </table>
