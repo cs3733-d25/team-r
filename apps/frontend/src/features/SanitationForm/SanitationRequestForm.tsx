@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar.tsx';
+import { Link } from 'react-router-dom';
 
 enum Department {
   SPECIALTY_CLINIC = 'SPECIALTY CLINIC',
@@ -26,6 +27,7 @@ interface SubmittedRequest {
   comments: string;
   timestamp: string;
 }
+
 
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -150,7 +152,13 @@ const SanitationRequestForm = () => {
             </div>
           </div>
         )}
-
+        <Link
+            key={'Sanitation Request Page'}
+            to={'/sanitationpage'}
+            className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
+        >
+          See All Requests
+        </Link>
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
