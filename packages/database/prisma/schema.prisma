@@ -23,11 +23,11 @@ enum EmployeeRole {
 }
 
 enum Department {
-  SPECIALTY_CLINIC
-  IMAGING_SUITE
-  PHLEBOTOMY
-  PHARMACY
-  AMBULATORY_URGENCARE
+  Specialty_Clinic
+  Imaging_Suite
+  Phlebotomy
+  Pharmacy
+  Ambulatory_UrgentCare
 }
 
 enum Gender {
@@ -39,10 +39,10 @@ enum Gender {
 }
 
 enum RequestPriority {
-  low
-  medium
-  high
-  urgent
+  Low
+  Medium
+  High
+  Urgent
 }
 
 enum RequestStatus {
