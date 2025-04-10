@@ -51,11 +51,6 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates, path }) => {
             // Add the floor plan image
             L.imageOverlay(floorPlan, floorPlanBounds).addTo(map);
 
-            // Add all the markers
-            const p1 = L.marker([250, 150]);
-            p1.addTo(map).bindPopup('Extended Parking').openPopup();
-            // ... add all other markers as before
-
             mapInstance.current = map;
         }
 
