@@ -1861,6 +1861,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/geojson", [\
+      ["npm:7946.0.16", {\
+        "packageLocation": "./.yarn/cache/@types-geojson-npm-7946.0.16-7a73d95991-1ff24a288b.zip/node_modules/@types/geojson/",\
+        "packageDependencies": [\
+          ["@types/geojson", "npm:7946.0.16"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@types/google.maps", [\
       ["npm:3.58.1", {\
         "packageLocation": "./.yarn/cache/@types-google.maps-npm-3.58.1-df719add21-0247c61d2a.zip/node_modules/@types/google.maps/",\
@@ -1912,6 +1921,16 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@types/keyv", "npm:3.1.4"],\
           ["@types/node", "npm:22.13.13"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/leaflet", [\
+      ["npm:1.9.17", {\
+        "packageLocation": "./.yarn/cache/@types-leaflet-npm-1.9.17-3841f1e7b9-b03c98921a.zip/node_modules/@types/leaflet/",\
+        "packageDependencies": [\
+          ["@types/leaflet", "npm:1.9.17"],\
+          ["@types/geojson", "npm:7946.0.16"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4805,6 +4824,7 @@ const RAW_RUNTIME_STATE =
           ["frontend", "workspace:apps/frontend"],\
           ["@auth0/auth0-react", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:2.3.0"],\
           ["@tailwindcss/vite", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.17"],\
+          ["@types/leaflet", "npm:1.9.17"],\
           ["@types/node", "npm:22.13.13"],\
           ["@types/prop-types", "npm:15.7.14"],\
           ["@types/react", "npm:18.3.20"],\
@@ -4822,6 +4842,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-compiler", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:19.0.0-beta-aeaed83-20250323"],\
           ["eslint-plugin-react-hooks", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:5.2.0"],\
           ["eslint-plugin-react-refresh", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.4.19"],\
+          ["leaflet", "npm:1.9.4"],\
           ["localforage", "npm:1.10.0"],\
           ["match-sorter", "npm:6.3.4"],\
           ["prettier", "npm:3.5.3"],\
@@ -5560,6 +5581,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["keyv", "npm:4.5.4"],\
           ["json-buffer", "npm:3.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["leaflet", [\
+      ["npm:1.9.4", {\
+        "packageLocation": "./.yarn/cache/leaflet-npm-1.9.4-8d372b0fe6-f639441dbb.zip/node_modules/leaflet/",\
+        "packageDependencies": [\
+          ["leaflet", "npm:1.9.4"]\
         ],\
         "linkType": "HARD"\
       }]\

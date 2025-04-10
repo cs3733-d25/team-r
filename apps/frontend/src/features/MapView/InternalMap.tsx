@@ -58,8 +58,40 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates }) => {
                 .bindPopup('Valet Parking')
                 .openPopup();
 
+            const s2 = L.marker([90, 750]);
+            s2.addTo(map)
+                .bindPopup('Sidewalk')
+                .openPopup();
+
+            const s1 = L.marker([210, 790]);
+            s1.addTo(map)
+                .bindPopup('Sidewalk')
+                .openPopup();
+
+            const h6 = L.marker([210, 760]);
+            h6.addTo(map)
+                .bindPopup('Hallway')
+                .openPopup();
+
+            const h5 = L.marker([235, 760]);
+            h5.addTo(map)
+                .bindPopup('Hallway')
+                .openPopup();
+
+            const h4 = L.marker([235, 730]);
+            h4.addTo(map)
+                .bindPopup('Hallway')
+                .openPopup();
+
+            const h3 = L.marker([190, 690]);
+            h3.addTo(map)
+                .bindPopup('Hallway')
+                .openPopup();
+
             mapInstance.current = map;
         }
+
+
 
         // Cleanup the map when the component unmounts or pathCoordinates change
         return () => {

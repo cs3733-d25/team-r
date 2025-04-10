@@ -213,44 +213,44 @@ hospitalGraph.addNode({
   id: "h3",
   name: "Hallway 22-3",
   type: "reception",
-  xPos: 0,
-  yPos: 0,
+  xPos: 690,
+  yPos: 190,
 });
 hospitalGraph.addNode({
   id: "h4",
   name: "Hallway 22-4",
   type: "reception",
-  xPos: 0,
-  yPos: 0,
+  xPos: 730,
+  yPos: 235,
 });
 hospitalGraph.addNode({
   id: "h5",
   name: "Hallway 22-5",
   type: "reception",
-  xPos: 0,
-  yPos: 0,
+  xPos: 760,
+  yPos: 235,
 });
 hospitalGraph.addNode({
   id: "h6",
   name: "Hallway 22-6",
   type: "reception",
-  xPos: 0,
-  yPos: 0,
+  xPos: 760,
+  yPos: 210,
 });
 //sidewalk
 hospitalGraph.addNode({
   id: "s1",
   name: "22-1",
   type: "sidewalk",
-  xPos: 0,
-  yPos: 0,
+  xPos: 790,
+  yPos: 210,
 });
 hospitalGraph.addNode({
   id: "s2",
   name: "22-2",
   type: "sidewalk",
-  xPos: 0,
-  yPos: 0,
+  xPos: 750,
+  yPos: 90,
 });
 
 //add all edges between nodes on the graph

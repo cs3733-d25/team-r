@@ -19,6 +19,7 @@
         "common": "*",
         "dotenv": "*",
         "dotenv-cli": "*",
+        "leaflet": "^1.9.4",
         "localforage": "^1.10.0",
         "match-sorter": "^6.3.1",
         "react": "^18.2.0",
@@ -28,6 +29,7 @@
         "serve": "^14.2.0"
     },
     "devDependencies": {
+        "@types/leaflet": "^1",
         "@types/node": "*",
         "@types/prop-types": "^15.7.5",
         "@types/react": "^18.0.37",
