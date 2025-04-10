@@ -52,6 +52,11 @@
     --color-mgb-light-blue-200: #B8E4E4;
     --color-mgb-light-blue-300: #A5CCCC;
     --color-mgb-light-blue-400: #91B3B3;
+    --color-mgb-light-blue-500: #7C9999;
+    --color-mgb-light-blue-600: #678080;
+    --color-mgb-light-blue-700: #536666;
+    --color-mgb-light-blue-800: #3E4D4D;
+    --color-mgb-light-blue-900: #293333;
 
     /*A couple of darker shades of mgb-blue for highlighting actions*/
     --color-mgb-blue-500: #449aa4;
