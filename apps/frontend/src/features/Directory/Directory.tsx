@@ -13,11 +13,12 @@ export function Directory() {
         <>
             <Navbar/>
             <div className={'flex min-h-screen justify-center'}>
-                <table className={'text-2xl font-bold'}>
+                <br/>
+                <table className={'text-l'}>
                     <tbody>
                     <tr className={'border-b'}>
-                        <th className={'text-6xl border-r pr-10'}>20 Patriot</th>
-                        <th className={'text-6xl pl-10'}>22 Patriot</th>
+                        <th className={'text-4xl pr-10 pt-5'}>20 Patriot</th>
+                        <th className={'text-4xl pl-10 pt-5'}>22 Patriot</th>
                     </tr>
                     <tr>
                         <td className={'text-3xl text-right'}>Floor</td>
