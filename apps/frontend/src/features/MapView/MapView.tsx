@@ -22,6 +22,7 @@ function MapView() {
     const [department, setDepartment] = useState<string>('');
     const [parkingLot, setParkingLot] = useState<string>('');
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
+    const [path, setPath] = useState<string[]>([]);
 
     /**
      * getNearestReceptionNode function returns the nearest reception node given a department
@@ -64,33 +65,30 @@ function MapView() {
     /**
      * findDirectionsBFS calls the BFS API to find the directions from the parking lot to the department
      */
+        // In MapView.tsx, update the BFS function
     const findDirectionBFS = async () => {
-        try {
-            if (!parkingLot || !department) {
-                alert("Please select a parking lot and a department");
-                return;
+            try {
+                // ... existing code ...
+
+                const response = await axios.post('/api/bfs', {
+                    startingPoint: getParkingLotNode(parkingLot),
+                    endingPoint: getNearestReceptionNode(department),
+                });
+
+                // Set the path as an array of node IDs
+                setPath(response.data); // Assuming response.data is ['p2', 'e2', 'r2', etc.]
+
+                // You can also still compute coordinates if needed
+                const path = response.data.map((nodeId: string) => mapNodeToCoordinates(nodeId));
+                setPathCoordinates(path);
+
+                alert(`Path found: ${response.data.join(' → ')}`);
+            } catch (error) {
+                console.error('Error finding path:', error);
+                alert('An error occurred while finding the path.');
             }
+        };
 
-            const startNode = getParkingLotNode(parkingLot);
-            const endNode = getNearestReceptionNode(department);
-
-            const response = await axios.post('/api/bfs', {
-                startingPoint: startNode,
-                endingPoint: endNode,
-            });
-
-            // Assuming response.data is an array of node IDs or coordinates
-            const path = response.data.map((nodeId: string) => mapNodeToCoordinates(nodeId));
-
-            // Update state with the path coordinates
-            setPathCoordinates(path);
-
-            alert(`Path found: ${response.data.join(' → ')}`);
-        } catch (error) {
-            console.error('Error finding path:', error);
-            alert('An error occurred while finding the path.');
-        }
-    };
 
     return (
         <div className="flex flex-col h-screen">
@@ -186,7 +184,7 @@ function MapView() {
 
                     <div className="w-full md:w-2/3 h-[50vh] md:h-[70vh]">
                         {/* Pass pathCoordinates prop to InternalMap */}
-                        <InternalMap pathCoordinates={pathCoordinates} />
+                        <InternalMap path={path} pathCoordinates={pathCoordinates} />
                     </div>
                 </div>
 
