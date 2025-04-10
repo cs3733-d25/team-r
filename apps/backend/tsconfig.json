@@ -1,11 +1,11 @@
 {
-    "extends": "ts-config-custom/tsconfig.base.json",
-    "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "skipLibCheck": true
-    }
+  "extends": "ts-config-custom/tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true
+  }
 }
