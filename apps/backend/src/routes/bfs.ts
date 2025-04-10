@@ -121,6 +121,7 @@ class Pathfinder {
         }
       }
     }
+
     return []; // No path found
   }
 }
@@ -212,28 +213,28 @@ hospitalGraph.addNode({
 hospitalGraph.addNode({
   id: "h3",
   name: "Hallway 22-3",
-  type: "reception",
+  type: "hallway",
   xPos: 690,
   yPos: 190,
 });
 hospitalGraph.addNode({
   id: "h4",
   name: "Hallway 22-4",
-  type: "reception",
+  type: "hallway",
   xPos: 730,
   yPos: 235,
 });
 hospitalGraph.addNode({
   id: "h5",
   name: "Hallway 22-5",
-  type: "reception",
+  type: "hallway",
   xPos: 760,
   yPos: 235,
 });
 hospitalGraph.addNode({
   id: "h6",
   name: "Hallway 22-6",
-  type: "reception",
+  type: "hallway",
   xPos: 760,
   yPos: 210,
 });

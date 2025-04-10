@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../components/Navbar.tsx';
+import { Link } from 'react-router-dom';
 
 enum Department {
-  SPECIALTY_CLINIC = 'SPECIALTY CLINIC',
-  IMAGING_SUITE = 'IMAGING SUITE',
-  PHLEBOTOMY = 'PHLEBOTOMY',
-  PHARMACY = 'PHARMACY',
-  AMBULATORY_URGENCARE = 'AMBULATORY_URGENCARE'
+  SPECIALTY_CLINIC = 'Specialty_Clinic',
+  IMAGING_SUITE = 'Imaging_Suite',
+  PHLEBOTOMY = 'Phlebotomy',
+  PHARMACY = 'Pharmacy',
+  AMBULATORY_URGENCARE = 'Ambulatory_UrgentCare'
 }
 
 enum RequestPriority {
-  low = 'low',
-  medium = 'medium',
-  high = 'high',
-  urgent = 'urgent'
+  low = 'Low',
+  medium = 'Medium',
+  high = 'High',
+  urgent = 'Urgent'
 }
 
 // Simple interface for submitted request
@@ -26,6 +27,7 @@ interface SubmittedRequest {
   comments: string;
   timestamp: string;
 }
+
 
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -109,8 +111,8 @@ const SanitationRequestForm = () => {
 
         {/* Confirmation Card */}
         {submittedRequest && !submitStatus?.isError && (
-          <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-green-500">
-            <div className="bg-green-500 text-white font-bold px-4 py-2 flex items-center">
+          <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
+            <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
@@ -150,7 +152,13 @@ const SanitationRequestForm = () => {
             </div>
           </div>
         )}
-
+        <Link
+            key={'Sanitation Request Page'}
+            to={'/sanitationpage'}
+            className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
+        >
+          See All Requests
+        </Link>
         <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-6">

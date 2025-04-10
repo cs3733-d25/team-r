@@ -86,7 +86,9 @@ router.post(
 //get all data for display
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const currentDirectory = await PrismaClient.directory.findMany();
+    const currentDirectory = await PrismaClient.directory.findMany({
+      orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
+    });
     //console.log("current directory", currentDirectory);
     if (currentDirectory != null) {
       res.status(200).json({

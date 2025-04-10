@@ -107,7 +107,7 @@ async function handleLogin(){
                         <div className="flex justify-between">
                             <button
                                 type="button"
-                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 active:bg-green-800 text-xs"
+                                className="px-4 py-2 bg-mgb-light-blue-600 text-white rounded hover:bg-mgb-light-blue-700 active:bg-mgb-light-blue-800 text-xs"
                                 onClick={(e) => handleGuestLogin(e)}
                             >
                                 Continue as Guest

@@ -6435,6 +6435,7 @@ __metadata:
   resolution: "softeng-startercode-d25@workspace:."
   dependencies:
     "@prisma/client": "npm:^6.5.0"
+    "@types/multer": "npm:^1"
     "@types/node": "npm:^22.13.13"
     "@types/react": "npm:^19.1.0"
     "@types/react-dom": "npm:^19.1.1"
@@ -6448,6 +6449,7 @@ __metadata:
     eslint: "npm:^9.23.0"
     eslint-config-custom: "workspace:*"
     husky: "npm:^9.1.7"
+    multer: "npm:^1.4.5-lts.2"
     postcss: "npm:^8.5.3"
     prettier: "npm:^3.5.3"
     prettier-config-custom: "workspace:*"
