@@ -198,42 +198,42 @@ hospitalGraph.addNode({
 hospitalGraph.addNode({
   id: "h1",
   name: "Hallway 22-1",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 }); //22 patriot place
 hospitalGraph.addNode({
   id: "h2",
   name: "Hallway 22-2",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 });
 hospitalGraph.addNode({
   id: "h3",
   name: "Hallway 22-3",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 });
 hospitalGraph.addNode({
   id: "h4",
   name: "Hallway 22-4",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 });
 hospitalGraph.addNode({
   id: "h5",
   name: "Hallway 22-5",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 });
 hospitalGraph.addNode({
   id: "h6",
   name: "Hallway 22-6",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 });
