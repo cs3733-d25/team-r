@@ -1,6 +1,6 @@
 import Navbar from '../../components/Navbar.tsx';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import { useState } from 'react';
+import {APIProvider, Map} from '@vis.gl/react-google-maps';
+import {useState} from 'react';
 import axios from 'axios';
 import InternalMap from '../../features/MapView/InternalMap.tsx';
 import Directions from './Directions.tsx';
@@ -65,30 +65,27 @@ function MapView() {
     /**
      * findDirectionsBFS calls the BFS API to find the directions from the parking lot to the department
      */
-        // In MapView.tsx, update the BFS function
+    // In MapView.tsx, update the BFS function
     const findDirectionBFS = async () => {
-            try {
-                // ... existing code ...
+        try {
+            // ... existing code ...
 
-                const response = await axios.post('/api/bfs', {
-                    startingPoint: getParkingLotNode(parkingLot),
-                    endingPoint: getNearestReceptionNode(department),
-                });
+            const response = await axios.post('/api/bfs', {
+                startingPoint: getParkingLotNode(parkingLot),
+                endingPoint: getNearestReceptionNode(department),
+            });
 
-                // Set the path as an array of node IDs
-                setPath(response.data); // Assuming response.data is ['p2', 'e2', 'r2', etc.]
+            // Set the path as an array of node IDs
+            setPath(response.data); // Assuming response.data is ['p2', 'e2', 'r2', etc.]
 
-                // You can also still compute coordinates if needed
-                const path = response.data.map((nodeId: string) => mapNodeToCoordinates(nodeId));
-                setPathCoordinates(path);
-
-                alert(`Path found: ${response.data.join(' → ')}`);
-            } catch (error) {
-                console.error('Error finding path:', error);
-                alert('An error occurred while finding the path.');
-            }
-        };
-
+            // You can also still compute coordinates if needed
+            const path = response.data.map((nodeId: string) => mapNodeToCoordinates(nodeId));
+            setPathCoordinates(path);
+        } catch (error) {
+            console.error('Error finding path:', error);
+            alert('An error occurred while finding the path.');
+        }
+    };
 
     return (
         <div className="flex flex-col h-screen">
@@ -153,7 +150,9 @@ function MapView() {
                 <div className="flex flex-col md:flex-row w-full gap-4 p-4 justify-center">
                     <div className="w-full md:w-1/3 flex flex-col space-y-4">
                         <div className="flex flex-col space-y-2">
-                            <label className="font-medium">Which parking lot did you park in?</label>
+                            <label className="font-medium">
+                                Which parking lot did you park in?
+                            </label>
                             <select
                                 onChange={(e) => setParkingLot(e.target.value)}
                                 className="p-2 border border-gray-300 rounded"
@@ -166,7 +165,9 @@ function MapView() {
                             </select>
                         </div>
                         <div className="flex flex-col space-y-2">
-                            <label className="font-medium">Which department are you travelling to?</label>
+                            <label className="font-medium">
+                                Which department are you travelling to?
+                            </label>
                             <select
                                 onChange={(e) => setDepartment(e.target.value)}
                                 className="p-2 border border-gray-300 rounded"
@@ -180,22 +181,19 @@ function MapView() {
                                 <option>Ambulatory/Urgent Care</option>
                             </select>
                         </div>
+                        {/* Button to trigger BFS pathfinding */}
+                        <button
+                            onClick={findDirectionBFS}
+                            className="px-6 py-3 bg-blue-500 text-white rounded"
+                        >
+                            Find Path
+                        </button>
                     </div>
 
                     <div className="w-full md:w-2/3 h-[50vh] md:h-[70vh]">
                         {/* Pass pathCoordinates prop to InternalMap */}
                         <InternalMap path={path} pathCoordinates={pathCoordinates} />
                     </div>
-                </div>
-
-                {/* Button to trigger BFS pathfinding */}
-                <div className="w-full text-center mt-4">
-                    <button
-                        onClick={findDirectionBFS}
-                        className="px-6 py-3 bg-blue-500 text-white rounded"
-                    >
-                        Find Path
-                    </button>
                 </div>
             </div>
         </div>
@@ -212,9 +210,9 @@ const mapNodeToCoordinates = (nodeId: string): [number, number] => {
         r1: [0, 0], // Example coordinates for node 'r1'
         r2: [0, 0], // Example coordinates for node 'r2'
         r3: [0, 0], // Example coordinates for node 'r3'
-        p1: [42.273000, -71.807000], // Example coordinates for node 'p1' (Extended Parking)
-        p2: [42.272000, -71.806000], // Example coordinates for node 'p2' (Patient Parking)
-        p3: [42.271000, -71.805000], // Example coordinates for node 'p3' (Valet Parking)
+        p1: [42.273, -71.807], // Example coordinates for node 'p1' (Extended Parking)
+        p2: [42.272, -71.806], // Example coordinates for node 'p2' (Patient Parking)
+        p3: [42.271, -71.805], // Example coordinates for node 'p3' (Valet Parking)
     };
 
     return nodeCoordinates[nodeId] || [0, 0]; // Return [0, 0] if nodeId is not found
