@@ -8,7 +8,9 @@ const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
   try {
-    const requests = await PrismaClient.sanitationRequest.findMany();
+    const requests = await PrismaClient.sanitationRequest.findMany({
+      orderBy: { priority: "asc" },
+    });
     console.log(requests);
     res.status(200).json(requests); // Send sanitation data as JSON
   } catch (error) {
@@ -33,9 +35,10 @@ router.post("/", async function (req: Request, res: Response) {
   try {
     // assumes that the request is formatted with the exact fields as the SanitationRequest table in the prisma schema (packages/database/prisma/schema.prisma)
     // console.log(parseRequestPriority(request.priority));
-    // console.log(request.priority);
-    // console.log(request.department);
+    console.log("priority: ", request.priority);
+    //console.log(request.department);
     console.log(parseDepartment(request.department));
+    console.log(parseRequestPriority(request.priority));
     const createRequest = await PrismaClient.sanitationRequest.create({
       data: {
         sanitationType: request.sanitationType,

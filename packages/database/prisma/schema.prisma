@@ -42,6 +42,7 @@ enum RequestPriority {
   low
   medium
   high
+  urgent
 }
 
 enum RequestStatus {
