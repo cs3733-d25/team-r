@@ -4,18 +4,18 @@ import Navbar from '../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
 
 enum Department {
-  SPECIALTY_CLINIC = 'SPECIALTY CLINIC',
-  IMAGING_SUITE = 'IMAGING SUITE',
-  PHLEBOTOMY = 'PHLEBOTOMY',
-  PHARMACY = 'PHARMACY',
-  AMBULATORY_URGENCARE = 'AMBULATORY_URGENCARE'
+  SPECIALTY_CLINIC = 'Specialty_Clinic',
+  IMAGING_SUITE = 'Imaging_Suite',
+  PHLEBOTOMY = 'Phlebotomy',
+  PHARMACY = 'Pharmacy',
+  AMBULATORY_URGENCARE = 'Ambulatory_UrgentCare'
 }
 
 enum RequestPriority {
-  low = 'low',
-  medium = 'medium',
-  high = 'high',
-  urgent = 'urgent'
+  low = 'Low',
+  medium = 'Medium',
+  high = 'High',
+  urgent = 'Urgent'
 }
 
 // Simple interface for submitted request
