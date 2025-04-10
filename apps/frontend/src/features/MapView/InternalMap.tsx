@@ -36,12 +36,7 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates }) => {
             // Store the map instance for later cleanup
             mapInstance.current = map;
 
-            // parking markers
-            const valetParking = L.marker([600, 520]);
-            valetParking.addTo(map)
-                .bindPopup('Valet Parking')
-                .openPopup();
-
+            // make markers
             const p1 = L.marker([250, 150]);
             p1.addTo(map)
                 .bindPopup('Extended Parking')
@@ -56,6 +51,46 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates }) => {
             const p3 = L.marker([600, 520]);
             p3.addTo(map)
                 .bindPopup('Valet Parking')
+                .openPopup();
+
+            const e1 = L.marker([530, 400]);
+            e1.addTo(map)
+                .bindPopup('Entrance')
+                .openPopup();
+
+            const e2 = L.marker([410, 395]);
+            e2.addTo(map)
+                .bindPopup('Entrance')
+                .openPopup();
+
+            const e3 = L.marker([210, 790]);
+            e3.addTo(map)
+                .bindPopup('Entrance')
+                .openPopup();
+
+            const r1 = L.marker([570, 375]);
+            r1.addTo(map)
+                .bindPopup('Reception')
+                .openPopup();
+
+            const r2 = L.marker([415, 480]);
+            r2.addTo(map)
+                .bindPopup('Reception')
+                .openPopup();
+
+            const r3 = L.marker([270, 660]);
+            r3.addTo(map)
+                .bindPopup('Reception')
+                .openPopup();
+
+            const h1 = L.marker([400, 455]);
+            h1.addTo(map)
+                .bindPopup('Hallway 1')
+                .openPopup();
+
+            const h2 = L.marker([245, 640]);
+            h2.addTo(map)
+                .bindPopup('Hallway 2')
                 .openPopup();
 
             const s2 = L.marker([90, 750]);
@@ -90,8 +125,6 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates }) => {
 
             mapInstance.current = map;
         }
-
-
 
         // Cleanup the map when the component unmounts or pathCoordinates change
         return () => {

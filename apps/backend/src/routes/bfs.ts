@@ -198,14 +198,14 @@ hospitalGraph.addNode({
 hospitalGraph.addNode({
   id: "h1",
   name: "Hallway 22-1",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 }); //22 patriot place
 hospitalGraph.addNode({
   id: "h2",
   name: "Hallway 22-2",
-  type: "reception",
+  type: "hallway",
   xPos: 0,
   yPos: 0,
 });
