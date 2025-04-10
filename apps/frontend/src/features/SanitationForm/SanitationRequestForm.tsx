@@ -111,8 +111,8 @@ const SanitationRequestForm = () => {
 
         {/* Confirmation Card */}
         {submittedRequest && !submitStatus?.isError && (
-          <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-green-500">
-            <div className="bg-green-500 text-white font-bold px-4 py-2 flex items-center">
+          <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
+            <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
