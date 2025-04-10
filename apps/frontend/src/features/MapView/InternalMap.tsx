@@ -17,7 +17,7 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates }) => {
             // Initialize the map
             const map = L.map(mapRef.current, {
                 crs: L.CRS.Simple, // Set the coordinate reference system to Simple (for floor plan)
-            }).setView([500, 500], 1);
+            }).setView([500, 500], 0.25);
 
             // Define the bounds of the floor plan image
             const floorPlanBounds: L.LatLngBoundsLiteral = [
@@ -34,6 +34,30 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates }) => {
             }
 
             // Store the map instance for later cleanup
+            mapInstance.current = map;
+
+            // parking markers
+            const valetParking = L.marker([600, 520]);
+            valetParking.addTo(map)
+                .bindPopup('Valet Parking')
+                .openPopup();
+
+            const p1 = L.marker([250, 150]);
+            p1.addTo(map)
+                .bindPopup('Extended Parking')
+                .openPopup();
+
+            const p2 = L.marker([400, 250]);
+            p2.addTo(map)
+                .bindPopup('Patient Parking')
+                .openPopup();
+            
+            // reception markers
+            const p3 = L.marker([600, 520]);
+            p3.addTo(map)
+                .bindPopup('Valet Parking')
+                .openPopup();
+
             mapInstance.current = map;
         }
 
