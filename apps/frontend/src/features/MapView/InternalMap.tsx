@@ -78,6 +78,18 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates, path }) => {
                     lineCap: 'round'
                 }).addTo(mapInstance.current);
 
+                // Show markers only for start (first) and end (last) nodes
+                const startNode = path[0];
+                const endNode = path[path.length - 1];
+
+                // Add start marker
+                const startMarker = L.marker(nodeCoordinates[startNode]).addTo(mapInstance.current)
+                    .bindPopup(`Start: ${startNode}`).openPopup();
+
+                // Add end marker
+                const endMarker = L.marker(nodeCoordinates[endNode]).addTo(mapInstance.current)
+                    .bindPopup(`End: ${endNode}`).openPopup();
+
                 // Fit map to the path
                 mapInstance.current.fitBounds(pathLayerRef.current.getBounds(), { padding: [50, 50] });
             }
@@ -89,6 +101,18 @@ const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates, path }) => {
                     weight: 5,
                     opacity: 0.7
                 }).addTo(mapInstance.current);
+
+                const startCoordinates = pathCoordinates[0];
+                const endCoordinates = pathCoordinates[pathCoordinates.length - 1];
+
+                // Add start marker
+                L.marker(startCoordinates).addTo(mapInstance.current)
+                    .bindPopup('Start').openPopup();
+
+                // Add end marker
+                L.marker(endCoordinates).addTo(mapInstance.current)
+                    .bindPopup('End').openPopup();
+
             }
         }
 
