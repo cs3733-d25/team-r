@@ -62,34 +62,29 @@ async function main() {
     });
 
     //create user admin for iteration 1 testing
-    const user8 = await prisma.user.create({
+    /*const user8 = await prisma.user.create({
         data: {
             username: 'admin',
             password: 'admin',
             userType: UserType.EMPLOYEE
         }
-    });
+    });*/
 
-    /*
+
     // Create employees with correct schema fields
-    const employee1 = await prisma.employee.create({
-        data: {
-            firstName: 'John',
-            lastName: 'Doe',
-            department: Department.AMBULATORY_URGENCARE,
-            role: EmployeeRole.DOCTOR,
-            onShift: true,
-            user: {
-                connect: { id: user1.id }
-            }
-        }
+    /*
+    await prisma.employee.createMany({
+        data: [
+            { id: user1.id, firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true },
+        ]
     });
 
+    await prisma.employee.create({data:{ firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true, user: { connect: { id: user1.id }}}});
     const employee2 = await prisma.employee.create({
         data: {
             firstName: 'Jane',
             lastName: 'Smith',
-            department: Department.SPECIALTY_CLINIC,
+            department: Department.Specialty_Clinic,
             role: EmployeeRole.NURSE,
             onShift: false,
             user: {
@@ -142,7 +137,7 @@ async function main() {
         data: {
             firstName: 'Wilson',
             lastName: 'Wong',
-            department: Department.SPECIALTY_CLINIC,
+            department: Department.Specialty_Clinic,
             role: EmployeeRole.ADMINISTRATOR,
             onShift: false,
             user: {
@@ -150,8 +145,9 @@ async function main() {
             }
         }
     });*/
-/*
+
     // Create patients
+    /*
     await prisma.patient.create({
         data: {
             firstName: 'Alice',
@@ -183,6 +179,16 @@ async function main() {
             }
         }
     });*/
+
+    await prisma.departments.createMany({
+        data:[
+            { departmentType: Department.Imaging_Suite, departmentName: "Imaging Suite"},
+            { departmentType: Department.Pharmacy, departmentName: "Pharmacy"},
+            { departmentType: Department.Ambulatory_UrgentCare, departmentName: "Ambulatory/Urgent Care"},
+            { departmentType: Department.Phlebotomy, departmentName: "Phlebotomy"},
+            { departmentType: Department.Specialty_Clinic, departmentName: "Specialty Clinic"}
+        ]
+    })
 
     // Create medical devices
     await prisma.medicalDevice.createMany({

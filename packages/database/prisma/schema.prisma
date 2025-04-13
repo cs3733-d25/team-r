@@ -182,8 +182,13 @@ model PharmacyRequest {
   middayPillCount        Int
   eveningPillCount       Int
   nightPillCount         Int
-  daysdays               Int
+  days                   Int
   numberOfPills          Int
   refills                Int
   additionalInstructions String
+}
+
+model Departments {
+  departmentType Department @id @unique
+  departmentName String
 }
