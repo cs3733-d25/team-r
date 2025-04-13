@@ -170,21 +170,21 @@ model Edge {
 }
 
 model PharmacyRequest {
-  PrescriptionID         Int             @id @default(autoincrement())
+  prescriptionID         Int             @id @default(autoincrement())
   employeeID             Int
-  Employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
-  Priority               RequestPriority
-  DepartmentID           Int
-  Department             Department
-  PatientID              Int
-  Patient                Patient         @relation("Prescriptions", fields: [PatientID], references: [id])
-  DrugName               String
-  MorningPillCount       Int
-  MiddayPillCount        Int
-  EveningPillCount       Int
-  NightPillCount         Int
-  Days                   Int
-  NumberOfPills          Int
-  Refills                Int
-  AdditionalInstructions String
+  employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
+  priority               RequestPriority
+  departmentID           Int
+  department             Department
+  patientID              Int
+  patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+  drugName               String
+  morningPillCount       Int
+  middayPillCount        Int
+  eveningPillCount       Int
+  nightPillCount         Int
+  days                   Int
+  numberOfPills          Int
+  refills                Int
+  additionalInstructions String
 }
