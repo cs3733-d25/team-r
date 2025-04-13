@@ -85,21 +85,23 @@ model Employee {
   onShift    Boolean       @default(false)
   user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients Patient[]       @relation("AssignedDoctor")
-  assignedRequests DeviceRequest[] @relation("AssignedRequests")
-  createdRequests  DeviceRequest[] @relation("CreatedRequests")
+  assignedPatients Patient[]         @relation("AssignedDoctor")
+  assignedRequests DeviceRequest[]   @relation("AssignedRequests")
+  createdRequests  DeviceRequest[]   @relation("CreatedRequests")
+  pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
 }
 
 model Patient {
-  id               Int       @id
+  id               Int               @id
   firstName        String
   lastName         String
   dateOfBirth      DateTime
   gender           Gender?
   phone            String?
-  assignedDoctor   Employee? @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+  assignedDoctor   Employee?         @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
   assignedDoctorId Int?
-  user             User      @relation(fields: [id], references: [id], onDelete: Cascade)
+  user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
+  pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
 }
 
 model DeviceRequest {
@@ -165,4 +167,24 @@ model Edge {
   toId   Int
   from   Node @relation("FromConnection", fields: [fromId], references: [id])
   to     Node @relation("ToConnection", fields: [toId], references: [id])
+}
+
+model PharmacyRequest {
+  PrescriptionID         Int             @id @default(autoincrement())
+  employeeID             Int
+  Employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
+  Priority               RequestPriority
+  DepartmentID           Int
+  Department             Department
+  PatientID              Int
+  Patient                Patient         @relation("Prescriptions", fields: [PatientID], references: [id])
+  DrugName               String
+  MorningPillCount       Int
+  MiddayPillCount        Int
+  EveningPillCount       Int
+  NightPillCount         Int
+  Days                   Int
+  NumberOfPills          Int
+  Refills                Int
+  AdditionalInstructions String
 }
