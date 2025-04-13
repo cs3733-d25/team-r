@@ -174,7 +174,6 @@ model PharmacyRequest {
   employeeID             Int
   employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
   priority               RequestPriority
-  departmentID           Int
   department             Department
   patientID              Int
   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
@@ -183,7 +182,7 @@ model PharmacyRequest {
   middayPillCount        Int
   eveningPillCount       Int
   nightPillCount         Int
-  days                   Int
+  daysdays               Int
   numberOfPills          Int
   refills                Int
   additionalInstructions String
