@@ -1,0 +1,15 @@
+meta {
+  name: Get departments
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/api/pharmacy/departments
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}
