@@ -112,38 +112,59 @@ const TransportationRequestForm = () => {
                 {submittedTransport && !submitStatus?.isError && (
                     <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
                         <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 mr-2"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 13l4 4L19 7"
+                                />
                             </svg>
                             Request Confirmation
                         </div>
                         <div className="p-4">
-                            <h3 className="text-lg font-semibold mb-2">Your transportation request has been submitted</h3>
+                            <h3 className="text-lg font-semibold mb-2">
+                                Your transportation request has been submitted
+                            </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Transportation Type:</span> {submittedTransport.transportationType}
+                                    <span className="font-semibold">Transportation Type:</span>{' '}
+                                    {submittedTransport.transportationType}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Priority:</span> {submittedTransport.priority}
+                                    <span className="font-semibold">Priority:</span>{' '}
+                                    {submittedTransport.priority}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Department:</span> {submittedTransport.department}
+                                    <span className="font-semibold">Department:</span>{' '}
+                                    {submittedTransport.department}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Current Building:</span> {submittedTransport.currentBuilding}
+                                    <span className="font-semibold">Current Building:</span>{' '}
+                                    {submittedTransport.currentBuilding}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Desired Building:</span> {submittedTransport.desiredBuilding}
+                                    <span className="font-semibold">Desired Building:</span>{' '}
+                                    {submittedTransport.desiredBuilding}
                                 </div>
                                 <div className="col-span-2">
-                                    <span className="font-semibold">Comments:</span> {submittedTransport.comments || "None provided"}
+                                    <span className="font-semibold">Comments:</span>{' '}
+                                    {submittedTransport.comments || 'None provided'}
                                 </div>
                                 <div className="col-span-2">
-                                    <span className="font-semibold">Submitted:</span> {submittedTransport.timestamp}
+                                    <span className="font-semibold">Submitted:</span>{' '}
+                                    {submittedTransport.timestamp}
                                 </div>
                             </div>
                             <div className="mt-3 text-sm text-gray-600">
-                                A staff member will be assigned to handle your request based on priority.
+                                A staff member will be assigned to handle your request based on
+                                priority.
                             </div>
                             <button
                                 onClick={() => setSubmittedTransport(null)}
@@ -157,43 +178,44 @@ const TransportationRequestForm = () => {
                 <Link
                     key={'Transportation Request Page'}
                     to={'/transportpage'}
-                    className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
+                    className={
+                        'px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200'
+                    }
                 >
                     See All Requests
                 </Link>
                 <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Transportation Type */}
-                                <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Transportation Type
-                                        <span className="text-red-500">*</span>
-                                        <span className="text-xs text-gray-500 block">
-                      e.g., Ambulance, Helicopter, etc
-                    </span>
-                                    </label>
-                                    <RadioGroup
-                                        name="transportType"
-                                        value={formData.transportationType}
-                                        <RadioGroupItem>
-                                    >Enter Transportation Type</RadioGroup>
-                                < /div>
+                            {/* Transportation Type */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Transportation Type
+                                    <span className="text-red-500">*</span>
+                                    <span className="text-xs text-gray-500 block">
+                                        e.g., Ambulance, Helicopter, etc
+                                    </span>
+                                </label>
+                                <RadioGroup
+                                    name="transportType"
+                                    value={formData.transportationType}
+                                    {...<div><RadioGroupItem value={'Ambulance'}>Ambulance</RadioGroupItem><RadioGroupItem value={'Helicopter'}>Helicopter</RadioGroupItem></div>}
+                                />
+
 
                                 {/* Priority */}
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Priority Level
                                         <span className="text-xs text-gray-500 block">
-                      URGENT: Immediate attention required
-                      <br />
-                      HIGH: Within 1 hour
-                      <br />
-                      MEDIUM: Within 4 hours
-                      <br />
-                      LOW: Within 24 hours
-                    </span>
+                                            URGENT: Immediate attention required
+                                            <br />
+                                            HIGH: Within 1 hour
+                                            <br />
+                                            MEDIUM: Within 4 hours
+                                            <br />
+                                            LOW: Within 24 hours
+                                        </span>
                                     </label>
                                     <select
                                         name="priority"
@@ -201,7 +223,7 @@ const TransportationRequestForm = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
                                     >
-                                        {Object.values(RequestPriority).map(priority => (
+                                        {Object.values(RequestPriority).map((priority) => (
                                             <option key={priority} value={priority}>
                                                 {priority}
                                             </option>
@@ -215,8 +237,8 @@ const TransportationRequestForm = () => {
                                         Department
                                         <span className="text-red-500">*</span>
                                         <span className="text-xs text-gray-500 block">
-                      Select the department requiring sanitation
-                    </span>
+                                            Select the department requiring sanitation
+                                        </span>
                                     </label>
                                     <select
                                         name="department"
@@ -224,7 +246,7 @@ const TransportationRequestForm = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
                                     >
-                                        {Object.values(Department).map(dept => (
+                                        {Object.values(Department).map((dept) => (
                                             <option key={dept} value={dept}>
                                                 {dept}
                                             </option>
@@ -238,18 +260,10 @@ const TransportationRequestForm = () => {
                                         Current Building
                                         <span className="text-red-500">*</span>
                                         <span className="text-xs text-gray-500 block">
-                      Format: Floor-Room (e.g., 3-124, L1-001)
-                    </span>
+                                            Format: Floor-Room (e.g., 3-124, L1-001)
+                                        </span>
                                     </label>
-                                    <input
-                                        type="text"
-                                        name="room"
-                                        value={formData.currentBuilding}
-                                        onChange={handleChange}
-                                        placeholder="e.g., 3-124"
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                        required
-                                    />
+                                    <DropdownMenu{...<DropdownMenuItem></DropdownMenuItem>}></DropdownMenu>
                                 </div>
                             </div>
 
@@ -258,8 +272,9 @@ const TransportationRequestForm = () => {
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Additional Comments
                                     <span className="text-xs text-gray-500 block">
-                    Include any specific instructions or details about the sanitation request
-                  </span>
+                                        Include any specific instructions or details about the
+                                        sanitation request
+                                    </span>
                                 </label>
                                 <textarea
                                     name="comments"
@@ -288,4 +303,4 @@ const TransportationRequestForm = () => {
     );
 };
 
-export default SanitationRequestForm;
+export default TransportationRequestForm;
