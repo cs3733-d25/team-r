@@ -62,6 +62,7 @@ enum DeviceStatus {
 enum Buildings {
   PATRIOT_PLACE_20
   PATRIOT_PLACE_22
+  CHESTNUT_HILL
 }
 
 model User {
@@ -102,6 +103,7 @@ model Patient {
   assignedDoctorId Int?
   user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
   pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
+  patientRequests PatientRequest[] @relation("PatientRequests")
 }
 
 model DeviceRequest {
@@ -168,7 +170,9 @@ model Edge {
   from   Node @relation("FromConnection", fields: [fromId], references: [id])
   to     Node @relation("ToConnection", fields: [toId], references: [id])
 }
-
+/*
+REQUESTS
+ */
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
   employeeID             Int
@@ -186,6 +190,17 @@ model PharmacyRequest {
   numberOfPills          Int
   refills                Int
   additionalInstructions String
+}
+
+model PatientRequest{
+  patientRequestID       Int     @id @default(autoincrement())
+  patientID             Int
+  patient              Patient    @relation("PatientRequests", fields: [patientID], references: [id])
+  priority  RequestPriority
+  department  Department
+  location  Buildings
+  status  RequestStatus
+  requestTime    DateTime        @default(now())
 }
 
 model Departments {

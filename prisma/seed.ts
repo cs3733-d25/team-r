@@ -71,6 +71,21 @@ async function main() {
     });*/
 
 
+
+    // Create employees with correct schema fields
+    const employee1 = await prisma.employee.create({
+        data: {
+            firstName: 'John',
+            lastName: 'Doe',
+            department: Department.Ambulatory_UrgentCare,
+            role: EmployeeRole.DOCTOR,
+            onShift: true,
+            user: {
+                connect: { id: user1.id }
+            }
+        }
+    });
+/*
     // Create employees with correct schema fields
 
     await prisma.employee.createMany({
@@ -80,6 +95,7 @@ async function main() {
     });
 /*
     await prisma.employee.create({data:{ firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true, user: { connect: { id: user1.id }}}});
+
     const employee2 = await prisma.employee.create({
         data: {
             firstName: 'Jane',
@@ -144,6 +160,8 @@ async function main() {
                 connect: { id: user8.id }
             }
         }
+    });
+*/
     });*/
 
     // Create patients
@@ -175,10 +193,10 @@ async function main() {
                 connect: { id: user7.id }
             },
             assignedDoctor: {
-                connect: { id: employee2.id }
+                connect: { id: employee1.id }
             }
         }
-    });*/
+    });
 
     await prisma.departments.createMany({
         data:[
