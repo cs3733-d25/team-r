@@ -20,12 +20,12 @@ interface SubmittedTransport {
     patientID: string;  //PK
     employeeID: string;
     employeeName: string;
-    currentBuilding : Building;  //FK
-    desiredBuilding : Building;
+    currentBuilding : Building | string;  //FK
+    desiredBuilding : Building | string;
     transportationType: string; //radio?
 
-    priority: RequestPriority;
-    department: Department;
+    priority: RequestPriority |string;
+    department: Department | string;
     comments: string;
     timestamp: string;
 
@@ -37,11 +37,11 @@ const TransportationRequestForm = () => {
         patientID: '',
         employeeID: '',
         employeeName: '',
-        currentBuilding :Building.PATRIOT_PLACE_22,
-        desiredBuilding : Building.PATRIOT_PLACE_20,
+        currentBuilding :"",
+        desiredBuilding : "",
         transportationType: '',
-        priority: RequestPriority.medium,
-        department: Department.AMBULATORY_URGENCARE,
+        priority: "",
+        department: "",
         comments: '',
 
     });
@@ -81,12 +81,12 @@ const TransportationRequestForm = () => {
                     patientID: '',
                     employeeName:'',
                     employeeID: '',
-                    currentBuilding :Building.PATRIOT_PLACE_22,
-                    desiredBuilding : Building.PATRIOT_PLACE_20,
+                    currentBuilding :"",
+                    desiredBuilding : "",
                     transportationType: '',
                     comments: '',
-                    priority: RequestPriority.medium,
-                    department: Department.AMBULATORY_URGENCARE,
+                    priority: "",
+                    department: "",
                 });
             }
         } catch (error) {
@@ -280,6 +280,7 @@ const TransportationRequestForm = () => {
                                         value={formData.priority}
                                         onChange={ handleChange}
                                     >
+                                        <option value="" disabled hidden>Select Priority</option>
                                         {Object.values(RequestPriority).map((priority) => (
                                             <option key={priority} value={priority}>
                                                 {priority}
@@ -302,6 +303,7 @@ const TransportationRequestForm = () => {
                                         value={formData.department}
                                         onChange={ handleChange}
                                     >
+                                        <option value="" disabled hidden>Select Department</option>
                                         {Object.values(Department).map((dept) => (
                                             <option key={dept} value={dept}>
                                                 {dept}
@@ -328,6 +330,7 @@ const TransportationRequestForm = () => {
                                             const differentBuild = (build != formData.desiredBuilding);
                                             return(
                                                 <>
+                                                    <option value="" disabled hidden>Select Current Building</option>
                                                     { differentBuild?<option key={build} value={build}>
                                                         {build}
                                                     </option>:null}
@@ -353,6 +356,7 @@ const TransportationRequestForm = () => {
                                             const differentBuild = build !== formData.currentBuilding;
                                             return(
                                                 <>
+                                                    <option value="" disabled hidden>Select Desired Building</option>
                                                     { differentBuild?<option key={build} value={build}>
                                                         {build}
                                                     </option>:null}
