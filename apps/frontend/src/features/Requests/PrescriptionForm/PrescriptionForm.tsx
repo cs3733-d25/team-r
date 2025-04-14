@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Department, RequestPriority } from '../RequestEnums.tsx';
 import axios from 'axios';
-import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import {Select, SelectGroup, SelectItem} from "@/components/ui/select.tsx";
+import { Select, SelectGroup, SelectItem } from '@/components/ui/select.tsx';
+import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 
 interface SubmittedPrescription {
     employee: string;
@@ -15,6 +15,8 @@ interface SubmittedPrescription {
     patientID: string;
     priority: RequestPriority;
     department: Department;
+    numberOfPills: number;
+    refills: number;
     morningPillCount: number;
     middayPillCount: number;
     eveningPillCount: number;
@@ -32,6 +34,8 @@ export const PrescriptionForm = () => {
         patientID: '',
         priority: RequestPriority.medium,
         department: Department.PHARMACY,
+        numberOfPills: 0,
+        refills: 0,
         morningPillCount: 0,
         middayPillCount: 0,
         eveningPillCount: 0,
@@ -77,6 +81,8 @@ export const PrescriptionForm = () => {
                     patientID: '',
                     priority: RequestPriority.medium,
                     department: Department.PHARMACY,
+                    numberOfPills: 0,
+                    refills: 0,
                     morningPillCount: 0,
                     middayPillCount: 0,
                     eveningPillCount: 0,
@@ -107,10 +113,379 @@ export const PrescriptionForm = () => {
 
     return (
         <>
-            <Navbar />
+            <NavbarMGH />
             <div className="p-6 max-w-7xl mx-auto">
                 <h1 className="text-2xl font-bold mb-0">Prescription Request System</h1>
                 <h2 className="text-xl font-bold mb-6">Owen Miller & Keagan Hitt</h2>
+                <Link
+                    key={'Prescription Request Page'}
+                    to={'/prescriptionpage'}
+                    className={
+                        'px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition duration-200'
+                    }
+                >
+                    See All Requests
+                </Link>
+                <br />
+                <br />
+                <div className="bg-secondary rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground">
+                    <div className="p-6">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Employee Name */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Employee Name
+                                        <span className="text-accent">*</span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="employee"
+                                        value={formData.employee}
+                                        onChange={handleChange}
+                                        placeholder="Enter your name"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Employee ID */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Employee ID
+                                        <span className="text-accent">*</span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="employeeID"
+                                        value={formData.employeeID}
+                                        onChange={handleChange}
+                                        placeholder="Enter employee ID"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Patient ID */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Patient ID
+                                        <span className="text-accent">*</span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="patientID"
+                                        value={formData.patientID}
+                                        onChange={handleChange}
+                                        placeholder="Enter patient ID"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Priority */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Priority Level
+                                        <span className="text-xs text-secondary-foreground block">
+                                            EMERGENCY: Immediate attention required
+                                            <br />
+                                            HIGH: Within 1 hour
+                                            <br />
+                                            MEDIUM: Within 4 hours
+                                            <br />
+                                            LOW: Within 24 hours
+                                        </span>
+                                    </Label>
+                                    <select
+                                        name="priority"
+                                        value={formData.priority}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
+                                    >
+                                        {Object.values(RequestPriority).map((priority) => (
+                                            <option key={priority} value={priority}>
+                                                {priority}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Department */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Department
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            Select the department making the prescription request.
+                                        </span>
+                                    </Label>
+                                    <select
+                                        name="department"
+                                        value={formData.department}
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
+                                    >
+                                        {Object.values(Department).map((dept) => (
+                                            <option key={dept} value={dept}>
+                                                {dept}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                {/* Drug Name */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Drug Name
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            Enter the name of the drug being prescribed.
+                                        </span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="drugName"
+                                        value={formData.drugName}
+                                        onChange={handleChange}
+                                        placeholder="Enter the name of the drug being prescribed."
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Drug Quantity */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Drug Quantity
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            Enter the amount of the drug being prescribed.
+                                        </span>
+                                    </Label>
+                                    <Input
+                                        type="number"
+                                        name="numberOfPills"
+                                        value={formData.numberOfPills}
+                                        onChange={handleChange}
+                                        placeholder="Enter the amount of the drug being prescribed."
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Refills */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Refill Quantity
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            Enter the number of refills available.
+                                        </span>
+                                    </Label>
+                                    <Input
+                                        type="number"
+                                        name="refills"
+                                        value={formData.refills}
+                                        onChange={handleChange}
+                                        placeholder="Enter the number of refills available."
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <h2 className={'text-foreground font-bold'}>Instructions for Patient:</h2>
+                            {/* Pill Quantities per Time */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
+                                    Quantity of Drug to be Taken by Patient at Each Time:
+                                </Label>
+                                <div className="flex flex-row justify-center">
+                                    <div className="px-3">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
+                                            Morning:
+                                        </Label>
+                                        <Input
+                                            type="number"
+                                            name="morningPillCount"
+                                            value={formData.morningPillCount}
+                                            onChange={handleChange}
+                                            placeholder="Enter the number of refills available."
+                                            className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
+                                            Midday:
+                                        </Label>
+                                        <Input
+                                            type="number"
+                                            name="middayPillCount"
+                                            value={formData.middayPillCount}
+                                            onChange={handleChange}
+                                            placeholder="Enter the number of refills available."
+                                            className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
+                                            Evening:
+                                        </Label>
+                                        <Input
+                                            type="number"
+                                            name="eveningPillCount"
+                                            value={formData.eveningPillCount}
+                                            onChange={handleChange}
+                                            placeholder="Enter the number of refills available."
+                                            className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
+                                            Bedtime:
+                                        </Label>
+                                        <Input
+                                            type="number"
+                                            name="nightPillCount"
+                                            value={formData.nightPillCount}
+                                            onChange={handleChange}
+                                            placeholder="Enter the number of refills available."
+                                            className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Days */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
+                                    Days per Week to Take Drug:
+                                </Label>
+                                <div className="flex flex-row justify-center">
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            1
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            2
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            3
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            4
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            5
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            6
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            7
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Additional Instructions */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Additional Instructions
+                                    <span className="text-xs text-secondary-foreground block">
+                                        Include any additional instructions necessary to take the
+                                        prescription.
+                                    </span>
+                                </Label>
+                                <textarea
+                                    name="additionalInstructions"
+                                    value={formData.additionalInstructions}
+                                    onChange={handleChange}
+                                    placeholder="Include any additional instructions necessary to take the prescription."
+                                    rows={4}
+                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                />
+                            </div>
+
+                            {/* Submit Button */}
+                            <div className="flex justify-end">
+                                <Button
+                                    type="submit"
+                                    className="px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-200"
+                                >
+                                    Submit Request
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {/*formData.days*/}
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
@@ -208,174 +583,6 @@ export const PrescriptionForm = () => {
                         </div>
                     </div>
                 )}
-                <Link
-                    key={'Prescription Request Page'}
-                    to={'/prescriptionpage'}
-                    className={
-                        'px-6 py-2 bg-secondary text-white font-medium rounded-md hover:bg-secondary-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition duration-200'
-                    }
-                >
-                    See All Requests
-                </Link>
-                <br />
-                <br />
-                <div className="bg-background rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground">
-                    <div className="p-6">
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Employee Name */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee Name
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="employee"
-                                        value={formData.employee}
-                                        onChange={handleChange}
-                                        placeholder="Enter your name"
-                                        className="w-full px-4 py-2 rounded-md border border-border"
-                                        required
-                                    />
-                                </div>
-
-                                {/* Employee ID */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee ID
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="employeeID"
-                                        value={formData.employeeID}
-                                        onChange={handleChange}
-                                        placeholder="Enter employee ID"
-                                        className="w-full px-4 py-2 rounded-md border border-border"
-                                        required
-                                    />
-                                </div>
-
-                                {/* Patient ID */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Patient ID
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="patientID"
-                                        value={formData.patientID}
-                                        onChange={handleChange}
-                                        placeholder="Enter patient ID"
-                                        className="w-full px-4 py-2 rounded-md border border-border"
-                                        required
-                                    />
-                                </div>
-
-                                {/* Priority */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Priority Level
-                                        <span className="text-xs text-muted-foreground block">
-                                            EMERGENCY: Immediate attention required
-                                            <br />
-                                            HIGH: Within 1 hour
-                                            <br />
-                                            MEDIUM: Within 4 hours
-                                            <br />
-                                            LOW: Within 24 hours
-                                        </span>
-                                    </Label>
-                                    <select name="priority"
-                                            value={formData.priority}
-                                            onChange={handleChange}
-                                            className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                    >
-                                            {Object.values(RequestPriority).map((priority) => (
-                                                <option key={priority} value={priority}>
-                                                    {priority}
-                                                </option>
-                                            ))}
-                                    </select>
-                                </div>
-
-                                {/* Department */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Department
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-muted-foreground block">
-                                            Select the department making the prescription request.
-                                        </span>
-                                    </Label>
-                                    <select
-                                        name="department"
-                                        value={formData.department}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                    >
-                                        {Object.values(Department).map((dept) => (
-                                            <option key={dept} value={dept}>
-                                                {dept}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-
-                            {/* Drug Name */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Drug Name
-                                    <span className="text-accent">*</span>
-                                    <span className="text-xs text-muted-foreground block">
-                                        Enter the name of the drug being prescribed.
-                                    </span>
-                                </Label>
-                                <Input
-                                    type="text"
-                                    name="drugName"
-                                    value={formData.drugName}
-                                    onChange={handleChange}
-                                    placeholder="Enter the name of the drug being prescribed."
-                                    className="w-full px-4 py-2 rounded-md border border-border"
-                                    required
-                                />
-                            </div>
-
-                            {/* Additional Instructions */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Additional Instructions
-                                    <span className="text-xs text-muted-foreground block">
-                                        Include any additional instructions necessary to take the
-                                        prescription.
-                                    </span>
-                                </Label>
-                                <textarea
-                                    name="additionalInstructions"
-                                    value={formData.additionalInstructions}
-                                    onChange={handleChange}
-                                    placeholder="Include any additional instructions necessary to take the prescription."
-                                    rows={4}
-                                    className="w-full px-4 py-2 rounded-md border border-border"
-                                />
-                            </div>
-
-                            {/* Submit Button */}
-                            <div className="flex justify-end">
-                                <Button
-                                    type="submit"
-                                    className="px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-200"
-                                >
-                                    Submit Request
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </>
     );
