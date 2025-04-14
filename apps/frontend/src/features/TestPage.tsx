@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button"
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 function TestPage(){
     return (
-        <Button>
-            Test Button
-        </Button>
+        <NavbarMGH/>
     );
 }
 
