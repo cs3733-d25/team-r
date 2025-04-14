@@ -59,7 +59,7 @@ export const PrescriptionForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('api/prescription', {
+            const response = await axios.post('api/pharmacy', {
                 ...formData,
                 priority: formData.priority.toString(),
             });
