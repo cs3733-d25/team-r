@@ -12,6 +12,8 @@ import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import {PrescriptionForm} from "../features/Requests/PrescriptionForm/PrescriptionForm.tsx";
 import {PrescriptionPage} from "../features/Requests/PrescriptionForm/PrescriptionPage.tsx";
+import PatientRequest from "@/features/Requests/PatientRequest/PatientRequest.tsx";
+import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 
 
 function App() {
@@ -33,7 +35,9 @@ function App() {
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
                 { path: 'prescription', element: <PrescriptionForm /> },
-                { path: 'prescriptionpage', element: <PrescriptionPage /> }
+                { path: 'prescriptionpage', element: <PrescriptionPage /> },
+                { path: 'patientrequest', element: <PatientRequestForm /> },
+                { path: 'patientrequestpage', element: <PatientRequest /> }
             ],
         },
     ]);

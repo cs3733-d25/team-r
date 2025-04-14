@@ -11,7 +11,6 @@ function Login() {
 
     const [incorrectLogin, setIncorrectLogin] = useState(''); //to add a popup if the user logs in incorrectly
 
-////////////////////////////////////////////////////////////////////////////
 async function handleLogin(){
     if (!username || !password) return;
     try {
