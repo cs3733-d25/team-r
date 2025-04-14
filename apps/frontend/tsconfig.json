@@ -6,7 +6,12 @@
         "moduleResolution": "bundler",
         "jsx": "react-jsx",
         "resolveJsonModule": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        }
     },
     "include": ["src"],
     "references": [{ "path": "./tsconfig.node.json" }]

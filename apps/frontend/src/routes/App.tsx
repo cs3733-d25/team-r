@@ -7,7 +7,8 @@ import Login from '../features/Login/Login.tsx';
 import MapView from '../features/MapView/MapView.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
-import CSVPage from "../features/CSVFiles/CSVPage.tsx";
+import CSVPage from '../features/CSVFiles/CSVPage.tsx';
+import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import {PrescriptionForm} from "../features/Requests/PrescriptionForm/PrescriptionForm.tsx";
 import {PrescriptionPage} from "../features/Requests/PrescriptionForm/PrescriptionPage.tsx";
@@ -20,7 +21,7 @@ function App() {
             errorElement: <p>Page not found</p>,
             children: [
                 { index: true, element: <HomeMain /> },
-                { path: 'home', element: <HomeMain status={"logged-in"} /> },
+                { path: 'home', element: <HomeMain status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
@@ -29,7 +30,8 @@ function App() {
                 {path: 'csv', element:<CSVPage/>},
                 {path: 'sanitationpage', element: <SanitationRequestPage />},
                 {path: 'prescription', element: <PrescriptionForm />},
-                {path: 'prescriptionpage', element: <PrescriptionPage />}
+                {path: 'prescriptionpage', element: <PrescriptionPage />},
+                { path: "testing", element: <TestPage/> }
             ],
         },
     ]);
