@@ -18,7 +18,8 @@ function App() {
     const router = createBrowserRouter([
         {
             path: '/',
-            errorElement: <p>Page not found</p>,
+            errorElement:
+                <p className={'font-trade'}>Page not found</p>,
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
@@ -27,11 +28,12 @@ function App() {
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <MapView /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
-                {path: 'csv', element:<CSVPage/>},
-                {path: 'sanitationpage', element: <SanitationRequestPage />},
-                {path: 'prescription', element: <PrescriptionForm />},
-                {path: 'prescriptionpage', element: <PrescriptionPage />},
-                { path: "testing", element: <TestPage/> }
+                { path: 'csv', element: <CSVPage /> },
+                { path: 'sanitationpage', element: <SanitationRequestPage /> },
+                { path: 'testing', element: <TestPage /> },
+                { path: 'profile', element: <p>Profile</p> },
+                { path: 'prescription', element: <PrescriptionForm /> },
+                { path: 'prescriptionpage', element: <PrescriptionPage /> }
             ],
         },
     ]);
