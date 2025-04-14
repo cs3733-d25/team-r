@@ -1,9 +1,9 @@
-import Navbar from '../../components/Navbar.tsx';
 import {APIProvider, Map} from '@vis.gl/react-google-maps';
 import {useState} from 'react';
 import axios from 'axios';
 import InternalMap from '../../features/MapView/InternalMap.tsx';
 import Directions from './Directions.tsx';
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 /**
  * MapView component, returns both the Google map and canvas image (floor plan)
@@ -89,7 +89,7 @@ function MapView() {
 
     return (
         <div className="flex flex-col h-screen">
-            <Navbar />
+            <NavbarMGH/>
             <div className="text-4xl text-center p-4 font-bold">
                 <p>Navigate to a Mass General Brigham location</p>
             </div>
