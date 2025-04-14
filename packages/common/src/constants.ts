@@ -7,5 +7,6 @@ export const API_ROUTES = {
     SANITATION: '/api/sanitation',
     CSV: '/api/csv',
     BFS: '/api/bfs',
-    PHARMACY: '/api/pharmacy'
+    PHARMACY: '/api/pharmacy',
+    ENUM: '/api/enum',
 };
