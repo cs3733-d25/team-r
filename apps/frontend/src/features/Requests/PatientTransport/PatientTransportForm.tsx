@@ -4,7 +4,7 @@ import {Department, RequestPriority} from "../RequestEnums.tsx";
 import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
-import {Select, SelectGroup, SelectItem} from "@/components/ui/select.tsx";
+import {Select, SelectItem} from "@/components/ui/select.tsx";
 
 
 // Simple interface for submitted request
