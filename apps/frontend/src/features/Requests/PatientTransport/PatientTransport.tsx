@@ -2,8 +2,10 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
-export function SanitationRequestPage() {
-    const [transport, setTransport] = useState([{transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
+import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
+
+export function TransportRequestPage() {
+    const [transport, setTransport] = useState([{employeeID:null, patientID:null, employeeName:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
     function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
@@ -32,44 +34,47 @@ export function SanitationRequestPage() {
             >
                 Back
             </Link>
-            <table className = {"mx-auto w-200"}>
-                <thead className = {"border-b"}>
-                <tr className={'text-lg border-b'}>
-                    <th className = {"text-center"}>User ID</th>
-                    <th className={"pl-5"}>Transportation Type</th>
-                    <th className={"pl-5"}>Priority</th>
-                    <th className={"pl-5"}>Department</th>
-                    <th className={"pl-5"}>Current Building</th>
-                    <th className={"pl-5"}>Desired Building</th>
-                    <th className={"pl-5"}>Comments</th>
-                    <th className={"pl-5"}>Status</th>
-                    <th className={"pl-5"}>Request Time</th>
-                </tr>
-                </thead>
-                <tbody className = {"text-center"}>
+            <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead>Employee</TableHead>
+                    <TableHead>Patient</TableHead>
+                    <TableHead>Transportation Type</TableHead>
+                    <TableHead >Priority</TableHead>
+                    <TableHead>Department</TableHead>
+                    <TableHead>Current Building</TableHead>
+                    <TableHead>Desired Building</TableHead>
+                    <TableHead>Comments</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Request Time</TableHead>
+                </TableRow>
+                </TableHeader>
+                <TableBody className = {"text-center"}>
                 {transport.map((row,index) =>
                 {
                     return(
                         <>
-                            <tr key = {index} className = { "border-t"}>
-                                <td className={"border-r border-b"}>{row.transportationType}</td>
-                                <td className={"border-r border-b"}>{row.priority}</td>
-                                <td className={"border-r border-b"}>{row.department}</td>
-                                <td className={"border-r border-b"}>{row.currentBuilding}</td>
-                                <td className={"border-r border-b"}>{row.desiredBuilding}</td>
-                                <td className={"border-r border -b"}>{row.comments}</td>
-                                <td className={"border-b"}>{row.status}</td>
-                                <td className={"border-r border-b"}>{row.requestTime}</td>
+                            <TableRow key = {index} >
+                                <TableCell>{row.employeeName}</TableCell>
+                                <TableCell>{row.patientID}</TableCell>
+                                <TableCell >{row.transportationType}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.department}</TableCell>
+                                <TableCell>{row.currentBuilding}</TableCell>
+                                <TableCell>{row.desiredBuilding}</TableCell>
+                                <TableCell>{row.comments}</TableCell>
+                                <TableCell>{row.status}</TableCell>
+                                <TableCell>{row.requestTime}</TableCell>
 
-                            </tr>
+                            </TableRow>
 
                         </>
                     );
 
                 })}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
         </>
     )
 }
-export default SanitationRequestPage;
+export default TransportRequestPage;

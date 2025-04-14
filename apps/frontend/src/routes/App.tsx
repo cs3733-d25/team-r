@@ -12,10 +12,11 @@ import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import {PrescriptionForm} from "../features/Requests/PrescriptionForm/PrescriptionForm.tsx";
 import {PrescriptionPage} from "../features/Requests/PrescriptionForm/PrescriptionPage.tsx";
-import TransportationRequestForm from "@/features/PatientTransport/PatientTransportForm.tsx";
+
 import PatientRequest from "@/features/Requests/PatientRequest/PatientRequest.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
-
+import TransportationRequestForm from "@/features/Requests/PatientTransport/PatientTransportForm.tsx";
+import TransportationRequestPage from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -38,9 +39,10 @@ function App() {
                 { path: 'prescription', element: <PrescriptionForm /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
                 { path: 'patientrequest', element: <PatientRequestForm /> },
-                { path: 'patientrequestpage', element: <PatientRequest /> }
+                { path: 'patientrequestpage', element: <PatientRequest /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
-                { path: 'transport', element: <TransportationRequestForm /> }
+                { path: 'transport', element: <TransportationRequestForm /> },
+                { path: 'transportpage', element: <TransportationRequestPage /> }
             ],
         },
     ]);

@@ -7,6 +7,7 @@ import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
+import {Input} from "@/components/ui/input.tsx";
 
 enum Building {
     PATRIOT_PLACE_22 = "Patriot_Place_22",
@@ -16,7 +17,9 @@ enum Building {
 
 // Simple interface for submitted request
 interface SubmittedTransport {
-    userID: string;  //PK
+    patientID: string;  //PK
+    employeeID: string;
+    employeeName: string;
     currentBuilding : Building;  //FK
     desiredBuilding : Building;
     transportationType: string; //radio?
@@ -31,14 +34,14 @@ interface SubmittedTransport {
 
 const TransportationRequestForm = () => {
     const [formData, setFormData] = useState({
-        userID: '',
-        currentBuilding :"Patriot_Place_22" ,
-        desiredBuilding : "Patriot_Place_20",
+        patientID: '',
+        employeeID: '',
+        employeeName: '',
+        currentBuilding :Building.PATRIOT_PLACE_22,
+        desiredBuilding : Building.PATRIOT_PLACE_20,
         transportationType: '',
-
         priority: RequestPriority.medium,
         department: Department.AMBULATORY_URGENCARE,
-        // room: '',
         comments: '',
 
     });
@@ -75,9 +78,11 @@ const TransportationRequestForm = () => {
 
                 // Reset form
                 setFormData({
-                    userID: '',
-                    currentBuilding :"Patriot_Place_22" ,
-                    desiredBuilding : "Patriot_Place_20",
+                    patientID: '',
+                    employeeName:'',
+                    employeeID: '',
+                    currentBuilding :Building.PATRIOT_PLACE_22,
+                    desiredBuilding : Building.PATRIOT_PLACE_20,
                     transportationType: '',
                     comments: '',
                     priority: RequestPriority.medium,
@@ -105,8 +110,8 @@ const TransportationRequestForm = () => {
         <>
             <NavbarMGH />
             <div className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-6">Transportation Request System</h1>
-                <h2>Made by Alex Lowczyk and Joshua Gifford</h2>
+                <h1 className="text-2xl font-bold mb-0">Transport Request System</h1>
+                <h2 className="text-xl font-bold mb-6">Alex Lowczyk & Joshua Gifford</h2>
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
@@ -140,6 +145,10 @@ const TransportationRequestForm = () => {
                                 Your transportation request has been submitted
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                <div>
+                                    <span className="font-semibold">Employee Name:</span>{' '}
+                                    {submittedTransport.employeeName}
+                                </div>
                                 <div>
                                     <span className="font-semibold">Transportation Type:</span>{' '}
                                     {submittedTransport.transportationType}
@@ -191,27 +200,64 @@ const TransportationRequestForm = () => {
                 >
                     See All Requests
                 </Link>
-                <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <div className="p-6">
+                <div className="bg-background rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground mt-3">
+                    <div className="p-15">
                         <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div >
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Employee Name
+                                    <span className="text-accent">*</span>
+                                </Label>
+                                <Input
+                                    type="text"
+                                    name="employeeName"
+                                    value={formData.employeeName}
+                                    onChange={handleChange}
+                                    placeholder="Enter your name"
+                                    className="w-full px-4 py-2 rounded-md border border-border"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Patient ID
+                                    <span className="text-accent">*</span>
+                                </Label>
+                                <Input
+                                    type="text"
+                                    name="patientID"
+                                    value={formData.patientID}
+                                    onChange={handleChange}
+                                    placeholder="Enter patient ID"
+                                    className="w-full px-4 py-2 rounded-md border border-border"
+                                    required
+                                />
+                            </div>
+                            </div>
                             {/* Transportation Type */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Transportation Type
-                                    <span className="text-red-500">*</span>
-                                    <span className="text-xs text-gray-500 block">
+                                    <span className="text-accent">*</span>
+                                    <span className="text-xs block">
                                         e.g., Ambulance, Helicopter, etc
                                     </span>
                                 </Label>
-                                <RadioGroup>
-                                    <RadioGroupItem value="non-emergency ambulance" id="non-emergency ambulance" />
-                                    <Label htmlFor="ambulance">Non Emergency Ambulance</Label>
-                                    <RadioGroupItem value="emergency ambulance" id="emergency ambulance" />
-                                    <Label htmlFor="ambulance">Emergency Ambulance</Label>
-                                    <RadioGroupItem value="helicopter" id="helicopter" />
-                                    <Label htmlFor="helicopter">Helicopter</Label>
-
-
+                                <RadioGroup defaultValue={"non-emergency ambulance" }>
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="non-emergency ambulance" id="non-emergency ambulance"  />
+                                        <Label htmlFor="non-emergency ambulance" >Non-Emergency Ambulance</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="emergency ambulance"  id="emergency ambulance"  />
+                                        <Label htmlFor="emergency ambulance" >Emergency Ambulance</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2 pb-5">
+                                        <RadioGroupItem value="helicopter"  id="helicopter"  />
+                                        <Label htmlFor="helicopter" >Helicopter</Label>
+                                    </div>
                                 </RadioGroup>
 
 
@@ -241,12 +287,12 @@ const TransportationRequestForm = () => {
                                         ))}
                                     </select>
                                 </div>
-
+                            </div>
                                 {/* Department */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Department
-                                        <span className="text-red-500">*</span>
+                                        <span className="text-accent">*</span>
                                         <span className="text-xs text-gray-500 block">
                                             Select the department requiring transportation
                                         </span>
@@ -266,37 +312,56 @@ const TransportationRequestForm = () => {
 
                                 {/* Current Building */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Current Building
-                                        <span className="text-red-500">*</span>
-                                    </label>
+                                        <span className="text-accent">*</span>
+                                    </Label>
                                     <select
                                         name="currentBuilding"
                                         value={formData.currentBuilding}
                                         onChange={ handleChange}
+
                                     >
-                                        {Object.values(Building).map((build) => (
-                                            <option key={build} value={build}>
-                                                {build}
-                                            </option>
-                                        ))}
+
+                                        {Object.values(Building).map((build) =>
+                                        {
+                                            const differentBuild = (build != formData.desiredBuilding);
+                                            return(
+                                                <>
+                                                    { differentBuild?<option key={build} value={build}>
+                                                        {build}
+                                                    </option>:null}
+
+                                                </>
+                                            );
+
+                                        })}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Desired Building
-                                        <span className="text-red-500">*</span>
-                                    </label>
+                                        <span className="text-accent">*</span>
+                                    </Label>
                                     <select
                                         name="desiredBuilding"
                                         value={formData.desiredBuilding}
                                         onChange={ handleChange}
                                     >
-                                        {Object.values(Building).map((build) => (
-                                            <option key={build} value={build}>
-                                                {build}
-                                            </option>
-                                        ))}
+                                        {Object.values(Building).map((build) =>
+                                        {
+                                            const differentBuild = build !== formData.currentBuilding;
+                                            return(
+                                                <>
+                                                    { differentBuild?<option key={build} value={build}>
+                                                        {build}
+                                                    </option>:null}
+
+                                                </>
+                                            );
+
+                                        })}
+
                                     </select>
                                 </div>
                             </div>
