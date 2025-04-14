@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form"
 import MedDeviceDropdown from "./MedDeviceDropdown.tsx";
-import PriorityRequest from "../../components/PriorityRequest.tsx";
+import PriorityRequest from "../../../components/PriorityRequest.tsx";
 
 import {
     Form,
@@ -11,7 +11,7 @@ import {
     FormControl,
     FormDescription,
     FormMessage,
-} from "@/components/ui/form";
+} from "@/components/ui/form.tsx";
 
 interface DeviceRequest {
     selectDevice: string;
@@ -70,7 +70,7 @@ const DeviceReqForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Room</FormLabel>
                                 <FormControl>
-                                    <input {...field} className="border p-1 rounded w-full" required />
+                                    <input {...field} className="border p-1 rounded w-full bg-input" required />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -84,7 +84,7 @@ const DeviceReqForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Department</FormLabel>
                                 <FormControl>
-                                    <input {...field} className="border p-1 rounded w-full" required />
+                                    <input {...field} className="border p-1 rounded w-full bg-input" required />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -98,7 +98,7 @@ const DeviceReqForm: React.FC = () => {
                             <FormItem>
                                 <FormLabel>Additional Comment(s)</FormLabel>
                                 <FormControl>
-                                    <input {...field} className="border p-1 rounded w-full" required />
+                                    <input {...field} className="border p-1 rounded w-full bg-input" required />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

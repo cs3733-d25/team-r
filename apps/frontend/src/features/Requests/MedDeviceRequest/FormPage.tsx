@@ -1,11 +1,11 @@
 import React from 'react';
 import DeviceReqForm from './DeviceReqForm.tsx';
-import Navbar from '../../components/Navbar.tsx';
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 const FormPage = () => {
     return (
         <>
-            <Navbar />
+            <NavbarMGH />
             <div className="p-10">
                 {/* this is a bad layout, you should really separate
                 DeviceReqForm into multiple components that build the website like:
