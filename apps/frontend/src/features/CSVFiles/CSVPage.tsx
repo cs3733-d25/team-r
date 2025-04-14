@@ -1,8 +1,10 @@
 import {useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from "../../components/Navbar.tsx";
-
-
+import { Button } from "@/components/ui/button"
+import {Label} from "@/components/ui/label"
+import {Input} from "@/components/ui/input.tsx"
+import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
 export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [csvfile, setFile] = useState<File | null>(null);
@@ -83,53 +85,49 @@ export function CSVPage() {
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
             <h2 className = {"text-xl text-center"}>Directory Table:</h2>
-           <table className = {"mx-auto w-200"}>
-                <thead className = {"border-b"}>
-                <tr className={'text-lg border-b'}>
-                    <th className={"pl-5"}>Name</th>
-                    <th className={"pl-5"}>Floor Number</th>
-                </tr>
-                </thead>
-                <tbody className = {"text-left"}>
+           <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead >Name</TableHead>
+                    <TableHead >Floor Number</TableHead>
+                </TableRow>
+                </TableHeader>
+                <TableBody >
                 {directoryTable.map((row,index) =>
                 { const newFloor = index === 0 || row.floorNumber != directoryTable[index-1].floorNumber;
                     const newPlace = index === 0 || row.building != directoryTable[index-1].building;
                     return(
 <>
-    {(newPlace && row.building===("PATRIOT_PLACE_22"))?<th colSpan={2} className={"items-center text-center text-lg pl-30 border-t"}>22 Patriot Place</th>:null}
-    {(newPlace && row.building===("PATRIOT_PLACE_20"))?<th colSpan={2} className={"items-center text-center text-lg pl-30 border-t"}>20 Patriot Place</th>:null}
-    <tr key = {index} className = {`${newFloor? "border-t":""}`}>
-                       <td className={"border-r"}>{row.name}</td>
-        {newFloor? <td className={"text-lg"}>{row.floorNumber}</td>:null}
+    {(newPlace && row.building===("PATRIOT_PLACE_22"))?<TableHead className = {"pl-30 text-center"} >22 Patriot Place</TableHead>:null}
+    {(newPlace && row.building===("PATRIOT_PLACE_20"))?<TableHead className = {"pl-30 text-center"}>20 Patriot Place</TableHead>:null}
+    <TableRow key = {index}>
+                       <TableCell >{row.name}</TableCell>
+        {newFloor? <TableCell >{row.floorNumber}</TableCell>:null}
 
-                    </tr>
+                    </TableRow>
 
 </>
                     );
 
                 })}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
             <br />
-            <form>
                 <div className={'absolute left-1/4 mr-10'}>
-                    <label htmlFor="ImportCSV">Import CSV File:  </label>
-                    <input
+                    <Label htmlFor="ImportCSV">Import CSV File:  </Label>
+                    <Input
                         type="file"
                         name="ImportCSV"
                         accept=".csv"
                         onChange={handleFileChange}
-                        className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 "}
-                    ></input>
+                    ></Input>
                 </div>
                 <div className={'flex absolute right-1/4 ml-10'}>
-                    <button id="ExportCSV" name="ExportCSV" onClick ={handleExport} className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}>Export</button>
+                    <Button variant = "default" id="ExportCSV" name="ExportCSV" onClick ={handleExport}>Export</Button>
                 </div>
                 <div className={'flex absolute left-1/4 pt-15 pb-20'}>
-                    <button id="SaveCSV" name="SaveCSV" onClick = {handleSave} className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}>Save</button>
+                    <Button variant="default" id="SaveCSV" name="SaveCSV" onClick = {handleSave}>Save</Button>
                 </div>
-
-            </form>
         </div>
     );
 }
