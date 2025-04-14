@@ -54,6 +54,7 @@ async function main() {
             {nodeID: '150.30', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 338.74, ycoord: 702.50, longName: 'Corridor 150.30', shortName: 'Corridor 150.30',},
             {nodeID: '150.36', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 311.24, ycoord: 672.50, longName: 'Corridor 150.36', shortName: 'Corridor 150.36',},
             {nodeID: '130.00', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 324.74, ycoord: 247.00, longName: 'Waiting Room 130.00', shortName: 'Waiting Room 130.00',}
+            // TODO: add 3rd floor node to connect bridge
         ],
     });
 
@@ -122,6 +123,8 @@ async function main() {
             { fromID: '3104', toID: '3S', fromX: null, fromY: null, toX: null, toY: null },
             { fromID: '3S', toID: '3112', fromX: null, fromY: null, toX: null, toY: null },
             { fromID: '3112', toID: 'ST03', fromX: null, fromY: null, toX: null, toY: null }
+            // TODO: connect elevator and stairs with floor 4
+            // TODO: connect bridge
         ]
     });
 
@@ -140,6 +143,7 @@ async function main() {
             { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
             { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
             { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'},
+
         ]
     });
 
@@ -151,7 +155,10 @@ async function main() {
             { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: 350.75, fromY: 455.50, toX: 419.75, toY: 455.00 },
             { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
             { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
+            { fromID:'checkIn4000B', toID:'rightWaitingHallway', fromX: 319.25, fromY: 654.50, toX: 250.25, toY: 633.50 },
             { fromID:'', toID:'', fromX: null, fromY: null, toX: null, toY: null }
+            // TODO: finish paths in patriot 22 floor 4
+            // TODO: connect elevator and stairs with floor 3
         ]
     });
 
