@@ -497,8 +497,8 @@ export const PrescriptionForm = () => {
 
                 {/* Confirmation Card */}
                 {submittedPrescription && !submitStatus?.isError && (
-                    <div className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-secondary">
-                        <div className="bg-secondary text-secondary-foreground font-bold px-4 py-2 flex items-center">
+                    <div className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                        <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-6 w-6 mr-2"
@@ -570,12 +570,12 @@ export const PrescriptionForm = () => {
                                     {submittedPrescription.timestamp}
                                 </div>
                             </div>
-                            <div className="mt-3 text-sm text-gray-600">
+                            <div className="mt-3 text-sm text-secondary-foreground">
                                 The prescription request has been submitted and will be filled.
                             </div>
                             <button
                                 onClick={() => setSubmittedPrescription(null)}
-                                className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-200"
+                                className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
                             >
                                 Dismiss
                             </button>
