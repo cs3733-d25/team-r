@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
+import {Navbar2} from "@/components/Navbar2.tsx";
+import {LabelList} from "recharts";
+import {Label} from "@/components/ui/label.tsx";
 
 function TestPage(){
     return (
-        <Button>
-            Test Button
-        </Button>
+        <Navbar2/>
     );
 }
 
