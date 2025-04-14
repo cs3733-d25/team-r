@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 export function PrescriptionPage() {
     const [prescription, setPrescription] = useState([{
@@ -45,11 +46,11 @@ export function PrescriptionPage() {
 
     return (
         <>
-            <Navbar />
-            <h1 className = {"bold text-3xl text-center pb-2"}>Sanitation Requests</h1>
+            <NavbarMGH />
+            <h1 className = {"bold text-3xl text-center pb-2"}>Prescription Requests</h1>
             <Link
-                key={'Sanitation Form Page'}
-                to={'/sanitation'}
+                key={'Prescription Form Page'}
+                to={'/prescription'}
                 className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 ml-10"}
             >
                 Back
