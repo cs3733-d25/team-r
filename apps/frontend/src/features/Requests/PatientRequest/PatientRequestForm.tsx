@@ -9,9 +9,9 @@ import {Link} from "react-router-dom";
 interface SubmittedPatientRequest{
     patientID: string;
     assignedEmpID:string;
-    priority: RequestPriority;
-    department: Department;
-    location: Buildings;
+    priority: RequestPriority | string;
+    department: Department | string;
+    location: Buildings | string;
     comment: string;
     time: string;
     //status: RequestStatus | null;
@@ -22,9 +22,9 @@ export const PatientRequestForm = () => {
 
         patientID: "",
         assignedEmpID:"",
-        priority: RequestPriority.medium,
-        department: Department.PHARMACY,
-        location: Buildings.CHESTNUT_HILL,
+        priority: "",
+        department: "",
+        location: "",
         comment: "",
         time: new Date().toString(),
         //status: null
@@ -63,9 +63,9 @@ export const PatientRequestForm = () => {
 
                     patientID: "",
                     assignedEmpID:"",
-                    priority: RequestPriority.medium,
-                    department: Department.PHARMACY,
-                    location: Buildings.CHESTNUT_HILL,
+                    priority: "",
+                    department: "",
+                    location: "",
                     comment: "",
                     time: new Date().toLocaleString(),
                     //status: null
@@ -196,6 +196,7 @@ export const PatientRequestForm = () => {
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
                                 >
+                                    <option value="" disabled hidden>Select Priority</option>
                                     {Object.values(RequestPriority).map(priority => (
                                         <option key={priority} value={priority}>
                                             {priority}
@@ -219,6 +220,7 @@ export const PatientRequestForm = () => {
                                     onChange={handleChange}
                                     className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
                                 >
+                                    <option value="" disabled hidden>Select a Department</option>
                                     {Object.values(Department).map(dept => (
                                         <option key={dept} value={dept}>
                                             {dept}
@@ -243,6 +245,7 @@ export const PatientRequestForm = () => {
                                 onChange={handleChange}
                                 className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
                             >
+                                <option value="" disabled hidden>Select a Location</option>
                                 {Object.values(Buildings).map(loc => (
                                     <option key={loc} value={loc}>
                                         {loc}

@@ -1,13 +1,13 @@
 import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import { $Enums, Prisma } from "../../../../packages/database";
+import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 import {
   RequestPriority,
   Department,
   Buildings,
   RequestStatus,
-} from "../../../../packages/database";
+} from "database";
 
 const router: Router = express.Router();
 router.get("/", async function (req: Request, res: Response) {
@@ -33,39 +33,19 @@ function parseEnum<T extends { [key: string]: string | number }>(
   }
   throw new Error(`Invalid enum value: ${value}`);
 }
-// a function to cast a string to a RequestPriority enum type
-function parseRequestPriority(value: string): RequestPriority {
-  return RequestPriority[value as keyof typeof RequestPriority];
-}
-// a function to cast a string to a Department enum type
-function parseDepartment(value: string): Department {
-  return Department[value as keyof typeof Department];
-}
-// a function to cast a string to a Department enum type
-function parseBuilding(value: string): Buildings {
-  return Buildings[value as keyof typeof Buildings];
-}
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a patient request");
   const request = req.body;
 
   try {
-    // console.log(parseRequestPriority(request.priority));
-    console.log("priority: ", request.priority);
-    console.log("unparsed department: ", request.department);
-    console.log("parseDepartment parse: ", parseDepartment(request.department));
-    console.log("parseenum parse: ", parseEnum(Department, request.department));
-    console.log("pare priority: ", parseRequestPriority(request.priority));
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
-        //requestType: request.sanitationType,
-        patient: {connect: {id: parseInt(request.patientID, 10)}},
-        priority: parseRequestPriority(request.priority),
-        department: parseDepartment(request.department),
+        patient: { connect: { id: parseInt(request.patientID, 10) } },
+        priority: parseEnum(RequestPriority, request.priority),
+        department: parseEnum(Department, request.department),
         location: parseEnum(Buildings, request.location),
         status: RequestStatus.cancelled,
-        //user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });
     // console.log(createRequest);
