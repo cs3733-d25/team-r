@@ -374,7 +374,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="1"
                                             onChange={handleChange}
                                             required
                                         />
@@ -386,7 +386,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="2"
                                             onChange={handleChange}
                                             required
                                         />
@@ -398,7 +398,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="3"
                                             onChange={handleChange}
                                             required
                                         />
@@ -410,7 +410,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="4"
                                             onChange={handleChange}
                                             required
                                         />
@@ -422,7 +422,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="5"
                                             onChange={handleChange}
                                             required
                                         />
@@ -434,7 +434,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="6"
                                             onChange={handleChange}
                                             required
                                         />
@@ -446,7 +446,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="7"
                                             onChange={handleChange}
                                             required
                                         />
@@ -485,7 +485,6 @@ export const PrescriptionForm = () => {
                         </form>
                     </div>
                 </div>
-                {/*formData.days*/}
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
