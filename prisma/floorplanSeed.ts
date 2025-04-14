@@ -4,7 +4,27 @@ import { NodeType, Building } from "../packages/database";
 const prisma = new PrismaClient();
 
 async function main() {
-    // chestnut hill
+    await prisma.node.createMany({
+        data:[
+            {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'canopyEntrance'},
+            {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'leftEntrance'},
+            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'frontLot'},
+            {nodeID: 'leftWaiting', nodeType: NodeType.other, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'leftWaiting'},
+            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'leftLot'},
+            {nodeID: 'specialtyCheckIn', nodeType: NodeType.reception, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'specialtyCheckIn'},
+            {nodeID: 'canopyEntranceHallway', nodeType: NodeType.hallway, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'canopyEntranceHallway'},
+        ]
+    })
+
+    await prisma.edge.createMany({
+        data:[
+            {fromID: 'frontLot', toID: 'canopyEntrance', fromX: null, fromY: null, toX: null, toY: null,},
+            {fromID: 'leftLot', toID: 'leftEntrance', fromX: null, fromY: null, toX: null, toY: null,},
+            {fromID: 'leftEntrance', toID: 'leftWaiting', fromX: null, fromY: null, toX: null, toY: null,},
+            {fromID: 'canopyEntrance', toID: 'canopyEntranceHallway', fromX: null, fromY: null, toX: null, toY: null},
+            {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: null, fromY: null, toX: null, toY: null},
+        ]
+    })
 
 
     // patriot 20 floor 1
@@ -126,7 +146,14 @@ async function main() {
     await prisma.edge.createMany({
         data: [
             { fromID:'rightEntrance4', toID:'checkIn4000B', fromX: null, fromY: null, toX: null, toY: null },
-        ]
+            { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'elevatorLobby4A', toID:'lobbyStairsHallway', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'rightEntrance4', toID:'rightWaitingHallway', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'', toID:'', fromX: null, fromY: null, toX: null, toY: null },
     });
 
     console.log('Database seeded successfully!');
