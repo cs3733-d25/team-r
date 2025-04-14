@@ -1,20 +1,20 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Bell, User } from 'lucide-react';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-import {Label} from "@/components/ui/label.tsx";
+import { Bell, Menu, User } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Label } from '@/components/ui/label.tsx';
+import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 
 export function NavbarMGH() {
+    // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
 
     return (
-        <header className="sticky top-0 z-40  border-b bg-primary">
+        // main header
+        <header className="sticky top-0 z-40 border-b bg-primary">
             <div className="flex h-16 items-center px-4 md:px-6">
+                {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
                     <a href="/" className="flex items-center">
                         <img
@@ -28,66 +28,74 @@ export function NavbarMGH() {
                     </a>
                 </div>
 
-                {/* Desktop Navigation */}
+                {/* Desktop Navigation - default*/}
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
                     </Button>
-                    <Button variant="ghost" asChild>
-                        <a href="/mapView">Map</a>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                        <a href="/sanitation">Make Request</a>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                        <a href="/csv">Database</a>
-                    </Button>
+                    <HoverPopoverNavLink label={"Navigate"} href={"/mapView"} items={[
+                        { label: 'Patriot Place', href: '/mapView' },
+                        { label: 'Chestnut Hill', href: '/mapView' },
+                    ]}/>
+                    <HoverPopoverNavLink label={"Request a Service"} href={"/sanitation"} items={[
+                        { label: 'Sanitation', href: '/sanitation' },
+                        { label: 'Medical Device', href: '/servicereqs' },
+                    ]}/>
+
+                    <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
+                        { label: 'Import a CSV', href: '/csv' },
+                        { label: 'Export CSV', href: '/csv' },
+                    ]
+                    }/>
                 </nav>
 
+                {/* Icons on left */}
                 <div className="ml-auto flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="rounded-full">
+                    {/* Bell currently non-functional*/}
+                    <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
                         <Bell className="h-5 w-5" />
                     </Button>
-
                     <Popover>
                         <PopoverTrigger>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="rounded-full"
-                            >
+                            <Button variant="ghost" size="icon" className="rounded-full">
                                 <User className="h-5 w-5" />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-56" align="end" sideOffset={5}>
                             <div className="grid gap-3 p-2">
-                                <Label
-                                    className={"font-trade text-base justify-center"}
-                                >
+                                <Label className={'font-trade text-base justify-center'}>
                                     Hi, User!
                                 </Label>
                                 <div className="border-t"></div>
                                 <Button
-                                    variant={"ghostPopover"}
+                                    variant={'ghostPopover'}
+                                    onClick={() => alert("This button doesn't work yet! - Akaash")}
                                 >
                                     Profile
                                 </Button>
                                 <Button
-                                    variant={"ghostPopover"}
+                                    variant={'ghostPopover'}
+                                    onClick={() => alert("This button doesn't work yet! - Akaash")}
                                 >
                                     Settings
                                 </Button>
                                 <div className="border-t"></div>
-                                <Button
-                                variant={"ghostDestructive"}
-                                >
-                                    Sign out
+                                <Button variant={'ghostDestructive'}>
+                                    <a href={'/'}>Sign out</a>
                                 </Button>
                             </div>
                         </PopoverContent>
                     </Popover>
 
                     {/* Mobile Menu Button */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="md:hidden"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <Menu className="h-5 w-5" />
+                    </Button>
                 </div>
             </div>
 
@@ -102,9 +110,14 @@ export function NavbarMGH() {
                     <span className="font-trade-condensed text-xl font-bold text-primary">
                         MyApp
                     </span>
-                    <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>
+                    <Button
+                        variant="ghost"
+                        className={'flex items-center'}
+                        size="icon"
+                        onClick={() => setIsOpen(false)}
+                    >
                         <span className="sr-only">Close</span>
-                        <span className="text-xl">×</span>
+                        <span className="text-xl relative -top-1">x</span>
                     </Button>
                 </div>
                 <nav className="flex flex-col gap-4 p-4">
@@ -112,10 +125,10 @@ export function NavbarMGH() {
                         <a href="/directory">Directories</a>
                     </Button>
                     <Button variant="ghost" asChild>
-                        <a href="/mapView">Map</a>
+                        <a href="/mapView">Navigate</a>
                     </Button>
                     <Button variant="ghost" asChild>
-                        <a href="/sanitation">Make Request</a>
+                        <a href="/sanitation">Request a Service</a>
                     </Button>
                     <Button variant="ghost" asChild>
                         <a href="/csv">Database</a>
