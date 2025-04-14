@@ -89,20 +89,20 @@ async function main() {
     // patriot 22 floor 3
     await prisma.node.createMany({
         data: [
-            {nodeID: 'ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Stair ST02', shortName: 'Stair ST02'},
-            {nodeID: '3000C', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Copy 3000C', shortName: 'Copy 3000C'},
-            {nodeID: '3E', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Corridor 3E', shortName: 'Corridor 3E'},
-            {nodeID: '3001', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Touchdown 3001', shortName: 'Touchdown 3001'},
-            {nodeID: '3000A', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Check-In 3000A', shortName: 'Check-In 3000A'},
-            {nodeID: 'ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Tenant Stair ST01', shortName: 'Tenant Stair ST01'},
-            {nodeID: '3A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Elevator 3A', shortName: 'Elevator 3A'},
-            {nodeID: '3B', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Corridor 3B', shortName: 'Corridor 3B'},
-            {nodeID: '307', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Bridge 307', shortName: 'Bridge 307'},
-            {nodeID: '3000B', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Waiting 3000B', shortName: 'Waiting 3000B'},
-            {nodeID: '3104', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'EQ Alcohol 2104', shortName: 'EQ Alcohol 2104'},
-            {nodeID: '3S', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Corridor 3S', shortName: 'Corridor 3S'},
-            {nodeID: '3112', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Exam 3112', shortName: 'Exam 3112'},
-            {nodeID: 'ST03', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: null, ycoord: null, longName: 'Stair ST03', shortName: 'Stair ST03'}
+            {nodeID: 'ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 442.88, ycoord: 327.00, longName: 'Stair ST02', shortName: 'Stair ST02'},
+            {nodeID: '3000C', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 444.25, ycoord: 344.00, longName: 'Copy 3000C', shortName: 'Copy 3000C'},
+            {nodeID: '3E', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 466.88, ycoord: 345.00, longName: 'Corridor 3E', shortName: 'Corridor 3E'},
+            {nodeID: '3001', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 466.63, ycoord: 432.00, longName: 'Touchdown 3001', shortName: 'Touchdown 3001'},
+            {nodeID: '3000A', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 418.63, ycoord: 419.25, longName: 'Check-In 3000A', shortName: 'Check-In 3000A'},
+            {nodeID: 'ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 436.13, ycoord: 470.25, longName: 'Tenant Stair ST01', shortName: 'Tenant Stair ST01'},
+            {nodeID: '3A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 438.88, ycoord: 538.75, longName: 'Elevator 3A', shortName: 'Elevator 3A'},
+            {nodeID: '3B', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 438.13, ycoord: 592.50, longName: 'Corridor 3B', shortName: 'Corridor 3B'},
+            {nodeID: '307', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'},
+            {nodeID: '3000B', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 436.13, ycoord: 643.75, longName: 'Waiting 3000B', shortName: 'Waiting 3000B'},
+            {nodeID: '3104', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 639.00, longName: 'EQ Alcohol 2104', shortName: 'EQ Alcohol 2104'},
+            {nodeID: '3S', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 733.25, longName: 'Corridor 3S', shortName: 'Corridor 3S'},
+            {nodeID: '3112', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 645.88, ycoord: 732.50, longName: 'Exam 3112', shortName: 'Exam 3112'},
+            {nodeID: 'ST03', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'}
         ]
     });
 
@@ -129,17 +129,17 @@ async function main() {
     // patriot 22 floor 4
     await prisma.node.createMany({
         data: [
-            { nodeID: 'rightEntrance4', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'rightEntranceFourth'},
-            { nodeID: 'checkIn4000B', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'rightCheckIn'},
-            { nodeID: 'waiting4000', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'rightEntranceWaiting'},
-            { nodeID: 'rightWaitingHallway', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'rightWaitingHallway'},
-            { nodeID: 'elevatorLobby4A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'elevatorLobby'},
-            { nodeID: 'lobbyStairsHallway', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'lobbyStairsHallway'},
-            { nodeID: 'stairST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'lobbyStairs'},
-            { nodeID: 'stairST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'leftStairs'},
-            { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'checkOutHallway'},
-            { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'checkOutWait'},
-            { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: null, ycoord: null, longName: '', shortName: 'checkOut'},
+            { nodeID: 'checkIn4000B', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 319.25, ycoord: 654.50, longName: 'rightCheckIn', shortName: 'rightCheckIn'},
+            { nodeID: 'waiting4000', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 299.25, ycoord: 579.50, longName: 'rightEntranceWaiting', shortName: 'rightEntranceWaiting'},
+            { nodeID: 'rightWaitingHallway', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 250.25, ycoord: 633.50, longName: 'rightWaitingHallway', shortName: 'rightWaitingHallway'},
+            { nodeID: 'rightEntranceHallway', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 353.25, ycoord: 655.50, longName: 'rightEntranceHallway', shortName: 'rightEntranceHallway'},
+            { nodeID: 'elevatorLobby4A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 351.25, ycoord: 535.50, longName: 'elevatorLobby', shortName: 'elevatorLobby'},
+            { nodeID: 'lobbyStairsHallway', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 350.75, ycoord: 455.50, longName: 'lobbyStairsHallway', shortName: 'lobbyStairsHallway'},
+            { nodeID: 'stairST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 419.75, ycoord: 455.00, longName: 'lobbyStairs', shortName: 'lobbyStairs'},
+            { nodeID: 'stairST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 355.25, ycoord: 280.50, longName: 'leftStairs', shortName: 'leftStairs'},
+            { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
+            { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
+            { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'},
         ]
     });
 
