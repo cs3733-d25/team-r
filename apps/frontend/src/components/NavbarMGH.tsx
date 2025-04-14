@@ -22,7 +22,7 @@ export function NavbarMGH() {
                             alt="Logo"
                             className="h-8 w-8 rounded-full mr-2"
                         />
-                        <span className="font-trade text-xl font-bold text-background">
+                        <span className="font-trade text-xl font-bold text-white">
                             Mass General Brigham
                         </span>
                     </a>
