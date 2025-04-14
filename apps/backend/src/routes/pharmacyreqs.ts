@@ -26,18 +26,18 @@ router.post("/", async function (req: Request, res: Response) {
   try {
     await PrismaClient.pharmacyRequest.create({
       data: {
-        employee: { connect: { id: request.employeeID } }, // connect to whatever employee has that ID number
+        employee: { connect: { id: parseInt(request.employeeID) } }, // connect to whatever employee has that ID number
         priority: parseRequestPriority(request.priority),
         department: await parseDepartment(request.department),
-        patient: { connect: { id: request.patientID } }, // connect to whatever patient has that ID number
+        patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
         drugName: request.drugName,
-        morningPillCount: request.morningPillCount,
-        middayPillCount: request.middayPillCount,
-        eveningPillCount: request.eveningPillCount,
-        nightPillCount: request.nightPillCount,
-        days: request.days,
-        numberOfPills: request.numberOfPills,
-        refills: request.refills,
+        morningPillCount: parseInt(request.morningPillCount),
+        middayPillCount: parseInt(request.middayPillCount),
+        eveningPillCount: parseInt(request.eveningPillCount),
+        nightPillCount: parseInt(request.nightPillCount),
+        days: parseInt(request.days),
+        numberOfPills: parseInt(request.numberOfPills),
+        refills: parseInt(request.refills),
         additionalInstructions: request.additionalInstructions,
         // also a timestamp of when it was submitted?
       },
