@@ -40,6 +40,7 @@ export function NavbarMGH() {
                     <HoverPopoverNavLink label={"Request a Service"} href={"/sanitation"} items={[
                         { label: 'Sanitation', href: '/sanitation' },
                         { label: 'Medical Device', href: '/servicereqs' },
+                        {label: 'Patient Request', href: '/patientRequest' },
                     ]}/>
 
                     <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
