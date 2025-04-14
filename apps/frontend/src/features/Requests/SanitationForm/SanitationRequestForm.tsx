@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Navbar from '../../components/Navbar.tsx';
+import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
-
-enum Department {
-  SPECIALTY_CLINIC = 'Specialty_Clinic',
-  IMAGING_SUITE = 'Imaging_Suite',
-  PHLEBOTOMY = 'Phlebotomy',
-  PHARMACY = 'Pharmacy',
-  AMBULATORY_URGENCARE = 'Ambulatory_UrgentCare'
-}
-
-enum RequestPriority {
-  low = 'Low',
-  medium = 'Medium',
-  high = 'High',
-  urgent = 'Urgent'
-}
+import {Department, RequestPriority} from "../RequestEnums.tsx";
 
 // Simple interface for submitted request
 interface SubmittedRequest {

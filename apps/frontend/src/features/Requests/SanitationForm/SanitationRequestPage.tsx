@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import Navbar from "../../components/Navbar.tsx";
+import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
 export function SanitationRequestPage() {
     const [sanitation, setSanitation] = useState([{requestID:null,sanitationType:null,priority:null,department:null,roomNumber:null,requestTime:null,comments:null,status:null,userId:null}]);
