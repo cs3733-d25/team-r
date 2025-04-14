@@ -282,6 +282,26 @@ export const PatientRequestForm = () => {
                                 </div>
                             </div>
 
+                                {/* Location */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Location
+                                        <span className="text-red-500">*</span>
+                                        <span className="text-xs text-gray-500 block">
+                    Specify the location where the prescription request is being made.
+                    </span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="location"
+                                        value={formData.location}
+                                        onChange={handleChange}
+                                        placeholder="Enter location"
+                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                                        required
+                                    />
+                                </div>
+
                             {/* Additional Instructions */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
