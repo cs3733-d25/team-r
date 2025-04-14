@@ -30,6 +30,12 @@ enum Department {
   Ambulatory_UrgentCare
 }
 
+enum Building {
+  PATRIOT_PLACE_22
+  PATRIOT_PLACE_20
+  CHESTNUT_HILL
+}
+
 enum Gender {
   MALE
   FEMALE
@@ -90,6 +96,8 @@ model Employee {
   assignedRequests DeviceRequest[]   @relation("AssignedRequests")
   createdRequests  DeviceRequest[]   @relation("CreatedRequests")
   pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
+
+  TransportRequest TransportRequest[] @relation("TransportRequest")
 }
 
 model Patient {
@@ -104,6 +112,8 @@ model Patient {
   user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
   pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
   patientRequests PatientRequest[] @relation("PatientRequests")
+
+  TransportRequest TransportRequest[] @relation("TransportRequest")
 }
 
 model DeviceRequest {
@@ -202,6 +212,22 @@ model PatientRequest{
   location  Buildings
   status  RequestStatus
   requestTime    DateTime        @default(now())
-
 }
 
+model TransportRequest {
+  employeeRequestID      Int             @id @default(autoincrement())
+  employeeID             Int
+  employee               Employee        @relation("TransportRequest", fields: [employeeID], references: [id])
+  patientID              Int
+  patient                Patient    @relation("TransportRequest", fields: [patientID], references: [id])
+
+  transportationType     String
+  currentBuilding        Building
+  desiredBuilding        Building
+
+  priority               RequestPriority
+  department             Department
+  comments               String
+  status  RequestStatus
+  requestTime    DateTime        @default(now())
+}
