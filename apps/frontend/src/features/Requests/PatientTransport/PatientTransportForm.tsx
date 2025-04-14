@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {Department, RequestPriority} from "../RequestEnums.tsx";
-import Navbar from '../../../components/Navbar.tsx';
+import {NavbarMGH} from '../../../components/NavbarMGH.tsx';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
-import {Select, SelectItem} from "@/components/ui/select.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import {Label} from "@/components/ui/label.tsx";
+import {Textarea} from "@/components/ui/textarea";
 
+enum Building {
+    PATRIOT_PLACE_22 = "Patriot_Place_22",
+    PATRIOT_PLACE_20 = "Patriot_Place_20",
+    CHESTNUT_HILL = "Chestnut_hill"
+}
 
 // Simple interface for submitted request
 interface SubmittedTransport {
     userID: string;  //PK
-    currentBuilding : string;  //FK
-    desiredBuilding : string;
+    currentBuilding : Building;  //FK
+    desiredBuilding : Building;
     transportationType: string; //radio?
 
     priority: RequestPriority;
@@ -25,8 +32,8 @@ interface SubmittedTransport {
 const TransportationRequestForm = () => {
     const [formData, setFormData] = useState({
         userID: '',
-        currentBuilding : '',
-        desiredBuilding : '',
+        currentBuilding :"Patriot_Place_22" ,
+        desiredBuilding : "Patriot_Place_20",
         transportationType: '',
 
         priority: RequestPriority.medium,
@@ -69,8 +76,8 @@ const TransportationRequestForm = () => {
                 // Reset form
                 setFormData({
                     userID: '',
-                    currentBuilding : '',
-                    desiredBuilding : '',
+                    currentBuilding :"Patriot_Place_22" ,
+                    desiredBuilding : "Patriot_Place_20",
                     transportationType: '',
                     comments: '',
                     priority: RequestPriority.medium,
@@ -96,7 +103,7 @@ const TransportationRequestForm = () => {
 
     return (
         <>
-            <Navbar />
+            <NavbarMGH />
             <div className="p-6 max-w-7xl mx-auto">
                 <h1 className="text-2xl font-bold mb-6">Transportation Request System</h1>
                 <h2>Made by Alex Lowczyk and Joshua Gifford</h2>
@@ -179,7 +186,7 @@ const TransportationRequestForm = () => {
                     key={'Transportation Request Page'}
                     to={'/transportpage'}
                     className={
-                        'px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200'
+                        'px-6 py-2 bg-secondary text-white font-medium rounded-md hover:bg-secondary-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition duration-200'
                     }
                 >
                     See All Requests
@@ -189,23 +196,28 @@ const TransportationRequestForm = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             {/* Transportation Type */}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Transportation Type
                                     <span className="text-red-500">*</span>
                                     <span className="text-xs text-gray-500 block">
                                         e.g., Ambulance, Helicopter, etc
                                     </span>
-                                </label>
-                                <RadioGroup
-                                    name="transportType"
-                                    value={formData.transportationType}
-                                    {...<div><RadioGroupItem value={'Ambulance'}>Ambulance</RadioGroupItem><RadioGroupItem value={'Helicopter'}>Helicopter</RadioGroupItem></div>}
-                                />
+                                </Label>
+                                <RadioGroup>
+                                    <RadioGroupItem value="non-emergency ambulance" id="non-emergency ambulance" />
+                                    <Label htmlFor="ambulance">Non Emergency Ambulance</Label>
+                                    <RadioGroupItem value="emergency ambulance" id="emergency ambulance" />
+                                    <Label htmlFor="ambulance">Emergency Ambulance</Label>
+                                    <RadioGroupItem value="helicopter" id="helicopter" />
+                                    <Label htmlFor="helicopter">Helicopter</Label>
+
+
+                                </RadioGroup>
 
 
                                 {/* Priority */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Priority Level
                                         <span className="text-xs text-gray-500 block">
                                             URGENT: Immediate attention required
@@ -216,82 +228,105 @@ const TransportationRequestForm = () => {
                                             <br />
                                             LOW: Within 24 hours
                                         </span>
-                                    </label>
-                                    <Select
+                                    </Label>
+                                    <select
                                         name="priority"
                                         value={formData.priority}
-                                        onValueChange={() => handleChange}
+                                        onChange={ handleChange}
                                     >
                                         {Object.values(RequestPriority).map((priority) => (
-                                            <SelectItem key={priority} value={priority}>
+                                            <option key={priority} value={priority}>
                                                 {priority}
-                                            </SelectItem>
+                                            </option>
                                         ))}
-                                    </Select>
+                                    </select>
                                 </div>
 
                                 {/* Department */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Department
                                         <span className="text-red-500">*</span>
                                         <span className="text-xs text-gray-500 block">
-                                            Select the department requiring sanitation
+                                            Select the department requiring transportation
                                         </span>
-                                    </label>
-                                    <Select
+                                    </Label>
+                                    <select
                                         name="department"
                                         value={formData.department}
-                                        onValueChange={() => handleChange}
+                                        onChange={ handleChange}
                                     >
                                         {Object.values(Department).map((dept) => (
-                                            <SelectItem key={dept} value={dept}>
+                                            <option key={dept} value={dept}>
                                                 {dept}
-                                            </SelectItem>
+                                            </option>
                                         ))}
-                                    </Select>
+                                    </select>
                                 </div>
 
-                                {/* Room Number */}
+                                {/* Current Building */}
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Current Building
                                         <span className="text-red-500">*</span>
-                                        <span className="text-xs text-gray-500 block">
-                                            Format: Floor-Room (e.g., 3-124, L1-001)
-                                        </span>
                                     </label>
-                                    <Select></Select>
+                                    <select
+                                        name="currentBuilding"
+                                        value={formData.currentBuilding}
+                                        onChange={ handleChange}
+                                    >
+                                        {Object.values(Building).map((build) => (
+                                            <option key={build} value={build}>
+                                                {build}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Desired Building
+                                        <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="desiredBuilding"
+                                        value={formData.desiredBuilding}
+                                        onChange={ handleChange}
+                                    >
+                                        {Object.values(Building).map((build) => (
+                                            <option key={build} value={build}>
+                                                {build}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
 
                             {/* Comments */}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Additional Comments
                                     <span className="text-xs text-gray-500 block">
                                         Include any specific instructions or details about the
-                                        sanitation request
+                                        transport request
                                     </span>
-                                </label>
-                                <textarea
+                                </Label>
+                                <Textarea
                                     name="comments"
                                     value={formData.comments}
                                     onChange={handleChange}
                                     placeholder="e.g., Liquid spill near entrance, Biohazard materials present, Special cleaning instructions..."
                                     rows={4}
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
                                 />
                             </div>
 
                             {/* Submit Button */}
                             <div className="flex justify-end">
-                                <button
+                                <Button
                                     type="submit"
-                                    className="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
+                                   variant="default"
                                 >
                                     Submit Request
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     </div>
