@@ -4,7 +4,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
-import { Buildings } from "../../../../packages/database";
+import { Building } from "../../../../packages/database";
 import multer from "multer";
 
 const router: Router = express.Router();
