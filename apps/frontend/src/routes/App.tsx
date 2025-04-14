@@ -28,6 +28,7 @@ function App() {
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
+                { path: 'profile', element: <p>Profile</p> },
             ],
         },
     ]);

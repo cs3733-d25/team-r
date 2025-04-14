@@ -1,9 +1,15 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Bell, Menu, User } from 'lucide-react';
+import { Bell, User } from 'lucide-react';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import {Label} from "@/components/ui/label.tsx";
 
-export function Navbar2() {
+export function NavbarMGH() {
     const [isOpen, setIsOpen] = React.useState(false);
 
     return (
@@ -42,19 +48,46 @@ export function Navbar2() {
                     <Button variant="ghost" size="icon" className="rounded-full">
                         <Bell className="h-5 w-5" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="rounded-full">
-                        <User className="h-5 w-5" />
-                    </Button>
+
+                    <Popover>
+                        <PopoverTrigger>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="rounded-full"
+                            >
+                                <User className="h-5 w-5" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-56" align="end" sideOffset={5}>
+                            <div className="grid gap-3 p-2">
+                                <Label
+                                    className={"font-trade text-base justify-center"}
+                                >
+                                    Hi, User!
+                                </Label>
+                                <div className="border-t"></div>
+                                <Button
+                                    variant={"ghostPopover"}
+                                >
+                                    Profile
+                                </Button>
+                                <Button
+                                    variant={"ghostPopover"}
+                                >
+                                    Settings
+                                </Button>
+                                <div className="border-t"></div>
+                                <Button
+                                variant={"ghostDestructive"}
+                                >
+                                    Sign out
+                                </Button>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
 
                     {/* Mobile Menu Button */}
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="md:hidden"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        <Menu className="h-5 w-5" />
-                    </Button>
                 </div>
             </div>
 
