@@ -1,0 +1,11 @@
+meta {
+  name: Export pharmacy requests to JSON
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{base_url}}/api/pharmacy/all-requests
+  body: none
+  auth: inherit
+}
