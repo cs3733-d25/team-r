@@ -7,16 +7,16 @@ interface HomeMainProps {
 
 export function HomeMain(props: HomeMainProps) {
     return (
-        <div className={"bg-mgb-blue flex-col h-screen"}>
+        <div className={"bg-primary flex-col h-screen"}>
             {props.status == 'logged-in' ? (
                 <NavBar />
             ) : (<NavBar page={"home"} />)}
             {/*Image taken from Mass General Brigham website home page*/}
             <div className={"bg-[url(/heropage.jpeg)] bg-no-repeat bg-cover h-6/7 justify-items-center"}>
-                <div className={"flex-col text-center w-5/8 bg-mgb-light-blue/80"}>
+                <div className={"flex-col text-center w-5/8 bg-background/80"}>
                     <br />
                     <h1 className={"text-5xl font-bold"}>Welcome to Mass General Brigham</h1>
-                    <br className={"bg-white"}/>
+                    <br />
                     {props.status != 'logged-in' && (
                         <div>
                             <p className={"text-xl px-5"}>
