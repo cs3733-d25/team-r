@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "tests",
+  "name": "API-testing",
   "type": "collection",
   "ignore": ["node_modules", ".git"]
 }

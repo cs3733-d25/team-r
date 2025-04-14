@@ -41,6 +41,7 @@ export function NavbarMGH() {
                         { label: 'Sanitation', href: '/sanitation' },
                         { label: 'Medical Device', href: '/servicereqs' },
                         {label: 'Patient Request', href: '/patientRequest' },
+                        { label: 'Prescription', href: '/prescription' },
                     ]}/>
 
                     <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[

@@ -178,7 +178,6 @@ model PharmacyRequest {
   employeeID             Int
   employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
   priority               RequestPriority
-  departmentID           Int
   department             Department
   patientID              Int
   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
@@ -202,6 +201,9 @@ model PatientRequest{
   location  Buildings
   status  RequestStatus
   requestTime    DateTime        @default(now())
-
 }
 
+model Departments {
+  departmentType Department @id @unique
+  departmentName String
+}

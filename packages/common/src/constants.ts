@@ -8,4 +8,6 @@ export const API_ROUTES = {
     CSV: '/api/csv',
     BFS: '/api/bfs',
     PATIENTREQ: '/api/patientreq',
+    PHARMACY: '/api/pharmacy',
+    ENUM: '/api/enum',
 };
