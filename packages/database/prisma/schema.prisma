@@ -66,7 +66,7 @@ enum Building {
 }
 
 enum NodeType {
-  enterance
+  entrance
   reception
   parking
   hallway
@@ -178,13 +178,13 @@ model Node {
 }
 
 model Edge {
-  edgeID   String @id @default(cuid())
-  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
+  edgeID   String @id @default(uuid())
   fromID   String
-  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
   toID     String
   fromX    Float
   fromY    Float
   toX      Float
   toY      Float
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
 }
