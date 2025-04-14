@@ -97,21 +97,23 @@ model Employee {
   onShift    Boolean       @default(false)
   user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients Patient[]       @relation("AssignedDoctor")
-  assignedRequests DeviceRequest[] @relation("AssignedRequests")
-  createdRequests  DeviceRequest[] @relation("CreatedRequests")
+  assignedPatients Patient[]         @relation("AssignedDoctor")
+  assignedRequests DeviceRequest[]   @relation("AssignedRequests")
+  createdRequests  DeviceRequest[]   @relation("CreatedRequests")
+  pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
 }
 
 model Patient {
-  id               Int       @id
+  id               Int               @id
   firstName        String
   lastName         String
   dateOfBirth      DateTime
   gender           Gender?
   phone            String?
-  assignedDoctor   Employee? @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+  assignedDoctor   Employee?         @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
   assignedDoctorId Int?
-  user             User      @relation(fields: [id], references: [id], onDelete: Cascade)
+  user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
+  pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
 }
 
 model DeviceRequest {
@@ -187,4 +189,28 @@ model Edge {
   toY      Float
   fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
   toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+}
+
+model PharmacyRequest {
+  prescriptionID         Int             @id @default(autoincrement())
+  employeeID             Int
+  employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
+  priority               RequestPriority
+  department             Department
+  patientID              Int
+  patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+  drugName               String
+  morningPillCount       Int
+  middayPillCount        Int
+  eveningPillCount       Int
+  nightPillCount         Int
+  days                   Int
+  numberOfPills          Int
+  refills                Int
+  additionalInstructions String
+}
+
+model Departments {
+  departmentType Department @id @unique
+  departmentName String
 }

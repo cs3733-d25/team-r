@@ -6,5 +6,7 @@ export const API_ROUTES = {
     LOGIN: '/api/login',
     SANITATION: '/api/sanitation',
     CSV: '/api/csv',
-    BFS: '/api/bfs'
+    BFS: '/api/bfs',
+    PHARMACY: '/api/pharmacy',
+    ENUM: '/api/enum',
 };
