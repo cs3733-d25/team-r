@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
 import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
+import chestnutHill from '../../../public/Chestnut Hill.svg'
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];  // Optional path coordinates
@@ -31,26 +32,27 @@ const InternalMap: React.FC<InternalMapProps> = () => {
             const floorLayer20_1 = L.layerGroup();
             const floorLayer22_3 = L.layerGroup();
             const floorLayer22_4 = L.layerGroup();
+            const floorLayerChestnutHill = L.layerGroup();
 
             // image overlays
             L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
             L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
             L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
+            L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
 
-            // Example markers (optional, customize as needed)
-            L.marker([400, 250]).bindPopup('Entrance 20-1').addTo(floorLayer20_1);
-            L.marker([420, 260]).bindPopup('Reception 22-3').addTo(floorLayer22_3);
-            L.marker([430, 270]).bindPopup('Elevator 22-4').addTo(floorLayer22_4);
 
             // === PARKING LOT LAYERS ===
             const patriotValetParking = L.layerGroup();
             const patriotPatientParking = L.layerGroup();
             const patriotExtendedParking = L.layerGroup();
+            const chestnutParking = L.layerGroup();
+            // TODO: add parking lot to patriot floor 1
+            // TODO: connect 20 and 22 patriot place
 
-            // Example parking markers (update coordinates)
-            L.marker([150, 100]).bindPopup('Lot A').addTo(patriotValetParking);
-            L.marker([300, 200]).bindPopup('Lot B').addTo(patriotPatientParking);
-            L.marker([450, 300]).bindPopup('Lot C').addTo(patriotExtendedParking);
+            // parking markers (update coordinates)
+            L.marker([150, 100]).bindPopup('Valet Parking').addTo(patriotValetParking);
+            L.marker([300, 200]).bindPopup('Patient Parking').addTo(patriotPatientParking);
+            L.marker([450, 300]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
 
             // Add default layer (e.g., floor 20-1)
             floorLayer20_1.addTo(map);
@@ -72,11 +74,17 @@ const InternalMap: React.FC<InternalMapProps> = () => {
                 collapsed: false
             }).addTo(map);
 
-            // Save map instance
             mapInstance.current = map;
+
+            // for getting coordinates (delete later)
+            map.on('click', function (e) {
+                console.log(`[${e.latlng.lat.toFixed(2)}, ${e.latlng.lng.toFixed(2)}],`);
+            });
+
         }
 
-        // Clean up on unmount
+
+        // clean up
         return () => {
             if (mapInstance.current) {
                 mapInstance.current.remove();
@@ -88,11 +96,7 @@ const InternalMap: React.FC<InternalMapProps> = () => {
     return (
         <div
             ref={mapRef}
-            style={{
-                height: '100vh', // Or whatever size you need
-                width: '100%',
-                border: '1px solid #ccc'
-            }}
+            style={{ height: '100vh', width: '100%', border: '1px solid #ccc' }}
         />
     );
 };
