@@ -4,6 +4,7 @@ import { NodeType, Building } from "../packages/database";
 const prisma = new PrismaClient();
 
 async function main() {
+    // chestnut hill floor 1
     await prisma.node.createMany({
         data:[
             {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'canopyEntrance'},
@@ -25,7 +26,6 @@ async function main() {
             {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: null, fromY: null, toX: null, toY: null},
         ]
     })
-
 
     // patriot 20 floor 1
     await prisma.node.createMany({
@@ -153,7 +153,8 @@ async function main() {
             { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: null, fromY: null, toX: null, toY: null },
             { fromID:'rightEntrance4', toID:'rightWaitingHallway', fromX: null, fromY: null, toX: null, toY: null },
             { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'', toID:'', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'', toID:'', fromX: null, fromY: null, toX: null, toY: null }
+        ]
     });
 
     console.log('Database seeded successfully!');
