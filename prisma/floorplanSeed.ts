@@ -145,14 +145,12 @@ async function main() {
 
     await prisma.edge.createMany({
         data: [
-            { fromID:'rightEntrance4', toID:'checkIn4000B', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'elevatorLobby4A', toID:'lobbyStairsHallway', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'rightEntrance4', toID:'rightWaitingHallway', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: null, fromY: null, toX: null, toY: null },
+            { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
+            { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: 353.25, fromY: 655.50, toX: 351.25, toY: 535.50 },
+            { fromID:'elevatorLobby4A', toID:'lobbyStairsHallway', fromX: 351.25, fromY: 535.50, toX: 350.75, toY: 455.50 },
+            { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: 350.75, fromY: 455.50, toX: 419.75, toY: 455.00 },
+            { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
+            { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
             { fromID:'', toID:'', fromX: null, fromY: null, toX: null, toY: null }
         ]
     });
