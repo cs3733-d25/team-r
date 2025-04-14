@@ -179,7 +179,7 @@ const TransportationRequestForm = () => {
                                         value={formData.transportationType}
                                         <RadioGroupItem>
                                     >Enter Transportation Type</RadioGroup>
-                                </div>
+                                < /div>
 
                                 {/* Priority */}
                                 <div>
