@@ -1,40 +1,54 @@
 
 import {useState} from "react";
-import {Department, RequestPriority} from "../RequestEnums.tsx";
+// import {Department, RequestPriority} from "../RequestEnums.tsx";
 import axios from "axios";
 import Navbar from "../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
 
-interface SubmittedPrescription {
+enum Department {
+    SPECIALTY_CLINIC = 'Specialty_Clinic',
+    IMAGING_SUITE = 'Imaging_Suite',
+    PHLEBOTOMY = 'Phlebotomy',
+    PHARMACY = 'Pharmacy',
+    AMBULATORY_URGENCARE = 'Ambulatory_UrgentCare'
+}
+
+enum RequestPriority {
+    low = 'Low',
+    medium = 'Medium',
+    high = 'High',
+    urgent = 'Urgent'
+}
+
+enum Building {
+    PATRIOT_PLACE_22 = "Patriot_Place_22",
+    PATRIOT_PLACE_20 = "Patriot_Place_20",
+    CHESTNUT_HILL = "Chestnut_hill"
+
+}
+
+interface SubmittedPatientRequest{
     employee: string;
     employeeID: string;
     patientID: string;
     priority: RequestPriority;
     department: Department;
-    morningPillCount: number;
-    middayPillCount: number;
-    eveningPillCount: number;
-    nightPillCount: number;
-    days: number;
-    additionalInstructions: string;
-    drugName: string;
-    timestamp: string;
+    location: Building;
+    comment: string;
+    time: string;
 }
 
-export const PrescriptionForm = () => {
+export const PatientRequestForm = () => {
     const [formData, setFormData] = useState({
         employee: "",
         employeeID: "",
         patientID: "",
         priority: RequestPriority.medium,
         department: Department.PHARMACY,
-        morningPillCount: 0,
-        middayPillCount: 0,
-        eveningPillCount: 0,
-        nightPillCount: 0,
-        days: 0,
-        additionalInstructions: "",
-        drugName: ""
+        location: Building.CHESTNUT_HILL,
+        comment: "",
+        time: new Date().toString()
+
     })
 
     const [submitStatus, setSubmitStatus] = useState<{
@@ -42,27 +56,27 @@ export const PrescriptionForm = () => {
         isError: boolean;
     } | null>(null);
 
-    //submittedPrescription holds info for confirmation card
-    const [submittedPrescription, setSubmittedPrescription] = useState<SubmittedPrescription | null>(null);
+    //submittedPatientRequest holds info for confirmation card
+    const [submittedPatientRequest, setSubmittedPatientRequest] = useState<SubmittedPatientRequest | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitStatus(null)
 
         try {
-            const response = await axios.post('api/prescription', {
+            const response = await axios.post('api/patientRequest', {
                 ...formData,
                 priority: formData.priority.toString()
             });
 
             if (response.status === 200) {
-                setSubmittedPrescription({
+                setSubmittedPatientRequest({
                     ...formData,
-                    timestamp: new Date().toLocaleString()
+                    time: new Date().toLocaleString()
                 });
 
                 setSubmitStatus({
-                    message: 'Prescription request submitted successfully!',
+                    message: 'Patient request request submitted successfully!',
                     isError: false
                 });
 
@@ -72,13 +86,10 @@ export const PrescriptionForm = () => {
                     patientID: "",
                     priority: RequestPriority.medium,
                     department: Department.PHARMACY,
-                    morningPillCount: 0,
-                    middayPillCount: 0,
-                    eveningPillCount: 0,
-                    nightPillCount: 0,
-                    days: 0,
-                    additionalInstructions: "",
-                    drugName: ""
+                    location: Building.CHESTNUT_HILL,
+                    comment: "",
+                    time: new Date().toLocaleString()
+
                 });
             }
         } catch (error) {
@@ -102,8 +113,8 @@ export const PrescriptionForm = () => {
         <>
             <Navbar />
             <div className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-0">Prescription Request System</h1>
-                <h2 className="text-xl font-bold mb-6">Owen Miller & Keagan Hitt</h2>
+                <h1 className="text-2xl font-bold mb-0">Patient Request Form</h1>
+                <h2 className="text-xl font-bold mb-6">Daksh Gajaria and Nora Cleary</h2>
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
@@ -113,7 +124,7 @@ export const PrescriptionForm = () => {
                 )}
 
                 {/* Confirmation Card */}
-                {submittedPrescription && !submitStatus?.isError && (
+                {submittedPatientRequest && !submitStatus?.isError && (
                     <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
                         <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -122,50 +133,34 @@ export const PrescriptionForm = () => {
                             Request Confirmation
                         </div>
                         <div className="p-4">
-                            <h3 className="text-lg font-semibold mb-2">Your prescription request has been submitted</h3>
+                            <h3 className="text-lg font-semibold mb-2">Your request has been submitted</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Drug Name:</span> {submittedPrescription.drugName}
+                                    <span className="font-semibold">Employee ID:</span> {submittedPatientRequest.comment}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Employee ID:</span> {submittedPrescription.employeeID}
+                                    <span className="font-semibold">Employee ID:</span> {submittedPatientRequest.employeeID}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Patient ID:</span> {submittedPrescription.patientID}
+                                    <span className="font-semibold">Patient ID:</span> {submittedPatientRequest.patientID}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Priority:</span> {submittedPrescription.priority}
+                                    <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Department:</span> {submittedPrescription.department}
+                                    <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Morning Pill Count:</span> {submittedPrescription.morningPillCount}
+                                    <span className="font-semibold">Department:</span> {submittedPatientRequest.location}
                                 </div>
-                                <div>
-                                    <span className="font-semibold">Midday Pill Count:</span> {submittedPrescription.middayPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Evening Pill Count:</span> {submittedPrescription.eveningPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Bedtime Pill Count:</span> {submittedPrescription.nightPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Days per Week:</span> {submittedPrescription.days}
-                                </div>
-                                <div className="col-span-2">
-                                    <span className="font-semibold">Additional Instructions:</span> {submittedPrescription.additionalInstructions || "None provided"}
-                                </div>
-                                <div className="col-span-2">
-                                    <span className="font-semibold">Submitted:</span> {submittedPrescription.timestamp}
-                                </div>
+
+
                             </div>
                             <div className="mt-3 text-sm text-gray-600">
-                                The prescription request has been submitted and will be filled.
+                                The request has been submitted and will be filled.
                             </div>
                             <button
-                                onClick={() => setSubmittedPrescription(null)}
+                                onClick={() => setSubmittedPatientRequest(null)}
                                 className="mt-4 px-4 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-200"
                             >
                                 Dismiss
@@ -174,8 +169,8 @@ export const PrescriptionForm = () => {
                     </div>
                 )}
                 <Link
-                    key={'Prescription Request Page'}
-                    to={'/prescriptionpage'}
+                    key={'Patient Request Page'}
+                    to={'/patientrequestpage'}
                     className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
                 >
                     See All Requests
@@ -297,7 +292,7 @@ export const PrescriptionForm = () => {
                                 </label>
                                 <textarea
                                     name="additionalInstructions"
-                                    value={formData.additionalInstructions}
+                                    value={formData.comment}
                                     onChange={handleChange}
                                     placeholder="Include any additional instructions necessary to take the prescription."
                                     rows={4}
@@ -305,25 +300,7 @@ export const PrescriptionForm = () => {
                                 />
                             </div>
 
-                            {/* Drug Name */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Drug Name
-                                    <span className="text-red-500">*</span>
-                                    <span className="text-xs text-gray-500 block">
-                        Enter the name of the drug being prescribed.
-                      </span>
-                                </label>
-                                <input
-                                    type="text"
-                                    name="drugName"
-                                    value={formData.drugName}
-                                    onChange={handleChange}
-                                    placeholder="Enter the name of the drug being prescribed."
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                    required
-                                />
-                            </div>
+
 
                             {/* Submit Button */}
                             <div className="flex justify-end">
