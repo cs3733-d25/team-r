@@ -85,15 +85,15 @@ async function main() {
             }
         }
     });
-/*
-    // Create employees with correct schema fields
 
+    // Create employees with correct schema fields
+/*
     await prisma.employee.createMany({
         data: [
             { id: user1.id, firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true },
         ]
     });
-/*
+
     await prisma.employee.create({data:{ firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true, user: { connect: { id: user1.id }}}});
 
     const employee2 = await prisma.employee.create({
@@ -162,7 +162,6 @@ async function main() {
         }
     });
 */
-    });*/
 
     // Create patients
 
