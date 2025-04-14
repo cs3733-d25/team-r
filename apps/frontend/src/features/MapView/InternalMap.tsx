@@ -1,124 +1,100 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import floorPlan from '../../../public/floorplan.svg';
+import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
+import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
+import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];  // Optional path coordinates
     path?: string[];  // Optional path as node IDs (e.g., ['p2', 'e2', 'r2'])
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates, path }) => {
+const InternalMap: React.FC<InternalMapProps> = () => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
-    const pathLayerRef = useRef<L.Polyline | null>(null);
 
     useEffect(() => {
-        // Map of node IDs to their coordinates on the floor plan
-        const nodeCoordinates: Record<string, [number, number]> = {
-            p1: [250, 150],  // Extended Parking
-            p2: [400, 250],  // Patient Parking
-            p3: [600, 520],  // Valet Parking
-            e1: [530, 400],  // Entrance
-            e2: [410, 395],  // Entrance
-            e3: [210, 790],  // Entrance
-            r1: [570, 375],  // Reception
-            r2: [415, 480],  // Reception
-            r3: [270, 660],  // Reception
-            h1: [400, 455],  // Hallway 1
-            h2: [245, 640],  // Hallway 2
-            h3: [190, 690],  // Hallway
-            h4: [235, 730],  // Hallway
-            h5: [235, 760],  // Hallway
-            h6: [210, 760],  // Hallway
-            s1: [210, 790],  // Sidewalk
-            s2: [90, 750]    // Sidewalk
-        };
-
-        // Check if the map container is available
         if (mapRef.current && !mapInstance.current) {
-            // Initialize the map
             const map = L.map(mapRef.current, {
                 crs: L.CRS.Simple,
-            }).setView([500, 500], 0.25);
+                minZoom: -2,
+            }).setView([500, 500], 0);
 
-            // Define the bounds of the floor plan image
-            const floorPlanBounds: L.LatLngBoundsLiteral = [
+            // bounds for all floorplans
+            const bounds: L.LatLngBoundsLiteral = [
                 [0, 0],
                 [1000, 1000],
             ];
 
-            // Add the floor plan image
-            L.imageOverlay(floorPlan, floorPlanBounds).addTo(map);
+            // === FLOOR LAYERS ===
+            const floorLayer20_1 = L.layerGroup();
+            const floorLayer22_3 = L.layerGroup();
+            const floorLayer22_4 = L.layerGroup();
 
+            // image overlays
+            L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
+            L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
+            L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
+
+            // Example markers (optional, customize as needed)
+            L.marker([400, 250]).bindPopup('Entrance 20-1').addTo(floorLayer20_1);
+            L.marker([420, 260]).bindPopup('Reception 22-3').addTo(floorLayer22_3);
+            L.marker([430, 270]).bindPopup('Elevator 22-4').addTo(floorLayer22_4);
+
+            // === PARKING LOT LAYERS ===
+            const patriotValetParking = L.layerGroup();
+            const patriotPatientParking = L.layerGroup();
+            const patriotExtendedParking = L.layerGroup();
+
+            // Example parking markers (update coordinates)
+            L.marker([150, 100]).bindPopup('Lot A').addTo(patriotValetParking);
+            L.marker([300, 200]).bindPopup('Lot B').addTo(patriotPatientParking);
+            L.marker([450, 300]).bindPopup('Lot C').addTo(patriotExtendedParking);
+
+            // Add default layer (e.g., floor 20-1)
+            floorLayer20_1.addTo(map);
+
+            // === LAYER CONTROLS ===
+            const baseLayers = {
+                '20 Patriot Place - Floor 1': floorLayer20_1,
+                '22 Patriot Place - Floor 3': floorLayer22_3,
+                '22 Patriot Place - Floor 4': floorLayer22_4
+            };
+
+            const overlays = {
+                'Parking Lot A': patriotValetParking,
+                'Parking Lot B': patriotPatientParking,
+                'Parking Lot C': patriotExtendedParking
+            };
+
+            L.control.layers(baseLayers, overlays, {
+                collapsed: false
+            }).addTo(map);
+
+            // Save map instance
             mapInstance.current = map;
         }
 
-        // Draw path if provided
-        if (mapInstance.current) {
-            // Remove existing path if any
-            if (pathLayerRef.current) {
-                pathLayerRef.current.remove();
-                pathLayerRef.current = null;
-            }
-
-            // Draw path based on node IDs if provided
-            if (path && path.length > 1) {
-                const pathPoints = path.map(nodeId => nodeCoordinates[nodeId] || [0, 0]);
-                pathLayerRef.current = L.polyline(pathPoints, {
-                    color: 'blue',
-                    weight: 5,
-                    opacity: 0.7,
-                    dashArray: '10, 10', // Creates a dashed line for better visibility
-                    lineCap: 'round'
-                }).addTo(mapInstance.current);
-
-                // Show markers only for start (first) and end (last) nodes
-                const startNode = path[0];
-                const endNode = path[path.length - 1];
-
-                // Add start marker
-                const startMarker = L.marker(nodeCoordinates[startNode]).addTo(mapInstance.current)
-                    .bindPopup(`Start: ${startNode}`).openPopup();
-
-                // Add end marker
-                const endMarker = L.marker(nodeCoordinates[endNode]).addTo(mapInstance.current)
-                    .bindPopup(`End: ${endNode}`).openPopup();
-
-                // Fit map to the path
-                mapInstance.current.fitBounds(pathLayerRef.current.getBounds(), { padding: [50, 50] });
-            }
-
-            // Or draw path based on raw coordinates if provided
-            else if (pathCoordinates && pathCoordinates.length > 1) {
-                pathLayerRef.current = L.polyline(pathCoordinates, {
-                    color: 'blue',
-                    weight: 5,
-                    opacity: 0.7
-                }).addTo(mapInstance.current);
-
-                const startCoordinates = pathCoordinates[0];
-                const endCoordinates = pathCoordinates[pathCoordinates.length - 1];
-
-                // Add start marker
-                L.marker(startCoordinates).addTo(mapInstance.current)
-                    .bindPopup('Start').openPopup();
-
-                // Add end marker
-                L.marker(endCoordinates).addTo(mapInstance.current)
-                    .bindPopup('End').openPopup();
-
-            }
-        }
-
+        // Clean up on unmount
         return () => {
-            if (pathLayerRef.current) {
-                pathLayerRef.current.remove();
+            if (mapInstance.current) {
+                mapInstance.current.remove();
+                mapInstance.current = null;
             }
         };
-    }, [pathCoordinates, path]);
+    }, []);
 
-    return <div ref={mapRef} style={{ height: '100%' }} />;
+    return (
+        <div
+            ref={mapRef}
+            style={{
+                height: '100vh', // Or whatever size you need
+                width: '100%',
+                border: '1px solid #ccc'
+            }}
+        />
+    );
 };
 
 export default InternalMap;
