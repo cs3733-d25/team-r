@@ -27,10 +27,6 @@ interface SubmittedPrescription {
     timestamp: string;
 }
 
-interface RadioProps {
-    days: number;
-}
-
 export const PrescriptionForm = () => {
     const [formData, setFormData] = useState({
         employee: '',
@@ -114,23 +110,6 @@ export const PrescriptionForm = () => {
             [name]: value,
         }));
     };
-
-    const RadioDays = (props: RadioProps) => {
-        return (
-            <div className="px-3 flex flex-row items-end">
-                <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
-                    {props.days}
-                </Label>
-                <Input
-                    type="radio"
-                    name="days"
-                    value={formData.days}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-        )
-    }
 
     return (
         <>
@@ -388,13 +367,90 @@ export const PrescriptionForm = () => {
                                     Days per Week to Take Drug:
                                 </Label>
                                 <div className="flex flex-row justify-center">
-                                    <RadioDays days={1} />
-                                    <RadioDays days={2} />
-                                    <RadioDays days={3} />
-                                    <RadioDays days={4} />
-                                    <RadioDays days={5} />
-                                    <RadioDays days={6} />
-                                    <RadioDays days={7} />
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            1
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            2
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            3
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            4
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            5
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            6
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            7
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="days"
+                                            value={formData.days}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
