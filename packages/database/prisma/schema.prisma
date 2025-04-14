@@ -167,7 +167,7 @@ model Node {
   nodeID    String   @id
   nodeType  NodeType
   building  Building
-  floor     String
+  floor     Int
   xcoord    Float
   ycoord    Float
   longName  String
