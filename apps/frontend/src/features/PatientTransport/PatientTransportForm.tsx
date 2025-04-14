@@ -3,7 +3,8 @@ import axios from 'axios';
 import {Department, RequestPriority} from "../RequestEnums.tsx";
 import Navbar from '../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
-
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
+import {DropdownMenu, DropdownMenuItem} from "@/components/ui/dropdown-menu.tsx";
 
 
 // Simple interface for submitted request
@@ -98,6 +99,7 @@ const TransportationRequestForm = () => {
             <Navbar />
             <div className="p-6 max-w-7xl mx-auto">
                 <h1 className="text-2xl font-bold mb-6">Transportation Request System</h1>
+                <h2>Made by Alex Lowczyk and Joshua Gifford</h2>
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
@@ -153,8 +155,8 @@ const TransportationRequestForm = () => {
                     </div>
                 )}
                 <Link
-                    key={'Sanitation Request Page'}
-                    to={'/sanitationpage'}
+                    key={'Transportation Request Page'}
+                    to={'/transportpage'}
                     className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
                 >
                     See All Requests
@@ -163,24 +165,20 @@ const TransportationRequestForm = () => {
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Sanitation Type */}
+                                {/* Transportation Type */}
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Sanitation Type
+                                        Transportation Type
                                         <span className="text-red-500">*</span>
                                         <span className="text-xs text-gray-500 block">
-                      e.g., Spill cleanup, Biohazard, General cleaning
+                      e.g., Ambulance, Helicopter, etc
                     </span>
                                     </label>
-                                    <input
-                                        type="text"
-                                        name="sanitationType"
-                                        value={formData.sanitationType}
-                                        onChange={handleChange}
-                                        placeholder="Enter sanitation type"
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                        required
-                                    />
+                                    <RadioGroup
+                                        name="transportType"
+                                        value={formData.transportationType}
+                                        <RadioGroupItem>
+                                    >Enter Transportation Type</RadioGroup>
                                 </div>
 
                                 {/* Priority */}
@@ -237,7 +235,7 @@ const TransportationRequestForm = () => {
                                 {/* Room Number */}
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Room Number
+                                        Current Building
                                         <span className="text-red-500">*</span>
                                         <span className="text-xs text-gray-500 block">
                       Format: Floor-Room (e.g., 3-124, L1-001)
@@ -246,7 +244,7 @@ const TransportationRequestForm = () => {
                                     <input
                                         type="text"
                                         name="room"
-                                        value={formData.room}
+                                        value={formData.currentBuilding}
                                         onChange={handleChange}
                                         placeholder="e.g., 3-124"
                                         className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
