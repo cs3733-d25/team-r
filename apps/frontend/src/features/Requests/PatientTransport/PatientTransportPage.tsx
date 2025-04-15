@@ -8,8 +8,10 @@ export function PatientTransportPage() {
     return(
         <>
             <NavbarMGH />
-            <Tabs defaultValue="patientTransportForm" className="w-full">
-                <TabsList className="flex border-b border-gray-300 bg-gray-100 rounded-t-lg relative z-10">
+            <h1 className="text-2xl font-bold mb-0">Transport Request System</h1>
+            <h2 className="text-xl font-bold mb-6">Alex Lowczyk & Joshua Gifford</h2>
+            <Tabs defaultValue="patientTransportForm" className="grid items-center justify-center">
+                <TabsList className="flex border-b border-gray-300 bg-gray-100 rounded-t-lg relative z-10 flex items-center">
                     <TabsTrigger value="patientTransportForm"
                                  className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 border border-b-transparent data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
                         PatientTransportForm</TabsTrigger>
