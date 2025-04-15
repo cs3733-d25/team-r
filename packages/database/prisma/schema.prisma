@@ -59,10 +59,21 @@ enum DeviceStatus {
   maintenance
 }
 
-enum Buildings {
+enum Building {
   PATRIOT_PLACE_20
   PATRIOT_PLACE_22
   CHESTNUT_HILL
+}
+
+enum NodeType {
+  entrance
+  reception
+  parking
+  hallway
+  department
+  elevator
+  stairs
+  other
 }
 
 model User {
@@ -90,6 +101,7 @@ model Employee {
   assignedRequests DeviceRequest[]   @relation("AssignedRequests")
   createdRequests  DeviceRequest[]   @relation("CreatedRequests")
   pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
+  TransportRequest TransportRequest[] @relation("TransportRequest")
 }
 
 model Patient {
@@ -103,9 +115,84 @@ model Patient {
   assignedDoctorId Int?
   user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
   pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
-  patientRequests PatientRequest[] @relation("PatientRequests")
+  patientRequests  PatientRequest[]  @relation("PatientRequests")
+  TransportRequest TransportRequest[] @relation("TransportRequest")
 }
 
+
+
+model MedicalDevice {
+  medicalDeviceId   Int          @id @default(autoincrement())
+  medicalDeviceType String
+  currentLocation   String
+  currentStatus     DeviceStatus @default(available)
+  lastUpdated       DateTime     @default(now())
+
+  // @@map("medical_devices")
+}
+
+
+
+model Directory {
+  id          Int      @id @default(autoincrement())
+  name        String
+  floorNumber Int
+  building    Building
+}
+
+model Node {
+  nodeID    String   @id
+  nodeType  NodeType
+  building  Building
+  floor     Int
+  xcoord    Float
+  ycoord    Float
+  longName  String
+  shortName String
+
+  edgesFrom Edge[] @relation("fromNode")
+  edgesTo   Edge[] @relation("toNode")
+}
+
+model Edge {
+  edgeID   String @id @default(uuid())
+  fromID   String
+  toID     String
+  fromX    Float
+  fromY    Float
+  toX      Float
+  toY      Float
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+}
+
+/**
+ * REQUESTS
+ */
+// model ServiceRequestGeneral{
+//   requestID Int @id
+//   pharmacyReq PharmacyRequest?  @relation("pharmRequest")
+//   //for iteration2 - do not connect the employeeName to a employee user
+//   employeeName  String
+//   priority  RequestPriority
+//   status  RequestStatus
+//   department  Department
+//   location  Building
+// }
+
+model SanitationRequest {
+  requestId      Int             @id @default(autoincrement())
+  sanitationType String
+  priority       RequestPriority
+  department     Department?
+  roomNumber     String
+  requestTime    DateTime        @default(now())
+  comments       String?
+  status         RequestStatus   @default(pending)
+
+  user   User @relation("sanitationRequests", fields: [userId], references: [id])
+  userId Int
+}
 model DeviceRequest {
   requestId            Int             @id @default(autoincrement())
   deviceType           String
@@ -123,56 +210,6 @@ model DeviceRequest {
   assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
   assignedEmployeeId Int?
 }
-
-model MedicalDevice {
-  medicalDeviceId   Int          @id @default(autoincrement())
-  medicalDeviceType String
-  currentLocation   String
-  currentStatus     DeviceStatus @default(available)
-  lastUpdated       DateTime     @default(now())
-
-  // @@map("medical_devices")
-}
-
-model SanitationRequest {
-  requestId      Int             @id @default(autoincrement())
-  sanitationType String
-  priority       RequestPriority
-  department     Department?
-  roomNumber     String
-  requestTime    DateTime        @default(now())
-  comments       String?
-  status         RequestStatus   @default(pending)
-
-  user   User @relation("sanitationRequests", fields: [userId], references: [id])
-  userId Int
-}
-
-model Directory {
-  id          Int       @id @default(autoincrement())
-  name        String
-  floorNumber Int
-  building    Buildings
-}
-
-model Node {
-  id          Int    @id @default(autoincrement())
-  name        String @unique
-  type        String
-  neighbors   Edge[] @relation("FromConnection")
-  connectedTo Edge[] @relation("ToConnection")
-}
-
-model Edge {
-  id     Int  @id @default(autoincrement())
-  fromId Int
-  toId   Int
-  from   Node @relation("FromConnection", fields: [fromId], references: [id])
-  to     Node @relation("ToConnection", fields: [toId], references: [id])
-}
-/*
-REQUESTS
- */
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
   employeeID             Int
@@ -191,19 +228,67 @@ model PharmacyRequest {
   refills                Int
   additionalInstructions String
 }
+// model PharmacyRequest {
+//   prescriptionID         Int             @id //@default(autoincrement())
+//   patientID              Int
+//   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+//   drugName               String
+//   morningPillCount       Int
+//   middayPillCount        Int
+//   eveningPillCount       Int
+//   nightPillCount         Int
+//   days                   Int
+//   numberOfPills          Int
+//   refills                Int
+//   additionalInstructions String
+//   //general
+//   generalRequest  ServiceRequestGeneral @relation("pharmRequest", fields: [prescriptionID], references: [requestID], onDelete: Cascade)
+// }
 
-model PatientRequest{
-  patientRequestID       Int     @id @default(autoincrement())
-  patientID             Int
-  patient              Patient    @relation("PatientRequests", fields: [patientID], references: [id])
-  priority  RequestPriority
-  department  Department
-  location  Buildings
+model PatientRequest {
+  patientRequestID Int             @id @default(autoincrement())
+  patientID        Int
+  patient          Patient         @relation("PatientRequests", fields: [patientID], references: [id])
+  priority         RequestPriority
+  department       Department
+  location         Building
+  status           RequestStatus
+  requestTime      DateTime        @default(now())
+}
+model TransportRequest {
+  employeeRequestID      Int             @id @default(autoincrement())
+  employeeID             Int
+  employee               Employee        @relation("TransportRequest", fields: [employeeID], references: [id])
+  patientID              Int
+  patient                Patient    @relation("TransportRequest", fields: [patientID], references: [id])
+
+  transportationType     String
+  currentBuilding        Building
+  desiredBuilding        Building
+
+  priority               RequestPriority
+  department             Department
+  comments               String
   status  RequestStatus
   requestTime    DateTime        @default(now())
 }
 
 model Departments {
-  departmentType Department @id @unique
-  departmentName String
+  type Department @id @unique
+  name String
+}
+
+model Priorities {
+  type RequestPriority @id @unique
+  name String
+}
+
+model Statuses {
+  type RequestStatus @id @unique
+  name String
+}
+
+model Locations{
+  type Building @id @unique
+  name String
 }
