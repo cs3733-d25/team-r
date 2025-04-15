@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {Department, RequestPriority} from "../RequestEnums.tsx";
+import {Department, RequestPriority, Buildings} from "../RequestEnums.tsx";
 import {NavbarMGH} from '../../../components/NavbarMGH.tsx';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
@@ -9,19 +9,14 @@ import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 
-enum Building {
-    PATRIOT_PLACE_22 = "Patriot_Place_22",
-    PATRIOT_PLACE_20 = "Patriot_Place_20",
-    CHESTNUT_HILL = "Chestnut_hill"
-}
 
 // Simple interface for submitted request
 interface SubmittedTransport {
     patientID: string;  //PK
     employeeID: string;
     employeeName: string;
-    currentBuilding : Building | string;  //FK
-    desiredBuilding : Building | string;
+    currentBuilding : Buildings | string;  //FK
+    desiredBuilding : Buildings | string;
     transportationType: string; //radio?
 
     priority: RequestPriority |string;
@@ -59,11 +54,11 @@ const TransportationRequestForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('/api/transport-request', {
+            const response = await axios.post('/api/transportreq/', {
                 ...formData,
                 priority: formData.priority.toString()
             });
-
+            console.log('message is here')
             if (response.status === 200) {
                 // Store the request data for the confirmation card
                 setSubmittedTransport({
@@ -211,8 +206,8 @@ const TransportationRequestForm = () => {
                                 </Label>
                                 <Input
                                     type="text"
-                                    name="employeeName"
-                                    value={formData.employeeName}
+                                    name="employeeID"
+                                    value={formData.employeeID}
                                     onChange={handleChange}
                                     placeholder="Enter your name"
                                     className="w-full px-4 py-2 rounded-md border border-border"
@@ -325,7 +320,7 @@ const TransportationRequestForm = () => {
 
                                     >
 
-                                        {Object.values(Building).map((build) =>
+                                        {Object.values(Buildings).map((build : Buildings) =>
                                         {
                                             const differentBuild = (build != formData.desiredBuilding);
                                             return(
@@ -351,7 +346,8 @@ const TransportationRequestForm = () => {
                                         value={formData.desiredBuilding}
                                         onChange={ handleChange}
                                     >
-                                        {Object.values(Building).map((build) =>
+
+                                        {Object.values(Buildings).map((build : Buildings) =>
                                         {
                                             const differentBuild = build !== formData.currentBuilding;
                                             return(

@@ -60,7 +60,7 @@ router.post("/", async function (req: Request, res: Response) {
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
         //requestType: request.sanitationType,
-        patient: {connect: {id: parseInt(request.patientID, 10)}},
+        patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority: parseRequestPriority(request.priority),
         department: parseDepartment(request.department),
         location: parseEnum(Buildings, request.location),

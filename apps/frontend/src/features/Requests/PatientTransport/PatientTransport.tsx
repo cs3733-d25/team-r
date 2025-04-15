@@ -14,7 +14,7 @@ export function TransportRequestPage() {
     displayTable();
     async function retrieveFromDatabase() {
         try{
-            const response = await axios.get("/api/transport-request/")
+            const response = await axios.get("/api/transportreq/")
             console.log("response from / get", response.data)
             setTransport(response.data);
             console.log(response.data);

@@ -8,4 +8,5 @@ export const API_ROUTES = {
     CSV: '/api/csv',
     BFS: '/api/bfs',
     PATIENTREQ: '/api/patientreq',
+    TRANSPORT: '/api/transportreq'
 };
