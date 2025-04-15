@@ -32,7 +32,7 @@ export function AllPatientRequests() {
     }
     return(
         <>
-            <h1 className = {"bold text-3xl text-center pb-2"}>Nonemergent Patient Requests</h1>
+
 
             <table className = {"mx-auto w-200"}>
                 <thead className = {"border-b"}>
