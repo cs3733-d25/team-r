@@ -17,6 +17,8 @@ import PatientRequest from "@/features/Requests/PatientRequest/PatientRequest.ts
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import TransportationRequestForm from "@/features/Requests/PatientTransport/PatientTransportForm.tsx";
 import TransportationRequestPage from "@/features/Requests/PatientTransport/PatientTransport.tsx";
+import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
+
 
 function App() {
     const router = createBrowserRouter([
@@ -41,7 +43,7 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequestForm /> },
                 { path: 'patientrequestpage', element: <PatientRequest /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
-                { path: 'transport', element: <TransportationRequestForm /> },
+                { path: 'transport', element: <PatientTransportPage /> },
                 { path: 'transportpage', element: <TransportationRequestPage /> }
             ],
         },

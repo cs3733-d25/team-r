@@ -103,7 +103,6 @@ const TransportationRequestForm = () => {
 
     return (
         <>
-            <NavbarMGH />
             <div className="p-6 max-w-7xl mx-auto">
                 <h1 className="text-2xl font-bold mb-0">Transport Request System</h1>
                 <h2 className="text-xl font-bold mb-6">Alex Lowczyk & Joshua Gifford</h2>

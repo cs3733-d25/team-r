@@ -25,7 +25,6 @@ export function TransportRequestPage() {
     }
     return(
         <>
-            <Navbar />
             <h1 className = {"bold text-3xl text-center pb-2"}>Transportation Requests</h1>
             <Link
                 key={'Transportation Form Page'}
