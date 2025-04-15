@@ -119,23 +119,7 @@ model Patient {
   TransportRequest TransportRequest[] @relation("TransportRequest")
 }
 
-model DeviceRequest {
-  requestId            Int             @id @default(autoincrement())
-  deviceType           String
-  priority             RequestPriority
-  deliveryLocation     String
-  deliveryTime         DateTime?
-  requestTime          DateTime        @default(now())
-  requestAcceptedTime  DateTime?
-  requestCompletedTime DateTime?
-  status               RequestStatus   @default(pending)
-  comments             String?
 
-  employee           Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
-  employeeId         Int
-  assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
-  assignedEmployeeId Int?
-}
 
 model MedicalDevice {
   medicalDeviceId   Int          @id @default(autoincrement())
@@ -147,19 +131,7 @@ model MedicalDevice {
   // @@map("medical_devices")
 }
 
-model SanitationRequest {
-  requestId      Int             @id @default(autoincrement())
-  sanitationType String
-  priority       RequestPriority
-  department     Department?
-  roomNumber     String
-  requestTime    DateTime        @default(now())
-  comments       String?
-  status         RequestStatus   @default(pending)
 
-  user   User @relation("sanitationRequests", fields: [userId], references: [id])
-  userId Int
-}
 
 model Directory {
   id          Int      @id @default(autoincrement())
@@ -197,6 +169,47 @@ model Edge {
 /**
  * REQUESTS
  */
+// model ServiceRequestGeneral{
+//   requestID Int @id
+//   pharmacyReq PharmacyRequest?  @relation("pharmRequest")
+//   //for iteration2 - do not connect the employeeName to a employee user
+//   employeeName  String
+//   priority  RequestPriority
+//   status  RequestStatus
+//   department  Department
+//   location  Building
+// }
+
+model SanitationRequest {
+  requestId      Int             @id @default(autoincrement())
+  sanitationType String
+  priority       RequestPriority
+  department     Department?
+  roomNumber     String
+  requestTime    DateTime        @default(now())
+  comments       String?
+  status         RequestStatus   @default(pending)
+
+  user   User @relation("sanitationRequests", fields: [userId], references: [id])
+  userId Int
+}
+model DeviceRequest {
+  requestId            Int             @id @default(autoincrement())
+  deviceType           String
+  priority             RequestPriority
+  deliveryLocation     String
+  deliveryTime         DateTime?
+  requestTime          DateTime        @default(now())
+  requestAcceptedTime  DateTime?
+  requestCompletedTime DateTime?
+  status               RequestStatus   @default(pending)
+  comments             String?
+
+  employee           Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
+  employeeId         Int
+  assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
+  assignedEmployeeId Int?
+}
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
   employeeID             Int
@@ -215,6 +228,22 @@ model PharmacyRequest {
   refills                Int
   additionalInstructions String
 }
+// model PharmacyRequest {
+//   prescriptionID         Int             @id //@default(autoincrement())
+//   patientID              Int
+//   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+//   drugName               String
+//   morningPillCount       Int
+//   middayPillCount        Int
+//   eveningPillCount       Int
+//   nightPillCount         Int
+//   days                   Int
+//   numberOfPills          Int
+//   refills                Int
+//   additionalInstructions String
+//   //general
+//   generalRequest  ServiceRequestGeneral @relation("pharmRequest", fields: [prescriptionID], references: [requestID], onDelete: Cascade)
+// }
 
 model PatientRequest {
   patientRequestID Int             @id @default(autoincrement())
@@ -256,5 +285,10 @@ model Priorities {
 
 model Statuses {
   type RequestStatus @id @unique
+  name String
+}
+
+model Locations{
+  type Building @id @unique
   name String
 }
