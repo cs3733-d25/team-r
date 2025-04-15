@@ -243,21 +243,42 @@ const TransportationRequestForm = () => {
                                         e.g., Ambulance, Helicopter, etc
                                     </span>
                                 </Label>
-                                <RadioGroup value={transportationType} onValueChange={setTransportationType}
-                                >
-                                    <div className="flex items-center space-x-2">
-                                        <RadioGroupItem value="Non-Emergency Ambulance" id="Non-Emergency Ambulance"  />
-                                        <Label htmlFor="Non-Emergency Ambulance" >Non-Emergency Ambulance</Label>
+                                <div className="px-3 flex flex-row items-end">
+                                    <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                        Non-Emergency Ambulence
+                                    </Label>
+                                    <Input
+                                        type="radio"
+                                        name="transportationType"
+                                        value="Non-Emergency Ambulence"
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            Emergency Ambulence
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="transportationType"
+                                            value="Emergency Ambulence"
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
-                                    <div className="flex items-center space-x-2">
-                                        <RadioGroupItem value="Emergency Ambulance"  id="Emergency Ambulance"   />
-                                        <Label htmlFor="Emergency Ambulance" >Emergency Ambulance</Label>
+                                    <div className="px-3 flex flex-row items-end">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
+                                            Helicopter
+                                        </Label>
+                                        <Input
+                                            type="radio"
+                                            name="transportationType"
+                                            value="Helicopter"
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
-                                    <div className="flex items-center space-x-2 pb-5">
-                                        <RadioGroupItem value="Helicopter"  id="Helicopter"  />
-                                        <Label htmlFor="Helicopter" >Helicopter</Label>
-                                    </div>
-                                </RadioGroup>
 
 
                                 {/* Priority */}
