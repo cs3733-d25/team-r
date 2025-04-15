@@ -14,9 +14,11 @@ import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequest
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
+import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
 import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
 import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
+import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx";
 
 
 function App() {
@@ -31,13 +33,13 @@ function App() {
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <ExternalMap /> },
+                { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
-                { path: 'prescription', element: <PrescriptionForm /> },
-                { path: 'prescriptionpage', element: <PrescriptionPage /> },
+                { path: 'prescription', element: <Prescription /> },
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },

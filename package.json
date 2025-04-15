@@ -10,7 +10,7 @@
     "dev": "dotenv -e .env -- turbo run dev",
     "dev:wpi": "dotenv -e .env.wpi -- turbo run dev",
     "dev:prod": "dotenv -e .env.prod -- turbo run dev",
-    "docker": "docker-compose -f ./docker/docker-compose.yml up --build",
+    "docker": "dotenv -e .env -- docker-compose -f ./docker/docker-compose.yml up --build",
     "fix": "yarn cache clean && yarn install",
     "test": "yarn run vitest --ui --open=false",
     "lint": "turbo run lint",

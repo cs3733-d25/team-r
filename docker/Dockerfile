@@ -32,6 +32,20 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
+# Accept build-time variables
+ARG NODE_ENV
+ARG FRONTEND_PORT
+ARG BACKEND_PORT
+ARG BACKEND_SOURCE
+ARG BACKEND_URL
+
+# Make them available at runtime
+ENV NODE_ENV=$NODE_ENV \
+    FRONTEND_PORT=$FRONTEND_PORT \
+    BACKEND_PORT=$BACKEND_PORT \
+    BACKEND_SOURCE=$BACKEND_SOURCE \
+    BACKEND_URL=$BACKEND_URL
+
 # Copy the entire project structure
 COPY --from=builder /app .
 
@@ -44,15 +58,15 @@ RUN yarn add serve
 # Install nginx
 RUN apk add --no-cache nginx
 
+# Install envsubst
+RUN apk add --no-cache gettext
+
 # Copy nginx configuration
-COPY docker/nginx.conf /etc/nginx/http.d/default.conf
+COPY docker/nginx.conf.template /etc/nginx/http.d/template
 
 # Copy start script
 COPY docker/start.sh /app/start.sh
 RUN chmod +x /app/start.sh
-
-# Expose ports
-EXPOSE 80 3001
 
 # Start the application
 CMD ["/app/start.sh"]
