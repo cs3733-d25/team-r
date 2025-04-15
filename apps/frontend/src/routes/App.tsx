@@ -12,9 +12,9 @@ import SanitationRequestPage from "../features/Requests/SanitationForm/Sanitatio
 import {PrescriptionForm} from "../features/Requests/PrescriptionForm/PrescriptionForm.tsx";
 import {PrescriptionPage} from "../features/Requests/PrescriptionForm/PrescriptionPage.tsx";
 import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequests.tsx";
-import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
+import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
 
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <ExternalMap /> },
+                { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
