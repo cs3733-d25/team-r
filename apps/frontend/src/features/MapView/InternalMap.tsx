@@ -87,7 +87,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer20_1);
             L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(floorLayer20_1);
             L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
-            L.marker([0, 0]).bindPopup('Parking Lot').addTo(floorLayerChestnutHill);
+            L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
+            L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
 
             // add a default layer
             floorLayer20_1.addTo(map);
