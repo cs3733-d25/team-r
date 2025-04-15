@@ -6,7 +6,6 @@ import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
-import CSVPage from '../features/CSVFiles/CSVPage.tsx';
 import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import {PrescriptionForm} from "../features/Requests/PrescriptionForm/PrescriptionForm.tsx";
@@ -18,6 +17,7 @@ import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
 import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
 import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
+import CSVTabPage from "@/features/CSVFiles/CSVTabs.tsx";
 
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <ExternalMap /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
-                { path: 'csv', element: <CSVPage /> },
+                { path: 'csv', element: <CSVTabPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
