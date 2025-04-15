@@ -78,18 +78,16 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
             L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
 
-            // === PARKING LOT LAYERS ===
-            const patriotValetParking = L.layerGroup();
-            const patriotPatientParking = L.layerGroup();
-            const patriotExtendedParking = L.layerGroup();
-            const chestnutParking = L.layerGroup();
 
             // parking lot markers
-            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(patriotValetParking);
-            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(patriotPatientParking);
-            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
+            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
+            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(floorLayer22_1);
+            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer22_1);
             // TODO: update coordinates
-            L.marker([0, 0]).bindPopup('Parking Lot').addTo(chestnutParking);
+            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer20_1);
+            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(floorLayer20_1);
+            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
+            L.marker([0, 0]).bindPopup('Parking Lot').addTo(floorLayerChestnutHill);
 
             // add a default layer
             floorLayer20_1.addTo(map);
