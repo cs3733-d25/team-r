@@ -49,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange }) =
     return (
         <Select onValueChange={handleChange}>
             <SelectTrigger>
-                <SelectValue placeholder={'Select a ' + tableName}></SelectValue>
+                <SelectValue placeholder={'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup >
