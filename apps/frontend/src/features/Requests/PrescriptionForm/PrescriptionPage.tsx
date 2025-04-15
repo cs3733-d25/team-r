@@ -44,7 +44,7 @@ export function PrescriptionPage() {
     }
 
     return (
-        <>
+        <div className={"bg-white"}>
             <h1 className={'bold text-3xl text-center pb-2'}>Prescription Requests</h1>
             <Table className={'mx-auto w-200'}>
                 <TableHeader className={'border-b'}>
@@ -118,6 +118,6 @@ export function PrescriptionPage() {
                     })}
                 </TableBody>
             </Table>
-        </>
+        </div>
     );
 }
