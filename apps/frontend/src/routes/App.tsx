@@ -14,6 +14,7 @@ import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequest
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
+import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
 import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
 import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
@@ -32,6 +33,7 @@ function App() {
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <ExternalMap /> },
+                { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },

@@ -1,6 +1,13 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import {Building, Department, Priorities, Prisma, RequestPriority, RequestStatus} from "database";
+import {
+  Building,
+  Department,
+  Priorities,
+  Prisma,
+  RequestPriority,
+  RequestStatus,
+} from "database";
 
 const router: Router = express.Router();
 
@@ -38,22 +45,22 @@ export async function parsePriority(value: string): Promise<RequestPriority> {
 export async function parseBuilding(value: string): Promise<Building> {
   // return Department type
   return PrismaClient.locations
-      .findFirstOrThrow({
-        where: { name: value },
-      })
-      .then((row) => {
-        return row.type;
-      });
+    .findFirstOrThrow({
+      where: { name: value },
+    })
+    .then((row) => {
+      return row.type;
+    });
 }
 export async function parseStatus(value: string): Promise<RequestStatus> {
   // return Department type
   return PrismaClient.statuses
-      .findFirstOrThrow({
-        where: { name: value },
-      })
-      .then((row) => {
-        return row.type;
-      });
+    .findFirstOrThrow({
+      where: { name: value },
+    })
+    .then((row) => {
+      return row.type;
+    });
 }
 
 // takes in an array of objects with a name field and return an array of names
