@@ -1,7 +1,13 @@
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-function Directions(props: { selectedLocation: string; startingLocation: string }) {
+interface DirectionProps {
+    selectedLocation: string;
+    startingLocation: string;
+    travelMode: string;
+}
+
+function Directions({ selectedLocation, startingLocation, travelMode }: DirectionProps) {
     const map = useMap();
     const routesLibrary = useMapsLibrary('routes');
     const [directionService, setDirectionService] = useState<google.maps.DirectionsService>();
@@ -15,17 +21,25 @@ function Directions(props: { selectedLocation: string; startingLocation: string 
 
     useEffect(() => {
         if (!directionService || !directionRenderer) return;
+        const googleTravelMode =
+            travelMode === 'WALKING'
+                ? google.maps.TravelMode.WALKING
+                : travelMode === 'TRANSIT'
+                  ? google.maps.TravelMode.TRANSIT
+                  : travelMode === 'BICYCLING'
+                    ? google.maps.TravelMode.BICYCLING
+                    : google.maps.TravelMode.DRIVING;
 
         directionService
             .route({
-                origin: props.startingLocation,
-                destination: props.selectedLocation,
-                travelMode: google.maps.TravelMode.DRIVING,
+                origin: startingLocation,
+                destination: selectedLocation,
+                travelMode: googleTravelMode,
             })
             .then((response) => {
                 directionRenderer.setDirections(response);
             });
-    }, [directionService, directionRenderer, props.selectedLocation, props.startingLocation]);
+    }, [directionService, directionRenderer, selectedLocation, startingLocation, travelMode]);
 
     return null;
 }

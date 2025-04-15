@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
+import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 
 
 // Simple interface for submitted request
@@ -104,20 +105,20 @@ const TransportationRequestForm = () => {
     return (
         <>
             <div className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-0">Transport Request System</h1>
-                <h2 className="text-xl font-bold mb-6">Alex Lowczyk & Joshua Gifford</h2>
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
-                    <div className="mb-4 p-4 rounded-md bg-red-100 text-red-700 border border-red-700">
+                    <Alert className="mb-4 p-4 rounded-md bg-accent border border-accent-foreground">
+                       <AlertDescription className={'text-accent-foreground'}>
                         {submitStatus.message}
-                    </div>
+                       </AlertDescription>
+                    </Alert>
                 )}
 
                 {/* Confirmation Card */}
                 {submittedTransport && !submitStatus?.isError && (
-                    <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
-                        <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
+                    <div  className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                        <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-6 w-6 mr-2"
@@ -189,7 +190,7 @@ const TransportationRequestForm = () => {
                         </div>
                     </div>
                 )}
-                <div className="bg-background rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground mt-3">
+                <div className="bg-background rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-primary mt-3">
                     <div className="p-15">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -372,7 +373,7 @@ const TransportationRequestForm = () => {
                                     name="comments"
                                     value={formData.comments}
                                     onChange={handleChange}
-                                    placeholder="e.g., Liquid spill near entrance, Biohazard materials present, Special cleaning instructions..."
+                                    placeholder="e.g., Patient is agitated, Patient needs fragile transport etc"
                                     rows={4}
                                 />
                             </div>
