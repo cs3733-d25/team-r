@@ -1,7 +1,6 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import { Department, Prisma, RequestPriority } from "database";
-import Prisma__DepartmentsClient = Prisma.Prisma__DepartmentsClient;
+import { Department, Priorities, Prisma, RequestPriority } from "database";
 
 const router: Router = express.Router();
 
@@ -13,9 +12,21 @@ export function parseRequestPriority(value: string): RequestPriority {
 
 // a function to cast a string to a Department enum type
 // uses look up table in database so that special characters can be stored
+
+// TODO: refactor for passing in department types
 export async function parseDepartment(value: string): Promise<Department> {
   // return Department type
   return PrismaClient.departments
+    .findFirstOrThrow({
+      where: { name: value },
+    })
+    .then((row) => {
+      return row.type;
+    });
+}
+export async function parsePriority(value: string): Promise<RequestPriority> {
+  // return Department type
+  return PrismaClient.priorities
     .findFirstOrThrow({
       where: { name: value },
     })
@@ -31,6 +42,7 @@ function formatNames(rows: { name: string }[]): string[] {
   });
 }
 
+// TODO: add locations table and bruno and everything
 router.get("/:table", async function (req: Request, res: Response) {
   try {
     console.log("type requested: " + req.params.table);
@@ -55,7 +67,7 @@ router.get("/:table", async function (req: Request, res: Response) {
       res.status(200).json(names);
     } else {
       console.error(
-        "Error fetching department data: that table does NOT exist",
+        "Error fetching department data: that table does NOT exist or something",
       );
       res.status(500).json({ error: "Internal Server Error" });
     }

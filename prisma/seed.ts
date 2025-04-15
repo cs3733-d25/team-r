@@ -195,7 +195,7 @@ async function main() {
                 connect: { id: employee1.id }
             }
         }
-    });
+    });*/
 
     await prisma.departments.createMany({
         data:[
@@ -227,6 +227,7 @@ async function main() {
     })
 
     // Create medical devices
+    /*
     await prisma.medicalDevice.createMany({
         data: [
             { medicalDeviceType: 'X-Ray Machine', currentLocation: 'Imaging Room 1', currentStatus: DeviceStatus.available },
