@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import FormPage from '@/features/Requests/MedDeviceRequest/FormPage.tsx';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
@@ -15,6 +14,8 @@ import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequest
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
+import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
+import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
 
 
 function App() {
@@ -27,7 +28,6 @@ function App() {
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
-                { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <ExternalMap /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
@@ -38,7 +38,9 @@ function App() {
                 { path: 'prescription', element: <PrescriptionForm /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
-                { path: 'patientrequest', element: <PatientRequest /> }
+                { path: 'patientrequest', element: <PatientRequest /> },
+                { path: 'devicerequest', element: <DeviceReqForm />},
+                { path: 'devicerequestpage', element: <DeviceReqPage />}
             ],
         },
     ]);
