@@ -9,6 +9,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
+import Dropdown from "@/components/Dropdowns/Department.tsx";
 
 
 // Simple interface for submitted request
@@ -47,6 +48,12 @@ const TransportationRequestForm = () => {
         isError: boolean;
     } | null>(null);
 
+    const handleDropdownChange = (name:string, value:string) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
     // Add state for the confirmation card
     const [submittedTransport, setSubmittedTransport] = useState<SubmittedTransport | null>(null);
     const handleSubmit = async (e: React.FormEvent) => {
@@ -205,7 +212,7 @@ const TransportationRequestForm = () => {
                                         value={formData.employeeID}
                                         onChange={handleChange}
                                         placeholder="Enter your name"
-                                        className="w-full px-4 py-2 rounded-md border border-border"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                         required
                                     />
                                 </div>
@@ -220,7 +227,7 @@ const TransportationRequestForm = () => {
                                         value={formData.patientID}
                                         onChange={handleChange}
                                         placeholder="Enter patient ID"
-                                        className="w-full px-4 py-2 rounded-md border border-border"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                         required
                                     />
                                 </div>
@@ -264,18 +271,7 @@ const TransportationRequestForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <select
-                                        name="priority"
-                                        value={formData.priority}
-                                        onChange={ handleChange}
-                                    >
-                                        <option value="" disabled hidden>Select Priority</option>
-                                        {Object.values(RequestPriority).map((priority) => (
-                                            <option key={priority} value={priority}>
-                                                {priority}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
                                 {/* Department */}
                                 <div>
@@ -286,18 +282,7 @@ const TransportationRequestForm = () => {
                                             Select the department requiring transportation
                                         </span>
                                     </Label>
-                                    <select
-                                        name="department"
-                                        value={formData.department}
-                                        onChange={ handleChange}
-                                    >
-                                        <option value="" disabled hidden>Select Department</option>
-                                        {Object.values(Department).map((dept) => (
-                                            <option key={dept} value={dept}>
-                                                {dept}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Current Building */}
@@ -307,60 +292,26 @@ const TransportationRequestForm = () => {
                                             Current Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                        <select
-                                            name="currentBuilding"
-                                            value={formData.currentBuilding}
-                                            onChange={ handleChange}
-
-                                        >
-
-                                            {Object.values(Buildings).map((build : Buildings) =>
-                                            {
-                                                const differentBuild = (build != formData.desiredBuilding);
-                                                return(
-                                                    <>
-                                                        <option value="" disabled hidden>Select Current Building</option>
-                                                        { differentBuild?<option key={build} value={build}>
-                                                            {build}
-                                                        </option>:null}
-
-                                                    </>
-                                                );
-
-                                            })}
-                                        </select>
+                                        <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
                                     </div>
                                     <div>
                                         <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                        <select
-                                            name="desiredBuilding"
-                                            value={formData.desiredBuilding}
-                                            onChange={ handleChange}
-                                        >
+                                         <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
 
-                                            {Object.values(Buildings).map((build : Buildings) =>
-                                            {
-                                                const differentBuild = build !== formData.currentBuilding;
-                                                return(
-                                                    <>
-                                                        <option value="" disabled hidden>Select Desired Building</option>
-                                                        { differentBuild?<option key={build} value={build}>
-                                                            {build}
-                                                        </option>:null}
 
-                                                    </>
-                                                );
-
-                                            })}
-
-                                        </select>
                                     </div>
                                 </div>
                             </div>
-
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Request Status
+                                    <span className="text-accent">*</span>
+                                </Label>
+                                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                            </div>
                             {/* Comments */}
                             <div>
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -373,11 +324,14 @@ const TransportationRequestForm = () => {
                                 <Textarea
                                     name="comments"
                                     value={formData.comments}
+                                    className={"bg-input"}
                                     onChange={handleChange}
                                     placeholder="e.g., Patient is agitated, Patient needs fragile transport etc"
                                     rows={4}
                                 />
                             </div>
+
+
 
                             {/* Submit Button */}
                             <div className="flex justify-end">

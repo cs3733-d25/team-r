@@ -511,8 +511,8 @@ export const PrescriptionForm = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Drug Name:</span>{' '}
-                                    {submittedPrescription.drugName}
+                                    <span className="font-semibold">Employee Name:</span>{' '}
+                                    {submittedPrescription.employee}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Employee ID:</span>{' '}
@@ -531,6 +531,10 @@ export const PrescriptionForm = () => {
                                     {submittedPrescription.department}
                                 </div>
                                 <div>
+                                    <span className="font-semibold">Status:</span>{' '}
+                                    {submittedPrescription.status}
+                                </div>
+                                <div>
                                     <span className="font-semibold">Morning Pill Count:</span>{' '}
                                     {submittedPrescription.morningPillCount}
                                 </div>
@@ -545,6 +549,18 @@ export const PrescriptionForm = () => {
                                 <div>
                                     <span className="font-semibold">Bedtime Pill Count:</span>{' '}
                                     {submittedPrescription.nightPillCount}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Drug Name:</span>{' '}
+                                    {submittedPrescription.drugName}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Pills per Bottle:</span>{' '}
+                                    {submittedPrescription.numberOfPills}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Refills:</span>{' '}
+                                    {submittedPrescription.refills}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Days per Week:</span>{' '}

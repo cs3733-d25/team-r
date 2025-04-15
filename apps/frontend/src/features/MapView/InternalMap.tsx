@@ -6,7 +6,7 @@ import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
 import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
 import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
-//import chestnutHill from '../../../public/Chestnut Hill.svg'
+import chestnutHill from '../../../public/Chestnut Hill.svg'
 import { goToFloor } from '../MapView/floorNavigation.ts';
 
 interface InternalMapProps {
@@ -20,16 +20,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
 
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
-            const map = L.map(mapRef.current, {
-                crs: L.CRS.Simple,
-                minZoom: -2,
-            }).setView([500, 500], 0);
+            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2,}).setView([500, 500], 0);
 
             // bounds for all floorplans
-            const bounds: L.LatLngBoundsLiteral = [
-                [0, 0],
-                [1000, 1000],
-            ];
+            const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
 
             // === FLOOR LAYERS ===
             const floorLayer20_1 = L.layerGroup();
@@ -37,7 +31,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             const floorLayer22_1 = L.layerGroup();
             const floorLayer22_3 = L.layerGroup();
             const floorLayer22_4 = L.layerGroup();
-            //const floorLayerChestnutHill = L.layerGroup();
+            const floorLayerChestnutHill = L.layerGroup();
 
             // image overlays
             L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
@@ -45,7 +39,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
             L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
             L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
-            //L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
+            L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
 
             // Transition Points Between Floors
             const transitionNodes = {
@@ -89,7 +83,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             const patriotValetParking = L.layerGroup();
             const patriotPatientParking = L.layerGroup();
             const patriotExtendedParking = L.layerGroup();
-            //const chestnutParking = L.layerGroup();
+            const chestnutParking = L.layerGroup();
 
             // parking lot markers
             L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(patriotValetParking);
@@ -105,13 +99,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
                 '20 Patriot Place - Floor 3': floorLayer20_3,
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
-                '22 Patriot Place - Floor 4': floorLayer22_4
+                '22 Patriot Place - Floor 4': floorLayer22_4,
+                'Chestnut Hill - Floor 1': floorLayerChestnutHill
             };
 
             const overlays = {
                 'Valet Parking': patriotValetParking,
                 'Patient Parking': patriotPatientParking,
                 'Extended Patient Parking': patriotExtendedParking
+                // TODO: parking should only be visible on patriot place floors 1
             };
 
             L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
@@ -148,13 +144,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             .addTo(floorLayer22_3);
 
             // path
-            if (pathCoordinates && pathCoordinates.length > 1) {
-                L.polyline(pathCoordinates, {
-                    color: 'red',
-                    weight: 3,
-                    opacity: 0.8
-                }).addTo(map);
-            }
+            if (pathCoordinates && pathCoordinates.length > 1) L.polyline(pathCoordinates, {                    color: 'red',                    weight: 3,                    opacity: 0.8                }).addTo(map);
 
             // for getting coordinates (delete later)
             map.on('click', function (e) {

@@ -18,13 +18,14 @@ export function Prescription() {
                                  className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
                         All Requests</TabsTrigger>
                 </TabsList>
+                <div className={"mb-6"}>
                     <TabsContent value="prescriptionForm">
                         <PrescriptionForm/>
                     </TabsContent>
                     <TabsContent value="prescriptionPage">
                         <PrescriptionPage />
                     </TabsContent>
-
+            </div>
             </Tabs>
 
         </>

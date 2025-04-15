@@ -104,6 +104,9 @@ export const PatientRequestForm = () => {
         <>
 
         <div className="p-6 max-w-7xl mx-auto">
+            <h1 className="text-2xl font-bold mb-0">Prescription Request System</h1>
+            <h2 className="text-xl font-bold mb-6">Owen Miller & Keagan Hitt</h2>
+
 
 
             {/* Status Message */}
