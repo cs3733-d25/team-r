@@ -41,7 +41,7 @@ app.use(API_ROUTES.SANITATION, sanitationRouter);
 app.use(API_ROUTES.CSV, csvRouter);
 app.use(API_ROUTES.BFS, bfsRouter);
 app.use(API_ROUTES.PHARMACY, pharmacyRouter);
-app.use(API_ROUTES.ENUM, enumRouter)
+app.use(API_ROUTES.ENUM, enumRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

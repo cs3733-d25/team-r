@@ -189,6 +189,16 @@ model PharmacyRequest {
 }
 
 model Departments {
-  departmentType Department @id @unique
-  departmentName String
+  type Department @id @unique
+  name String
+}
+
+model Priorities {
+  type RequestPriority @id @unique
+  name String
+}
+
+model Statuses {
+  type RequestStatus @id @unique
+  name String
 }
