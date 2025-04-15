@@ -28,13 +28,13 @@ interface SubmittedTransport {
 
 
 const TransportationRequestForm = () => {
+    const [transportationType, setTransportationType] = useState("");
     const [formData, setFormData] = useState({
         patientID: '',
         employeeID: '',
         employeeName: '',
         currentBuilding :"",
         desiredBuilding : "",
-        transportationType: '',
         priority: "",
         department: "",
         comments: '',
@@ -48,7 +48,6 @@ const TransportationRequestForm = () => {
 
     // Add state for the confirmation card
     const [submittedTransport, setSubmittedTransport] = useState<SubmittedTransport | null>(null);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitStatus(null);
@@ -62,7 +61,7 @@ const TransportationRequestForm = () => {
             if (response.status === 200) {
                 // Store the request data for the confirmation card
                 setSubmittedTransport({
-                    ...formData,
+                    ...formData,transportationType,
                     timestamp: new Date().toLocaleString()
                 });
 
@@ -78,11 +77,11 @@ const TransportationRequestForm = () => {
                     employeeID: '',
                     currentBuilding :"",
                     desiredBuilding : "",
-                    transportationType: '',
                     comments: '',
                     priority: "",
                     department: "",
                 });
+                setTransportationType('');
             }
         } catch (error) {
             console.error('Error submitting request:', error);
@@ -141,8 +140,12 @@ const TransportationRequestForm = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Employee Name:</span>{' '}
-                                    {submittedTransport.employeeName}
+                                    <span className="font-semibold">Employee ID:</span>{' '}
+                                    {submittedTransport.employeeID}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Patient ID:</span>{' '}
+                                    {submittedTransport.patientID}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Transportation Type:</span>{' '}
@@ -201,7 +204,7 @@ const TransportationRequestForm = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div >
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Employee Name
+                                    Employee ID
                                     <span className="text-accent">*</span>
                                 </Label>
                                 <Input
@@ -240,18 +243,19 @@ const TransportationRequestForm = () => {
                                         e.g., Ambulance, Helicopter, etc
                                     </span>
                                 </Label>
-                                <RadioGroup defaultValue={"non-emergency ambulance" }>
+                                <RadioGroup value={transportationType} onValueChange={setTransportationType}
+                                >
                                     <div className="flex items-center space-x-2">
-                                        <RadioGroupItem value="non-emergency ambulance" id="non-emergency ambulance"  />
-                                        <Label htmlFor="non-emergency ambulance" >Non-Emergency Ambulance</Label>
+                                        <RadioGroupItem value="Non-Emergency Ambulance" id="Non-Emergency Ambulance"  />
+                                        <Label htmlFor="Non-Emergency Ambulance" >Non-Emergency Ambulance</Label>
                                     </div>
                                     <div className="flex items-center space-x-2">
-                                        <RadioGroupItem value="emergency ambulance"  id="emergency ambulance"  />
-                                        <Label htmlFor="emergency ambulance" >Emergency Ambulance</Label>
+                                        <RadioGroupItem value="Emergency Ambulance"  id="Emergency Ambulance"   />
+                                        <Label htmlFor="Emergency Ambulance" >Emergency Ambulance</Label>
                                     </div>
                                     <div className="flex items-center space-x-2 pb-5">
-                                        <RadioGroupItem value="helicopter"  id="helicopter"  />
-                                        <Label htmlFor="helicopter" >Helicopter</Label>
+                                        <RadioGroupItem value="Helicopter"  id="Helicopter"  />
+                                        <Label htmlFor="Helicopter" >Helicopter</Label>
                                     </div>
                                 </RadioGroup>
 
