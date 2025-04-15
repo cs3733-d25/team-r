@@ -10,6 +10,7 @@ import csvRouter from "./routes/csv.ts";
 import loginRouter from "./routes/login.ts";
 import sanitationRouter from "./routes/sanitationreqs.ts";
 import bfsRouter from "./routes/bfs.ts";
+import patientRequestRouter from "./routes/patientRequest.ts";
 import pharmacyRouter from "./routes/pharmacyreqs.ts";
 import enumRouter from "./routes/enum.ts";
 import { API_ROUTES } from "common/src/constants";
@@ -40,6 +41,7 @@ app.use(API_ROUTES.LOGIN, loginRouter);
 app.use(API_ROUTES.SANITATION, sanitationRouter);
 app.use(API_ROUTES.CSV, csvRouter);
 app.use(API_ROUTES.BFS, bfsRouter);
+app.use(API_ROUTES.PATIENTREQ, patientRequestRouter);
 app.use(API_ROUTES.PHARMACY, pharmacyRouter);
 app.use(API_ROUTES.ENUM, enumRouter);
 

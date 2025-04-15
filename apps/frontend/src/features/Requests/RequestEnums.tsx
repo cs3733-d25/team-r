@@ -13,6 +13,22 @@ export enum Department {
     AMBULATORY_URGENCARE = 'Ambulatory_UrgentCare'
 }
 
+
+export enum RequestStatus {
+    pending = 'Pending',
+    accepted = 'Accepted',
+    in_progress = 'InProgress',
+    completed = 'Completed',
+    cancelled = 'Cancelled',
+}
+
+export enum Buildings {
+    PATRIOT_PLACE_22 = "PATRIOT_PLACE_22",
+    PATRIOT_PLACE_20 = "PATRIOT_PLACE_20",
+    CHESTNUT_HILL = "CHESTNUT_HILL",
+
+}
+
 interface SubmittedPrescription {
     employeeID: string;
     patientID: string;

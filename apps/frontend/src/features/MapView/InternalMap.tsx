@@ -1,124 +1,188 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import floorPlan from '../../../public/floorplan.svg';
+import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
+import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
+import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
+import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
+import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
+//import chestnutHill from '../../../public/Chestnut Hill.svg'
+import { goToFloor } from '../MapView/floorNavigation.ts';
 
 interface InternalMapProps {
-    pathCoordinates?: [number, number][];  // Optional path coordinates
-    path?: string[];  // Optional path as node IDs (e.g., ['p2', 'e2', 'r2'])
+    pathCoordinates?: [number, number][];
+    path?: string[];
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({ pathCoordinates, path }) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
-    const pathLayerRef = useRef<L.Polyline | null>(null);
 
     useEffect(() => {
-        // Map of node IDs to their coordinates on the floor plan
-        const nodeCoordinates: Record<string, [number, number]> = {
-            p1: [250, 150],  // Extended Parking
-            p2: [400, 250],  // Patient Parking
-            p3: [600, 520],  // Valet Parking
-            e1: [530, 400],  // Entrance
-            e2: [410, 395],  // Entrance
-            e3: [210, 790],  // Entrance
-            r1: [570, 375],  // Reception
-            r2: [415, 480],  // Reception
-            r3: [270, 660],  // Reception
-            h1: [400, 455],  // Hallway 1
-            h2: [245, 640],  // Hallway 2
-            h3: [190, 690],  // Hallway
-            h4: [235, 730],  // Hallway
-            h5: [235, 760],  // Hallway
-            h6: [210, 760],  // Hallway
-            s1: [210, 790],  // Sidewalk
-            s2: [90, 750]    // Sidewalk
-        };
-
-        // Check if the map container is available
         if (mapRef.current && !mapInstance.current) {
-            // Initialize the map
             const map = L.map(mapRef.current, {
                 crs: L.CRS.Simple,
-            }).setView([500, 500], 0.25);
+                minZoom: -2,
+            }).setView([500, 500], 0);
 
-            // Define the bounds of the floor plan image
-            const floorPlanBounds: L.LatLngBoundsLiteral = [
+            // bounds for all floorplans
+            const bounds: L.LatLngBoundsLiteral = [
                 [0, 0],
                 [1000, 1000],
             ];
 
-            // Add the floor plan image
-            L.imageOverlay(floorPlan, floorPlanBounds).addTo(map);
+            // === FLOOR LAYERS ===
+            const floorLayer20_1 = L.layerGroup();
+            const floorLayer20_3 = L.layerGroup();
+            const floorLayer22_1 = L.layerGroup();
+            const floorLayer22_3 = L.layerGroup();
+            const floorLayer22_4 = L.layerGroup();
+            //const floorLayerChestnutHill = L.layerGroup();
+
+            // image overlays
+            L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
+            L.imageOverlay(patriot20Floor3, bounds).addTo(floorLayer20_3);
+            L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
+            L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
+            L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
+            //L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
+
+            // Transition Points Between Floors
+            const transitionNodes = {
+                // 22 patriot place
+                'elevatorA': {floor1: [385.55, 546.23], floor3: [464.51, 546.23], floor4: [383.55, 554.24]},
+                'st01': {floor1: [387.55, 456.21], floor3: [469.50, 469.21], floor4: [392.55, 457.21]},
+                'st02': {floor1: [316.59, 280.17], floor3: [405.54, 314.17], floor4: [316.59, 279.17]},
+                'st03': {floor1: [622.42, 885.32], floor3: [678.38, 850.31], floor4: [619.42, 887.32]},
+                // 20 patriot place
+                'st13': {floor1: [758.34, 187.14], floor3: [758.34, 187.14]},
+                'st14': {floor1: [218.74, 818.00], floor3: [218.74, 818.00]},
+                'el10': {floor1: [240.64, 771.29], floor3: [240.64, 771.29]}
+                // chestnut hill
+            };
+
+            // 22 patriot place floor 1 buttons to go up to floor 3
+            L.circle(transitionNodes['elevatorA'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            L.circle(transitionNodes['st01'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            L.circle(transitionNodes['st02'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            L.circle(transitionNodes['st03'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            // 22 patriot place floor 3 buttons to go up to floor 4 or down to floor 1
+            L.circle(transitionNodes['elevatorA'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            L.circle(transitionNodes['st01'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            L.circle(transitionNodes['st02'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            L.circle(transitionNodes['st03'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            // 22 patriot place floor 4 buttons to go down to floor 3
+            L.circle(transitionNodes['elevatorA'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            L.circle(transitionNodes['st01'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            L.circle(transitionNodes['st02'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            L.circle(transitionNodes['st03'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+
+            // 20 patriot place
+            L.circle(transitionNodes['st13'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
+            L.circle(transitionNodes['st13'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
+            L.circle(transitionNodes['st14'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
+            L.circle(transitionNodes['st14'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
+            L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
+            L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
+
+            // === PARKING LOT LAYERS ===
+            const patriotValetParking = L.layerGroup();
+            const patriotPatientParking = L.layerGroup();
+            const patriotExtendedParking = L.layerGroup();
+            //const chestnutParking = L.layerGroup();
+
+            // parking lot markers
+            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(patriotValetParking);
+            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(patriotPatientParking);
+            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
+
+            // add a default layer
+            floorLayer20_1.addTo(map);
+
+            // === LAYER CONTROLS ===
+            const baseLayers = {
+                '20 Patriot Place - Floor 1': floorLayer20_1,
+                '20 Patriot Place - Floor 3': floorLayer20_3,
+                '22 Patriot Place - Floor 1': floorLayer22_1,
+                '22 Patriot Place - Floor 3': floorLayer22_3,
+                '22 Patriot Place - Floor 4': floorLayer22_4
+            };
+
+            const overlays = {
+                'Valet Parking': patriotValetParking,
+                'Patient Parking': patriotPatientParking,
+                'Extended Patient Parking': patriotExtendedParking
+            };
+
+            L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
+
+            // connect patriot place buildings
+            const bridge1 = L.polyline([
+                [241.63, 101.12], // 20 Patriot Place
+                [242.63, 68.11], // 22 Patriot Place
+            ], {
+                color: 'blue',
+                weight: 2,
+                dashArray: '5, 5',
+            })
+            .bindPopup('Bridge to 22 Patriot Place')
+            .on('click', () => {
+                map.removeLayer(floorLayer20_3);
+                map.addLayer(floorLayer22_3);
+            })
+            .addTo(floorLayer20_3);
+
+            const bridge2 = L.polyline([
+                [353.57, 642.26], // 22 Patriot Place
+                [134.70, 785.30], // 20 Patriot Place
+            ], {
+                color: 'red',
+                weight: 2,
+                dashArray: '5, 5',
+            })
+            .bindPopup('Bridge to 20 Patriot Place')
+            .on('click', () => {
+                map.removeLayer(floorLayer22_3);
+                map.addLayer(floorLayer20_3);
+            })
+            .addTo(floorLayer22_3);
+
+            // path
+            if (pathCoordinates && pathCoordinates.length > 1) {
+                L.polyline(pathCoordinates, {
+                    color: 'red',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(map);
+            }
+
+            // for getting coordinates (delete later)
+            map.on('click', function (e) {
+                console.log(`[${e.latlng.lat.toFixed(2)}, ${e.latlng.lng.toFixed(2)}],`);
+            });
 
             mapInstance.current = map;
+
+            (window as unknown as { goToFloor: (floor: number) => void }).goToFloor = (floor: number) => {
+                goToFloor(floor, map, floorLayer22_1, floorLayer22_3, floorLayer22_4);
+            };
         }
 
-        // Draw path if provided
-        if (mapInstance.current) {
-            // Remove existing path if any
-            if (pathLayerRef.current) {
-                pathLayerRef.current.remove();
-                pathLayerRef.current = null;
-            }
-
-            // Draw path based on node IDs if provided
-            if (path && path.length > 1) {
-                const pathPoints = path.map(nodeId => nodeCoordinates[nodeId] || [0, 0]);
-                pathLayerRef.current = L.polyline(pathPoints, {
-                    color: 'blue',
-                    weight: 5,
-                    opacity: 0.7,
-                    dashArray: '10, 10', // Creates a dashed line for better visibility
-                    lineCap: 'round'
-                }).addTo(mapInstance.current);
-
-                // Show markers only for start (first) and end (last) nodes
-                const startNode = path[0];
-                const endNode = path[path.length - 1];
-
-                // Add start marker
-                const startMarker = L.marker(nodeCoordinates[startNode]).addTo(mapInstance.current)
-                    .bindPopup(`Start: ${startNode}`).openPopup();
-
-                // Add end marker
-                const endMarker = L.marker(nodeCoordinates[endNode]).addTo(mapInstance.current)
-                    .bindPopup(`End: ${endNode}`).openPopup();
-
-                // Fit map to the path
-                mapInstance.current.fitBounds(pathLayerRef.current.getBounds(), { padding: [50, 50] });
-            }
-
-            // Or draw path based on raw coordinates if provided
-            else if (pathCoordinates && pathCoordinates.length > 1) {
-                pathLayerRef.current = L.polyline(pathCoordinates, {
-                    color: 'blue',
-                    weight: 5,
-                    opacity: 0.7
-                }).addTo(mapInstance.current);
-
-                const startCoordinates = pathCoordinates[0];
-                const endCoordinates = pathCoordinates[pathCoordinates.length - 1];
-
-                // Add start marker
-                L.marker(startCoordinates).addTo(mapInstance.current)
-                    .bindPopup('Start').openPopup();
-
-                // Add end marker
-                L.marker(endCoordinates).addTo(mapInstance.current)
-                    .bindPopup('End').openPopup();
-
-            }
-        }
-
+        // clean up
         return () => {
-            if (pathLayerRef.current) {
-                pathLayerRef.current.remove();
+            if (mapInstance.current) {
+                mapInstance.current.remove();
+                mapInstance.current = null;
             }
         };
-    }, [pathCoordinates, path]);
+    }, [pathCoordinates]);
 
-    return <div ref={mapRef} style={{ height: '100%' }} />;
+    return (
+        <div
+            ref={mapRef}
+            style={{ height: '100vh', width: '100%', border: '1px solid #ccc' }}
+        />
+    );
 };
 
 export default InternalMap;
