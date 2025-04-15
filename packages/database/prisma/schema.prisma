@@ -114,6 +114,7 @@ model Patient {
   assignedDoctorId Int?
   user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
   pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
+  patientRequests PatientRequest[] @relation("PatientRequests")
 }
 
 model DeviceRequest {
@@ -190,7 +191,9 @@ model Edge {
   fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
   toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
 }
-
+/*
+REQUESTS
+ */
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
   employeeID             Int
@@ -208,6 +211,17 @@ model PharmacyRequest {
   numberOfPills          Int
   refills                Int
   additionalInstructions String
+}
+
+model PatientRequest{
+  patientRequestID       Int     @id @default(autoincrement())
+  patientID             Int
+  patient              Patient    @relation("PatientRequests", fields: [patientID], references: [id])
+  priority  RequestPriority
+  department  Department
+  location  Buildings
+  status  RequestStatus
+  requestTime    DateTime        @default(now())
 }
 
 model Departments {
