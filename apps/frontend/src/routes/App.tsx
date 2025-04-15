@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FormPage from '../features/MedDeviceRequest/FormPage.tsx';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
-import MapView from '../features/MapView/MapView.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVPage from '../features/CSVFiles/CSVPage.tsx';
@@ -15,6 +14,7 @@ import {PrescriptionPage} from "../features/Requests/PrescriptionForm/Prescripti
 import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequests.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
+import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
                 { path: 'login', element: <Login /> },
                 { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
-                { path: 'mapView', element: <MapView /> },
+                { path: 'mapView', element: <ExternalMap /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
