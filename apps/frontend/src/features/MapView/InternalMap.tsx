@@ -102,7 +102,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
                 'Chestnut Hill': floorLayerChestnutHill
             };
 
-            L.control.layers(baseLayers, { collapsed: false }).addTo(map);
+            L.control.layers(baseLayers).addTo(map);
 
             // connect patriot place buildings
             const bridge1 = L.polyline([
