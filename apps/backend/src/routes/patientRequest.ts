@@ -2,12 +2,8 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
-import {
-  RequestPriority,
-  Department,
-  Building,
-  RequestStatus,
-} from "database";
+import { RequestPriority, Department, Building, RequestStatus } from "database";
+import { parseDepartment, parsePriority } from "./enum.ts";
 
 const router: Router = express.Router();
 router.get("/", async function (req: Request, res: Response) {
@@ -24,15 +20,15 @@ router.get("/", async function (req: Request, res: Response) {
 });
 
 //generic enum parse
-function parseEnum<T extends { [key: string]: string | number }>(
-  enumType: T,
-  value: string,
-): T[keyof T] {
-  if (value in enumType) {
-    return enumType[value as keyof T];
-  }
-  throw new Error(`Invalid enum value: ${value}`);
-}
+// function parseEnum<T extends { [key: string]: string | number }>(
+//   enumType: T,
+//   value: string,
+// ): T[keyof T] {
+//   if (value in enumType) {
+//     return enumType[value as keyof T];
+//   }
+//   throw new Error(`Invalid enum value: ${value}`);
+// }
 
 router.get("/", async function (req: Request, res: Response) {
   try {
@@ -52,12 +48,13 @@ router.post("/", async function (req: Request, res: Response) {
   const request = req.body;
 
   try {
+    console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
         patient: { connect: { id: parseInt(request.patientID, 10) } },
-        priority: parseEnum(RequestPriority, request.priority),
-        department: parseEnum(Department, request.department),
-        location: parseEnum(Building, request.location),
+        priority: await parsePriority(request.priority),
+        department: await parseDepartment(request.department),
+        location: Building.PATRIOT_PLACE_20, //parseEnum(Building, request.location),
         status: RequestStatus.cancelled,
       },
     });
