@@ -7,6 +7,7 @@ import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
 import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 //import chestnutHill from '../../../public/Chestnut Hill.svg'
+import { goToFloor } from '../MapView/floorNavigation.ts';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
@@ -49,25 +50,40 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             // Transition Points Between Floors
             const transitionNodes = {
                 // 22 patriot place
-                'elevatorA': {from: [464.51, 546.23], to: [383.55, 554.24]},
-                'st01': {from: [469.50, 469.21], to: [392.55, 457.21]},
-                'st02': {from: [405.54, 314.17], to: [316.59, 279.17]},
-                'st03': {from: [678.38, 850.31], to: [619.42, 887.32]},
+                'elevatorA': {floor1: [385.55, 546.23], floor3: [464.51, 546.23], floor4: [383.55, 554.24]},
+                'st01': {floor1: [387.55, 456.21], floor3: [469.50, 469.21], floor4: [392.55, 457.21]},
+                'st02': {floor1: [316.59, 280.17], floor3: [405.54, 314.17], floor4: [316.59, 279.17]},
+                'st03': {floor1: [622.42, 885.32], floor3: [678.38, 850.31], floor4: [619.42, 887.32]},
                 // 20 patriot place
-                'st13': {from: [767.24, 243.00], to: [767.24, 243.00]},
-                'st14': {from: [218.74, 818.00], to: [218.74, 818.00]},
-                'el10': {from: [191.74, 757.50], to: [191.74, 757.50]}
+                'st13': {floor1: [758.34, 187.14], floor3: [758.34, 187.14]},
+                'st14': {floor1: [218.74, 818.00], floor3: [218.74, 818.00]},
+                'el10': {floor1: [240.64, 771.29], floor3: [240.64, 771.29]}
+                // chestnut hill
             };
 
-            L.circle(transitionNodes['elevatorA'].from as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 4').on('click', () => {map.removeLayer(floorLayer22_3); map.addLayer(floorLayer22_4)}).addTo(floorLayer22_3);
-            L.circle(transitionNodes['elevatorA'].to as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st01'].from as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 4').on('click', () => {map.removeLayer(floorLayer22_3); map.addLayer(floorLayer22_4)}).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st01'].to as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st02'].from as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 4').on('click', () => {map.removeLayer(floorLayer22_3); map.addLayer(floorLayer22_4)}).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st02'].to as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st03'].from as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 4').on('click', () => {map.removeLayer(floorLayer22_3); map.addLayer(floorLayer22_4)}).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st03'].to as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            // 22 patriot place floor 1 buttons to go up to floor 3
+            L.circle(transitionNodes['elevatorA'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            L.circle(transitionNodes['st01'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            L.circle(transitionNodes['st02'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            L.circle(transitionNodes['st03'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
+            // 22 patriot place floor 3 buttons to go up to floor 4 or down to floor 1
+            L.circle(transitionNodes['elevatorA'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            L.circle(transitionNodes['st01'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            L.circle(transitionNodes['st02'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            L.circle(transitionNodes['st03'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
+            // 22 patriot place floor 4 buttons to go down to floor 3
+            L.circle(transitionNodes['elevatorA'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            L.circle(transitionNodes['st01'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            L.circle(transitionNodes['st02'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
+            L.circle(transitionNodes['st03'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
 
+            // 20 patriot place
+            L.circle(transitionNodes['st13'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
+            L.circle(transitionNodes['st13'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
+            L.circle(transitionNodes['st14'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
+            L.circle(transitionNodes['st14'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
+            L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
+            L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
 
             // === PARKING LOT LAYERS ===
             const patriotValetParking = L.layerGroup();
@@ -75,7 +91,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             const patriotExtendedParking = L.layerGroup();
             //const chestnutParking = L.layerGroup();
 
-            // parking markers (update coordinates)
+            // parking lot markers
             L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(patriotValetParking);
             L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(patriotPatientParking);
             L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
@@ -146,6 +162,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             });
 
             mapInstance.current = map;
+
+            (window as unknown as { goToFloor: (floor: number) => void }).goToFloor = (floor: number) => {
+                goToFloor(floor, map, floorLayer22_1, floorLayer22_3, floorLayer22_4);
+            };
         }
 
         // clean up
