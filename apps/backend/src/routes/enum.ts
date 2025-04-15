@@ -24,9 +24,16 @@ export async function parseDepartment(value: string): Promise<Department> {
     });
 }
 
+// takes in an array of objects with a name field and return an array of names
+function formatNames(rows: { name: string }[]): string[] {
+  return rows.map((row): string => {
+    return row.name;
+  });
+}
+
 router.get("/:table", async function (req: Request, res: Response) {
   try {
-    console.log("priorities types requested");
+    console.log("type requested: " + req.params.table);
     // format departments as an array of strings, and then return it to the client
 
     // query the database to get an array of rows
@@ -34,29 +41,13 @@ router.get("/:table", async function (req: Request, res: Response) {
     let rows;
     switch (req.params.table) {
       case "departments":
-        rows = await PrismaClient.departments.findMany({
-          select: { name: true },
-        });
-        names = rows.map((row) => {
-          return row.name;
-        });
-        console.log(names);
+        names = formatNames(await PrismaClient.departments.findMany());
         break;
       case "priorities":
-        rows = await PrismaClient.priorities.findMany({
-          select: { name: true },
-        });
-        names = rows.map((row) => {
-          return row.name;
-        });
+        names = formatNames(await PrismaClient.priorities.findMany());
         break;
       case "statuses":
-        rows = await PrismaClient.statuses.findMany({
-          select: { name: true },
-        });
-        names = rows.map((row) => {
-          return row.name;
-        });
+        names = formatNames(await PrismaClient.statuses.findMany());
         break;
     }
     if (names.length > 0) {
