@@ -19,6 +19,7 @@ import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.
 import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx";
+import {EditMap} from "@/features/MapView/EditMap.tsx";
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
-                { path: 'mapView', element: <ExternalMap /> },
+                { path: 'external-map', element: <ExternalMap /> },
                 { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
                 { path: 'csv', element: <CSVPage /> },
@@ -44,7 +45,8 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReqForm />},
-                { path: 'devicerequestpage', element: <DeviceReqPage />}
+                { path: 'devicerequestpage', element: <DeviceReqPage />},
+                { path: 'edit-map', element: <EditMap /> },
             ],
         },
     ]);
