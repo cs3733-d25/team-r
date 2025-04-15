@@ -40,8 +40,7 @@ function App() {
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
-                {path: 'transport',element: <PatientTransportPage /> },
-                { path: 'patientrequest', element: <PatientRequest /> },
+                { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReqForm />},
                 { path: 'devicerequestpage', element: <DeviceReqPage />}
             ],
