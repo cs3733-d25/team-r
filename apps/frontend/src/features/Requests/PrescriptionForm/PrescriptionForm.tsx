@@ -1,4 +1,4 @@
-import {ReactElement, useEffect, useState} from 'react';
+import {useState} from 'react';
 import { Department, RequestPriority } from '../RequestEnums.tsx';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -6,8 +6,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectGroup, SelectItem } from '@/components/ui/select.tsx';
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import {getDepartments} from "@/features/Requests/UseStates.tsx";
 
 interface SubmittedPrescription {
     employee: string;
@@ -111,24 +111,7 @@ export const PrescriptionForm = () => {
         }));
     };
 
-    const [departmentOptions, setDepartmentOptions] = useState([]);
 
-    useEffect(() => {
-        async function retrieveDepartments(){
-            try{
-                const response = await axios.get("/api/enum/departments/");
-                console.log("response from /api/enum/departments get", response.data)
-                const departments = response.data.map((department:string) => <option key={department} value={department}>{department}</option>);
-                console.log(departments);
-                setDepartmentOptions(departments);
-            }
-            catch(error){
-                console.log(error);
-            }
-        }
-        console.log("f");
-        retrieveDepartments();
-    }, []);
 
     return (
         <>
@@ -245,7 +228,7 @@ export const PrescriptionForm = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
                                     >
-                                        {departmentOptions}
+                                        {getDepartments()}
                                     </select>
                                 </div>
 
