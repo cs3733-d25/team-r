@@ -4,7 +4,7 @@ import { NodeType, Building } from "../packages/database";
 const prisma = new PrismaClient();
 
 async function main() {
-    // chestnut hill floor 1
+    /*// chestnut hill floor 1
     await prisma.node.createMany({
         data:[
             {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'canopyEntrance'},
@@ -25,7 +25,7 @@ async function main() {
             {fromID: 'canopyEntrance', toID: 'canopyEntranceHallway', fromX: null, fromY: null, toX: null, toY: null},
             {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: null, fromY: null, toX: null, toY: null},
         ]
-    })
+    })*/
 
     // patriot 20 floor 1
     await prisma.node.createMany({
@@ -54,7 +54,16 @@ async function main() {
             {nodeID: '150.30', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 338.74, ycoord: 702.50, longName: 'Corridor 150.30', shortName: 'Corridor 150.30',},
             {nodeID: '150.36', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 311.24, ycoord: 672.50, longName: 'Corridor 150.36', shortName: 'Corridor 150.36',},
             {nodeID: '130.00', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 324.74, ycoord: 247.00, longName: 'Waiting Room 130.00', shortName: 'Waiting Room 130.00',}
-            // TODO: add 3rd floor node to connect bridge
+        ],
+    });
+
+    // patriot 20 floor 3
+    await prisma.node.createMany({
+        data: [
+            {nodeID: 'bridgePatriot20', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
+            {nodeID: '200.13', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '2nd Floor Stairs', shortName: '2nd Floor Stairs'},
+            {nodeID: '200.14', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '2nd Floor Stairs', shortName: '2nd Floor Stairs'},
+            {nodeID: '200.10', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '2nd Floor Elevator', shortName: '2nd Floor Elevator'}
         ],
     });
 
@@ -82,10 +91,22 @@ async function main() {
             {fromID: '110.60', toID: '150.30', fromX: 549.74, fromY: 536.00, toX: 338.74, toY: 702.50},
             {fromID: '110.60', toID: '120.26', fromX: 549.74, fromY: 536.00, toX: 418.24, toY: 532.50},
             {fromID: '120.26', toID: '100.09', fromX: 418.24, fromY: 532.50, toX: 191.24, toY: 530.50},
-            {fromID: '150.30', toID: '150.36', fromX: 338.74, fromY: 702.50, toX: 311.24, toY: 672.50}
+            {fromID: '150.30', toID: '150.36', fromX: 338.74, fromY: 702.50, toX: 311.24, toY: 672.50},
+            {fromID: '100.13', toID: '200.13', fromX: 767.24, fromY: 243.00, toX: 767.24, toY: 243.00},
+            {fromID: '100.14', toID: '200.14', fromX: 218.74, fromY: 818.00, toX: 218.74, toY: 818.00},
+            {fromID: '100.10', toID: '200.10', fromX: 191.74, fromY: 757.50, toX: 191.74, toY: 757.50}
         ]
     });
 
+    // patriot 22 floor 1
+    await prisma.node.createMany({
+        data: [
+            {nodeID: '1ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
+            { nodeID: '1ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
+            { nodeID: '1EA', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
+            { nodeID: '22entrance1', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 333.39, ycoord: 719.00, longName: 'Entrance', shortName: 'Entrance'}
+        ]
+    });
 
     // patriot 22 floor 3
     await prisma.node.createMany({
@@ -98,33 +119,32 @@ async function main() {
             {nodeID: 'ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 436.13, ycoord: 470.25, longName: 'Tenant Stair ST01', shortName: 'Tenant Stair ST01'},
             {nodeID: '3A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 438.88, ycoord: 538.75, longName: 'Elevator 3A', shortName: 'Elevator 3A'},
             {nodeID: '3B', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 438.13, ycoord: 592.50, longName: 'Corridor 3B', shortName: 'Corridor 3B'},
-            {nodeID: '307', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'},
             {nodeID: '3000B', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 436.13, ycoord: 643.75, longName: 'Waiting 3000B', shortName: 'Waiting 3000B'},
-            {nodeID: '3104', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 639.00, longName: 'EQ Alcohol 2104', shortName: 'EQ Alcohol 2104'},
+            {nodeID: '3104', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 639.00, longName: 'EQ Alcohol 3104', shortName: 'EQ Alcohol 3104'},
             {nodeID: '3S', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 733.25, longName: 'Corridor 3S', shortName: 'Corridor 3S'},
             {nodeID: '3112', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 645.88, ycoord: 732.50, longName: 'Exam 3112', shortName: 'Exam 3112'},
-            {nodeID: 'ST03', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'}
+            {nodeID: 'ST03', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'},
+            {nodeID: '307', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'}
         ]
     });
 
     await prisma.edge.createMany({
         data: [
-            {fromID: 'ST02', toID: '3000C', fromX: null, fromY: null, toX: null, toY: null},
-            { fromID: '3000C', toID: '3E', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3E', toID: '3001', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3001', toID: '3000A', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3000A', toID: 'ST01', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: 'ST01', toID: '3A', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3000A', toID: '3B', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3A', toID: '3B', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3B', toID: '307', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3A', toID: '3000B', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3000B', toID: '3104', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3104', toID: '3S', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3S', toID: '3112', fromX: null, fromY: null, toX: null, toY: null },
-            { fromID: '3112', toID: 'ST03', fromX: null, fromY: null, toX: null, toY: null }
-            // TODO: connect elevator and stairs with floor 4
-            // TODO: connect bridge
+            {fromID: 'ST02', toID: '3000C', fromX: 442.88, fromY: 327.00, toX: 444.25, toY: 344.00},
+            { fromID: '3000C', toID: '3E', fromX: 444.25, fromY: 344.00, toX: 466.88, toY: 345.00 },
+            { fromID: '3E', toID: '3001', fromX: 466.88, fromY: 345.00, toX: 466.63, toY: 432.00 },
+            { fromID: '3001', toID: '3000A', fromX: 466.63, fromY: 432.00, toX: 418.63, toY: 419.25 },
+            { fromID: '3000A', toID: 'ST01', fromX: 418.63, fromY: 419.25, toX: 436.13, toY: 470.25 },
+            { fromID: 'ST01', toID: '3A', fromX: 436.13, fromY: 470.25, toX: 438.88, toY: 538.75 },
+            { fromID: '3000A', toID: '3B', fromX: 418.63, fromY: 419.25, toX: 438.13, toY: 592.50 },
+            { fromID: '3A', toID: '3B', fromX: 438.88, fromY: 538.75, toX: 438.13, toY: 592.50 },
+            { fromID: '3B', toID: '307', fromX: 438.13, fromY: 592.50, toX: 275.38, toY: 693.50 },
+            { fromID: '3A', toID: '3000B', fromX: 438.88, fromY: 538.75, toX: 436.13, toY: 643.75 },
+            { fromID: '3000B', toID: '3104', fromX: 436.13, fromY: 643.75, toX: 595.13, toY: 639.00 },
+            { fromID: '3104', toID: '3S', fromX: 595.13, fromY: 639.00, toX: 595.13, toY: 733.25 },
+            { fromID: '3S', toID: '3112', fromX: 595.13, fromY: 733.25, toX: 645.88, toY: 732.50 },
+            { fromID: '3112', toID: 'ST03', fromX: 645.88, fromY: 732.50, toX: 660.63, toY: 805.25 },
+            { fromID: 'bridgePatriot20', toID: '307', fromX: 237.41, fromY: 111.00, toX: 275.38, toY: 693.50 }
         ]
     });
 
@@ -155,9 +175,12 @@ async function main() {
             { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
             { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
             { fromID:'checkIn4000B', toID:'rightWaitingHallway', fromX: 319.25, fromY: 654.50, toX: 250.25, toY: 633.50 },
-            { fromID:'', toID:'', fromX: null, fromY: null, toX: null, toY: null }
             // TODO: finish paths in patriot 22 floor 4
-            // TODO: connect elevator and stairs with floor 3
+
+            {fromID: 'ST02', toID: 'stairST02', fromX: 442.88, fromY: 327.00, toX: 355.25, toY: 280.50},
+            {fromID: 'ST01', toID: 'stairST01', fromX: 436.13, fromY: 470.25, toX: 419.75, toY: 455.00},
+            {fromID: '3A', toID: 'elevatorLobby4A', fromX: 438.88, fromY: 538.75, toX: 351.25, toY: 535.50},
+
         ]
     });
 
