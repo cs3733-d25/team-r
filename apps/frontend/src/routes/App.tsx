@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import FormPage from '../features/MedDeviceRequest/FormPage.tsx';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
-import MapView from '../features/MapView/MapView.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVPage from '../features/CSVFiles/CSVPage.tsx';
@@ -15,6 +13,10 @@ import {PrescriptionPage} from "../features/Requests/PrescriptionForm/Prescripti
 import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequests.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
+import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
+import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
+import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
+import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 
 
 function App() {
@@ -27,9 +29,8 @@ function App() {
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
-                { path: 'servicereqs', element: <FormPage /> },
                 { path: 'directory', element: <Directory /> },
-                { path: 'mapView', element: <MapView /> },
+                { path: 'mapView', element: <ExternalMap /> },
                 { path: 'sanitation', element: <SanitationRequestForm /> },
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
@@ -38,7 +39,10 @@ function App() {
                 { path: 'prescription', element: <PrescriptionForm /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
-                { path: 'patientrequest', element: <PatientRequest /> }
+                { path: 'patientrequest', element: <PatientRequest /> },
+                { path: 'transport',element: <PatientTransportPage /> },
+                { path: 'devicerequest', element: <DeviceReqForm />},
+                { path: 'devicerequestpage', element: <DeviceReqPage />}
             ],
         },
     ]);

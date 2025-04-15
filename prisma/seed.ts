@@ -1,5 +1,5 @@
 import { PrismaClient } from "../packages/database";
-import { UserType, Department, EmployeeRole, Gender, RequestStatus, RequestPriority, DeviceStatus } from "../packages/database";
+import { UserType, Department, EmployeeRole, Gender, RequestStatus, Building, RequestPriority, DeviceStatus } from "../packages/database";
 
 const prisma = new PrismaClient();
 
@@ -195,19 +195,48 @@ async function main() {
                 connect: { id: employee1.id }
             }
         }
-    });
+    });*/
 
     await prisma.departments.createMany({
         data:[
-            { departmentType: Department.Imaging_Suite, departmentName: "Imaging Suite"},
-            { departmentType: Department.Pharmacy, departmentName: "Pharmacy"},
-            { departmentType: Department.Ambulatory_UrgentCare, departmentName: "Ambulatory/Urgent Care"},
-            { departmentType: Department.Phlebotomy, departmentName: "Phlebotomy"},
-            { departmentType: Department.Specialty_Clinic, departmentName: "Specialty Clinic"}
+            { type: Department.Imaging_Suite, name: "Imaging Suite"},
+            { type: Department.Pharmacy, name: "Pharmacy"},
+            { type: Department.Ambulatory_UrgentCare, name: "Ambulatory/Urgent Care"},
+            { type: Department.Phlebotomy, name: "Phlebotomy"},
+            { type: Department.Specialty_Clinic, name: "Specialty Clinic"}
+        ]
+    })
+
+    await prisma.priorities.createMany({
+        data: [
+            { type: RequestPriority.Low, name: "Low"},
+            { type: RequestPriority.Medium, name: "Medium"},
+            { type: RequestPriority.High, name: "High"},
+            { type: RequestPriority.Urgent, name: "Urgent"},
+        ]
+    })
+
+    await prisma.statuses.createMany({
+        data: [
+            { type: RequestStatus.pending, name: "Pending" },
+            { type: RequestStatus.accepted, name: "Accepted" },
+            { type: RequestStatus.in_progress, name: "In progress" },
+            { type: RequestStatus.completed, name: "Completed" },
+            { type: RequestStatus.cancelled, name: "Cancelled" },
+        ]
+    })
+
+
+    await prisma.locations.createMany({
+        data: [
+            { type: Building.PATRIOT_PLACE_20, name: "Patriot Place 20" },
+            { type: Building.PATRIOT_PLACE_22, name: "Patriot Place 22" },
+            { type: Building.CHESTNUT_HILL, name: "Chestnut Hill" },
         ]
     })
 
     // Create medical devices
+    /*
     await prisma.medicalDevice.createMany({
         data: [
             { medicalDeviceType: 'X-Ray Machine', currentLocation: 'Imaging Room 1', currentStatus: DeviceStatus.available },

@@ -5,6 +5,7 @@ import axios from "axios";
 import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
+import Dropdown from "../../../components/Dropdowns/Department.tsx";
 
 
 interface SubmittedPatientRequest{
@@ -15,7 +16,7 @@ interface SubmittedPatientRequest{
     location: Buildings | string;
     comment: string;
     time: string;
-    //status: RequestStatus | null;
+    status: RequestStatus | string;
 }
 
 export const PatientRequestForm = () => {
@@ -28,7 +29,7 @@ export const PatientRequestForm = () => {
         location: "",
         comment: "",
         time: new Date().toString(),
-        //status: null
+        status: ''
 
     })
 
@@ -69,7 +70,7 @@ export const PatientRequestForm = () => {
                     location: "",
                     comment: "",
                     time: new Date().toLocaleString(),
-                    //status: null
+                    status: ''
 
                 });
             }
@@ -82,13 +83,22 @@ export const PatientRequestForm = () => {
         }
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
+    const handleDropdownChange = (name:string, value:string) => {
+        // console.log(value);
+        // console.log(name);
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
     };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
 
     return (
         <>
@@ -169,7 +179,13 @@ export const PatientRequestForm = () => {
                                     required
                                 />
                             </div>
-
+                            {/*status*/}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Request Status
+                                </label>
+                                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                            </div>
                             {/* Priority */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -184,19 +200,7 @@ export const PatientRequestForm = () => {
                       LOW: Within 24 hours
                         </span>
                                 </label>
-                                <select
-                                    name="priority"
-                                    value={formData.priority}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                >
-                                    <option value="" disabled hidden>Select Priority</option>
-                                    {Object.values(RequestPriority).map(priority => (
-                                        <option key={priority} value={priority}>
-                                            {priority}
-                                        </option>
-                                    ))}
-                                </select>
+                                <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
                             {/* Department */}
@@ -205,22 +209,10 @@ export const PatientRequestForm = () => {
                                     Department
                                     <span className="text-red-500">*</span>
                                     <span className="text-xs text-gray-500 block">
-                      Select the department making the patient request.
-                        </span>
+                                        Select the department making the patient request.
+                                    </span>
                                 </label>
-                                <select
-                                    name="department"
-                                    value={formData.department}
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                >
-                                    <option value="" disabled hidden>Select a Department</option>
-                                    {Object.values(Department).map(dept => (
-                                        <option key={dept} value={dept}>
-                                            {dept}
-                                        </option>
-                                    ))}
-                                </select>
+                                <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
                             </div>
                         </div>
 
@@ -233,19 +225,8 @@ export const PatientRequestForm = () => {
                                         Select the building making the patient request.
                                     </span>
                             </label>
-                            <select
-                                name="location"
-                                value={formData.location}
-                                onChange={handleChange}
-                                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                            >
-                                <option value="" disabled hidden>Select a Location</option>
-                                {Object.values(Buildings).map(loc => (
-                                    <option key={loc} value={loc}>
-                                        {loc}
-                                    </option>
-                                ))}
-                            </select>
+                            {/*TableName - enum, fieldName - from request*/}
+                            <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
                         </div>
 
 

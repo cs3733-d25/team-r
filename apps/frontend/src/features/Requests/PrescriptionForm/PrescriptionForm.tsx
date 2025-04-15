@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import { Department, RequestPriority } from '../RequestEnums.tsx';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -6,8 +6,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectGroup, SelectItem } from '@/components/ui/select.tsx';
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import {getDepartments} from "@/features/Requests/UseStates.tsx";
 
 interface SubmittedPrescription {
     employee: string;
@@ -59,7 +59,7 @@ export const PrescriptionForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('api/prescription', {
+            const response = await axios.post('api/pharmacy', {
                 ...formData,
                 priority: formData.priority.toString(),
             });
@@ -110,6 +110,8 @@ export const PrescriptionForm = () => {
             [name]: value,
         }));
     };
+
+
 
     return (
         <>
@@ -226,11 +228,7 @@ export const PrescriptionForm = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
                                     >
-                                        {Object.values(Department).map((dept) => (
-                                            <option key={dept} value={dept}>
-                                                {dept}
-                                            </option>
-                                        ))}
+                                        {getDepartments()}
                                     </select>
                                 </div>
 
@@ -374,7 +372,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="1"
                                             onChange={handleChange}
                                             required
                                         />
@@ -386,7 +384,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="2"
                                             onChange={handleChange}
                                             required
                                         />
@@ -398,7 +396,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="3"
                                             onChange={handleChange}
                                             required
                                         />
@@ -410,7 +408,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="4"
                                             onChange={handleChange}
                                             required
                                         />
@@ -422,7 +420,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="5"
                                             onChange={handleChange}
                                             required
                                         />
@@ -434,7 +432,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="6"
                                             onChange={handleChange}
                                             required
                                         />
@@ -446,7 +444,7 @@ export const PrescriptionForm = () => {
                                         <Input
                                             type="radio"
                                             name="days"
-                                            value={formData.days}
+                                            value="7"
                                             onChange={handleChange}
                                             required
                                         />
@@ -485,7 +483,6 @@ export const PrescriptionForm = () => {
                         </form>
                     </div>
                 </div>
-                {/*formData.days*/}
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
@@ -498,8 +495,8 @@ export const PrescriptionForm = () => {
 
                 {/* Confirmation Card */}
                 {submittedPrescription && !submitStatus?.isError && (
-                    <div className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-secondary">
-                        <div className="bg-secondary text-secondary-foreground font-bold px-4 py-2 flex items-center">
+                    <div className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                        <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-6 w-6 mr-2"
@@ -571,12 +568,12 @@ export const PrescriptionForm = () => {
                                     {submittedPrescription.timestamp}
                                 </div>
                             </div>
-                            <div className="mt-3 text-sm text-gray-600">
+                            <div className="mt-3 text-sm text-secondary-foreground">
                                 The prescription request has been submitted and will be filled.
                             </div>
                             <button
                                 onClick={() => setSubmittedPrescription(null)}
-                                className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-200"
+                                className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
                             >
                                 Dismiss
                             </button>
