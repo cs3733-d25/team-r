@@ -40,21 +40,38 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
             //L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
 
+            // Transition Points Between Floors
+            const transitionNodes = {
+                'elevatorA': {
+                    from: [438.88, 538.75],
+                    to: [351.25, 535.50]
+                },
+                'st01': {
+                    from: [436.13, 470.25],
+                    to: [419.75, 455.00]
+                },
+                'st02': {
+                    from: [442.88, 327.00],
+                    to: [355.25, 280.50]
+                },
+                'st03': {
+                    from: [660.63, 805.25],
+                    to: [350.75, 455.50]
+                },
+            };
 
             // === PARKING LOT LAYERS ===
             const patriotValetParking = L.layerGroup();
             const patriotPatientParking = L.layerGroup();
             const patriotExtendedParking = L.layerGroup();
             //const chestnutParking = L.layerGroup();
-            // TODO: add parking lot to patriot floor 1
-            // TODO: connect 20 and 22 patriot place
 
             // parking markers (update coordinates)
-            L.marker([150, 100]).bindPopup('Valet Parking').addTo(patriotValetParking);
-            L.marker([300, 200]).bindPopup('Patient Parking').addTo(patriotPatientParking);
-            L.marker([450, 300]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
+            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(patriotValetParking);
+            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(patriotPatientParking);
+            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
 
-            // Add default layer (e.g., floor 20-1)
+            // add a default layer
             floorLayer20_1.addTo(map);
 
             // === LAYER CONTROLS ===
