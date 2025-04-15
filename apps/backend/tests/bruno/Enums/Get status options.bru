@@ -1,11 +1,11 @@
 meta {
-  name: Get sanitation requests
+  name: Get status options
   type: http
-  seq: 1
+  seq: 2
 }
 
 get {
-  url: {{base_url}}/api/sanitation
+  url: {{base_url}}/api/enum/statuses
   body: none
   auth: inherit
 }
