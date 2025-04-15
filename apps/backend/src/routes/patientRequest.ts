@@ -2,8 +2,7 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
-import { RequestPriority, Department, Building, RequestStatus } from "database";
-import { parseDepartment, parsePriority } from "./enum.ts";
+import {parseBuilding, parseDepartment, parsePriority, parseStatus} from "./enum.ts";
 
 const router: Router = express.Router();
 router.get("/", async function (req: Request, res: Response) {
@@ -54,8 +53,8 @@ router.post("/", async function (req: Request, res: Response) {
         patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority: await parsePriority(request.priority),
         department: await parseDepartment(request.department),
-        location: Building.PATRIOT_PLACE_20, //parseEnum(Building, request.location),
-        status: RequestStatus.cancelled,
+        location: await parseBuilding(request.location), //parseEnum(Building, request.location),
+        status: await parseStatus(request.status),
       },
     });
     // console.log(createRequest);
