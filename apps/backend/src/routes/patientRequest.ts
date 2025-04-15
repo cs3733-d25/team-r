@@ -5,7 +5,7 @@ import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 import {
   RequestPriority,
   Department,
-  Buildings,
+  Building,
   RequestStatus,
 } from "database";
 
@@ -44,7 +44,7 @@ router.post("/", async function (req: Request, res: Response) {
         patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority: parseEnum(RequestPriority, request.priority),
         department: parseEnum(Department, request.department),
-        location: parseEnum(Buildings, request.location),
+        location: parseEnum(Building, request.location),
         status: RequestStatus.cancelled,
       },
     });
