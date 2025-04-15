@@ -4,17 +4,19 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     ports:
-      - "${PORT:-80}:80"
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+      - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
-      # Change these to match whatever database you want to use
       - NODE_ENV=${NODE_ENV:-production}
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=host.docker.internal
-      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
-      - POSTGRES_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@host.docker.internal:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-postgres}?schema=public
-      - BACKEND_PORT=3001
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - FRONTEND_PORT=${FRONTEND_PORT}
+      - BACKEND_PORT=${BACKEND_PORT}
+      - BACKEND_SOURCE=${BACKEND_SOURCE}
+      - BACKEND_URL=${BACKEND_URL}
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
