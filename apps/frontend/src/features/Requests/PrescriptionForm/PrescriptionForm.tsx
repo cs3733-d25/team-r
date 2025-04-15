@@ -128,10 +128,8 @@ export const PrescriptionForm = () => {
 
     return (
         <>
-            <div className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-0">Prescription Request System</h1>
-                <h2 className="text-xl font-bold mb-6">Owen Miller & Keagan Hitt</h2>
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground">
+            <div className="max-w-7xl mx-auto">
+                <div className="bg-white rounded-b-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
