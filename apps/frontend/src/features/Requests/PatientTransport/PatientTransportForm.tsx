@@ -28,7 +28,6 @@ interface SubmittedTransport {
 
 
 const TransportationRequestForm = () => {
-    const [transportationType, setTransportationType] = useState("");
     const [formData, setFormData] = useState({
         patientID: '',
         employeeID: '',
@@ -38,6 +37,7 @@ const TransportationRequestForm = () => {
         priority: "",
         department: "",
         comments: '',
+        transportationType:'',
 
     });
 
@@ -61,7 +61,7 @@ const TransportationRequestForm = () => {
             if (response.status === 200) {
                 // Store the request data for the confirmation card
                 setSubmittedTransport({
-                    ...formData,transportationType,
+                    ...formData,
                     timestamp: new Date().toLocaleString()
                 });
 
@@ -80,8 +80,9 @@ const TransportationRequestForm = () => {
                     comments: '',
                     priority: "",
                     department: "",
+                    transportationType:'',
                 });
-                setTransportationType('');
+
             }
         } catch (error) {
             console.error('Error submitting request:', error);
@@ -235,54 +236,30 @@ const TransportationRequestForm = () => {
                             </div>
                             {/* Transportation Type */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Transportation Type
                                     <span className="text-accent">*</span>
-                                    <span className="text-xs block">
-                                        e.g., Ambulance, Helicopter, etc
-                                    </span>
+                                    <span className="text-xs text-gray-500 block">
+                                       e.g., Ambulance, Helicopter, etc
+                                   </span>
+
+                                <RadioGroup name = "transportationType" value = {formData.transportationType} onValueChange={(value)=>setFormData((prev)=>({...prev,transportationType: value}))}>
+                                    <div className="flex items-center space-x-2 space-y-2">
+                                        <RadioGroupItem value="Non-Emergency Ambulance" id="Non-EmergencyAmbulance" />
+                                        <Label htmlFor="Non-EmergencyAmbulance">Non-Emergency Ambulance</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2 space y-2">
+                                        <RadioGroupItem value="Emergency Ambulance" id="EmergencyAmbulance" />
+                                        <Label htmlFor="EmergencyAmbulance">Emergency Ambulance</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2 space y-2">
+                                        <RadioGroupItem value="Helicopter" id="Helicopter" />
+                                        <Label htmlFor="Helicopter">Helicopter</Label>
+                                    </div>
+                                </RadioGroup>
                                 </Label>
-                                <div className="px-3 flex flex-row items-end">
-                                    <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
-                                        Non-Emergency Ambulence
-                                    </Label>
-                                    <Input
-                                        type="radio"
-                                        name="transportationType"
-                                        value="Non-Emergency Ambulence"
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                    <div className="px-3 flex flex-row items-end">
-                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
-                                            Emergency Ambulence
-                                        </Label>
-                                        <Input
-                                            type="radio"
-                                            name="transportationType"
-                                            value="Emergency Ambulence"
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="px-3 flex flex-row items-end">
-                                        <Label className="block text-sm font-semibold text-foreground mb-2 text-center px-2">
-                                            Helicopter
-                                        </Label>
-                                        <Input
-                                            type="radio"
-                                            name="transportationType"
-                                            value="Helicopter"
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
-
-
                                 {/* Priority */}
-                                <div>
+                                <div >
                                     <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Priority Level
                                         <span className="text-xs text-gray-500 block">
@@ -308,7 +285,6 @@ const TransportationRequestForm = () => {
                                         ))}
                                     </select>
                                 </div>
-                            </div>
                                 {/* Department */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -333,7 +309,8 @@ const TransportationRequestForm = () => {
                                 </div>
 
                                 {/* Current Building */}
-                                <div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div >
                                     <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Current Building
                                         <span className="text-accent">*</span>
@@ -389,6 +366,7 @@ const TransportationRequestForm = () => {
 
                                     </select>
                                 </div>
+                            </div>
                             </div>
 
                             {/* Comments */}
