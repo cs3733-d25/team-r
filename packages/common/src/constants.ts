@@ -10,4 +10,5 @@ export const API_ROUTES = {
     PATIENTREQ: '/api/patientreq',
     PHARMACY: '/api/pharmacy',
     ENUM: '/api/enum',
+    TRANSPORT: '/api/transportreq'
 };

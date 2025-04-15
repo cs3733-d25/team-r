@@ -15,6 +15,7 @@ import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequest
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
+import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 
 
 function App() {
@@ -38,7 +39,8 @@ function App() {
                 { path: 'prescription', element: <PrescriptionForm /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
-                { path: 'patientrequest', element: <PatientRequest /> }
+                { path: 'patientrequest', element: <PatientRequest /> },
+                {path: 'transport',element: <PatientTransportPage /> },
             ],
         },
     ]);
