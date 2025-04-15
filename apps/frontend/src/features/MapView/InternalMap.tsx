@@ -102,15 +102,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
                 'Chestnut Hill': floorLayerChestnutHill
             };
 
-            const overlays = {
-                'Valet Parking': patriotValetParking,
-                'Patient Parking': patriotPatientParking,
-                'Extended Patient Parking': patriotExtendedParking,
-                'Chestnut Hill Parking': chestnutParking
-                // TODO: parking should only be visible on patriot place floors 1
-            };
-
-            L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
+            L.control.layers(baseLayers, { collapsed: false }).addTo(map);
 
             // connect patriot place buildings
             const bridge1 = L.polyline([
