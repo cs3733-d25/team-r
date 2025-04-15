@@ -180,7 +180,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
     return (
         <div
             ref={mapRef}
-            style={{ height: '100vh', width: '100%', border: '1px solid #ccc' }}
+            style={{
+                height: '100vh',
+                width: '100%',
+                border: '1px solid #ccc',
+                position: 'relative',
+                zIndex: 0 // Add a low z-index here
+            }}
         />
     );
 };
