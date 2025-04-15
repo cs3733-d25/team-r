@@ -4,7 +4,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
-import { Buildings } from "../../../../packages/database";
+import { Building } from "../../../../packages/database";
 import multer from "multer";
 
 const router: Router = express.Router();
@@ -33,8 +33,8 @@ router.get("/export", async (req: Request, res: Response) => {
 });
 
 // a function to cast a string to a Buildings enum type
-function parseBuilding(value: string): Buildings {
-  return Buildings[value as keyof typeof Buildings];
+function parseBuilding(value: string): Building {
+  return Building[value as keyof typeof Building];
 }
 
 // import directory from CSV
