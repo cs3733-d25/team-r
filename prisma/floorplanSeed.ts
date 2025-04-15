@@ -142,8 +142,7 @@ async function main() {
             { nodeID: 'stairST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 355.25, ycoord: 280.50, longName: 'leftStairs', shortName: 'leftStairs'},
             { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
             { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
-            { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'},
-
+            { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'}
         ]
     });
 
