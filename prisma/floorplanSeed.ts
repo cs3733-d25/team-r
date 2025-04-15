@@ -38,7 +38,7 @@ async function main() {
             {nodeID: '100.00F', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 190.74, ycoord: 589.50, longName: 'Check-In 100.00F', shortName: 'Check-In 100.00F',},
             {nodeID: '100.13', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 767.24, ycoord: 243.00, longName: 'Stairs 100.13', shortName: 'Stairs 100.13',},
             {nodeID: '100.14', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 218.74, ycoord: 818.00, longName: 'Stairs 100.14', shortName: 'Stairs 100.14',},
-            {nodeID: '100.10', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 191.74, ycoord: 757.50, longName: 'Elevator 100.10', shortName: 'Elevator 100.10',},
+            {nodeID: '100.10', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 191.74, ycoord: 757.50, longName: 'Elevator 100.10', shortName: 'Elevator 100.10',},
             {nodeID: '100.00', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 192.74, ycoord: 234.50, longName: 'Lobby 100.00 intersection', shortName: 'Lobby 100.00',},
             {nodeID: '100.04', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 458.74, ycoord: 234.50, longName: 'Pharmacy Consult', shortName: 'Pharmacy Consult',},
             {nodeID: '110.20A', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_20, floor: 1, xcoord: 519.24, ycoord: 231.50, longName: 'Patient Toilet 110.20A', shortName: 'Patient Toilet 110.20A',},
