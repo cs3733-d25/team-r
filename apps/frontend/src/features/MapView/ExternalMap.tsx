@@ -24,6 +24,7 @@ interface ExternalMapProps {
     selectedLocation?: string;
 }
 
+
 /**
  * ExternalMap component
  * @param initialLocation - the location to be pre-selected
@@ -69,7 +70,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 placeholder={'Starting location'}
                                 onChange={(e) => setStartingLocation(e.target.value)}
                             />
-                            <Select onValueChange={(value: TravelModeType) => setTravelMode(value)}>
+                            <Select onValueChange={(value) => setTravelMode(value)}>
                             <SelectTrigger>
                                     <SelectValue placeholder="Mode of transport" />
                                 </SelectTrigger>

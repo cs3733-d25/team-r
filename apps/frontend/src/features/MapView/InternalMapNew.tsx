@@ -21,7 +21,7 @@ export function InternalMapNew() {
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>
                         <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
-                        <Label className={'p-2 pt-0 font-bold text-xl'}>Patriot Place</Label>
+                        <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>Patriot Place</Label>
                     </div>
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
