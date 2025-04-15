@@ -12,8 +12,9 @@ import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import {PrescriptionForm} from "../features/Requests/PrescriptionForm/PrescriptionForm.tsx";
 import {PrescriptionPage} from "../features/Requests/PrescriptionForm/PrescriptionPage.tsx";
-import PatientRequest from "@/features/Requests/PatientRequest/PatientRequest.tsx";
+import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequests.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
+import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 
 
 function App() {
@@ -36,8 +37,8 @@ function App() {
                 { path: 'profile', element: <p>Profile</p> },
                 { path: 'prescription', element: <PrescriptionForm /> },
                 { path: 'prescriptionpage', element: <PrescriptionPage /> },
-                { path: 'patientrequest', element: <PatientRequestForm /> },
-                { path: 'patientrequestpage', element: <PatientRequest /> }
+                { path: 'patientrequestpage', element: <PatientRequestPage /> },
+                { path: 'patientrequest', element: <PatientRequest /> }
             ],
         },
     ]);

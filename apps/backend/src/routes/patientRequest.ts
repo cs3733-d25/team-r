@@ -34,6 +34,19 @@ function parseEnum<T extends { [key: string]: string | number }>(
   throw new Error(`Invalid enum value: ${value}`);
 }
 
+router.get("/", async function (req: Request, res: Response) {
+  try {
+    const requests = await PrismaClient.patientRequest.findMany({
+      orderBy: { priority: "asc" },
+    });
+    console.log(requests);
+    res.status(200).json(requests); // Send sanitation data as JSON
+  } catch (error) {
+    console.error("Error fetching pharmacy request data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a patient request");
   const request = req.body;

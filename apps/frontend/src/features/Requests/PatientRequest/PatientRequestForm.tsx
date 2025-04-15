@@ -2,8 +2,9 @@
 import {useState} from "react";
 import {Department, RequestPriority, RequestStatus, Buildings} from "../RequestEnums.tsx";
 import axios from "axios";
-import Navbar from "../../../components/Navbar.tsx";
+import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
+import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 
 
 interface SubmittedPatientRequest{
@@ -91,10 +92,9 @@ export const PatientRequestForm = () => {
 
     return (
         <>
-        <Navbar/>
+
         <div className="p-6 max-w-7xl mx-auto">
-            <h1 className="text-2xl font-bold mb-0">Patient Request Form</h1>
-            <h2 className="text-xl font-bold mb-6">Daksh Gajaria and Nora Cleary</h2>
+
 
             {/* Status Message */}
             {submitStatus && submitStatus.isError && (
@@ -146,13 +146,7 @@ export const PatientRequestForm = () => {
                     </div>
                 </div>
             )}
-            <Link
-                key={'Patient Request Page'}
-                to={'/patientrequestpage'}
-                className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
-            >
-                See All Requests
-            </Link>
+
             <div
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="p-6">
@@ -271,3 +265,4 @@ export const PatientRequestForm = () => {
 </>
     )
 }
+export default PatientRequestForm;
