@@ -7,11 +7,12 @@ import TwentyFloorTwo from './directorypages/20Floor2.tsx';
 import TwentyFloorThree from './directorypages/20Floor3.tsx';
 import TwentyFloorFour from './directorypages/20Floor4.tsx';
 import Navbar from "../../components/Navbar.tsx";
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 export function Directory() {
     return (
         <>
-            <Navbar/>
+            <NavbarMGH/>
             <div className={'flex min-h-screen justify-center'}>
                 <br/>
                 <table className={'text-l'}>
