@@ -104,7 +104,7 @@ const TransportationRequestForm = () => {
 
     return (
         <>
-            <div className="p-6 max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto">
 
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
@@ -117,7 +117,7 @@ const TransportationRequestForm = () => {
 
                 {/* Confirmation Card */}
                 {submittedTransport && !submitStatus?.isError && (
-                    <div  className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                    <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
                         <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -190,8 +190,8 @@ const TransportationRequestForm = () => {
                         </div>
                     </div>
                 )}
-                <div className="bg-background rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-primary mt-3">
-                    <div className="p-15">
+                <div className=" rounded-lg mt-3">
+                    <div className="p-5">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div >
@@ -253,6 +253,7 @@ const TransportationRequestForm = () => {
                                 <div >
                                     <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                         Priority Level
+                                        <span className="text-accent">*</span>
                                         <span className="text-xs text-gray-500 block">
                                             URGENT: Immediate attention required
                                             <br />
