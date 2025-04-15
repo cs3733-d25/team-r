@@ -1,14 +1,11 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import Navbar from "../../../components/Navbar.tsx";
-import {Link} from "react-router-dom";
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 export function PrescriptionPage() {
     const [prescription, setPrescription] = useState([{
         prescriptionID: null,
         employeeID: null,
-        //employee: null,
+        employeeName: null,
         priority: null,
         department: null,
         patientID: null,
@@ -21,7 +18,7 @@ export function PrescriptionPage() {
         numberOfPills: null,
         refills: null,
         additionalInstructions: null,
-        //status: null
+        status: null
     }]);
     function displayTable() {
         useEffect(() => {
@@ -44,15 +41,7 @@ export function PrescriptionPage() {
 
     return (
         <>
-            <NavbarMGH />
             <h1 className = {"bold text-3xl text-center pb-2"}>Prescription Requests</h1>
-            <Link
-                key={'Prescription Form Page'}
-                to={'/prescription'}
-                className={"px-6 py-2 bg-primary text-primary-foreground font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-200 ml-10"}
-            >
-                Back
-            </Link>
             <table className = {"mx-auto w-200"}>
                 <thead className = {"border-b"}>
                 <tr className={'text-lg border-b'}>
@@ -78,7 +67,7 @@ export function PrescriptionPage() {
                     return(
                         <>
                             <tr key = {index} className = { "border-t"}>
-                                <td className={"border-r border-b border-foreground"}>{row.employeeID}</td>
+                                <td className={"border-r border-b border-foreground"}>{row.employeeName}</td>
                                 <td className={"border-r border-b border-foreground"}>{row.drugName}</td>
                                 <td className={"border-r border-b border-foreground"}>{row.priority}</td>
                                 <td className={"border-r border-b border-foreground"}>{row.department}</td>
@@ -91,7 +80,7 @@ export function PrescriptionPage() {
                                 <td className={"border-r border-b border-foreground"}>{row.numberOfPills}</td>
                                 <td className={"border-r border-b border-foreground"}>{row.refills}</td>
                                 <td className={"border-r border-b border-foreground"}>{row.additionalInstructions}</td>
-                                <td className={"border-b border-foreground"}>{row.priority}</td>
+                                <td className={"border-b border-foreground"}>{row.status}</td>
                             </tr>
 
                         </>
