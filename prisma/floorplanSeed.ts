@@ -277,9 +277,9 @@ async function main() {
         await prisma.node.createMany({
             data: [
                 {nodeID: 'bridgePatriot20', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
-                {nodeID: '200.13', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '2nd Floor Stairs', shortName: '2nd Floor Stairs'},
-                {nodeID: '200.14', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '2nd Floor Stairs', shortName: '2nd Floor Stairs'},
-                {nodeID: '200.10', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '2nd Floor Elevator', shortName: '2nd Floor Elevator'}
+                {nodeID: '300.13', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
+                {nodeID: '300.14', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
+                {nodeID: '300.10', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '3rd Floor Elevator', shortName: '3rd Floor Elevator'}
             ],
         });
 
@@ -308,9 +308,9 @@ async function main() {
                 {fromID: '110.60', toID: '120.26', fromX: 549.74, fromY: 536.00, toX: 418.24, toY: 532.50},
                 {fromID: '120.26', toID: '100.09', fromX: 418.24, fromY: 532.50, toX: 191.24, toY: 530.50},
                 {fromID: '150.30', toID: '150.36', fromX: 338.74, fromY: 702.50, toX: 311.24, toY: 672.50},
-                {fromID: '100.13', toID: '200.13', fromX: 767.24, fromY: 243.00, toX: 767.24, toY: 243.00},
-                {fromID: '100.14', toID: '200.14', fromX: 218.74, fromY: 818.00, toX: 218.74, toY: 818.00},
-                {fromID: '100.10', toID: '200.10', fromX: 191.74, fromY: 757.50, toX: 191.74, toY: 757.50}
+                {fromID: '100.13', toID: '300.13', fromX: 767.24, fromY: 243.00, toX: 767.24, toY: 243.00},
+                {fromID: '100.14', toID: '300.14', fromX: 218.74, fromY: 818.00, toX: 218.74, toY: 818.00},
+                {fromID: '100.10', toID: '300.10', fromX: 191.74, fromY: 757.50, toX: 191.74, toY: 757.50}
             ]
         });
 
@@ -391,12 +391,13 @@ async function main() {
                 { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
                 { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
                 { fromID:'checkIn4000B', toID:'rightWaitingHallway', fromX: 319.25, fromY: 654.50, toX: 250.25, toY: 633.50 },
-                // TODO: finish paths in patriot 22 floor 4
-
+                { fromID:'checkIn4000B', toID:'waiting4000', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
+                { fromID:'rightEntranceHallway', toID:'corridor4R', fromX: 353.25, fromY: 655.50, toX: 468.75, toY: 653.50 },
+                { fromID:'corridor4R', toID:'checkOutWait4083', fromX: 468.75, fromY: 653.50, toX: 470.25, toY: 615.00 },
+                { fromID:'corridor4R', toID:'checkOut4090', fromX: 468.75, fromY: 653.50, toX: 497.25, toY: 708.00 },
                 {fromID: 'ST02', toID: 'stairST02', fromX: 442.88, fromY: 327.00, toX: 355.25, toY: 280.50},
                 {fromID: 'ST01', toID: 'stairST01', fromX: 436.13, fromY: 470.25, toX: 419.75, toY: 455.00},
-                {fromID: '3A', toID: 'elevatorLobby4A', fromX: 438.88, fromY: 538.75, toX: 351.25, toY: 535.50},
-
+                {fromID: '3A', toID: 'elevatorLobby4A', fromX: 438.88, fromY: 538.75, toX: 351.25, toY: 535.50}
             ]
         });
 
@@ -411,4 +412,3 @@ async function main() {
         .finally(async () => {
             await prisma.$disconnect();
         });
-
