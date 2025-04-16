@@ -26,7 +26,7 @@ export function DeviceReqPage() {
 
     async function retrieveFromDatabase() {
         try {
-            const response = await axios.get("/api/device/")
+            const response = await axios.get("api/servicereq/")
             console.log("response from / get", response.data)
             setDevice(response.data);
             console.log(response.data);
@@ -38,7 +38,7 @@ export function DeviceReqPage() {
 
     return (
         <div className={"bg-white"}>
-            <h1 className = {"bold text-3xl text-center pb-2"}>Device Requests</h1>
+            <h1 className = {"bold text-3xl font-trade text-center pb-2"}>Device Requests</h1>
             <Table className = {"mx-auto w-200"}>
                 <TableHeader className = {"border-b"}>
                 <TableRow className={'text-lg border-b'}>

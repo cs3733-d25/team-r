@@ -7,8 +7,8 @@ export function Prescription() {
     return(
         <>
             <NavbarMGH />
-            <h1 className="text-2xl font-bold mb-0 place-self-center">Prescription Request System</h1>
-            <h2 className="text-xl font-bold mb-6 place-self-center">Owen Miller & Keagan Hitt</h2>
+            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Prescription Request System</h1>
+            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Owen Miller & Keagan Hitt</h2>
             <Tabs defaultValue="prescriptionForm" className="items-center justify-center w-full px-50">
                 <TabsList className="flex bg-hidden rounded-t-lg relative z-10">
                     <TabsTrigger value="prescriptionForm"

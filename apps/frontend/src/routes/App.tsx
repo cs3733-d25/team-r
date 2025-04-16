@@ -13,8 +13,6 @@ import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequ
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
 import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
-import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
-import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx";
 import SanitationRequestTabs from "@/features/Requests/SanitationForm/SanitationTabs.tsx";

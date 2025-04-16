@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Department, RequestPriority } from '../RequestEnums.tsx';
+import {Buildings, Department, RequestPriority, RequestStatus, RequestMedicalDevice} from '../RequestEnums.tsx';
+//import {RequestMedicalDevice} from '../../../../../../packages/database;
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
@@ -12,14 +13,14 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 
 interface SubmittedDevice {
-    device: string;
-    priority: string;
+    device: RequestMedicalDevice | string;
     room: string;
-    department: string;
+    priority: RequestPriority | string;
+    department: Department | string;
     comment: string;
     employeeName: string;
     employeeID: string;
-    status: string;
+    status: RequestStatus | string;
 
     timestamp: string;
 }
@@ -49,7 +50,7 @@ export const DeviceReqForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('api/device', {
+            const response = await axios.post('api/servicereq/', {
                 ...formData,
                 priority: formData.priority.toString(),
             });
@@ -101,9 +102,9 @@ export const DeviceReqForm = () => {
         }));
     };
 
-    const handleChange3 = (value:string) => {
-        handleDropdownChange("device", value);
-    }
+    // const handleChange3 = (value:string) => {
+    //     handleDropdownChange("device", value);
+    // }
 
     const handleDropdownChange = (name:string, value:string) => {
         setFormData(prev => ({
@@ -125,20 +126,24 @@ export const DeviceReqForm = () => {
                                         Select a Device
                                         <span className="text-accent">*</span>
                                     </Label>
-                                    <Select onValueChange={handleChange3}>
-                                        <SelectTrigger className={"bg-input"}>
-                                            <SelectValue placeholder={'Select a device'}></SelectValue>
-                                        </SelectTrigger>
-                                        <SelectContent className={"bg-input"} >
-                                            <SelectGroup>
-                                                {["X-ray", "Defibrillator", "EKG Machine", "Pacemaker", "Syringe"].map((device: string) => (
-                                                <SelectItem key={device} value={device} className={"bg-input hover:bg-accent"}>
-                                                    {device}
-                                                </SelectItem>
-                                                ))}
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
+                                    {/*<Select onValueChange={handleChange3}>*/}
+                                    {/*    <SelectTrigger className={"bg-input"}>*/}
+                                    {/*        <SelectValue placeholder={'Select a device'}></SelectValue>*/}
+                                    {/*    </SelectTrigger>*/}
+                                    {/*    <SelectContent className={"bg-input"} >*/}
+                                    {/*        <SelectGroup>*/}
+                                    {/*            {["X-ray", "Defibrillator", "EKG Machine", "Pacemaker", "Syringe"].map((device: string) => (*/}
+                                    {/*            <SelectItem key={device} value={device} className={"bg-input hover:bg-accent"}>*/}
+                                    {/*                {device}*/}
+                                    {/*            </SelectItem>*/}
+                                    {/*            ))}*/}
+                                    {/*        </SelectGroup>*/}
+                                    {/*        <SelectGroup>*/}
+                                    {/*            */}
+                                    {/*        </SelectGroup>*/}
+                                    {/*    </SelectContent>*/}
+                                    {/*</Select>*/}
+                                    <Dropdown tableName={"devices"} fieldName={"device"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Employee Name */}
@@ -163,6 +168,8 @@ export const DeviceReqForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Employee ID
                                         <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            ID must be a number.</span>
                                     </Label>
                                     <Input
                                         type="text"

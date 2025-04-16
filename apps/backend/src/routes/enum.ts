@@ -1,6 +1,7 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import {
+  $Enums,
   Building,
   Department,
   Priorities,
@@ -8,6 +9,7 @@ import {
   RequestPriority,
   RequestStatus,
 } from "database";
+import RequestMedicalDevice = $Enums.RequestMedicalDevice;
 
 const router: Router = express.Router();
 
@@ -63,6 +65,19 @@ export async function parseStatus(value: string): Promise<RequestStatus> {
     });
 }
 
+export async function parseDevice(
+  value: string,
+): Promise<RequestMedicalDevice> {
+  // return Department type
+  return PrismaClient.devices
+    .findFirstOrThrow({
+      where: { name: value },
+    })
+    .then((row) => {
+      return row.type;
+    });
+}
+
 // takes in an array of objects with a name field and return an array of names
 function formatNames(rows: { name: string }[]): string[] {
   return rows.map((row): string => {
@@ -91,6 +106,9 @@ router.get("/:table", async function (req: Request, res: Response) {
         break;
       case "locations":
         names = formatNames(await PrismaClient.locations.findMany());
+        break;
+      case "devices":
+        names = formatNames(await PrismaClient.devices.findMany());
         break;
     }
     if (names.length > 0) {
