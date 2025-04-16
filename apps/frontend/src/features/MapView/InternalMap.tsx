@@ -24,6 +24,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             const map = L.map(mapRef.current, {
                 crs: L.CRS.Simple,
                 minZoom: -2,
+                zoomControl: false,
             }).setView([500, 500], 0);
 
             // bounds for all floorplans
