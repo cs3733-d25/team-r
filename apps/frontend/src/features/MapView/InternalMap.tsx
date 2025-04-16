@@ -8,6 +8,7 @@ import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 import chestnutHill from '../../../public/Chestnut-Hill.svg'
 import { goToFloor } from '../MapView/floorNavigation.ts';
+import './leaflet.css';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
