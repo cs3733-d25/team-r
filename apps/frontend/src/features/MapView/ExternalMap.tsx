@@ -32,7 +32,8 @@ interface ExternalMapProps {
  */
 export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapProps) {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    const patriotPlace = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
+    const patriotPlace20 = 'Mass General Brigham, 20 Patriot Pl, Foxborough, MA 02035';
+    const patriotPlace22 = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     const [startingLocation, setStartingLocation] = useState<string>('');
@@ -41,6 +42,12 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const location = useLocation();
     const status = location.state?.status;
 
+    const getBuildingIdentifier = (location: string) => {
+        if (location === patriotPlace20) return 'PATRIOT_PLACE_20';
+        if (location === patriotPlace22) return 'PATRIOT_PLACE_22';
+        if (location === chestnutHill) return 'CHESTNUT_HILL';
+        return '';
+    };
 
     console.log("Login status:", status); // Debug log
 
@@ -71,7 +78,6 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <Label className={'p-2 font-bold text-2xl'}>Directions</Label>
                     <div className="space-y-4 flex-grow overflow-auto">
-                        {/* Your existing directions content */}
                         <div className="flex flex-col space-y-2">
                             <Input
                                 type={'text'}
@@ -99,13 +105,19 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
-                                    onClick={() => setSelectedLocation(patriotPlace)}
+                                    variant={selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
+                                    onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
-                                    Patriot Place
+                                    20 Patriot Place
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === patriotPlace ? 'selected' : 'secondary'}
+                                    variant={selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
+                                    onClick={() => setSelectedLocation(patriotPlace22)}
+                                >
+                                    22 Patriot Place
+                                </Button>
+                                <Button
+                                    variant={selectedLocation === chestnutHill ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Chestnut Hill
@@ -120,7 +132,13 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             disabled={selectedLocation === ''}
                             className={'w-full'}
                             onClick={() => navigate('/internal-map',
-                                { state: { selectedLocation } })}
+                                {
+                                    state: {
+                                        selectedLocation,
+                                        buildingIdentifier: getBuildingIdentifier(selectedLocation)
+                                    }
+                                }
+                            )}
                         >
                             I've Arrived
                         </Button>
