@@ -20,7 +20,7 @@ export function AllRequestsPage() {
     const requestTypes = [
         {
             name: "Medical Device",
-            description: "Requests for medical devices including X-rays, Defibrillators, EKG Machines, etc.",
+            description: "Requests for medical devices",
             path: "/devicerequest"
         },
         {
