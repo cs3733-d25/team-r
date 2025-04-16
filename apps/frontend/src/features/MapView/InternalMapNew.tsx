@@ -26,6 +26,10 @@ interface Node {
     shortName: string;
 }
 
+interface CustomWindow extends Window {
+    goToFloor?: (floor: number) => void;
+}
+
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -33,6 +37,7 @@ export function InternalMapNew() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const buildingIdentifier = location.state?.buildingIdentifier;
+    const [currentFloor, setCurrentFloor] = useState(1);
 
     useEffect(() => {
         const loadParkingLots = async () => {
@@ -136,7 +141,24 @@ export function InternalMapNew() {
             selectedBuilding === 'PATRIOT_PLACE_22' ? '22 Patriot Place' :
                 selectedBuilding === 'CHESTNUT_HILL' ? 'Chestnut Hill' : 'Patriot Place';
 
+    const floorConfig = {
+        PATRIOT_PLACE_20: [1, 3, 4],
+        PATRIOT_PLACE_22: [1, 3],
+        CHESTNUT_HILL: [1]
+    };
 
+    // Get floors for current building
+    const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
+
+    // Handle floor change
+    const handleFloorChange = (floor: number) => {
+        setCurrentFloor(floor);
+        // Call the global goToFloor function exposed by InternalMap
+        const customWindow = window as CustomWindow;
+        if (customWindow.goToFloor) {
+            customWindow.goToFloor(floor);
+        }
+    };
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
@@ -192,8 +214,15 @@ export function InternalMapNew() {
                         <div className="flex flex-col space-y-2">
                             <Label className={'px-2 mb-3'}>Floor selection</Label>
                             <div className="flex flex-col space-y-2">
-                                <Button variant={'secondary'}>Floor 1</Button>
-                                <Button variant={'secondary'}>Floor 2</Button>
+                                {availableFloors.map(floor => (
+                                    <Button
+                                        key={floor}
+                                        variant={currentFloor === floor ? 'default' : 'secondary'}
+                                        onClick={() => handleFloorChange(floor)}
+                                    >
+                                        Floor {floor}
+                                    </Button>
+                                ))}
                             </div>
                         </div>
                     </div>
