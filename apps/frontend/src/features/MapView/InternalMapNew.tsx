@@ -18,6 +18,7 @@ import type {Node} from '../../../../backend/src/routes/mapData.ts';
 
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
+    const [selectedBuilding, setSelectedBuilding] = useState<string>('PATRIOT_PLACE_20');
 
     useEffect(() => {
         const loadData = async () => {
@@ -27,19 +28,91 @@ export function InternalMapNew() {
         loadData();
     }, []);
 
+    const departmentsByBuilding: Record<string, { key: string; value: string; label: string; }[]> = {
+        PATRIOT_PLACE_20: [
+            { key: "20-blood-draw", value: "20-blood-draw", label: "Blood Draw/Phlebotomy" },
+            { key: "20-pharmacy", value: "20-pharmacy", label: "Pharmacy" },
+            { key: "20-radiology", value: "20-radiology", label: "Radiology" },
+            { key: "20-cardio-services", value: "20-cardio-services", label: "Cardiovascular Services" },
+            { key: "20-urology", value: "20-urology", label: "Urology" },
+            { key: "20-urgentcare", value: "20-urgentcare", label: "Urgent Care Center" },
+            { key: "20-orthopaedics", value: "20-orthopaedics", label: "Orthopaedics" },
+            { key: "20-hand-upper-extremity", value: "20-hand-upper-extremity", label: "Hand and Upper Extremity" },
+            { key: "20-arthroplasty", value: "20-arthroplasty", label: "Arthroplasty" },
+            { key: "20-pediatric-trauma", value: "20-pediatric-trauma", label: "Pediatric Trauma" },
+            { key: "20-physiatry-2", value: "20-physiatry-2", label: "Physiatry (2nd Floor)" },
+            { key: "20-podiatry", value: "20-podiatry", label: "Podiatry" },
+            { key: "20-rehab-services", value: "20-rehab-services", label: "Rehabilitation Services" },
+            { key: "20-cardiac-rehab", value: "20-cardiac-rehab", label: "Cardiac Rehab" },
+            { key: "20-occupational-therapy", value: "20-occupation-therapy", label: "Occupational Therapy" },
+            { key: "20-hand-therapy", value: "20-hand-therapy", label: "Hand Therapy" },
+            { key: "20-upper-extremity", value: "20-upper-extremity", label: "Upper Extremity" },
+            { key: "20-physical-therapy", value: "20-physical-therapy", label: "Physical Therapy" },
+            { key: "20-speech-language", value: "20-speech-language", label: "Speech - Language" },
+            { key: "20-clinical-lab", value: "20-clinical-lab", label: "Clinical Lab" },
+            { key: "20-surgi-care", value: "20-surgi-care", label: "Surgi-Care" },
+            { key: "20-surgical-specialities", value: "20-surgical-specialties", label: "Surgical Specialties" },
+            { key: "20-audiology", value: "20-audiology", label: "Audiology" },
+            { key: "20-ent", value: "20-ent", label: "ENT" },
+            { key: "20-general-gastro-surgery", value: "20-general-gastro-surgery", label: "General and Gastrointestinal Surgery" },
+            { key: "20-plastic-surgery", value: "20-plastic-surgery", label: "Plastic Surgery" },
+            { key: "20-thoracic-surgery", value: "20-thoracic-surgery", label: "Thoracic Surgery" },
+            { key: "20-vascular-surgery", value: "20-vascular-surgery", label: "Vascular Surgery" },
+            { key: "20-weight-wellness", value: "20-weight-wellness", label: "Weight Management and Wellness" },
+            { key: "20-sports", value: "20-sports", label: "Sports" },
+            { key: "20-xray-suite", value: "20-xray-suite", label: "X-Ray Suite" },
+            { key: "20-electromyography", value: "20-electromyography", label: "Electromyography" },
+            { key: "20-nutrition", value: "20-nutrition", label: "Nutrition" },
+            { key: "20-pain-medicine", value: "20-pain-medicine", label: "Pain Medicine" },
+            { key: "20-physiatry-4", value: "20-physiatry-4", label: "Physiatry (4th Floor)" },
+            { key: "20-pulmonary-testing", value: "20-pulmonary-testing", label: "Pulmonary Function Testing" },
+            { key: "20-day-surgery", value: "20-day-surgery", label: "Day Surgery Center" },
+        ],
+        PATRIOT_PLACE_22: [
+            {key: "22-childrens-hospital", value: "22-childrens-hospital", label: "MassGeneral Hospital for Children"},
+            {key: "22-spaulding-outpatient", value: "22-spaulding-outpatient", label: "Spaulding Outpatient Center for Children"},
+            {key: "22-multi-specialty-clinic", value: "22-multi-specialty-clinic", label: "Multi-Specialty Clinic"},
+            {key: "22-allergy", value: "22-allergy", label: "Allergy"},
+            {key: "22-cardiac-arrythmia", value: "22-cardiac-arrythmia", label: "Cardiac Arrythmia"},
+            {key: "22-dermatology", value: "22-dermatology", label: "Dermatology"},
+            {key: "22-endocrinology", value: "22-endocrinology", label: "Endocrinology"},
+            {key: "22-gastroenterology", value: "22-gastroenterology", label: "Gastroenterology"},
+            {key: "22-kidney-medicine", value: "22-kidney-medicine", label: "Kidney (Renal) Medicine"},
+            {key: "22-neurology", value: "22-neurology", label: "Neurology"},
+            {key: "22-neurosurgery", value: "22-neurosurgery", label: "Neurosurgery"},
+            {key: "22-ophthalmology", value: "22-ophthalmology", label: "Ophthalmology"},
+            {key: "22-optometry", value: "22-optometry", label: "Optometry"},
+            {key: "22-pulmonology", value: "22-pulmonology", label: "Pulmonology"},
+            {key: "22-rheumatology", value: "22-rheumatology", label: "Rheumatology"},
+            {key: "22-vein-care", value: "22-vein-care", label: "Vein Care Services"},
+            {key: "22-womens-health", value: "22-womens-health", label: "Women's Health"},
+            {key: "22-financial-services", value: "22-financial-services", label: "financial-services"},
+            {key: "22-blood-draw", value: "22-blood-draw", label: "Blood Draw/Phlebotomy"},
+            {key: "22-community-room", value: "22-community-room", label: "Community Room"},
+            {key: "22-primary-care", value: "22-primary-care", label: "Primary Care"},
+        ],
+        CHESTNUT_HILL: [],
+    };
+
+    const departments = departmentsByBuilding[selectedBuilding] || [];
+    const buildingDisplayName =
+        selectedBuilding === 'PATRIOT_PLACE_20' ? '20 Patriot Place' :
+        selectedBuilding === 'PATRIOT_PLACE_22' ? '22 Patriot Place' :
+        selectedBuilding === 'CHESTNUT_HILL' ? 'Chestnut Hill' : 'Patriot Place';
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className={"sticky top-0 z-30"}>
                 <NavbarMGH />
             </div>
             <div className="flex-1 w-full relative">
-                <InternalMap />
+                <InternalMap onBuildingChange={setSelectedBuilding}/>
                 {/* Overlay sidebar */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>
                         <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
                         <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>
-                            Patriot Place
+                            {buildingDisplayName}
                         </Label>
                     </div>
                     <div className="space-y-4 flex-grow overflow-auto">
@@ -51,8 +124,9 @@ export function InternalMapNew() {
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Parking Lots</SelectLabel>
-                                        // TODO: filter choices based on campus
-                                        {parkingLots.map((lot) => (
+                                        {parkingLots
+                                            .filter(lot => lot.building === selectedBuilding)
+                                            .map((lot) => (
                                             <SelectItem key={lot.nodeID} value={lot.shortName}>
                                                 {lot.shortName}
                                             </SelectItem>
@@ -67,44 +141,11 @@ export function InternalMapNew() {
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Departments</SelectLabel>
-                                        // TODO: filter choices based on campus
-                                        <SelectItem key="20-blood-draw" value="20-blood-draw">Blood Draw/Phlebotomy</SelectItem>
-                                        <SelectItem key="20-pharmacy" value="20-pharmacy">Pharmacy</SelectItem>
-                                        <SelectItem key="20-radiology" value="20-radiology">Radiology</SelectItem>
-                                        <SelectItem key="20-cardio-services" value="20-cardio-services">Cardiovascular Services</SelectItem>
-                                        <SelectItem key="20-urology" value="20-urology">Urology</SelectItem>
-                                        <SelectItem key="20-urgentcare" value="20-urgentcare">Urgent Care Center</SelectItem>
-                                        <SelectItem key="20-orthopaedics" value="20-orthopaedics">Orthopaedics</SelectItem>
-                                        <SelectItem key="20-hand-upper-extremity" value="20-hand-upper-extremity">Hand and Upper Extremity</SelectItem>
-                                        <SelectItem key="20-arthroplasty" value="20-arthroplasty">Arthroplasty</SelectItem>
-                                        <SelectItem key="20-pediatric-trauma" value="20-pediatric-trauma">Pediatric Trauma</SelectItem>
-                                        <SelectItem key="20-physiatry-2" value="20-physiatry-2">Physiatry (2nd Floor)</SelectItem>
-                                        <SelectItem key="20-podiatry" value="20-podiatry">Podiatry</SelectItem>
-                                        <SelectItem key="20-rehab-services" value="20-rehab-services">Rehabilitation Services</SelectItem>
-                                        <SelectItem key="20-cardiac-rehab" value="20-cardiac-rehab">Cardiac Rehab</SelectItem>
-                                        <SelectItem key="20-occupational-therapy" value="20-occupation-therapy">Occupational Therapy</SelectItem>
-                                        <SelectItem key="20-hand-therapy" value="20-hand-therapy">Hand Therapy</SelectItem>
-                                        <SelectItem key="20-upper-extremity" value="20-upper-extremity">Upper Extremity</SelectItem>
-                                        <SelectItem key="20-physical-therapy" value="20-physical-therapy">Physical Therapy</SelectItem>
-                                        <SelectItem key="20-speech-language" value="20-speech-language">Speech - Language</SelectItem>
-                                        <SelectItem key="20-clinical-lab" value="20-clinical-lab">Clinical Lab</SelectItem>
-                                        <SelectItem key="20-surgi-care" value="20-surgi-care">Surgi-Care</SelectItem>
-                                        <SelectItem key="20-surgical-specialities" value="20-surgical-specialties">Surgical Specialties</SelectItem>
-                                        <SelectItem key="20-audiology" value="20-audiology">Audiology</SelectItem>
-                                        <SelectItem key="20-ent" value="20-ent">ENT</SelectItem>
-                                        <SelectItem key="20-general-gastro-surgery" value="20-general-gastro-surgery">General and Gastrointestinal Surgery</SelectItem>
-                                        <SelectItem key="20-plastic-surgery" value="20-plastic-surgery">Plastic Surgery</SelectItem>
-                                        <SelectItem key="20-thoracic-surgery" value="20-thoracic-surgery">Thoracic Surgery</SelectItem>
-                                        <SelectItem key="20-vascular-surgery" value="20-vascular-surgery">Vascular Surgery</SelectItem>
-                                        <SelectItem key="20-weight-wellness" value="20-weight-wellness">Weight Management and Wellness</SelectItem>
-                                        <SelectItem key="20-sports" value="20-sports">Sports</SelectItem>
-                                        <SelectItem key="20-xray-suite" value="20-xray-suite">X-Ray Suite</SelectItem>
-                                        <SelectItem key="20-electromyography" value="20-electromyography">Electromyography</SelectItem>
-                                        <SelectItem key="20-nutrition" value="20-nutrition">Nutrition</SelectItem>
-                                        <SelectItem key="20-pain-medicine" value="20-pain-medicine">Pain Medicine</SelectItem>
-                                        <SelectItem key="20-physiatry-4" value="20-physiatry-4">Physiatry (4th Floor)</SelectItem>
-                                        <SelectItem key="20-pulmonary-testing" value="20-pulmonary-testing">Pulmonary Function Testing</SelectItem>
-                                        <SelectItem key="20-day-surgery" value="20-day-surgery">Day Surgery Center</SelectItem>
+                                        {departments.map((dept) => (
+                                            <SelectItem key={dept.key} value={dept.value}>
+                                                {dept.label}
+                                            </SelectItem>
+                                        ))}
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>

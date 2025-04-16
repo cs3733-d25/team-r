@@ -13,9 +13,10 @@ import './leaflet.css';
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
+    onBuildingChange?: (building: string) => void;
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, onBuildingChange}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
