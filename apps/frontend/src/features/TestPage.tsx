@@ -1,11 +1,11 @@
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import LeafletMap from '@/features/MapView/LeafletMap.tsx';
+import InternalMap from '@/features/MapView/InternalMap.tsx';
 
 function TestPage() {
     return (
         <div>
             <NavbarMGH />
-            <LeafletMap />
+            <InternalMap />
         </div>
     );
 }
