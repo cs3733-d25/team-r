@@ -38,7 +38,7 @@ export function NavbarMGH() {
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Edit Map', href: '/edit-map' },
                     ]}/>
-                    <HoverPopoverNavLink label={"Request a Service"} href={"/sanitation"} items={[
+                    <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
                         { label: 'Sanitation', href: '/sanitation' },
                         { label: 'Medical Device', href: '/devicerequest' },
                         { label: 'Patient Request', href: '/patientrequestpage' },
