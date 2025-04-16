@@ -16,6 +16,7 @@ export function AllRequestsPage() {
     const [activeTab, setActiveTab] = useState("overview");
     const navigate = useNavigate();
 
+    // Removed icon reference from requestTypes
     const requestTypes = [
         {
             name: "Medical Device",
@@ -66,9 +67,8 @@ export function AllRequestsPage() {
                             {requestTypes.map((type) => (
                                 <Card key={type.name} className="overflow-hidden hover:shadow-lg transition-shadow">
                                     <CardHeader className="bg-primary text-primary-foreground">
-                                        <CardTitle className="flex items-center gap-2">
-                                            <span className="text-2xl">{type.icon}</span>
-                                            <span>{type.name} Requests</span>
+                                        <CardTitle>
+                                            {type.name} Requests
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="pt-6">
