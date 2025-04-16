@@ -81,12 +81,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
 
             // parking lot markers
             L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
-            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(floorLayer22_1);
+            L.marker([217.98, 221.99]).bindPopup('Patient Parking').addTo(floorLayer22_1);
             L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer22_1);
-            // TODO: update coordinates
-            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer20_1);
-            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(floorLayer20_1);
-            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
+            L.marker([594.87, 43.05]).bindPopup('Valet Parking').addTo(floorLayer20_1);
+            L.marker([166.45, 36.50]).bindPopup('Patient Parking').addTo(floorLayer20_1);
+            L.marker([125.94, 265.92]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
             L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
             L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
 
