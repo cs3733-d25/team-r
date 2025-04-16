@@ -33,7 +33,7 @@ async function handleLogin(){
         console.log("userType: ", response.data.userType);
         if(response.data.message == "User verified"){
             console.log("yippee user is verified");
-            navigate('/directory');
+            navigate('/external-map');
         }
         else {
             setIncorrectLogin(response.data.message);
@@ -58,15 +58,15 @@ async function handleLogin(){
     //function to ignore login and continue as guest
     const handleGuestLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        navigate('/directory');
+        navigate('/external-map');
     }
 
     return (
-        <div className={"bg-mgb-blue flex-col h-screen"}>
+        <div className={"bg-primary flex-col h-screen"}>
             <div className={""}>
                 <NavbarMGH page={"login"}/>
             </div>
-            <div className="flex justify-center items-center bg-[url(/heropage.jpeg)] bg-gray-500 bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
+            <div className="flex justify-center items-center bg-[url(/hero-page-3.jpeg)] bg-gray-500 bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
                 <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">
                     <div className={'flex items-center justify-center p-2'}>
                         <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
@@ -117,7 +117,7 @@ async function handleLogin(){
                                 e.preventDefault();
                                 handleLogin();
                             }}
-                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 active:bg-blue-800"
+                                className="px-4 py-2 bg-primary text-white rounded hover:bg-foreground"
                             >
                                 Login
                             </button>
