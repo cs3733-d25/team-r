@@ -39,7 +39,8 @@ export function NavbarMGH(props: NavBarProps) {
                         <a href="/directory">Directories</a>
                     </Button>
                     <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
-                        { label: 'Patriot Place', href: '/external-map' },
+                        { label: '20 Patriot Place', href: '/external-map' },
+                        { label: '22 Patriot Place', href: '/external-map' },
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Edit Map', href: '/edit-map' },
                     ]}/>
