@@ -140,8 +140,27 @@ export function InternalMapNew() {
             {key: "22-community-room", value: "22-community-room", label: "Community Room"},
             {key: "22-primary-care", value: "22-primary-care", label: "Primary Care"},
         ],
-        // TODO: add departments for chestnut hill
-        CHESTNUT_HILL: [],
+        // Added departments : Riley
+        CHESTNUT_HILL: [
+            {key: "cnh-allergy-immunology", value: "cnh-allergy-immunology", label: "Allergy and Clinical Immunology"},
+            {key: "cnh-backup-childcare", value: "cnh-backup-childcare", label: "Backup Child Care Center"},
+            {key: "cnh-dermatology", value: "cnh-dermatology", label: "Dermatology"},
+            {key: "cnh-physicians", value: "cnh-physicians", label: "Physicians Group"},
+            {key: "cnh-obstetrics-gynecology", value: "cnh-obstetrics-gynecology", label: "Obstetrics and Gynecology"},
+            {key: "cnh-psychiatric-specialities", value: "cnh-psychiatric-specialities", label: "Psychiatric Specialities"},
+            {key: "cnh-center-for-pain", value: "cnh-center-for-pain", label: "Center for Pain Medicine"},
+            {key: "cnh-crohns-colitis", value: "cnh-crohns-colitis", label: "Crohn's and Colitis Center"},
+            {key: "cnh-endoscopy-center", value: "cnh-endoscopy-center", label: "Endoscopy Center"},
+            {key: "cnh-womens-health-center", value: "cnh-womens-health-center", label: "Center for Women's Health"},
+            {key: "cnh-laboratory", value: "cnh-laboratory", label: "Laboratory"},
+            {key: "cnh-multi-specialty", value: "cnh-multi-specialty", label: "Multi-Specialty Clinic"},
+            {key: "cnh-integrative-health", value: "cnh-integrative-health", label: "Center for Integrative Health"},
+            {key: "cnh-financial-services", value: "cnh-financial-services", label: "Patient Financial Services"},
+            {key: "cnh-pharmacy", value: "cnh-pharmacy", label: "Pharmacy"},
+            {key: "cnh-radiology", value: "cnh-radiology", label: "Radiology"},
+            {key: "cnh-radiology-mri-ct", value: "cnh-radiology-mri-ct", label: "Radiology (MRI/CT Scan)"},
+            {key: "cnh-rehabilitation", value: "cnh-rehabilitation", label: "Rehabilitation Services"}
+        ],
     };
 
     const getBuildingFromLocation = (location: string) => {
