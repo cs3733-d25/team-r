@@ -3,7 +3,12 @@ import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 import { RequestPriority, Department } from "../../../../packages/database";
-import {parseBuilding, parseDepartment, parseRequestPriority, parseStatus} from "./enum.ts";
+import {
+  parseBuilding,
+  parseDepartment,
+  parseRequestPriority,
+  parseStatus,
+} from "./enum.ts";
 
 const router: Router = express.Router();
 
@@ -49,7 +54,7 @@ router.post("/", async function (req: Request, res: Response) {
         location: await parseBuilding(request.location),
         roomNumber: request.room,
         comments: request.comments,
-        status: await parseStatus(request.status)
+        status: await parseStatus(request.status),
         // user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });
