@@ -22,7 +22,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
 
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
-            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2,}).setView([500, 500], 0);
+            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
 
             // bounds for all floorplans
             const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
