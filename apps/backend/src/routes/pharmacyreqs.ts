@@ -1,7 +1,11 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
-import { parseDepartment, parseRequestPriority } from "./enum.ts";
+import {
+  parseDepartment,
+  parseRequestPriority,
+  parseBuilding,
+} from "./enum.ts";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
 const router: Router = express.Router();

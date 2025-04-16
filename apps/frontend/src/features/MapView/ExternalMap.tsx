@@ -1,10 +1,20 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import {NavbarMGH} from '@/components/NavbarMGH.tsx';
 import Directions from '@/features/MapView/Directions.tsx';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
-import { useState } from 'react';
-import { Label } from '@/components/ui/label.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { Button } from '@/components/ui/button.tsx';
+import {APIProvider, Map} from '@vis.gl/react-google-maps';
+import {useState} from 'react';
+import {Label} from '@/components/ui/label.tsx';
+import {Input} from '@/components/ui/input.tsx';
+import {Button} from '@/components/ui/button.tsx';
+import {useNavigate} from 'react-router-dom';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
 /**
  * ExternalMapProps
@@ -20,17 +30,19 @@ interface ExternalMapProps {
  * @constructor
  */
 export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapProps) {
-
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
     const patriotPlace = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     const [startingLocation, setStartingLocation] = useState<string>('');
+    const [travelMode, setTravelMode] = useState<string>("DRIVING");
+    const navigate = useNavigate();
 
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
+        // <p>Hello world</p>
+        <div className={'flex flex-col h-screen overflow-hidden'}>
             <NavbarMGH />
-            <div className="flex-1 w-full relative">
+            <div className={'flex-1 w-full relative'}>
                 <APIProvider apiKey={apiKey} libraries={['places']}>
                     <Map
                         defaultZoom={8}
@@ -42,6 +54,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                     <Directions
                         selectedLocation={selectedLocation}
                         startingLocation={startingLocation}
+                        travelMode={travelMode}
                     />
                 </APIProvider>
 
@@ -56,14 +69,42 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 placeholder={'Starting location'}
                                 onChange={(e) => setStartingLocation(e.target.value)}
                             />
+                            <Select onValueChange={(value: TravelModeType) => setTravelMode(value)}>
+                            <SelectTrigger>
+                                    <SelectValue placeholder="Mode of transport" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Travel Mode</SelectLabel>
+                                        <SelectItem value={'DRIVING'}>
+                                            Car
+                                        </SelectItem>
+                                        <SelectItem value={'TRANSIT'}>
+                                            Public Transportation
+                                        </SelectItem>
+                                        <SelectItem value={'BICYCLING'}>
+                                            Bicycle
+                                        </SelectItem>
+                                        <SelectItem value={'WALKING'}>
+                                            Walk
+                                        </SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div className="flex flex-col space-y-2">
-                            <Label className={"px-2 mb-3"}>Destination</Label>
+                            <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
-                                <Button variant={"secondary"} onClick={() => setSelectedLocation(patriotPlace)}>
+                                <Button
+                                    variant={'secondary'}
+                                    onClick={() => setSelectedLocation(patriotPlace)}
+                                >
                                     Patriot Place
                                 </Button>
-                                <Button variant={"secondary"} onClick={() => setSelectedLocation(chestnutHill)}>
+                                <Button
+                                    variant={'secondary'}
+                                    onClick={() => setSelectedLocation(chestnutHill)}
+                                >
                                     Chestnut Hill
                                 </Button>
                             </div>
@@ -72,7 +113,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
                     {/* I've arrived button */}
                     <div className="mt-4 pt-2 border-t border-gray-200">
-                        <Button className={"w-full"}>
+                        <Button className={'w-full'} onClick={() => navigate('/internal-map')}>
                             I've Arrived
                         </Button>
                     </div>

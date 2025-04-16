@@ -1,5 +1,5 @@
 import { PrismaClient } from "../packages/database";
-import { UserType, Department, EmployeeRole, Gender, RequestStatus, RequestPriority, DeviceStatus } from "../packages/database";
+import { UserType, Department, EmployeeRole, Gender, RequestStatus, Building, RequestPriority, DeviceStatus } from "../packages/database";
 
 const prisma = new PrismaClient();
 
@@ -218,11 +218,20 @@ async function main() {
 
     await prisma.statuses.createMany({
         data: [
-            { type: RequestStatus.pending, name: "pending" },
-            { type: RequestStatus.accepted, name: "accepted" },
-            { type: RequestStatus.in_progress, name: "in_progress" },
-            { type: RequestStatus.completed, name: "completed" },
-            { type: RequestStatus.cancelled, name: "cancelled" },
+            { type: RequestStatus.pending, name: "Pending" },
+            { type: RequestStatus.accepted, name: "Accepted" },
+            { type: RequestStatus.in_progress, name: "In progress" },
+            { type: RequestStatus.completed, name: "Completed" },
+            { type: RequestStatus.cancelled, name: "Cancelled" },
+        ]
+    })
+
+
+    await prisma.locations.createMany({
+        data: [
+            { type: Building.PATRIOT_PLACE_20, name: "Patriot Place 20" },
+            { type: Building.PATRIOT_PLACE_22, name: "Patriot Place 22" },
+            { type: Building.CHESTNUT_HILL, name: "Chestnut Hill" },
         ]
     })
 

@@ -19,7 +19,7 @@ function getOptions(table: string) {
                 const response = await axios.get('/api/enum/' + table + '/');
                 console.log('response from /api/enum/' + table + ' get', response.data);
                 const options = response.data.map((department: string) => (
-                    <SelectItem key={department} value={department}>
+                    <SelectItem key={department} value={department} className={"bg-input hover:bg-accent"}>
                         {department}
                     </SelectItem>
                 ));
@@ -48,11 +48,11 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange }) =
 
     return (
         <Select onValueChange={handleChange}>
-            <SelectTrigger>
-                <SelectValue placeholder={'Select a ' + tableName}></SelectValue>
+            <SelectTrigger className={"bg-input"}>
+                <SelectValue placeholder={'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
-            <SelectContent>
-                <SelectGroup >
+            <SelectContent className={"bg-input"} >
+                <SelectGroup>
                     {getOptions(tableName)}
                 </SelectGroup>
             </SelectContent>
