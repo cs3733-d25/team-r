@@ -1,11 +1,11 @@
 import {NavbarMGH} from '@/components/NavbarMGH.tsx';
 import Directions from '@/features/MapView/Directions.tsx';
-import {APIProvider, Map} from '@vis.gl/react-google-maps';
-import {useState} from 'react';
+import {APIProvider, Map, useMap} from '@vis.gl/react-google-maps';
+import {useState, useRef, useEffect} from 'react';
 import {Label} from '@/components/ui/label.tsx';
 import {Input} from '@/components/ui/input.tsx';
 import {Button} from '@/components/ui/button.tsx';
-import {useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     Select,
     SelectContent,
@@ -24,24 +24,69 @@ interface ExternalMapProps {
     selectedLocation?: string;
 }
 
+function MapController({ selectedLocation }: { selectedLocation: string }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map || !selectedLocation) return;
+
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ address: selectedLocation })
+            .then(response => {
+                const { results } = response;
+                if (results[0]) {
+                    const location = results[0].geometry.location;
+                    map.panTo(location);
+                    map.setZoom(15);
+                }
+            })
+            .catch(error => {
+                console.error("Geocoding error:", error);
+            });
+    }, [map, selectedLocation]);
+
+    return null;
+}
+
 /**
  * ExternalMap component
  * @param initialLocation - the location to be pre-selected
+ * @param status
  * @constructor
  */
 export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapProps) {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    const patriotPlace = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
+    const patriotPlace20 = 'Mass General Brigham, 20 Patriot Pl, Foxborough, MA 02035';
+    const patriotPlace22 = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     const [startingLocation, setStartingLocation] = useState<string>('');
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
+    const location = useLocation();
+    const status = location.state?.status;
+
+    const getBuildingIdentifier = (location: string) => {
+        if (location === patriotPlace20) return 'PATRIOT_PLACE_20';
+        if (location === patriotPlace22) return 'PATRIOT_PLACE_22';
+        if (location === chestnutHill) return 'CHESTNUT_HILL';
+        return '';
+    };
+
+    const handleLocationSelect = (location: string) => {
+        setSelectedLocation(location);
+    };
+
+    console.log("Login status:", status); // Debug log
+
 
     return (
         // <p>Hello world</p>
         <div className={'flex flex-col h-screen overflow-hidden'}>
-            <NavbarMGH />
+            {status == 'logged-in' ? (
+                <NavbarMGH />
+            ) : (<NavbarMGH page={"home"} />)}
             <div className={'flex-1 w-full relative'}>
                 <APIProvider apiKey={apiKey} libraries={['places']}>
                     <Map
@@ -51,6 +96,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         fullscreenControl={false}
                         mapTypeControl={false}
                     />
+                    <MapController selectedLocation={selectedLocation} />
                     <Directions
                         selectedLocation={selectedLocation}
                         startingLocation={startingLocation}
@@ -62,7 +108,6 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <Label className={'p-2 font-bold text-2xl'}>Directions</Label>
                     <div className="space-y-4 flex-grow overflow-auto">
-                        {/* Your existing directions content */}
                         <div className="flex flex-col space-y-2">
                             <Input
                                 type={'text'}
@@ -90,14 +135,20 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
-                                    onClick={() => setSelectedLocation(patriotPlace)}
+                                    variant={selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
+                                    onClick={() => handleLocationSelect(patriotPlace20)}
                                 >
-                                    Patriot Place
+                                    20 Patriot Place
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === patriotPlace ? 'selected' : 'secondary'}
-                                    onClick={() => setSelectedLocation(chestnutHill)}
+                                    variant={selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
+                                    onClick={() => handleLocationSelect(patriotPlace22)}
+                                >
+                                    22 Patriot Place
+                                </Button>
+                                <Button
+                                    variant={selectedLocation === chestnutHill ? 'selected' : 'secondary'}
+                                    onClick={() => handleLocationSelect(chestnutHill)}
                                 >
                                     Chestnut Hill
                                 </Button>
@@ -111,7 +162,13 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             disabled={selectedLocation === ''}
                             className={'w-full'}
                             onClick={() => navigate('/internal-map',
-                                { state: { selectedLocation } })}
+                                {
+                                    state: {
+                                        selectedLocation,
+                                        buildingIdentifier: getBuildingIdentifier(selectedLocation)
+                                    }
+                                }
+                            )}
                         >
                             I've Arrived
                         </Button>

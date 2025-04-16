@@ -1,12 +1,26 @@
 import React from 'react'
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import { useNavigate } from 'react-router-dom';
+
 
 interface HomeMainProps {
     status?: string;
 }
 
 export function HomeMain(props: HomeMainProps) {
+
+    const navigate = useNavigate();
+    const handleNavigateToMap = () => {
+        navigate('/external-map', {
+            state: {
+                status: props.status,
+                // Add any other props you want to pass
+            }
+        });
+    };
+
+
     return (
         <div className={"bg-primary h-screen"}>
             {props.status == 'logged-in' ? (
@@ -30,8 +44,12 @@ export function HomeMain(props: HomeMainProps) {
                     <br />
                     <br />
                     <div className={"justify-self-center"}>
-                        <Button variant="ghost" asChild className={"bg-primary hover:bg-foreground hover:text-white"}>
-                            <a href="/external-map">Find a Location</a>
+                        <Button
+                            variant="ghost"
+                            className={"bg-primary hover:bg-foreground hover:text-white"}
+                            onClick={handleNavigateToMap}
+                        >
+                            Find a Location
                         </Button>
                     </div>
                 </div>

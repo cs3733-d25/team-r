@@ -1,0 +1,26 @@
+meta {
+  name: Enter sanitation request
+  type: http
+  seq: 4
+}
+
+post {
+  url: http:/localhost:3000/api/sanitation
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "sanitationType": "clean the room",
+    "priority": "low",
+    "department": "PHARMACY",
+    "room": "F023",
+    "comments": "pleaseseesees",
+    "userID": 8
+  }
+}
+
+assert {
+  res.status: eq 200
+}

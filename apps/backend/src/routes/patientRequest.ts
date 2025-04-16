@@ -5,6 +5,7 @@ import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 import {
   parseBuilding,
   parseDepartment,
+  parseNonemergent,
   parsePriority,
   parseStatus,
 } from "./enum.ts";
@@ -60,6 +61,9 @@ router.post("/", async function (req: Request, res: Response) {
         department: await parseDepartment(request.department),
         location: await parseBuilding(request.location), //parseEnum(Building, request.location),
         status: await parseStatus(request.status),
+        employeeName: request.employeeName,
+        request: await parseNonemergent(request.request),
+        comment: request.comment,
       },
     });
     // console.log(createRequest);

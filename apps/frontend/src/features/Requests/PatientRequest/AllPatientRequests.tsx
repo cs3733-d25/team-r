@@ -1,8 +1,10 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
+
 
 export function AllPatientRequests() {
-    const [sanitation, setSanitation] = useState([{
+    const [patientRequest, setPatientRequest] = useState([{
         patientRequestID:null,
         patientID:null,
         assignedEmpID:null,
@@ -11,7 +13,9 @@ export function AllPatientRequests() {
         location:null,
         comment:null,
         time:null,
-        status:null}]);
+        status:null,
+        employeeName:null,
+        request: null}]);
 
     function displayTable() {
         useEffect(() => {
@@ -23,7 +27,7 @@ export function AllPatientRequests() {
         try{
             const response = await axios.get("/api/patientreq/")
             console.log("response from / get", response.data)
-            setSanitation(response.data);
+            setPatientRequest(response.data);
             console.log(response.data);
         }
         catch(error){
@@ -34,38 +38,41 @@ export function AllPatientRequests() {
         <>
 
 
-            <table className = {"mx-auto w-200"}>
-                <thead className = {"border-b"}>
-                <tr className={'text-lg border-b'}>
-                    <th className={"pl-5"}>Comments</th>
-                    <th className={"pl-5"}>Priority</th>
-                    <th className={"pl-5"}>Department</th>
-                    <th className={"pl-5"}>Location</th>
-                    <th className={"pl-5"}>Status</th>
-                    <th className={"pl-5"}>Status</th>
-                </tr>
-                </thead>
+            <Table className = {"mx-auto w-200"}>
+                <TableHeader className = {"border-b"}>
+                <TableRow className={'text-lg border-b'}>
+                    <TableHead className={"pl-5"}>Employee</TableHead>
+                    <TableHead className={"pl-5"}>Patient ID</TableHead>
+                    <TableHead className={"pl-5"}>Request</TableHead>
+                    <TableHead className={"pl-5"}>Priority</TableHead>
+                    <TableHead className={"pl-5"}>Department</TableHead>
+                    <TableHead className={"pl-5"}>Location</TableHead>
+                    <TableHead className={"pl-5"}>Status</TableHead>
+
+                </TableRow>
+                </TableHeader>
                 <tbody className = {"text-center"}>
-                {sanitation.map((row,index) =>
+                {patientRequest.map((row,index) =>
                 {
                     return(
                         <>
-                            <tr key = {index} className = { "border-t"}>
-                                <td className={"border-r border-b"}>{row.comment}</td>
-                                <td className={"border-r border-b"}>{row.priority}</td>
-                                <td className={"border-r border-b"}>{row.department}</td>
-                                <td className={"border-r border-b"}>{row.location}</td>
-                                <td className={"border-r border -b"}>{row.status}</td>
-                                <td className={"border-b"}>{row.status}</td>
+                            <TableRow key = {index} className = { "border-t"}>
+                                <TableCell>{row.employeeName}</TableCell>
+                                <TableCell>{row.patientID}</TableCell>
+                                <TableCell>{row.request}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.department}</TableCell>
+                                <TableCell>{row.department}</TableCell>
+                                <TableCell>{row.status}</TableCell>
 
-                            </tr>
+                            </TableRow>
 
                         </>
                     );
 
                 })}
                 </tbody>
-            </table>
+            </Table>
         </>
     )
 }

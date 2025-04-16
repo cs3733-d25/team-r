@@ -3,7 +3,11 @@ import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 
-export function EditMap() {
+interface EditMapProps {
+    status?: string;
+}
+
+export function EditMap(EditMapProps: EditMapProps) {
     return (
         <div className="flex flex-col h-screen">
             <div className="sticky top-0 z-30">
