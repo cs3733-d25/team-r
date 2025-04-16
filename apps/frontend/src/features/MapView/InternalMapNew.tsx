@@ -76,7 +76,35 @@ export function InternalMapNew() {
                                         <SelectItem key="20-urgentcare" value="20-urgentcare">Urgent Care Center</SelectItem>
                                         <SelectItem key="20-orthopaedics" value="20-orthopaedics">Orthopaedics</SelectItem>
                                         <SelectItem key="20-hand-upper-extremity" value="20-hand-upper-extremity">Hand and Upper Extremity</SelectItem>
-
+                                        <SelectItem key="20-arthroplasty" value="20-arthroplasty">Arthroplasty</SelectItem>
+                                        <SelectItem key="20-pediatric-trauma" value="20-pediatric-trauma">Pediatric Trauma</SelectItem>
+                                        <SelectItem key="20-physiatry-2" value="20-physiatry-2">Physiatry (2nd Floor)</SelectItem>
+                                        <SelectItem key="20-podiatry" value="20-podiatry">Podiatry</SelectItem>
+                                        <SelectItem key="20-rehab-services" value="20-rehab-services">Rehabilitation Services</SelectItem>
+                                        <SelectItem key="20-cardiac-rehab" value="20-cardiac-rehab">Cardiac Rehab</SelectItem>
+                                        <SelectItem key="20-occupational-therapy" value="20-occupation-therapy">Occupational Therapy</SelectItem>
+                                        <SelectItem key="20-hand-therapy" value="20-hand-therapy">Hand Therapy</SelectItem>
+                                        <SelectItem key="20-upper-extremity" value="20-upper-extremity">Upper Extremity</SelectItem>
+                                        <SelectItem key="20-physical-therapy" value="20-physical-therapy">Physical Therapy</SelectItem>
+                                        <SelectItem key="20-speech-language" value="20-speech-language">Speech - Language</SelectItem>
+                                        <SelectItem key="20-clinical-lab" value="20-clinical-lab">Clinical Lab</SelectItem>
+                                        <SelectItem key="20-surgi-care" value="20-surgi-care">Surgi-Care</SelectItem>
+                                        <SelectItem key="20-surgical-specialities" value="20-surgical-specialties">Surgical Specialties</SelectItem>
+                                        <SelectItem key="20-audiology" value="20-audiology">Audiology</SelectItem>
+                                        <SelectItem key="20-ent" value="20-ent">ENT</SelectItem>
+                                        <SelectItem key="20-general-gastro-surgery" value="20-general-gastro-surgery">General and Gastrointestinal Surgery</SelectItem>
+                                        <SelectItem key="20-plastic-surgery" value="20-plastic-surgery">Plastic Surgery</SelectItem>
+                                        <SelectItem key="20-thoracic-surgery" value="20-thoracic-surgery">Thoracic Surgery</SelectItem>
+                                        <SelectItem key="20-vascular-surgery" value="20-vascular-surgery">Vascular Surgery</SelectItem>
+                                        <SelectItem key="20-weight-wellness" value="20-weight-wellness">Weight Management and Wellness</SelectItem>
+                                        <SelectItem key="20-sports" value="20-sports">Sports</SelectItem>
+                                        <SelectItem key="20-xray-suite" value="20-xray-suite">X-Ray Suite</SelectItem>
+                                        <SelectItem key="20-electromyography" value="20-electromyography">Electromyography</SelectItem>
+                                        <SelectItem key="20-nutrition" value="20-nutrition">Nutrition</SelectItem>
+                                        <SelectItem key="20-pain-medicine" value="20-pain-medicine">Pain Medicine</SelectItem>
+                                        <SelectItem key="20-physiatry-4" value="20-physiatry-4">Physiatry (4th Floor)</SelectItem>
+                                        <SelectItem key="20-pulmonary-testing" value="20-pulmonary-testing">Pulmonary Function Testing</SelectItem>
+                                        <SelectItem key="20-day-surgery" value="20-day-surgery">Day Surgery Center</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
