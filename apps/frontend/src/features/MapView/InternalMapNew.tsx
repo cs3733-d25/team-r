@@ -14,6 +14,8 @@ import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {fetchParkingLots} from '@/features/MapView/mapService';
+import Dropdown from "@/components/Dropdowns/Department.tsx";
+import {Department, RequestPriority} from "@/features/Requests/RequestEnums.tsx";
 
 interface Node {
     nodeID: string;
@@ -30,6 +32,8 @@ interface CustomWindow extends Window {
     goToFloor?: (floor: number) => void;
 }
 
+
+
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +42,23 @@ export function InternalMapNew() {
     const selectedLocation = location.state?.selectedLocation || '';
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
+    const [formData, setFormData] = useState({
 
+    });
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+
+            //
+        }catch{}
+    }
+    const handleDropdownChange = (name:string, value:string) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
     useEffect(() => {
         const loadParkingLots = async () => {
             try {
@@ -175,6 +195,7 @@ export function InternalMapNew() {
                             {buildingDisplayName}
                         </Label>
                     </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
                             <Select>
@@ -194,21 +215,22 @@ export function InternalMapNew() {
                                         </SelectGroup>
                                     </SelectContent>
                             </Select>
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Department" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Departments</SelectLabel>
-                                            {departments.map(dept => (
-                                                <SelectItem key={dept.key} value={dept.value}>
-                                                    {dept.label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                            </Select>
+                            <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                            {/*<Select>*/}
+                            {/*    <SelectTrigger>*/}
+                            {/*        <SelectValue placeholder="Department" />*/}
+                            {/*    </SelectTrigger>*/}
+                            {/*    <SelectContent>*/}
+                            {/*            <SelectGroup>*/}
+                            {/*                <SelectLabel>Departments</SelectLabel>*/}
+                            {/*                {departments.map(dept => (*/}
+                            {/*                    <SelectItem key={dept.key} value={dept.value}>*/}
+                            {/*                        {dept.label}*/}
+                            {/*                    </SelectItem>*/}
+                            {/*                ))}*/}
+                            {/*            </SelectGroup>*/}
+                            {/*        </SelectContent>*/}
+                            {/*</Select>*/}
                             <Button>Get Directions</Button>
                         </div>
                         <div className="flex flex-col space-y-2">
@@ -226,6 +248,7 @@ export function InternalMapNew() {
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -9,9 +9,9 @@ async function main() {
         data:[
             {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
             {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
-            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 130.02, ycoord: 592.90, longName: '', shortName: 'frontLot'},
+            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
             {nodeID: 'leftWaiting', nodeType: NodeType.other, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
-            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 587.89, ycoord: 20.00, longName: '', shortName: 'leftLot'},
+            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
             {nodeID: 'specialtyCheckIn', nodeType: NodeType.reception, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
             {nodeID: 'canopyEntranceHallway', nodeType: NodeType.hallway, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
         ],

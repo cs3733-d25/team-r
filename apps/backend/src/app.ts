@@ -15,6 +15,7 @@ import pharmacyRouter from "./routes/pharmacyreqs.ts";
 import enumRouter from "./routes/enum.ts";
 import transportRequestRouter from "./routes/transportreqs.ts";
 import deviceRequestRouter from "./routes/devicereqs.ts";
+import mapRouter from "./routes/mapData.ts";
 import { API_ROUTES } from "common/src/constants";
 
 const app: Express = express(); // Setup the backend
@@ -49,6 +50,7 @@ app.use(API_ROUTES.PHARMACY, pharmacyRouter);
 app.use(API_ROUTES.ENUM, enumRouter);
 app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
+app.use(API_ROUTES.MAP, mapRouter);
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
