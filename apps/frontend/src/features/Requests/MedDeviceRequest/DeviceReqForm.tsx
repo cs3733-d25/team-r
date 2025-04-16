@@ -163,6 +163,8 @@ export const DeviceReqForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Employee ID
                                         <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            ID must be a number.</span>
                                     </Label>
                                     <Input
                                         type="text"
