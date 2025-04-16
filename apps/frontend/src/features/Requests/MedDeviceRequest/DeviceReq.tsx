@@ -1,34 +1,34 @@
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
-import {PrescriptionForm} from "./PrescriptionForm";
-import {PrescriptionPage} from "./PrescriptionPage";
+import {DeviceReqForm} from "./DeviceReqForm";
+import {DeviceReqPage} from "./DeviceReqPage";
 
-export function Prescription() {
+export function DeviceReq() {
     return(
         <>
             <NavbarMGH />
-            <h1 className="text-2xl font-bold mb-0 place-self-center">Prescription Request System</h1>
+            <h1 className="text-2xl font-bold mb-0 place-self-center">Medical Device Request System</h1>
             <h2 className="text-xl font-bold mb-6 place-self-center">Owen Miller & Keagan Hitt</h2>
-            <Tabs defaultValue="prescriptionForm" className="items-center justify-center w-full px-50">
+            <Tabs defaultValue="deviceForm" className="items-center justify-center w-full px-50">
                 <TabsList className="flex bg-hidden rounded-t-lg relative z-10">
-                    <TabsTrigger value="prescriptionForm"
+                    <TabsTrigger value="deviceForm"
                                  className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
-                        Prescription Request</TabsTrigger>
-                    <TabsTrigger value="prescriptionPage"
+                        Medical Device Request</TabsTrigger>
+                    <TabsTrigger value="devicePage"
                                  className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
                         All Requests</TabsTrigger>
                 </TabsList>
                 <div className={"mb-6"}>
-                    <TabsContent value="prescriptionForm">
-                        <PrescriptionForm/>
+                    <TabsContent value="deviceForm">
+                        <DeviceReqForm/>
                     </TabsContent>
-                    <TabsContent value="prescriptionPage">
-                        <PrescriptionPage />
+                    <TabsContent value="devicePage">
+                        <DeviceReqPage />
                     </TabsContent>
-            </div>
+                </div>
             </Tabs>
 
         </>
     )
 }
-export default Prescription;
+export default DeviceReq;

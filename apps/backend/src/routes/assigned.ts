@@ -2,7 +2,7 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 
 const router: Router = express.Router();
-
+/*
 router.get("/", async function (req: Request, res: Response) {
   console.log("hello assigned");
 
@@ -18,6 +18,6 @@ router.get("/", async function (req: Request, res: Response) {
     console.error("Error fetching assigned employee:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
+});*/
 
 export default router;

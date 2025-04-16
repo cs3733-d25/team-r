@@ -33,9 +33,10 @@ export function NavbarMGH() {
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
                     </Button>
-                    <HoverPopoverNavLink label={"Navigate"} href={"/mapView"} items={[
-                        { label: 'Patriot Place', href: '/mapView' },
-                        { label: 'Chestnut Hill', href: '/mapView' },
+                    <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
+                        { label: 'Patriot Place', href: '/external-map' },
+                        { label: 'Chestnut Hill', href: '/external-map' },
+                        { label: 'Edit Map', href: '/edit-map' },
                     ]}/>
                     <HoverPopoverNavLink label={"Request a Service"} href={"/sanitation"} items={[
                         { label: 'Sanitation', href: '/sanitation' },
@@ -128,7 +129,7 @@ export function NavbarMGH() {
                         <a href="/directory">Directories</a>
                     </Button>
                     <Button variant="ghost" asChild>
-                        <a href="/mapView">Navigate</a>
+                        <a href="/external-map">Navigate</a>
                     </Button>
                     <Button variant="ghost" asChild>
                         <a href="/sanitation">Request a Service</a>

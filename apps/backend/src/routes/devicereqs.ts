@@ -13,7 +13,7 @@ const router: Router = express.Router();
 
 router.get("/all-requests", async function (req: Request, res: Response) {
   try {
-    const requests = await PrismaClient.pharmacyRequest.findMany({
+    const requests = await PrismaClient.deviceRequest.findMany({
       orderBy: { priority: "asc" },
     });
     console.log(requests);
@@ -25,26 +25,19 @@ router.get("/all-requests", async function (req: Request, res: Response) {
 });
 
 router.post("/", async function (req: Request, res: Response) {
-  console.log("A user entered a pharmacy request");
+  console.log("A user entered a device request");
   const request = req.body;
   // console.log(request);
   try {
-    await PrismaClient.pharmacyRequest.create({
+    await PrismaClient.deviceRequest.create({
       data: {
-        employeeName: request.employee, // connect to whatever employee has that ID number
+        deviceType: request.deviceType, // connect to whatever employee has that ID number
         priority: parseRequestPriority(request.priority),
-        department: await parseDepartment(request.department),
-        patientID: parseInt(request.patientID),
-        // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
-        drugName: request.drugName,
-        morningPillCount: parseInt(request.morningPillCount),
-        middayPillCount: parseInt(request.middayPillCount),
-        eveningPillCount: parseInt(request.eveningPillCount),
-        nightPillCount: parseInt(request.nightPillCount),
-        days: parseInt(request.days),
-        numberOfPills: parseInt(request.numberOfPills),
-        refills: parseInt(request.refills),
-        additionalInstructions: request.additionalInstructions,
+        room: request.room,
+        department: await parseDepartment(request.deparment),
+        comments: request.comment,
+        employeeName: request.employeeName,
+        employeeID: request.employeeID,
         status: await parseStatus(request.status),
         // also a timestamp of when it was submitted?
       },
