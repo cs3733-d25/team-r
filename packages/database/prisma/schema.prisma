@@ -73,6 +73,13 @@ enum RequestMedicalDevice{
   Pacemaker
 }
 
+enum RequestNonemergent{
+  Room_Maintenance
+  Food
+  Speak_to_a_doctor
+  Visitation_hours
+}
+
 enum NodeType {
   entrance
   reception
@@ -259,6 +266,9 @@ model PatientRequest {
   location         Building
   status           RequestStatus
   requestTime      DateTime        @default(now())
+  request           RequestNonemergent
+  employeeName  String
+  comment String
 }
 
 model TransportRequest {
@@ -301,5 +311,10 @@ model Locations{
 
 model Devices{
   type RequestMedicalDevice @id @unique
+  name String
+}
+
+model Nonemergencies {
+  type RequestNonemergent @id @unique
   name String
 }
