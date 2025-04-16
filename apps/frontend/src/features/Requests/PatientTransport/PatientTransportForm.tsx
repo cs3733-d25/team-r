@@ -15,7 +15,7 @@ import Dropdown from "@/components/Dropdowns/Department.tsx";
 // Simple interface for submitted request
 interface SubmittedTransport {
     patientID: string;  //PK
-    employeeID: string;
+    //employeeID: string;
     employeeName: string;
     currentBuilding : Buildings | string;  //FK
     desiredBuilding : Buildings | string;
@@ -32,7 +32,7 @@ interface SubmittedTransport {
 const TransportationRequestForm = () => {
     const [formData, setFormData] = useState({
         patientID: '',
-        employeeID: '',
+        //employeeID: '',
         employeeName: '',
         currentBuilding :"",
         desiredBuilding : "",
@@ -82,7 +82,7 @@ const TransportationRequestForm = () => {
                 setFormData({
                     patientID: '',
                     employeeName:'',
-                    employeeID: '',
+                    //employeeID: '',
                     currentBuilding :"",
                     desiredBuilding : "",
                     comments: '',
@@ -208,8 +208,8 @@ const TransportationRequestForm = () => {
                                     </Label>
                                     <Input
                                         type="text"
-                                        name="employeeID"
-                                        value={formData.employeeID}
+                                        name="employeeName"
+                                        value={formData.employeeName}
                                         onChange={handleChange}
                                         placeholder="Enter your name"
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
@@ -292,14 +292,14 @@ const TransportationRequestForm = () => {
                                             Current Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                        <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
+                                        <Dropdown tableName={"locations"} fieldName={"currentBuilding"} onChange={handleDropdownChange}></Dropdown>
                                     </div>
                                     <div>
                                         <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                         <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
+                                         <Dropdown tableName={"locations"} fieldName={"desiredBuilding"} onChange={handleDropdownChange}></Dropdown>
 
 
                                     </div>

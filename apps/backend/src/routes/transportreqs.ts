@@ -8,7 +8,7 @@ import {
   Building,
 } from "../../../../packages/database";
 import RequestStatus = $Enums.RequestStatus;
-import {parseStatus, parseBuilding} from "./enum.ts"; //here?
+import { parseStatus, parseBuilding } from "./enum.ts"; //here?
 
 const router: Router = express.Router();
 
@@ -35,15 +35,15 @@ function parseDepartment(value: string): Department {
 }
 
 //generic enum parse
-function parseEnum<T extends { [key: string]: string | number }>(
-  enumType: T,
-  value: string,
-): T[keyof T] {
-  if (value in enumType) {
-    return enumType[value as keyof T];
-  }
-  throw new Error(`Invalid enum value: ${value}`);
-}
+// function parseEnum<T extends { [key: string]: string | number }>(
+//   enumType: T,
+//   value: string,
+// ): T[keyof T] {
+//   if (value in enumType) {
+//     return enumType[value as keyof T];
+//   }
+//   throw new Error(`Invalid enum value: ${value}`);
+// }
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a transportation request");
@@ -58,7 +58,7 @@ router.post("/", async function (req: Request, res: Response) {
     const createRequest = await PrismaClient.transportRequest.create({
       data: {
         employeeName: request.employeeName,
-        employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
+        //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
         patient: { connect: { id: parseInt(request.patientID, 10) } },
 
         transportationType: request.transportationType,
@@ -68,7 +68,7 @@ router.post("/", async function (req: Request, res: Response) {
         priority: parseRequestPriority(request.priority),
         department: parseDepartment(request.department),
         comments: request.comments,
-        status: await parseStatus(request.status),//
+        status: await parseStatus(request.status), //
         //user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });
