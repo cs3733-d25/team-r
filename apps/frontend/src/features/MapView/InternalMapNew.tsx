@@ -13,19 +13,16 @@ import {
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import {useEffect, useState} from 'react';
 
-import {fetchParkingLots, fetchDepartments} from "@/features/MapView/mapService.ts";
+import {fetchParkingLots} from "@/features/MapView/mapService.ts";
 import type {Node} from '../../../../backend/src/routes/mapData.ts';
 
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
-    const [departments, setDepartments] = useState<Node[]>([]);
 
     useEffect(() => {
         const loadData = async () => {
             const lots = await fetchParkingLots();
-            const depts = await fetchDepartments();
             setParkingLots(lots);
-            setDepartments(depts);
         };
         loadData();
     }, []);
