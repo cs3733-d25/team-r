@@ -5,7 +5,7 @@ import {useState} from 'react';
 import {Label} from '@/components/ui/label.tsx';
 import {Input} from '@/components/ui/input.tsx';
 import {Button} from '@/components/ui/button.tsx';
-import {useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     Select,
     SelectContent,
@@ -27,6 +27,7 @@ interface ExternalMapProps {
 /**
  * ExternalMap component
  * @param initialLocation - the location to be pre-selected
+ * @param status
  * @constructor
  */
 export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapProps) {
@@ -37,11 +38,19 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const [startingLocation, setStartingLocation] = useState<string>('');
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
+    const location = useLocation();
+    const status = location.state?.status;
+
+
+    console.log("Login status:", status); // Debug log
+
 
     return (
         // <p>Hello world</p>
         <div className={'flex flex-col h-screen overflow-hidden'}>
-            <NavbarMGH />
+            {status == 'logged-in' ? (
+                <NavbarMGH />
+            ) : (<NavbarMGH page={"home"} />)}
             <div className={'flex-1 w-full relative'}>
                 <APIProvider apiKey={apiKey} libraries={['places']}>
                     <Map

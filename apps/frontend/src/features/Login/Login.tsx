@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {Label} from "@/components/ui/label.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 
 function Login() {
@@ -33,7 +35,12 @@ async function handleLogin(){
         console.log("userType: ", response.data.userType);
         if(response.data.message == "User verified"){
             console.log("yippee user is verified");
-            navigate('/external-map');
+            navigate('/external-map', {
+                state: {
+                    status: 'logged-in',
+                    // Add any other props you want to pass
+                }
+            })
         }
         else {
             setIncorrectLogin(response.data.message);
@@ -70,9 +77,9 @@ async function handleLogin(){
                 <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">
                     <div className={'flex items-center justify-center p-2'}>
                         <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
-                        <div className={'text-xl font-bold font-sans'}>
-                            <h2>Mass General Brigham</h2>
-                        </div>
+                        <Label className={"text-2xl font-bold"}>
+                            Mass General Brigham
+                        </Label>
                     </div>
                     <form className="space-y-4">
                         <div>
@@ -104,14 +111,14 @@ async function handleLogin(){
                             <input id="checkbox" type="checkbox" name="remember" />
                         </div>
                         <div className="flex justify-between">
-                            <button
-                                type="button"
-                                className="px-4 py-2 bg-mgb-light-blue-600 text-white rounded hover:bg-mgb-light-blue-700 active:bg-mgb-light-blue-800 text-xs"
-                                onClick={(e) => handleGuestLogin(e)}
-                            >
-                                Continue as Guest
-                            </button>
-                            <button
+                            {/*<button*/}
+                            {/*    type="button"*/}
+                            {/*    className="px-4 py-2 bg-mgb-light-blue-600 text-white rounded hover:bg-mgb-light-blue-700 active:bg-mgb-light-blue-800 text-xs"*/}
+                            {/*    onClick={(e) => handleGuestLogin(e)}*/}
+                            {/*>*/}
+                            {/*    Continue as Guest*/}
+                            {/*</button>*/}
+                            <Button
                                 type="submit"
                                 onClick={(e) => {
                                 e.preventDefault();
@@ -120,7 +127,7 @@ async function handleLogin(){
                                 className="px-4 py-2 bg-primary text-white rounded hover:bg-foreground"
                             >
                                 Login
-                            </button>
+                            </Button>
                         </div>
                     </form>
                     {incorrectLogin && ( //for adding popup if the user logs in with the wrong username and/or password

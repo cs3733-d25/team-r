@@ -110,7 +110,7 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Only display login button in logged-out home page */}
                 {(props.page == "home") && (
                     <div className="ml-auto flex items-center gap-2">
-                        <Button variant="ghost" asChild className={"bg-accent hover:bg-chart-1 hover:text-input"}>
+                        <Button variant="ghost">
                             <a href="/login">Login</a>
                         </Button>
                     </div>
