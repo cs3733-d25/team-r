@@ -234,20 +234,19 @@ export const DeviceReqForm = () => {
                                     />
                                 </div>
 
-                                {/* Additional Instructions */}
+                                {/* Comments */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Additional Instructions
+                                        Comments
                                         <span className="text-xs text-secondary-foreground block">
-                                        Include any additional instructions necessary to take the
-                                        prescription.
+                                        Enter any additional comments.
                                     </span>
                                     </Label>
                                     <Textarea
-                                        name="additionalInstructions"
+                                        name="comment"
                                         value={formData.comment}
                                         onChange={handleChange2}
-                                        placeholder="Include any additional instructions necessary to take the prescription."
+                                        placeholder="Enter any additional comments."
                                         rows={4}
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     />
@@ -302,6 +301,10 @@ export const DeviceReqForm = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
+                                    <span className="font-semibold">Submitted by:</span>{' '}
+                                    {submittedDevice.employee}
+                                </div>
+                                <div>
                                     <span className="font-semibold">Device:</span>{' '}
                                     {submittedDevice.device}
                                 </div>
@@ -320,6 +323,14 @@ export const DeviceReqForm = () => {
                                 <div>
                                     <span className="font-semibold">Comment:</span>{' '}
                                     {submittedDevice.comment}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Employee ID:</span>{' '}
+                                    {submittedDevice.employeeID}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Status:</span>{' '}
+                                    {submittedDevice.status}
                                 </div>
                             </div>
                             <div className="mt-3 text-sm text-gray-600">
