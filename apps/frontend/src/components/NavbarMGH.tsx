@@ -16,7 +16,7 @@ export function NavbarMGH() {
             <div className="flex h-16 items-center px-4 md:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href="/" className="flex items-center">
+                    <a href="/home" className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
