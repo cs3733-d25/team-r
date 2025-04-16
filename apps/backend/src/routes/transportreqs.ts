@@ -8,7 +8,7 @@ import {
   Building,
 } from "../../../../packages/database";
 import RequestStatus = $Enums.RequestStatus;
-import {parseStatus} from "./enum.ts"; //here?
+import {parseStatus, parseBuilding} from "./enum.ts"; //here?
 
 const router: Router = express.Router();
 
@@ -62,8 +62,8 @@ router.post("/", async function (req: Request, res: Response) {
         patient: { connect: { id: parseInt(request.patientID, 10) } },
 
         transportationType: request.transportationType,
-        currentBuilding: parseEnum(Building, request.currentBuilding),
-        desiredBuilding: parseEnum(Building, request.desiredBuilding),
+        currentBuilding: await parseBuilding(request.currentBuilding),
+        desiredBuilding: await parseBuilding(request.desiredBuilding),
 
         priority: parseRequestPriority(request.priority),
         department: parseDepartment(request.department),
