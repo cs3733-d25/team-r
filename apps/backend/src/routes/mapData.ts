@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Router } from "express";
 import { Pool } from "pg";
 
 export interface Node {
@@ -12,10 +12,10 @@ export interface Node {
   shortName: string;
 }
 
-const router = express.Router();
+const router: Router = express.Router();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.POSTGRES_URL,
 });
 
 // get parking lots
@@ -33,7 +33,7 @@ router.get("/parking-lots", async (req, res) => {
   }
 });
 
-// get departments
+/*// get departments
 router.get("/departments", async (req, res) => {
   try {
     const result = await pool.query(`
@@ -45,6 +45,6 @@ router.get("/departments", async (req, res) => {
     console.error(err);
     res.status(500).send("Server error");
   }
-});
+});*/
 
 export default router;

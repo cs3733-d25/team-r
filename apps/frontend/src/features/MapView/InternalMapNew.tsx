@@ -54,6 +54,7 @@ export function InternalMapNew() {
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Parking Lots</SelectLabel>
+                                        // TODO: filter choices based on campus
                                         {parkingLots.map((lot) => (
                                             <SelectItem key={lot.nodeID} value={lot.shortName}>
                                                 {lot.shortName}
@@ -69,11 +70,16 @@ export function InternalMapNew() {
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Departments</SelectLabel>
-                                        {departments.map((dept) => (
-                                            <SelectItem key={dept.nodeID} value={dept.shortName}>
-                                                {dept.shortName}
-                                            </SelectItem>
-                                        ))}
+                                        // TODO: filter choices based on campus
+                                        <SelectItem key="20-blood-draw" value="20-blood-draw">Blood Draw/Phlebotomy</SelectItem>
+                                        <SelectItem key="20-pharmacy" value="20-pharmacy">Pharmacy</SelectItem>
+                                        <SelectItem key="20-radiology" value="20-radiology">Radiology</SelectItem>
+                                        <SelectItem key="20-cardio-services" value="20-cardio-services">Cardiovascular Services</SelectItem>
+                                        <SelectItem key="20-urology" value="20-urology">Urology</SelectItem>
+                                        <SelectItem key="20-urgentcare" value="20-urgentcare">Urgent Care Center</SelectItem>
+                                        <SelectItem key="20-orthopaedics" value="20-orthopaedics">Orthopaedics</SelectItem>
+                                        <SelectItem key="20-hand-upper-extremity" value="20-hand-upper-extremity">Hand and Upper Extremity</SelectItem>
+
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>

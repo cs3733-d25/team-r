@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { Node } from '../../../../backend/src/routes/mapData.ts';
 
-export const fetchParkingLots = async (): Promise<Node[]> => {
-    const res = await axios.get('/api/locations/parking-lots');
+export const fetchParkingLots = async () => {
+    const res = await axios.get('/api/mapdata/parking-lots');
     return res.data;
 };
 
-export const fetchDepartments = async (): Promise<Node[]> => {
-    const res = await axios.get('/api/locations/departments');
+export const fetchDepartments = async () => {
+    const res = await axios.get('/api/mapdata/departments');
     return res.data;
 };
