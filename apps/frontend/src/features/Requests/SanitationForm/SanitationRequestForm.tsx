@@ -3,12 +3,18 @@ import axios from 'axios';
 import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
 import {Department, RequestPriority} from "../RequestEnums.tsx";
+import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
+import {Label} from "@/components/ui/label.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {Textarea} from "@/components/ui/textarea.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import Dropdown from "@/components/Dropdowns/Department.tsx";
 
 // Simple interface for submitted request
 interface SubmittedRequest {
   sanitationType: string;
-  priority: RequestPriority;
-  department: Department;
+  priority: RequestPriority |string;
+  department: Department |string;
   room: string;
   comments: string;
   timestamp: string;
@@ -18,13 +24,18 @@ interface SubmittedRequest {
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     sanitationType: '',
-    priority: RequestPriority.medium,
-    department: Department.AMBULATORY_URGENCARE,
+    priority: "",
+    department: "",
     room: '',
     comments: '',
     userID: 8
   });
-
+  const handleDropdownChange = (name:string, value:string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
   const [submitStatus, setSubmitStatus] = useState<{
     message: string;
     isError: boolean;
@@ -38,17 +49,17 @@ const SanitationRequestForm = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post('/api/sanitation', {
+      const response = await axios.post('/api/sanitation/', {
         ...formData,
         priority: formData.priority.toString()
       });
 
       if (response.status === 200) {
         // Store the request data for the confirmation card
-        setSubmittedRequest({
-          ...formData,
-          timestamp: new Date().toLocaleString()
-        });
+          setSubmittedRequest({
+            ...formData,
+            timestamp: new Date().toLocaleString()
+          });
 
         setSubmitStatus({
           message: 'Sanitation request submitted successfully!',
@@ -58,8 +69,8 @@ const SanitationRequestForm = () => {
         // Reset form
         setFormData({
           sanitationType: '',
-          priority: RequestPriority.medium,
-          department: Department.AMBULATORY_URGENCARE,
+          priority: "",
+          department: "",
           room: '',
           comments: '',
           userID: 8
@@ -84,21 +95,21 @@ const SanitationRequestForm = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="p-6 max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Sanitation Request System</h1>
+      <div className="max-w-7xl mx-auto">
 
         {/* Status Message */}
         {submitStatus && submitStatus.isError && (
-          <div className="mb-4 p-4 rounded-md bg-red-100 text-red-700 border border-red-700">
-            {submitStatus.message}
-          </div>
+            <Alert className="mb-4 p-4 rounded-md bg-accent border border-accent-foreground">
+              <AlertDescription className={'text-accent-foreground'}>
+                {submitStatus.message}
+              </AlertDescription>
+            </Alert>
         )}
 
         {/* Confirmation Card */}
         {submittedRequest && !submitStatus?.isError && (
-          <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
-            <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
+          <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+            <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
@@ -138,40 +149,33 @@ const SanitationRequestForm = () => {
             </div>
           </div>
         )}
-        <Link
-            key={'Sanitation Request Page'}
-            to={'/sanitationpage'}
-            className={"px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"}
-        >
-          See All Requests
-        </Link>
-        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-          <div className="p-6">
+        <div className=" rounded-lg mt-3">
+          <div className="p-5">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Sanitation Type */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
                     Sanitation Type
                     <span className="text-red-500">*</span>
                     <span className="text-xs text-gray-500 block">
                       e.g., Spill cleanup, Biohazard, General cleaning
                     </span>
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     type="text"
                     name="sanitationType"
                     value={formData.sanitationType}
                     onChange={handleChange}
                     placeholder="Enter sanitation type"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
                     required
                   />
                 </div>
 
                 {/* Priority */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
                     Priority Level
                     <span className="text-xs text-gray-500 block">
                       URGENT: Immediate attention required
@@ -182,91 +186,68 @@ const SanitationRequestForm = () => {
                       <br />
                       LOW: Within 24 hours
                     </span>
-                  </label>
-                  <select
-                    name="priority"
-                    value={formData.priority}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                  >
-                    {Object.values(RequestPriority).map(priority => (
-                      <option key={priority} value={priority}>
-                        {priority}
-                      </option>
-                    ))}
-                  </select>
+                  </Label>
+                  <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                 </div>
 
                 {/* Department */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
                     Department
                     <span className="text-red-500">*</span>
                     <span className="text-xs text-gray-500 block">
                       Select the department requiring sanitation
                     </span>
-                  </label>
-                  <select
-                    name="department"
-                    value={formData.department}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                  >
-                    {Object.values(Department).map(dept => (
-                      <option key={dept} value={dept}>
-                        {dept}
-                      </option>
-                    ))}
-                  </select>
+                  </Label>
+                  <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
                 </div>
 
                 {/* Room Number */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
                     Room Number
                     <span className="text-red-500">*</span>
                     <span className="text-xs text-gray-500 block">
                       Format: Floor-Room (e.g., 3-124, L1-001)
                     </span>
-                  </label>
-                  <input
+                  </Label>
+                  <Input
                     type="text"
                     name="room"
                     value={formData.room}
                     onChange={handleChange}
                     placeholder="e.g., 3-124"
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
                     required
                   />
                 </div>
               </div>
-
               {/* Comments */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <Label className="block text-sm font-semibold text-gray-700 mb-2">
                   Additional Comments
                   <span className="text-xs text-gray-500 block">
                     Include any specific instructions or details about the sanitation request
                   </span>
-                </label>
-                <textarea
+                </Label>
+                <Textarea
                   name="comments"
                   value={formData.comments}
                   onChange={handleChange}
                   placeholder="e.g., Liquid spill near entrance, Biohazard materials present, Special cleaning instructions..."
                   rows={4}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                  className="w-full px-4 py-2 rounded-md border border-border bg-input"
                 />
               </div>
 
               {/* Submit Button */}
               <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
+                <Button
+                    type="submit"
+                    variant="default"
                 >
                   Submit Request
-                </button>
+                </Button>
               </div>
             </form>
           </div>
