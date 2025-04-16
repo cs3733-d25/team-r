@@ -51,6 +51,7 @@ export function CSVPage() {
 
                 console.log("CSV file is sent off! :)", sendOff);
                 displayTable();
+                setFile(null);
             } catch (error) {
                 console.error("CSV File Sendoff didn't work :(")
             }
@@ -58,6 +59,21 @@ export function CSVPage() {
         else{
             alert("Please Select a CSV file");
         }
+    }
+    const handleConfirmation = (e:React.ChangeEvent<HTMLInputElement>) => {
+        return(
+        <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
+            <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/>
+                </svg>
+                Import Confirmation
+            </div>
+            <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">Your CSV File was Imported</h3>
+            </div>
+        </div>)
     }
     const handleExport = async()=> {
         {
@@ -81,10 +97,10 @@ export function CSVPage() {
         }
     }
     return (
-        <div className={'flex-col'} >
+        <div >
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br />
-                <div className={'absolute left-1/4 mr-10'}>
+                <div>
                     <Label htmlFor="ImportCSV">Import CSV File:  </Label>
                     <Input
                         type="file"
@@ -93,10 +109,10 @@ export function CSVPage() {
                         onChange={handleFileChange}
                     ></Input>
                 </div>
-                <div className={'flex absolute right-1/4 ml-10'}>
+                <div className={"float-right"}>
                     <Button variant = "default" id="ExportCSV" name="ExportCSV" onClick ={handleExport}>Export</Button>
                 </div>
-                <div className={'flex absolute left-1/4 pt-15 pb-20'}>
+                <div>
                     <Button variant="default" id="SaveCSV" name="SaveCSV" onClick = {handleSave}>Save</Button>
                 </div>
         </div>

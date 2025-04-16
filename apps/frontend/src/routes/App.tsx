@@ -5,7 +5,7 @@ import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
-import CSVPage from '../features/CSVFiles/CSVPage.tsx';
+import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequests.tsx";
@@ -35,7 +35,7 @@ function App() {
                 { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
-                { path: 'csv', element: <CSVPage /> },
+                { path: 'csv', element: <CSVTabPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
