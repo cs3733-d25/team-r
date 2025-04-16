@@ -108,7 +108,7 @@ model Employee {
   assignedPatients Patient[]          @relation("AssignedDoctor")
   // assignedRequests DeviceRequest[]   @relation("AssignedRequests")
   // createdRequests  DeviceRequest[]   @relation("CreatedRequests")
-  TransportRequest TransportRequest[] @relation("TransportRequest")
+
 }
 
 model Patient {
@@ -263,11 +263,11 @@ model PatientRequest {
 
 model TransportRequest {
   employeeRequestID Int      @id @default(autoincrement())
-  employeeID        Int
-  employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
+  //employeeID        Int
+  //employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
   patientID         Int
   patient           Patient  @relation("TransportRequest", fields: [patientID], references: [id])
-
+  employeeName        String
   transportationType String
   currentBuilding    Building
   desiredBuilding    Building

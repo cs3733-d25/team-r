@@ -29,7 +29,7 @@ export function TransportRequestPage() {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Employee</TableHead>
+                        <TableHead>Employee Name</TableHead>
                         <TableHead>Patient</TableHead>
                         <TableHead>Transportation Type</TableHead>
                         <TableHead >Priority</TableHead>
@@ -47,7 +47,7 @@ export function TransportRequestPage() {
                         return(
                             <>
                                 <TableRow key = {index} >
-                                    <TableCell>{row.employeeID}</TableCell>
+                                    <TableCell>{row.employeeName}</TableCell>
                                     <TableCell>{row.patientID}</TableCell>
                                     <TableCell >{row.transportationType}</TableCell>
                                     <TableCell>{row.priority}</TableCell>
