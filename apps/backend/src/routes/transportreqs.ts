@@ -34,7 +34,7 @@ function parseDepartment(value: string): Department {
 }
 
 //generic enum parse
-function parseEnum<T extends { [key: string]: string | number }> (
+function parseEnum<T extends { [key: string]: string | number }>(
   enumType: T,
   value: string,
 ): T[keyof T] {

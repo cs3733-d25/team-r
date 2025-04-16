@@ -4,54 +4,51 @@ import prismaClient from "../bin/prisma-client.ts";
 const router: Router = express.Router();
 //const prisma = new PrismaClient();
 
+//does the Breadth First Search (BFS)
+async function BFS(start: string, end: string): Promise<string[]> {
+  const visited = new Set<string>(); //visited list
+  const queue: string[][] = [[start]]; //where to go next
 
+  //const nodes = await prisma.nodes.findMany()
+  const edges = await prismaClient.edge.findMany();
 
-  //does the Breadth First Search (BFS)
-  async function BFS(start: string, end: string): Promise<string[]> {
-    const visited = new Set<string>(); //visited list
-    const queue: string[][] = [[start]]; //where to go next
+  const graph = new Map<string, Set<string>>();
 
-    //const nodes = await prisma.nodes.findMany()
-    const edges = await prismaClient.edge.findMany();
+  for (const edge of edges) {
+    if (!graph.has(edge.fromID)) graph.set(edge.fromID, new Set());
+    if (!graph.has(edge.toID)) graph.set(edge.toID, new Set());
 
-    const graph = new Map<string, Set<string>>();
+    graph.get(edge.fromID)!.add(edge.toID);
+    graph.get(edge.toID)!.add(edge.fromID);
+  }
 
-    for (const edge of edges) {
-      if (!graph.has(edge.fromID)) graph.set(edge.fromID, new Set());
-      if (!graph.has(edge.toID)) graph.set(edge.toID, new Set());
+  while (queue.length > 0) {
+    //while we have nodes to visit
+    const path = queue.shift();
+    if (!path) continue;
 
-      graph.get(edge.fromID)!.add(edge.toID);
-      graph.get(edge.toID)!.add(edge.fromID);
+    const currentID = path[path.length - 1];
+
+    if (currentID === end) {
+      //at destination
+      return path;
     }
 
-    while (queue.length > 0) {
-      //while we have nodes to visit
-      const path = queue.shift();
-      if (!path) continue;
+    if (!visited.has(currentID)) {
+      //have we been here? If not...
+      visited.add(currentID); //add to visited list
+      const neighbors = graph.get(currentID) || new Set();
 
-      const currentID = path[path.length - 1];
-
-      if (currentID === end) {
-        //at destination
-        return path;
-      }
-
-      if (!visited.has(currentID)) {
-        //have we been here? If not...
-        visited.add(currentID); //add to visited list
-        const neighbors = graph.get(currentID) || new Set();
-
-        for (const neighborId of neighbors) {
-          if (!visited.has(neighborId)) {
-            queue.push([...path, neighborId]); //add neighbors to the queue
-          }
+      for (const neighborId of neighbors) {
+        if (!visited.has(neighborId)) {
+          queue.push([...path, neighborId]); //add neighbors to the queue
         }
       }
     }
-
-    return []; // No path found
   }
 
+  return []; // No path found
+}
 
 //send data to front end
 router.post("/", async function (req: Request, res: Response) {
@@ -87,7 +84,7 @@ router.get("/full", async (req: Request, res: Response) => {
 
     res.json({
       nodes,
-      edges
+      edges,
     });
   } catch (error) {
     console.error("Failed to load full graph:", error);
@@ -96,4 +93,3 @@ router.get("/full", async (req: Request, res: Response) => {
 });
 
 export default router;
-
