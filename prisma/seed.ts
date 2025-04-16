@@ -63,13 +63,13 @@ async function main() {
     });
 
     //create user admin for iteration 1 testing
-    /*const user8 = await prisma.user.create({
+    const user8 = await prisma.user.create({
         data: {
             username: 'admin',
             password: 'admin',
             userType: UserType.EMPLOYEE
         }
-    });*/
+    });
 
 
 

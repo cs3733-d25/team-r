@@ -12,7 +12,10 @@ import {
 } from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {fetchParkingLots} from '@/features/MapView/mapService';
+import Dropdown from "@/components/Dropdowns/Department.tsx";
+import {Department, RequestPriority} from "@/features/Requests/RequestEnums.tsx";
 
 interface Node {
     nodeID: string;
@@ -25,11 +28,54 @@ interface Node {
     shortName: string;
 }
 
+interface CustomWindow extends Window {
+    goToFloor?: (floor: number) => void;
+}
+
+
+
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const buildingIdentifier = location.state?.buildingIdentifier;
+    const [currentFloor, setCurrentFloor] = useState(1);
+    const [formData, setFormData] = useState({
+
+    });
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+
+            //
+        }catch{}
+    }
+    const handleDropdownChange = (name:string, value:string) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+    useEffect(() => {
+        const loadParkingLots = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchParkingLots();
+                setParkingLots(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadParkingLots();
+    }, []);
 
     const departmentsByBuilding: Record<string, { key: string; value: string; label: string; }[]> = {
         PATRIOT_PLACE_20: [
@@ -94,7 +140,27 @@ export function InternalMapNew() {
             {key: "22-community-room", value: "22-community-room", label: "Community Room"},
             {key: "22-primary-care", value: "22-primary-care", label: "Primary Care"},
         ],
-        CHESTNUT_HILL: [],
+        // Added departments : Riley
+        CHESTNUT_HILL: [
+            {key: "cnh-allergy-immunology", value: "cnh-allergy-immunology", label: "Allergy and Clinical Immunology"},
+            {key: "cnh-backup-childcare", value: "cnh-backup-childcare", label: "Backup Child Care Center"},
+            {key: "cnh-dermatology", value: "cnh-dermatology", label: "Dermatology"},
+            {key: "cnh-physicians", value: "cnh-physicians", label: "Physicians Group"},
+            {key: "cnh-obstetrics-gynecology", value: "cnh-obstetrics-gynecology", label: "Obstetrics and Gynecology"},
+            {key: "cnh-psychiatric-specialities", value: "cnh-psychiatric-specialities", label: "Psychiatric Specialities"},
+            {key: "cnh-center-for-pain", value: "cnh-center-for-pain", label: "Center for Pain Medicine"},
+            {key: "cnh-crohns-colitis", value: "cnh-crohns-colitis", label: "Crohn's and Colitis Center"},
+            {key: "cnh-endoscopy-center", value: "cnh-endoscopy-center", label: "Endoscopy Center"},
+            {key: "cnh-womens-health-center", value: "cnh-womens-health-center", label: "Center for Women's Health"},
+            {key: "cnh-laboratory", value: "cnh-laboratory", label: "Laboratory"},
+            {key: "cnh-multi-specialty", value: "cnh-multi-specialty", label: "Multi-Specialty Clinic"},
+            {key: "cnh-integrative-health", value: "cnh-integrative-health", label: "Center for Integrative Health"},
+            {key: "cnh-financial-services", value: "cnh-financial-services", label: "Patient Financial Services"},
+            {key: "cnh-pharmacy", value: "cnh-pharmacy", label: "Pharmacy"},
+            {key: "cnh-radiology", value: "cnh-radiology", label: "Radiology"},
+            {key: "cnh-radiology-mri-ct", value: "cnh-radiology-mri-ct", label: "Radiology (MRI/CT Scan)"},
+            {key: "cnh-rehabilitation", value: "cnh-rehabilitation", label: "Rehabilitation Services"}
+        ],
     };
 
     const getBuildingFromLocation = (location: string) => {
@@ -114,7 +180,24 @@ export function InternalMapNew() {
             selectedBuilding === 'PATRIOT_PLACE_22' ? '22 Patriot Place' :
                 selectedBuilding === 'CHESTNUT_HILL' ? 'Chestnut Hill' : 'Patriot Place';
 
+    const floorConfig = {
+        PATRIOT_PLACE_20: [1, 3, 4],
+        PATRIOT_PLACE_22: [1, 3],
+        CHESTNUT_HILL: [1]
+    };
 
+    // Get floors for current building
+    const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
+
+    // Handle floor change
+    const handleFloorChange = (floor: number) => {
+        setCurrentFloor(floor);
+        // Call the global goToFloor function exposed by InternalMap
+        const customWindow = window as CustomWindow;
+        if (customWindow.goToFloor) {
+            customWindow.goToFloor(floor);
+        }
+    };
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
@@ -131,6 +214,7 @@ export function InternalMapNew() {
                             {buildingDisplayName}
                         </Label>
                     </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
                             <Select>
@@ -175,6 +259,7 @@ export function InternalMapNew() {
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
