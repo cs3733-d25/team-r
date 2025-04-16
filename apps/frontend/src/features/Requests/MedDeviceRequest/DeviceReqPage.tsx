@@ -1,17 +1,15 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 import {Table, TableHeader, TableRow, TableHead, TableCell, TableBody} from '@/components/ui/table.tsx';
 
 export function DeviceReqPage() {
     const [device, setDevice] = useState([{
         deviceID: null,
-        device: null,
+        deviceType: null,
         priority: null,
         room: null,
         department: null,
-        comment: null,
+        comments: null,
         employeeName: null,
         employeeID: null,
         status: null
@@ -57,11 +55,11 @@ export function DeviceReqPage() {
                     return (
                         <>
                             <TableRow key = {index} className = {"border-t"}>
-                                <TableCell className={"border-r border-b"}>{row.device}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.deviceType}</TableCell>
                                 <TableCell className={"border-r border-b"}>{row.priority}</TableCell>
                                 <TableCell className={"border-r border-b"}>{row.room}</TableCell>
                                 <TableCell className={"border-r border-b"}>{row.department}</TableCell>
-                                <TableCell className={"border-r border -b"}>{row.comment}</TableCell>
+                                <TableCell className={"border-r border -b"}>{row.comments}</TableCell>
                                 <TableCell className={"border-r border-b"}>{row.employeeName}</TableCell>
                                 <TableCell className={"border-r border-b"}>{row.employeeID}</TableCell>
                                 <TableCell className={"border-r border-b"}>{row.status}</TableCell>
