@@ -11,8 +11,25 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
+import {useEffect, useState} from 'react';
+
+import {fetchParkingLots, fetchDepartments} from "@/features/MapView/mapService.ts";
+import type {Node} from '../../../../backend/src/routes/mapData.ts';
 
 export function InternalMapNew() {
+    const [parkingLots, setParkingLots] = useState<Node[]>([]);
+    const [departments, setDepartments] = useState<Node[]>([]);
+
+    useEffect(() => {
+        const loadData = async () => {
+            const lots = await fetchParkingLots();
+            const depts = await fetchDepartments();
+            setParkingLots(lots);
+            setDepartments(depts);
+        };
+        loadData();
+    }, []);
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className={"sticky top-0 z-30"}>
@@ -32,42 +49,35 @@ export function InternalMapNew() {
                         <div className="flex flex-col space-y-2">
                             <Select>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Starting location" />
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Location</SelectLabel>
-                                            <SelectItem value={'dropdown test'}>
-                                                Dropdown test
-                                            </SelectItem>
-                                            <SelectItem value={'dropdown test 2'}>
-                                                Dropdown 2
-                                            </SelectItem>
-                                            <SelectItem value={'dropdown test 3'}>
-                                                Dropdown 3
-                                            </SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
+                                    <SelectValue placeholder="Parking Lot" />
                                 </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Parking Lots</SelectLabel>
+                                        {parkingLots.map((lot) => (
+                                            <SelectItem key={lot.nodeID} value={lot.shortName}>
+                                                {lot.shortName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
                             </Select>
                             <Select>
                                 <SelectTrigger>
-                                    <SelectValue placeholder="Ending location" />
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Location</SelectLabel>
-                                            <SelectItem value={'dropdown test'}>
-                                                Dropdown test
-                                            </SelectItem>
-                                            <SelectItem value={'dropdown test 2'}>
-                                                Dropdown 2
-                                            </SelectItem>
-                                            <SelectItem value={'dropdown test 3'}>
-                                                Dropdown 3
-                                            </SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
+                                    <SelectValue placeholder="Department" />
                                 </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Departments</SelectLabel>
+                                        {departments.map((dept) => (
+                                            <SelectItem key={dept.nodeID} value={dept.shortName}>
+                                                {dept.shortName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
                             </Select>
+
                             <Button>Get Directions</Button>
                         </div>
                         <div className="flex flex-col space-y-2">
