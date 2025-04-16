@@ -97,10 +97,9 @@ model Employee {
   onShift    Boolean       @default(false)
   user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients Patient[]         @relation("AssignedDoctor")
-  assignedRequests DeviceRequest[]   @relation("AssignedRequests")
-  createdRequests  DeviceRequest[]   @relation("CreatedRequests")
-  pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
+  assignedPatients Patient[]       @relation("AssignedDoctor")
+  assignedRequests DeviceRequest[] @relation("AssignedRequests")
+  createdRequests  DeviceRequest[] @relation("CreatedRequests")
 }
 
 model Patient {
@@ -197,8 +196,7 @@ model Edge {
  */
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
-  employeeID             Int
-  employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
+  employeeName           String
   priority               RequestPriority
   department             Department
   patientID              Int
@@ -212,6 +210,7 @@ model PharmacyRequest {
   numberOfPills          Int
   refills                Int
   additionalInstructions String
+  status                 RequestStatus
 }
 
 model PatientRequest {
