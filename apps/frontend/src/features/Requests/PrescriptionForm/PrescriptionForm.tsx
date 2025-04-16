@@ -1,20 +1,19 @@
 import {useState} from 'react';
 import { Department, RequestPriority } from '../RequestEnums.tsx';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import {getDepartments} from "@/features/Requests/UseStates.tsx";
+import Dropdown from "@/components/Dropdowns/Department.tsx";
+import {Textarea} from "@/components/ui/textarea.tsx";
 
 interface SubmittedPrescription {
     employee: string;
     employeeID: string;
     patientID: string;
-    priority: RequestPriority;
-    department: Department;
+    priority: RequestPriority | string;
+    department: Department | string;
     numberOfPills: number;
     refills: number;
     morningPillCount: number;
@@ -24,6 +23,7 @@ interface SubmittedPrescription {
     days: number;
     additionalInstructions: string;
     drugName: string;
+    status: string;
     timestamp: string;
 }
 
@@ -43,6 +43,7 @@ export const PrescriptionForm = () => {
         days: 0,
         additionalInstructions: '',
         drugName: '',
+        status: ''
     });
 
     const [submitStatus, setSubmitStatus] = useState<{
@@ -90,6 +91,7 @@ export const PrescriptionForm = () => {
                     days: 0,
                     additionalInstructions: '',
                     drugName: '',
+                    status: ''
                 });
             }
         } catch (error) {
@@ -101,36 +103,33 @@ export const PrescriptionForm = () => {
         }
     };
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
+    const handleDropdownChange = (name:string, value:string) => {
+        setFormData(prev => ({
             ...prev,
-            [name]: value,
+            [name]: value
         }));
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
 
+    const handleChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
     return (
         <>
-            <NavbarMGH />
-            <div className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-0">Prescription Request System</h1>
-                <h2 className="text-xl font-bold mb-6">Owen Miller & Keagan Hitt</h2>
-                <Link
-                    key={'Prescription Request Page'}
-                    to={'/prescriptionpage'}
-                    className={
-                        'px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition duration-200'
-                    }
-                >
-                    See All Requests
-                </Link>
-                <br />
-                <br />
-                <div className="bg-secondary rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground">
+            <div className="max-w-7xl mx-auto">
+                <div className="bg-white rounded-b-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -156,6 +155,8 @@ export const PrescriptionForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Employee ID
                                         <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            ID must be a number.</span>
                                     </Label>
                                     <Input
                                         type="text"
@@ -173,6 +174,8 @@ export const PrescriptionForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Patient ID
                                         <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            ID must be a number.</span>
                                     </Label>
                                     <Input
                                         type="text"
@@ -189,6 +192,7 @@ export const PrescriptionForm = () => {
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Priority Level
+                                        <span className="text-accent">*</span>
                                         <span className="text-xs text-secondary-foreground block">
                                             EMERGENCY: Immediate attention required
                                             <br />
@@ -199,18 +203,7 @@ export const PrescriptionForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <select
-                                        name="priority"
-                                        value={formData.priority}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
-                                    >
-                                        {Object.values(RequestPriority).map((priority) => (
-                                            <option key={priority} value={priority}>
-                                                {priority}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Department */}
@@ -222,14 +215,16 @@ export const PrescriptionForm = () => {
                                             Select the department making the prescription request.
                                         </span>
                                     </Label>
-                                    <select
-                                        name="department"
-                                        value={formData.department}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
-                                    >
-                                        {getDepartments()}
-                                    </select>
+                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                                </div>
+
+                                {/* Status */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-foreground mb-2">
+                                        Request Status
+                                        <span className="text-accent">*</span>
+                                    </label>
+                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Drug Name */}
@@ -363,6 +358,7 @@ export const PrescriptionForm = () => {
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
                                     Days per Week to Take Drug:
+                                    <span className="text-accent">*</span>
                                 </Label>
                                 <div className="flex flex-row justify-center">
                                     <div className="px-3 flex flex-row items-end">
@@ -461,10 +457,10 @@ export const PrescriptionForm = () => {
                                         prescription.
                                     </span>
                                 </Label>
-                                <textarea
+                                <Textarea
                                     name="additionalInstructions"
                                     value={formData.additionalInstructions}
-                                    onChange={handleChange}
+                                    onChange={handleChange2}
                                     placeholder="Include any additional instructions necessary to take the prescription."
                                     rows={4}
                                     className="w-full px-4 py-2 rounded-md border border-border bg-input"
@@ -495,7 +491,7 @@ export const PrescriptionForm = () => {
 
                 {/* Confirmation Card */}
                 {submittedPrescription && !submitStatus?.isError && (
-                    <div className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                    <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
                         <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -519,8 +515,8 @@ export const PrescriptionForm = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Drug Name:</span>{' '}
-                                    {submittedPrescription.drugName}
+                                    <span className="font-semibold">Employee Name:</span>{' '}
+                                    {submittedPrescription.employee}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Employee ID:</span>{' '}
@@ -539,6 +535,10 @@ export const PrescriptionForm = () => {
                                     {submittedPrescription.department}
                                 </div>
                                 <div>
+                                    <span className="font-semibold">Status:</span>{' '}
+                                    {submittedPrescription.status}
+                                </div>
+                                <div>
                                     <span className="font-semibold">Morning Pill Count:</span>{' '}
                                     {submittedPrescription.morningPillCount}
                                 </div>
@@ -553,6 +553,18 @@ export const PrescriptionForm = () => {
                                 <div>
                                     <span className="font-semibold">Bedtime Pill Count:</span>{' '}
                                     {submittedPrescription.nightPillCount}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Drug Name:</span>{' '}
+                                    {submittedPrescription.drugName}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Pills per Bottle:</span>{' '}
+                                    {submittedPrescription.numberOfPills}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Refills:</span>{' '}
+                                    {submittedPrescription.refills}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Days per Week:</span>{' '}

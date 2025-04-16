@@ -1,11 +1,15 @@
 
 import {useState} from "react";
-import {Department, RequestPriority, RequestStatus, Buildings} from "../RequestEnums.tsx";
+import {Department, RequestPriority, RequestStatus, Buildings, RequestNonemergent} from "../RequestEnums.tsx";
 import axios from "axios";
 import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 import Dropdown from "../../../components/Dropdowns/Department.tsx";
+import {Label} from "@/components/ui/label.tsx";
+import {Textarea} from "@/components/ui/textarea.tsx";
+import { Input } from '@/components/ui/input.tsx';
+import { Button } from '@/components/ui/button.tsx';
 
 
 interface SubmittedPatientRequest{
@@ -17,6 +21,8 @@ interface SubmittedPatientRequest{
     comment: string;
     time: string;
     status: RequestStatus | string;
+    request: RequestNonemergent | string;
+    employeeName: string;
 }
 
 export const PatientRequestForm = () => {
@@ -29,7 +35,9 @@ export const PatientRequestForm = () => {
         location: "",
         comment: "",
         time: new Date().toString(),
-        status: ''
+        status: '',
+        request: ' ',
+        employeeName: '',
 
     })
 
@@ -70,7 +78,9 @@ export const PatientRequestForm = () => {
                     location: "",
                     comment: "",
                     time: new Date().toLocaleString(),
-                    status: ''
+                    status: '',
+                    request: ' ',
+                    employeeName: ''
 
                 });
             }
@@ -91,21 +101,25 @@ export const PatientRequestForm = () => {
             [name]: value
         }));
     };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    }
+    };
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const {name, value} = e.target;
+    //     setFormData(prev => ({
+    //         ...prev,
+    //         [name]: value
+    //     }));
+    // }
 
     return (
         <>
 
         <div className="p-6 max-w-7xl mx-auto">
-
-
             {/* Status Message */}
             {submitStatus && submitStatus.isError && (
                 <div className="mb-4 p-4 rounded-md bg-red-100 text-red-700 border border-red-700">
@@ -162,14 +176,29 @@ export const PatientRequestForm = () => {
                 <div className="p-6">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
+                            {/* Employee Name */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Employee Name
+                                    <span className="text-red-500">*</span>
+                                </Label>
+                                <Input
+                                    type="text"
+                                    name="employeeName"
+                                    value={formData.employeeName}
+                                    onChange={handleChange}
+                                    placeholder="Enter Employee Name"
+                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                                    required
+                                />
+                            </div>
                             {/* Patient ID */}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Patient ID
                                     <span className="text-red-500">*</span>
-                                </label>
-                                <input
+                                </Label>
+                                <Input
                                     type="text"
                                     name="patientID"
                                     value={formData.patientID}
@@ -179,16 +208,17 @@ export const PatientRequestForm = () => {
                                     required
                                 />
                             </div>
-                            {/*status*/}
+                            {/*nonemergent request*/}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Request Status
-                                </label>
-                                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    Nonemergent Request
+                                </Label>
+                                <Dropdown tableName={"nonemergencies"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
                             </div>
+
                             {/* Priority */}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Priority Level
                                     <span className="text-xs text-gray-500 block">
                       EMERGENCY: Immediate attention required
@@ -199,46 +229,71 @@ export const PatientRequestForm = () => {
                       <br/>
                       LOW: Within 24 hours
                         </span>
-                                </label>
+                                </Label>
                                 <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
                             {/* Department */}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Department
                                     <span className="text-red-500">*</span>
                                     <span className="text-xs text-gray-500 block">
                                         Select the department making the patient request.
                                     </span>
-                                </label>
+                                </Label>
                                 <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
                             </div>
                         </div>
 
                         {/* Location */}
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                 Location
                                 <span className="text-red-500">*</span>
                                 <span className="text-xs text-gray-500 block">
                                         Select the building making the patient request.
                                     </span>
-                            </label>
+                            </Label>
                             {/*TableName - enum, fieldName - from request*/}
                             <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
+                        </div>
+                        {/*status*/}
+                        <div>
+                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                Request Status
+                            </Label>
+                            <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                        </div>
+                        {/* Additional Instructions */}
+                        <div>
+                            <Label className="block text-sm font-semibold text-foreground mb-2">
+                                Comments:
+                                <span className="text-xs text-secondary-foreground block">
+                                        Include any additional comments or instructions.
+                                    </span>
+                            </Label>
+                            <Textarea
+                                name="comment"
+                                value={formData.comment}
+                                onChange={handleChange}
+                                placeholder="Include any additional comments or instructions."
+                                rows={4}
+                                className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                            />
                         </div>
 
 
                 {/* Submit Button */}
                 <div className="flex justify-end">
-                    <button
+                    <Button
                         type="submit"
                         className="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
                     >
                         Submit Request
-                    </button>
+                    </Button>
                 </div>
+
             </form>
         </div>
         </div>

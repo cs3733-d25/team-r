@@ -1,17 +1,20 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {Table, TableHeader, TableRow, TableHead, TableCell, TableBody} from '@/components/ui/table.tsx';
 
 export function DeviceReqPage() {
-    const [prescription, setPrescription] = useState([{
+    const [device, setDevice] = useState([{
         deviceID: null,
-        device: null,
+        deviceType: null,
         priority: null,
         room: null,
         department: null,
-        comment: null
+        comments: null,
+        employeeName: null,
+        employeeID: null,
+        status: null
     }]);
+
     function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
@@ -21,9 +24,9 @@ export function DeviceReqPage() {
 
     async function retrieveFromDatabase() {
         try {
-            const response = await axios.get("/api/device/")
+            const response = await axios.get("api/servicereq/")
             console.log("response from / get", response.data)
-            setPrescription(response.data);
+            setDevice(response.data);
             console.log(response.data);
         }
         catch(error){
@@ -32,44 +35,41 @@ export function DeviceReqPage() {
     }
 
     return (
-        <>
-            <NavbarMGH />
-            <h1 className = {"bold text-3xl text-center pb-2"}>Device Requests</h1>
-            <Link
-                key={'Device Form Page'}
-                to={'/devicerequest'}
-                className={"px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-200 ml-10"}
-            >
-                Back
-            </Link>
-            <table className = {"mx-auto w-200"}>
-                <thead className = {"border-b"}>
-                <tr className={'text-lg border-b'}>
-                    <th className={"pl-5"}>Device</th>
-                    <th className={"pl-5"}>Priority</th>
-                    <th className={"pl-5"}>Room</th>
-                    <th className={"pl-5"}>Department</th>
-                    <th className={"pl-5"}>Comments</th>
-                </tr>
-                </thead>
-                <tbody className = {"text-center"}>
-                {prescription.map((row,index) =>
-                {
-                    return(
+        <div className={"bg-white"}>
+            <h1 className = {"bold text-3xl font-trade text-center pb-2"}>Device Requests</h1>
+            <Table className = {"mx-auto w-200"}>
+                <TableHeader className = {"border-b"}>
+                <TableRow className={'text-lg border-b'}>
+                    <TableHead className={"pl-5"}>Device</TableHead>
+                    <TableHead className={"pl-5"}>Priority</TableHead>
+                    <TableHead className={"pl-5"}>Room</TableHead>
+                    <TableHead className={"pl-5"}>Department</TableHead>
+                    <TableHead className={"pl-5"}>Comments</TableHead>
+                    <TableHead className={"pl-5"}>Employee Name</TableHead>
+                    <TableHead className={"pl-5"}>Employee ID</TableHead>
+                    <TableHead className={"pl-5"}>Status</TableHead>
+                </TableRow>
+                </TableHeader>
+                <TableBody className = {"text-center"}>
+                {device.map((row,index) => {
+                    return (
                         <>
-                            <tr key = {index} className = { "border-t"}>
-                                <td className={"border-r border-b"}>{row.device}</td>
-                                <td className={"border-r border-b"}>{row.priority}</td>
-                                <td className={"border-r border-b"}>{row.room}</td>
-                                <td className={"border-r border-b"}>{row.department}</td>
-                                <td className={"border-r border -b"}>{row.comment}</td>
-                            </tr>
+                            <TableRow key = {index} className = {"border-t"}>
+                                <TableCell className={"border-r border-b"}>{row.deviceType}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.priority}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.room}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.department}</TableCell>
+                                <TableCell className={"border-r border -b"}>{row.comments}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.employeeName}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.employeeID}</TableCell>
+                                <TableCell className={"border-r border-b"}>{row.status}</TableCell>
+                            </TableRow>
 
                         </>
                     );
                 })}
-                </tbody>
-            </table>
-        </>
+                </TableBody>
+            </Table>
+        </div>
     )
 }

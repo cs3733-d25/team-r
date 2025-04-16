@@ -1,0 +1,14 @@
+.leaflet-container {
+    position: absolute !important;
+    height: 100% !important;
+    width: 100% !important;
+    z-index: 0;
+}
+
+.map-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    touch-action: none;
+}

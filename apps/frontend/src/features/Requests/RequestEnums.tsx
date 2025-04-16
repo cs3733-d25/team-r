@@ -28,6 +28,20 @@ export enum Buildings {
     CHESTNUT_HILL = "CHESTNUT_HILL",
 
 }
+export enum RequestMedicalDevice{
+    XRay = "XRay",
+    Defibrillator = "Defibrillator",
+    EKG_Machine = 'EKG_Machine',
+    Syringe = 'Syringe',
+    Pacemaker = 'pacemaker'
+}
+
+export enum RequestNonemergent {
+    Room_Maintenance = 'Room maintenance',
+    Food = 'Food',
+    Speak_to_a_doctor = 'Speak_to_a_doctor',
+    Visitation_hours = 'Visitation_hours',
+}
 
 interface SubmittedPrescription {
     employeeID: string;

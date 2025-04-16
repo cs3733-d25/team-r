@@ -65,6 +65,21 @@ enum Building {
   CHESTNUT_HILL
 }
 
+enum RequestMedicalDevice{
+  XRay
+  Defibrillator
+  EKG_Machine
+  Syringe
+  Pacemaker
+}
+
+enum RequestNonemergent{
+  Room_Maintenance
+  Food
+  Speak_to_a_doctor
+  Visitation_hours
+}
+
 enum NodeType {
   entrance
   reception
@@ -83,9 +98,9 @@ model User {
   userType  UserType @default(PATIENT)
   updatedAt DateTime @default(now())
 
-  employee           Employee?
-  patient            Patient?
-  sanitationRequests SanitationRequest[] @relation("sanitationRequests")
+  employee Employee?
+  patient  Patient?
+  // sanitationRequests SanitationRequest[] @relation("sanitationRequests")
 }
 
 model Employee {
@@ -97,29 +112,26 @@ model Employee {
   onShift    Boolean       @default(false)
   user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients Patient[]         @relation("AssignedDoctor")
-  assignedRequests DeviceRequest[]   @relation("AssignedRequests")
-  createdRequests  DeviceRequest[]   @relation("CreatedRequests")
-  pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
-  TransportRequest TransportRequest[] @relation("TransportRequest")
+  assignedPatients Patient[]          @relation("AssignedDoctor")
+  // assignedRequests DeviceRequest[]   @relation("AssignedRequests")
+  // createdRequests  DeviceRequest[]   @relation("CreatedRequests")
+
 }
 
 model Patient {
-  id               Int               @id
+  id               Int                @id
   firstName        String
   lastName         String
   dateOfBirth      DateTime
   gender           Gender?
   phone            String?
-  assignedDoctor   Employee?         @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+  assignedDoctor   Employee?          @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
   assignedDoctorId Int?
-  user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
-  pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
-  patientRequests  PatientRequest[]  @relation("PatientRequests")
+  user             User               @relation(fields: [id], references: [id], onDelete: Cascade)
+  // pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
+  patientRequests  PatientRequest[]   @relation("PatientRequests")
   TransportRequest TransportRequest[] @relation("TransportRequest")
 }
-
-
 
 model MedicalDevice {
   medicalDeviceId   Int          @id @default(autoincrement())
@@ -130,8 +142,6 @@ model MedicalDevice {
 
   // @@map("medical_devices")
 }
-
-
 
 model Directory {
   id          Int      @id @default(autoincrement())
@@ -189,35 +199,35 @@ model SanitationRequest {
   requestTime    DateTime        @default(now())
   comments       String?
   status         RequestStatus   @default(pending)
+  employeeName   String
+  location       Building
 
-  user   User @relation("sanitationRequests", fields: [userId], references: [id])
-  userId Int
+  // user   User @relation("sanitationRequests", fields: [userId], references: [id])
+  // userId Int
 }
+
 model DeviceRequest {
-  requestId            Int             @id @default(autoincrement())
-  deviceType           String
-  priority             RequestPriority
-  deliveryLocation     String
-  deliveryTime         DateTime?
-  requestTime          DateTime        @default(now())
-  requestAcceptedTime  DateTime?
-  requestCompletedTime DateTime?
-  status               RequestStatus   @default(pending)
-  comments             String?
-
-  employee           Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
-  employeeId         Int
-  assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
-  assignedEmployeeId Int?
+  requestId    Int             @id @default(autoincrement())
+  deviceType   String
+  priority     RequestPriority
+  room         String
+  department   Department
+  requestTime  DateTime        @default(now())
+  comments     String?
+  employeeName String //Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
+  employeeID   Int
+  status       RequestStatus   @default(pending)
+  // assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
+  // assignedEmployeeId Int?
 }
+
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
-  employeeID             Int
-  employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
+  employeeName           String
   priority               RequestPriority
   department             Department
   patientID              Int
-  patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+  // patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
   drugName               String
   morningPillCount       Int
   middayPillCount        Int
@@ -227,7 +237,9 @@ model PharmacyRequest {
   numberOfPills          Int
   refills                Int
   additionalInstructions String
+  status                 RequestStatus
 }
+
 // model PharmacyRequest {
 //   prescriptionID         Int             @id //@default(autoincrement())
 //   patientID              Int
@@ -254,23 +266,27 @@ model PatientRequest {
   location         Building
   status           RequestStatus
   requestTime      DateTime        @default(now())
+  request           RequestNonemergent
+  employeeName  String
+  comment String
 }
+
 model TransportRequest {
-  employeeRequestID      Int             @id @default(autoincrement())
-  employeeID             Int
-  employee               Employee        @relation("TransportRequest", fields: [employeeID], references: [id])
-  patientID              Int
-  patient                Patient    @relation("TransportRequest", fields: [patientID], references: [id])
+  employeeRequestID Int      @id @default(autoincrement())
+  //employeeID        Int
+  //employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
+  patientID         Int
+  patient           Patient  @relation("TransportRequest", fields: [patientID], references: [id])
+  employeeName        String
+  transportationType String
+  currentBuilding    Building
+  desiredBuilding    Building
 
-  transportationType     String
-  currentBuilding        Building
-  desiredBuilding        Building
-
-  priority               RequestPriority
-  department             Department
-  comments               String
-  status  RequestStatus
-  requestTime    DateTime        @default(now())
+  priority    RequestPriority
+  department  Department
+  comments    String
+  status      RequestStatus
+  requestTime DateTime        @default(now())
 }
 
 model Departments {
@@ -290,5 +306,15 @@ model Statuses {
 
 model Locations{
   type Building @id @unique
+  name String
+}
+
+model Devices{
+  type RequestMedicalDevice @id @unique
+  name String
+}
+
+model Nonemergencies {
+  type RequestNonemergent @id @unique
   name String
 }

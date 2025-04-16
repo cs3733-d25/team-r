@@ -1,5 +1,6 @@
-import { PrismaClient } from "../packages/database";
+import {$Enums, PrismaClient, RequestNonemergent} from "../packages/database";
 import { UserType, Department, EmployeeRole, Gender, RequestStatus, Building, RequestPriority, DeviceStatus } from "../packages/database";
+import RequestMedicalDevice = $Enums.RequestMedicalDevice;
 
 const prisma = new PrismaClient();
 
@@ -236,6 +237,24 @@ async function main() {
     })
 
     // Create medical devices
+    await prisma.devices.createMany({
+        data: [
+            { type: RequestMedicalDevice.XRay, name: 'X Ray' },
+            { type: RequestMedicalDevice.EKG_Machine, name: 'EKG Machine' },
+            { type: RequestMedicalDevice.Defibrillator, name: 'Defibrillator' },
+            { type: RequestMedicalDevice.Syringe, name: 'Syringe' },
+            { type: RequestMedicalDevice.Pacemaker, name: 'Pacemaker' },
+        ],
+    });
+
+    await prisma.nonemergencies.createMany({
+        data: [
+            { type: RequestNonemergent.Room_Maintenance, name: 'Room maintenance' },
+            { type: RequestNonemergent.Food, name: 'Food' },
+            { type: RequestNonemergent.Speak_to_a_doctor, name: 'Speak to a doctor' },
+            { type: RequestNonemergent.Visitation_hours, name: 'Visitation hours' },
+        ],
+    });
     /*
     await prisma.medicalDevice.createMany({
         data: [
