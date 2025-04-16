@@ -1,184 +1,86 @@
-import React, { useEffect, useRef } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
-import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
-import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
-import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
-import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
-import chestnutHill from '../../../public/Chestnut-Hill.svg'
-import { goToFloor } from '../MapView/floorNavigation.ts';
-import './leaflet.css';
+import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import { Label } from '@/components/ui/label.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
-interface InternalMapProps {
-    pathCoordinates?: [number, number][];
-    path?: string[];
-}
+import LeafletMap from '@/features/MapView/LeafletMap.tsx';
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
-    const mapRef = useRef<HTMLDivElement | null>(null);
-    const mapInstance = useRef<L.Map | null>(null);
-
-    useEffect(() => {
-        if (mapRef.current && !mapInstance.current) {
-            const map = L.map(mapRef.current, {
-                crs: L.CRS.Simple,
-                minZoom: -2,
-                zoomControl: false,
-            }).setView([500, 500], 0);
-
-            // bounds for all floorplans
-            const bounds: L.LatLngBoundsLiteral = [
-                [0, 0],
-                [1000, 1000],
-            ];
-
-            // === FLOOR LAYERS ===
-            const floorLayer20_1 = L.layerGroup();
-            const floorLayer20_3 = L.layerGroup();
-            const floorLayer22_1 = L.layerGroup();
-            const floorLayer22_3 = L.layerGroup();
-            const floorLayer22_4 = L.layerGroup();
-            const floorLayerChestnutHill = L.layerGroup();
-
-            // image overlays
-            L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
-            L.imageOverlay(patriot20Floor3, bounds).addTo(floorLayer20_3);
-            L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
-            L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
-            L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
-            L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
-
-            // Transition Points Between Floors
-            const transitionNodes = {
-                // 22 patriot place
-                'elevatorA': {floor1: [385.55, 546.23], floor3: [464.51, 546.23], floor4: [383.55, 554.24]},
-                'st01': {floor1: [387.55, 456.21], floor3: [469.50, 469.21], floor4: [392.55, 457.21]},
-                'st02': {floor1: [316.59, 280.17], floor3: [405.54, 314.17], floor4: [316.59, 279.17]},
-                'st03': {floor1: [622.42, 885.32], floor3: [678.38, 850.31], floor4: [619.42, 887.32]},
-                // 20 patriot place
-                'st13': {floor1: [758.34, 187.14], floor3: [758.34, 187.14]},
-                'st14': {floor1: [218.74, 818.00], floor3: [218.74, 818.00]},
-                'el10': {floor1: [240.64, 771.29], floor3: [240.64, 771.29]}
-            };
-
-            // 22 patriot place floor 1 buttons to go up to floor 3
-            L.circle(transitionNodes['elevatorA'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            L.circle(transitionNodes['st01'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            L.circle(transitionNodes['st02'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            L.circle(transitionNodes['st03'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            // 22 patriot place floor 3 buttons to go up to floor 4 or down to floor 1
-            L.circle(transitionNodes['elevatorA'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st01'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st02'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st03'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            // 22 patriot place floor 4 buttons to go down to floor 3
-            L.circle(transitionNodes['elevatorA'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st01'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st02'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st03'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-
-            // 20 patriot place
-            L.circle(transitionNodes['st13'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
-            L.circle(transitionNodes['st13'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
-            L.circle(transitionNodes['st14'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
-            L.circle(transitionNodes['st14'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
-            L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
-            L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
-
-
-            // parking lot markers
-            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
-            L.marker([217.98, 221.99]).bindPopup('Patient Parking').addTo(floorLayer22_1);
-            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer22_1);
-            L.marker([594.87, 43.05]).bindPopup('Valet Parking').addTo(floorLayer20_1);
-            L.marker([166.45, 36.50]).bindPopup('Patient Parking').addTo(floorLayer20_1);
-            L.marker([125.94, 265.92]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
-            L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
-            L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
-
-            // add a default layer
-            floorLayer20_1.addTo(map);
-
-            // === LAYER CONTROLS ===
-            const baseLayers = {
-                '20 Patriot Place - Floor 1': floorLayer20_1,
-                '20 Patriot Place - Floor 3': floorLayer20_3,
-                '22 Patriot Place - Floor 1': floorLayer22_1,
-                '22 Patriot Place - Floor 3': floorLayer22_3,
-                '22 Patriot Place - Floor 4': floorLayer22_4,
-                'Chestnut Hill': floorLayerChestnutHill
-            };
-
-            L.control.layers(baseLayers).addTo(map);
-
-            // connect patriot place buildings
-            const bridge1 = L.polyline([
-                [241.63, 101.12], // 20 Patriot Place
-                [242.63, 68.11], // 22 Patriot Place
-            ], {
-                color: 'blue',
-                weight: 2,
-                dashArray: '5, 5',
-            })
-            .bindPopup('Bridge to 22 Patriot Place')
-            .on('click', () => {
-                map.removeLayer(floorLayer20_3);
-                map.addLayer(floorLayer22_3);
-            })
-            .addTo(floorLayer20_3);
-
-            const bridge2 = L.polyline([
-                [353.57, 642.26], // 22 Patriot Place
-                [134.70, 785.30], // 20 Patriot Place
-            ], {
-                color: 'red',
-                weight: 2,
-                dashArray: '5, 5',
-            })
-            .bindPopup('Bridge to 20 Patriot Place')
-            .on('click', () => {
-                map.removeLayer(floorLayer22_3);
-                map.addLayer(floorLayer20_3);
-            })
-            .addTo(floorLayer22_3);
-
-            // path
-            if (pathCoordinates && pathCoordinates.length > 1) L.polyline(pathCoordinates, {color: 'red', weight: 3, opacity: 0.8}).addTo(map);
-
-            // for getting coordinates (can delete later)
-            map.on('click', function (e) {
-                console.log(`[${e.latlng.lat.toFixed(2)}, ${e.latlng.lng.toFixed(2)}],`);
-            });
-
-            mapInstance.current = map;
-
-            (window as unknown as { goToFloor: (floor: number) => void }).goToFloor = (floor: number) => {
-                goToFloor(floor, map, floorLayer22_1, floorLayer22_3, floorLayer22_4);
-            };
-        }
-
-        // clean up
-        return () => {
-            if (mapInstance.current) {
-                mapInstance.current.remove();
-                mapInstance.current = null;
-            }
-        };
-    }, [pathCoordinates]);
-
+export function InternalMap() {
     return (
-        <div
-            ref={mapRef}
-            style={{
-                height: '100vh',
-                width: '100%',
-                border: '1px solid #ccc',
-                position: 'relative',
-                zIndex: 0 // Add a low z-index here
-            }}
-        />
+        <div className="flex flex-col h-screen overflow-hidden">
+            <div className={'sticky top-0 z-30'}>
+                <NavbarMGH />
+            </div>
+            <div className="flex-1 w-full relative">
+                <LeafletMap location={'patriot'} />
+                {/* Overlay sidebar */}
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
+                    <div>
+                        <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
+                        <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>
+                            Patriot Place
+                        </Label>
+                    </div>
+                    <div className="space-y-4 flex-grow overflow-auto">
+                        <div className="flex flex-col space-y-2">
+                            <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Starting location" />
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Location</SelectLabel>
+                                            <SelectItem value={'dropdown test'}>
+                                                Dropdown test
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 2'}>
+                                                Dropdown 2
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 3'}>
+                                                Dropdown 3
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </SelectTrigger>
+                            </Select>
+                            <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Ending location" />
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Location</SelectLabel>
+                                            <SelectItem value={'dropdown test'}>
+                                                Dropdown test
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 2'}>
+                                                Dropdown 2
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 3'}>
+                                                Dropdown 3
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </SelectTrigger>
+                            </Select>
+                            <Button>Get Directions</Button>
+                        </div>
+                        <div className="flex flex-col space-y-2">
+                            <Label className={'px-2 mb-3'}>Floor selection</Label>
+                            <div className="flex flex-col space-y-2">
+                                <Button variant={'secondary'}>Floor 1</Button>
+                                <Button variant={'secondary'}>Floor 2</Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
-};
-
-export default InternalMap;
+}
