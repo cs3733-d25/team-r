@@ -32,7 +32,8 @@ interface ExternalMapProps {
  */
 export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapProps) {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    const patriotPlace = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
+    const patriotPlace20 = 'Mass General Brigham, 20 Patriot Pl, Foxborough, MA 02035';
+    const patriotPlace22 = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     const [startingLocation, setStartingLocation] = useState<string>('');
@@ -98,9 +99,15 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <div className="flex flex-col space-y-2">
                                 <Button
                                     variant={'secondary'}
-                                    onClick={() => setSelectedLocation(patriotPlace)}
+                                    onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
-                                    Patriot Place
+                                    20 Patriot Place
+                                </Button>
+                                <Button
+                                    variant={'secondary'}
+                                    onClick={() => setSelectedLocation(patriotPlace22)}
+                                >
+                                    22 Patriot Place
                                 </Button>
                                 <Button
                                     variant={'secondary'}
@@ -115,7 +122,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                     {/* I've arrived button */}
                     <div className="mt-4 pt-2 border-t border-gray-200">
                         <Button className={'w-full'} onClick={() => navigate('/internal-map')}>
-                            I've Arrived
+                            I've Arrived!
                         </Button>
                     </div>
                 </div>
