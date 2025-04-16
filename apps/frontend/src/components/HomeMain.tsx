@@ -1,5 +1,6 @@
 import React from 'react'
-import NavBar from "./Navbar.tsx";
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
 interface HomeMainProps {
     status?: string;
@@ -7,23 +8,32 @@ interface HomeMainProps {
 
 export function HomeMain(props: HomeMainProps) {
     return (
-        <div className={"bg-primary flex-col h-screen"}>
+        <div className={"bg-primary h-screen"}>
             {props.status == 'logged-in' ? (
-                <NavBar />
-            ) : (<NavBar page={"home"} />)}
+                <NavbarMGH />
+            ) : (<NavbarMGH page={"home"} />)}
             {/*Image taken from Mass General Brigham website home page*/}
-            <div className={"bg-[url(/heropage.jpeg)] bg-no-repeat bg-cover h-6/7 justify-items-center"}>
-                <div className={"flex-col text-center w-5/8 bg-background/80"}>
+            <div className={"flex-col bg-[url(/hero-page-3.jpeg)] bg-no-repeat bg-cover h-6/7 content-center"}>
+                <div className={"text-center w-3/8 content-center h-full bg-ring/50 backdrop-blur-sm"}>
+                    <div className={"bg-background/80"}>
+                        <br />
+                        <h1 className={"text-5xl font-trade"}>Welcome to Mass General Brigham</h1>
+                        <br />
+                        {props.status != 'logged-in' && (
+                            <div>
+                                <p className={"text-xl px-5 font-trade"}>
+                                    Log in to locate a department using our pathfinding page so that we can help you navigate toward any service that you may need.
+                                </p>
+                                <br />
+                            </div>)}
+                    </div>
                     <br />
-                    <h1 className={"text-5xl font-bold"}>Welcome to Mass General Brigham</h1>
                     <br />
-                    {props.status != 'logged-in' && (
-                        <div>
-                            <p className={"text-xl px-5"}>
-                                Log in to access our directory and locate a department so that we can help you navigate toward any service that you may need.
-                            </p>
-                            <br />
-                        </div>)}
+                    <div className={"justify-self-center"}>
+                        <Button variant="ghost" asChild className={"bg-primary hover:bg-foreground hover:text-white"}>
+                            <a href="/external-map">Find a Location</a>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

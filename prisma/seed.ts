@@ -1,5 +1,6 @@
-import { PrismaClient } from "../packages/database";
+import {$Enums, PrismaClient} from "../packages/database";
 import { UserType, Department, EmployeeRole, Gender, RequestStatus, Building, RequestPriority, DeviceStatus } from "../packages/database";
+import RequestMedicalDevice = $Enums.RequestMedicalDevice;
 
 const prisma = new PrismaClient();
 
@@ -236,6 +237,15 @@ async function main() {
     })
 
     // Create medical devices
+    await prisma.devices.createMany({
+        data: [
+            { type: RequestMedicalDevice.XRay, name: 'X Ray' },
+            { type: RequestMedicalDevice.EKG_Machine, name: 'EKG Machine' },
+            { type: RequestMedicalDevice.Defibrillator, name: 'Defibrillator' },
+            { type: RequestMedicalDevice.Syringe, name: 'Syringe' },
+            { type: RequestMedicalDevice.Pacemaker, name: 'Pacemaker' },
+        ],
+    });
     /*
     await prisma.medicalDevice.createMany({
         data: [
