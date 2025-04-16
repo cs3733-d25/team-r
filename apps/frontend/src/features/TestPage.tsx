@@ -1,8 +1,12 @@
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import InternalMap from '@/features/MapView/InternalMap.tsx';
 
-function TestPage(){
+function TestPage() {
     return (
-        <NavbarMGH/>
+        <div>
+            <NavbarMGH />
+            <InternalMap />
+        </div>
     );
 }
 
