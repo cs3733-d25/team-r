@@ -31,7 +31,8 @@ function App() {
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
-                { path: 'mapView', element: <ExternalMap /> },
+                { path: 'external-map', element: <ExternalMap /> },
+                { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
                 { path: 'csv', element: <CSVPage /> },
@@ -42,6 +43,7 @@ function App() {
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
+                { path: 'devicerequest', element: <DeviceReq /> },
             ],
         },
     ]);

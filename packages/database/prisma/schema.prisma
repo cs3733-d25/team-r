@@ -65,6 +65,14 @@ enum Building {
   CHESTNUT_HILL
 }
 
+enum RequestMedicalDevice{
+  XRay
+  Defibrillator
+  EKG_Machine
+  Syringe
+  Pacemaker
+}
+
 enum NodeType {
   entrance
   reception
@@ -288,5 +296,10 @@ model Statuses {
 
 model Locations{
   type Building @id @unique
+  name String
+}
+
+model Devices{
+  type RequestMedicalDevice @id @unique
   name String
 }
