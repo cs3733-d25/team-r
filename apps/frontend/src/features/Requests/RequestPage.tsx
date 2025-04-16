@@ -21,30 +21,26 @@ export function AllRequestsPage() {
             name: "Medical Device",
             description: "Requests for medical devices including X-rays, Defibrillators, EKG Machines, etc.",
             icon: "🩺",
-            path: "/devicerequest" // Uncommented this
+            path: "/devicerequest"
         },
         {
             name: "Prescription",
             description: "Medication prescriptions for patients",
-            icon: "💊",
-            path: "/prescription" // Uncommented this
+            path: "/prescription"
         },
         {
             name: "Patient",
             description: "Non-emergency patient service requests",
-            icon: "🏥", // Uncommented this
             path: "/patientrequestpage"
         },
         {
             name: "Transport",
             description: "Patient transportation between facilities",
-            icon: "🚑", // Uncommented this
             path: "/transport"
         },
         {
             name: "Sanitation",
             description: "Cleaning and sanitation service requests",
-            icon: "🧹", // Added an icon here
             path: "/sanitation"
         }
     ];
