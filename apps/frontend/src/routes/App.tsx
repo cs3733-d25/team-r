@@ -33,7 +33,7 @@ function App() {
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
-                { path: 'mapView', element: <ExternalMap /> },
+                { path: 'external-map', element: <ExternalMap /> },
                 { path: 'internal-map', element: <InternalMapNew /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
                 { path: 'csv', element: <CSVPage /> },
