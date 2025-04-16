@@ -12,7 +12,8 @@ import {
 } from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {fetchParkingLots} from '@/features/MapView/mapService';
 
 interface Node {
     nodeID: string;
@@ -27,9 +28,29 @@ interface Node {
 
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const buildingIdentifier = location.state?.buildingIdentifier;
+
+    useEffect(() => {
+        const loadParkingLots = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchParkingLots();
+                setParkingLots(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadParkingLots();
+    }, []);
 
     const departmentsByBuilding: Record<string, { key: string; value: string; label: string; }[]> = {
         PATRIOT_PLACE_20: [
@@ -134,8 +155,8 @@ export function InternalMapNew() {
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
                             <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Parking Lot" />
+                                <SelectTrigger disabled={isLoading}>
+                                    <SelectValue placeholder={isLoading ? "Loading..." : "Parking Lot"} />
                                 </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>

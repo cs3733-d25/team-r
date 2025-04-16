@@ -33,6 +33,7 @@ router.get("/parking-lots", async (req, res) => {
   }
 });
 
+/*
 // get departments
 router.get("/departments", async (req, res) => {
   try {
@@ -46,5 +47,6 @@ router.get("/departments", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+*/
 
 export default router;

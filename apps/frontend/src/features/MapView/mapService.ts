@@ -6,7 +6,8 @@ export const fetchParkingLots = async (): Promise<Node[]> => {
     return res.data;
 };
 
+/*
 export const fetchDepartments = async (): Promise<Node[]> => {
     const res = await axios.get('/api/locations/departments');
     return res.data;
-};
+};*/
