@@ -8,6 +8,7 @@ import {
   Prisma,
   RequestPriority,
   RequestStatus,
+  RequestNonemergent,
 } from "database";
 import RequestMedicalDevice = $Enums.RequestMedicalDevice;
 
@@ -65,11 +66,26 @@ export async function parseStatus(value: string): Promise<RequestStatus> {
     });
 }
 
+//for medical device request
 export async function parseDevice(
   value: string,
 ): Promise<RequestMedicalDevice> {
   // return Department type
   return PrismaClient.devices
+    .findFirstOrThrow({
+      where: { name: value },
+    })
+    .then((row) => {
+      return row.type;
+    });
+}
+
+//for nonemergency patient request
+export async function parseNonemergent(
+  value: string,
+): Promise<RequestNonemergent> {
+  // return Department type
+  return PrismaClient.nonemergencies
     .findFirstOrThrow({
       where: { name: value },
     })
@@ -109,6 +125,9 @@ router.get("/:table", async function (req: Request, res: Response) {
         break;
       case "devices":
         names = formatNames(await PrismaClient.devices.findMany());
+        break;
+      case "nonemergencies":
+        names = formatNames(await PrismaClient.nonemergencies.findMany());
         break;
     }
     if (names.length > 0) {
