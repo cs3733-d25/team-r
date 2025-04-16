@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/Navbar.tsx";
 import axios from "axios";
+import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 
 
 function Login() {
@@ -64,7 +64,7 @@ async function handleLogin(){
     return (
         <div className={"bg-mgb-blue flex-col h-screen"}>
             <div className={""}>
-                <NavBar page={"login"}/>
+                <NavbarMGH page={"login"}/>
             </div>
             <div className="flex justify-center items-center bg-[url(/heropage.jpeg)] bg-gray-500 bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
                 <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">

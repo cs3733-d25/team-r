@@ -6,7 +6,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 
-export function NavbarMGH() {
+interface NavBarProps {
+    page?: string;
+}
+
+export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -16,7 +20,7 @@ export function NavbarMGH() {
             <div className="flex h-16 items-center px-4 md:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href="/home" className="flex items-center">
+                    <a href={(props.page == "home" || props.page == "login") ? "/" : "/home"} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -29,6 +33,7 @@ export function NavbarMGH() {
                 </div>
 
                 {/* Desktop Navigation - default*/}
+                {(props.page != "home" && props.page != "login") && (
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
@@ -51,9 +56,10 @@ export function NavbarMGH() {
                         { label: 'Export CSV', href: '/csv' },
                     ]
                     }/>
-                </nav>
+                </nav>)}
 
-                {/* Icons on left */}
+                {/* Icons on right */}
+                {(props.page != "home" && props.page != "login") && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
@@ -100,7 +106,15 @@ export function NavbarMGH() {
                     >
                         <Menu className="h-5 w-5" />
                     </Button>
-                </div>
+                </div>)}
+                {/* Only display login button in logged-out home page */}
+                {(props.page == "home") && (
+                    <div className="ml-auto flex items-center gap-2">
+                        <Button variant="ghost" asChild className={"bg-accent hover:bg-chart-1 hover:text-input"}>
+                            <a href="/login">Login</a>
+                        </Button>
+                    </div>
+                )}
             </div>
 
             {/* Mobile Navigation */}

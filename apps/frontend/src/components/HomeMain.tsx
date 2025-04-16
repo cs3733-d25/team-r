@@ -1,5 +1,4 @@
 import React from 'react'
-import NavBar from "./Navbar.tsx";
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 import {Button} from "@/components/ui/button.tsx";
 
@@ -12,7 +11,7 @@ export function HomeMain(props: HomeMainProps) {
         <div className={"bg-primary h-screen"}>
             {props.status == 'logged-in' ? (
                 <NavbarMGH />
-            ) : (<NavBar page={"home"} />)}
+            ) : (<NavbarMGH page={"home"} />)}
             {/*Image taken from Mass General Brigham website home page*/}
             <div className={"flex-col bg-[url(/hero-page-3.jpeg)] bg-no-repeat bg-cover h-6/7 content-center"}>
                 <div className={"text-center w-3/8 content-center h-full bg-ring/50 backdrop-blur-sm"}>
