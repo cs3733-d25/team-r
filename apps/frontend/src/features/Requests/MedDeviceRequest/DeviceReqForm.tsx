@@ -17,7 +17,7 @@ interface SubmittedDevice {
     room: string;
     department: string;
     comment: string;
-    employee: string;
+    employeeName: string;
     employeeID: string;
     status: string;
 
@@ -31,7 +31,7 @@ export const DeviceReqForm = () => {
         room: '',
         department: '',
         comment: '',
-        employee: '',
+        employeeName: '',
         employeeID: '',
         status: ''
     });
@@ -71,7 +71,7 @@ export const DeviceReqForm = () => {
                     room: '',
                     department: '',
                     comment: '',
-                    employee: '',
+                    employeeName: '',
                     employeeID: '',
                     status: ''
                 });
@@ -149,8 +149,8 @@ export const DeviceReqForm = () => {
                                     </Label>
                                     <Input
                                         type="text"
-                                        name="employee"
-                                        value={formData.employee}
+                                        name="employeeName"
+                                        value={formData.employeeName}
                                         onChange={handleChange}
                                         placeholder="Enter your name"
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
@@ -302,7 +302,7 @@ export const DeviceReqForm = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
                                     <span className="font-semibold">Submitted by:</span>{' '}
-                                    {submittedDevice.employee}
+                                    {submittedDevice.employeeName}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Device:</span>{' '}
