@@ -24,7 +24,6 @@ interface ExternalMapProps {
     selectedLocation?: string;
 }
 
-
 /**
  * ExternalMap component
  * @param initialLocation - the location to be pre-selected
@@ -36,7 +35,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     const [startingLocation, setStartingLocation] = useState<string>('');
-    const [travelMode, setTravelMode] = useState<string>("DRIVING");
+    const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
 
     return (
@@ -71,24 +70,18 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 onChange={(e) => setStartingLocation(e.target.value)}
                             />
                             <Select onValueChange={(value) => setTravelMode(value)}>
-                            <SelectTrigger>
+                                <SelectTrigger>
                                     <SelectValue placeholder="Mode of transport" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Travel Mode</SelectLabel>
-                                        <SelectItem value={'DRIVING'}>
-                                            Car
-                                        </SelectItem>
+                                        <SelectItem value={'DRIVING'}>Car</SelectItem>
                                         <SelectItem value={'TRANSIT'}>
                                             Public Transportation
                                         </SelectItem>
-                                        <SelectItem value={'BICYCLING'}>
-                                            Bicycle
-                                        </SelectItem>
-                                        <SelectItem value={'WALKING'}>
-                                            Walk
-                                        </SelectItem>
+                                        <SelectItem value={'BICYCLING'}>Bicycle</SelectItem>
+                                        <SelectItem value={'WALKING'}>Walk</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
@@ -97,13 +90,13 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
                                 <Button
-                                    variant={'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace)}
                                 >
                                     Patriot Place
                                 </Button>
                                 <Button
-                                    variant={'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === patriotPlace ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Chestnut Hill
@@ -114,7 +107,11 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
                     {/* I've arrived button */}
                     <div className="mt-4 pt-2 border-t border-gray-200">
-                        <Button className={'w-full'} onClick={() => navigate('/internal-map')}>
+                        <Button
+                            disabled={selectedLocation === ''}
+                            className={'w-full'}
+                            onClick={() => navigate('/internal-map')}
+                        >
                             I've Arrived
                         </Button>
                     </div>
