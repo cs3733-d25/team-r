@@ -1,7 +1,8 @@
 import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
+import prismaClient from "../bin/prisma-client.ts";
 const router: Router = express.Router();
-const prisma = new PrismaClient();
+//const prisma = new PrismaClient();
 
 
 
@@ -11,16 +12,16 @@ const prisma = new PrismaClient();
     const queue: string[][] = [[start]]; //where to go next
 
     //const nodes = await prisma.nodes.findMany()
-    const edges = await prisma.edge.findMany();
+    const edges = await prismaClient.edge.findMany();
 
     const graph = new Map<string, Set<string>>();
 
     for (const edge of edges) {
-      if (!graph.has(edge.fromNodeID)) graph.set(edge.fromNodeID, new Set());
-      if (!graph.has(edge.toNodeID)) graph.set(edge.toNodeID, new Set());
+      if (!graph.has(edge.fromID)) graph.set(edge.fromID, new Set());
+      if (!graph.has(edge.toID)) graph.set(edge.toID, new Set());
 
-      graph.get(edge.fromNodeID)!.add(edge.toNodeID);
-      graph.get(edge.toNodeID)!.add(edge.fromNodeID);
+      graph.get(edge.fromID)!.add(edge.toID);
+      graph.get(edge.toID)!.add(edge.fromID);
     }
 
     while (queue.length > 0) {
@@ -81,8 +82,8 @@ router.post("/", async function (req: Request, res: Response) {
 
 router.get("/full", async (req: Request, res: Response) => {
   try {
-    const nodes: Node[] = await prisma.node.findMany();
-    const edges: Edge[] = await prisma.edge.findMany();
+    const nodes: any = await prismaClient.node.findMany();
+    const edges: any = await prismaClient.edge.findMany();
 
     res.json({
       nodes,
