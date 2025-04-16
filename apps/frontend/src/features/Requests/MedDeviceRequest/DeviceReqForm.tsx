@@ -1,26 +1,21 @@
 import { useState } from 'react';
-import {Buildings, Department, RequestPriority, RequestStatus, RequestMedicalDevice} from '../RequestEnums.tsx';
-//import {RequestMedicalDevice} from '../../../../../../packages/database;
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 import Dropdown from "@/components/Dropdowns/Department.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
-import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 
 interface SubmittedDevice {
-    device: RequestMedicalDevice | string;
+    device: string;
     room: string;
-    priority: RequestPriority | string;
-    department: Department | string;
+    priority: string;
+    department: string;
     comment: string;
     employeeName: string;
     employeeID: string;
-    status: RequestStatus | string;
+    status: string;
 
     timestamp: string;
 }

@@ -10,7 +10,6 @@ import {
   parseStatus,
 } from "./enum.ts";
 
-
 const router: Router = express.Router();
 
 // router.get("/", async function (req: Request, res: Response) {
@@ -54,7 +53,7 @@ router.post("/", async function (req: Request, res: Response) {
         department: await parseDepartment(request.department),
         status: await parseStatus(request.status),
         room: request.room,
-        comments: request.comments,
+        comments: request.comment,
         employeeName: request.employeeName,
         employeeID: parseInt(request.employeeID),
       },
