@@ -1,7 +1,7 @@
 import {NavbarMGH} from '@/components/NavbarMGH.tsx';
 import Directions from '@/features/MapView/Directions.tsx';
-import {APIProvider, Map} from '@vis.gl/react-google-maps';
-import {useState} from 'react';
+import {APIProvider, Map, useMap} from '@vis.gl/react-google-maps';
+import {useState, useRef, useEffect} from 'react';
 import {Label} from '@/components/ui/label.tsx';
 import {Input} from '@/components/ui/input.tsx';
 import {Button} from '@/components/ui/button.tsx';
@@ -22,6 +22,31 @@ import {
  */
 interface ExternalMapProps {
     selectedLocation?: string;
+}
+
+function MapController({ selectedLocation }: { selectedLocation: string }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map || !selectedLocation) return;
+
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ address: selectedLocation })
+            .then(response => {
+                const { results } = response;
+                if (results[0]) {
+                    const location = results[0].geometry.location;
+                    map.panTo(location);
+                    map.setZoom(15);
+                }
+            })
+            .catch(error => {
+                console.error("Geocoding error:", error);
+            });
+    }, [map, selectedLocation]);
+
+    return null;
 }
 
 /**
@@ -49,6 +74,10 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         return '';
     };
 
+    const handleLocationSelect = (location: string) => {
+        setSelectedLocation(location);
+    };
+
     console.log("Login status:", status); // Debug log
 
 
@@ -67,6 +96,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         fullscreenControl={false}
                         mapTypeControl={false}
                     />
+                    <MapController selectedLocation={selectedLocation} />
                     <Directions
                         selectedLocation={selectedLocation}
                         startingLocation={startingLocation}
@@ -106,19 +136,19 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <div className="flex flex-col space-y-2">
                                 <Button
                                     variant={selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
-                                    onClick={() => setSelectedLocation(patriotPlace20)}
+                                    onClick={() => handleLocationSelect(patriotPlace20)}
                                 >
                                     20 Patriot Place
                                 </Button>
                                 <Button
                                     variant={selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
-                                    onClick={() => setSelectedLocation(patriotPlace22)}
+                                    onClick={() => handleLocationSelect(patriotPlace22)}
                                 >
                                     22 Patriot Place
                                 </Button>
                                 <Button
                                     variant={selectedLocation === chestnutHill ? 'selected' : 'secondary'}
-                                    onClick={() => setSelectedLocation(chestnutHill)}
+                                    onClick={() => handleLocationSelect(chestnutHill)}
                                 >
                                     Chestnut Hill
                                 </Button>
