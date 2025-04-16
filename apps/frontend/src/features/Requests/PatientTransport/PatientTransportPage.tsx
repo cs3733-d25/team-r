@@ -10,16 +10,16 @@ export function PatientTransportPage() {
             <NavbarMGH />
             <h1 className="text-2xl font-bold mb-0">Transport Request System</h1>
             <h2 className="text-xl font-bold mb-6">Alex Lowczyk & Joshua Gifford</h2>
-            <Tabs defaultValue="patientTransportForm" className="grid items-center justify-center">
+            <Tabs defaultValue="patientTransportForm" className="items-center justify-center w-full px-50">
                 <TabsList className="flex border-b border-gray-300 bg-gray-100 rounded-t-lg relative z-10 flex items-center">
                     <TabsTrigger value="patientTransportForm"
-                                 className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 border border-b-transparent data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
+                                 className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
                         PatientTransportForm</TabsTrigger>
                     <TabsTrigger value="patientTransportTable"
-                                 className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 border border-b-transparent data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
+                                 className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
                         PatientTransport Table</TabsTrigger>
                 </TabsList>
-                <div className="relative z-0 -mt-1 border border-gray-300 rounded-b-lg bg-white p-4">
+                <div className="relative z-0 -mt-1 border border-gray-300 rounded-b-lg bg-white p-4 mb-10">
                     <TabsContent value="patientTransportForm">
                         <TransportationRequestForm></TransportationRequestForm>
                     </TabsContent>

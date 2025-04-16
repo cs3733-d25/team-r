@@ -7,6 +7,9 @@ import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import Dropdown from "@/components/Dropdowns/Department.tsx";
+import {Textarea} from "@/components/ui/textarea.tsx";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 
 interface SubmittedDevice {
     device: string;
@@ -14,6 +17,10 @@ interface SubmittedDevice {
     room: string;
     department: string;
     comment: string;
+    employee: string;
+    employeeID: string;
+    status: string;
+
     timestamp: string;
 }
 
@@ -24,6 +31,9 @@ export const DeviceReqForm = () => {
         room: '',
         department: '',
         comment: '',
+        employee: '',
+        employeeID: '',
+        status: ''
     });
 
     const [submitStatus, setSubmitStatus] = useState<{
@@ -61,6 +71,9 @@ export const DeviceReqForm = () => {
                     room: '',
                     department: '',
                     comment: '',
+                    employee: '',
+                    employeeID: '',
+                    status: ''
                 });
             }
         } catch (error) {
@@ -72,34 +85,37 @@ export const DeviceReqForm = () => {
         }
     };
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setFormData(prev => ({
             ...prev,
-            [name]: value,
+            [name]: value
+        }));
+    }
+
+    const handleChange2 = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleChange3 = (value:string) => {
+        handleDropdownChange("device", value);
+    }
+
+    const handleDropdownChange = (name:string, value:string) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
         }));
     };
 
     return (
         <>
-            <NavbarMGH />
-            <div className="p-6 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-0">Medical Device Request System</h1>
-                <h2 className="text-xl font-bold mb-6">Owen Miller & Keagan Hitt</h2>
-                <Link
-                    key={'Device Request Page'}
-                    to={'/devicerequestpage'}
-                    className={
-                        'px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 transition duration-200'
-                    }
-                >
-                    See All Requests
-                </Link>
-                <br />
-                <br />
-                <div className="bg-secondary rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border-2 border-foreground">
+            <div className="max-w-7xl mx-auto">
+                <div className="bg-white rounded-b-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -109,24 +125,61 @@ export const DeviceReqForm = () => {
                                         Select a Device
                                         <span className="text-accent">*</span>
                                     </Label>
-                                    <select
-                                        name="device"
-                                        value={formData.device}
+                                    <Select onValueChange={handleChange3}>
+                                        <SelectTrigger className={"bg-input"}>
+                                            <SelectValue placeholder={'Select a device'}></SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent className={"bg-input"} >
+                                            <SelectGroup>
+                                                {["X-ray", "Defibrillator", "EKG Machine", "Pacemaker", "Syringe"].map((device: string) => (
+                                                <SelectItem key={device} value={device} className={"bg-input hover:bg-accent"}>
+                                                    {device}
+                                                </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                {/* Employee Name */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Employee Name
+                                        <span className="text-accent">*</span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="employee"
+                                        value={formData.employee}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
-                                    >
-                                        {Object.values(RequestPriority).map((priority) => (
-                                            <option key={priority} value={priority}>
-                                                {priority}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        placeholder="Enter your name"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Employee ID */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Employee ID
+                                        <span className="text-accent">*</span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="employeeID"
+                                        value={formData.employeeID}
+                                        onChange={handleChange}
+                                        placeholder="Enter employee ID"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
                                 </div>
 
                                 {/* Priority */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Priority Level
+                                        <span className="text-accent">*</span>
                                         <span className="text-xs text-secondary-foreground block">
                                             EMERGENCY: Immediate attention required
                                             <br />
@@ -137,18 +190,28 @@ export const DeviceReqForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <select
-                                        name="priority"
-                                        value={formData.priority}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
-                                    >
-                                        {Object.values(RequestPriority).map((priority) => (
-                                            <option key={priority} value={priority}>
-                                                {priority}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                </div>
+
+                                {/* Department */}
+                                <div>
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Department
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            Select the department making the prescription request.
+                                        </span>
+                                    </Label>
+                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                                </div>
+
+                                {/* Status */}
+                                <div>
+                                    <label className="block text-sm font-semibold text-foreground mb-2">
+                                        Request Status
+                                        <span className="text-accent">*</span>
+                                    </label>
+                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}
@@ -171,42 +234,19 @@ export const DeviceReqForm = () => {
                                     />
                                 </div>
 
-                                {/* Department */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Department
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            Select the department making the device request.
-                                        </span>
-                                    </Label>
-                                    <select
-                                        name="department"
-                                        value={formData.department}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200 bg-input"
-                                    >
-                                        {Object.values(Department).map((dept) => (
-                                            <option key={dept} value={dept}>
-                                                {dept}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
                                 {/* Comments */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Comments
                                         <span className="text-xs text-secondary-foreground block">
-                                            Include any additional comments about the device request here.
-                                        </span>
+                                        Enter any additional comments.
+                                    </span>
                                     </Label>
-                                    <textarea
+                                    <Textarea
                                         name="comment"
                                         value={formData.comment}
-                                        onChange={handleChange}
-                                        placeholder="Include any additional comments about the device request here."
+                                        onChange={handleChange2}
+                                        placeholder="Enter any additional comments."
                                         rows={4}
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     />
@@ -261,6 +301,10 @@ export const DeviceReqForm = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
+                                    <span className="font-semibold">Submitted by:</span>{' '}
+                                    {submittedDevice.employee}
+                                </div>
+                                <div>
                                     <span className="font-semibold">Device:</span>{' '}
                                     {submittedDevice.device}
                                 </div>
@@ -279,6 +323,14 @@ export const DeviceReqForm = () => {
                                 <div>
                                     <span className="font-semibold">Comment:</span>{' '}
                                     {submittedDevice.comment}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Employee ID:</span>{' '}
+                                    {submittedDevice.employeeID}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Status:</span>{' '}
+                                    {submittedDevice.status}
                                 </div>
                             </div>
                             <div className="mt-3 text-sm text-gray-600">
