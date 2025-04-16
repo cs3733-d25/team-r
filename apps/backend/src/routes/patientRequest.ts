@@ -63,7 +63,7 @@ router.post("/", async function (req: Request, res: Response) {
         status: await parseStatus(request.status),
         employeeName: request.employeeName,
         request: await parseNonemergent(request.request),
-        comment: request.comment
+        comment: request.comment,
       },
     });
     // console.log(createRequest);
