@@ -15,7 +15,6 @@ import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
 import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
 import {DeviceReqForm} from "@/features/Requests/MedDeviceRequest/DeviceReqForm.tsx";
 import {DeviceReqPage} from "@/features/Requests/MedDeviceRequest/DeviceReqPage.tsx";
-import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx";
 import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";

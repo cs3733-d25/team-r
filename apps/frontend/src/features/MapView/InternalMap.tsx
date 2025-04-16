@@ -6,33 +6,25 @@ import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
 import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
 import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
-//import chestnutHill from '../../../public/Chestnut Hill.svg'
+import chestnutHill from '../../../public/Chestnut-Hill.svg'
 import { goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
-    location: string;
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
-            const map = L.map(mapRef.current, {
-                crs: L.CRS.Simple,
-                minZoom: -2,
-                zoomControl: false,
-            }).setView([500, 500], 0);
+            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2,}).setView([500, 500], 0);
 
             // bounds for all floorplans
-            const bounds: L.LatLngBoundsLiteral = [
-                [0, 0],
-                [1000, 1000],
-            ];
+            const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
 
             // === FLOOR LAYERS ===
             const floorLayer20_1 = L.layerGroup();
@@ -40,7 +32,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             const floorLayer22_1 = L.layerGroup();
             const floorLayer22_3 = L.layerGroup();
             const floorLayer22_4 = L.layerGroup();
-            //const floorLayerChestnutHill = L.layerGroup();
+            const floorLayerChestnutHill = L.layerGroup();
 
             // image overlays
             L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
@@ -48,7 +40,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
             L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
             L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
-            //L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
+            L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
 
             // Transition Points Between Floors
             const transitionNodes = {
@@ -61,7 +53,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 'st13': {floor1: [758.34, 187.14], floor3: [758.34, 187.14]},
                 'st14': {floor1: [218.74, 818.00], floor3: [218.74, 818.00]},
                 'el10': {floor1: [240.64, 771.29], floor3: [240.64, 771.29]}
-                // chestnut hill
             };
 
             // 22 patriot place floor 1 buttons to go up to floor 3
@@ -88,23 +79,19 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
             L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
 
-            // === PARKING LOT LAYERS ===
-            const patriotValetParking = L.layerGroup();
-            const patriotPatientParking = L.layerGroup();
-            const patriotExtendedParking = L.layerGroup();
-            //const chestnutParking = L.layerGroup();
 
             // parking lot markers
-            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(patriotValetParking);
-            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(patriotPatientParking);
-            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(patriotExtendedParking);
+            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
+            L.marker([217.98, 221.99]).bindPopup('Patient Parking').addTo(floorLayer22_1);
+            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer22_1);
+            L.marker([594.87, 43.05]).bindPopup('Valet Parking').addTo(floorLayer20_1);
+            L.marker([166.45, 36.50]).bindPopup('Patient Parking').addTo(floorLayer20_1);
+            L.marker([125.94, 265.92]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
+            L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
+            L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
 
             // add a default layer
-            if (location === 'patriot'){
-                map.addLayer(floorLayer20_1);
-            } else {
-
-            }
+            floorLayer20_1.addTo(map);
 
             // === LAYER CONTROLS ===
             const baseLayers = {
@@ -112,16 +99,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 '20 Patriot Place - Floor 3': floorLayer20_3,
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
-                '22 Patriot Place - Floor 4': floorLayer22_4
+                '22 Patriot Place - Floor 4': floorLayer22_4,
+                'Chestnut Hill': floorLayerChestnutHill
             };
 
-            const overlays = {
-                'Valet Parking': patriotValetParking,
-                'Patient Parking': patriotPatientParking,
-                'Extended Patient Parking': patriotExtendedParking
-            };
-
-            L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
+            L.control.layers(baseLayers).addTo(map);
 
             // connect patriot place buildings
             const bridge1 = L.polyline([
@@ -132,12 +114,12 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 weight: 2,
                 dashArray: '5, 5',
             })
-            .bindPopup('Bridge to 22 Patriot Place')
-            .on('click', () => {
-                map.removeLayer(floorLayer20_3);
-                map.addLayer(floorLayer22_3);
-            })
-            .addTo(floorLayer20_3);
+                .bindPopup('Bridge to 22 Patriot Place')
+                .on('click', () => {
+                    map.removeLayer(floorLayer20_3);
+                    map.addLayer(floorLayer22_3);
+                })
+                .addTo(floorLayer20_3);
 
             const bridge2 = L.polyline([
                 [353.57, 642.26], // 22 Patriot Place
@@ -147,23 +129,17 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 weight: 2,
                 dashArray: '5, 5',
             })
-            .bindPopup('Bridge to 20 Patriot Place')
-            .on('click', () => {
-                map.removeLayer(floorLayer22_3);
-                map.addLayer(floorLayer20_3);
-            })
-            .addTo(floorLayer22_3);
+                .bindPopup('Bridge to 20 Patriot Place')
+                .on('click', () => {
+                    map.removeLayer(floorLayer22_3);
+                    map.addLayer(floorLayer20_3);
+                })
+                .addTo(floorLayer22_3);
 
             // path
-            if (pathCoordinates && pathCoordinates.length > 1) {
-                L.polyline(pathCoordinates, {
-                    color: 'red',
-                    weight: 3,
-                    opacity: 0.8
-                }).addTo(map);
-            }
+            if (pathCoordinates && pathCoordinates.length > 1) L.polyline(pathCoordinates, {color: 'red', weight: 3, opacity: 0.8}).addTo(map);
 
-            // for getting coordinates (delete later)
+            // for getting coordinates (can delete later)
             map.on('click', function (e) {
                 console.log(`[${e.latlng.lat.toFixed(2)}, ${e.latlng.lng.toFixed(2)}],`);
             });
