@@ -100,7 +100,6 @@ model Employee {
   assignedPatients Patient[]         @relation("AssignedDoctor")
   assignedRequests DeviceRequest[]   @relation("AssignedRequests")
   createdRequests  DeviceRequest[]   @relation("CreatedRequests")
-  pharmacyRequests PharmacyRequest[] @relation("PharmacyRequests")
   TransportRequest TransportRequest[] @relation("TransportRequest")
 }
 
@@ -212,8 +211,7 @@ model DeviceRequest {
 }
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
-  employeeID             Int
-  employee               Employee        @relation("PharmacyRequests", fields: [employeeID], references: [id])
+  employeeName           String
   priority               RequestPriority
   department             Department
   patientID              Int
@@ -227,23 +225,8 @@ model PharmacyRequest {
   numberOfPills          Int
   refills                Int
   additionalInstructions String
+  status                 RequestStatus
 }
-// model PharmacyRequest {
-//   prescriptionID         Int             @id //@default(autoincrement())
-//   patientID              Int
-//   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
-//   drugName               String
-//   morningPillCount       Int
-//   middayPillCount        Int
-//   eveningPillCount       Int
-//   nightPillCount         Int
-//   days                   Int
-//   numberOfPills          Int
-//   refills                Int
-//   additionalInstructions String
-//   //general
-//   generalRequest  ServiceRequestGeneral @relation("pharmRequest", fields: [prescriptionID], references: [requestID], onDelete: Cascade)
-// }
 
 model PatientRequest {
   patientRequestID Int             @id @default(autoincrement())

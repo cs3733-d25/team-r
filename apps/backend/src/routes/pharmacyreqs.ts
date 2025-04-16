@@ -5,6 +5,7 @@ import {
   parseDepartment,
   parseRequestPriority,
   parseBuilding,
+  parseStatus,
 } from "./enum.ts";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
@@ -30,7 +31,7 @@ router.post("/", async function (req: Request, res: Response) {
   try {
     await PrismaClient.pharmacyRequest.create({
       data: {
-        employee: { connect: { id: parseInt(request.employeeID) } }, // connect to whatever employee has that ID number
+        employeeName: request.employee, // connect to whatever employee has that ID number
         priority: parseRequestPriority(request.priority),
         department: await parseDepartment(request.department),
         patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -43,6 +44,7 @@ router.post("/", async function (req: Request, res: Response) {
         numberOfPills: parseInt(request.numberOfPills),
         refills: parseInt(request.refills),
         additionalInstructions: request.additionalInstructions,
+        status: await parseStatus(request.status),
         // also a timestamp of when it was submitted?
       },
     });
