@@ -33,7 +33,7 @@ function App() {
                 { path: 'directory', element: <Directory /> },
                 { path: 'mapView', element: <ExternalMap /> },
                 { path: 'internal-map', element: <InternalMapNew /> },
-                { path: 'sanitation', element: <SanitationRequestForm /> },
+                { path: 'sanitation', element: <SanitationRequestTabs/> },
                 { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
@@ -42,8 +42,6 @@ function App() {
                 { path: 'patientrequestpage', element: <PatientRequestPage /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
-                { path: 'devicerequest', element: <DeviceReqForm />},
-                { path: 'devicerequestpage', element: <DeviceReqPage />}
             ],
         },
     ]);
