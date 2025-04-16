@@ -13,9 +13,10 @@ import './leaflet.css';
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
+    location: string;
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -91,7 +92,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
             L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
 
             // add a default layer
-            floorLayer20_1.addTo(map);
+            if (location === 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035') {
+                floorLayer20_1.addTo(map);
+            } else {
+                floorLayerChestnutHill.addTo(map);
+            }
 
             // === LAYER CONTROLS ===
             const baseLayers = {

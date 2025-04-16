@@ -10,17 +10,20 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-
 import InternalMap from '@/features/MapView/InternalMap.tsx';
+import {useLocation} from "react-router-dom";
 
 export function InternalMapNew() {
+    const location = useLocation();
+    const selectedLocation = location.state?.selectedLocation || '';
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className={'sticky top-0 z-30'}>
                 <NavbarMGH />
             </div>
             <div className="flex-1 w-full relative">
-                <InternalMap location={'patriot'} />
+                <InternalMap location={selectedLocation} />
                 {/* Overlay sidebar */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>

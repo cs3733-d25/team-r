@@ -110,7 +110,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         <Button
                             disabled={selectedLocation === ''}
                             className={'w-full'}
-                            onClick={() => navigate('/internal-map')}
+                            onClick={() => navigate('/internal-map',
+                                { state: { selectedLocation } })}
                         >
                             I've Arrived
                         </Button>
