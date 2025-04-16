@@ -1,7 +1,7 @@
 import {NavbarMGH} from '@/components/NavbarMGH.tsx';
 import Directions from '@/features/MapView/Directions.tsx';
-import {APIProvider, Map} from '@vis.gl/react-google-maps';
-import {useState} from 'react';
+import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
+import {useEffect, useState} from 'react';
 import {Label} from '@/components/ui/label.tsx';
 import {Input} from '@/components/ui/input.tsx';
 import {Button} from '@/components/ui/button.tsx';
@@ -22,6 +22,24 @@ import {
  */
 interface ExternalMapProps {
     selectedLocation?: string;
+}
+
+function MapController({ location }: { location: string }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map || !location) return;
+        
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: location }, (results, status) => {
+            if (status === 'OK' && results && results[0]?.geometry?.location) {
+                map.panTo(results[0].geometry.location);
+                map.setZoom(15);
+            }
+        });
+    }, [map, location]);
+
+    return null;
 }
 
 
@@ -53,6 +71,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         fullscreenControl={false}
                         mapTypeControl={false}
                     />
+                    <MapController location={selectedLocation} />
                     <Directions
                         selectedLocation={selectedLocation}
                         startingLocation={startingLocation}
@@ -98,19 +117,19 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
                                 <Button
-                                    variant={'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === patriotPlace20 ? 'default' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
                                     20 Patriot Place
                                 </Button>
                                 <Button
-                                    variant={'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === patriotPlace22 ? 'default' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace22)}
                                 >
                                     22 Patriot Place
                                 </Button>
                                 <Button
-                                    variant={'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'default' : 'secondary'}
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Chestnut Hill
@@ -121,7 +140,9 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
                     {/* I've arrived button */}
                     <div className="mt-4 pt-2 border-t border-gray-200">
-                        <Button className={'w-full'} onClick={() => navigate('/internal-map')}>
+                        <Button className={'w-full'} onClick={() => navigate('/internal-map',
+                        { state: { selectedLocation } })}
+                        >
                             I've Arrived!
                         </Button>
                     </div>
