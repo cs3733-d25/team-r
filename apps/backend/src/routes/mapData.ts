@@ -24,7 +24,6 @@ router.get("/parking-lots", async (req, res) => {
     const result = await pool.query(`
             SELECT * FROM "Node"
             WHERE "nodeType" = 'parking'
-            AND building in ('PATRIOT_PLACE_20', 'PATRIOT_PLACE_22');
             `);
     res.json(result.rows);
   } catch (err) {

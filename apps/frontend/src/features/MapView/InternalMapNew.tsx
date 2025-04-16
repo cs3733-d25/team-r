@@ -115,6 +115,7 @@ export function InternalMapNew() {
             {key: "22-community-room", value: "22-community-room", label: "Community Room"},
             {key: "22-primary-care", value: "22-primary-care", label: "Primary Care"},
         ],
+        // TODO: add departments for chestnut hill
         CHESTNUT_HILL: [],
     };
 
