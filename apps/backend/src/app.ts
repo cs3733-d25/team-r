@@ -34,6 +34,7 @@ app.use(cookieParser()); // Cookie parser
 
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
+// TODO: refactor to put all of the requests in a single router
 app.use(API_ROUTES.HEALTHCHECK, healthcheckRouter);
 app.use(API_ROUTES.EMPLOYEE, employeeRouter);
 app.use(API_ROUTES.SERVICE, servicereqRouter);
