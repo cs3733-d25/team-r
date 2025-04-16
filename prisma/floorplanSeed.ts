@@ -4,32 +4,62 @@ import { NodeType, Building } from "../packages/database";
 const prisma = new PrismaClient();
 
 async function main() {
-    /*// chestnut hill floor 1
+    // chestnut hill floor 1
     await prisma.node.createMany({
         data:[
-            {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'canopyEntrance'},
-            {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'leftEntrance'},
-            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'frontLot'},
-            {nodeID: 'leftWaiting', nodeType: NodeType.other, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'leftWaiting'},
-            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'leftLot'},
-            {nodeID: 'specialtyCheckIn', nodeType: NodeType.reception, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'specialtyCheckIn'},
-            {nodeID: 'canopyEntranceHallway', nodeType: NodeType.hallway, building: Building.CHESTNUT_HILL, floor: 1, xcoord: null, ycoord: null, longName: '', shortName: 'canopyEntranceHallway'},
+            {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
+            {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
+            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 130.02, ycoord: 592.90, longName: '', shortName: 'frontLot'},
+            {nodeID: 'leftWaiting', nodeType: NodeType.other, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
+            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 587.89, ycoord: 20.00, longName: '', shortName: 'leftLot'},
+            {nodeID: 'specialtyCheckIn', nodeType: NodeType.reception, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
+            {nodeID: 'canopyEntranceHallway', nodeType: NodeType.hallway, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
         ]
     })
 
     await prisma.edge.createMany({
         data:[
-            {fromID: 'frontLot', toID: 'canopyEntrance', fromX: null, fromY: null, toX: null, toY: null,},
-            {fromID: 'leftLot', toID: 'leftEntrance', fromX: null, fromY: null, toX: null, toY: null,},
-            {fromID: 'leftEntrance', toID: 'leftWaiting', fromX: null, fromY: null, toX: null, toY: null,},
-            {fromID: 'canopyEntrance', toID: 'canopyEntranceHallway', fromX: null, fromY: null, toX: null, toY: null},
-            {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: null, fromY: null, toX: null, toY: null},
+            {fromID: 'frontLot', toID: 'canopyEntrance', fromX: 130.02, fromY: 592.90, toX: 160.01, toY: 342.94},
+            {fromID: 'leftLot', toID: 'leftEntrance', fromX: 587.89, fromY: 20.00, toX: 496.92, toY: 127.98},
+            {fromID: 'leftEntrance', toID: 'leftWaiting', fromX: 496.92, fromY: 127.98, toX: 437.93, toY: 152.98},
+            {fromID: 'canopyEntrance', toID: 'canopyEntranceHallway', fromX: 160.01, fromY: 342.94, toX: 179.01, toY: 343.94},
+            {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: 179.01, fromY: 343.94, toX: 262.98, toY: 449.93}
         ]
-    })*/
+    })
 
     // patriot 20 floor 1
     await prisma.node.createMany({
         data: [
+            {
+                nodeID: 'valetParking20',
+                nodeType: NodeType.parking,
+                building: Building.PATRIOT_PLACE_20,
+                floor: 1,
+                xcoord: 576.44,
+                ycoord: 35.10,
+                longName: 'Valet Parking 20 Patriot',
+                shortName: 'Valet Parking 20 Patriot',
+            },
+            {
+                nodeID: 'patientParking20',
+                nodeType: NodeType.parking,
+                building: Building.PATRIOT_PLACE_20,
+                floor: 1,
+                xcoord: 223.65,
+                ycoord: 18.10,
+                longName: 'Patient Parking 20 Patriot',
+                shortName: 'Patient Parking 20 Patriot',
+            },
+            {
+                nodeID: 'extendedParking20',
+                nodeType: NodeType.parking,
+                building: Building.PATRIOT_PLACE_20,
+                floor: 1,
+                xcoord: 128.70,
+                ycoord: 226.15,
+                longName: 'Extended Patient Parking 20 Patriot',
+                shortName: 'Extended Patient Parking 20 Patriot',
+            },
             {
                 nodeID: 'swEntrance',
                 nodeType: NodeType.entrance,
@@ -317,6 +347,9 @@ async function main() {
         // patriot 22 floor 1
         await prisma.node.createMany({
             data: [
+                {nodeID: 'valetParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 578.88, ycoord: 973.82, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
+                {nodeID: 'patientParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 205.98, ycoord: 271.94, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
+                {nodeID: 'extendedParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 146.00, ycoord: 254.94, longName: 'Extended Patient Parking 22 Patriot', shortName: 'Extended Patient Parking 22 Patriot',},
                 {nodeID: '1ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
                 { nodeID: '1ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
                 { nodeID: '1EA', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
