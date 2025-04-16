@@ -8,19 +8,21 @@ import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 import chestnutHill from '../../../public/Chestnut-Hill.svg'
 import { goToFloor } from '../MapView/floorNavigation.ts';
+import './leaflet.css';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
+    location: string;
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
-            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2,}).setView([500, 500], 0);
+            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
 
             // bounds for all floorplans
             const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
@@ -81,16 +83,20 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
 
             // parking lot markers
             L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
-            L.marker([223.65, 18.10]).bindPopup('Patient Parking').addTo(floorLayer22_1);
+            L.marker([217.98, 221.99]).bindPopup('Patient Parking').addTo(floorLayer22_1);
             L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer22_1);
-            L.marker([578.88, 973.82]).bindPopup('Valet Parking').addTo(floorLayer20_1);
-            L.marker([205.98, 271.94]).bindPopup('Patient Parking').addTo(floorLayer20_1);
-            L.marker([146.00, 254.94]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
+            L.marker([594.87, 43.05]).bindPopup('Valet Parking').addTo(floorLayer20_1);
+            L.marker([166.45, 36.50]).bindPopup('Patient Parking').addTo(floorLayer20_1);
+            L.marker([125.94, 265.92]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
             L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
             L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
 
             // add a default layer
-            floorLayer20_1.addTo(map);
+            if (location === 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035') {
+                floorLayer20_1.addTo(map);
+            } else {
+                floorLayerChestnutHill.addTo(map);
+            }
 
             // === LAYER CONTROLS ===
             const baseLayers = {
@@ -113,12 +119,12 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
                 weight: 2,
                 dashArray: '5, 5',
             })
-            .bindPopup('Bridge to 22 Patriot Place')
-            .on('click', () => {
-                map.removeLayer(floorLayer20_3);
-                map.addLayer(floorLayer22_3);
-            })
-            .addTo(floorLayer20_3);
+                .bindPopup('Bridge to 22 Patriot Place')
+                .on('click', () => {
+                    map.removeLayer(floorLayer20_3);
+                    map.addLayer(floorLayer22_3);
+                })
+                .addTo(floorLayer20_3);
 
             const bridge2 = L.polyline([
                 [353.57, 642.26], // 22 Patriot Place
@@ -128,12 +134,12 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates}) => {
                 weight: 2,
                 dashArray: '5, 5',
             })
-            .bindPopup('Bridge to 20 Patriot Place')
-            .on('click', () => {
-                map.removeLayer(floorLayer22_3);
-                map.addLayer(floorLayer20_3);
-            })
-            .addTo(floorLayer22_3);
+                .bindPopup('Bridge to 20 Patriot Place')
+                .on('click', () => {
+                    map.removeLayer(floorLayer22_3);
+                    map.addLayer(floorLayer20_3);
+                })
+                .addTo(floorLayer22_3);
 
             // path
             if (pathCoordinates && pathCoordinates.length > 1) L.polyline(pathCoordinates, {color: 'red', weight: 3, opacity: 0.8}).addTo(map);

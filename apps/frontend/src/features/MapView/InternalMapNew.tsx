@@ -10,20 +10,27 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import InternalMap from "@/features/MapView/InternalMap.tsx";
+import InternalMap from '@/features/MapView/InternalMap.tsx';
+import {useLocation} from "react-router-dom";
 
 export function InternalMapNew() {
+    const location = useLocation();
+    const selectedLocation = location.state?.selectedLocation || '';
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
-            <NavbarMGH />
+            <div className={'sticky top-0 z-30'}>
+                <NavbarMGH />
+            </div>
             <div className="flex-1 w-full relative">
-                <InternalMap/>
+                <InternalMap location={selectedLocation} />
                 {/* Overlay sidebar */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>
                         <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
-                        <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>Patriot Place</Label>
+                        <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>
+                            Patriot Place
+                        </Label>
                     </div>
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
@@ -33,9 +40,15 @@ export function InternalMapNew() {
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Location</SelectLabel>
-                                            <SelectItem value={'dropdown test'}>Dropdown test</SelectItem>
-                                            <SelectItem value={'dropdown test 2'}>Dropdown 2</SelectItem>
-                                            <SelectItem value={'dropdown test 3'}>Dropdown 3</SelectItem>
+                                            <SelectItem value={'dropdown test'}>
+                                                Dropdown test
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 2'}>
+                                                Dropdown 2
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 3'}>
+                                                Dropdown 3
+                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </SelectTrigger>
@@ -46,30 +59,26 @@ export function InternalMapNew() {
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Location</SelectLabel>
-                                            <SelectItem value={'dropdown test'}>Dropdown test</SelectItem>
-                                            <SelectItem value={'dropdown test 2'}>Dropdown 2</SelectItem>
-                                            <SelectItem value={'dropdown test 3'}>Dropdown 3</SelectItem>
+                                            <SelectItem value={'dropdown test'}>
+                                                Dropdown test
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 2'}>
+                                                Dropdown 2
+                                            </SelectItem>
+                                            <SelectItem value={'dropdown test 3'}>
+                                                Dropdown 3
+                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </SelectTrigger>
                             </Select>
-                            <Button>
-                                Get Directions
-                            </Button>
+                            <Button>Get Directions</Button>
                         </div>
                         <div className="flex flex-col space-y-2">
                             <Label className={'px-2 mb-3'}>Floor selection</Label>
                             <div className="flex flex-col space-y-2">
-                                <Button
-                                    variant={'secondary'}
-                                >
-                                    Floor 1
-                                </Button>
-                                <Button
-                                    variant={'secondary'}
-                                >
-                                    Floor 2
-                                </Button>
+                                <Button variant={'secondary'}>Floor 1</Button>
+                                <Button variant={'secondary'}>Floor 2</Button>
                             </div>
                         </div>
                     </div>
