@@ -31,6 +31,36 @@ async function main() {
     await prisma.node.createMany({
         data: [
             {
+                nodeID: 'valetParking20',
+                nodeType: NodeType.parking,
+                building: Building.PATRIOT_PLACE_20,
+                floor: 1,
+                xcoord: 576.44,
+                ycoord: 35.10,
+                longName: 'Valet Parking 20 Patriot',
+                shortName: 'Valet Parking 20 Patriot',
+            },
+            {
+                nodeID: 'patientParking20',
+                nodeType: NodeType.parking,
+                building: Building.PATRIOT_PLACE_20,
+                floor: 1,
+                xcoord: 223.65,
+                ycoord: 18.10,
+                longName: 'Patient Parking 20 Patriot',
+                shortName: 'Patient Parking 20 Patriot',
+            },
+            {
+                nodeID: 'extendedParking20',
+                nodeType: NodeType.parking,
+                building: Building.PATRIOT_PLACE_20,
+                floor: 1,
+                xcoord: 128.70,
+                ycoord: 226.15,
+                longName: 'Extended Patient Parking 20 Patriot',
+                shortName: 'Extended Patient Parking 20 Patriot',
+            },
+            {
                 nodeID: 'swEntrance',
                 nodeType: NodeType.entrance,
                 building: Building.PATRIOT_PLACE_20,
@@ -317,6 +347,9 @@ async function main() {
         // patriot 22 floor 1
         await prisma.node.createMany({
             data: [
+                {nodeID: 'valetParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 578.88, ycoord: 973.82, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
+                {nodeID: 'patientParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 205.98, ycoord: 271.94, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
+                {nodeID: 'extendedParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 146.00, ycoord: 254.94, longName: 'Extended Patient Parking 22 Patriot', shortName: 'Extended Patient Parking 22 Patriot',},
                 {nodeID: '1ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
                 { nodeID: '1ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
                 { nodeID: '1EA', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
