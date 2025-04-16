@@ -148,8 +148,8 @@ const TransportationRequestForm = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Employee ID:</span>{' '}
-                                    {submittedTransport.employeeID}
+                                    <span className="font-semibold">Employee Name:</span>{' '}
+                                    {submittedTransport.employeeName}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Patient ID:</span>{' '}
@@ -203,7 +203,7 @@ const TransportationRequestForm = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div >
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee ID
+                                        Employee Name
                                         <span className="text-accent">*</span>
                                     </Label>
                                     <Input

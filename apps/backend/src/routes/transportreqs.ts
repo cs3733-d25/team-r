@@ -7,7 +7,8 @@ import {
   Department,
   Building,
 } from "../../../../packages/database";
-import RequestStatus = $Enums.RequestStatus; //here?
+import RequestStatus = $Enums.RequestStatus;
+import {parseStatus} from "./enum.ts"; //here?
 
 const router: Router = express.Router();
 
@@ -56,7 +57,7 @@ router.post("/", async function (req: Request, res: Response) {
     console.log(parseRequestPriority(request.priority));
     const createRequest = await PrismaClient.transportRequest.create({
       data: {
-        employeeRequestID: request.employeeRequestID,
+        employeeName: request.employeeName,
         employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
         patient: { connect: { id: parseInt(request.patientID, 10) } },
 
@@ -67,7 +68,7 @@ router.post("/", async function (req: Request, res: Response) {
         priority: parseRequestPriority(request.priority),
         department: parseDepartment(request.department),
         comments: request.comments,
-        status: RequestStatus.cancelled, //
+        status: await parseStatus(request.status),//
         //user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });

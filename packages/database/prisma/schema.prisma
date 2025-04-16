@@ -259,7 +259,7 @@ model TransportRequest {
   employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
   patientID         Int
   patient           Patient  @relation("TransportRequest", fields: [patientID], references: [id])
-
+employeeName        String
   transportationType String
   currentBuilding    Building
   desiredBuilding    Building
