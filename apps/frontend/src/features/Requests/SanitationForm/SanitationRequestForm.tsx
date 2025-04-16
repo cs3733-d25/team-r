@@ -49,7 +49,7 @@ const SanitationRequestForm = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post('/api/sanitation/', {
+      const response = await axios.post('/api/sanitation', {
         ...formData,
         priority: formData.priority.toString()
       });
