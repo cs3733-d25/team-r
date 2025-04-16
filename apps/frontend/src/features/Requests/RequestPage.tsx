@@ -20,7 +20,6 @@ export function AllRequestsPage() {
         {
             name: "Medical Device",
             description: "Requests for medical devices including X-rays, Defibrillators, EKG Machines, etc.",
-            icon: "🩺",
             path: "/devicerequest"
         },
         {
