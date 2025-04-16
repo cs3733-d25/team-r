@@ -45,6 +45,7 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'edit-map', element: <EditMap /> },
             ],
         },
     ]);
