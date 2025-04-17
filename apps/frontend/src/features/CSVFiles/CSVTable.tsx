@@ -8,13 +8,19 @@ import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/c
 function CSVTablePage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
 
-
-    function displayTable() {
+////Changed so useEffect isn't called inside the function, apparently that breaks reacts rules according to stackoverflow --Riley
+    /*function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
         }, []);
     }
     displayTable();
+    */
+    useEffect(() => {
+        retrieveFromDatabase();
+    }, []);
+
+
     async function retrieveFromDatabase() {
 
         try{
@@ -43,8 +49,16 @@ function CSVTablePage() {
                 const newPlace = index === 0 || row.building != directoryTable[index-1].building;
                 return(
                     <>
-                        {(newPlace && row.building===("PATRIOT_PLACE_22"))?<TableHead className = {"pl-30 text-center"} >22 Patriot Place</TableHead>:null}
-                        {(newPlace && row.building===("PATRIOT_PLACE_20"))?<TableHead className = {"pl-30 text-center"}>20 Patriot Place</TableHead>:null}
+                        {newPlace && row.building === "PATRIOT_PLACE_22" && (
+                            <TableRow>
+                                <TableCell colSpan={2} className="text-center font-bold">22 Patriot Place</TableCell> //changed the pl-30 because the spacing doesn't change anymore than pl-12 -Riley
+                            </TableRow>
+                        )}
+                        {newPlace && row.building === "PATRIOT_PLACE_20" && (
+                            <TableRow>
+                                <TableCell colSpan={2} className="text-center font-bold">20 Patriot Place</TableCell>
+                            </TableRow>
+                        )}
                         <TableRow key = {index}>
                             <TableCell >{row.name}</TableCell>
                             {newFloor? <TableCell >{row.floorNumber}</TableCell>:null}

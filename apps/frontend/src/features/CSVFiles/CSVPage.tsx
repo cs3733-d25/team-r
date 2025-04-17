@@ -9,6 +9,9 @@ import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/c
 export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [csvfile, setFile] = useState<File | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [feedback, setFeedback] = useState<string | null>(null);
+
 
 
     function displayTable() {
@@ -36,30 +39,44 @@ export function CSVPage() {
             console.log(error);
         }
     }
-    const handleSave=async()=>{
-        if(csvfile != null){
+    const handleSave = async () => {
+        if (csvfile != null) {
+            // Make sure the file is a CSV that is under 5 MB - Riley
+            if (csvfile.size > 5 * 1024 * 1024 || !csvfile.name.endsWith('.csv')) {
+                alert("File must be a .csv and less than 5MB.");
+                return;
+            }
+
             const formData = new FormData();
             formData.append('csvfile', csvfile);
+
             try {
-                console.log("CSV file is trying to send off! :)")
+                console.log("CSV file is trying to send off! :)");
+                // Stops Users from being able to save while the file is still uploading - Riley
+                setLoading(true);
+
                 const sendOff = await axios.post('/api/csv/import', formData, {
-                    headers:{
+                    headers: {
                         'Content-Type': 'multipart/form-data'
                     }
-                })
-
+                });
 
                 console.log("CSV file is sent off! :)", sendOff);
-                displayTable();
-                setFile(null);
+                alert("Upload successful!");
+
+                retrieveFromDatabase();
             } catch (error) {
-                console.error("CSV File Sendoff didn't work :(")
+                console.error("CSV File Sendoff didn't work :(");
+                alert("Upload failed. Please check the file and try again.");
+            } finally {
+                //Allows Users to be able to use save button - Riley
+                setLoading(false);
             }
-        }
-        else{
+        } else {
             alert("Please Select a CSV file");
         }
-    }
+    };
+
     const handleConfirmation = (e:React.ChangeEvent<HTMLInputElement>) => {
         return(
         <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
@@ -110,10 +127,22 @@ export function CSVPage() {
                     ></Input>
                 </div>
                 <div className={"float-right"}>
-                    <Button variant = "default" id="ExportCSV" name="ExportCSV" onClick ={handleExport}>Export</Button>
+                    <Button variant = "default"
+                            id="ExportCSV"
+                            name="ExportCSV"
+                            onClick ={handleExport}>Export
+                    </Button>
                 </div>
                 <div>
-                    <Button variant="default" id="SaveCSV" name="SaveCSV" onClick = {handleSave}>Save</Button>
+                    <Button
+                        variant="default"
+                        id="SaveCSV"
+                        name="SaveCSV"
+                        onClick={handleSave}
+                        disabled={loading}
+                    >
+                        {loading ? "Saving..." : "Save"}
+                    </Button>
                 </div>
         </div>
     );
