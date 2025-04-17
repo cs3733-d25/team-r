@@ -1,0 +1,12 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../.prisma/client"
+  engineType      = "binary"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+  // schemas  = ["user", "request", "node", "enum"]
+}
