@@ -40,6 +40,7 @@ export function InternalMapNew() {
     const [error, setError] = useState<string | null>(null);
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
+    console.log('selectedLocation:', selectedLocation);
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
     const [formData, setFormData] = useState({
