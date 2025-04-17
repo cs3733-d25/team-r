@@ -14,8 +14,7 @@ import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {fetchParkingLots, fetchDepartments} from '@/features/MapView/mapService';
-import Dropdown from "@/components/Dropdowns/Department.tsx";
-import {Department, RequestPriority} from "@/features/Requests/RequestEnums.tsx";
+import axios from 'axios';
 
 interface Node {
     nodeID: string;
@@ -37,10 +36,10 @@ export function InternalMapNew() {
     const [departments, setDepartments] = useState<{key: string; value: string; label: string}[]>([]);
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
-    console.log('selectedLocation:', selectedLocation);
+    const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
+    const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
-    const [formData, setFormData] = useState({});
 
     const getBuildingFromLocation = (location: string) => {
         if (location.includes('20 Patriot Pl')) return 'PATRIOT_PLACE_20';
@@ -52,6 +51,18 @@ export function InternalMapNew() {
     const [selectedBuilding, setSelectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            // const response = await axios.post('/api/map/internal',{
+            //     selectedParkinglot,
+            //     selectedDepartment
+            // });
+            console.log("selected parking lot: ", selectedParkinglot);
+            console.log("selected department lot: ", selectedDepartment);
+        } catch {}
+    };
 
     useEffect(() => {
         const loadParkingLots = async () => {
@@ -70,7 +81,7 @@ export function InternalMapNew() {
         const loadDepartments = async () => {
             try {
                 const data = await fetchDepartments(selectedBuilding);
-                const formattedDepartments = data.map((dept: any) => ({
+                const formattedDepartments = data.map((dept: { id?: string; key?: string; value?: string; name?: string; label?: string }) => ({
                     key: dept.id || dept.key,
                     value: dept.id || dept.value,
                     label: dept.name || dept.label
@@ -83,6 +94,15 @@ export function InternalMapNew() {
 
         loadDepartments();
     }, [selectedBuilding]);
+
+    const floorConfig = {
+        PATRIOT_PLACE_20: [1, 3, 4],
+        PATRIOT_PLACE_22: [1, 3],
+        CHESTNUT_HILL: [1],
+    };
+
+    // Get floors for current building
+    const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
@@ -135,12 +155,12 @@ export function InternalMapNew() {
                                         </SelectGroup>
                                     </SelectContent>
                             </Select>
-                            <Button>Get Directions</Button>
+                            <Button type="submit">Get Directions</Button>
                         </div>
                         <div className="flex flex-col space-y-2">
                             <Label className={'px-2 mb-3'}>Floor selection</Label>
                             <div className="flex flex-col space-y-2">
-                                {[1, 3, 4].map(floor => (
+                                {availableFloors.map(floor => (
                                     <Button
                                         key={floor}
                                         variant={currentFloor === floor ? 'default' : 'secondary'}
@@ -148,6 +168,7 @@ export function InternalMapNew() {
                                             setCurrentFloor(floor);
                                             (window as CustomWindow).goToFloor?.(floor);
                                         }}
+                                        type="button"
                                     >
                                         Floor {floor}
                                     </Button>

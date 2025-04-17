@@ -25,10 +25,6 @@ export interface Edge {
 
 const router: Router = express.Router();
 
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL,
-// });
-
 // get parking lots
 router.get("/parking-lots", async (req, res) => {
   try {
