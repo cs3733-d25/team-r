@@ -11,10 +11,12 @@ import { goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import {
     fetchCheckIn,
-    fetchEdges20_1,//  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
+    fetchEdges20_1, fetchEdges20_3,
+    fetchEdges22_1, fetchEdges22_3, fetchEdges22_4,
+    fetchEdgesChestnut, //  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
     fetchEntrances,
-    fetchParkingLots
-} from "@/features/MapView/mapService.ts";
+    fetchParkingLots,
+} from '@/features/MapView/mapService.ts';
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 import {SelectItem} from "@/components/ui/select.tsx";
 
@@ -32,6 +34,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [checkIn, setCheckIn] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+    const [edges20_3, setEdges20_3] = useState<Edge[]>([]);
+    const [edges22_1, setEdges22_1] = useState<Edge[]>([]);
+    const [edges22_3, setEdges22_3] = useState<Edge[]>([]);
+    const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
+    const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
 
     useEffect(() => {
         const loadCheckIn = async () => {
@@ -73,8 +80,18 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
         const loadEdges = async () => {
             try {
                 setIsLoading(true);
-                const data = await fetchEdges20_1();
-                setEdges20_1(data);
+                const data201 = await fetchEdges20_1();
+                setEdges20_1(data201);
+                const data203 = await fetchEdges20_3();
+                setEdges20_3(data203);
+                const data221 = await fetchEdges22_1();
+                setEdges22_1(data221);
+                const data223 = await fetchEdges22_3();
+                setEdges22_3(data223);
+                const data224 = await fetchEdges22_4();
+                setEdges22_4(data224);
+                const dataChestnut = await fetchEdgesChestnut();
+                setEdgesChestnut(dataChestnut);
                 setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
@@ -226,6 +243,46 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                     ]).addTo(floorLayer20_1)
                 ))}
 
+            {edges20_3
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer20_3)
+                ))}
+
+            {edges22_1
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_1)
+                ))}
+
+            {edges22_3
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_3)
+                ))}
+
+            {edges22_4
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_4)
+                ))}
+
+            {edgesChestnut
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayerChestnutHill)
+                ))}
+
             // add a default layer
             if (location === 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035') {
                 floorLayer20_1.addTo(map);
@@ -300,7 +357,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 mapInstance.current = null;
             }
         };
-    }, [pathCoordinates]);
+    }, [pathCoordinates, entrances, checkIn, edges20_1, edges20_3, edges22_1, edges22_3, edges22_4, edgesChestnut]);
 
     return (
         <div>
