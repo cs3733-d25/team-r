@@ -18,6 +18,8 @@ import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx"
 import SanitationRequestTabs from "@/features/Requests/SanitationForm/SanitationTabs.tsx";
 import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
 import {EditMap} from "@/features/MapView/EditMap.tsx";
+import RequestPage  from "@/features/Requests/RequestPage.tsx";
+
 
 
 function App() {
@@ -44,6 +46,7 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'requests', element: <RequestPage /> }
             ],
         },
     ]);
