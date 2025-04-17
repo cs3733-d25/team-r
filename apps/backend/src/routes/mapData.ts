@@ -39,6 +39,28 @@ router.get("/parking-lots", async (req, res) => {
   }
 });
 
+router.get("/departments", async (req, res) => {
+  try {
+    const building = req.query.building as string;
+
+    const request = await PrismaClient.department.findMany({
+      where: building ? { building } : {},
+    });
+
+    // Transform to match frontend expectations
+    const formattedDepartments = request.map((dept) => ({
+      key: dept.id.toString(),
+      value: dept.id.toString(),
+      label: dept.name,
+    }));
+
+    res.json(formattedDepartments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 router.get("/check-in", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
