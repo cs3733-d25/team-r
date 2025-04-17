@@ -229,8 +229,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             // add a default layer
             if (location === 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035') {
                 floorLayer20_1.addTo(map);
-            } else {
+            } else if (location === '850 Boylston St, Chestnut Hill, MA 02467') {
                 floorLayerChestnutHill.addTo(map);
+            } else {
+                floorLayer22_1.addTo(map);
             }
 
             // === LAYER CONTROLS ===
