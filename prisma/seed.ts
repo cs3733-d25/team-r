@@ -71,6 +71,14 @@ async function main() {
         }
     });
 
+    //create user admin for iteration 2 testing
+    const user9 = await prisma.user.create({
+        data: {
+            username: 'adminD25X@gmail.com',
+            password: 'cs3733D25X',
+            userType: UserType.EMPLOYEE
+        }
+    });
 
 
     // Create employees with correct schema fields
