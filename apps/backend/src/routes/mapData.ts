@@ -33,6 +33,19 @@ router.get("/parking-lots", async (req, res) => {
   }
 });
 
+router.post("/internal", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({
+      where: { nodeType: "parking" },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 /*
 // get departments
 router.get("/departments", async (req, res) => {

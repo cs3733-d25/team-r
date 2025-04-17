@@ -1,4 +1,6 @@
 import express, { Router, Request, Response } from "express";
+import PrismaClient from "../bin/prisma-client.ts";
+import { Prisma } from "database";
 const router: Router = express.Router();
 
 interface NodeData {
@@ -130,6 +132,7 @@ const hospitalGraph = new Graph();
 
 // add all hospital node data and outside data
 //parking
+/*
 hospitalGraph.addNode({
   id: "p1",
   name: "Extended Parking",
@@ -242,9 +245,9 @@ hospitalGraph.addNode({
 hospitalGraph.addNode({
   id: "s1",
   name: "22-1",
-  type: "sidewalk",
-  xPos: 790,
-  yPos: 210,
+  type: "sixPos: 790,
+  yPos: 210,dewalk",
+
 });
 hospitalGraph.addNode({
   id: "s2",
@@ -253,7 +256,9 @@ hospitalGraph.addNode({
   xPos: 750,
   yPos: 90,
 });
-
+*
+ */
+/*
 //add all edges between nodes on the graph
 //NOTE: p = parking, e = entrance, r = reception, h = hallway, s = sidewalk
 //p1
@@ -282,13 +287,13 @@ hospitalGraph.addEdge("h6", "e3");
 //sidewalk outside 22 place
 hospitalGraph.addEdge("s1", "s2");
 hospitalGraph.addEdge("s2", "e3");
+*/
 
 const pathFinder = new Pathfinder(hospitalGraph);
 //send data to front end
 router.post("/", async function (req: Request, res: Response) {
   const { startingPoint, endingPoint } = req.body;
   console.log("Starting BFS algorithm");
-
   try {
     const pf = pathFinder.BFS(startingPoint, endingPoint);
     if (pf.length > 0) {
