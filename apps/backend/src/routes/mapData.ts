@@ -1,5 +1,7 @@
 import express, { Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
+import { Prisma } from "database";
+import { Building } from "database";
 
 export interface Node {
   nodeID: string;
@@ -42,9 +44,9 @@ router.get("/departments", async (req, res) => {
   try {
     const buildingStr = req.query.building as string;
 
-    // Create the where clause with type-safe building value
+    // Create the where clause with correct enum reference
     const whereClause = buildingStr
-      ? { building: buildingStr as Prisma.Building }
+      ? { building: buildingStr as Building }
       : {};
 
     const request = await PrismaClient.directory.findMany({
