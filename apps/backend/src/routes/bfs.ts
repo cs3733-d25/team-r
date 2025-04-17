@@ -56,6 +56,15 @@ router.post("/", async function (req: Request, res: Response) {
   console.log("Starting BFS algorithm");
 
   try {
+    const departmentToCheckIns: Record<string, string[]> = {
+      Primary_care: ["checkin4000B"],
+      Community_: ["checkin4000B"],
+      Blood_draw: ["checkin4000B"],
+
+      radiology: ["r2"],
+      pharmacy: ["r4"],
+    };
+
     const path = await BFS(startingPoint, endingPoint);
     //const pf = BFS(startingPoint, endingPoint);
     if (path.length > 0) {
