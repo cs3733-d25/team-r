@@ -6,24 +6,19 @@ export const fetchParkingLots = async (): Promise<Node[]> => {
     return res.data;
 };
 
-export async function fetchDepartments(building?: string) {
+// In mapService.ts, update the fetchDepartments function
+export const fetchDepartments = async (building: string) => {
     try {
-        const url = building
-            ? `/api/departments?building=${building}`
-            : '/api/departments';
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
-        }
-
-        return await response.json();
+        console.log("Fetching departments with building:", building);
+        const response = await axios.get(`/api/map/departments?building=${building}`);
+        console.log("Response data:", response.data);
+        return response.data;
     } catch (error) {
-        console.error('Error fetching departments:', error);
+        console.error("Error fetching departments:", error);
         throw error;
     }
-}
+};
+
 
 export const fetchCheckIn = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/check-in');

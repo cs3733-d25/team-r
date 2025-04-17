@@ -14,7 +14,6 @@ import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import {fetchParkingLots, fetchDepartments} from '@/features/MapView/mapService';
-import axios from 'axios';
 
 interface Node {
     nodeID: string;
@@ -104,6 +103,13 @@ export function InternalMapNew() {
     // Get floors for current building
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
+    const getShortLocationName = (location: string) => {
+        if (location.includes('20 Patriot Pl')) return '20 Patriot Place';
+        if (location.includes('22 Patriot Pl')) return '22 Patriot Place';
+        if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
+        return location;
+    };
+
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className={'sticky top-0 z-30'}>
@@ -116,7 +122,7 @@ export function InternalMapNew() {
                     <div>
                         <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
                         <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>
-                            {selectedLocation}
+                            {getShortLocationName(selectedLocation)}
                         </Label>
                     </div>
                     <form className="space-y-6" onSubmit={handleSubmit}>
