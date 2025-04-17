@@ -12,4 +12,5 @@ export const API_ROUTES = {
     ENUM: '/api/enum',
     TRANSPORT: '/api/transportreq',
     DEVICE: '/api/device',
+    MAP: '/api/map',
 };

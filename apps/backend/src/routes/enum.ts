@@ -145,4 +145,27 @@ router.get("/:table", async function (req: Request, res: Response) {
   }
 });
 
+//enums with mapping
+// expects keys are string and value is another object with enum keys and readable string values
+type EnumMappingsType = Record<string, Record<string, string>>;
+//
+// export function formatEnumLabels<T extends Record<string, any>>(
+//     items: T[], //array of objects - record from a table
+//     enumFields: (keyof T)[], //array of strings holding the enum names as strings
+//     mappings: EnumMappingsType //enum to display mapping
+// ): (T & Record<string, string>)[] {
+//   return items.map((item) => { //loop through onjects and copy
+//     const formattedItem = { ...item };
+//     for (const field of enumFields) {
+//       const fieldKey = field as string;
+//       const enumValue = item[fieldKey];
+//       const label = mappings[fieldKey]?.[enumValue];
+//       if (label) {
+//         formattedItem['${fieldKey}Label'] = label;
+//       }
+//     }
+//     return formattedItem;
+//   });
+// }
+
 export default router;

@@ -9,12 +9,13 @@ async function main() {
         data:[
             {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
             {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
-            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 130.02, ycoord: 592.90, longName: '', shortName: 'frontLot'},
+            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
             {nodeID: 'leftWaiting', nodeType: NodeType.other, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
-            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 587.89, ycoord: 20.00, longName: '', shortName: 'leftLot'},
+            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
             {nodeID: 'specialtyCheckIn', nodeType: NodeType.reception, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
             {nodeID: 'canopyEntranceHallway', nodeType: NodeType.hallway, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
-        ]
+        ],
+        skipDuplicates: true
     })
 
     await prisma.edge.createMany({
@@ -301,6 +302,7 @@ async function main() {
                 shortName: 'Waiting Room 130.00',
             }
         ],
+        skipDuplicates: true
     });
 
         // patriot 20 floor 3
@@ -311,6 +313,7 @@ async function main() {
                 {nodeID: '300.14', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
                 {nodeID: '300.10', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '3rd Floor Elevator', shortName: '3rd Floor Elevator'}
             ],
+            skipDuplicates: true
         });
 
         await prisma.edge.createMany({
@@ -354,7 +357,8 @@ async function main() {
                 { nodeID: '1ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
                 { nodeID: '1EA', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
                 { nodeID: '22entrance1', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 333.39, ycoord: 719.00, longName: 'Entrance', shortName: 'Entrance'}
-            ]
+            ],
+            skipDuplicates: true
         });
 
         // patriot 22 floor 3
@@ -374,7 +378,8 @@ async function main() {
                 {nodeID: '3112', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 645.88, ycoord: 732.50, longName: 'Exam 3112', shortName: 'Exam 3112'},
                 {nodeID: 'ST03', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'},
                 {nodeID: '307', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'}
-            ]
+            ],
+            skipDuplicates: true
         });
 
         await prisma.edge.createMany({
@@ -412,7 +417,8 @@ async function main() {
                 { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
                 { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
                 { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'}
-            ]
+            ],
+            skipDuplicates: true
         });
 
         await prisma.edge.createMany({

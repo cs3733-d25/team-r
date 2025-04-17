@@ -12,7 +12,10 @@ import {
 } from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {fetchParkingLots} from '@/features/MapView/mapService';
+import Dropdown from "@/components/Dropdowns/Department.tsx";
+import {Department, RequestPriority} from "@/features/Requests/RequestEnums.tsx";
 
 interface Node {
     nodeID: string;
@@ -25,13 +28,76 @@ interface Node {
     shortName: string;
 }
 
+interface CustomWindow extends Window {
+    goToFloor?: (floor: number) => void;
+}
+
 export function InternalMapNew() {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
+    const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
+    const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
+    const [currentFloor, setCurrentFloor] = useState(1);
+    const [formData, setFormData] = useState({
+    });
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            // const response = await axios.post('/api/map/internal',{
+            //     selectedParkinglot,
+            //     selectedDepartment
+            // });
+            console.log("selected parking lot: ", selectedParkinglot);
+            console.log("selected department lot: ", selectedDepartment);
+        } catch {}
+    };
+    const handleDropdownChange = (name:string, value:string) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+    useEffect(() => {
+        const loadParkingLots = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchParkingLots();
+                setParkingLots(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    const departmentsByBuilding: Record<string, { key: string; value: string; label: string; }[]> = {
+        loadParkingLots();
+    }, []);
+
+    useEffect(() => {
+        const loadParkingLots = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchParkingLots();
+                setParkingLots(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadParkingLots();
+    }, []);
+
+    const departmentsByBuilding: Record<string, { key: string; value: string; label: string }[]> = {
         PATRIOT_PLACE_20: [
             { key: "20-blood-draw", value: "20-blood-draw", label: "Blood Draw/Phlebotomy" },
             { key: "20-pharmacy", value: "20-pharmacy", label: "Pharmacy" },
@@ -94,7 +160,27 @@ export function InternalMapNew() {
             {key: "22-community-room", value: "22-community-room", label: "Community Room"},
             {key: "22-primary-care", value: "22-primary-care", label: "Primary Care"},
         ],
-        CHESTNUT_HILL: [],
+        // Added departments : Riley
+        CHESTNUT_HILL: [
+            {key: "cnh-allergy-immunology", value: "cnh-allergy-immunology", label: "Allergy and Clinical Immunology"},
+            {key: "cnh-backup-childcare", value: "cnh-backup-childcare", label: "Backup Child Care Center"},
+            {key: "cnh-dermatology", value: "cnh-dermatology", label: "Dermatology"},
+            {key: "cnh-physicians", value: "cnh-physicians", label: "Physicians Group"},
+            {key: "cnh-obstetrics-gynecology", value: "cnh-obstetrics-gynecology", label: "Obstetrics and Gynecology"},
+            {key: "cnh-psychiatric-specialities", value: "cnh-psychiatric-specialities", label: "Psychiatric Specialities"},
+            {key: "cnh-center-for-pain", value: "cnh-center-for-pain", label: "Center for Pain Medicine"},
+            {key: "cnh-crohns-colitis", value: "cnh-crohns-colitis", label: "Crohn's and Colitis Center"},
+            {key: "cnh-endoscopy-center", value: "cnh-endoscopy-center", label: "Endoscopy Center"},
+            {key: "cnh-womens-health-center", value: "cnh-womens-health-center", label: "Center for Women's Health"},
+            {key: "cnh-laboratory", value: "cnh-laboratory", label: "Laboratory"},
+            {key: "cnh-multi-specialty", value: "cnh-multi-specialty", label: "Multi-Specialty Clinic"},
+            {key: "cnh-integrative-health", value: "cnh-integrative-health", label: "Center for Integrative Health"},
+            {key: "cnh-financial-services", value: "cnh-financial-services", label: "Patient Financial Services"},
+            {key: "cnh-pharmacy", value: "cnh-pharmacy", label: "Pharmacy"},
+            {key: "cnh-radiology", value: "cnh-radiology", label: "Radiology"},
+            {key: "cnh-radiology-mri-ct", value: "cnh-radiology-mri-ct", label: "Radiology (MRI/CT Scan)"},
+            {key: "cnh-rehabilitation", value: "cnh-rehabilitation", label: "Rehabilitation Services"}
+        ],
     };
 
     const getBuildingFromLocation = (location: string) => {
@@ -114,7 +200,24 @@ export function InternalMapNew() {
             selectedBuilding === 'PATRIOT_PLACE_22' ? '22 Patriot Place' :
                 selectedBuilding === 'CHESTNUT_HILL' ? 'Chestnut Hill' : 'Patriot Place';
 
+    const floorConfig = {
+        PATRIOT_PLACE_20: [1, 3, 4],
+        PATRIOT_PLACE_22: [1, 3],
+        CHESTNUT_HILL: [1],
+    };
 
+    // Get floors for current building
+    const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
+
+    // Handle floor change
+    const handleFloorChange = (floor: number) => {
+        setCurrentFloor(floor);
+        // Call the global goToFloor function exposed by InternalMap
+        const customWindow = window as CustomWindow;
+        if (customWindow.goToFloor) {
+            customWindow.goToFloor(floor);
+        }
+    };
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
@@ -131,50 +234,69 @@ export function InternalMapNew() {
                             {buildingDisplayName}
                         </Label>
                     </div>
-                    <div className="space-y-4 flex-grow overflow-auto">
-                        <div className="flex flex-col space-y-2">
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Parking Lot" />
-                                </SelectTrigger>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-4 flex-grow overflow-auto">
+                            <div className="flex flex-col space-y-2">
+                                {/*Sets the parking lot that the user chooses*/}
+                                <Select onValueChange={(value) =>setSelectedParkinglot(value)}>
+                                    <SelectTrigger disabled={isLoading}>
+                                        <SelectValue
+                                            placeholder={isLoading ? 'Loading...' : 'Parking Lot'}
+                                        />
+                                    </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Parking Lots</SelectLabel>
                                             {parkingLots
-                                                .filter(lot => lot.building === selectedBuilding)
+                                                .filter((lot) => lot.building === selectedBuilding)
                                                 .map((lot) => (
-                                                    <SelectItem key={lot.nodeID} value={lot.shortName}>
+                                                    <SelectItem
+                                                        key={lot.nodeID}
+                                                        value={lot.shortName}
+                                                    >
                                                         {lot.shortName}
                                                     </SelectItem>
                                                 ))}
                                         </SelectGroup>
                                     </SelectContent>
-                            </Select>
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Department" />
-                                </SelectTrigger>
-                                <SelectContent>
+                                </Select>
+                                {/*<Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>*/}
+                                {/*Sets the department that the user chooses*/}
+                                <Select onValueChange={(value) => setSelectedDepartment(value)}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Department" />
+                                    </SelectTrigger>
+                                    <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Departments</SelectLabel>
-                                            {departments.map(dept => (
+                                            {departments.map((dept) => (
                                                 <SelectItem key={dept.key} value={dept.value}>
                                                     {dept.label}
                                                 </SelectItem>
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
-                            </Select>
-                            <Button>Get Directions</Button>
-                        </div>
-                        <div className="flex flex-col space-y-2">
-                            <Label className={'px-2 mb-3'}>Floor selection</Label>
+                                </Select>
+                                <Button onClick={handleSubmit}>Get Directions</Button>
+                            </div>
                             <div className="flex flex-col space-y-2">
-                                <Button variant={'secondary'}>Floor 1</Button>
-                                <Button variant={'secondary'}>Floor 2</Button>
+                                <Label className={'px-2 mb-3'}>Floor selection</Label>
+                                <div className="flex flex-col space-y-2">
+                                    {availableFloors.map((floor) => (
+                                        <Button
+                                            key={floor}
+                                            variant={
+                                                currentFloor === floor ? 'default' : 'secondary'
+                                            }
+                                            onClick={() => handleFloorChange(floor)}
+                                        >
+                                            Floor {floor}
+                                        </Button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

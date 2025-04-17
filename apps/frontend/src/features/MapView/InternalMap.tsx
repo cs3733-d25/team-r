@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
@@ -9,6 +9,14 @@ import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 import chestnutHill from '../../../public/Chestnut-Hill.svg'
 import { goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
+import {
+    fetchCheckIn,
+    fetchEdges20_1,//  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
+    fetchEntrances,
+    fetchParkingLots
+} from "@/features/MapView/mapService.ts";
+import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
+import {SelectItem} from "@/components/ui/select.tsx";
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
@@ -19,6 +27,65 @@ interface InternalMapProps {
 const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [checkIn, setCheckIn] = useState<Node[]>([]);
+    const [entrances, setEntrances] = useState<Node[]>([]);
+    const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+
+    useEffect(() => {
+        const loadCheckIn = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchCheckIn();
+                setCheckIn(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadCheckIn();
+    }, []);
+
+    useEffect(() => {
+        const loadEntrances = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchEntrances();
+                setEntrances(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadEntrances();
+    }, []);
+
+    useEffect(() => {
+        const loadEdges = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchEdges20_1();
+                setEdges20_1(data);
+                setError(null);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+                setError('Failed to load parking lots');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadEdges();
+    }, []);
 
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
@@ -91,11 +158,81 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
             L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
 
+            {entrances
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayer20_1)
+                ))}
+
+            {entrances
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 3)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayer20_3)
+                ))}
+
+            {entrances
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 1)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayer22_1)
+                ))}
+
+            {entrances
+                .filter(lot => lot.building === "CHESTNUT_HILL" && lot.floor === 1)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayerChestnutHill)
+                ))}
+
+            {checkIn
+                .filter(lot => lot.building === "CHESTNUT_HILL" && lot.floor === 1)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayerChestnutHill)
+                ))}
+
+            {checkIn
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer20_1)
+                ))}
+
+            {checkIn
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 3)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer20_3)
+                ))}
+
+            {checkIn
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 1)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_1)
+                ))}
+
+            {checkIn
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 3)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_3)
+                ))}
+
+            {checkIn
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 4)
+                .map((lot) => (
+                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_4)
+                ))}
+
+            {edges20_1
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer20_1)
+                ))}
+
             // add a default layer
             if (location === 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035') {
                 floorLayer20_1.addTo(map);
-            } else {
+            } else if (location === '850 Boylston St, Chestnut Hill, MA 02467') {
                 floorLayerChestnutHill.addTo(map);
+            } else {
+                floorLayer22_1.addTo(map);
             }
 
             // === LAYER CONTROLS ===
@@ -166,6 +303,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     }, [pathCoordinates]);
 
     return (
+        <div>
         <div
             ref={mapRef}
             style={{
@@ -176,6 +314,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 zIndex: 0 // Add a low z-index here
             }}
         />
+        </div>
     );
 };
 

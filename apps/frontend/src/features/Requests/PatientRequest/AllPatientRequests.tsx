@@ -62,7 +62,7 @@ export function AllPatientRequests() {
                                 <TableCell>{row.request}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.department}</TableCell>
-                                <TableCell>{row.department}</TableCell>
+                                <TableCell>{row.location}</TableCell>
                                 <TableCell>{row.status}</TableCell>
 
                             </TableRow>

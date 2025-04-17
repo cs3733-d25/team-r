@@ -17,31 +17,11 @@ export function AllRequestsPage() {
   const navigate = useNavigate();
 
   const requestTypes = [
-    {
-      name: 'Medical Device',
-      description: 'Requests for medical devices',
-      path: '/devicerequest',
-    },
-    {
-      name: 'Prescription',
-      description: 'Medication prescriptions for patients',
-      path: '/prescription',
-    },
-    {
-      name: 'Patient',
-      description: 'Non-emergency patient service requests',
-      path: '/patientrequestpage',
-    },
-    {
-      name: 'Transport',
-      description: 'Patient transportation between facilities',
-      path: '/transport',
-    },
-    {
-      name: 'Sanitation',
-      description: 'Cleaning and sanitation service requests',
-      path: '/sanitation',
-    },
+    { name: 'Medical Device', description: 'Requests for medical devices', path: '/devicerequest' },
+    { name: 'Prescription',   description: 'Medication prescriptions for patients', path: '/prescription' },
+    { name: 'Patient',        description: 'Non-emergency patient service requests', path: '/patientrequestpage' },
+    { name: 'Transport',      description: 'Patient transportation between facilities', path: '/transport' },
+    { name: 'Sanitation',     description: 'Cleaning and sanitation service requests', path: '/sanitation' },
   ];
 
   return (
@@ -52,7 +32,8 @@ export function AllRequestsPage() {
         <h1 className="text-3xl font-bold mb-6 text-center">Service Request Dashboard</h1>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="mb-1">
+          {/* remove bottom border, zero out bottom margin */}
+          <TabsList className="mb-0 border-b-0 shadow-none">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
             <TabsTrigger value="prescription">Prescription</TabsTrigger>
@@ -61,8 +42,8 @@ export function AllRequestsPage() {
             <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
           </TabsList>
 
-          {/* ——— Overview ——— */}
-          <TabsContent value="overview" className="space-y-6">
+          {/* pull content up by 1px to kill any gap */}
+          <TabsContent value="overview" className="space-y-6 -mt-px">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {requestTypes.map((type) => (
                 <Card
@@ -91,8 +72,7 @@ export function AllRequestsPage() {
             </div>
           </TabsContent>
 
-          {/* ——— Medical Device Tab ——— */}
-          <TabsContent value="medical-device">
+          <TabsContent value="medical-device" className="-mt-px">
             <Card className="rounded-lg overflow-hidden">
               <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
                 <CardTitle>Medical Device Requests</CardTitle>
@@ -103,8 +83,7 @@ export function AllRequestsPage() {
             </Card>
           </TabsContent>
 
-          {/* ——— Prescription Tab ——— */}
-          <TabsContent value="prescription">
+          <TabsContent value="prescription" className="-mt-px">
             <Card className="rounded-lg overflow-hidden">
               <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
                 <CardTitle>Prescription Requests</CardTitle>
@@ -115,8 +94,7 @@ export function AllRequestsPage() {
             </Card>
           </TabsContent>
 
-          {/* ——— Patient Tab ——— */}
-          <TabsContent value="patient">
+          <TabsContent value="patient" className="-mt-px">
             <Card className="rounded-lg overflow-hidden">
               <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
                 <CardTitle>Patient Requests</CardTitle>
@@ -127,8 +105,7 @@ export function AllRequestsPage() {
             </Card>
           </TabsContent>
 
-          {/* ——— Transport Tab ——— */}
-          <TabsContent value="transport">
+          <TabsContent value="transport" className="-mt-px">
             <Card className="rounded-lg overflow-hidden">
               <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
                 <CardTitle>Transport Requests</CardTitle>
@@ -139,8 +116,7 @@ export function AllRequestsPage() {
             </Card>
           </TabsContent>
 
-          {/* ——— Sanitation Tab ——— */}
-          <TabsContent value="sanitation">
+          <TabsContent value="sanitation" className="-mt-px">
             <Card className="rounded-lg overflow-hidden">
               <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
                 <CardTitle>Sanitation Requests</CardTitle>
