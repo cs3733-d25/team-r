@@ -137,19 +137,19 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
                                 {/* add extra locations to if clause to prevent buttons from being sent*/}
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === chestnutHill || selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
                                     Patriot Place 20
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === chestnutHill  || selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace22)}
                                 >
                                     Patriot Place 22
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
+                                    variant={selectedLocation === '' || selectedLocation === patriotPlace20 || selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Chestnut Hill
