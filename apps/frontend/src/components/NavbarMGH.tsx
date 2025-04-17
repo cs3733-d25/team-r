@@ -17,7 +17,7 @@ export function NavbarMGH(props: NavBarProps) {
     return (
         // main header
         <header className="sticky top-0 z-40 border-b bg-primary">
-            <div className="flex h-16 items-center px-4 md:px-6">
+            <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
                     <a href={(props.page == "home" || props.page == "login") ? "/" : "/home"} className="flex items-center">
@@ -34,7 +34,7 @@ export function NavbarMGH(props: NavBarProps) {
 
                 {/* Desktop Navigation - default*/}
                 {(props.page != "home" && props.page != "login") && (
-                <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex items-center gap-6">
+                <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
                     </Button>
@@ -101,7 +101,7 @@ export function NavbarMGH(props: NavBarProps) {
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="md:hidden"
+                        className="min-[1152px]:hidden"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         <Menu className="h-5 w-5" />
@@ -110,7 +110,7 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Only display login button in logged-out home page */}
                 {(props.page == "home") && (
                     <div className="ml-auto flex items-center gap-2">
-                        <Button variant="ghost" asChild className={"bg-accent hover:bg-chart-1 hover:text-input"}>
+                        <Button variant="ghost">
                             <a href="/login">Login</a>
                         </Button>
                     </div>
@@ -120,7 +120,7 @@ export function NavbarMGH(props: NavBarProps) {
             {/* Mobile Navigation */}
             <div
                 className={cn(
-                    'fixed inset-0 z-50 bg-primary md:hidden',
+                    'fixed inset-0 z-50 bg-primary min-[1152px]:hidden',
                     isOpen ? 'flex flex-col' : 'hidden'
                 )}
             >

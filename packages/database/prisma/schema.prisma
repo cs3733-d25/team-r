@@ -73,6 +73,13 @@ enum RequestMedicalDevice{
   Pacemaker
 }
 
+enum RequestNonemergent{
+  Room_Maintenance
+  Food
+  Speak_to_a_doctor
+  Visitation_hours
+}
+
 enum NodeType {
   entrance
   reception
@@ -108,7 +115,7 @@ model Employee {
   assignedPatients Patient[]          @relation("AssignedDoctor")
   // assignedRequests DeviceRequest[]   @relation("AssignedRequests")
   // createdRequests  DeviceRequest[]   @relation("CreatedRequests")
-  TransportRequest TransportRequest[] @relation("TransportRequest")
+
 }
 
 model Patient {
@@ -259,15 +266,18 @@ model PatientRequest {
   location         Building
   status           RequestStatus
   requestTime      DateTime        @default(now())
+  request           RequestNonemergent
+  employeeName  String
+  comment String
 }
 
 model TransportRequest {
   employeeRequestID Int      @id @default(autoincrement())
-  employeeID        Int
-  employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
+  //employeeID        Int
+  //employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
   patientID         Int
   patient           Patient  @relation("TransportRequest", fields: [patientID], references: [id])
-
+  employeeName        String
   transportationType String
   currentBuilding    Building
   desiredBuilding    Building
@@ -301,5 +311,10 @@ model Locations{
 
 model Devices{
   type RequestMedicalDevice @id @unique
+  name String
+}
+
+model Nonemergencies {
+  type RequestNonemergent @id @unique
   name String
 }

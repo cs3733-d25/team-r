@@ -9,7 +9,9 @@ echo "BACKEND_PORT: $BACKEND_PORT"
 echo "BACKEND_URL: $BACKEND_URL"
 echo "NODE_ENV: $NODE_ENV"
 
-export POSTGRES_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
+# very bad idea, now anyone can login to this database I do not care about
+export POSTGRES_URL=postgresql://postgres:LmTmcGZKFCD2QRjkZFyi@sofeng-db.cbaosgy847f1.us-east-2.rds.amazonaws.com:5432/postgres
+#postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
 echo "POSTGRES_URL: ${POSTGRES_URL}"
 
 # Push schema to DB

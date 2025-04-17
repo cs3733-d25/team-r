@@ -21,7 +21,7 @@
     "deploy": "bash ./scripts/deploy.sh",
     "prepare": "husky",
     "seed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
-    "seed-AWS": "dotenv -e ${PROJECT_CWD}/.env.aws ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "seed-AWS": "dotenv -e ${PROJECT_CWD}/.env.aws-db ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
     "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts"
   },
   "devDependencies": {

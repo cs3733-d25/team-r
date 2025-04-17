@@ -36,6 +36,13 @@ export enum RequestMedicalDevice{
     Pacemaker = 'pacemaker'
 }
 
+export enum RequestNonemergent {
+    Room_Maintenance = 'Room maintenance',
+    Food = 'Food',
+    Speak_to_a_doctor = 'Speak_to_a_doctor',
+    Visitation_hours = 'Visitation_hours',
+}
+
 interface SubmittedPrescription {
     employeeID: string;
     patientID: string;

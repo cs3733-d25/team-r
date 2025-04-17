@@ -14,7 +14,7 @@ import patientRequestRouter from "./routes/patientRequest.ts";
 import pharmacyRouter from "./routes/pharmacyreqs.ts";
 import enumRouter from "./routes/enum.ts";
 import transportRequestRouter from "./routes/transportreqs.ts";
-import deviceRequestRouter from "./routes/devicereqs.ts";
+import deviceRequestRouter from "./routes/devicereqs.ts"
 import { API_ROUTES } from "common/src/constants";
 
 const app: Express = express(); // Setup the backend
