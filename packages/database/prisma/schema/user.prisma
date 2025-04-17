@@ -1,0 +1,40 @@
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  userType  UserType @default(PATIENT)
+  updatedAt DateTime @default(now())
+
+  employee Employee?
+  patient  Patient?
+  // sanitationRequests SanitationRequest[] @relation("sanitationRequests")
+}
+
+model Employee {
+  id         Int           @id
+  firstName  String
+  lastName   String
+  department Department?
+  role       EmployeeRole?
+  onShift    Boolean       @default(false)
+  user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  assignedPatients Patient[] @relation("AssignedDoctor")
+  // assignedRequests DeviceRequest[]   @relation("AssignedRequests")
+  // createdRequests  DeviceRequest[]   @relation("CreatedRequests")
+}
+
+model Patient {
+  id               Int                @id
+  firstName        String
+  lastName         String
+  dateOfBirth      DateTime
+  gender           Gender?
+  phone            String?
+  assignedDoctor   Employee?          @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
+  assignedDoctorId Int?
+  user             User               @relation(fields: [id], references: [id], onDelete: Cascade)
+  // pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
+  patientRequests  PatientRequest[]   @relation("PatientRequests")
+  TransportRequest TransportRequest[] @relation("TransportRequest")
+}

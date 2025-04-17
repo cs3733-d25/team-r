@@ -1,0 +1,32 @@
+model Directory {
+  id          Int      @id @default(autoincrement())
+  name        String
+  floorNumber Int
+  building    Building
+}
+
+model Node {
+  nodeID    String   @id
+  nodeType  NodeType
+  building  Building
+  floor     Int
+  xcoord    Float
+  ycoord    Float
+  longName  String
+  shortName String
+
+  edgesFrom Edge[] @relation("fromNode")
+  edgesTo   Edge[] @relation("toNode")
+}
+
+model Edge {
+  edgeID   String @id @default(uuid())
+  fromID   String
+  toID     String
+  fromX    Float
+  fromY    Float
+  toX      Float
+  toY      Float
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+}

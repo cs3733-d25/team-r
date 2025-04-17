@@ -1,0 +1,122 @@
+/**
+ * REQUESTS
+ */
+model MedicalDevice {
+  medicalDeviceId   Int          @id @default(autoincrement())
+  medicalDeviceType String
+  currentLocation   String
+  currentStatus     DeviceStatus @default(available)
+  lastUpdated       DateTime     @default(now())
+
+  // @@map("medical_devices")
+}
+
+// model ServiceRequestGeneral{
+//   requestID Int @id
+//   pharmacyReq PharmacyRequest?  @relation("pharmRequest")
+//   //for iteration2 - do not connect the employeeName to a employee user
+//   employeeName  String
+//   priority  RequestPriority
+//   status  RequestStatus
+//   department  Department
+//   location  Building
+// }
+
+model SanitationRequest {
+  requestId      Int             @id @default(autoincrement())
+  sanitationType String
+  priority       RequestPriority
+  department     Department?
+  roomNumber     String
+  requestTime    DateTime        @default(now())
+  comments       String?
+  status         RequestStatus   @default(pending)
+  employeeName   String
+  location       Building
+
+  // user   User @relation("sanitationRequests", fields: [userId], references: [id])
+  // userId Int
+}
+
+model DeviceRequest {
+  requestId    Int             @id @default(autoincrement())
+  deviceType   String
+  priority     RequestPriority
+  room         String
+  department   Department
+  requestTime  DateTime        @default(now())
+  comments     String?
+  employeeName String //Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
+  employeeID   Int
+  status       RequestStatus   @default(pending)
+  // assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
+  // assignedEmployeeId Int?
+}
+
+model PharmacyRequest {
+  prescriptionID         Int             @id @default(autoincrement())
+  employeeName           String
+  priority               RequestPriority
+  department             Department
+  patientID              Int
+  // patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+  drugName               String
+  morningPillCount       Int
+  middayPillCount        Int
+  eveningPillCount       Int
+  nightPillCount         Int
+  days                   Int
+  numberOfPills          Int
+  refills                Int
+  additionalInstructions String
+  status                 RequestStatus
+}
+
+// model PharmacyRequest {
+//   prescriptionID         Int             @id //@default(autoincrement())
+//   patientID              Int
+//   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+//   drugName               String
+//   morningPillCount       Int
+//   middayPillCount        Int
+//   eveningPillCount       Int
+//   nightPillCount         Int
+//   days                   Int
+//   numberOfPills          Int
+//   refills                Int
+//   additionalInstructions String
+//   //general
+//   generalRequest  ServiceRequestGeneral @relation("pharmRequest", fields: [prescriptionID], references: [requestID], onDelete: Cascade)
+// }
+
+model PatientRequest {
+  patientRequestID Int                @id @default(autoincrement())
+  patientID        Int
+  patient          Patient            @relation("PatientRequests", fields: [patientID], references: [id])
+  priority         RequestPriority
+  department       Department
+  location         Building
+  status           RequestStatus
+  requestTime      DateTime           @default(now())
+  request          RequestNonemergent
+  employeeName     String
+  comment          String
+}
+
+model TransportRequest {
+  employeeRequestID  Int      @id @default(autoincrement())
+  //employeeID        Int
+  //employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
+  patientID          Int
+  patient            Patient  @relation("TransportRequest", fields: [patientID], references: [id])
+  employeeName       String
+  transportationType String
+  currentBuilding    Building
+  desiredBuilding    Building
+
+  priority    RequestPriority
+  department  Department
+  comments    String
+  status      RequestStatus
+  requestTime DateTime        @default(now())
+}
