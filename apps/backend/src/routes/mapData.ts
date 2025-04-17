@@ -13,6 +13,16 @@ export interface Node {
   shortName: string;
 }
 
+export interface Edge {
+  edgeID: string;
+  fromID: string;
+  toID: string;
+  fromX: number;
+  fromY: number;
+  toX: number;
+  toY: number;
+}
+
 const router: Router = express.Router();
 
 // const pool = new Pool({
@@ -24,6 +34,58 @@ router.get("/parking-lots", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "parking" },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/check-in", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({
+      where: { nodeType: "reception" },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/entrances", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({
+      where: { nodeType: "entrance" },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/edges-20-1", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "PATRIOT_PLACE_20",
+          floor: 1,
+        },
+        toNode: {
+          building: "PATRIOT_PLACE_20",
+          floor: 1,
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
     });
     console.log(request);
     res.json(request);
