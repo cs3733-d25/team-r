@@ -39,11 +39,12 @@ export function NavbarMGH(props: NavBarProps) {
                         <a href="/directory">Directories</a>
                     </Button>
                     <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
-                        { label: 'Patriot Place', href: '/external-map' },
+                        { label: '20 Patriot Place', href: '/external-map' },
+                        { label: '22 Patriot Place', href: '/external-map' },
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Edit Map', href: '/edit-map' },
                     ]}/>
-                    <HoverPopoverNavLink label={"Request a Service"} href={"/sanitation"} items={[
+                    <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
                         { label: 'Sanitation', href: '/sanitation' },
                         { label: 'Medical Device', href: '/devicerequest' },
                         { label: 'Patient Request', href: '/patientrequestpage' },
