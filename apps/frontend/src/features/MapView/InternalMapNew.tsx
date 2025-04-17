@@ -119,10 +119,10 @@ export function InternalMapNew() {
                             {selectedLocation}
                         </Label>
                     </div>
-                    <form className="space-y-6">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
-                            <Select>
+                            <Select onValueChange={setSelectedParkinglot}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Parking Lot" />
                                 </SelectTrigger>
@@ -140,7 +140,7 @@ export function InternalMapNew() {
                                     </SelectContent>
                             </Select>
 
-                            <Select>
+                            <Select onValueChange={setSelectedDepartment}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Department" />
                                 </SelectTrigger>

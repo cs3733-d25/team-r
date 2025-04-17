@@ -91,20 +91,4 @@ router.get("/edges-20-1", async (req, res) => {
   }
 });
 
-/*
-// get departments
-router.get("/departments", async (req, res) => {
-  try {
-    const result = await pool.query(`
-        SELECT * FROM "Node"
-        WHERE "nodeType" = 'department';
-        `);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
-*/
-
 export default router;

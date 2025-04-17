@@ -24,6 +24,7 @@ export async function fetchDepartments(building?: string) {
         throw error;
     }
 }
+
 export const fetchCheckIn = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/check-in');
     return res.data;
