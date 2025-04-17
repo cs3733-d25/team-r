@@ -74,9 +74,9 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         return '';
     };
 
-    const handleLocationSelect = (location: string) => {
-        setSelectedLocation(location);
-    };
+    // const handleLocationSelect = (location: string) => {
+    //     setSelectedLocation(location);
+    // };
 
     console.log("Login status:", status); // Debug log
 
@@ -134,21 +134,23 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         <div className="flex flex-col space-y-2">
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
+
+                                {/* add extra locations to if clause to prevent buttons from being sent*/}
                                 <Button
-                                    variant={selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
-                                    onClick={() => handleLocationSelect(patriotPlace20)}
+                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
+                                    onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
-                                    20 Patriot Place
+                                    Patriot Place 20
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
-                                    onClick={() => handleLocationSelect(patriotPlace22)}
+                                    variant={selectedLocation === '' || selectedLocation === chestnutHill ? 'selected' : 'secondary'}
+                                    onClick={() => setSelectedLocation(patriotPlace22)}
                                 >
-                                    22 Patriot Place
+                                    Patriot Place 22
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === chestnutHill ? 'selected' : 'secondary'}
-                                    onClick={() => handleLocationSelect(chestnutHill)}
+                                    variant={selectedLocation === '' || selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
+                                    onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Chestnut Hill
                                 </Button>
