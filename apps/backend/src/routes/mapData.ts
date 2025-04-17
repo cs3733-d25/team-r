@@ -1,6 +1,5 @@
-import express, { Router, Request, Response } from "express";
+import express, { Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import { Prisma } from "database";
 
 export interface Node {
   nodeID: string;
@@ -41,10 +40,15 @@ router.get("/parking-lots", async (req, res) => {
 
 router.get("/departments", async (req, res) => {
   try {
-    const building = req.query.building as string;
+    const buildingStr = req.query.building as string;
 
-    const request = await PrismaClient.department.findMany({
-      where: building ? { building } : {},
+    // Create the where clause with type-safe building value
+    const whereClause = buildingStr
+      ? { building: buildingStr as Prisma.Building }
+      : {};
+
+    const request = await PrismaClient.directory.findMany({
+      where: whereClause,
     });
 
     // Transform to match frontend expectations
