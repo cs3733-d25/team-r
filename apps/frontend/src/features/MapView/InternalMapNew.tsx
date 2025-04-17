@@ -234,22 +234,22 @@ export function InternalMapNew() {
                                         </SelectGroup>
                                     </SelectContent>
                             </Select>
-                            <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
-                            {/*<Select>*/}
-                            {/*    <SelectTrigger>*/}
-                            {/*        <SelectValue placeholder="Department" />*/}
-                            {/*    </SelectTrigger>*/}
-                            {/*    <SelectContent>*/}
-                            {/*            <SelectGroup>*/}
-                            {/*                <SelectLabel>Departments</SelectLabel>*/}
-                            {/*                {departments.map(dept => (*/}
-                            {/*                    <SelectItem key={dept.key} value={dept.value}>*/}
-                            {/*                        {dept.label}*/}
-                            {/*                    </SelectItem>*/}
-                            {/*                ))}*/}
-                            {/*            </SelectGroup>*/}
-                            {/*        </SelectContent>*/}
-                            {/*</Select>*/}
+                            {/*<Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>*/}
+                            <Select>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Department" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Departments</SelectLabel>
+                                            {departments.map(dept => (
+                                                <SelectItem key={dept.key} value={dept.value}>
+                                                    {dept.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                            </Select>
                             <Button>Get Directions</Button>
                         </div>
                         <div className="flex flex-col space-y-2">
