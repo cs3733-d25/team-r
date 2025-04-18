@@ -44,7 +44,8 @@ export function InternalMapNew() {
         if (location.includes('20 Patriot Pl')) return 'PATRIOT_PLACE_20';
         if (location.includes('22 Patriot Pl')) return 'PATRIOT_PLACE_22';
         if (location.includes('Chestnut Hill')) return 'CHESTNUT_HILL';
-        return 'PATRIOT_PLACE_22';
+        if (location.includes('Faulkner')) return 'FAULKNER';
+        return 'PATRIOT_PLACE_22'; //default
     };
 
     const [selectedBuilding, setSelectedBuilding] = useState<string>(
@@ -98,6 +99,7 @@ export function InternalMapNew() {
         PATRIOT_PLACE_20: [1, 3, 4],
         PATRIOT_PLACE_22: [1, 3],
         CHESTNUT_HILL: [1],
+        FAULKNER: [1]
     };
 
     // Get floors for current building
@@ -107,6 +109,7 @@ export function InternalMapNew() {
         if (location.includes('20 Patriot Pl')) return '20 Patriot Place';
         if (location.includes('22 Patriot Pl')) return '22 Patriot Place';
         if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
+        if (location.includes('Faulkner')) return 'Faulkner';
         return location;
     };
 

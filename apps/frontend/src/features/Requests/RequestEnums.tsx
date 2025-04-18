@@ -26,7 +26,7 @@ export enum Buildings {
     PATRIOT_PLACE_22 = "PATRIOT_PLACE_22",
     PATRIOT_PLACE_20 = "PATRIOT_PLACE_20",
     CHESTNUT_HILL = "CHESTNUT_HILL",
-
+    FAULKNER = 'FAULKNER'
 }
 export enum RequestMedicalDevice{
     XRay = "XRay",

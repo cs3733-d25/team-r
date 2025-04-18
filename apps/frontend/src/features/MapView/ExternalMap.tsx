@@ -60,6 +60,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const patriotPlace20 = 'Mass General Brigham, 20 Patriot Pl, Foxborough, MA 02035';
     const patriotPlace22 = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
+    const faulkner = '1153 Centre Street, Faulkner, Boston MA 02130'
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     const [startingLocation, setStartingLocation] = useState<string>('');
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
@@ -71,6 +72,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         if (location === patriotPlace20) return 'PATRIOT_PLACE_20';
         if (location === patriotPlace22) return 'PATRIOT_PLACE_22';
         if (location === chestnutHill) return 'CHESTNUT_HILL';
+        if (location === faulkner) return 'FAULKNER';
         return '';
     };
 
@@ -135,24 +137,30 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
 
-                                {/* add extra locations to if clause to prevent buttons from being sent*/}
+                                {/* variant: if not the current button selected, set to light blue (selected). Dark blue (secondary) if clicked on */}
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === chestnutHill || selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
+                                    variant={selectedLocation !== patriotPlace20 ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
                                     Patriot Place 20
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === chestnutHill  || selectedLocation === patriotPlace20 ? 'selected' : 'secondary'}
+                                    variant={selectedLocation !== patriotPlace22 ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace22)}
                                 >
                                     Patriot Place 22
                                 </Button>
                                 <Button
-                                    variant={selectedLocation === '' || selectedLocation === patriotPlace20 || selectedLocation === patriotPlace22 ? 'selected' : 'secondary'}
+                                    variant={selectedLocation !== chestnutHill ? 'selected' : 'secondary'}
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Chestnut Hill
+                                </Button>
+                                <Button
+                                    variant={selectedLocation !== faulkner ? 'selected' : 'secondary'}
+                                    onClick={() => setSelectedLocation(faulkner)}
+                                >
+                                    Faulkner
                                 </Button>
                             </div>
                         </div>
