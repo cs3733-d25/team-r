@@ -1,0 +1,15 @@
+meta {
+  name: Get sanitation requests
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/api/sanitation
+  body: none
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

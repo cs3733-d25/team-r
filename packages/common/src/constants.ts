@@ -6,5 +6,11 @@ export const API_ROUTES = {
     LOGIN: '/api/login',
     SANITATION: '/api/sanitation',
     CSV: '/api/csv',
-    BFS: '/api/bfs'
+    BFS: '/api/bfs',
+    PATIENTREQ: '/api/patientreq',
+    PHARMACY: '/api/pharmacy',
+    ENUM: '/api/enum',
+    TRANSPORT: '/api/transportreq',
+    DEVICE: '/api/device',
+    MAP: '/api/map',
 };

@@ -1,0 +1,15 @@
+meta {
+  name: Export directory backup
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/api/csv/export
+  body: file
+  auth: inherit
+}
+
+assert {
+  res.status: eq 200
+}

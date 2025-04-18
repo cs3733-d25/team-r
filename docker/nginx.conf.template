@@ -1,0 +1,21 @@
+server {
+    listen ${FRONTEND_PORT};
+    server_name localhost;
+
+    # Serve frontend static files directly
+    location / {
+        root /app/apps/frontend/build;
+        try_files $uri $uri/ /index.html;
+        index index.html;
+    }
+
+    # Proxy API requests to the backend
+    location /api/ {
+        proxy_pass http://localhost:${BACKEND_PORT};
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}

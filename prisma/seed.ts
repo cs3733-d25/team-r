@@ -1,5 +1,6 @@
-import { PrismaClient } from "../packages/database";
-import { UserType, Department, EmployeeRole, Gender, RequestStatus, RequestPriority, DeviceStatus } from "../packages/database";
+import {$Enums, PrismaClient, RequestNonemergent} from "../packages/database";
+import { UserType, Department, EmployeeRole, Gender, RequestStatus, Building, RequestPriority, DeviceStatus } from "../packages/database";
+import RequestMedicalDevice = $Enums.RequestMedicalDevice;
 
 const prisma = new PrismaClient();
 
@@ -70,13 +71,22 @@ async function main() {
         }
     });
 
-    /*
+    //create user admin for iteration 2 testing
+    const user9 = await prisma.user.create({
+        data: {
+            username: 'adminD25X@gmail.com',
+            password: 'cs3733D25X',
+            userType: UserType.EMPLOYEE
+        }
+    });
+
+
     // Create employees with correct schema fields
     const employee1 = await prisma.employee.create({
         data: {
             firstName: 'John',
             lastName: 'Doe',
-            department: Department.AMBULATORY_URGENCARE,
+            department: Department.Ambulatory_UrgentCare,
             role: EmployeeRole.DOCTOR,
             onShift: true,
             user: {
@@ -85,11 +95,21 @@ async function main() {
         }
     });
 
+    // Create employees with correct schema fields
+/*
+    await prisma.employee.createMany({
+        data: [
+            { id: user1.id, firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true },
+        ]
+    });
+
+    await prisma.employee.create({data:{ firstName: 'John', lastName: 'Doe', department: Department.Phlebotomy, role: EmployeeRole.DOCTOR, onShift: true, user: { connect: { id: user1.id }}}});
+
     const employee2 = await prisma.employee.create({
         data: {
             firstName: 'Jane',
             lastName: 'Smith',
-            department: Department.SPECIALTY_CLINIC,
+            department: Department.Specialty_Clinic,
             role: EmployeeRole.NURSE,
             onShift: false,
             user: {
@@ -142,16 +162,18 @@ async function main() {
         data: {
             firstName: 'Wilson',
             lastName: 'Wong',
-            department: Department.SPECIALTY_CLINIC,
+            department: Department.Specialty_Clinic,
             role: EmployeeRole.ADMINISTRATOR,
             onShift: false,
             user: {
                 connect: { id: user8.id }
             }
         }
-    });*/
-/*
+    });
+*/
+
     // Create patients
+
     await prisma.patient.create({
         data: {
             firstName: 'Alice',
@@ -163,11 +185,11 @@ async function main() {
                 connect: { id: user6.id }
             },
             assignedDoctor: {
-                connect: { id: employee1.id }
+                connect: { id: 1 }
             }
         }
     });
-
+/*
     await prisma.patient.create({
         data: {
             firstName: 'Bob',
@@ -179,12 +201,69 @@ async function main() {
                 connect: { id: user7.id }
             },
             assignedDoctor: {
-                connect: { id: employee2.id }
+                connect: { id: employee1.id }
             }
         }
     });*/
 
+    await prisma.departments.createMany({
+        data:[
+            { type: Department.Imaging_Suite, name: "Imaging Suite"},
+            { type: Department.Pharmacy, name: "Pharmacy"},
+            { type: Department.Ambulatory_UrgentCare, name: "Ambulatory/Urgent Care"},
+            { type: Department.Phlebotomy, name: "Phlebotomy"},
+            { type: Department.Specialty_Clinic, name: "Specialty Clinic"}
+        ]
+    })
+
+    await prisma.priorities.createMany({
+        data: [
+            { type: RequestPriority.Low, name: "Low"},
+            { type: RequestPriority.Medium, name: "Medium"},
+            { type: RequestPriority.High, name: "High"},
+            { type: RequestPriority.Urgent, name: "Urgent"},
+        ]
+    })
+
+    await prisma.statuses.createMany({
+        data: [
+            { type: RequestStatus.pending, name: "Pending" },
+            { type: RequestStatus.accepted, name: "Accepted" },
+            { type: RequestStatus.in_progress, name: "In progress" },
+            { type: RequestStatus.completed, name: "Completed" },
+            { type: RequestStatus.cancelled, name: "Cancelled" },
+        ]
+    })
+
+
+    await prisma.locations.createMany({
+        data: [
+            { type: Building.PATRIOT_PLACE_20, name: "Patriot Place 20" },
+            { type: Building.PATRIOT_PLACE_22, name: "Patriot Place 22" },
+            { type: Building.CHESTNUT_HILL, name: "Chestnut Hill" },
+        ]
+    })
+
     // Create medical devices
+    await prisma.devices.createMany({
+        data: [
+            { type: RequestMedicalDevice.XRay, name: 'X Ray' },
+            { type: RequestMedicalDevice.EKG_Machine, name: 'EKG Machine' },
+            { type: RequestMedicalDevice.Defibrillator, name: 'Defibrillator' },
+            { type: RequestMedicalDevice.Syringe, name: 'Syringe' },
+            { type: RequestMedicalDevice.Pacemaker, name: 'Pacemaker' },
+        ],
+    });
+
+    await prisma.nonemergencies.createMany({
+        data: [
+            { type: RequestNonemergent.Room_Maintenance, name: 'Room maintenance' },
+            { type: RequestNonemergent.Food, name: 'Food' },
+            { type: RequestNonemergent.Speak_to_a_doctor, name: 'Speak to a doctor' },
+            { type: RequestNonemergent.Visitation_hours, name: 'Visitation hours' },
+        ],
+    });
+    /*
     await prisma.medicalDevice.createMany({
         data: [
             { medicalDeviceType: 'X-Ray Machine', currentLocation: 'Imaging Room 1', currentStatus: DeviceStatus.available },

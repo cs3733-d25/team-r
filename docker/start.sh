@@ -1,13 +1,21 @@
 #!/bin/sh
 
-# Log environment variables
-echo "Starting with environment:"
-echo "PORT: $PORT"
-echo "BACKEND_PORT: $BACKEND_PORT"
-echo "NODE_ENV: $NODE_ENV"
-echo "Database: $POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
+echo "Running start.sh"
 
-# Build the frontend (this ensures we have the latest build)
+# Log environment variables
+echo "Environment variables:"
+echo "FRONTEND_PORT: $FRONTEND_PORT"
+echo "BACKEND_PORT: $BACKEND_PORT"
+echo "BACKEND_URL: $BACKEND_URL"
+echo "NODE_ENV: $NODE_ENV"
+
+export POSTGRES_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
+echo "POSTGRES_URL: ${POSTGRES_URL}"
+
+# Push schema to DB
+yarn workspace database push
+
+# Build the frontend
 echo "Building frontend..."
 cd /app/apps/frontend
 yarn build
@@ -23,4 +31,9 @@ trap "kill $BACKEND_PID; exit" SIGINT SIGTERM
 
 # Start nginx in the foreground
 echo "Starting nginx..."
+
+# Generate nginx.conf from template
+envsubst '${BACKEND_PORT} ${FRONTEND_PORT}' < /etc/nginx/http.d/template > /etc/nginx/http.d/default.conf
+
+# Start NGINX
 nginx -g "daemon off;"

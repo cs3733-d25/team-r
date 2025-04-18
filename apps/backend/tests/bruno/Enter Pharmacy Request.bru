@@ -1,0 +1,29 @@
+meta {
+  name: Enter Pharmacy Request
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/api/pharmacy/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "employeeID": 1,
+    "priority": "Low",
+    "department": "Imaging Suite",
+    "patientID": 6,
+    "drugName": "Ibuprofen",
+    "morningPillCount": 0,
+    "middayPillCount": 1,
+    "eveningPillCount": 0,
+    "nightPillCount": 1,
+    "days": 5,
+    "numberOfPills": 25,
+    "refills": 0,
+    "additionalInstructions": ""
+  }
+}
