@@ -45,7 +45,7 @@ export function InternalMapNew() {
         if (location.includes('22 Patriot Pl')) return 'PATRIOT_PLACE_22';
         if (location.includes('Chestnut Hill')) return 'CHESTNUT_HILL';
         if (location.includes('Faulkner')) return 'FAULKNER';
-        return 'PATRIOT_PLACE_22'; //default
+        return 'PATRIOT_PLACE_22'; //default place
     };
 
     const [selectedBuilding, setSelectedBuilding] = useState<string>(
