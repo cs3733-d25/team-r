@@ -7,6 +7,7 @@ import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
 import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 import chestnutHill from '../../../public/Chestnut-Hill.svg'
+import faulkner from '../../../public/Faulkner-Map-Draft.svg'
 import { goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import {
@@ -101,6 +102,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             const floorLayer22_3 = L.layerGroup();
             const floorLayer22_4 = L.layerGroup();
             const floorLayerChestnutHill = L.layerGroup();
+            const floorLayerFaulkner = L.layerGroup();
 
             // image overlays
             L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
@@ -109,6 +111,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
             L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
             L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
+            L.imageOverlay(faulkner, bounds).addTo(floorLayerFaulkner);
 
             // Transition Points Between Floors
             const transitionNodes = {
@@ -147,6 +150,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
             L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
 
+            //faulkner
+            //.circle(transitionNodes['???'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('????').on('click', () => {map.removeLayer(???); map.addLayer(???)}).addTo(???);
+            //TODO: add/edit faulkner circles
+
 
             // parking lot markers
             L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
@@ -157,6 +164,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.marker([125.94, 265.92]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
             L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
             L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
+            L.marker([0.0, 0.00]).bindPopup('???').addTo(floorLayerFaulkner);
+            //TODO: add/edit faulkner markers
 
             {entrances
                 .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
@@ -217,7 +226,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 .map((lot) => (
                     L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_4)
                 ))}
-
+            //TODO: add faulkner stuff here?
             {edges20_1
                 .map((edge) => (
                     L.polyline([
@@ -227,13 +236,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 ))}
 
             // add a default layer
-            if (location === 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035') {
+            if (location.includes('20 Patriot Pl'))
                 floorLayer20_1.addTo(map);
-            } else if (location === '850 Boylston St, Chestnut Hill, MA 02467') {
-                floorLayerChestnutHill.addTo(map);
-            } else {
+            else if (location.includes('22 Patriot Pl'))
                 floorLayer22_1.addTo(map);
-            }
+            else if (location.includes('Chestnut Hill'))
+                floorLayerChestnutHill.addTo(map);
+            else if (location.includes('Faulkner'))
+                floorLayerFaulkner.addTo(map)
 
             // === LAYER CONTROLS ===
             const baseLayers = {
@@ -242,7 +252,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
                 '22 Patriot Place - Floor 4': floorLayer22_4,
-                'Chestnut Hill': floorLayerChestnutHill
+                'Chestnut Hill': floorLayerChestnutHill,
+                'Faulkner' : floorLayerFaulkner
             };
 
             L.control.layers(baseLayers).addTo(map);

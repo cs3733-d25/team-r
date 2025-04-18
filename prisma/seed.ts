@@ -263,8 +263,8 @@ async function main() {
             { type: RequestNonemergent.Visitation_hours, name: 'Visitation hours' },
         ],
     });
-    /*
-    await prisma.medicalDevice.createMany({
+
+    /*await prisma.medicalDevice.createMany({
         data: [
             { medicalDeviceType: 'X-Ray Machine', currentLocation: 'Imaging Room 1', currentStatus: DeviceStatus.available },
             { medicalDeviceType: 'Defibrillator', currentLocation: 'Emergency Room', currentStatus: DeviceStatus.available },
@@ -275,7 +275,7 @@ async function main() {
         ]
     });
 
-    /*
+
     // Create device requests
     await prisma.deviceRequest.createMany({
         data: [
@@ -412,7 +412,7 @@ async function main() {
                 comments: 'Patient requiring continuous medication delivery.'
             }
         ]
-    });
+    });*/
 
     await prisma.directory.createMany({
         data: [
@@ -479,9 +479,28 @@ async function main() {
             {name: "Blood Draw/Phlebotomy", floorNumber: 4, building: "PATRIOT_PLACE_22"},
             {name: "Community Room", floorNumber: 4, building: "PATRIOT_PLACE_22"},
             {name: "Primary Care", floorNumber: 4, building: "PATRIOT_PLACE_22"},
+
+            {name: "Allergy and Clinical Immunology", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Backup Child Care Center", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Dermatology", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Physicians Group", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Obstetrics and Gynecology", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Psychiatric Specialties", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Center for Pain Medicine", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Crohn's and Colitis Center", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Endoscopy Center", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Center for Women's Health", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Laboratory", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Multi-Specialty Clinic", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Center for Integrative Health", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Patient Financial Services", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Pharmacy", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Radiology", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "CHESTNUT_HILL"},
+            {name: "Rehabilitation Services", floorNumber: 1, building: "CHESTNUT_HILL"}
         ]
     })
-*/
+
     console.log('Database seeded successfully!');
 }
 

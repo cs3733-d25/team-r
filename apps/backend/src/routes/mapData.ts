@@ -1,6 +1,7 @@
-import express, { Router, Request, Response } from "express";
+import express, { Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
+import { Building } from "database";
 
 export interface Node {
   nodeID: string;
@@ -25,10 +26,6 @@ export interface Edge {
 
 const router: Router = express.Router();
 
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL,
-// });
-
 // get parking lots
 router.get("/parking-lots", async (req, res) => {
   try {
@@ -37,6 +34,33 @@ router.get("/parking-lots", async (req, res) => {
     });
     console.log(request);
     res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/departments", async (req, res) => {
+  try {
+    const buildingStr = req.query.building as string;
+
+    // Create the where clause with correct enum reference
+    const whereClause = buildingStr
+      ? { building: buildingStr as Building }
+      : {};
+
+    const request = await PrismaClient.directory.findMany({
+      where: whereClause,
+    });
+
+    // Transform to match frontend expectations
+    const formattedDepartments = request.map((dept) => ({
+      key: dept.id.toString(),
+      value: dept.id.toString(),
+      label: dept.name,
+    }));
+
+    res.json(formattedDepartments);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -94,34 +118,5 @@ router.get("/edges-20-1", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-router.post("/internal", async (req, res) => {
-  try {
-    const request = await PrismaClient.node.findMany({
-      where: { nodeType: "parking" },
-    });
-    console.log(request);
-    res.json(request);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
-
-/*
-// get departments
-router.get("/departments", async (req, res) => {
-  try {
-    const result = await pool.query(`
-        SELECT * FROM "Node"
-        WHERE "nodeType" = 'department';
-        `);
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
-*/
 
 export default router;
