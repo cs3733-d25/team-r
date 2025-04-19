@@ -2,19 +2,20 @@ model Directory {
   id          Int      @id @default(autoincrement())
   name        String
   floorNumber Int
-  building    Building
+  building    String
 }
 
 model Node {
   nodeID    String   @id
-  nodeType  NodeType
-  building  Building
+  nodeType  String
+  building  String
   floor     Int
   xcoord    Float
   ycoord    Float
   longName  String
   shortName String
 
+  departments Department[]
   edgesFrom Edge[] @relation("fromNode")
   edgesTo   Edge[] @relation("toNode")
 }

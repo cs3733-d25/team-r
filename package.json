@@ -4,7 +4,8 @@
   "version": "1.0.1",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
-    "floorseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/floorplanSeed.ts"
+    "floorseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/floorplanSeed.ts",
+    "enumseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/enumSeed.ts"
   },
   "scripts": {
     "dev": "dotenv -e .env -- turbo run dev",
@@ -21,7 +22,8 @@
     "deploy": "bash ./scripts/deploy.sh",
     "prepare": "husky",
     "seed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
-    "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts"
+    "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts",
+    "enumseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/enumSeed.ts"
   },
   "devDependencies": {
     "@prisma/client": "^6.5.0",

@@ -1,11 +1,9 @@
-import {PrismaClient} from "../packages/database";
-import { NodeType, Building } from "../packages/database";
+import client from "../apps/backend/src/bin/prisma-client.ts";
 
-const prisma = new PrismaClient();
 
 async function main() {
     // chestnut hill floor 1
-    await prisma.node.createMany({
+    await client.node.createMany({
         data:[
             {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
             {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
@@ -18,7 +16,7 @@ async function main() {
         skipDuplicates: true
     })
 
-    await prisma.edge.createMany({
+    await client.edge.createMany({
         data:[
             {fromID: 'frontLot', toID: 'canopyEntrance', fromX: 130.02, fromY: 592.90, toX: 160.01, toY: 342.94},
             {fromID: 'leftLot', toID: 'leftEntrance', fromX: 587.89, fromY: 20.00, toX: 496.92, toY: 127.98},
@@ -29,7 +27,7 @@ async function main() {
     })
 
     // patriot 20 floor 1
-    await prisma.node.createMany({
+    await client.node.createMany({
         data: [
             {
                 nodeID: 'valetParking20',
@@ -306,7 +304,7 @@ async function main() {
     });
 
         // patriot 20 floor 3
-        await prisma.node.createMany({
+        await client.node.createMany({
             data: [
                 {nodeID: 'bridgePatriot20', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
                 {nodeID: '300.13', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
@@ -316,7 +314,7 @@ async function main() {
             skipDuplicates: true
         });
 
-        await prisma.edge.createMany({
+        await client.edge.createMany({
             data: [
                 {fromID: 'swEntrance', toID: '100.00', fromX: 186.48, fromY: 134.00, toX: 192.74, toY: 234.50},
                 {fromID: '100.00', toID: '120.00B', fromX: 192.74, fromY: 234.50, toX: 196.74, toY: 451.50},
@@ -348,7 +346,7 @@ async function main() {
         });
 
         // patriot 22 floor 1
-        await prisma.node.createMany({
+        await client.node.createMany({
             data: [
                 {nodeID: 'valetParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 576.44, ycoord: 35.10, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
                 {nodeID: 'patientParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 217.98, ycoord: 221.99, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
@@ -362,7 +360,7 @@ async function main() {
         });
 
         // patriot 22 floor 3
-        await prisma.node.createMany({
+        await client.node.createMany({
             data: [
                 {nodeID: 'ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 442.88, ycoord: 327.00, longName: 'Stair ST02', shortName: 'Stair ST02'},
                 {nodeID: '3000C', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 444.25, ycoord: 344.00, longName: 'Copy 3000C', shortName: 'Copy 3000C'},
@@ -382,7 +380,7 @@ async function main() {
             skipDuplicates: true
         });
 
-        await prisma.edge.createMany({
+        await client.edge.createMany({
             data: [
                 {fromID: 'ST02', toID: '3000C', fromX: 442.88, fromY: 327.00, toX: 444.25, toY: 344.00},
                 { fromID: '3000C', toID: '3E', fromX: 444.25, fromY: 344.00, toX: 466.88, toY: 345.00 },
@@ -404,7 +402,7 @@ async function main() {
 
 
         // patriot 22 floor 4
-        await prisma.node.createMany({
+        await client.node.createMany({
             data: [
                 { nodeID: 'checkIn4000B', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 319.25, ycoord: 654.50, longName: 'rightCheckIn', shortName: 'rightCheckIn'},
                 { nodeID: 'waiting4000', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 299.25, ycoord: 579.50, longName: 'rightEntranceWaiting', shortName: 'rightEntranceWaiting'},
@@ -421,7 +419,7 @@ async function main() {
             skipDuplicates: true
         });
 
-        await prisma.edge.createMany({
+        await client.edge.createMany({
             data: [
                 { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
                 { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: 353.25, fromY: 655.50, toX: 351.25, toY: 535.50 },
@@ -449,5 +447,5 @@ async function main() {
             return Promise.reject(e);
         })
         .finally(async () => {
-            await prisma.$disconnect();
+            await client.$disconnect();
         });

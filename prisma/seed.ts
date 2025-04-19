@@ -1,9 +1,7 @@
-import {$Enums, PrismaClient, RequestNonemergent} from "../packages/database";
-import { UserType, Department, EmployeeRole, Gender, RequestStatus, Building, RequestPriority, DeviceStatus } from "../packages/database";
-import RequestMedicalDevice = $Enums.RequestMedicalDevice;
+
+import { PrismaClient } from "../packages/database";
 
 const prisma = new PrismaClient();
-
 async function main() {
     // Create users
     const user1 = await prisma.user.create({
@@ -22,7 +20,7 @@ async function main() {
         }
     });
 
-    const user3 = await prisma.user.create({
+    const user3 = await client.user.create({
         data: {
             username: 'employee3@example.com',
             password: 'password123',
@@ -30,7 +28,7 @@ async function main() {
         }
     });
 
-    const user4 = await prisma.user.create({
+    const user4 = await client.user.create({
         data: {
             username: 'employee4@example.com',
             password: 'password123',
@@ -38,7 +36,7 @@ async function main() {
         }
     });
 
-    const user5 = await prisma.user.create({
+    const user5 = await client.user.create({
         data: {
             username: 'employee5@example.com',
             password: 'password123',
@@ -46,7 +44,7 @@ async function main() {
         }
     });
 
-    const user6 = await prisma.user.create({
+    const user6 = await client.user.create({
         data: {
             username: 'patient1@example.com',
             password: 'password123',
@@ -54,7 +52,7 @@ async function main() {
         }
     });
 
-    const user7 = await prisma.user.create({
+    const user7 = await client.user.create({
         data: {
             username: 'patient2@example.com',
             password: 'password123',
@@ -63,7 +61,7 @@ async function main() {
     });
 
     //create user admin for iteration 1 testing
-    const user8 = await prisma.user.create({
+    const user8 = await client.user.create({
         data: {
             username: 'admin',
             password: 'admin',
@@ -72,7 +70,7 @@ async function main() {
     });
 
     //create user admin for iteration 2 testing
-    const user9 = await prisma.user.create({
+    const user9 = await client.user.create({
         data: {
             username: 'adminD25X@gmail.com',
             password: 'cs3733D25X',
@@ -414,7 +412,7 @@ async function main() {
         ]
     });*/
 
-    await prisma.directory.createMany({
+    await client.directory.createMany({
         data: [
             {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
             {name: "Pharmacy", floorNumber: 1, building: "PATRIOT_PLACE_20"},

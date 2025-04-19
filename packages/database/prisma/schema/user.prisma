@@ -1,3 +1,4 @@
+/*
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
@@ -29,7 +30,6 @@ model Patient {
   firstName        String
   lastName         String
   dateOfBirth      DateTime
-  gender           Gender?
   phone            String?
   assignedDoctor   Employee?          @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
   assignedDoctorId Int?
@@ -38,3 +38,4 @@ model Patient {
   patientRequests  PatientRequest[]   @relation("PatientRequests")
   TransportRequest TransportRequest[] @relation("TransportRequest")
 }
+*/

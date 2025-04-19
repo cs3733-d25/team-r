@@ -1,13 +1,10 @@
-/**
- * REQUESTS
- */
+/*
 model MedicalDevice {
   medicalDeviceId   Int          @id @default(autoincrement())
   medicalDeviceType String
   currentLocation   String
-  currentStatus     DeviceStatus @default(available)
+  currentStatus     MedicalDeviceStatus
   lastUpdated       DateTime     @default(now())
-
   // @@map("medical_devices")
 }
 
@@ -120,3 +117,4 @@ model TransportRequest {
   status      RequestStatus
   requestTime DateTime        @default(now())
 }
+*/
