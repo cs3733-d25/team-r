@@ -1,22 +1,94 @@
+import client from "../apps/backend/src/bin/prisma-client.ts";
 
-import { PrismaClient } from "../packages/database";
-
-const prisma = new PrismaClient();
 async function main() {
     // Create users
-    const user1 = await prisma.user.create({
+    await client.userType.createMany({
+        data: [
+            { id: 'Employee', name: 'Employee' },
+            { id: 'Patient', name: 'Patient' },
+        ],
+    });
+        // 1. Create a node for department relation
+        const node = await client.node.create({
+            data: {
+                nodeID: '90',
+                xcoord: 100,
+                ycoord: 200,
+                floor: 1,
+                building: 'Main',
+                longName: 'testNodeMain',
+                shortName: 'testNodeMain',
+                nodeType: 'Reception'
+            }
+        });
+
+        // 2. Create department
+        const department1 = await client.department.create({
+            data: {
+                recepetionNodeID: node.nodeID,
+                name: 'Ambulatory/Urgent Care'
+            }
+        });
+
+        // 3. Create user
+        const user1 = await client.user.create({
+            data: {
+                id: '1',
+                username: 'employee1@example.com',
+                password: 'password123',
+                userTypeID: 'Employee'
+            }
+        });
+
+        // 4. Create employee (after department is available)
+        const employee1 = await client.employee.create({
+            data: {
+                firstName: 'John',
+                lastName: 'Doe',
+                departmentId: department1.recepetionNodeID,
+                role: 'Doctor',
+                onShift: true,
+            }
+        });
+
+/*
+    const user1 = await client.user.create({
         data: {
+            id: '1',
             username: 'employee1@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE
+            userTypeID: '1',
+            userType: 'Employee'
+        }
+    });
+    // Create employees with correct schema fields
+    const employee1 = await client.employee.create({
+        data: {
+            id: user1.id,
+            firstName: 'John',
+            lastName: 'Doe',
+            departmentId: '1',
+            role: 'Doctor',
+            onShift: true,
+            user: {
+                connect: { id: user1.id }
+            }
         }
     });
 
-    const user2 = await prisma.user.create({
+    const department1 = await client.department.create({
+        data: {
+            id: '90',
+            name: 'Ambulatory/Urgent Care',
+            recepetionNodeID: '90'
+        }
+    })
+
+    const user2 = await client.user.create({
         data: {
             username: 'employee2@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE
+            userType: 'Employee'
         }
     });
 
@@ -24,7 +96,7 @@ async function main() {
         data: {
             username: 'employee3@example.com',
             password: 'password123',
-            userType: UserType.EMPLOYEE
+            userType: 'Employee'
         }
     });
 
@@ -79,19 +151,7 @@ async function main() {
     });
 
 
-    // Create employees with correct schema fields
-    const employee1 = await prisma.employee.create({
-        data: {
-            firstName: 'John',
-            lastName: 'Doe',
-            department: Department.Ambulatory_UrgentCare,
-            role: EmployeeRole.DOCTOR,
-            onShift: true,
-            user: {
-                connect: { id: user1.id }
-            }
-        }
-    });
+
 
     // Create employees with correct schema fields
 /*
@@ -168,11 +228,11 @@ async function main() {
             }
         }
     });
-*/
+
 
     // Create patients
 
-    await prisma.patient.create({
+    await client.patient.create({
         data: {
             firstName: 'Alice',
             lastName: 'Johnson',
@@ -202,15 +262,15 @@ async function main() {
                 connect: { id: employee1.id }
             }
         }
-    });*/
+    });
 
-    await prisma.departments.createMany({
+    await client.department.createMany({
         data:[
-            { type: Department.Imaging_Suite, name: "Imaging Suite"},
-            { type: Department.Pharmacy, name: "Pharmacy"},
-            { type: Department.Ambulatory_UrgentCare, name: "Ambulatory/Urgent Care"},
-            { type: Department.Phlebotomy, name: "Phlebotomy"},
-            { type: Department.Specialty_Clinic, name: "Specialty Clinic"}
+            { name: "Imaging Suite", receptionNodeID: '90'},
+            { name: "Pharmacy", receptionNodeID: '90'},
+            { name:"Ambulatory/Urgent Care", receptionNodeID: '90'},
+            { name: "Phlebotomy", receptionNodeID: '90'},
+            { name: "Specialty Clinic", receptionNodeID: '90'}
         ]
     })
 
@@ -412,93 +472,6 @@ async function main() {
         ]
     });*/
 
-    await client.directory.createMany({
-        data: [
-            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Pharmacy", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Radiology", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Cardiovascular Services", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Urology", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-            {name: "Urgent Care Center", floorNumber: 1, building: "PATRIOT_PLACE_20"},
-
-            {name: "Orthopaedics", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Hand and Upper Extremity", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Arthroplasty", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Pediatric Trauma", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Physiatry", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Podiatry", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Rehabilitation Services", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Cardiac Rehab", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Occupational Therapy", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Hand Therapy", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Upper Extremity", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Physical Therapy", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Speech - Language", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Clinical Lab", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-            {name: "Surgi-Care", floorNumber: 2, building: "PATRIOT_PLACE_20"},
-
-            {name: "Surgical Specialties", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "Audiology", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "ENT", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "Plastic Surgery", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "Thoriacic Surgery", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "Vascular Surgery", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "Weight Management and Wellness", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "Sports Medicine Center", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-            {name: "X-Rat Suite", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-
-            {name: "Electromyography", floorNumber: 4, building: "PATRIOT_PLACE_20"},
-            {name: "Nutrition", floorNumber: 4, building: "PATRIOT_PLACE_20"},
-            {name: "Pain Medicine", floorNumber: 4, building: "PATRIOT_PLACE_20"},
-            {name: "Physiatry", floorNumber: 4, building: "PATRIOT_PLACE_20"},
-            {name: "Pulmonary Function Testing", floorNumber: 4, building: "PATRIOT_PLACE_20"},
-            {name: "Day Surgery Center", floorNumber: 4, building: "PATRIOT_PLACE_20"},
-
-            {name: "MassGeneral Hospital for Children", floorNumber: 1, building: "PATRIOT_PLACE_22"},
-            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "PATRIOT_PLACE_22"},
-            {name: "Multi Specialty Clinic", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Allergy", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Dermatology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Endocrinology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Gastroenterology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Neurology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Neurosurgery", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Opthalmology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Optometry", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Pulmonology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Rhematology", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Vein Care Services", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Women's Health", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-            {name: "Patient Financial Services", floorNumber: 3, building: "PATRIOT_PLACE_22"},
-
-            {name: "Blood Draw/Phlebotomy", floorNumber: 4, building: "PATRIOT_PLACE_22"},
-            {name: "Community Room", floorNumber: 4, building: "PATRIOT_PLACE_22"},
-            {name: "Primary Care", floorNumber: 4, building: "PATRIOT_PLACE_22"},
-
-            {name: "Allergy and Clinical Immunology", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Backup Child Care Center", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Dermatology", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Physicians Group", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Obstetrics and Gynecology", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Psychiatric Specialties", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Center for Pain Medicine", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Crohn's and Colitis Center", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Endoscopy Center", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Center for Women's Health", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Laboratory", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Multi-Specialty Clinic", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Center for Integrative Health", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Patient Financial Services", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Pharmacy", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Radiology", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Rehabilitation Services", floorNumber: 1, building: "CHESTNUT_HILL"}
-        ]
-    })
-
     console.log('Database seeded successfully!');
 }
 
@@ -508,5 +481,5 @@ main()
         return Promise.reject(e);
     })
     .finally(async () => {
-        await prisma.$disconnect();
+        await client.$disconnect();
     });

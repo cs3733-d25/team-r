@@ -5,13 +5,13 @@ async function main() {
     // chestnut hill floor 1
     await client.node.createMany({
         data:[
-            {nodeID: 'canopyEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
-            {nodeID: 'leftEntrance', nodeType: NodeType.entrance, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
-            {nodeID: 'frontLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
-            {nodeID: 'leftWaiting', nodeType: NodeType.other, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
-            {nodeID: 'leftLot', nodeType: NodeType.parking, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
-            {nodeID: 'specialtyCheckIn', nodeType: NodeType.reception, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
-            {nodeID: 'canopyEntranceHallway', nodeType: NodeType.hallway, building: Building.CHESTNUT_HILL, floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
+            {nodeID: 'canopyEntrance', nodeType: 'Entrance', building: 'Chestnut Hill', floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
+            {nodeID: 'leftEntrance', nodeType: 'Entrance', building: 'Chestnut Hill', floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
+            {nodeID: 'frontLot', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
+            {nodeID: 'leftWaiting', nodeType: 'Other', building: 'Chestnut Hill', floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
+            {nodeID: 'leftLot', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
+            {nodeID: 'specialtyCheckIn', nodeType: 'Reception', building: 'Chestnut Hill', floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
+            {nodeID: 'canopyEntranceHallway', nodeType: 'Hallway', building: 'Chestnut Hill', floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
         ],
         skipDuplicates: true
     })
@@ -31,8 +31,8 @@ async function main() {
         data: [
             {
                 nodeID: 'valetParking20',
-                nodeType: NodeType.parking,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Parking',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 594.87,
                 ycoord: 43.05,
@@ -41,8 +41,8 @@ async function main() {
             },
             {
                 nodeID: 'patientParking20',
-                nodeType: NodeType.parking,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Parking',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 166.45,
                 ycoord: 36.50,
@@ -51,8 +51,8 @@ async function main() {
             },
             {
                 nodeID: 'extendedParking20',
-                nodeType: NodeType.parking,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Parking',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 125.94,
                 ycoord: 265.92,
@@ -62,7 +62,7 @@ async function main() {
             {
                 nodeID: 'swEntrance',
                 nodeType: NodeType.entrance,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 186.48,
                 ycoord: 134.00,
@@ -72,7 +72,7 @@ async function main() {
             {
                 nodeID: 'seEntrance',
                 nodeType: NodeType.entrance,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 253.24,
                 ycoord: 841.50,
@@ -82,7 +82,7 @@ async function main() {
             {
                 nodeID: '130.01',
                 nodeType: NodeType.reception,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 333.24,
                 ycoord: 342.00,
@@ -92,7 +92,7 @@ async function main() {
             {
                 nodeID: '110.01',
                 nodeType: NodeType.reception,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 412.74,
                 ycoord: 221.00,
@@ -102,7 +102,7 @@ async function main() {
             {
                 nodeID: '120.01',
                 nodeType: NodeType.reception,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 256.24,
                 ycoord: 466.00,
@@ -112,7 +112,7 @@ async function main() {
             {
                 nodeID: '100.00F',
                 nodeType: NodeType.reception,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 190.74,
                 ycoord: 589.50,
@@ -122,7 +122,7 @@ async function main() {
             {
                 nodeID: '100.13',
                 nodeType: NodeType.stairs,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 767.24,
                 ycoord: 243.00,
@@ -132,7 +132,7 @@ async function main() {
             {
                 nodeID: '100.14',
                 nodeType: NodeType.stairs,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 218.74,
                 ycoord: 818.00,
@@ -141,8 +141,8 @@ async function main() {
             },
             {
                 nodeID: '100.10',
-                nodeType: NodeType.elevator,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Elevator',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 191.74,
                 ycoord: 757.50,
@@ -152,7 +152,7 @@ async function main() {
             {
                 nodeID: '100.00',
                 nodeType: NodeType.hallway,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 192.74,
                 ycoord: 234.50,
@@ -161,8 +161,8 @@ async function main() {
             },
             {
                 nodeID: '100.04',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 458.74,
                 ycoord: 234.50,
@@ -171,8 +171,8 @@ async function main() {
             },
             {
                 nodeID: '110.20A',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 519.24,
                 ycoord: 231.50,
@@ -181,8 +181,8 @@ async function main() {
             },
             {
                 nodeID: '110.03',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 520.24,
                 ycoord: 258.00,
@@ -191,8 +191,8 @@ async function main() {
             },
             {
                 nodeID: '110.20',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 570.24,
                 ycoord: 258.50,
@@ -202,7 +202,7 @@ async function main() {
             {
                 nodeID: '110.09',
                 nodeType: NodeType.hallway,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 682.24,
                 ycoord: 259.50,
@@ -211,8 +211,8 @@ async function main() {
             },
             {
                 nodeID: '110.12A',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 721.74,
                 ycoord: 254.50,
@@ -222,7 +222,7 @@ async function main() {
             {
                 nodeID: '110.33',
                 nodeType: NodeType.hallway,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 575.24,
                 ycoord: 518.50,
@@ -231,8 +231,8 @@ async function main() {
             },
             {
                 nodeID: '110.60',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 549.74,
                 ycoord: 536.00,
@@ -241,8 +241,8 @@ async function main() {
             },
             {
                 nodeID: '120.26',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 418.24,
                 ycoord: 532.50,
@@ -252,7 +252,7 @@ async function main() {
             {
                 nodeID: '100.09',
                 nodeType: NodeType.hallway,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 191.24,
                 ycoord: 530.50,
@@ -261,8 +261,8 @@ async function main() {
             },
             {
                 nodeID: '120.00B',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 196.74,
                 ycoord: 451.50,
@@ -272,7 +272,7 @@ async function main() {
             {
                 nodeID: '150.30',
                 nodeType: NodeType.hallway,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 338.74,
                 ycoord: 702.50,
@@ -282,7 +282,7 @@ async function main() {
             {
                 nodeID: '150.36',
                 nodeType: NodeType.hallway,
-                building: Building.PATRIOT_PLACE_20,
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 311.24,
                 ycoord: 672.50,
@@ -291,8 +291,8 @@ async function main() {
             },
             {
                 nodeID: '130.00',
-                nodeType: NodeType.other,
-                building: Building.PATRIOT_PLACE_20,
+                nodeType: 'Other',
+                building: 'Patriot Place 20',
                 floor: 1,
                 xcoord: 324.74,
                 ycoord: 247.00,
@@ -306,10 +306,10 @@ async function main() {
         // patriot 20 floor 3
         await client.node.createMany({
             data: [
-                {nodeID: 'bridgePatriot20', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
-                {nodeID: '300.13', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
-                {nodeID: '300.14', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
-                {nodeID: '300.10', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_20, floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '3rd Floor Elevator', shortName: '3rd Floor Elevator'}
+                {nodeID: 'bridgePatriot20', nodeType: 'Entrance', building: 'Patriot Place 20', floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
+                {nodeID: '300.13', nodeType: 'Stairs', building: 'Patriot Place 20', floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
+                {nodeID: '300.14', nodeType: 'Stairs', building: 'Patriot Place 20', floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
+                {nodeID: '300.10', nodeType: 'Elevator', building: 'Patriot Place 20'0, floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '3rd Floor Elevator', shortName: '3rd Floor Elevator'}
             ],
             skipDuplicates: true
         });
@@ -348,13 +348,13 @@ async function main() {
         // patriot 22 floor 1
         await client.node.createMany({
             data: [
-                {nodeID: 'valetParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 576.44, ycoord: 35.10, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
-                {nodeID: 'patientParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 217.98, ycoord: 221.99, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
-                {nodeID: 'extendedParking22', nodeType: NodeType.parking, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 128.70, ycoord: 226.15, longName: 'Extended Patient Parking 22 Patriot', shortName: 'Extended Patient Parking 22 Patriot',},
-                {nodeID: '1ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
-                { nodeID: '1ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
-                { nodeID: '1EA', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
-                { nodeID: '22entrance1', nodeType: NodeType.entrance, building: Building.PATRIOT_PLACE_22, floor: 1, xcoord: 333.39, ycoord: 719.00, longName: 'Entrance', shortName: 'Entrance'}
+                {nodeID: 'valetParking22', nodeType: NodeType.parking, building: 'Patriot Place 22', floor: 1, xcoord: 576.44, ycoord: 35.10, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
+                {nodeID: 'patientParking22', nodeType: NodeType.parking, building: 'Patriot Place 22', floor: 1, xcoord: 217.98, ycoord: 221.99, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
+                {nodeID: 'extendedParking22', nodeType: NodeType.parking, building: 'Patriot Place 22', floor: 1, xcoord: 128.70, ycoord: 226.15, longName: 'Extended Patient Parking 22 Patriot', shortName: 'Extended Patient Parking 22 Patriot',},
+                {nodeID: '1ST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
+                { nodeID: '1ST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
+                { nodeID: '1EA', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
+                { nodeID: '22entrance1', nodeType: 'Entrance', building: 'Patriot Place 22', floor: 1, xcoord: 333.39, ycoord: 719.00, longName: 'Entrance', shortName: 'Entrance'}
             ],
             skipDuplicates: true
         });
@@ -362,20 +362,20 @@ async function main() {
         // patriot 22 floor 3
         await client.node.createMany({
             data: [
-                {nodeID: 'ST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 442.88, ycoord: 327.00, longName: 'Stair ST02', shortName: 'Stair ST02'},
-                {nodeID: '3000C', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 444.25, ycoord: 344.00, longName: 'Copy 3000C', shortName: 'Copy 3000C'},
-                {nodeID: '3E', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 466.88, ycoord: 345.00, longName: 'Corridor 3E', shortName: 'Corridor 3E'},
-                {nodeID: '3001', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 466.63, ycoord: 432.00, longName: 'Touchdown 3001', shortName: 'Touchdown 3001'},
-                {nodeID: '3000A', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 418.63, ycoord: 419.25, longName: 'Check-In 3000A', shortName: 'Check-In 3000A'},
-                {nodeID: 'ST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 436.13, ycoord: 470.25, longName: 'Tenant Stair ST01', shortName: 'Tenant Stair ST01'},
-                {nodeID: '3A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 438.88, ycoord: 538.75, longName: 'Elevator 3A', shortName: 'Elevator 3A'},
-                {nodeID: '3B', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 438.13, ycoord: 592.50, longName: 'Corridor 3B', shortName: 'Corridor 3B'},
-                {nodeID: '3000B', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 436.13, ycoord: 643.75, longName: 'Waiting 3000B', shortName: 'Waiting 3000B'},
-                {nodeID: '3104', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 639.00, longName: 'EQ Alcohol 3104', shortName: 'EQ Alcohol 3104'},
-                {nodeID: '3S', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 595.13, ycoord: 733.25, longName: 'Corridor 3S', shortName: 'Corridor 3S'},
-                {nodeID: '3112', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 645.88, ycoord: 732.50, longName: 'Exam 3112', shortName: 'Exam 3112'},
-                {nodeID: 'ST03', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'},
-                {nodeID: '307', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'}
+                {nodeID: 'ST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 3, xcoord: 442.88, ycoord: 327.00, longName: 'Stair ST02', shortName: 'Stair ST02'},
+                {nodeID: '3000C', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 3, xcoord: 444.25, ycoord: 344.00, longName: 'Copy 3000C', shortName: 'Copy 3000C'},
+                {nodeID: '3E', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 3, xcoord: 466.88, ycoord: 345.00, longName: 'Corridor 3E', shortName: 'Corridor 3E'},
+                {nodeID: '3001', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 3, xcoord: 466.63, ycoord: 432.00, longName: 'Touchdown 3001', shortName: 'Touchdown 3001'},
+                {nodeID: '3000A', nodeType: NodeType.reception, building: 'Patriot Place 22', floor: 3, xcoord: 418.63, ycoord: 419.25, longName: 'Check-In 3000A', shortName: 'Check-In 3000A'},
+                {nodeID: 'ST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 3, xcoord: 436.13, ycoord: 470.25, longName: 'Tenant Stair ST01', shortName: 'Tenant Stair ST01'},
+                {nodeID: '3A', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 3, xcoord: 438.88, ycoord: 538.75, longName: 'Elevator 3A', shortName: 'Elevator 3A'},
+                {nodeID: '3B', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 3, xcoord: 438.13, ycoord: 592.50, longName: 'Corridor 3B', shortName: 'Corridor 3B'},
+                {nodeID: '3000B', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 3, xcoord: 436.13, ycoord: 643.75, longName: 'Waiting 3000B', shortName: 'Waiting 3000B'},
+                {nodeID: '3104', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 3, xcoord: 595.13, ycoord: 639.00, longName: 'EQ Alcohol 3104', shortName: 'EQ Alcohol 3104'},
+                {nodeID: '3S', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 3, xcoord: 595.13, ycoord: 733.25, longName: 'Corridor 3S', shortName: 'Corridor 3S'},
+                {nodeID: '3112', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 3, xcoord: 645.88, ycoord: 732.50, longName: 'Exam 3112', shortName: 'Exam 3112'},
+                {nodeID: 'ST03', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'},
+                {nodeID: '307', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'}
             ],
             skipDuplicates: true
         });
@@ -404,17 +404,17 @@ async function main() {
         // patriot 22 floor 4
         await client.node.createMany({
             data: [
-                { nodeID: 'checkIn4000B', nodeType: NodeType.reception, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 319.25, ycoord: 654.50, longName: 'rightCheckIn', shortName: 'rightCheckIn'},
-                { nodeID: 'waiting4000', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 299.25, ycoord: 579.50, longName: 'rightEntranceWaiting', shortName: 'rightEntranceWaiting'},
-                { nodeID: 'rightWaitingHallway', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 250.25, ycoord: 633.50, longName: 'rightWaitingHallway', shortName: 'rightWaitingHallway'},
-                { nodeID: 'rightEntranceHallway', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 353.25, ycoord: 655.50, longName: 'rightEntranceHallway', shortName: 'rightEntranceHallway'},
-                { nodeID: 'elevatorLobby4A', nodeType: NodeType.elevator, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 351.25, ycoord: 535.50, longName: 'elevatorLobby', shortName: 'elevatorLobby'},
-                { nodeID: 'lobbyStairsHallway', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 350.75, ycoord: 455.50, longName: 'lobbyStairsHallway', shortName: 'lobbyStairsHallway'},
-                { nodeID: 'stairST01', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 419.75, ycoord: 455.00, longName: 'lobbyStairs', shortName: 'lobbyStairs'},
-                { nodeID: 'stairST02', nodeType: NodeType.stairs, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 355.25, ycoord: 280.50, longName: 'leftStairs', shortName: 'leftStairs'},
-                { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
-                { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
-                { nodeID: 'checkOut4090', nodeType: NodeType.other, building: Building.PATRIOT_PLACE_22, floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'}
+                { nodeID: 'checkIn4000B', nodeType: NodeType.reception, building: 'Patriot Place 22', floor: 4, xcoord: 319.25, ycoord: 654.50, longName: 'rightCheckIn', shortName: 'rightCheckIn'},
+                { nodeID: 'waiting4000', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 4, xcoord: 299.25, ycoord: 579.50, longName: 'rightEntranceWaiting', shortName: 'rightEntranceWaiting'},
+                { nodeID: 'rightWaitingHallway', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 4, xcoord: 250.25, ycoord: 633.50, longName: 'rightWaitingHallway', shortName: 'rightWaitingHallway'},
+                { nodeID: 'rightEntranceHallway', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 4, xcoord: 353.25, ycoord: 655.50, longName: 'rightEntranceHallway', shortName: 'rightEntranceHallway'},
+                { nodeID: 'elevatorLobby4A', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 4, xcoord: 351.25, ycoord: 535.50, longName: 'elevatorLobby', shortName: 'elevatorLobby'},
+                { nodeID: 'lobbyStairsHallway', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 4, xcoord: 350.75, ycoord: 455.50, longName: 'lobbyStairsHallway', shortName: 'lobbyStairsHallway'},
+                { nodeID: 'stairST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 4, xcoord: 419.75, ycoord: 455.00, longName: 'lobbyStairs', shortName: 'lobbyStairs'},
+                { nodeID: 'stairST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 4, xcoord: 355.25, ycoord: 280.50, longName: 'leftStairs', shortName: 'leftStairs'},
+                { nodeID: 'corridor4R', nodeType: NodeType.hallway, building: 'Patriot Place 22', floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
+                { nodeID: 'checkOutWait4083', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
+                { nodeID: 'checkOut4090', nodeType: NodeType.other, building: 'Patriot Place 22', floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'}
             ],
             skipDuplicates: true
         });

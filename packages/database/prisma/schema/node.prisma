@@ -7,8 +7,7 @@ model Directory {
 
 model Node {
   nodeID    String   @id
-  nodeTypeID String //this is for prisma
-  nodeType  NodeType @relation(fields: [nodeTypeID], references: [id])
+  nodeType String
   building  String
   floor     Int
   xcoord    Float
@@ -19,6 +18,7 @@ model Node {
   departments Department[]
   edgesFrom Edge[] @relation("fromNode")
   edgesTo   Edge[] @relation("toNode")
+
 }
 
 model Edge {
@@ -31,4 +31,12 @@ model Edge {
   toY      Float
   fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
   toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+}
+
+model Department{
+  id String @id@default(uuid())
+  name String
+  recepetionNodeID String
+  receptionNode Node @relation(fields:[recepetionNodeID], references: [nodeID])
+  employee  Employee[]
 }
