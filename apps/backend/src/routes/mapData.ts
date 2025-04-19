@@ -92,6 +92,18 @@ router.get("/entrances", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+router.get("/elevators", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({
+      where: { nodeType: "elevator" },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 
 router.get("/edges-20-1", async (req, res) => {
   try {
