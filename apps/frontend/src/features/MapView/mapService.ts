@@ -34,6 +34,11 @@ export const fetchEdges20_1 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-20-1');
     return res.data;
 };
+export const fetchElevators = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/elevators');
+    return res.data;
+};
+
 
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
