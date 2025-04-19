@@ -7,7 +7,8 @@ model Directory {
 
 model Node {
   nodeID    String   @id
-  nodeType  String
+  nodeTypeID String //this is for prisma
+  nodeType  NodeType @relation(fields: [nodeTypeID], references: [id])
   building  String
   floor     Int
   xcoord    Float

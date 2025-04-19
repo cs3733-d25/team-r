@@ -1,6 +1,4 @@
 import client from "../apps/backend/src/bin/prisma-client.ts";
-//import {PrismaClient} from "../packages/database";
-
 
 async function main() {
     await client.userType.createMany({

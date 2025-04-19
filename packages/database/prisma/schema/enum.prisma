@@ -47,4 +47,5 @@ model RequestNonemergent {
 model NodeType {
   id   String @id @default(uuid())
   name String @unique
+  nodes Node[]
 }
