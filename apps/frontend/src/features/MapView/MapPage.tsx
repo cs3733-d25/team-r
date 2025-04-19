@@ -4,20 +4,9 @@ import { Button } from '@/components/ui/button.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMapData } from '@/features/MapView/mapService';
 import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
-
-interface Node {
-    nodeID: string;
-    nodeType: string;
-    building: string;
-    floor: number;
-    xcoord: number;
-    ycoord: number;
-    longName: string;
-    shortName: string;
-}
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number) => void;
@@ -31,7 +20,7 @@ export function MapPage() {
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
 
-    const [selectedBuilding, setSelectedBuilding] = useState<string>(
+    const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
 
