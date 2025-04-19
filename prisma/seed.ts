@@ -1,31 +1,21 @@
 import client from "../apps/backend/src/bin/prisma-client.ts";
 
 async function main() {
-    // Create users
+    // Create user type
     await client.userType.createMany({
         data: [
             { id: 'Employee', name: 'Employee' },
             { id: 'Patient', name: 'Patient' },
+            { id: 'Admin', name: 'Admin' }
         ],
+        skipDuplicates: true
     });
-        // 1. Create a node for department relation
-        const node = await client.node.create({
-            data: {
-                nodeID: '90',
-                xcoord: 100,
-                ycoord: 200,
-                floor: 1,
-                building: 'Main',
-                longName: 'testNodeMain',
-                shortName: 'testNodeMain',
-                nodeType: 'Reception'
-            }
-        });
 
         // 2. Create department
         const department1 = await client.department.create({
             data: {
-                recepetionNodeID: node.nodeID,
+                id: 'Phlebotomy',
+                recepetionNodeID: 'specialtyCheckIn',
                 name: 'Ambulatory/Urgent Care'
             }
         });
@@ -43,13 +33,16 @@ async function main() {
         // 4. Create employee (after department is available)
         const employee1 = await client.employee.create({
             data: {
+                id: '1',
                 firstName: 'John',
                 lastName: 'Doe',
-                departmentId: department1.recepetionNodeID,
+                departmentId: 'Phlebotomy',
                 role: 'Doctor',
                 onShift: true,
             }
+
         });
+
 
 /*
     const user1 = await client.user.create({
