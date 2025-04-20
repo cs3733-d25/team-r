@@ -1,5 +1,4 @@
 import {useState} from "react";
-//import {Department, RequestPriority, RequestStatus, Buildings, RequestNonemergent} from "../RequestEnums.tsx";
 import axios from "axios";
 import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";

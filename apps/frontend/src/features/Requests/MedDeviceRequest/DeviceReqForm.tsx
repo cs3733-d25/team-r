@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import Dropdown from "@/components/Dropdowns/Department.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 interface SubmittedDevice {
     device: string;
@@ -45,7 +46,7 @@ export const DeviceReqForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('api/servicereq/', {
+            const response = await axios.post('api/devicereq/', {
                 ...formData,
                 priority: formData.priority.toString(),
             });
@@ -121,24 +122,8 @@ export const DeviceReqForm = () => {
                                         Select a Device
                                         <span className="text-accent">*</span>
                                     </Label>
-                                    {/*<Select onValueChange={handleChange3}>*/}
-                                    {/*    <SelectTrigger className={"bg-input"}>*/}
-                                    {/*        <SelectValue placeholder={'Select a device'}></SelectValue>*/}
-                                    {/*    </SelectTrigger>*/}
-                                    {/*    <SelectContent className={"bg-input"} >*/}
-                                    {/*        <SelectGroup>*/}
-                                    {/*            {["X-ray", "Defibrillator", "EKG Machine", "Pacemaker", "Syringe"].map((device: string) => (*/}
-                                    {/*            <SelectItem key={device} value={device} className={"bg-input hover:bg-accent"}>*/}
-                                    {/*                {device}*/}
-                                    {/*            </SelectItem>*/}
-                                    {/*            ))}*/}
-                                    {/*        </SelectGroup>*/}
-                                    {/*        <SelectGroup>*/}
-                                    {/*            */}
-                                    {/*        </SelectGroup>*/}
-                                    {/*    </SelectContent>*/}
-                                    {/*</Select>*/}
-                                    <Dropdown tableName={"devices"} fieldName={"device"} onChange={handleDropdownChange}></Dropdown>
+
+                                    <Dropdown tableName={"medicalDevice"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Employee Name */}
@@ -192,20 +177,11 @@ export const DeviceReqForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
-                                {/* Department */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Department
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            Select the department making the prescription request.
-                                        </span>
-                                    </Label>
-                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
-                                </div>
+                                {/* Location and Department */}
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
@@ -213,7 +189,7 @@ export const DeviceReqForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </label>
-                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}

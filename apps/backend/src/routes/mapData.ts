@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
-import { Building } from "database";
 
 export interface Node {
   nodeID: string;
@@ -30,7 +29,7 @@ const router: Router = express.Router();
 router.get("/parking-lots", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
-      where: { nodeType: "parking" },
+      where: { nodeType: "Parking" },
     });
     console.log(request);
     res.json(request);
@@ -46,11 +45,11 @@ router.get("/departments", async (req, res) => {
 
     // Create the where clause with correct enum reference
     const whereClause = buildingStr
-      ? { building: buildingStr as Building }
+      ? { building: buildingStr }
       : {};
 
     const request = await PrismaClient.directory.findMany({
-      where: whereClause,
+      where: whereClause
     });
 
     // Transform to match frontend expectations
@@ -83,7 +82,7 @@ router.get("/check-in", async (req, res) => {
 router.get("/entrances", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
-      where: { nodeType: "entrance" },
+      where: { nodeType: "Entrance" },
     });
     console.log(request);
     res.json(request);
@@ -98,11 +97,11 @@ router.get("/edges-20-1", async (req, res) => {
     const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
-          building: "PATRIOT_PLACE_20",
+          building: "Patriot Place 20",
           floor: 1,
         },
         toNode: {
-          building: "PATRIOT_PLACE_20",
+          building: "Patriot Place 20",
           floor: 1,
         },
       },
