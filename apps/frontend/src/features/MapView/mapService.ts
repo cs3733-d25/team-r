@@ -43,7 +43,8 @@ export const fetchElevators = async (): Promise<Node[]> => {
 
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
-    const [departments, setDepartments] = useState<{key: string; value: string; label: string}[]>([]);
+    const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]);
+
 
     useEffect(() => {
         const loadParkingLots = async () => {
@@ -62,12 +63,14 @@ export function useMapData(selectedBuilding: string) {
         const loadDepartments = async () => {
             try {
                 const data = await fetchDepartments(selectedBuilding);
-                const formattedDepartments = data.map((dept: any) => ({
-                    key: dept.id || dept.key,
-                    value: dept.id || dept.value,
-                    label: dept.name || dept.label
-                }));
-                setDepartments(formattedDepartments);
+                console.log('raw department data:', data);
+                // const formattedDepartments = data.map((dept: any) => ({
+                //     key: dept.id || dept.key,
+                //     value: dept.id || dept.value,
+                //     label: dept.name || dept.label
+                // }));
+                console.log('formatted departments: ', data);
+                setDepartments(data);
             } catch (err) {
                 console.error('Error fetching departments:', err);
             }

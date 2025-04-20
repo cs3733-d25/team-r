@@ -41,25 +41,17 @@ router.get("/parking-lots", async (req, res) => {
 
 router.get("/departments", async (req, res) => {
   try {
+    //const buildingStr = req.query.building as string;
     const buildingStr = req.query.building as string;
-
+    console.log("building str", buildingStr);
     // Create the where clause with correct enum reference
-    const whereClause = buildingStr
-      ? { building: buildingStr }
-      : {};
+    //const whereClause = buildingStr ? { building: buildingStr } : {};
 
     const request = await PrismaClient.directory.findMany({
-      where: whereClause
+      where: { building: buildingStr },
     });
-
-    // Transform to match frontend expectations
-    const formattedDepartments = request.map((dept) => ({
-      key: dept.id.toString(),
-      value: dept.id.toString(),
-      label: dept.name,
-    }));
-
-    res.json(formattedDepartments);
+    console.log("departments: ", request);
+    res.json(request);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");

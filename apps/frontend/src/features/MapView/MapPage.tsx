@@ -25,8 +25,7 @@ export function MapPage() {
     );
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
-    console.log('building identifieer: ', buildingIdentifier);
-    console.log('selectde building', selectedBuilding);
+    console.log('departments: ', departments);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -82,9 +81,9 @@ export function MapPage() {
                                 <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Departments</SelectLabel>
-                                            {departments.map(dept => (
-                                                <SelectItem key={dept.key} value={dept.value}>
-                                                    {dept.label}
+                                            {departments.map((dept) => (
+                                                <SelectItem key={dept.id} value={dept.id}>
+                                                    {dept.name}
                                                 </SelectItem>
                                             ))}
                                         </SelectGroup>
