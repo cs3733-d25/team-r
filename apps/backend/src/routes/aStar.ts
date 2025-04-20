@@ -1,5 +1,6 @@
 import prismaClient from "../bin/prisma-client";
 import { PriorityQueue } from "../routes/dataStructures";
+import router from "./mapData";
 
 function heuristic(a: string, b: string): number {
   // Placeholder: returns zero (Dijkstra). Replace if you have coords.
@@ -59,3 +60,5 @@ export async function aStar(start: string, end: string): Promise<string[]> {
     // no path
     return [];
   }
+
+  export default router;
