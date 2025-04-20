@@ -1,11 +1,35 @@
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import InternalMap from '@/features/MapView/InternalMap.tsx';
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import { useState } from "react";
 
 function TestPage() {
+    const [formData, setFormData] = useState({
+        patientID: "",
+        assignedEmpID: "",
+        priority: "",
+        department: "",
+        location: "",
+        comment: "",
+        time: new Date().toString(),
+        status: '',
+        request: ' ',
+        employeeName: '',
+    });
+
+    const handleDropdownChange = (name: string, value: string) => {
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     return (
         <div>
             <NavbarMGH />
-            <InternalMap />
+            {/* <InternalMap /> */}
+            <LocationDepartmentDropdown
+                onChange={handleDropdownChange}
+            />
         </div>
     );
 }

@@ -22,6 +22,17 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
 
     return (
         <div>
+            {/* Location dropdown */}
+            <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                Location
+                <span className="text-red-500">*</span>
+                <span className="text-xs text-gray-500 block">
+                    Select the building making the patient request.
+                </span>
+            </Label>
+            <Dropdown tableName={"building"} onChange={handleLocationChange} />
+            {/*select department based on location*/}
+            <p>location dropdown test</p>
             {selectedLocation && (
                 <>
                     <Label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -32,15 +43,13 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
                                         </span>
                     </Label>
                     {/*handle departments for location*/}
-                    {selectedLocation === "Patriot Place 22" ?
-                        <Dropdown tableName={"departmentsPP22"} onChange={handleDepartmentChange}></Dropdown>
-
-                    : selectedLocation === "Patriot Place 20" ?
-                        <Dropdown tableName={"departmentsPP20"} onChange={handleDepartmentChange}></Dropdown>
-
-                    :selectedLocation === "Chestnut Hill" ?
-                        <Dropdown tableName={"departmentsCH"} onChange={handleDepartmentChange}></Dropdown>
-                        :null}
+                    {selectedLocation === "Patriot Place 22" ? (
+                        <Dropdown tableName={"departmentsPP22"} onChange={handleDepartmentChange} />
+                    ) : selectedLocation === "Patriot Place 20" ? (
+                        <Dropdown tableName={"departmentsPP20"} onChange={handleDepartmentChange} />
+                    ) : selectedLocation === "Chestnut Hill" ? (
+                        <Dropdown tableName={"departmentsCH"} onChange={handleDepartmentChange} />
+                    ) : null}
                 </>
             )}
         </div>
