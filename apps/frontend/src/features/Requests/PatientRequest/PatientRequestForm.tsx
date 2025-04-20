@@ -231,7 +231,7 @@ export const PatientRequestForm = () => {
                                 </Label>
                                 <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
-
+                            {/* Location and Department */}
                             <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
                         </div>
                         {/* Additional Instructions */}

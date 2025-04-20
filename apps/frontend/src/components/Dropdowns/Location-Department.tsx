@@ -39,7 +39,7 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
                         Department
                         <span className="text-red-500">*</span>
                         <span className="text-xs text-gray-500 block">
-                                            Select the department making the patient request.
+                                            Select a department
                                         </span>
                     </Label>
                     {/*handle departments for location*/}

@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
-import {Buildings, Department, RequestPriority} from "../RequestEnums.tsx";
 import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import Dropdown from "@/components/Dropdowns/Department.tsx";
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 // Simple interface for submitted request
 interface SubmittedRequest {
   employeeName: string;
   sanitationType: string;
-  priority: RequestPriority |string;
-  department: Department |string;
-  location: Buildings | string;
+  priority: string;
+  department: string;
+  location: string;
   room: string;
   comments: string;
   timestamp: string;
@@ -28,12 +28,12 @@ const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     employeeName: '',
     sanitationType: '',
-    priority: "",
-    department: "",
+    priority: '',
+    department: '',
     room: '',
     comments: '',
     status:'',
-    location:"",
+    location:'',
 
   });
   const handleDropdownChange = (name:string, value:string) => {
@@ -76,12 +76,12 @@ const SanitationRequestForm = () => {
         setFormData({
           employeeName: '',
           sanitationType: '',
-          priority: "",
-          department: "",
+          priority: '',
+          department: '',
           room: '',
           comments: '',
           status: '',
-          location: "",
+          location: '',
 
         });
       }
@@ -221,32 +221,11 @@ const SanitationRequestForm = () => {
                       LOW: Within 24 hours
                     </span>
                   </Label>
-                  <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
                 </div>
 
-                {/* Department */}
-                <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Department
-                    <span className="text-red-500">*</span>
-                    <span className="text-xs text-gray-500 block">
-                      Select the department requiring sanitation
-                    </span>
-                  </Label>
-                  <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
-                </div>
-                {/* Location */}
-                <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Location
-                    <span className="text-red-500">*</span>
-                    <span className="text-xs text-gray-500 block">
-                                        Select the building making the patient request.
-                                    </span>
-                  </Label>
-                  {/*TableName - enum, fieldName - from request*/}
-                  <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
-                </div>
+                {/* Location and Department */}
+                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
 
                 {/* Room Number */}
                 <div>
@@ -274,7 +253,7 @@ const SanitationRequestForm = () => {
                   Request Status
                   <span className="text-accent">*</span>
                 </Label>
-                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
               </div>
               {/* Comments */}
               <div>
