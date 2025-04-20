@@ -2,13 +2,6 @@ import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
-import { RequestPriority, Department } from "../../../../packages/database";
-import {
-  parseBuilding,
-  parseDepartment,
-  parseRequestPriority,
-  parseStatus,
-} from "./enum.ts";
 
 const router: Router = express.Router();
 
@@ -25,36 +18,22 @@ router.get("/", async function (req: Request, res: Response) {
   }
 });
 
-// // a function to cast a string to a RequestPriority enum type
-// function parseRequestPriority(value: string): RequestPriority {
-//   return RequestPriority[value as keyof typeof RequestPriority];
-// }
-// // a function to cast a string to a Department enum type
-// function parseDepartment(value: string): Department {
-//   return Department[value as keyof typeof Department];
-// }
-
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a sanitation request");
-  const request = req.body;
-  console.log("Room: " + request.room);
+  const {priority, status, department, location, roomNumber, employeeName, comments, sanitationType} = req.body;
+
   try {
-    // assumes that the request is formatted with the exact fields as the SanitationRequest table in the prisma schema (packages/database/prisma/schema.prisma)
-    // console.log(parseRequestPriority(request.priority));
-    // console.log("priority: ", request.priority);
-    //console.log(request.department);
-    // console.log(parseDepartment(request.department));
-    // console.log(parseRequestPriority(request.priority));
     const createRequest = await PrismaClient.sanitationRequest.create({
       data: {
-        employeeName: request.employeeName,
-        sanitationType: request.sanitationType,
-        priority: parseRequestPriority(request.priority),
-        department: await parseDepartment(request.department),
-        location: await parseBuilding(request.location),
-        roomNumber: request.room,
-        comments: request.comments,
-        status: await parseStatus(request.status),
+        employeeName,
+        sanitationType,
+        priority,
+        department,
+        location,
+        roomNumber,
+        comments,
+        status,
+        //assignedEmployee: employeeName //connect later
         // user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });

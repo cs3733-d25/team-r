@@ -1,40 +1,54 @@
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  userType  UserType @default(PATIENT)
-  updatedAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  username   String   @unique
+  password   String
+  userTypeID String
+  userType   UserType @relation(fields: [userTypeID], references: [id])
+  updatedAt  DateTime @default(now())
 
   employee Employee?
-  patient  Patient?
-  // sanitationRequests SanitationRequest[] @relation("sanitationRequests")
+  patient Patient?
+}
+
+model UserType {
+  id   String @id @default(uuid())
+  name String
+
+  users User[]
 }
 
 model Employee {
-  id         Int           @id
-  firstName  String
-  lastName   String
-  department Department?
-  role       EmployeeRole?
-  onShift    Boolean       @default(false)
+  id             String         @id @default(uuid())
+  firstName      String
+  lastName       String
+  departmentId   String?
+  department     Department?    @relation(fields: [departmentId], references: [id])
+
+  roleId         String?
+  role           String
+
+  onShift        Boolean        @default(false)
   user       User          @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients Patient[] @relation("AssignedDoctor")
-  // assignedRequests DeviceRequest[]   @relation("AssignedRequests")
-  // createdRequests  DeviceRequest[]   @relation("CreatedRequests")
+  assignedPatients Patient[]
+  // medicalDeviceRequests MedicalDeviceRequest[]
+  // sanitationRequests SanitationRequest[]
+  // deviceRequests  DeviceRequest[]
+  // pharmacyRequests  PharmacyRequest[]
+  // patientRequests PatientRequest[]
+  // transportRequests TransportRequest[]
 }
 
+
 model Patient {
-  id               Int                @id
+  id               String         @id @default(uuid())
   firstName        String
   lastName         String
   dateOfBirth      DateTime
-  gender           Gender?
   phone            String?
-  assignedDoctor   Employee?          @relation("AssignedDoctor", fields: [assignedDoctorId], references: [id])
-  assignedDoctorId Int?
+  assignedDoctor   Employee          @relation(fields: [assignedDoctorId], references: [id])
+  assignedDoctorId String
   user             User               @relation(fields: [id], references: [id], onDelete: Cascade)
-  // pharmacyRequests PharmacyRequest[] @relation("Prescriptions")
-  patientRequests  PatientRequest[]   @relation("PatientRequests")
-  TransportRequest TransportRequest[] @relation("TransportRequest")
+  transportRequest TransportRequest[]
+  patientRequest  PatientRequest[]
 }

@@ -37,7 +37,7 @@ function App() {
                 { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
-                { path: 'csv', element: <CSVPage /> },
+                // { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },

@@ -1,6 +1,4 @@
-
 import {useState} from "react";
-import {Department, RequestPriority, RequestStatus, Buildings, RequestNonemergent} from "../RequestEnums.tsx";
 import axios from "axios";
 import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
@@ -10,19 +8,20 @@ import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 
 
 interface SubmittedPatientRequest{
     patientID: string;
     assignedEmpID:string;
-    priority: RequestPriority | string;
-    department: Department | string;
-    location: Buildings | string;
+    priority: string;
+    department: string;
+    location: string;
     comment: string;
     time: string;
-    status: RequestStatus | string;
-    request: RequestNonemergent | string;
+    status: string;
+    request: string;
     employeeName: string;
 }
 
@@ -100,8 +99,6 @@ export const PatientRequestForm = () => {
     }
 
     const handleDropdownChange = (name:string, value:string) => {
-        // console.log(value);
-        // console.log(name);
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -219,7 +216,7 @@ export const PatientRequestForm = () => {
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Nonemergent Request
                                 </Label>
-                                <Dropdown tableName={"nonemergencies"} fieldName={"request"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
                             {/* Priority */}
@@ -236,40 +233,10 @@ export const PatientRequestForm = () => {
                       LOW: Within 24 hours
                         </span>
                                 </Label>
-                                <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
-
-                            {/* Department */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Department
-                                    <span className="text-red-500">*</span>
-                                    <span className="text-xs text-gray-500 block">
-                                        Select the department making the patient request.
-                                    </span>
-                                </Label>
-                                <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-                            </div>
-                        </div>
-
-                        {/* Location */}
-                        <div>
-                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Location
-                                <span className="text-red-500">*</span>
-                                <span className="text-xs text-gray-500 block">
-                                        Select the building making the patient request.
-                                    </span>
-                            </Label>
-                            {/*TableName - enum, fieldName - from request*/}
-                            <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-                        </div>
-                        {/*status*/}
-                        <div>
-                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Request Status
-                            </Label>
-                            <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                            {/* Location and Department */}
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
                         </div>
                         {/* Additional Instructions */}
                         <div>

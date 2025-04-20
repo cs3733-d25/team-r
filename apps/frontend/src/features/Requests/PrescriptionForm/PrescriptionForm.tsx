@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import Dropdown from "@/components/Dropdowns/Department.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 interface SubmittedPrescription {
     employee: string;
@@ -207,20 +208,11 @@ export const PrescriptionForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                    <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
-                                {/* Department */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Department
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            Select the department making the prescription request.
-                                        </span>
-                                    </Label>
-                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-                                </div>
+                                {/* Location and Department */}
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
@@ -228,7 +220,7 @@ export const PrescriptionForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </label>
-                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Drug Name */}
@@ -587,12 +579,12 @@ export const PrescriptionForm = () => {
                             <div className="mt-3 text-sm text-secondary-foreground">
                                 The prescription request has been submitted and will be filled.
                             </div>
-                            <button
+                            <Button
                                 onClick={() => setSubmittedPrescription(null)}
                                 className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
                             >
                                 Dismiss
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 )}

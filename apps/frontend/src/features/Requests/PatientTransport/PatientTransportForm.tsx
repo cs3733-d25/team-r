@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {Department, RequestPriority, Buildings} from "../RequestEnums.tsx";
 import {NavbarMGH} from '../../../components/NavbarMGH.tsx';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
@@ -10,6 +9,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import Dropdown from "@/components/Dropdowns/Department.tsx";
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 
 // Simple interface for submitted request
@@ -17,12 +17,12 @@ interface SubmittedTransport {
     patientID: string;  //PK
     //employeeID: string;
     employeeName: string;
-    currentBuilding : Buildings | string;  //FK
-    desiredBuilding : Buildings | string;
+    currentBuilding : string;  //FK
+    desiredBuilding : string;
     transportationType: string; //radio?
 
-    priority: RequestPriority |string;
-    department: Department | string;
+    priority: string;
+    department: string;
     comments: string;
     timestamp: string;
 
@@ -34,10 +34,10 @@ const TransportationRequestForm = () => {
         patientID: '',
         //employeeID: '',
         employeeName: '',
-        currentBuilding :"",
-        desiredBuilding : "",
-        priority: "",
-        department: "",
+        currentBuilding :'',
+        desiredBuilding : '',
+        priority: '',
+        department: '',
         comments: '',
         transportationType:'',
 
@@ -88,11 +88,11 @@ const TransportationRequestForm = () => {
                     patientID: '',
                     employeeName:'',
                     //employeeID: '',
-                    currentBuilding :"",
-                    desiredBuilding : "",
+                    currentBuilding :'',
+                    desiredBuilding : '',
                     comments: '',
-                    priority: "",
-                    department: "",
+                    priority: '',
+                    department: '',
                     transportationType:'',
                 });
 
@@ -276,46 +276,48 @@ const TransportationRequestForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                    <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
-                                {/* Department */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        Department
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-gray-500 block">
-                                            Select the department requiring transportation
-                                        </span>
-                                    </Label>
-                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-                                </div>
+                                {/* Current Location and Department */}
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
+                                {/*        Department*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*        <span className="text-xs text-gray-500 block">*/}
+                                {/*            Select the department requiring transportation*/}
+                                {/*        </span>*/}
+                                {/*    </Label>*/}
+                                {/*    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>*/}
+                                {/*</div>*/}
 
-                                {/* Current Building */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div >
-                                        <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                            Current Building
-                                            <span className="text-accent">*</span>
-                                        </Label>
-                                        <Dropdown tableName={"locations"} fieldName={"currentBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-                                    </div>
+                                {/*/!* Current Building *!/*/}
+                                {/*<div className="grid grid-cols-1 md:grid-cols-2 gap-6">*/}
+                                {/*    <div >*/}
+                                {/*        <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
+                                {/*            Current Building*/}
+                                {/*            <span className="text-accent">*</span>*/}
+                                {/*        </Label>*/}
+                                {/*        <Dropdown tableName={"locations"} fieldName={"currentBuilding"} onChange={handleDropdownChange}></Dropdown>*/}
+                                {/*    </div>*/}
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+
                                     <div>
                                         <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                         <Dropdown tableName={"locations"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
 
 
                                     </div>
-                                </div>
+
                             </div>
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status
                                     <span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                             {/* Comments */}
                             <div>
