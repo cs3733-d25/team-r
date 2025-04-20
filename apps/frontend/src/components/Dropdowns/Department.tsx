@@ -39,21 +39,25 @@ interface DropdownProps {
     tableName: string;
     fieldName: string;
     onChange: (name:string, value: string) => void;
+    reset?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange }) => {
+const Dropdown: React.FC<DropdownProps> = (props: DropdownProps) => {
+    let resetForm = true; //if submitted, resetForm will change and the key should change making the dropdown reset
+    if (!props.reset) {resetForm = false;} else {resetForm = true;} //if statement becasue props.reset can be undefined
+
     const handleChange = (value:string) => {
-        onChange(fieldName, value);
+        props.onChange(props.fieldName, value);
     }
 
     return (
-        <Select onValueChange={handleChange}>
+        <Select onValueChange={handleChange} key={resetForm.toString()}>
             <SelectTrigger className={"bg-input"}>
-                <SelectValue placeholder={'Select a ' + fieldName}></SelectValue>
+                <SelectValue placeholder={'Select a ' + props.fieldName}></SelectValue>
             </SelectTrigger>
             <SelectContent className={"bg-input"} >
                 <SelectGroup>
-                    {getOptions(tableName)}
+                    {getOptions(props.tableName)}
                 </SelectGroup>
             </SelectContent>
         </Select>
