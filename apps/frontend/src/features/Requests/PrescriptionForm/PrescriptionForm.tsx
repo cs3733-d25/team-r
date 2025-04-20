@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import { Department, RequestPriority } from '../RequestEnums.tsx';
 import axios from 'axios';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
@@ -12,8 +11,8 @@ interface SubmittedPrescription {
     employee: string;
     employeeID: string;
     patientID: string;
-    priority: RequestPriority | string;
-    department: Department | string;
+    priority: string;
+    department: string;
     numberOfPills: number;
     refills: number;
     morningPillCount: number;
@@ -32,8 +31,8 @@ export const PrescriptionForm = () => {
         employee: '',
         employeeID: '',
         patientID: '',
-        priority: RequestPriority.medium,
-        department: Department.PHARMACY,
+        priority: '',
+        department: '',
         numberOfPills: 0,
         refills: 0,
         morningPillCount: 0,
@@ -50,6 +49,9 @@ export const PrescriptionForm = () => {
         message: string;
         isError: boolean;
     } | null>(null);
+
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
 
     //submittedPrescription holds info for confirmation card
     const [submittedPrescription, setSubmittedPrescription] =
@@ -76,12 +78,14 @@ export const PrescriptionForm = () => {
                     isError: false,
                 });
 
+                setResetDropdowns(!resetDropdowns);
+
                 setFormData({
                     employee: '',
                     employeeID: '',
                     patientID: '',
-                    priority: RequestPriority.medium,
-                    department: Department.PHARMACY,
+                    priority: '',
+                    department: '',
                     numberOfPills: 0,
                     refills: 0,
                     morningPillCount: 0,
@@ -203,7 +207,7 @@ export const PrescriptionForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Department */}
@@ -215,7 +219,7 @@ export const PrescriptionForm = () => {
                                             Select the department making the prescription request.
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Status */}
@@ -224,7 +228,7 @@ export const PrescriptionForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </label>
-                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Drug Name */}

@@ -48,6 +48,9 @@ const TransportationRequestForm = () => {
         isError: boolean;
     } | null>(null);
 
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
+
     const handleDropdownChange = (name:string, value:string) => {
         setFormData(prev => ({
             ...prev,
@@ -77,6 +80,8 @@ const TransportationRequestForm = () => {
                     message: 'Patient Transport request submitted successfully!',
                     isError: false
                 });
+
+                setResetDropdowns(!resetDropdowns);
 
                 // Reset form
                 setFormData({
@@ -271,7 +276,7 @@ const TransportationRequestForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
                                 {/* Department */}
                                 <div>
@@ -282,7 +287,7 @@ const TransportationRequestForm = () => {
                                             Select the department requiring transportation
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Current Building */}
@@ -292,14 +297,14 @@ const TransportationRequestForm = () => {
                                             Current Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                        <Dropdown tableName={"locations"} fieldName={"currentBuilding"} onChange={handleDropdownChange}></Dropdown>
+                                        <Dropdown tableName={"locations"} fieldName={"currentBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                     </div>
                                     <div>
                                         <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                         <Dropdown tableName={"locations"} fieldName={"desiredBuilding"} onChange={handleDropdownChange}></Dropdown>
+                                         <Dropdown tableName={"locations"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
 
 
                                     </div>
@@ -310,7 +315,7 @@ const TransportationRequestForm = () => {
                                     Request Status
                                     <span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                             {/* Comments */}
                             <div>

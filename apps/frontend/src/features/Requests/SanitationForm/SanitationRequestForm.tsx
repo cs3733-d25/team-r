@@ -47,6 +47,9 @@ const SanitationRequestForm = () => {
     isError: boolean;
   } | null>(null);
 
+  //put this in Dropdown element and it will reset on submit
+  const [resetDropdowns, setResetDropdowns] = useState(false);
+
   // Add state for the confirmation card
   const [submittedRequest, setSubmittedRequest] = useState<SubmittedRequest | null>(null);
 
@@ -71,6 +74,8 @@ const SanitationRequestForm = () => {
           message: 'Sanitation request submitted successfully!',
           isError: false
         });
+
+        setResetDropdowns(!resetDropdowns);
 
         // Reset form
         setFormData({
@@ -221,7 +226,7 @@ const SanitationRequestForm = () => {
                       LOW: Within 24 hours
                     </span>
                   </Label>
-                  <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
 
                 {/* Department */}
@@ -233,7 +238,7 @@ const SanitationRequestForm = () => {
                       Select the department requiring sanitation
                     </span>
                   </Label>
-                  <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
                 {/* Location */}
                 <div>
@@ -245,7 +250,7 @@ const SanitationRequestForm = () => {
                                     </span>
                   </Label>
                   {/*TableName - enum, fieldName - from request*/}
-                  <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
 
                 {/* Room Number */}
@@ -274,7 +279,7 @@ const SanitationRequestForm = () => {
                   Request Status
                   <span className="text-accent">*</span>
                 </Label>
-                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
               </div>
               {/* Comments */}
               <div>

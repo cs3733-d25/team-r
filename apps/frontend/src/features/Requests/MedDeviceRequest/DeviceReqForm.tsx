@@ -37,6 +37,9 @@ export const DeviceReqForm = () => {
         isError: boolean;
     } | null>(null);
 
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
+
     //submittedDevice holds info for confirmation card
     const [submittedDevice, setSubmittedDevice] = useState<SubmittedDevice | null>(null);
 
@@ -60,6 +63,8 @@ export const DeviceReqForm = () => {
                     message: 'Device request submitted successfully!',
                     isError: false,
                 });
+
+                setResetDropdowns(!resetDropdowns);
 
                 setFormData({
                     device: '',
@@ -138,7 +143,7 @@ export const DeviceReqForm = () => {
                                     {/*        </SelectGroup>*/}
                                     {/*    </SelectContent>*/}
                                     {/*</Select>*/}
-                                    <Dropdown tableName={"devices"} fieldName={"device"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"devices"} fieldName={"device"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Employee Name */}
@@ -192,7 +197,7 @@ export const DeviceReqForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Department */}
@@ -204,7 +209,7 @@ export const DeviceReqForm = () => {
                                             Select the department making the prescription request.
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Status */}
@@ -213,7 +218,7 @@ export const DeviceReqForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </label>
-                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}
