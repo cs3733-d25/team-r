@@ -19,7 +19,7 @@ export async function aStar(start: string, end: string): Promise<string[]> {
     graph.get(toID)!.add(fromID);
   }
 
-  // 2) Prepare scores and queue
+  // 2) Preparing  scores and queue
   const openSet = new PriorityQueue<string>();
   openSet.enqueue(start, 0);
 
@@ -29,7 +29,7 @@ export async function aStar(start: string, end: string): Promise<string[]> {
 
   const fScore = new Map<string, number>();
   fScore.set(start, heuristic(start, end));
-
+// main loop here
   while (!openSet.isEmpty()) {
       const current = openSet.dequeue()!;
       if (current === end) {
