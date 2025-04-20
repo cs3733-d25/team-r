@@ -33,7 +33,7 @@ router.post("/", async function (req: Request, res: Response) {
         employeeName,
         request,
         comment,
-        assignedEmployee: employeeName //fix this to connect correctly
+        //assignedEmployee: employeeName //fix this to connect correctly
       },
     });
     // console.log(createRequest);

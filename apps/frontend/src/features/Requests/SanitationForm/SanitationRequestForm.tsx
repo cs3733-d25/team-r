@@ -17,7 +17,7 @@ interface SubmittedRequest {
   priority: string;
   department: string;
   location: string;
-  room: string;
+  roomNumber: string;
   comments: string;
   timestamp: string;
   status:string;
@@ -30,7 +30,7 @@ const SanitationRequestForm = () => {
     sanitationType: '',
     priority: '',
     department: '',
-    room: '',
+    roomNumber: '',
     comments: '',
     status:'',
     location:'',
@@ -83,7 +83,7 @@ const SanitationRequestForm = () => {
           sanitationType: '',
           priority: '',
           department: '',
-          room: '',
+          roomNumber: '',
           comments: '',
           status: '',
           location: '',
@@ -148,7 +148,7 @@ const SanitationRequestForm = () => {
                   <span className="font-semibold">Location:</span> {submittedRequest.location}
                 </div>
                 <div>
-                  <span className="font-semibold">Room:</span> {submittedRequest.room}
+                  <span className="font-semibold">Room:</span> {submittedRequest.roomNumber}
                 </div>
                 <div>
                   <span className="font-semibold">Sanitation Type:</span> {submittedRequest.status}
@@ -243,8 +243,8 @@ const SanitationRequestForm = () => {
                   </Label>
                   <Input
                     type="text"
-                    name="room"
-                    value={formData.room}
+                    name="roomNumber"
+                    value={formData.roomNumber}
                     onChange={handleChange}
                     placeholder="e.g., 3-124"
                     className="w-full px-4 py-2 rounded-md border border-border bg-input"
@@ -258,7 +258,7 @@ const SanitationRequestForm = () => {
                   Request Status
                   <span className="text-accent">*</span>
                 </Label>
-                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
               </div>
               {/* Comments */}
               <div>

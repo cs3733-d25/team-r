@@ -33,7 +33,7 @@ router.post("/", async function (req: Request, res: Response) {
         roomNumber,
         comments,
         status,
-        assignedEmployee: employeeName //connect later
+        //assignedEmployee: employeeName //connect later
         // user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });

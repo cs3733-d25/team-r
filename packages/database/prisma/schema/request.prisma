@@ -4,8 +4,8 @@ model MedicalDeviceRequest {
   currentLocation   String
   currentStatus     String
   lastUpdated       DateTime     @default(now())
-  assignedEmployeeID String
-  assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
 
 model SanitationRequest {
@@ -19,8 +19,8 @@ model SanitationRequest {
   status         String
   employeeName   String
   location       String
-  assignedEmployeeID String
-  assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
 
 model DeviceRequest {
@@ -35,8 +35,8 @@ model DeviceRequest {
   employeeID   Int
   status       String
 
-  assignedEmployeeID String
-  assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 
 }
 
@@ -58,8 +58,8 @@ model PharmacyRequest {
   additionalInstructions String
   status                 String
 
-  assignedEmployeeID String
-  assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
 
 model PatientRequest {
@@ -75,8 +75,8 @@ model PatientRequest {
   employeeName     String
   comment          String
 
-  assignedEmployeeID String
-  assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
 
 model TransportRequest {
@@ -94,6 +94,6 @@ model TransportRequest {
   status      String
   requestTime DateTime        @default(now())
 
-  assignedEmployeeID String
-  assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }

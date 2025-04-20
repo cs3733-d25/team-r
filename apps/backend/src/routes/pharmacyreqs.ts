@@ -42,7 +42,7 @@ router.post("/", async function (req: Request, res: Response) {
         refills,
         additionalInstructions,
         status,
-        assignedEmployee: employeeName //connect later
+        //assignedEmployee: employeeName //connect later
       },
     });
     res.status(200).json({ message: "Successfully entered pharmacy request" });

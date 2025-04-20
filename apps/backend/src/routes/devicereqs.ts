@@ -37,7 +37,7 @@ router.post("/", async function (req: Request, res: Response) {
         comments,
         employeeName,
         employeeID, //
-        assignedEmployee: employeeName //connect later
+        //assignedEmployee: employeeName //connect later
       },
     });
     // console.log(createRequest);

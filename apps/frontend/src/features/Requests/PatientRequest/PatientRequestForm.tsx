@@ -216,7 +216,7 @@ export const PatientRequestForm = () => {
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Nonemergent Request
                                 </Label>
-                                <Dropdown tableName={"nonemergencies"} fieldName={"request"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
                             {/* Priority */}
@@ -233,7 +233,7 @@ export const PatientRequestForm = () => {
                       LOW: Within 24 hours
                         </span>
                                 </Label>
-                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
                             {/* Location and Department */}
                             <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
