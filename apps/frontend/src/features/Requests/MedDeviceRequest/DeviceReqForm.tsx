@@ -38,6 +38,9 @@ export const DeviceReqForm = () => {
         isError: boolean;
     } | null>(null);
 
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
+
     //submittedDevice holds info for confirmation card
     const [submittedDevice, setSubmittedDevice] = useState<SubmittedDevice | null>(null);
 
@@ -61,6 +64,8 @@ export const DeviceReqForm = () => {
                     message: 'Device request submitted successfully!',
                     isError: false,
                 });
+
+                setResetDropdowns(!resetDropdowns);
 
                 setFormData({
                     device: '',
@@ -177,7 +182,7 @@ export const DeviceReqForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Location and Department */}
@@ -189,7 +194,7 @@ export const DeviceReqForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </label>
-                                    <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}

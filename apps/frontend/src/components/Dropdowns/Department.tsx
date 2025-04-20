@@ -9,9 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { SelectLabel } from '@radix-ui/react-select';
-import values, {valueKey} from "@/constant-values.ts";
 
-/*
 function getOptions(table: string) {
     const [dropdownOptions, setDropdownOptions] = useState([]);
 
@@ -36,27 +34,29 @@ function getOptions(table: string) {
 
     return dropdownOptions;
 }
-*/
-
-
 
 interface DropdownProps {
-    tableName: valueKey ;
-    //fieldName: string;
+    tableName: string;
+    fieldName: string;
     onChange: (name:string, value: string) => void;
+    reset?: boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ tableName, onChange }) => {
     const options = values[tableName];
+
+const Dropdown: React.FC<DropdownProps> = (props: DropdownProps) => {
+    let resetForm = true; //if submitted, resetForm will change and the key should change making the dropdown reset
+    if (!props.reset) {resetForm = false;} else {resetForm = true;} //if statement becasue props.reset can be undefined
 
     const handleChange = (value:string) => {
         onChange(tableName, value);
     }
 
     return (
-        <Select onValueChange={handleChange}>
+        <Select onValueChange={handleChange} key={resetForm.toString()}>
             <SelectTrigger className={"bg-input"}>
-                <SelectValue placeholder={'Select a ' + tableName}></SelectValue>
+                <SelectValue placeholder={'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
             <SelectContent className={"bg-input"} >
                 <SelectGroup>
@@ -68,7 +68,6 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, onChange }) => {
                 </SelectGroup>
             </SelectContent>
         </Select>
-
     );
 };
 

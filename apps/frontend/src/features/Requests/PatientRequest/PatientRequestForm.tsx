@@ -46,6 +46,9 @@ export const PatientRequestForm = () => {
         isError: boolean;
     } | null>(null);
 
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
+
     //submittedPatientRequest holds info for confirmation card
     const [submittedPatientRequest, setSubmittedPatientRequest] = useState<SubmittedPatientRequest | null>(null);
 
@@ -68,6 +71,8 @@ export const PatientRequestForm = () => {
                     message: 'Patient request request submitted successfully!',
                     isError: false
                 });
+
+                setResetDropdowns(!resetDropdowns);
 
                 setFormData({
 
@@ -211,7 +216,7 @@ export const PatientRequestForm = () => {
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Nonemergent Request
                                 </Label>
-                                <Dropdown tableName={"nonemergentRequest"}  onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"nonemergencies"} fieldName={"request"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
 
                             {/* Priority */}
@@ -228,7 +233,7 @@ export const PatientRequestForm = () => {
                       LOW: Within 24 hours
                         </span>
                                 </Label>
-                                <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                             {/* Location and Department */}
                             <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>

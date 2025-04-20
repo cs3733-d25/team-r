@@ -51,6 +51,9 @@ export const PrescriptionForm = () => {
         isError: boolean;
     } | null>(null);
 
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
+
     //submittedPrescription holds info for confirmation card
     const [submittedPrescription, setSubmittedPrescription] =
         useState<SubmittedPrescription | null>(null);
@@ -75,6 +78,8 @@ export const PrescriptionForm = () => {
                     message: 'Prescription request submitted successfully!',
                     isError: false,
                 });
+
+                setResetDropdowns(!resetDropdowns);
 
                 setFormData({
                     employee: '',
@@ -203,7 +208,7 @@ export const PrescriptionForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Location and Department */}
@@ -215,7 +220,7 @@ export const PrescriptionForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </label>
-                                    <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Drug Name */}

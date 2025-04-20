@@ -1,38 +1,18 @@
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import {fetchParkingLots, fetchDepartments} from '@/features/MapView/mapService';
-
-interface Node {
-    nodeID: string;
-    nodeType: string;
-    building: string;
-    floor: number;
-    xcoord: number;
-    ycoord: number;
-    longName: string;
-    shortName: string;
-}
+import React, { useState } from 'react';
+import { useMapData } from '@/features/MapView/mapService';
+import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number) => void;
 }
 
-export function InternalMapNew() {
-    const [parkingLots, setParkingLots] = useState<Node[]>([]);
-    const [departments, setDepartments] = useState<{key: string; value: string; label: string}[]>([]);
+export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
@@ -40,75 +20,22 @@ export function InternalMapNew() {
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
 
-    const getBuildingFromLocation = (location: string) => {
-        if (location.includes('20 Patriot Pl')) return 'PATRIOT_PLACE_20';
-        if (location.includes('22 Patriot Pl')) return 'PATRIOT_PLACE_22';
-        if (location.includes('Chestnut Hill')) return 'CHESTNUT_HILL';
-        return 'PATRIOT_PLACE_22';
-    };
-
-    const [selectedBuilding, setSelectedBuilding] = useState<string>(
+    const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
+
+    const {parkingLots, departments} = useMapData(selectedBuilding);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            // const response = await axios.post('/api/map/internal',{
-            //     selectedParkinglot,
-            //     selectedDepartment
-            // });
             console.log("selected parking lot: ", selectedParkinglot);
             console.log("selected department lot: ", selectedDepartment);
         } catch {}
     };
 
-    useEffect(() => {
-        const loadParkingLots = async () => {
-            try {
-                const data = await fetchParkingLots();
-                setParkingLots(data);
-            } catch (err) {
-                console.error('Error fetching parking lots:', err);
-            }
-        };
-
-        loadParkingLots();
-    }, []);
-
-    useEffect(() => {
-        const loadDepartments = async () => {
-            try {
-                const data = await fetchDepartments(selectedBuilding);
-                const formattedDepartments = data.map((dept: { id?: string; key?: string; value?: string; name?: string; label?: string }) => ({
-                    key: dept.id || dept.key,
-                    value: dept.id || dept.value,
-                    label: dept.name || dept.label
-                }));
-                setDepartments(formattedDepartments);
-            } catch (err) {
-                console.error('Error fetching departments:', err);
-            }
-        };
-
-        loadDepartments();
-    }, [selectedBuilding]);
-
-    const floorConfig = {
-        PATRIOT_PLACE_20: [1, 3, 4],
-        PATRIOT_PLACE_22: [1, 3],
-        CHESTNUT_HILL: [1],
-    };
-
     // Get floors for current building
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
-
-    const getShortLocationName = (location: string) => {
-        if (location.includes('20 Patriot Pl')) return '20 Patriot Place';
-        if (location.includes('22 Patriot Pl')) return '22 Patriot Place';
-        if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
-        return location;
-    };
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">

@@ -48,6 +48,9 @@ const TransportationRequestForm = () => {
         isError: boolean;
     } | null>(null);
 
+    //put this in Dropdown element and it will reset on submit
+    const [resetDropdowns, setResetDropdowns] = useState(false);
+
     const handleDropdownChange = (name:string, value:string) => {
         setFormData(prev => ({
             ...prev,
@@ -77,6 +80,8 @@ const TransportationRequestForm = () => {
                     message: 'Patient Transport request submitted successfully!',
                     isError: false
                 });
+
+                setResetDropdowns(!resetDropdowns);
 
                 // Reset form
                 setFormData({
@@ -271,7 +276,7 @@ const TransportationRequestForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
                                 {/* Current Location and Department */}
                                 {/*<div>*/}
@@ -301,7 +306,7 @@ const TransportationRequestForm = () => {
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                         <Dropdown tableName={"building"}  onChange={handleDropdownChange}></Dropdown>
+                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
 
 
                                     </div>
@@ -312,7 +317,7 @@ const TransportationRequestForm = () => {
                                     Request Status
                                     <span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                             {/* Comments */}
                             <div>

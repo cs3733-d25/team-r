@@ -47,6 +47,9 @@ const SanitationRequestForm = () => {
     isError: boolean;
   } | null>(null);
 
+  //put this in Dropdown element and it will reset on submit
+  const [resetDropdowns, setResetDropdowns] = useState(false);
+
   // Add state for the confirmation card
   const [submittedRequest, setSubmittedRequest] = useState<SubmittedRequest | null>(null);
 
@@ -71,6 +74,8 @@ const SanitationRequestForm = () => {
           message: 'Sanitation request submitted successfully!',
           isError: false
         });
+
+        setResetDropdowns(!resetDropdowns);
 
         // Reset form
         setFormData({
@@ -221,7 +226,7 @@ const SanitationRequestForm = () => {
                       LOW: Within 24 hours
                     </span>
                   </Label>
-                  <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
 
                 {/* Location and Department */}
@@ -253,7 +258,7 @@ const SanitationRequestForm = () => {
                   Request Status
                   <span className="text-accent">*</span>
                 </Label>
-                <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
+                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
               </div>
               {/* Comments */}
               <div>

@@ -94,7 +94,7 @@ async function handleLogin(){
                                 name="username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className="w-full p-2 border border-gray-300 bg-input rounded"
+                                className="w-full p-2 border border-ring bg-input rounded"
                             />
                         </div>
                         <div>
@@ -106,7 +106,7 @@ async function handleLogin(){
                                 name="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full p-2 border border-gray-300 bg-input rounded"
+                                className="w-full p-2 border border-ring bg-input rounded"
                             />
                         </div>
                         <br />
