@@ -23,6 +23,5 @@ const values = {
 
 };
 
-
-
+export type valueKey = keyof typeof values; // "priority" | "status"
 export default values;

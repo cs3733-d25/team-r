@@ -1,3 +1,4 @@
+/*
 export enum RequestPriority {
     low = 'Low',
     medium = 'Medium',
@@ -57,3 +58,4 @@ interface SubmittedPrescription {
     drugName: string;
     timestamp: string;
 }
+*/

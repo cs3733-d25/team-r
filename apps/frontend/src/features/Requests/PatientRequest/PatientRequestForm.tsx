@@ -1,6 +1,5 @@
-
 import {useState} from "react";
-import {Department, RequestPriority, RequestStatus, Buildings, RequestNonemergent} from "../RequestEnums.tsx";
+//import {Department, RequestPriority, RequestStatus, Buildings, RequestNonemergent} from "../RequestEnums.tsx";
 import axios from "axios";
 import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
@@ -16,13 +15,13 @@ import { Button } from '@/components/ui/button.tsx';
 interface SubmittedPatientRequest{
     patientID: string;
     assignedEmpID:string;
-    priority: RequestPriority | string;
-    department: Department | string;
-    location: Buildings | string;
+    priority: string;
+    department: string;
+    location: string;
     comment: string;
     time: string;
-    status: RequestStatus | string;
-    request: RequestNonemergent | string;
+    status: string;
+    request: string;
     employeeName: string;
 }
 
@@ -214,7 +213,7 @@ export const PatientRequestForm = () => {
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                     Nonemergent Request
                                 </Label>
-                                <Dropdown tableName={"nonemergencies"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"nonemergentRequest"}  onChange={handleDropdownChange}></Dropdown>
                             </div>
 
                             {/* Priority */}
@@ -231,7 +230,7 @@ export const PatientRequestForm = () => {
                       LOW: Within 24 hours
                         </span>
                                 </Label>
-                                <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
                             {/* Department */}
@@ -243,7 +242,8 @@ export const PatientRequestForm = () => {
                                         Select the department making the patient request.
                                     </span>
                                 </Label>
-                                <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
+                                {/*handle departments for location*/}
+                                <Dropdown tableName={"departmentsPP20"} onChange={handleDropdownChange}></Dropdown>
                             </div>
                         </div>
 
@@ -257,14 +257,14 @@ export const PatientRequestForm = () => {
                                     </span>
                             </Label>
                             {/*TableName - enum, fieldName - from request*/}
-                            <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
+                            <Dropdown tableName={"building"} onChange={handleDropdownChange}></Dropdown>
                         </div>
                         {/*status*/}
                         <div>
                             <Label className="block text-sm font-semibold text-gray-700 mb-2">
                                 Request Status
                             </Label>
-                            <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                            <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
                         </div>
                         {/* Additional Instructions */}
                         <div>
