@@ -88,5 +88,3 @@ export class PriorityQueue<T> {
      }
    }
  }
-
-}
