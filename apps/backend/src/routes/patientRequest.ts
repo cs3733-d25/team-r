@@ -24,46 +24,23 @@ router.get("/", async function (req: Request, res: Response) {
   }
 });
 
-//generic enum parse
-// function parseEnum<T extends { [key: string]: string | number }>(
-//   enumType: T,
-//   value: string,
-// ): T[keyof T] {
-//   if (value in enumType) {
-//     return enumType[value as keyof T];
-//   }
-//   throw new Error(`Invalid enum value: ${value}`);
-// }
-
-router.get("/", async function (req: Request, res: Response) {
-  try {
-    const requests = await PrismaClient.patientRequest.findMany({
-      orderBy: { priority: "asc" },
-    });
-    console.log(requests);
-    res.status(200).json(requests); // Send sanitation data as JSON
-  } catch (error) {
-    console.error("Error fetching pharmacy request data:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a patient request");
-  const request = req.body;
+  const {priority, status, department, comment, patient, location, request, employeeName} = req.body;
 
   try {
     console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
-        patient: { connect: { id: parseInt(request.patientID, 10) } },
-        priority: await parsePriority(request.priority),
-        department: await parseDepartment(request.department),
-        location: await parseBuilding(request.location), //parseEnum(Building, request.location),
-        status: await parseStatus(request.status),
-        employeeName: request.employeeName,
-        request: await parseNonemergent(request.request),
-        comment: request.comment,
+        patient,
+        priority,
+        department,
+        location,
+        status,
+        employeeName,
+        request,
+        comment,
+        assignedEmployee: employeeName //fix this to connect correctly
       },
     });
     // console.log(createRequest);

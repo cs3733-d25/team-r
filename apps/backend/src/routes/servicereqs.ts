@@ -1,4 +1,3 @@
-/*
 import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
@@ -72,4 +71,3 @@ router.post("/", async function (req: Request, res: Response) {
   }
 });
 export default router;
-*/

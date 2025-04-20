@@ -9,6 +9,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 
 
@@ -94,8 +95,6 @@ export const PatientRequestForm = () => {
     }
 
     const handleDropdownChange = (name:string, value:string) => {
-        // console.log(value);
-        // console.log(name);
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -233,38 +232,7 @@ export const PatientRequestForm = () => {
                                 <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
-                            {/* Department */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Department
-                                    <span className="text-red-500">*</span>
-                                    <span className="text-xs text-gray-500 block">
-                                        Select the department making the patient request.
-                                    </span>
-                                </Label>
-                                {/*handle departments for location*/}
-                                <Dropdown tableName={"departmentsPP20"} onChange={handleDropdownChange}></Dropdown>
-                            </div>
-                        </div>
-
-                        {/* Location */}
-                        <div>
-                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Location
-                                <span className="text-red-500">*</span>
-                                <span className="text-xs text-gray-500 block">
-                                        Select the building making the patient request.
-                                    </span>
-                            </Label>
-                            {/*TableName - enum, fieldName - from request*/}
-                            <Dropdown tableName={"building"} onChange={handleDropdownChange}></Dropdown>
-                        </div>
-                        {/*status*/}
-                        <div>
-                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                Request Status
-                            </Label>
-                            <Dropdown tableName={"status"} onChange={handleDropdownChange}></Dropdown>
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
                         </div>
                         {/* Additional Instructions */}
                         <div>

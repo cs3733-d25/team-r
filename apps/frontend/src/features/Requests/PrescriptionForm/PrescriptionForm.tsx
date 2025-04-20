@@ -203,7 +203,7 @@ export const PrescriptionForm = () => {
                                             LOW: Within 24 hours
                                         </span>
                                     </Label>
-                                    <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"priority"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Department */}
