@@ -25,6 +25,8 @@ export function MapPage() {
     );
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
+    console.log('building identifieer: ', buildingIdentifier);
+    console.log('selectde building', selectedBuilding);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()

@@ -69,10 +69,10 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const status = location.state?.status;
 
     const getBuildingIdentifier = (location: string) => {
-        if (location === patriotPlace20) return 'PATRIOT_PLACE_20';
-        if (location === patriotPlace22) return 'PATRIOT_PLACE_22';
-        if (location === chestnutHill) return 'CHESTNUT_HILL';
-        if (location === faulkner) return 'FAULKNER';
+        if (location === patriotPlace20) return 'Patriot Place 20';
+        if (location === patriotPlace22) return 'Patriot Place 22';
+        if (location === chestnutHill) return 'Chestnut Hill';
+        if (location === faulkner) return 'Faulkner';
         return '';
     };
 

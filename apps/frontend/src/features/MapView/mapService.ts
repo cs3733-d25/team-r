@@ -4,6 +4,7 @@ import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
 export const fetchParkingLots = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/parking-lots');
+    console.log('res.data: ', res.data);
     return res.data;
 };
 
@@ -48,6 +49,7 @@ export function useMapData(selectedBuilding: string) {
         const loadParkingLots = async () => {
             try {
                 const data = await fetchParkingLots();
+                console.log('Fetched parking lots:', data);
                 setParkingLots(data);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
