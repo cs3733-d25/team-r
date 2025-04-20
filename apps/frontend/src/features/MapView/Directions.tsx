@@ -1,5 +1,6 @@
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from 'react';
+import TextDirections from "@/components/TextDirections.tsx";
 
 interface DirectionProps {
     selectedLocation: string;
@@ -12,7 +13,6 @@ function Directions({ selectedLocation, startingLocation, travelMode }: Directio
     const routesLibrary = useMapsLibrary('routes');
     const [directionService, setDirectionService] = useState<google.maps.DirectionsService>();
     const [directionRenderer, setDirectionRenderer] = useState<google.maps.DirectionsRenderer>();
-    const [directions, setDirections] = useState<google.maps.DirectionsResult | null>(null);
     const [steps, setSteps] = useState<string[]>([]);
     const [distance, setDistance] = useState<string>('');
     const [duration, setDuration] = useState<string>('');
@@ -43,7 +43,6 @@ function Directions({ selectedLocation, startingLocation, travelMode }: Directio
                 },
                 (result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
                     if (status === 'OK' && result) {
-                        setDirections(result);
 
                         // Extract turn-by-turn text directions
                         const routeSteps = result.routes[0].legs.flatMap((leg) =>
@@ -76,22 +75,7 @@ function Directions({ selectedLocation, startingLocation, travelMode }: Directio
     }
 
     return (
-        <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
-            <h3 className="font-bold text-lg mb-2">Directions</h3>
-            {distance && duration && (
-                <div className="mb-4 text-sm text-gray-600">
-                    <p>{distance} - {duration}</p>
-                </div>
-            )}
-            <ol className="list-decimal list-inside space-y-2">
-                {steps.map((step, index) => (
-                    <li key={index}
-                        className="text-sm border-b border-gray-100 pb-2 last:border-0"
-                        dangerouslySetInnerHTML={{ __html: step }}
-                    />
-                ))}
-            </ol>
-        </div>
+        <TextDirections steps={steps} distance={distance} duration={duration}/>
     );
 }
 
