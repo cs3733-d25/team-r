@@ -5747,6 +5747,7 @@ __metadata:
     prettier: "npm:*"
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
+    react-bootstrap-icons: "npm:^1.11.5"
     react-day-picker: "npm:8.10.1"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.55.0"
@@ -7881,6 +7882,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-bootstrap-icons@npm:^1.11.5":
+  version: 1.11.5
+  resolution: "react-bootstrap-icons@npm:1.11.5"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ">=16.8.6"
+  checksum: 10c0/ec1cb4439460c80de58762d88848493a9d17147b4c26390cf610d42b0223a28aee2ddd7b502ce9db4c4aa910d42536b3e18ff609de155711f2e8e1827467b02a
+  languageName: node
+  linkType: hard
+
 "react-day-picker@npm:8.10.1":
   version: 8.10.1
   resolution: "react-day-picker@npm:8.10.1"
@@ -8720,6 +8732,7 @@ __metadata:
     prettier-config-custom: "workspace:*"
     prisma: "npm:^6.5.0"
     react: "npm:^19.1.0"
+    react-bootstrap-icons: "npm:^1.11.5"
     react-dom: "npm:^19.1.0"
     tailwindcss: "npm:^4.1.3"
     ts-config-custom: "workspace:*"

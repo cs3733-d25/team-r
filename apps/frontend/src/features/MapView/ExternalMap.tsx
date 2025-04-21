@@ -25,9 +25,17 @@ interface ExternalMapProps {
     selectedLocation?: string;
 }
 
+/**
+ * MapController component, used to control the zoom of the map
+ * @param selectedLocation - the location to be zoomed in on
+ * @constructor
+ */
 function MapController({ selectedLocation }: { selectedLocation: string }) {
     const map = useMap();
 
+    /**
+     * broken useEffect, will flash screen with zoomed in locations before displaying
+     */
     useEffect(() => {
         if (!map || !selectedLocation) return;
 
@@ -63,12 +71,20 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const faulkner = '1153 Centre Street, Faulkner, Boston MA 02130'
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
-    const [startingLocation, setStartingLocation] = useState<string>('');
+    type LocationInput = string | {
+        lat: number;
+        lng: number;
+    }
+    const [startingLocation, setStartingLocation] = useState<LocationInput>('');
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
     const location = useLocation();
     const status = location.state?.status;
 
+    /**
+     * getBuildingIdentifier function, turns the location string into a building identifier
+     * @param location
+     */
     const getBuildingIdentifier = (location: string) => {
         if (location === patriotPlace20) return 'PATRIOT_PLACE_20';
         if (location === patriotPlace22) return 'PATRIOT_PLACE_22';
@@ -77,15 +93,32 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         return '';
     };
 
-    // const handleLocationSelect = (location: string) => {
-    //     setSelectedLocation(location);
-    // };
+    /**
+     * useEffect to get the user's current location
+     */
 
-    console.log("Login status:", status); // Debug log
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser');
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setStartingLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            },
+            (err) => {
+                alert(`Error getting location: ${err.message}`);
+            }
+        );
+    };
+
 
 
     return (
-        // <p>Hello world</p>
         <div className={'flex flex-col h-screen overflow-hidden'}>
             {status == 'logged-in' ? (
                 <NavbarMGH />
@@ -99,10 +132,16 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         fullscreenControl={false}
                         mapTypeControl={false}
                     />
-                    <MapController selectedLocation={selectedLocation} />
+                    {/* on the fritz, will flash screen with zoomed in locations before displaying
+                    Temporarily disabled for now, in Jira as a bug fix*/}
+                    {/*<MapController selectedLocation={selectedLocation} />*/}
                     <Directions
                         selectedLocation={selectedLocation}
-                        startingLocation={startingLocation}
+                        startingLocation={
+                            typeof startingLocation === 'string'
+                                ? startingLocation
+                                : `${startingLocation.lat},${startingLocation.lng}`
+                        }
                         travelMode={travelMode}
                     />
                 </APIProvider>
@@ -117,6 +156,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 placeholder={'Starting location'}
                                 onChange={(e) => setStartingLocation(e.target.value)}
                             />
+                            <Label>Or</Label>
+                            <Button onClick={getLocation}>Use my Location</Button>
                             <Select onValueChange={(value) => setTravelMode(value)}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Mode of transport" />

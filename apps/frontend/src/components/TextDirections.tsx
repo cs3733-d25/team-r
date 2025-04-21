@@ -1,6 +1,5 @@
 import {Label} from "@/components/ui/label.tsx";
-import {HeadingLabel} from "@/components/ui/heading-label.tsx";
-
+import {Mic} from "react-bootstrap-icons";
 interface TextDirectionsProps {
     steps: string[];
     distance: string;
@@ -11,10 +10,11 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
     return (
         <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
             {distance && duration && (
-                <div className="mb-4 text-sm text-gray-600">
+                <div className="flex justify-between mb-4 text-sm text-gray-600">
                     <Label>
                         {distance} - {duration}
                     </Label>
+                    <Mic className={"text-3xl"}/>
                 </div>
             )}
             <ol className="list-decimal list-inside space-y-2">
