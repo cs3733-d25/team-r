@@ -1,7 +1,7 @@
 import {NavbarMGH} from '@/components/NavbarMGH.tsx';
 import Directions from '@/features/MapView/Directions.tsx';
 import {APIProvider, Map, useMap} from '@vis.gl/react-google-maps';
-import {useState, useRef, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {Label} from '@/components/ui/label.tsx';
 import {Input} from '@/components/ui/input.tsx';
 import {Button} from '@/components/ui/button.tsx';
