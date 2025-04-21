@@ -31,7 +31,7 @@ router.get("/parking-lots", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "Parking" },
     });
-    console.log(request);
+    //console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -43,14 +43,12 @@ router.get("/departments", async (req, res) => {
   try {
     //const buildingStr = req.query.building as string;
     const buildingStr = req.query.building as string;
-    console.log("building str", buildingStr);
-    // Create the where clause with correct enum reference
-    //const whereClause = buildingStr ? { building: buildingStr } : {};
+    //console.log("building str", buildingStr);
 
     const request = await PrismaClient.directory.findMany({
       where: { building: buildingStr },
     });
-    console.log("departments: ", request);
+    //console.log("departments: ", request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -63,7 +61,7 @@ router.get("/check-in", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "reception" },
     });
-    console.log(request);
+    //console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -76,7 +74,7 @@ router.get("/entrances", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "Entrance" },
     });
-    console.log(request);
+    //console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -88,7 +86,7 @@ router.get("/elevators", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "elevator" },
     });
-    console.log(request);
+    //console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -114,7 +112,7 @@ router.get("/edges-20-1", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    //console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);

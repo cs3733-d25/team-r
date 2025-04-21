@@ -47,10 +47,11 @@ export function useMapData(selectedBuilding: string) {
 
 
     useEffect(() => {
+        console.log('Loading parking lots');
         const loadParkingLots = async () => {
             try {
                 const data = await fetchParkingLots();
-                console.log('Fetched parking lots:', data);
+                //console.log('Fetched parking lots:', data);
                 setParkingLots(data);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
@@ -60,16 +61,10 @@ export function useMapData(selectedBuilding: string) {
     }, []);
 
     useEffect(() => {
+        console.log('Triggering loadDepartments for building:', selectedBuilding);
         const loadDepartments = async () => {
             try {
                 const data = await fetchDepartments(selectedBuilding);
-                console.log('raw department data:', data);
-                // const formattedDepartments = data.map((dept: any) => ({
-                //     key: dept.id || dept.key,
-                //     value: dept.id || dept.value,
-                //     label: dept.name || dept.label
-                // }));
-                console.log('formatted departments: ', data);
                 setDepartments(data);
             } catch (err) {
                 console.error('Error fetching departments:', err);
