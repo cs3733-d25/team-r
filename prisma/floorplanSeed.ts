@@ -446,8 +446,8 @@ async function main() {
                 nodeType: 'Parking',
                 building: 'Faulkner',
                 floor: 1,
-                xcoord: 130.02,
-                ycoord: 592.90,
+                xcoord: 0,
+                ycoord: 0,
                 longName: 'Valet Parking Lot',
                 shortName: 'Valet Parking Lot'
             },
@@ -456,8 +456,8 @@ async function main() {
                 nodeType: 'Parking',
                 building: 'Faulkner',
                 floor: 1,
-                xcoord: 587.89,
-                ycoord: 20.00,
+                xcoord: 0,
+                ycoord: 0,
                 longName: 'Left Parking Lot',
                 shortName: 'Left Parking Lot'
             },
@@ -466,8 +466,8 @@ async function main() {
                 nodeType: 'Parking',
                 building: 'Faulkner',
                 floor: 1,
-                xcoord: 179.01,
-                ycoord: 343.94,
+                xcoord: 0,
+                ycoord: 0,
                 longName: 'Right Parking Lot',
                 shortName: 'Right Parking Lot'
             },
