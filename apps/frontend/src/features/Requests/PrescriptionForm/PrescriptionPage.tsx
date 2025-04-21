@@ -44,25 +44,25 @@ export function PrescriptionPage() {
     }
 
     return (
-        <div className={"bg-white"}>
-            <h1 className={'bold text-3xl text-center pb-2 font-trade'}>Prescription Requests</h1>
-            <Table className={'mx-auto w-200'}>
-                <TableHeader className={'border-b'}>
-                    <TableRow className={'text-lg border-b'}>
-                        <TableHead className={'pl-5'}>Employee Name</TableHead>
-                        <TableHead className={'pl-5'}>Prescription Name</TableHead>
-                        <TableHead className={'pl-5'}>Priority</TableHead>
-                        <TableHead className={'pl-5'}>Department</TableHead>
-                        <TableHead className={'pl-5'}>Patient ID</TableHead>
-                        <TableHead className={'pl-5'}>Morning Pill Count</TableHead>
-                        <TableHead className={'pl-5'}>Midday Pill Count</TableHead>
-                        <TableHead className={'pl-5'}>Evening Pill Count</TableHead>
-                        <TableHead className={'pl-5'}>Bedtime Pill Count</TableHead>
-                        <TableHead className={'pl-5'}>Days Per Week</TableHead>
-                        <TableHead className={'pl-5'}>Pill Count</TableHead>
-                        <TableHead className={'pl-5'}>Refills</TableHead>
-                        <TableHead className={'pl-5'}>Additional Instructions</TableHead>
-                        <TableHead className={'pl-5'}>Status</TableHead>
+        <div>
+
+            <Table >
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Employee Name</TableHead>
+                        <TableHead>Prescription Name</TableHead>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Department</TableHead>
+                        <TableHead >Patient ID</TableHead>
+                        <TableHead>Morning Pill Count</TableHead>
+                        <TableHead >Midday Pill Count</TableHead>
+                        <TableHead >Evening Pill Count</TableHead>
+                        <TableHead>Bedtime Pill Count</TableHead>
+                        <TableHead>Days Per Week</TableHead>
+                        <TableHead >Pill Count</TableHead>
+                        <TableHead >Refills</TableHead>
+                        <TableHead >Additional Instructions</TableHead>
+                        <TableHead >Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody className={'text-center'}>
@@ -70,46 +70,46 @@ export function PrescriptionPage() {
                         return (
                             <>
                                 <TableRow key={index} className={'border-t'}>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.employeeName}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.drugName}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.priority}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.department}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.patientID}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.morningPillCount}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.middayPillCount}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.eveningPillCount}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.nightPillCount}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.days}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.numberOfPills}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.refills}
                                     </TableCell>
-                                    <TableCell className={'border-r border-b border-foreground'}>
+                                    <TableCell >
                                         {row.additionalInstructions}
                                     </TableCell>
-                                    <TableCell className={'border-b border-foreground'}>
+                                    <TableCell >
                                         {row.status}
                                     </TableCell>
                                 </TableRow>

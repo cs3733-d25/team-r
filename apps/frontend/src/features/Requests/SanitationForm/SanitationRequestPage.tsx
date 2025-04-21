@@ -39,12 +39,12 @@ export function SanitationRequestPage() {
                     <TableHead>Status</TableHead>
                 </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody className="text-center">
                 {sanitation.map((row,index) =>
                 {
                     return(
                         <>
-                            <TableRow key = {index}>
+                            <TableRow key = {index} className = 'border-t'>
                                 <TableCell>{row.employeeName}</TableCell>
                                 <TableCell>{row.sanitationType}</TableCell>
                                 <TableCell>{row.priority}</TableCell>

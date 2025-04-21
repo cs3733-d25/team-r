@@ -38,20 +38,20 @@ export function AllPatientRequests() {
         <>
 
 
-            <Table className = {"mx-auto w-200"}>
-                <TableHeader className = {"border-b"}>
-                <TableRow className={'text-lg border-b'}>
-                    <TableHead className={"pl-5"}>Employee</TableHead>
-                    <TableHead className={"pl-5"}>Patient ID</TableHead>
-                    <TableHead className={"pl-5"}>Request</TableHead>
-                    <TableHead className={"pl-5"}>Priority</TableHead>
-                    <TableHead className={"pl-5"}>Department</TableHead>
-                    <TableHead className={"pl-5"}>Location</TableHead>
-                    <TableHead className={"pl-5"}>Status</TableHead>
+            <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead >Employee</TableHead>
+                    <TableHead>Patient ID</TableHead>
+                    <TableHead >Request</TableHead>
+                    <TableHead >Priority</TableHead>
+                    <TableHead>Department</TableHead>
+                    <TableHead >Location</TableHead>
+                    <TableHead>Status</TableHead>
 
                 </TableRow>
                 </TableHeader>
-                <tbody className = {"text-center"}>
+                <TableBody className={"text-center"}>
                 {patientRequest.map((row,index) =>
                 {
                     return(
@@ -71,7 +71,7 @@ export function AllPatientRequests() {
                     );
 
                 })}
-                </tbody>
+                </TableBody>
             </Table>
         </>
     )

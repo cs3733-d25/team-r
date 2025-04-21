@@ -25,7 +25,6 @@ export function TransportRequestPage() {
     }
     return(
         <>
-            <h1 className = {"bold text-3xl text-center pb-2"}>Transportation Requests</h1>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -41,12 +40,12 @@ export function TransportRequestPage() {
                         <TableHead>Request Time</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody className = {"text-center"}>
+                <TableBody className="text-center">
                     {transport.map((row,index) =>
                     {
                         return(
                             <>
-                                <TableRow key = {index} >
+                                <TableRow key = {index} className={"border-t"} >
                                     <TableCell>{row.employeeName}</TableCell>
                                     <TableCell>{row.patientID}</TableCell>
                                     <TableCell >{row.transportationType}</TableCell>

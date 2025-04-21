@@ -35,34 +35,33 @@ export function DeviceReqPage() {
     }
 
     return (
-        <div className={"bg-white"}>
-            <h1 className = {"bold text-3xl font-trade text-center pb-2"}>Device Requests</h1>
-            <Table className = {"mx-auto w-200"}>
-                <TableHeader className = {"border-b"}>
-                <TableRow className={'text-lg border-b'}>
-                    <TableHead className={"pl-5"}>Device</TableHead>
-                    <TableHead className={"pl-5"}>Priority</TableHead>
-                    <TableHead className={"pl-5"}>Room</TableHead>
-                    <TableHead className={"pl-5"}>Department</TableHead>
-                    <TableHead className={"pl-5"}>Comments</TableHead>
-                    <TableHead className={"pl-5"}>Employee Name</TableHead>
-                    <TableHead className={"pl-5"}>Employee ID</TableHead>
-                    <TableHead className={"pl-5"}>Status</TableHead>
+        <div >
+            <Table >
+                <TableHeader>
+                <TableRow >
+                    <TableHead >Device</TableHead>
+                    <TableHead >Priority</TableHead>
+                    <TableHead >Room</TableHead>
+                    <TableHead>Department</TableHead>
+                    <TableHead >Comments</TableHead>
+                    <TableHead>Employee Name</TableHead>
+                    <TableHead >Employee ID</TableHead>
+                    <TableHead >Status</TableHead>
                 </TableRow>
                 </TableHeader>
-                <TableBody className = {"text-center"}>
+                <TableBody className={"text-center"}>
                 {device.map((row,index) => {
                     return (
                         <>
                             <TableRow key = {index} className = {"border-t"}>
-                                <TableCell className={"border-r border-b"}>{row.deviceType}</TableCell>
-                                <TableCell className={"border-r border-b"}>{row.priority}</TableCell>
-                                <TableCell className={"border-r border-b"}>{row.room}</TableCell>
-                                <TableCell className={"border-r border-b"}>{row.department}</TableCell>
-                                <TableCell className={"border-r border -b"}>{row.comments}</TableCell>
-                                <TableCell className={"border-r border-b"}>{row.employeeName}</TableCell>
-                                <TableCell className={"border-r border-b"}>{row.employeeID}</TableCell>
-                                <TableCell className={"border-r border-b"}>{row.status}</TableCell>
+                                <TableCell >{row.deviceType}</TableCell>
+                                <TableCell >{row.priority}</TableCell>
+                                <TableCell >{row.room}</TableCell>
+                                <TableCell >{row.department}</TableCell>
+                                <TableCell >{row.comments}</TableCell>
+                                <TableCell >{row.employeeName}</TableCell>
+                                <TableCell>{row.employeeID}</TableCell>
+                                <TableCell>{row.status}</TableCell>
                             </TableRow>
 
                         </>
