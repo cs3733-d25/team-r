@@ -1,64 +1,57 @@
-import { Floor22_1 } from './directorypages/22floor1.tsx';
-import { Floor22_2 } from './directorypages/22floor2.tsx';
-import { Floor22_3 } from './directorypages/22floor3.tsx';
-import { Floor22_4 } from './directorypages/22floor4.tsx';
-import TwentyFloorOne from './directorypages/20Floor1.tsx';
-import TwentyFloorTwo from './directorypages/20Floor2.tsx';
-import TwentyFloorThree from './directorypages/20Floor3.tsx';
-import TwentyFloorFour from './directorypages/20Floor4.tsx';
-import Navbar from "../../components/Navbar.tsx";
+import React from "react";
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {allSpecialties} from '@/features/Directory/specialties.ts';
+import {GroupedList, ListGroup, ListItem} from '@/features/Directory/listTypes.ts';
+
+const groupAndSortSpecialties = (specialties: string[]): GroupedList => {
+    // Sort the specialties alphabetically
+    const sortedSpecialties = [...specialties].sort();
+
+    const groupedData: { [key: string]: ListItem[] } = {};
+
+    // Group by the first letter
+    sortedSpecialties.forEach(specialty => {
+        const firstLetter = specialty.charAt(0).toUpperCase();
+        if (!groupedData[firstLetter]) {
+            groupedData[firstLetter] = [];
+        }
+        groupedData[firstLetter].push({ name: specialty });
+    });
+
+    // Convert the grouped object into an array of ListGroup
+    const groupedList: GroupedList = Object.keys(groupedData)
+        .sort() // Sort the letters alphabetically
+        .map(letter => ({
+            letter: letter,
+            items: groupedData[letter],
+        }));
+
+    return groupedList;
+};
+
 
 export function Directory() {
+    const groupedSpecialties = groupAndSortSpecialties(allSpecialties);
+
     return (
         <>
-            <NavbarMGH/>
-            <div className={'flex min-h-screen justify-center'}>
-                <br/>
-                <table className={'text-l'}>
-                    <tbody>
-                    <tr className={'border-b'}>
-                        <th className={'text-4xl text-center pt-5'}>20 Patriot</th>
-                        <th className={'text-4xl text-center pt-5'}>22 Patriot</th>
-                    </tr>
-                    <tr className={'border-b'}>
-                        <td className={'border-r text-left align-top pr-5'}>
-                            <TwentyFloorOne />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_1 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 1</td>
-                    </tr>
-                    <tr className={'border-b'}>
-                        <td className={'border-r text-left align-top pr-5'}>
-                            <TwentyFloorTwo />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_2 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 2</td>
-                    </tr>
-                    <tr className={'border-b'}>
-                        <td className={'border-r text-left align-top pr-5'}>
-                            <TwentyFloorThree />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_3 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 3</td>
-                    </tr>
-                    <tr>
-                        <td className={'border-r align-top text-left pr-5'}>
-                            <TwentyFloorFour />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_4 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 4</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <NavbarMGH />
+            <div className="container mx-auto px-4 py-8"> {/* Use a container for better centering and padding */}
+                <h1 className="text-4xl font-bold text-center mb-8">Medical Specialties Directory</h1> {/* Add a title */}
+                <div className="flex flex-col md:flex-row md:gap-8"> {/* Flex container for columns on medium screens and up */}
+                    {groupedSpecialties.map(group => (
+                        <div key={group.letter} className="w-full md:w-1/3 mb-8"> {/* Each group takes full width on small, 1/3 on medium+ */}
+                            <h2 className="text-2xl font-semibold border-b pb-2 mb-4">{group.letter}</h2>
+                            <ul>
+                                {group.items.map((item, itemIndex) => (
+                                    <li key={itemIndex} className="mb-1">
+                                        {item.name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
     );
