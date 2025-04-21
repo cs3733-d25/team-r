@@ -106,7 +106,7 @@ async function main() {
             {name: "Vascular Lab", floorNumber: 1, building: "Faulkner"}
         ]
     });
-    console.log('Departments seeded successfully!');
+    console.log('Directory seeded successfully!');
 }
 
 main()
