@@ -11,15 +11,6 @@ async function main() {
         skipDuplicates: true
     });
 
-        // 2. Create department
-        const department1 = await client.department.create({
-            data: {
-                id: 'Phlebotomy',
-                recepetionNodeID: 'specialtyCheckIn',
-                name: 'Ambulatory/Urgent Care'
-            }
-        });
-
         // 3. Create user
         const user1 = await client.user.create({
             data: {
@@ -36,7 +27,7 @@ async function main() {
                 id: '1',
                 firstName: 'John',
                 lastName: 'Doe',
-                departmentId: 'Phlebotomy',
+                departmentId: 'Pharmacy',
                 role: 'Doctor',
                 onShift: true,
             }

@@ -65,7 +65,7 @@ async function main() {
             {id: 'Pharmacy', recepetionNodeID: '130.01', name: 'Pharmacy'},
             {id: 'Radiology PP20-1', recepetionNodeID: '110.01', name: 'Radiology'},
             {id: 'Cardiovascular Services', recepetionNodeID: '120.01', name: 'Cardiovascular Services'},
-            {id: 'Urology', recepetionNodeID: '100.0F', name: 'Urology'},
+            {id: 'Urology', recepetionNodeID: '100.00F', name: 'Urology'},
             {id: 'Urgent Care Center', recepetionNodeID: '130.01', name: 'Urgent Care Center'}
         ],
         skipDuplicates: true
