@@ -128,7 +128,7 @@ export const DeviceReqForm = () => {
                                         <span className="text-accent">*</span>
                                     </Label>
 
-                                    <Dropdown tableName={"medicalDevice"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
                                 {/* Employee Name */}
