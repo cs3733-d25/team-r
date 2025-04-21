@@ -9,7 +9,7 @@ import { useMapData } from '@/features/MapView/mapService';
 import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
 
 interface CustomWindow extends Window {
-    goToFloor?: (floor: number) => void;
+    goToFloor?: (floor: number, building?: string) => void;
 }
 
 export function MapPage() {
@@ -26,14 +26,15 @@ export function MapPage() {
     );
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
+    console.log('departments: ', departments);
 
     useEffect(() => {
         const filterLots = parkingLots.filter(lot => {
             const buildingMap: {[key: string]: string[]} = {
-                'PATRIOT_PLACE_20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'PATRIOT_PLACE_22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
-                'CHESTNUT_HILL': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                'FAULKNER': ['FAULKNER', 'Faulkner']
+                'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
+                'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
+                'Faulkner': ['FAULKNER', 'Faulkner']
             };
 
             return buildingMap[selectedBuilding]?.some(buildingName =>
@@ -86,17 +87,18 @@ export function MapPage() {
                                         </SelectGroup>
                                     </SelectContent>
                             </Select>
+                            <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
 
-                            <Select onValueChange={setSelectedDepartment}>
+                            {/*<Select onValueChange={setSelectedDepartment}>*/}
                                 <SelectTrigger>
                                     <SelectValue placeholder="Department" />
                                 </SelectTrigger>
                                 <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Departments</SelectLabel>
-                                            {departments.map(dept => (
-                                                <SelectItem key={dept.key} value={dept.value}>
-                                                    {dept.label}
+                                            {departments.map((dept) => (
+                                                <SelectItem key={dept.id} value={dept.name}>
+                                                    {dept.name}
                                                 </SelectItem>
                                             ))}
                                         </SelectGroup>
@@ -113,7 +115,7 @@ export function MapPage() {
                                         variant={currentFloor === floor ? 'default' : 'secondary'}
                                         onClick={() => {
                                             setCurrentFloor(floor);
-                                            (window as CustomWindow).goToFloor?.(floor);
+                                            (window as CustomWindow).goToFloor?.(floor, selectedBuilding);
                                         }}
                                         type="button"
                                     >

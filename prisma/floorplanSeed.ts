@@ -475,7 +475,7 @@ async function main() {
         skipDuplicates: true
     });
 
-    console.log('Database seeded successfully!');
+    console.log('Floorplan seeded successfully!');
     }
 
     main()

@@ -189,19 +189,39 @@ export function connectBuildings(
 export function goToFloor(
     floor: number,
     map: L.Map,
+    floorLayer20_1: L.LayerGroup,
+    floorLayer20_3: L.LayerGroup,
     floorLayer22_1: L.LayerGroup,
     floorLayer22_3: L.LayerGroup,
     floorLayer22_4: L.LayerGroup,
     floorLayerChestnutHill: L.LayerGroup,
-    floorLayerFaulkner: L.LayerGroup
+    floorLayerFaulkner: L.LayerGroup,
+    building?: string
 )  {
+    map.removeLayer(floorLayer20_1);
+    map.removeLayer(floorLayer20_3);
     map.removeLayer(floorLayer22_1);
     map.removeLayer(floorLayer22_3);
     map.removeLayer(floorLayer22_4);
     map.removeLayer(floorLayerChestnutHill);
     map.removeLayer(floorLayerFaulkner);
 
-    // TODO: fix this switch statement to include all buildings
+    if (building === 'CHESTNUT_HILL') {
+        map.addLayer(floorLayerChestnutHill);
+        return;
+    }
+
+    if (building === 'FAULKNER') {
+        map.addLayer(floorLayerFaulkner);
+        return;
+    }
+
+    if (building === 'PATRIOT_PLACE_20') {
+        if (floor === 1) map.addLayer(floorLayer20_1);
+        else if (floor === 3) map.addLayer(floorLayer20_3);
+        return;
+    }
+
     switch (floor) {
         case 1:
             map.addLayer(floorLayer22_1);
