@@ -59,7 +59,7 @@ router.get("/departments", async (req, res) => {
 router.get("/check-in", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
-      where: { nodeType: "reception" },
+      where: { nodeType: "Reception" },
     });
     //console.log(request);
     res.json(request);
@@ -84,7 +84,7 @@ router.get("/entrances", async (req, res) => {
 router.get("/elevators", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
-      where: { nodeType: "elevator" },
+      where: { nodeType: "Elevator" },
     });
     //console.log(request);
     res.json(request);
