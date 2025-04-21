@@ -9,7 +9,7 @@ import { useMapData } from '@/features/MapView/mapService';
 import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
 
 interface CustomWindow extends Window {
-    goToFloor?: (floor: number) => void;
+    goToFloor?: (floor: number, building?: string) => void;
 }
 
 export function MapPage() {
@@ -113,7 +113,7 @@ export function MapPage() {
                                         variant={currentFloor === floor ? 'default' : 'secondary'}
                                         onClick={() => {
                                             setCurrentFloor(floor);
-                                            (window as CustomWindow).goToFloor?.(floor);
+                                            (window as CustomWindow).goToFloor?.(floor, selectedBuilding);
                                         }}
                                         type="button"
                                     >
