@@ -6,54 +6,38 @@ import {
     SelectTrigger,
     SelectValue,
 } from '../ui/select';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { SelectLabel } from '@radix-ui/react-select';
-
-function getOptions(table: string) {
-    const [dropdownOptions, setDropdownOptions] = useState([]);
-
-    useEffect(() => {
-        async function retrieveOptions() {
-            try {
-                const response = await axios.get('/api/enum/' + table + '/');
-                console.log('response from /api/enum/' + table + ' get', response.data);
-                const options = response.data.map((department: string) => (
-                    <SelectItem key={department} value={department} className={"bg-input hover:bg-accent"}>
-                        {department}
-                    </SelectItem>
-                ));
-                console.log(options);
-                setDropdownOptions(options);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        retrieveOptions();
-    }, []);
-
-    return dropdownOptions;
-}
+import values, {valueKey} from "@/constant-values.ts";
 
 interface DropdownProps {
-    tableName: string;
+    tableName: valueKey;
     fieldName: string;
     onChange: (name:string, value: string) => void;
+    reset?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange }) => {
+const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange, reset }) => {
+    let resetForm = true; //if submitted, resetForm will change and the key should change making the dropdown reset
+    if (!reset) {resetForm = false;} else {resetForm = true;} //if statement becasue props.reset can be undefined
+
+    const options = values[tableName];
+
     const handleChange = (value:string) => {
         onChange(fieldName, value);
     }
 
     return (
-        <Select onValueChange={handleChange}>
-            <SelectTrigger className={"bg-input"}>
+        <Select onValueChange={handleChange} key={resetForm.toString()}>
+            {/*<Select onValueChange={handleChange}>*/}
+             <SelectTrigger className={"bg-input"}>
                 <SelectValue placeholder={'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
             <SelectContent className={"bg-input"} >
                 <SelectGroup>
-                    {getOptions(tableName)}
+                    {options.map((option) => (
+                        <SelectItem key={option} value={option}>
+                            {option}
+                        </SelectItem>
+                    ))}
                 </SelectGroup>
             </SelectContent>
         </Select>

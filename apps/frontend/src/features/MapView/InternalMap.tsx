@@ -8,16 +8,15 @@ import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
 import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
 import chestnutHill from '../../../public/Chestnut-Hill.svg'
 import faulkner from '../../../public/Faulkner-Map-Draft.svg'
-import { goToFloor } from '../MapView/floorNavigation.ts';
+import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import {
     fetchCheckIn,
-    fetchEdges20_1,//  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
+    fetchEdges20_1, fetchElevators,//  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
     fetchEntrances,
     fetchParkingLots
 } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
-import {SelectItem} from "@/components/ui/select.tsx";
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
@@ -28,24 +27,33 @@ interface InternalMapProps {
 const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [checkIn, setCheckIn] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
+    const [elevators, setElevators] = useState<Node[]>([]);
+    const [lots, setLots] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+
+
+
+
+function clickMarker(data:Node, marker:L.Marker):void{
+        marker.on('click', () => {
+            const info = `<p>Name: ${data.shortName}</p>
+            <p>Building: ${data.building}</p>
+           <p> Floor: ${data.floor}</p>
+           <p> X Coordinate: ${data.xcoord}</p>
+           <p> Y Coordinate: ${data.ycoord}</p>`;
+            marker.bindPopup(info).openPopup();
+        });
+    }
 
     useEffect(() => {
         const loadCheckIn = async () => {
             try {
-                setIsLoading(true);
                 const data = await fetchCheckIn();
                 setCheckIn(data);
-                setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
-                setError('Failed to load parking lots');
-            } finally {
-                setIsLoading(false);
             }
         };
 
@@ -55,33 +63,47 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     useEffect(() => {
         const loadEntrances = async () => {
             try {
-                setIsLoading(true);
                 const data = await fetchEntrances();
                 setEntrances(data);
-                setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
-                setError('Failed to load parking lots');
-            } finally {
-                setIsLoading(false);
             }
         };
 
         loadEntrances();
     }, []);
+    useEffect(() => {
+        const loadElevators = async () => {
+            try {
+                const data = await fetchElevators();
+                setElevators(data);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+            }
+        };
+
+        loadElevators();
+    }, []);
+    useEffect(() => {
+        const loadLots = async () => {
+            try {
+                const data = await fetchParkingLots();
+                setLots(data);
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+            }
+        };
+
+        loadLots();
+    }, []);
 
     useEffect(() => {
         const loadEdges = async () => {
             try {
-                setIsLoading(true);
                 const data = await fetchEdges20_1();
                 setEdges20_1(data);
-                setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
-                setError('Failed to load parking lots');
-            } finally {
-                setIsLoading(false);
             }
         };
 
@@ -90,12 +112,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
 
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
-            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
-
-            // bounds for all floorplans
-            const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
-
-            // === FLOOR LAYERS ===
             const floorLayer20_1 = L.layerGroup();
             const floorLayer20_3 = L.layerGroup();
             const floorLayer22_1 = L.layerGroup();
@@ -103,6 +119,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             const floorLayer22_4 = L.layerGroup();
             const floorLayerChestnutHill = L.layerGroup();
             const floorLayerFaulkner = L.layerGroup();
+
+            const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
+
+            // bounds for all floorplans
+            const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
 
             // image overlays
             L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
@@ -113,119 +134,142 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, bounds).addTo(floorLayerFaulkner);
 
-            // Transition Points Between Floors
-            const transitionNodes = {
-                // 22 patriot place
-                'elevatorA': {floor1: [385.55, 546.23], floor3: [464.51, 546.23], floor4: [383.55, 554.24]},
-                'st01': {floor1: [387.55, 456.21], floor3: [469.50, 469.21], floor4: [392.55, 457.21]},
-                'st02': {floor1: [316.59, 280.17], floor3: [405.54, 314.17], floor4: [316.59, 279.17]},
-                'st03': {floor1: [622.42, 885.32], floor3: [678.38, 850.31], floor4: [619.42, 887.32]},
-                // 20 patriot place
-                'st13': {floor1: [758.34, 187.14], floor3: [758.34, 187.14]},
-                'st14': {floor1: [218.74, 818.00], floor3: [218.74, 818.00]},
-                'el10': {floor1: [240.64, 771.29], floor3: [240.64, 771.29]}
-            };
+            addFloorTransitionMarkers(map, floorLayer20_1, floorLayer20_3, floorLayer22_1, floorLayer22_3, floorLayer22_4, floorLayerChestnutHill, floorLayerFaulkner);
 
-            // 22 patriot place floor 1 buttons to go up to floor 3
-            L.circle(transitionNodes['elevatorA'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            L.circle(transitionNodes['st01'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            L.circle(transitionNodes['st02'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            L.circle(transitionNodes['st03'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer22_1); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_1);
-            // 22 patriot place floor 3 buttons to go up to floor 4 or down to floor 1
-            L.circle(transitionNodes['elevatorA'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st01'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st02'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            L.circle(transitionNodes['st03'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup(` <div style="text-align: center; font-size: 18px;"> <div onclick="goToFloor(4)" style="cursor:pointer;">⬆️ Floor 4</div> <div onclick="goToFloor(1)" style="cursor:pointer;">⬇️ Floor 1</div> </div> `).addTo(floorLayer22_3);
-            // 22 patriot place floor 4 buttons to go down to floor 3
-            L.circle(transitionNodes['elevatorA'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st01'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st02'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-            L.circle(transitionNodes['st03'].floor4 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1/3').on('click', () => {map.removeLayer(floorLayer22_4); map.addLayer(floorLayer22_3)}).addTo(floorLayer22_4);
-
-            // 20 patriot place
-            L.circle(transitionNodes['st13'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
-            L.circle(transitionNodes['st13'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
-            L.circle(transitionNodes['st14'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
-            L.circle(transitionNodes['st14'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Stairs from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
-            L.circle(transitionNodes['el10'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator to Floor 3').on('click', () => {map.removeLayer(floorLayer20_1); map.addLayer(floorLayer20_3)}).addTo(floorLayer20_1);
-            L.circle(transitionNodes['el10'].floor3 as [number, number], {color: 'green', radius: 10,}).bindPopup('Elevator from Floor 1').on('click', () => {map.removeLayer(floorLayer20_3); map.addLayer(floorLayer20_1)}).addTo(floorLayer20_3);
-
-            //faulkner
-            //.circle(transitionNodes['???'].floor1 as [number, number], {color: 'green', radius: 10,}).bindPopup('????').on('click', () => {map.removeLayer(???); map.addLayer(???)}).addTo(???);
-            //TODO: add/edit faulkner circles
-
+            connectBuildings(map, floorLayer20_3, floorLayer22_3);
 
             // parking lot markers
-            L.marker([576.44, 35.10]).bindPopup('Valet Parking').addTo(floorLayer22_1);
-            L.marker([217.98, 221.99]).bindPopup('Patient Parking').addTo(floorLayer22_1);
-            L.marker([128.70, 226.15]).bindPopup('Extended Patient Parking').addTo(floorLayer22_1);
-            L.marker([594.87, 43.05]).bindPopup('Valet Parking').addTo(floorLayer20_1);
-            L.marker([166.45, 36.50]).bindPopup('Patient Parking').addTo(floorLayer20_1);
-            L.marker([125.94, 265.92]).bindPopup('Extended Patient Parking').addTo(floorLayer20_1);
-            L.marker([130.02, 592.90]).bindPopup('Front Parking Lot').addTo(floorLayerChestnutHill);
-            L.marker([587.89, 20.00]).bindPopup('Left Parking Lot').addTo(floorLayerChestnutHill);
+            lots
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
+                .map((lot) => {
+                    const place= L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
+                    clickMarker(lot, place);
+                });
+            lots
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 1)
+                .map((lot) => {
+                    const place= L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
+                    clickMarker(lot, place);
+                });
+            lots
+                .filter(lot => lot.building === "CHESTNUT_HILL" && lot.floor === 1)
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayerChestnutHill)
+                    clickMarker(lot, place);
+                })
             L.marker([0.0, 0.00]).bindPopup('???').addTo(floorLayerFaulkner);
             //TODO: add/edit faulkner markers
 
-            {entrances
+            entrances
                 .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayer20_1)
-                ))}
+                .map((lot) => {
+                   const place= L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
+                    clickMarker(lot, place);
+                });
 
-            {entrances
+            entrances
                 .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 3)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayer20_3)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
+                    clickMarker(lot, place);
+                } );
 
-            {entrances
+            entrances
                 .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 1)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayer22_1)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
+                    clickMarker(lot, place);
+                })
 
-            {entrances
+            entrances
                 .filter(lot => lot.building === "CHESTNUT_HILL" && lot.floor === 1)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayerChestnutHill)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayerChestnutHill)
+                    clickMarker(lot, place);
+                })
 
-            {checkIn
+            checkIn
                 .filter(lot => lot.building === "CHESTNUT_HILL" && lot.floor === 1)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayerChestnutHill)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayerChestnutHill)
+                    clickMarker(lot, place);
+                })
 
-            {checkIn
+            checkIn
                 .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer20_1)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
+                    clickMarker(lot, place);
+                    })
 
-            {checkIn
+            checkIn
                 .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 3)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer20_3)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
+                    clickMarker(lot, place);
+                })
 
-            {checkIn
+            checkIn
                 .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 1)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_1)
-                ))}
+                .map((lot) => {
+                   const place =  L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
+                    clickMarker(lot, place);
+                })
 
-            {checkIn
+            checkIn
                 .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 3)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_3)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_3)
+                    clickMarker(lot, place);
+                })
 
-            {checkIn
+            checkIn
                 .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 4)
-                .map((lot) => (
-                    L.marker([lot.xcoord, lot.ycoord]).bindPopup('Check-In').addTo(floorLayer22_4)
-                ))}
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_4)
+                    clickMarker(lot, place);
+                })
+            elevators
+                .filter(lot => lot.building === "CHESTNUT_HILL" && lot.floor === 1)
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayerChestnutHill)
+                    clickMarker(lot, place);
+                })
+
+            elevators
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 1)
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
+                    clickMarker(lot, place);
+                })
+
+            elevators
+                .filter(lot => lot.building === "PATRIOT_PLACE_20" && lot.floor === 3)
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
+                    clickMarker(lot, place);
+                })
+
+            elevators
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 1)
+                .map((lot) => {
+                    const place =  L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
+                    clickMarker(lot, place);
+                })
+
+            elevators
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 3)
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_3)
+                    clickMarker(lot, place);
+                })
+
+            elevators
+                .filter(lot => lot.building === "PATRIOT_PLACE_22" && lot.floor === 4)
+                .map((lot) => {
+                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_4)
+                    clickMarker(lot, place);
+                })
             //TODO: add faulkner stuff here?
             {edges20_1
                 .map((edge) => (
@@ -258,37 +302,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
 
             L.control.layers(baseLayers).addTo(map);
 
-            // connect patriot place buildings
-            const bridge1 = L.polyline([
-                [241.63, 101.12], // 20 Patriot Place
-                [242.63, 68.11], // 22 Patriot Place
-            ], {
-                color: 'blue',
-                weight: 2,
-                dashArray: '5, 5',
-            })
-                .bindPopup('Bridge to 22 Patriot Place')
-                .on('click', () => {
-                    map.removeLayer(floorLayer20_3);
-                    map.addLayer(floorLayer22_3);
-                })
-                .addTo(floorLayer20_3);
-
-            const bridge2 = L.polyline([
-                [353.57, 642.26], // 22 Patriot Place
-                [134.70, 785.30], // 20 Patriot Place
-            ], {
-                color: 'red',
-                weight: 2,
-                dashArray: '5, 5',
-            })
-                .bindPopup('Bridge to 20 Patriot Place')
-                .on('click', () => {
-                    map.removeLayer(floorLayer22_3);
-                    map.addLayer(floorLayer20_3);
-                })
-                .addTo(floorLayer22_3);
-
             // path
             if (pathCoordinates && pathCoordinates.length > 1) L.polyline(pathCoordinates, {color: 'red', weight: 3, opacity: 0.8}).addTo(map);
 
@@ -300,7 +313,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             mapInstance.current = map;
 
             (window as unknown as { goToFloor: (floor: number) => void }).goToFloor = (floor: number) => {
-                goToFloor(floor, map, floorLayer22_1, floorLayer22_3, floorLayer22_4);
+                goToFloor(
+                    floor,
+                    map,
+                    floorLayer22_1,
+                    floorLayer22_3,
+                    floorLayer22_4,
+                    floorLayerChestnutHill,
+                    floorLayerFaulkner
+                );
             };
         }
 
@@ -311,20 +332,20 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 mapInstance.current = null;
             }
         };
-    }, [pathCoordinates]);
+    },);
 
     return (
         <div>
-        <div
-            ref={mapRef}
-            style={{
-                height: '100vh',
-                width: '100%',
-                border: '1px solid #ccc',
-                position: 'relative',
-                zIndex: 0 // Add a low z-index here
-            }}
-        />
+            <div
+                ref={mapRef}
+                style={{
+                    height: '100vh',
+                    width: '100%',
+                    border: '1px solid #ccc',
+                    position: 'relative',
+                    zIndex: 0
+                }}
+            />
         </div>
     );
 };

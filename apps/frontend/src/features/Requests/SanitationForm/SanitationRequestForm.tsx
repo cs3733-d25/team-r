@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
-import {Buildings, Department, RequestPriority} from "../RequestEnums.tsx";
 import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import Dropdown from "@/components/Dropdowns/Department.tsx";
+import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 // Simple interface for submitted request
 interface SubmittedRequest {
   employeeName: string;
   sanitationType: string;
-  priority: RequestPriority |string;
-  department: Department |string;
-  location: Buildings | string;
-  room: string;
+  priority: string;
+  department: string;
+  location: string;
+  roomNumber: string;
   comments: string;
   timestamp: string;
   status:string;
@@ -28,12 +28,12 @@ const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
     employeeName: '',
     sanitationType: '',
-    priority: "",
-    department: "",
-    room: '',
+    priority: '',
+    department: '',
+    roomNumber: '',
     comments: '',
     status:'',
-    location:"",
+    location:'',
 
   });
   const handleDropdownChange = (name:string, value:string) => {
@@ -46,6 +46,9 @@ const SanitationRequestForm = () => {
     message: string;
     isError: boolean;
   } | null>(null);
+
+  //put this in Dropdown element and it will reset on submit
+  const [resetDropdowns, setResetDropdowns] = useState(false);
 
   // Add state for the confirmation card
   const [submittedRequest, setSubmittedRequest] = useState<SubmittedRequest | null>(null);
@@ -72,16 +75,18 @@ const SanitationRequestForm = () => {
           isError: false
         });
 
+        setResetDropdowns(!resetDropdowns);
+
         // Reset form
         setFormData({
           employeeName: '',
           sanitationType: '',
-          priority: "",
-          department: "",
-          room: '',
+          priority: '',
+          department: '',
+          roomNumber: '',
           comments: '',
           status: '',
-          location: "",
+          location: '',
 
         });
       }
@@ -143,7 +148,7 @@ const SanitationRequestForm = () => {
                   <span className="font-semibold">Location:</span> {submittedRequest.location}
                 </div>
                 <div>
-                  <span className="font-semibold">Room:</span> {submittedRequest.room}
+                  <span className="font-semibold">Room:</span> {submittedRequest.roomNumber}
                 </div>
                 <div>
                   <span className="font-semibold">Sanitation Type:</span> {submittedRequest.status}
@@ -221,32 +226,11 @@ const SanitationRequestForm = () => {
                       LOW: Within 24 hours
                     </span>
                   </Label>
-                  <Dropdown tableName={"priorities"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
 
-                {/* Department */}
-                <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Department
-                    <span className="text-red-500">*</span>
-                    <span className="text-xs text-gray-500 block">
-                      Select the department requiring sanitation
-                    </span>
-                  </Label>
-                  <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>
-                </div>
-                {/* Location */}
-                <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Location
-                    <span className="text-red-500">*</span>
-                    <span className="text-xs text-gray-500 block">
-                                        Select the building making the patient request.
-                                    </span>
-                  </Label>
-                  {/*TableName - enum, fieldName - from request*/}
-                  <Dropdown tableName={"locations"} fieldName={"location"} onChange={handleDropdownChange}></Dropdown>
-                </div>
+                {/* Location and Department */}
+                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
 
                 {/* Room Number */}
                 <div>
@@ -259,8 +243,8 @@ const SanitationRequestForm = () => {
                   </Label>
                   <Input
                     type="text"
-                    name="room"
-                    value={formData.room}
+                    name="roomNumber"
+                    value={formData.roomNumber}
                     onChange={handleChange}
                     placeholder="e.g., 3-124"
                     className="w-full px-4 py-2 rounded-md border border-border bg-input"
@@ -274,7 +258,7 @@ const SanitationRequestForm = () => {
                   Request Status
                   <span className="text-accent">*</span>
                 </Label>
-                <Dropdown tableName={"statuses"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
               </div>
               {/* Comments */}
               <div>

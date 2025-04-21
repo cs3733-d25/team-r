@@ -2,21 +2,23 @@ model Directory {
   id          Int      @id @default(autoincrement())
   name        String
   floorNumber Int
-  building    Building
+  building    String
 }
 
 model Node {
   nodeID    String   @id
-  nodeType  NodeType
-  building  Building
+  nodeType String
+  building  String
   floor     Int
   xcoord    Float
   ycoord    Float
   longName  String
   shortName String
 
+  departments Department[]
   edgesFrom Edge[] @relation("fromNode")
   edgesTo   Edge[] @relation("toNode")
+
 }
 
 model Edge {
@@ -29,4 +31,12 @@ model Edge {
   toY      Float
   fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
   toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+}
+
+model Department{
+  id String @id@default(uuid())
+  name String
+  recepetionNodeID String
+  receptionNode Node @relation(fields:[recepetionNodeID], references: [nodeID])
+  employee  Employee[]
 }

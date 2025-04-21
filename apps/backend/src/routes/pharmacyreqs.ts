@@ -1,12 +1,7 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
-import {
-  parseDepartment,
-  parseRequestPriority,
-  parseBuilding,
-  parseStatus,
-} from "./enum.ts";
+
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
 const router: Router = express.Router();
@@ -26,27 +21,28 @@ router.get("/all-requests", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a pharmacy request");
-  const request = req.body;
+  const {priority, status, department, comment, patient, location, request, employeeName, patientID,
+  drugName, morningPillCount, middayPillCount, eveningPillCount, nightPillCount, days, numberOfPills, refills, additionalInstructions} = req.body;
   // console.log(request);
   try {
     await PrismaClient.pharmacyRequest.create({
       data: {
-        employeeName: request.employee, // connect to whatever employee has that ID number
-        priority: parseRequestPriority(request.priority),
-        department: await parseDepartment(request.department),
-        patientID: parseInt(request.patientID),
+        employeeName,
+        priority,
+        department,
+        patientID,
         // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
-        drugName: request.drugName,
-        morningPillCount: parseInt(request.morningPillCount),
-        middayPillCount: parseInt(request.middayPillCount),
-        eveningPillCount: parseInt(request.eveningPillCount),
-        nightPillCount: parseInt(request.nightPillCount),
-        days: parseInt(request.days),
-        numberOfPills: parseInt(request.numberOfPills),
-        refills: parseInt(request.refills),
-        additionalInstructions: request.additionalInstructions,
-        status: await parseStatus(request.status),
-        // also a timestamp of when it was submitted?
+        drugName,
+        morningPillCount,
+        middayPillCount,
+        eveningPillCount,
+        nightPillCount,
+        days,
+        numberOfPills,
+        refills,
+        additionalInstructions,
+        status,
+        //assignedEmployee: employeeName //connect later
       },
     });
     res.status(200).json({ message: "Successfully entered pharmacy request" });

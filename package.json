@@ -4,7 +4,8 @@
   "version": "1.0.1",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
-    "floorseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/floorplanSeed.ts"
+    "floorseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/floorplanSeed.ts",
+    "directoryseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/directorySeed.ts"
   },
   "scripts": {
     "dev": "dotenv -e .env -- turbo run dev",
@@ -21,7 +22,8 @@
     "deploy": "bash ./scripts/deploy.sh",
     "prepare": "husky",
     "seed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
-    "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts"
+    "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts",
+    "directoryseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/directorySeed.ts"
   },
   "devDependencies": {
     "@prisma/client": "^6.5.0",
