@@ -84,7 +84,26 @@ async function main() {
             {name: "Pharmacy", floorNumber: 1, building: "CHESTNUT_HILL"},
             {name: "Radiology", floorNumber: 1, building: "CHESTNUT_HILL"},
             {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "CHESTNUT_HILL"},
-            {name: "Rehabilitation Services", floorNumber: 1, building: "CHESTNUT_HILL"}
+            {name: "Rehabilitation Services", floorNumber: 1, building: "CHESTNUT_HILL"},
+
+            {name: "Admitting/Registration", floorNumber: 1, building: "FAULKNER"},
+            {name: "Atrium Cafe", floorNumber: 1, building: "FAULKNER"},
+            {name: "Audiology", floorNumber: 1, building: "FAULKNER"},
+            {name: "Blood Drawing Lab", floorNumber: 1, building: "FAULKNER"},
+            {name: "Cardiac Rehab", floorNumber: 1, building: "FAULKNER"},
+            {name: "Emergency Department", floorNumber: 1, building: "FAULKNER"},
+            {name: "Emergency Enterance", floorNumber: 1, building: "FAULKNER"},
+            {name: "GI Endoscopy", floorNumber: 1, building: "FAULKNER"},
+            {name: "Information", floorNumber: 1, building: "FAULKNER"},
+            {name: "MRI/CT", floorNumber: 1, building: "FAULKNER"},
+            {name: "Patient Finances", floorNumber: 1, building: "FAULKNER"},
+            {name: "Pre-Admittance Screening", floorNumber: 1, building: "FAULKNER"},
+            {name: "Pulmonary Lab", floorNumber: 1, building: "FAULKNER"},
+            {name: "Radiology", floorNumber: 1, building: "FAULKNER"},
+            {name: "Special Testing", floorNumber: 1, building: "FAULKNER"},
+            {name: "Starbucks", floorNumber: 1, building: "FAULKNER"},
+            {name: "Taiclet Family Center", floorNumber: 1, building: "FAULKNER"},
+            {name: "Vascular Lab", floorNumber: 1, building: "FAULKNER"}
         ]
     });
     console.log('Departments seeded successfully!');
