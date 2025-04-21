@@ -1,5 +1,6 @@
-import {Label} from "@/components/ui/label.tsx";
-import {Mic} from "react-bootstrap-icons";
+import { Label } from '@/components/ui/label.tsx';
+import { Mic } from 'react-bootstrap-icons';
+
 interface TextDirectionsProps {
     steps: string[];
     distance: string;
@@ -7,6 +8,20 @@ interface TextDirectionsProps {
 }
 
 function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
+    const handleTTS = () => {
+        // remove HTML tags from the steps
+        const cleanedSteps = steps.map((step) => step.replace(/<[^>]+>/g, ''));
+        // convert the string array of steps to a single string
+        const speech = new SpeechSynthesisUtterance(cleanedSteps.join('. '));
+        // show the steps in the console
+        console.log(speech);
+        // set lang
+        speech.lang = 'en-US';
+        speech.rate = 0.85;
+        // speak
+        window.speechSynthesis.speak(speech);
+    };
+
     return (
         <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
             {distance && duration && (
@@ -14,7 +29,7 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                     <Label>
                         {distance} - {duration}
                     </Label>
-                    <Mic className={"text-3xl"}/>
+                    <Mic className={'text-3xl'} onClick={handleTTS} />
                 </div>
             )}
             <ol className="list-decimal list-inside space-y-2">
