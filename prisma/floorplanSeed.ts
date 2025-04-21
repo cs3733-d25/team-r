@@ -7,9 +7,9 @@ async function main() {
         data:[
             {nodeID: 'canopyEntrance', nodeType: 'Entrance', building: 'Chestnut Hill', floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
             {nodeID: 'leftEntrance', nodeType: 'Entrance', building: 'Chestnut Hill', floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
-            {nodeID: 'frontLot', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
+            {nodeID: 'frontLotChestnut', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
             {nodeID: 'leftWaiting', nodeType: 'Other', building: 'Chestnut Hill', floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
-            {nodeID: 'leftLot', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
+            {nodeID: 'leftLotChestnut', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
             {nodeID: 'specialtyCheckIn', nodeType: 'Reception', building: 'Chestnut Hill', floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
             {nodeID: 'canopyEntranceHallway', nodeType: 'Hallway', building: 'Chestnut Hill', floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
         ],
@@ -18,8 +18,8 @@ async function main() {
 
     await client.edge.createMany({
         data:[
-            {fromID: 'frontLot', toID: 'canopyEntrance', fromX: 130.02, fromY: 592.90, toX: 160.01, toY: 342.94},
-            {fromID: 'leftLot', toID: 'leftEntrance', fromX: 587.89, fromY: 20.00, toX: 496.92, toY: 127.98},
+            {fromID: 'frontLotChestnut', toID: 'canopyEntrance', fromX: 130.02, fromY: 592.90, toX: 160.01, toY: 342.94},
+            {fromID: 'leftLotChestnut', toID: 'leftEntrance', fromX: 587.89, fromY: 20.00, toX: 496.92, toY: 127.98},
             {fromID: 'leftEntrance', toID: 'leftWaiting', fromX: 496.92, fromY: 127.98, toX: 437.93, toY: 152.98},
             {fromID: 'canopyEntrance', toID: 'canopyEntranceHallway', fromX: 160.01, fromY: 342.94, toX: 179.01, toY: 343.94},
             {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: 179.01, fromY: 343.94, toX: 262.98, toY: 449.93}
@@ -442,7 +442,7 @@ async function main() {
     await client.node.createMany({
         data: [
             {
-                nodeID: 'valetParking',
+                nodeID: 'valetParkingFaulkner',
                 nodeType: 'Parking',
                 building: 'Faulkner',
                 floor: 1,
@@ -452,7 +452,7 @@ async function main() {
                 shortName: 'Valet Parking Lot'
             },
             {
-                nodeID: 'leftLot',
+                nodeID: 'leftLotFaulkner',
                 nodeType: 'Parking',
                 building: 'Faulkner',
                 floor: 1,
@@ -462,7 +462,7 @@ async function main() {
                 shortName: 'Left Parking Lot'
             },
             {
-                nodeID: 'rightLot',
+                nodeID: 'rightLotFaulkner',
                 nodeType: 'Parking',
                 building: 'Faulkner',
                 floor: 1,
