@@ -14,4 +14,5 @@ export const API_ROUTES = {
     DEVICE: '/api/device',
     MAP: '/api/map',
     ASTAR: '/api/aStar',
+    DFS: '/api/dfs',
 };
