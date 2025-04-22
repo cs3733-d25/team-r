@@ -175,13 +175,13 @@ export const PatientRequestForm = () => {
             )}
 
             <div
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                >
                 <div className="p-6">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Employee Name */}
                             <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Employee Name
                                     <span className="text-red-500">*</span>
                                 </Label>
@@ -191,13 +191,13 @@ export const PatientRequestForm = () => {
                                     value={formData.employeeName}
                                     onChange={handleChange}
                                     placeholder="Enter Employee Name"
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     required
                                 />
                             </div>
                             {/* Patient ID */}
                             <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Patient ID
                                     <span className="text-red-500">*</span>
                                 </Label>
@@ -207,13 +207,13 @@ export const PatientRequestForm = () => {
                                     value={formData.patientID}
                                     onChange={handleChange}
                                     placeholder="Enter patient ID"
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
+                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     required
                                 />
                             </div>
                             {/*nonemergent request*/}
                             <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Nonemergent Request
                                 </Label>
                                 <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
@@ -221,9 +221,9 @@ export const PatientRequestForm = () => {
 
                             {/* Priority */}
                             <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Priority Level
-                                    <span className="text-xs text-gray-500 block">
+                                    <span className="text-xs text-secondary-foreground block">
                       EMERGENCY: Immediate attention required
                       <br/>
                       HIGH: Within 1 hour
@@ -237,6 +237,13 @@ export const PatientRequestForm = () => {
                             </div>
                             {/* Location and Department */}
                             <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                            <div>
+                                <label className="block text-sm font-semibold text-foreground mb-2">
+                                    Request Status
+                                    <span className="text-accent">*</span>
+                                </label>
+                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                            </div>
                         </div>
                         {/* Additional Instructions */}
                         <div>

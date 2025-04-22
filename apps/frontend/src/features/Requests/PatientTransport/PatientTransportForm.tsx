@@ -239,10 +239,10 @@ const TransportationRequestForm = () => {
                             </div>
                             {/* Transportation Type */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Transportation Type
                                     <span className="text-accent">*</span>
-                                    <span className="text-xs text-gray-500 block">
+                                    <span className="text-xs text-secondary-foreground block">
                                        e.g., Ambulance, Helicopter, etc
                                    </span>
 
@@ -263,10 +263,10 @@ const TransportationRequestForm = () => {
                                 </Label>
                                 {/* Priority */}
                                 <div >
-                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Priority Level
                                         <span className="text-accent">*</span>
-                                        <span className="text-xs text-gray-500 block">
+                                        <span className="text-xs text-secondary-foreground block">
                                             URGENT: Immediate attention required
                                             <br />
                                             HIGH: Within 1 hour
@@ -302,7 +302,7 @@ const TransportationRequestForm = () => {
                                 <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
 
                                     <div>
-                                        <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <Label className="block text-sm font-semibold text-foreground mb-2">
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
@@ -321,9 +321,9 @@ const TransportationRequestForm = () => {
                             </div>
                             {/* Comments */}
                             <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Additional Comments
-                                    <span className="text-xs text-gray-500 block">
+                                    <span className="text-xs text-secondary-foreground block">
                                         Include any specific instructions or details about the
                                         transport request
                                     </span>

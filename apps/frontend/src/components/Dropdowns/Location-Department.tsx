@@ -26,10 +26,10 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
     return (
         <div>
             {/* Location dropdown */}
-            <Label className="block text-sm font-semibold text-gray-700 mb-2">
+            <Label className="block text-sm font-semibold text-foreground mb-2">
                 Location
                 <span className="text-red-500">*</span>
-                <span className="text-xs text-gray-500 block">
+                <span className="text-xs text-secondary-foreground block">
                     Select the building making the patient request.
                 </span>
             </Label>
@@ -37,7 +37,7 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
             {/*select department based on location*/}
             {selectedLocation && (
                 <>
-                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <Label className="block text-sm font-semibold text-foreground mb-2">
                         Department
                         <span className="text-red-500">*</span>
                         <span className="text-xs text-gray-500 block">

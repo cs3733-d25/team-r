@@ -194,10 +194,10 @@ const SanitationRequestForm = () => {
                 </div>
                 {/* Sanitation Type */}
                 <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className= "block text-sm font-semibold text-foreground mb-2">
                     Sanitation Type
                     <span className="text-red-500">*</span>
-                    <span className="text-xs text-gray-500 block">
+                    <span className="text-xs text-secondary-foreground block">
                       e.g., Spill cleanup, Biohazard, General cleaning
                     </span>
                   </Label>
@@ -214,9 +214,9 @@ const SanitationRequestForm = () => {
 
                 {/* Priority */}
                 <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">
                     Priority Level
-                    <span className="text-xs text-gray-500 block">
+                    <span className="text-xs text-secondary-foreground block">
                       URGENT: Immediate attention required
                       <br />
                       HIGH: Within 1 hour
@@ -231,13 +231,21 @@ const SanitationRequestForm = () => {
 
                 {/* Location and Department */}
                 <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                {/* Status */}
 
+                <div>
+                  <Label className="block text-sm font-semibold text-foreground mb-2">
+                    Request Status
+                    <span className="text-accent">*</span>
+                  </Label>
+                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                </div>
                 {/* Room Number */}
                 <div>
-                  <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <Label className="block text-sm font-semibold text-foreground mb-2">
                     Room Number
                     <span className="text-red-500">*</span>
-                    <span className="text-xs text-gray-500 block">
+                    <span className="text-xs text-secondary-foreground block">
                       Format: Floor-Room (e.g., 3-124, L1-001)
                     </span>
                   </Label>
@@ -252,19 +260,12 @@ const SanitationRequestForm = () => {
                   />
                 </div>
               </div>
-              {/* Status */}
-              <div>
-                <Label className="block text-sm font-semibold text-foreground mb-2">
-                  Request Status
-                  <span className="text-accent">*</span>
-                </Label>
-                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
-              </div>
+
               {/* Comments */}
               <div>
-                <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                <Label className="block text-sm font-semibold text-foreground mb-2">
                   Additional Comments
-                  <span className="text-xs text-gray-500 block">
+                  <span className="text-xs text-secondary-foreground block">
                     Include any specific instructions or details about the sanitation request
                   </span>
                 </Label>

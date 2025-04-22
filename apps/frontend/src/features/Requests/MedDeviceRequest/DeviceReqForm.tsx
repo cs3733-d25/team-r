@@ -49,7 +49,7 @@ export const DeviceReqForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('api/devicereq/', {
+            const response = await axios.post('api/device/', {
                 ...formData,
                 priority: formData.priority.toString(),
             });
