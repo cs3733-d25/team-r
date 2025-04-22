@@ -37,7 +37,7 @@ export const rawDirectoryItems: RawDirectoryItem[] = [
     {name: "Vascular Surgery", floorNumber: 3, building: "PATRIOT_PLACE_20"},
     {name: "Weight Management and Wellness", floorNumber: 3, building: "PATRIOT_PLACE_20"},
     {name: "Sports Medicine Center", floorNumber: 3, building: "PATRIOT_PLACE_20"},
-    {name: "X-Rat Suite", floorNumber: 3, building: "PATRIOT_PLACE_20"},
+    {name: "X-Ray Suite", floorNumber: 3, building: "PATRIOT_PLACE_20"},
 
     {name: "Electromyography", floorNumber: 4, building: "PATRIOT_PLACE_20"},
     {name: "Nutrition", floorNumber: 4, building: "PATRIOT_PLACE_20"},
