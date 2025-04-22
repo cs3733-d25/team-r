@@ -1,18 +1,10 @@
-// apps/backend/src/algorithms/dfs.ts
-
 import prismaClient from "../bin/prisma-client";
-
-import { Stack } from "./dataStructures.ts"; // update path if yours differs
-
 import { Stack } from "./dataStructures.ts";  // update path if yours differs
-
-
-// apps/backend/src/algorithms/DFS.ts
-
 import { Graph } from "./Graph";
 
 export default class DFS {
-  constructor(private graph: Graph) {}
+  constructor(private graph: Graph) {
+  }
 
   public findPath(start: string, end: string): string[] {
     const visited = new Set<string>();
@@ -37,4 +29,4 @@ export default class DFS {
 
     return [];
   }
-
+}
