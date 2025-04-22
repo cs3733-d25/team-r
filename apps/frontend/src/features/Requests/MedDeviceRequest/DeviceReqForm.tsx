@@ -49,7 +49,7 @@ export const DeviceReqForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('api/device/', {
+            const response = await axios.post('api/devicereq/', {
                 ...formData,
                 priority: formData.priority.toString(),
             });
@@ -216,6 +216,7 @@ export const DeviceReqForm = () => {
                                         required
                                     />
                                 </div>
+                                <br />
 
                                 {/* Comments */}
                                 <div>
@@ -231,7 +232,7 @@ export const DeviceReqForm = () => {
                                         onChange={handleChange2}
                                         placeholder="Enter any additional comments."
                                         rows={4}
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        className="w-250 px-4 py-2 rounded-md border border-border bg-input"
                                     />
                                 </div>
                             </div>
