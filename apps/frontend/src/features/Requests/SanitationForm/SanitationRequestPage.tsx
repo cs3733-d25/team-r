@@ -27,16 +27,16 @@ export function SanitationRequestPage() {
 
 
             <Table>
-                <TableHeader>
+                <TableHeader >
                 <TableRow>
-                    <TableHead>Employee Name</TableHead>
-                    <TableHead >Sanitation Type</TableHead>
-                    <TableHead>Priority</TableHead>
-                    <TableHead>Department</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Room Number</TableHead>
-                    <TableHead>Comments</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead className={"text-center"}>Employee Name</TableHead>
+                    <TableHead className={"text-center"}>Sanitation Type</TableHead>
+                    <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Department</TableHead>
+                    <TableHead className={"text-center"}>Location</TableHead>
+                    <TableHead className={"text-center"}>Room Number</TableHead>
+                    <TableHead className={"text-center"}>Comments</TableHead>
+                    <TableHead className={"text-center"}>Status</TableHead>
                 </TableRow>
                 </TableHeader>
                 <TableBody className="text-center">

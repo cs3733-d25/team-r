@@ -38,15 +38,15 @@ export function DeviceReqPage() {
         <div >
             <Table >
                 <TableHeader>
-                <TableRow >
-                    <TableHead >Device</TableHead>
-                    <TableHead >Priority</TableHead>
-                    <TableHead >Room</TableHead>
-                    <TableHead>Department</TableHead>
-                    <TableHead >Comments</TableHead>
-                    <TableHead>Employee Name</TableHead>
-                    <TableHead >Employee ID</TableHead>
-                    <TableHead >Status</TableHead>
+                <TableRow  >
+                    <TableHead className={"text-center"}>Device</TableHead>
+                    <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Room</TableHead>
+                    <TableHead className={"text-center"}>Department</TableHead>
+                    <TableHead className={"text-center"}>Employee Name</TableHead>
+                    <TableHead className={"text-center"}>Employee ID</TableHead>
+                    <TableHead className={"text-center"}>Status</TableHead>
+                    <TableHead className={"text-center"}>Comments</TableHead>
                 </TableRow>
                 </TableHeader>
                 <TableBody className={"text-center"}>
@@ -58,10 +58,10 @@ export function DeviceReqPage() {
                                 <TableCell >{row.priority}</TableCell>
                                 <TableCell >{row.room}</TableCell>
                                 <TableCell >{row.department}</TableCell>
-                                <TableCell >{row.comments}</TableCell>
                                 <TableCell >{row.employeeName}</TableCell>
                                 <TableCell>{row.employeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
+                                <TableCell >{row.comments}</TableCell>
                             </TableRow>
 
                         </>

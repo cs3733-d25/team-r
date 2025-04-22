@@ -132,91 +132,6 @@ const TransportationRequestForm = () => {
     return (
         <>
             <div className="max-w-7xl mx-auto">
-
-                {/* Status Message */}
-                {submitStatus && submitStatus.isError && (
-                    <Alert className="mb-4 p-4 rounded-md bg-accent border border-accent-foreground">
-                       <AlertDescription className={'text-accent-foreground'}>
-                        {submitStatus.message}
-                       </AlertDescription>
-                    </Alert>
-                )}
-
-                {/* Confirmation Card */}
-                {submittedTransport && !submitStatus?.isError && (
-                    <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
-                        <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 mr-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
-                            Request Confirmation
-                        </div>
-                        <div className="p-4">
-                            <h3 className="text-lg font-semibold mb-2">
-                                Your transportation request has been submitted
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                <div>
-                                    <span className="font-semibold">Employee Name:</span>{' '}
-                                    {submittedTransport.employeeName}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Patient ID:</span>{' '}
-                                    {submittedTransport.patientID}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Transportation Type:</span>{' '}
-                                    {submittedTransport.transportationType}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Priority:</span>{' '}
-                                    {submittedTransport.priority}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Department:</span>{' '}
-                                    {submittedTransport.department}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Current Building:</span>{' '}
-                                    {submittedTransport.currentBuilding}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Desired Building:</span>{' '}
-                                    {submittedTransport.desiredBuilding}
-                                </div>
-                                <div className="col-span-2">
-                                    <span className="font-semibold">Comments:</span>{' '}
-                                    {submittedTransport.comments || 'None provided'}
-                                </div>
-                                <div className="col-span-2">
-                                    <span className="font-semibold">Submitted:</span>{' '}
-                                    {submittedTransport.timestamp}
-                                </div>
-                            </div>
-                            <div className="mt-3 text-sm text-gray-600">
-                                A staff member will be assigned to handle your request based on
-                                priority.
-                            </div>
-                            <button
-                                onClick={() => setSubmittedTransport(null)}
-                                className="mt-4 px-4 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-200"
-                            >
-                                Dismiss
-                            </button>
-                        </div>
-                    </div>
-                )}
                 <div className=" rounded-lg mt-3">
                     <div className="p-5">
                         <form onSubmit={handleSubmit} className="space-y-6">
@@ -240,6 +155,8 @@ const TransportationRequestForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Patient ID
                                         <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                            ID must be Patient's First Name.</span>
                                     </Label>
                                     <Input
                                         type="text"
@@ -296,10 +213,10 @@ const TransportationRequestForm = () => {
                                 {/* Current Location and Department */}
                                 <div>
                                     {/* Location dropdown */}
-                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Location
-                                        <span className="text-red-500">*</span>
-                                        <span className="text-xs text-gray-500 block">
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
                                         Select the building making the patient request.
                                     </span>
                                     </Label>
@@ -307,10 +224,10 @@ const TransportationRequestForm = () => {
                                     {/*select department based on location*/}
                                     {selectedLocation && (
                                         <>
-                                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                            <Label className="block text-sm font-semibold text-foreground mb-2">
                                                 Department
-                                                <span className="text-red-500">*</span>
-                                                <span className="text-xs text-gray-500 block">
+                                                <span className="text-accent">*</span>
+                                                <span className="text-xs text-secondary-foreground block">
                                             Select a department
                                         </span>
                                             </Label>
@@ -400,6 +317,87 @@ const TransportationRequestForm = () => {
                         </form>
                     </div>
                 </div>
+                {/* Status Message */}
+                {submitStatus && submitStatus.isError && (
+                    <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
+                        <AlertDescription className={'text-foreground'}>
+                            {submitStatus.message}
+                        </AlertDescription>
+                    </Alert>
+                )}
+
+                {/* Confirmation Card */}
+                {submittedTransport && !submitStatus?.isError && (
+                    <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                        <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 mr-2"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+                            Request Confirmation
+                        </div>
+                        <div className="p-4">
+                            <h3 className="text-lg font-semibold mb-2">
+                                Your transportation request has been submitted
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                <div>
+                                    <span className="font-semibold">Employee Name:</span>{' '}
+                                    {submittedTransport.employeeName}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Patient ID:</span>{' '}
+                                    {submittedTransport.patientID}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Transportation Type:</span>{' '}
+                                    {submittedTransport.transportationType}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Priority:</span>{' '}
+                                    {submittedTransport.priority}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Current Building:</span>{' '}
+                                    {submittedTransport.currentBuilding}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Desired Building:</span>{' '}
+                                    {submittedTransport.desiredBuilding}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Department:</span>{' '}
+                                    {submittedTransport.department}
+                                </div>
+
+                                <div>
+                                    <span className="font-semibold">Comments:</span>{' '}
+                                    {submittedTransport.comments || 'None provided'}
+                                </div>
+
+                            </div>
+                            <div className="mt-3 text-sm text-secondary-foreground">
+                                The Transport Request Has Been Submitted and Will Be Filled
+                            </div>
+                            <Button
+                                onClick={() => setSubmittedTransport(null)}
+                                className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
+                            >
+                                Dismiss
+                            </Button>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

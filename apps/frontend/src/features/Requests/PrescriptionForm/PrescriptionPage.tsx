@@ -47,22 +47,22 @@ export function PrescriptionPage() {
         <div>
 
             <Table >
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Employee Name</TableHead>
-                        <TableHead>Prescription Name</TableHead>
-                        <TableHead>Priority</TableHead>
-                        <TableHead>Department</TableHead>
-                        <TableHead >Patient ID</TableHead>
-                        <TableHead>Morning Pill Count</TableHead>
-                        <TableHead >Midday Pill Count</TableHead>
-                        <TableHead >Evening Pill Count</TableHead>
-                        <TableHead>Bedtime Pill Count</TableHead>
-                        <TableHead>Days Per Week</TableHead>
-                        <TableHead >Pill Count</TableHead>
-                        <TableHead >Refills</TableHead>
-                        <TableHead >Additional Instructions</TableHead>
-                        <TableHead >Status</TableHead>
+                <TableHeader >
+                    <TableRow >
+                        <TableHead className={"text-center"}>Employee Name</TableHead>
+                        <TableHead className={"text-center"}>Prescription Name</TableHead>
+                        <TableHead className={"text-center"}>Priority</TableHead>
+                        <TableHead className={"text-center"}>Department</TableHead>
+                        <TableHead className={"text-center"}>Patient ID</TableHead>
+                        <TableHead className={"text-center"}>Morning Pill Count</TableHead>
+                        <TableHead className={"text-center"}>Midday Pill Count</TableHead>
+                        <TableHead className={"text-center"}>Evening Pill Count</TableHead>
+                        <TableHead className={"text-center"}>Bedtime Pill Count</TableHead>
+                        <TableHead className={"text-center"}>Days Per Week</TableHead>
+                        <TableHead className={"text-center"}>Pill Count</TableHead>
+                        <TableHead className={"text-center"}>Refills</TableHead>
+                        <TableHead className={"text-center"}>Additional Instructions</TableHead>
+                        <TableHead className={"text-center"}>Status</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody className={'text-center'}>

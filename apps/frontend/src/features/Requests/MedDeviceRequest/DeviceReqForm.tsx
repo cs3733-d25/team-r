@@ -116,8 +116,9 @@ export const DeviceReqForm = () => {
 
     return (
         <>
+
             <div className="max-w-7xl mx-auto">
-                <div className="bg-white rounded-b-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className=" rounded-lg mt-3">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -250,86 +251,86 @@ export const DeviceReqForm = () => {
                     </div>
                 </div>
 
-                {/* Status Message */}
-                {submitStatus && submitStatus.isError && (
-                    <Alert className="mb-4 p-4 rounded-md bg-accent border border-accent-foreground">
-                        <AlertDescription className={'text-accent-foreground'}>
-                            {submitStatus.message}
-                        </AlertDescription>
-                    </Alert>
-                )}
 
-                {/* Confirmation Card */}
-                {submittedDevice && !submitStatus?.isError && (
-                    <div className="mb-6 bg-background rounded-lg shadow-md overflow-hidden border-2 border-secondary">
-                        <div className="bg-secondary text-secondary-foreground font-bold px-4 py-2 flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 mr-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
-                            Request Confirmation
-                        </div>
-                        <div className="p-4">
-                            <h3 className="text-lg font-semibold mb-2">
-                                Your device request has been submitted
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                <div>
-                                    <span className="font-semibold">Submitted by:</span>{' '}
-                                    {submittedDevice.employeeName}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Device:</span>{' '}
-                                    {submittedDevice.device}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Priority:</span>{' '}
-                                    {submittedDevice.priority}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Room:</span>{' '}
-                                    {submittedDevice.room}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Department:</span>{' '}
-                                    {submittedDevice.department}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Comment:</span>{' '}
-                                    {submittedDevice.comment}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Employee ID:</span>{' '}
-                                    {submittedDevice.employeeID}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Status:</span>{' '}
-                                    {submittedDevice.status}
-                                </div>
-                            </div>
-                            <div className="mt-3 text-sm text-gray-600">
-                                The device request has been submitted and will be filled.
-                            </div>
-                            <button
-                                onClick={() => setSubmittedDevice(null)}
-                                className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-200"
-                            >
-                                Dismiss
-                            </button>
-                        </div>
-                    </div>
-                )}
             </div>
+            {submitStatus && submitStatus.isError && (
+                <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
+                    <AlertDescription className={'text-foreground'}>
+                        {submitStatus.message}
+                    </AlertDescription>
+                </Alert>
+            )}
+
+            {/* Confirmation Card */}
+            {submittedDevice && !submitStatus?.isError && (
+                <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                    <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                        Request Confirmation
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-lg font-semibold mb-2">
+                            Your device request has been submitted
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div>
+                                <span className="font-semibold">Employee Name:</span>{' '}
+                                {submittedDevice.employeeName}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Employee ID:</span>{' '}
+                                {submittedDevice.employeeID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Device:</span>{' '}
+                                {submittedDevice.device}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Room:</span>{' '}
+                                {submittedDevice.room}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Priority:</span>{' '}
+                                {submittedDevice.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Department:</span>{' '}
+                                {submittedDevice.department}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Status:</span>{' '}
+                                {submittedDevice.status}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Comment:</span>{' '}
+                                {submittedDevice.comment}
+                            </div>
+                        </div>
+                        <div className="mt-3 text-sm text-secondary-foreground">
+                            The device request has been submitted and will be filled.
+                        </div>
+                        <Button
+                            onClick={() => setSubmittedDevice(null)}
+                            className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
+                        >
+                            Dismiss
+                        </Button>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

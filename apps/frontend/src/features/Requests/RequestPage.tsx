@@ -57,7 +57,7 @@ export function AllRequestsPage() {
                     <p className="text-muted-foreground mb-4">{type.description}</p>
                     <div className="flex flex-col space-y-2">
                       <Button
-                        variant="outline"
+                        variant="secondary"
                         onClick={() => setActiveTab(type.name.toLowerCase())}
                       >
                         View {type.name} Requests

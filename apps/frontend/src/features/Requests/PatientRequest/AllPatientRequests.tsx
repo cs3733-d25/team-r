@@ -39,15 +39,15 @@ export function AllPatientRequests() {
 
 
             <Table>
-                <TableHeader>
-                <TableRow>
-                    <TableHead >Employee</TableHead>
-                    <TableHead>Patient ID</TableHead>
-                    <TableHead >Request</TableHead>
-                    <TableHead >Priority</TableHead>
-                    <TableHead>Department</TableHead>
-                    <TableHead >Location</TableHead>
-                    <TableHead>Status</TableHead>
+                <TableHeader >
+                <TableRow >
+                    <TableHead className={"text-center"} >Employee</TableHead>
+                    <TableHead className={"text-center"}>Patient ID</TableHead>
+                    <TableHead className={"text-center"}>Request</TableHead>
+                    <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Department</TableHead>
+                    <TableHead className={"text-center"}>Location</TableHead>
+                    <TableHead className={"text-center"}>Status</TableHead>
 
                 </TableRow>
                 </TableHeader>

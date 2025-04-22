@@ -9,6 +9,7 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
 
 
 
@@ -123,56 +124,6 @@ export const PatientRequestForm = () => {
         <>
 
         <div className="p-6 max-w-7xl mx-auto">
-            {/* Status Message */}
-            {submitStatus && submitStatus.isError && (
-                <div className="mb-4 p-4 rounded-md bg-red-100 text-red-700 border border-red-700">
-                    {submitStatus.message}
-                </div>
-            )}
-
-            {/* Confirmation Card */}
-            {submittedPatientRequest && !submitStatus?.isError && (
-                <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-mgb-light-blue-500">
-                    <div className="bg-mgb-light-blue-500 text-white font-bold px-4 py-2 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/>
-                        </svg>
-                        Request Confirmation
-                    </div>
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-2">Your request has been submitted</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                            <div>
-                                <span className="font-semibold">Comment:</span> {submittedPatientRequest.comment}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Patient ID:</span> {submittedPatientRequest.patientID}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Location:</span> {submittedPatientRequest.location}
-                            </div>
-
-
-                        </div>
-                        <div className="mt-3 text-sm text-gray-600">
-                            The request has been submitted and will be filled.
-                        </div>
-                        <button
-                            onClick={() => setSubmittedPatientRequest(null)}
-                            className="mt-4 px-4 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-200"
-                        >
-                            Dismiss
-                        </button>
-                    </div>
-                </div>
-            )}
 
             <div
                 >
@@ -183,7 +134,7 @@ export const PatientRequestForm = () => {
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Employee Name
-                                    <span className="text-red-500">*</span>
+                                    <span className="text-accent">*</span>
                                 </Label>
                                 <Input
                                     type="text"
@@ -199,7 +150,9 @@ export const PatientRequestForm = () => {
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Patient ID
-                                    <span className="text-red-500">*</span>
+                                    <span className="text-accent">*</span>
+                                    <span className="text-xs text-secondary-foreground block">
+                                            ID must be Patient's First Name.</span>
                                 </Label>
                                 <Input
                                     type="text"
@@ -215,7 +168,9 @@ export const PatientRequestForm = () => {
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Nonemergent Request
+                                    <span className="text-accent">*</span>
                                 </Label>
+
                                 <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
                             </div>
 
@@ -223,6 +178,7 @@ export const PatientRequestForm = () => {
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Priority Level
+                                    <span className="text-accent">*</span>
                                     <span className="text-xs text-secondary-foreground block">
                       EMERGENCY: Immediate attention required
                       <br/>
@@ -277,7 +233,68 @@ export const PatientRequestForm = () => {
             </form>
         </div>
         </div>
-</div>
+            {submitStatus && submitStatus.isError && (
+                <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
+                    <AlertDescription className={'text-foreground'}>
+                        {submitStatus.message}
+                    </AlertDescription>
+                </Alert>
+            )}
+            {/* Confirmation Card */}
+            {submittedPatientRequest && !submitStatus?.isError && (
+                <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                    <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Request Confirmation
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-lg font-semibold mb-2">Your request has been submitted</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div>
+                                <span className="font-semibold">Employee Name:</span>
+                                {submittedPatientRequest.employeeName}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Patient ID:</span> {submittedPatientRequest.patientID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Non Emergent Request:</span> {submittedPatientRequest.request}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Location:</span> {submittedPatientRequest.location}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Status:</span> {submittedPatientRequest.status}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Comment:</span> {submittedPatientRequest.comment}
+                            </div>
+
+
+                        </div>
+                        <div className="mt-3 text-sm text-secondary-foreground">
+                            The request has been submitted and will be filled.
+                        </div>
+                        <Button
+                            onClick={() => setSubmittedPatientRequest(null)}
+                            className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
+                        >
+                            Dismiss
+                        </Button>
+                    </div>
+                </div>
+            )}
+
+        </div>
 </>
     )
 }
