@@ -31,6 +31,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+    const [edges20_3, setEdges20_3] = useState<Edge[]>([]);
+    const [edges22_1, setEdges22_1] = useState<Edge[]>([]);
+    const [edges22_3, setEdges22_3] = useState<Edge[]>([]);
+    const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
+    const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
 
 
 function clickMarker(data:Node, marker:L.Marker):void{
@@ -97,8 +102,20 @@ function clickMarker(data:Node, marker:L.Marker):void{
     useEffect(() => {
         const loadEdges = async () => {
             try {
-                const data = await fetchEdges20_1();
-                setEdges20_1(data);
+                setIsLoading(true);
+                const data201 = await fetchEdges20_1();
+                setEdges20_1(data201);
+                const data203 = await fetchEdges20_3();
+                setEdges20_3(data203);
+                const data221 = await fetchEdges22_1();
+                setEdges22_1(data221);
+                const data223 = await fetchEdges22_3();
+                setEdges22_3(data223);
+                const data224 = await fetchEdges22_4();
+                setEdges22_4(data224);
+                const dataChestnut = await fetchEdgesChestnut();
+                setEdgesChestnut(dataChestnut);
+                setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
             }
@@ -256,6 +273,46 @@ function clickMarker(data:Node, marker:L.Marker):void{
                     ]).addTo(floorLayer20_1)
                 ))}
 
+            {edges20_3
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer20_3)
+                ))}
+
+            {edges22_1
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_1)
+                ))}
+
+            {edges22_3
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_3)
+                ))}
+
+            {edges22_4
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_4)
+                ))}
+
+            {edgesChestnut
+                .map((edge) => (
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayerChestnutHill)
+                ))}
+
             // add a default layer
             if (location.includes('20 Patriot Pl'))
                 floorLayer20_1.addTo(map);
@@ -310,7 +367,7 @@ function clickMarker(data:Node, marker:L.Marker):void{
                 mapInstance.current = null;
             }
         };
-    },);
+    }, [pathCoordinates, entrances, checkIn, edges20_1, edges20_3, edges22_1, edges22_3, edges22_4, edgesChestnut]);
 
     return (
         <div>

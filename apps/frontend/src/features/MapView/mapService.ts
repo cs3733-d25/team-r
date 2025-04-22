@@ -35,6 +35,22 @@ export const fetchEdges20_1 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-20-1');
     return res.data;
 };
+export const fetchEdges20_3 = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-20-3');
+    return res.data;
+};
+export const fetchEdges22_1 = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-22-1');
+    return res.data;
+};
+export const fetchEdges22_3 = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-22-3');
+    return res.data;
+};
+export const fetchEdges22_4 = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-22-4');
+    return res.data;
+};
 export const fetchElevators = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/elevators');
     return res.data;
@@ -59,6 +75,10 @@ export function useMapData(selectedBuilding: string) {
         loadParkingLots();
     }, []);
 
+export const fetchEdgesChestnut = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-chestnut');
+    return res.data;
+};
     useEffect(() => {
         console.log('Triggering loadDepartments for building:', selectedBuilding);
         const loadDepartments = async () => {
