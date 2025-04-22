@@ -11,6 +11,6 @@ export const API_ROUTES = {
     PHARMACY: '/api/pharmacy',
     ENUM: '/api/enum',
     TRANSPORT: '/api/transportreq',
-    DEVICE: '/api/device',
+    DEVICE: '/api/devicereq',
     MAP: '/api/map',
 };
