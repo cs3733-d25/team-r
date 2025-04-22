@@ -42,6 +42,20 @@ export class BFS {
 async function BFS(start: string, end: string): Promise<string[]> {
 
 
+export default router;
+/*
+//does the Breadth First Search (BFS)
+async function BFS(start: string, end: string): Promise<string[]> {
+
+
+  while (queue.length > 0) {
+    //while we have nodes to visit
+    const path = queue.shift();
+    if (!path) continue;
+
+    const currentID = path[path.length - 1];
+
+
   while (queue.length > 0) {
     //while we have nodes to visit
     const path = queue.shift();
@@ -54,10 +68,19 @@ async function BFS(start: string, end: string): Promise<string[]> {
       return path;
     }
 
+
     if (!visited.has(currentID)) {
       //have we been here? If not...
       visited.add(currentID); //add to visited list
       const neighbors = graph.get(currentID) || new Set();
+
+
+
+    if (!visited.has(currentID)) {
+      //have we been here? If not...
+      visited.add(currentID); //add to visited list
+      const neighbors = graph.get(currentID) || new Set();
+
 
       for (const neighborId of neighbors) {
         if (!visited.has(neighborId)) {
@@ -73,5 +96,4 @@ async function BFS(start: string, end: string): Promise<string[]> {
 //send data to front end
 
 */
-
 

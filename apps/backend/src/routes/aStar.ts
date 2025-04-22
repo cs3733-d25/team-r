@@ -1,14 +1,14 @@
 import prismaClient from "../bin/prisma-client";
 import { PriorityQueue } from "./dataStructures.ts";
 import router from "./mapData";
+import { Graph } from "./Graph.ts";
 import {Graph} from "./Graph.ts";
+
 
 
 
 export class AStar {
   constructor(private graph: Graph) {}
-
-
 
   private heuristic(a: string, b: string): number {
     // Placeholder: returns zero (Dijkstra). Replace if you have coords.
@@ -55,3 +55,6 @@ export class AStar {
     return [];
   }
 }
+
+export default router;
+
