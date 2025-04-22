@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from 'react';
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
@@ -207,4 +208,4 @@ export function EditMap({ status }: EditMapProps) {
             </div>
         </div>
     );
-}
+}*/
