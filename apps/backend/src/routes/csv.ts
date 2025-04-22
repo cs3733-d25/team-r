@@ -57,7 +57,7 @@ router.post(
           id: parseInt(row.id),
           name: row.name,
           floorNumber: parseInt(row.floorNumber),
-          building: row.building
+          building: row.building,
         }));
 
         // create a call to prisma to insert the new entries to the directory table

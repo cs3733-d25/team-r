@@ -1,64 +1,94 @@
-import { Floor22_1 } from './directorypages/22floor1.tsx';
-import { Floor22_2 } from './directorypages/22floor2.tsx';
-import { Floor22_3 } from './directorypages/22floor3.tsx';
-import { Floor22_4 } from './directorypages/22floor4.tsx';
-import TwentyFloorOne from './directorypages/20Floor1.tsx';
-import TwentyFloorTwo from './directorypages/20Floor2.tsx';
-import TwentyFloorThree from './directorypages/20Floor3.tsx';
-import TwentyFloorFour from './directorypages/20Floor4.tsx';
-import Navbar from "../../components/Navbar.tsx";
+import React from "react";
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs.tsx';
+import { rawDirectoryItems, RawDirectoryItem } from './directoryItems.ts';
+import { HospitalDirectoryData, BuildingData, FloorGroup, DirectoryItem } from './listTypes.ts';
+
+const buildingDisplayNames: { [key: string]: string } = {
+    'PATRIOT_PLACE_20': '20 Patriot',
+    'PATRIOT_PLACE_22': '22 Patriot',
+    'CHESTNUT_HILL': 'Chestnut Hill',
+    'FAULKNER': 'Faulkner',
+};
+
+const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => {
+    const groupedByBuilding: { [building: string]: { [floor: number]: DirectoryItem[] } } = {};
+
+    data.forEach(item => {
+        if (!groupedByBuilding[item.building]) {
+            groupedByBuilding[item.building] = {};
+        }
+        if (!groupedByBuilding[item.building][item.floorNumber]) {
+            groupedByBuilding[item.building][item.floorNumber] = [];
+        }
+        groupedByBuilding[item.building][item.floorNumber].push({ name: item.name });
+    });
+
+    const hospitalDirectory: HospitalDirectoryData = Object.keys(groupedByBuilding)
+        .sort((a, b) => buildingDisplayNames[a].localeCompare(buildingDisplayNames[b]))
+        .map(buildingRawValue => {
+            const floorsData = groupedByBuilding[buildingRawValue];
+            const buildingDisplayName = buildingDisplayNames[buildingRawValue] || buildingRawValue;
+            const floorNumbers = Object.keys(floorsData).map(Number).sort((a, b) => a - b);
+            const floorGroups: FloorGroup[] = floorNumbers.map(floorNumber => ({
+                floor: `Floor ${floorNumber}`,
+                items: floorsData[floorNumber].sort((a, b) => a.name.localeCompare(b.name)),
+            }));
+
+            return {
+                building: buildingDisplayName,
+                buildingValue: buildingRawValue,
+                floors: floorGroups,
+            };
+        });
+
+    return hospitalDirectory;
+};
 
 export function Directory() {
+    const hospitalData = groupDirectoryData(rawDirectoryItems);
+    const defaultTabValue = hospitalData.length > 0 ? hospitalData[0].buildingValue : '';
+
     return (
         <>
-            <NavbarMGH/>
-            <div className={'flex min-h-screen justify-center'}>
-                <br/>
-                <table className={'text-l'}>
-                    <tbody>
-                    <tr className={'border-b'}>
-                        <th className={'text-4xl text-center pt-5'}>20 Patriot</th>
-                        <th className={'text-4xl text-center pt-5'}>22 Patriot</th>
-                    </tr>
-                    <tr className={'border-b'}>
-                        <td className={'border-r text-left align-top pr-5'}>
-                            <TwentyFloorOne />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_1 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 1</td>
-                    </tr>
-                    <tr className={'border-b'}>
-                        <td className={'border-r text-left align-top pr-5'}>
-                            <TwentyFloorTwo />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_2 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 2</td>
-                    </tr>
-                    <tr className={'border-b'}>
-                        <td className={'border-r text-left align-top pr-5'}>
-                            <TwentyFloorThree />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_3 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 3</td>
-                    </tr>
-                    <tr>
-                        <td className={'border-r align-top text-left pr-5'}>
-                            <TwentyFloorFour />
-                        </td>
-                        <td className={'text-left border-r align-top pl-5 pr-5'}>
-                            <Floor22_4 />
-                        </td>
-                        <td className={' text-center text-2xl pl-5'}>Floor 4</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <NavbarMGH />
+            <div className="container mx-auto px-4 py-8">
+                <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
+                <Tabs defaultValue={defaultTabValue}>
+                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {hospitalData.map(buildingInfo => (
+                            <TabsTrigger
+                                key={buildingInfo.buildingValue}
+                                value={buildingInfo.buildingValue}
+                                className="text-sm md:text-base"
+                            >
+                                {buildingInfo.building}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+
+                    {hospitalData.map(buildingInfo => (
+                        <TabsContent
+                            key={buildingInfo.buildingValue}
+                            value={buildingInfo.buildingValue}
+                        >
+                            <div className="mt-6">
+                                {buildingInfo.floors.map(floorGroup => (
+                                    <div key={floorGroup.floor} className="mb-8">
+                                        <h2 className="text-2xl font-semibold border-b pb-2 mb-4">{floorGroup.floor}</h2>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
+                                            {floorGroup.items.map((item, itemIndex) => (
+                                                <div key={itemIndex}>
+                                                    {item.name}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </TabsContent>
+                    ))}
+                </Tabs>
             </div>
         </>
     );
