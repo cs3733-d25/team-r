@@ -1,63 +1,50 @@
-/**
- * REQUESTS
- */
-model MedicalDevice {
+model MedicalDeviceRequest {
   medicalDeviceId   Int          @id @default(autoincrement())
   medicalDeviceType String
   currentLocation   String
-  currentStatus     DeviceStatus @default(available)
+  currentStatus     String
   lastUpdated       DateTime     @default(now())
-
-  // @@map("medical_devices")
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
-
-// model ServiceRequestGeneral{
-//   requestID Int @id
-//   pharmacyReq PharmacyRequest?  @relation("pharmRequest")
-//   //for iteration2 - do not connect the employeeName to a employee user
-//   employeeName  String
-//   priority  RequestPriority
-//   status  RequestStatus
-//   department  Department
-//   location  Building
-// }
 
 model SanitationRequest {
   requestId      Int             @id @default(autoincrement())
   sanitationType String
-  priority       RequestPriority
-  department     Department?
+  priority       String
+  department     String?
   roomNumber     String
   requestTime    DateTime        @default(now())
   comments       String?
-  status         RequestStatus   @default(pending)
+  status         String
   employeeName   String
-  location       Building
-
-  // user   User @relation("sanitationRequests", fields: [userId], references: [id])
-  // userId Int
+  location       String
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
 
 model DeviceRequest {
   requestId    Int             @id @default(autoincrement())
   deviceType   String
-  priority     RequestPriority
+  priority     String
   room         String
-  department   Department
+  department   String
   requestTime  DateTime        @default(now())
   comments     String?
   employeeName String //Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
   employeeID   Int
-  status       RequestStatus   @default(pending)
-  // assignedEmployee   Employee? @relation("AssignedRequests", fields: [assignedEmployeeId], references: [id])
-  // assignedEmployeeId Int?
+  status       String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+
 }
 
 model PharmacyRequest {
   prescriptionID         Int             @id @default(autoincrement())
   employeeName           String
-  priority               RequestPriority
-  department             Department
+  priority               String
+  department             String
   patientID              Int
   // patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
   drugName               String
@@ -69,54 +56,44 @@ model PharmacyRequest {
   numberOfPills          Int
   refills                Int
   additionalInstructions String
-  status                 RequestStatus
-}
+  status                 String
 
-// model PharmacyRequest {
-//   prescriptionID         Int             @id //@default(autoincrement())
-//   patientID              Int
-//   patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
-//   drugName               String
-//   morningPillCount       Int
-//   middayPillCount        Int
-//   eveningPillCount       Int
-//   nightPillCount         Int
-//   days                   Int
-//   numberOfPills          Int
-//   refills                Int
-//   additionalInstructions String
-//   //general
-//   generalRequest  ServiceRequestGeneral @relation("pharmRequest", fields: [prescriptionID], references: [requestID], onDelete: Cascade)
-// }
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
 
 model PatientRequest {
   patientRequestID Int                @id @default(autoincrement())
-  patientID        Int
-  patient          Patient            @relation("PatientRequests", fields: [patientID], references: [id])
-  priority         RequestPriority
-  department       Department
-  location         Building
-  status           RequestStatus
+  patientID        String
+  patient          Patient            @relation(fields: [patientID], references: [id])
+  priority         String
+  department       String
+  location         String
+  status           String
   requestTime      DateTime           @default(now())
-  request          RequestNonemergent
+  request          String
   employeeName     String
   comment          String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
 
 model TransportRequest {
   employeeRequestID  Int      @id @default(autoincrement())
-  //employeeID        Int
-  //employee          Employee @relation("TransportRequest", fields: [employeeID], references: [id])
-  patientID          Int
-  patient            Patient  @relation("TransportRequest", fields: [patientID], references: [id])
+  patientID          String
+  patient            Patient  @relation(fields: [patientID], references: [id])
   employeeName       String
   transportationType String
-  currentBuilding    Building
-  desiredBuilding    Building
+  currentBuilding    String
+  desiredBuilding    String
 
-  priority    RequestPriority
-  department  Department
+  priority    String
+  department  String
   comments    String
-  status      RequestStatus
+  status      String
   requestTime DateTime        @default(now())
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }

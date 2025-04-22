@@ -4,18 +4,19 @@ import { Button } from '@/components/ui/button.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMapData } from '@/features/MapView/mapService';
 import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
 
 interface CustomWindow extends Window {
-    goToFloor?: (floor: number) => void;
+    goToFloor?: (floor: number, building?: string) => void;
 }
 
 export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
+    const [filterParkingLots, setFilterParkingLots] = useState<{ building: string; nodeID: string; shortName: string }[]>([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
@@ -25,16 +26,32 @@ export function MapPage() {
     );
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
+    console.log('departments: ', departments);
+
+    useEffect(() => {
+        const filterLots = parkingLots.filter(lot => {
+            const buildingMap: {[key: string]: string[]} = {
+                'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
+                'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
+                'Faulkner': ['FAULKNER', 'Faulkner']
+            };
+
+            return buildingMap[selectedBuilding]?.some(buildingName =>
+                lot.building.toUpperCase().includes(buildingName.toUpperCase())
+            );
+        });
+        setFilterParkingLots(filterLots);
+    }, [parkingLots, selectedBuilding]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            console.log("selected parking lot: ", selectedParkinglot);
-            console.log("selected department lot: ", selectedDepartment);
+            console.log("parking lot: ", selectedParkinglot);
+            console.log("department lot: ", selectedDepartment);
         } catch {}
     };
 
-    // Get floors for current building
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
     return (
@@ -62,27 +79,26 @@ export function MapPage() {
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Parking Lots</SelectLabel>
-                                            {parkingLots
-                                                .filter(lot => lot.building === selectedBuilding)
-                                                .map((lot) => (
-                                                    <SelectItem key={lot.nodeID} value={lot.shortName}>
-                                                        {lot.shortName}
-                                                    </SelectItem>
-                                                ))}
+                                            {filterParkingLots.map((lot) => (
+                                                <SelectItem key={lot.nodeID} value={lot.shortName}>
+                                                    {lot.shortName}
+                                                </SelectItem>
+                                            ))}
                                         </SelectGroup>
                                     </SelectContent>
                             </Select>
+                            <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
 
-                            <Select onValueChange={setSelectedDepartment}>
+                            {/*<Select onValueChange={setSelectedDepartment}>*/}
                                 <SelectTrigger>
                                     <SelectValue placeholder="Department" />
                                 </SelectTrigger>
                                 <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Departments</SelectLabel>
-                                            {departments.map(dept => (
-                                                <SelectItem key={dept.key} value={dept.value}>
-                                                    {dept.label}
+                                            {departments.map((dept) => (
+                                                <SelectItem key={dept.id} value={dept.name}>
+                                                    {dept.name}
                                                 </SelectItem>
                                             ))}
                                         </SelectGroup>
@@ -99,7 +115,7 @@ export function MapPage() {
                                         variant={currentFloor === floor ? 'default' : 'secondary'}
                                         onClick={() => {
                                             setCurrentFloor(floor);
-                                            (window as CustomWindow).goToFloor?.(floor);
+                                            (window as CustomWindow).goToFloor?.(floor, selectedBuilding);
                                         }}
                                         type="button"
                                     >

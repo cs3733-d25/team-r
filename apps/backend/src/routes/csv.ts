@@ -4,7 +4,6 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
-import { Building } from "../../../../packages/database";
 import multer from "multer";
 
 const router: Router = express.Router();
@@ -32,11 +31,6 @@ router.get("/export", async (req: Request, res: Response) => {
   }
 });
 
-// a function to cast a string to a Buildings enum type
-function parseBuilding(value: string): Building {
-  return Building[value as keyof typeof Building];
-}
-
 // import directory from CSV
 router.post(
   "/import",
@@ -63,7 +57,7 @@ router.post(
           id: parseInt(row.id),
           name: row.name,
           floorNumber: parseInt(row.floorNumber),
-          building: parseBuilding(row.building),
+          building: row.building
         }));
 
         // create a call to prisma to insert the new entries to the directory table

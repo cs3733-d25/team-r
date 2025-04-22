@@ -312,15 +312,18 @@ function clickMarker(data:Node, marker:L.Marker):void{
 
             mapInstance.current = map;
 
-            (window as unknown as { goToFloor: (floor: number) => void }).goToFloor = (floor: number) => {
+            (window as unknown as { goToFloor: (floor: number, building?: string) => void }).goToFloor = (floor: number, building?: string) => {
                 goToFloor(
                     floor,
                     map,
+                    floorLayer20_1,
+                    floorLayer20_3,
                     floorLayer22_1,
                     floorLayer22_3,
                     floorLayer22_4,
                     floorLayerChestnutHill,
-                    floorLayerFaulkner
+                    floorLayerFaulkner,
+                    building
                 );
             };
         }

@@ -1,8 +1,8 @@
 export const getBuildingFromLocation = (location: string) => {
-    if (location.includes('20 Patriot Pl')) return 'PATRIOT_PLACE_20';
-    if (location.includes('22 Patriot Pl')) return 'PATRIOT_PLACE_22';
-    if (location.includes('Chestnut Hill')) return 'CHESTNUT_HILL';
-    if (location.includes('Faulkner')) return 'FAULKNER';
+    if (location.includes('20 Patriot Pl')) return 'Patriot Place 20';
+    if (location.includes('22 Patriot Pl')) return 'Patriot Place 22';
+    if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
+    if (location.includes('Faulkner')) return 'Faulkner';
     return 'PATRIOT_PLACE_22';
 };
 
