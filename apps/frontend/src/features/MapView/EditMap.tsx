@@ -208,4 +208,9 @@ export function EditMap({ status }: EditMapProps) {
             </div>
         </div>
     );
+
 }*/
+
+export function EditMap() {
+    return null; // Stub implementation
+}
