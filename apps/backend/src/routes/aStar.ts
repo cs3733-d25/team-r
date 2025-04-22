@@ -1,40 +1,36 @@
 import prismaClient from "../bin/prisma-client";
-import { PriorityQueue } from "../routes/dataStructures";
+import { PriorityQueue } from "./dataStructures.ts";
 import router from "./mapData";
+import {Graph} from "./Graph.ts";
 
-function heuristic(a: string, b: string): number {
-  // Placeholder: returns zero (Dijkstra). Replace if you have coords.
-  // I was thinking we either use the distance between the nodes or the number of edges between them.
-  // we can also use E-disance, Minkowski, or chebyshev distance.
-  return 0;
-}
 
-export async function aStar(start: string, end: string): Promise<string[]> {
-  // 1) Build graph
-  const edges = await prismaClient.edge.findMany();
-  const graph = new Map<string, Set<string>>();
-  for (const { fromID, toID } of edges) {
-    if (!graph.has(fromID)) graph.set(fromID, new Set());
-    if (!graph.has(toID))   graph.set(toID, new Set());
-    graph.get(fromID)!.add(toID);
-    graph.get(toID)!.add(fromID);
+
+export class AStar {
+  constructor(private graph: Graph) {}
+
+
+
+  private heuristic(a: string, b: string): number {
+    // Placeholder: returns zero (Dijkstra). Replace if you have coords.
+    // I was thinking we either use the distance between the nodes or the number of edges between them.
+    // we can also use E-disance, Minkowski, or chebyshev distance.
+    return 0;
   }
 
-  // 2) Preparing  scores and queue
-  const openSet = new PriorityQueue<string>();
-  openSet.enqueue(start, 0);
+  public findPath(start: string, end: string): string[] {
+    const openSet = new PriorityQueue<string>();
+    openSet.enqueue(start, 0);
 
-  const cameFrom = new Map<string, string>();
-  const gScore = new Map<string, number>();
-  gScore.set(start, 0);
+    const cameFrom = new Map<string, string>();
+    const gScore = new Map<string, number>();
+    gScore.set(start, 0);
 
-  const fScore = new Map<string, number>();
-  fScore.set(start, heuristic(start, end));
-// main loop here
-  while (!openSet.isEmpty()) {
+    const fScore = new Map<string, number>();
+    fScore.set(start, this.heuristic(start, end));
+
+    while (!openSet.isEmpty()) {
       const current = openSet.dequeue()!;
       if (current === end) {
-        // reconstruct path
         const path: string[] = [];
         let node: string | undefined = end;
         while (node) {
@@ -44,21 +40,18 @@ export async function aStar(start: string, end: string): Promise<string[]> {
         return path.reverse();
       }
 
-      const neighbors = graph.get(current) || new Set();
-      for (const neighbor of neighbors) {
-        const tentativeG = (gScore.get(current) ?? Infinity) + 1;
+      for (const neighbor of this.graph.getNeighbors(current)) {
+        const tentativeG = (gScore.get(current) ?? Infinity) + 1; // assume unweighted
         if (tentativeG < (gScore.get(neighbor) ?? Infinity)) {
           cameFrom.set(neighbor, current);
           gScore.set(neighbor, tentativeG);
-          const f = tentativeG + heuristic(neighbor, end);
+          const f = tentativeG + this.heuristic(neighbor, end);
           fScore.set(neighbor, f);
           openSet.enqueue(neighbor, f);
         }
       }
     }
 
-    // no path
     return [];
   }
-
-  export default router;
+}
