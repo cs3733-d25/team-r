@@ -40,7 +40,6 @@ export const fetchElevators = async (): Promise<Node[]> => {
     return res.data;
 };
 
-
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
     const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]);
