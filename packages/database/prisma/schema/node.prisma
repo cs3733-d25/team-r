@@ -3,6 +3,8 @@ model Directory {
   name        String
   floorNumber Int
   building    String
+  recepetionNodeID String?
+  receptionNode Node? @relation(fields:[recepetionNodeID], references: [nodeID])
 }
 
 model Node {
@@ -15,7 +17,7 @@ model Node {
   longName  String
   shortName String
 
-  departments Department[]
+  departments Directory[]
   edgesFrom Edge[] @relation("fromNode")
   edgesTo   Edge[] @relation("toNode")
 
@@ -37,6 +39,6 @@ model Department{
   id String @id@default(uuid())
   name String
   recepetionNodeID String
-  receptionNode Node @relation(fields:[recepetionNodeID], references: [nodeID])
+ // receptionNode Node @relation(fields:[recepetionNodeID], references: [nodeID])
   employee  Employee[]
 }
