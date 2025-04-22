@@ -56,10 +56,14 @@ export const fetchElevators = async (): Promise<Node[]> => {
     return res.data;
 };
 
+export const fetchEdgesChestnut = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-chestnut');
+    return res.data;
+};
+
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
     const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]);
-
 
     useEffect(() => {
         console.log('Loading parking lots');
@@ -75,10 +79,6 @@ export function useMapData(selectedBuilding: string) {
         loadParkingLots();
     }, []);
 
-export const fetchEdgesChestnut = async (): Promise<Edge[]> => {
-    const res = await axios.get('/api/map/edges-chestnut');
-    return res.data;
-};
     useEffect(() => {
         console.log('Triggering loadDepartments for building:', selectedBuilding);
         const loadDepartments = async () => {
