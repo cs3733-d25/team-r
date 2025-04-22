@@ -16,7 +16,7 @@ export const getShortLocationName = (location: string) => {
 
 export const floorConfig = {
     PATRIOT_PLACE_20: [1, 3, 4],
-    PATRIOT_PLACE_22: [1, 3],
+    PATRIOT_PLACE_22: [1],
     CHESTNUT_HILL: [1],
     FAULKNER: [1]
 };
