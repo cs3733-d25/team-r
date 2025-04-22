@@ -119,15 +119,20 @@ function clickMarker(data:Node, marker:L.Marker):void{
             const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
 
             // bounds for all floorplans
-            const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
+            const bounds20_1: L.LatLngBoundsLiteral = [[-1700, -1800], [1350, 2000],];
+            const bounds22_1: L.LatLngBoundsLiteral = [[-1700, -2100], [1200, 2000],];
+            const bounds22_3: L.LatLngBoundsLiteral = [[-400, -150], [1300, 1400],];
+            const bounds22_4: L.LatLngBoundsLiteral = [[-500, -100], [1500, 1400],];
+            const boundsChestnutHill: L.LatLngBoundsLiteral = [[-400, -500], [1200, 1300],];
+            const boundsFaulkner: L.LatLngBoundsLiteral = [[-200, -1000], [1000, 2250],];
 
             // image overlays
-            L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
-            L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
-            L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
-            L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
-            L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
-            L.imageOverlay(faulkner, bounds).addTo(floorLayerFaulkner);
+            L.imageOverlay(patriot20Floor1, bounds20_1).addTo(floorLayer20_1);
+            L.imageOverlay(patriot22Floor1, bounds22_1).addTo(floorLayer22_1);
+            L.imageOverlay(patriot22Floor3, bounds22_3).addTo(floorLayer22_3);
+            L.imageOverlay(patriot22Floor4, bounds22_4).addTo(floorLayer22_4);
+            L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
+            L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
             addFloorTransitionMarkers(map, floorLayer20_1, floorLayer22_1, floorLayer22_3, floorLayer22_4, floorLayerChestnutHill, floorLayerFaulkner);
 
