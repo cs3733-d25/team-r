@@ -8,7 +8,7 @@ import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 
 interface NavBarProps {
     page?: string;
-    userType: string;
+    userType?: string;
 }
 
 export function NavbarMGH(props: NavBarProps) {

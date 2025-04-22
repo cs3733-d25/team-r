@@ -1,4 +1,4 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
 import {PrescriptionForm} from "./PrescriptionForm";
 import {PrescriptionPage} from "./PrescriptionPage";

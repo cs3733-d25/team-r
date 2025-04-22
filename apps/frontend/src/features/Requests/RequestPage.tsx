@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavbarMGH } from '@/components/NavbarMGH';
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';

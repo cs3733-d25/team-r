@@ -1,4 +1,4 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 import { useState } from "react";
 

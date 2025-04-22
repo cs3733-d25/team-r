@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input.tsx"
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {NavbarMGH} from "@/components/NavBarMGH/NavbarMGH.tsx";
 export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [csvfile, setFile] = useState<File | null>(null);

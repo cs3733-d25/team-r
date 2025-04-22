@@ -1,5 +1,5 @@
 import React from 'react'
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {NavbarMGH} from "@/components/NavBarMGH/NavbarMGH.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import { useNavigate } from 'react-router-dom';
 

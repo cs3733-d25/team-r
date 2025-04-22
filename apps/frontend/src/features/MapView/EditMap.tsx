@@ -1,4 +1,4 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
