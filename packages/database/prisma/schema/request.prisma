@@ -32,7 +32,7 @@ model DeviceRequest {
   requestTime  DateTime        @default(now())
   comments     String?
   employeeName String //Employee  @relation("CreatedRequests", fields: [employeeId], references: [id])
-  employeeID   Int
+  employeeID   String
   status       String
 
   // assignedEmployeeID String
@@ -45,7 +45,7 @@ model PharmacyRequest {
   employeeName           String
   priority               String
   department             String
-  patientID              Int
+  patientID              String
   // patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
   drugName               String
   morningPillCount       Int

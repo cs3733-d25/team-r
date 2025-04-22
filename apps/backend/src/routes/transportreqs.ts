@@ -23,7 +23,7 @@ router.post("/", async function (req: Request, res: Response) {
   const {
     priority,
     status,
-    patient,
+    patientID,
     department,
     roomNumber,
     employeeName,
@@ -37,7 +37,7 @@ router.post("/", async function (req: Request, res: Response) {
       data: {
         employeeName,
         //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
-        patient,
+        patientID,
         transportationType,
         currentBuilding,
         desiredBuilding,

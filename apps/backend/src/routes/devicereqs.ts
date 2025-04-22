@@ -32,15 +32,15 @@ router.post("/", async function (req: Request, res: Response) {
     request,
     employeeName,
     employeeID,
-    deviceType,
+    device,
     room,
   } = req.body;
 
   try {
-    console.log(request);
+    console.log("deviceType: ", device);
     const createRequest = await PrismaClient.deviceRequest.create({
       data: {
-        deviceType,
+        deviceType: device,
         //patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority,
         department,

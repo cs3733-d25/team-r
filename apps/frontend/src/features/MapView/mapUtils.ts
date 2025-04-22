@@ -14,6 +14,21 @@ export const getShortLocationName = (location: string) => {
     return location;
 };
 
+export const getBuildingConstant = (buildingName: string) => {
+    switch (buildingName) {
+        case 'Patriot Place 20':
+            return 'PATRIOT_PLACE_20';
+        case 'Patriot Place 22':
+            return 'PATRIOT_PLACE_22';
+        case 'Chestnut Hill':
+            return 'CHESTNUT_HILL';
+        case 'Faulkner':
+            return 'FAULKNER';
+        default:
+            return buildingName;
+    }
+};
+
 export const floorConfig = {
     PATRIOT_PLACE_20: [1],
     PATRIOT_PLACE_22: [1, 3, 4],
