@@ -5,7 +5,6 @@ const router: Router = express.Router();
 
 //receive the username and password from the client
 router.post("/", async function (req: Request, res: Response) {
-
   const { username, password } = req.body;
   console.log("username: ", username);
 
