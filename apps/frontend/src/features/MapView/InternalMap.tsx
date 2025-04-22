@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import L from 'leaflet';
+import L, {latLng} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
 import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
@@ -14,7 +14,7 @@ import {
     fetchCheckIn,
     fetchEdges20_1, fetchElevators,//  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
     fetchEntrances,
-    fetchParkingLots
+    fetchParkingLots, postNode
 } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
@@ -22,21 +22,57 @@ interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
     location: string;
+    newNode?:  Node;
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
+const nodePlaceholderOptions = {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 5
+}
+
+const blankNode:Node = {
+    nodeID: "",
+    nodeType: "",
+    building: "",
+    floor: 0,
+    xcoord: 0,
+    ycoord: 0,
+    longName: "",
+    shortName: "",
+}
+
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, newNode}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
+
     const [checkIn, setCheckIn] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+    const [pendingNode, setPendingNode] = useState<Node>(blankNode);
 
 
+    // when the newNode props get updated, track them
+    // WHEN TO SUBMIT THE NODE?
+    // useEffect(() => {
+    //     const submitNode = async () => {
+    //         try {
+    //             const response = await postNode(newNode);
+    //             if (response.status === 200) {
+    //                 console.log("Node created successfully!");
+    //             }
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     if (newNode.x !== 0){
+    //     submitNode().then(loadNodes);
+    // }, [newNode]);
 
-
-function clickMarker(data:Node, marker:L.Marker):void{
+    function clickMarker(data:Node, marker:L.Marker):void {
         marker.on('click', () => {
             const info = `<p>Name: ${data.shortName}</p>
             <p>Building: ${data.building}</p>
@@ -121,6 +157,10 @@ function clickMarker(data:Node, marker:L.Marker):void{
             const floorLayerFaulkner = L.layerGroup();
 
             const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
+
+
+            // start the placeholer off screen
+            const nodePlaceholder = L.circle([-100,-100], nodePlaceholderOptions).addTo(map);
 
             // bounds for all floorplans
             const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
@@ -307,7 +347,15 @@ function clickMarker(data:Node, marker:L.Marker):void{
 
             // for getting coordinates (can delete later)
             map.on('click', function (e) {
-                console.log(`[${e.latlng.lat.toFixed(2)}, ${e.latlng.lng.toFixed(2)}],`);
+                // parse the new coordinates
+                const x = e.latlng.lat.toFixed(2)
+                const y = e.latlng.lng.toFixed(2);
+                console.log("["+x+", "+y+"]");
+
+                // update the placeholder
+                nodePlaceholder.setLatLng(e.latlng);
+
+                // store the coordinates
             });
 
             mapInstance.current = map;

@@ -21,8 +21,26 @@ router.get("/all-requests", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a pharmacy request");
-  const {priority, status, department, comment, patient, location, request, employeeName, patientID,
-  drugName, morningPillCount, middayPillCount, eveningPillCount, nightPillCount, days, numberOfPills, refills, additionalInstructions} = req.body;
+  const {
+    priority,
+    status,
+    department,
+    comment,
+    patient,
+    location,
+    request,
+    employeeName,
+    patientID,
+    drugName,
+    morningPillCount,
+    middayPillCount,
+    eveningPillCount,
+    nightPillCount,
+    days,
+    numberOfPills,
+    refills,
+    additionalInstructions,
+  } = req.body;
   // console.log(request);
   try {
     await PrismaClient.pharmacyRequest.create({

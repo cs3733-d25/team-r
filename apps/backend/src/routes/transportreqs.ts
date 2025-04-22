@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import {  Prisma } from "../../../../packages/database";
+import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
 const router: Router = express.Router();
@@ -20,7 +20,18 @@ router.get("/", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a transportation request");
-  const {priority, status, patient, department, roomNumber, employeeName, comments, transportationType, currentBuilding, desiredBuilding} = req.body;
+  const {
+    priority,
+    status,
+    patient,
+    department,
+    roomNumber,
+    employeeName,
+    comments,
+    transportationType,
+    currentBuilding,
+    desiredBuilding,
+  } = req.body;
   try {
     const createRequest = await PrismaClient.transportRequest.create({
       data: {

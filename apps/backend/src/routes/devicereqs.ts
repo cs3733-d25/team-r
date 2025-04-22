@@ -22,7 +22,19 @@ router.get("/", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a med device request");
-  const {priority, status, department, comments, patient, location, request, employeeName, employeeID, deviceType, room} = req.body;
+  const {
+    priority,
+    status,
+    department,
+    comments,
+    patient,
+    location,
+    request,
+    employeeName,
+    employeeID,
+    deviceType,
+    room,
+  } = req.body;
 
   try {
     console.log(request);

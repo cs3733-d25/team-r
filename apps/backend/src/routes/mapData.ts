@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
 import { Prisma } from "database";
 
@@ -117,6 +117,20 @@ router.get("/edges-20-1", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
+  }
+});
+
+router.post("/create-node", async (req: Request, res: Response) => {
+  try {
+    const newNode = req.body;
+    console.log(newNode);
+    await PrismaClient.node.create({
+      data: newNode,
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error creating node:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

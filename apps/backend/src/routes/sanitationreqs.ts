@@ -20,7 +20,16 @@ router.get("/", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a sanitation request");
-  const {priority, status, department, location, roomNumber, employeeName, comments, sanitationType} = req.body;
+  const {
+    priority,
+    status,
+    department,
+    location,
+    roomNumber,
+    employeeName,
+    comments,
+    sanitationType,
+  } = req.body;
 
   try {
     const createRequest = await PrismaClient.sanitationRequest.create({
