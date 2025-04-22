@@ -3,13 +3,24 @@ import { Mic } from 'react-bootstrap-icons';
 
 interface TextDirectionsProps {
     steps: string[];
-    distance: string;
-    duration: string;
+    distance?: string;
+    duration?: string;
 }
 
+/**
+ * TextDirections component - displays text directions for internal and external maps, allows for TTS
+ * @param steps - array of text directions
+ * @param distance - distance of the route (optional)
+ * @param duration - time it takes to travel (optional)
+ * @constructor
+ */
 function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
+    /**
+     * handleTTS - handles the text-to-speech functionality
+     * only accepts external maps for now
+     */
     const handleTTS = () => {
-        // remove HTML tags from the steps
+        // remove HTML tags from the steps using regex
         const cleanedSteps = steps.map((step) => step.replace(/<[^>]+>/g, ''));
         // convert the string array of steps to a single string
         const speech = new SpeechSynthesisUtterance(cleanedSteps.join('. '));

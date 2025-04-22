@@ -1,21 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
-import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
-import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
-import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
-import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
-import chestnutHill from '../../../public/Chestnut-Hill.svg'
-import faulkner from '../../../public/Faulkner-Map-Draft.svg'
+import patriot20Floor1 from '../../../public/20patriot1.svg';
+import patriot22Floor1 from '../../../public/22patriot1.svg';
+import patriot22Floor3 from '../../../public/22patriot3.svg';
+import patriot22Floor4 from '../../../public/22patriot4.svg';
+import chestnutHill from '../../../public/chestnutHill1.svg'
+import faulkner from '../../../public/faulkner1.svg'
 import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import {
-    fetchCheckIn,
-    fetchEdges20_1, fetchElevators,//  fetchEdges20_3, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut,
-    fetchEntrances,
-    fetchParkingLots
-} from "@/features/MapView/mapService.ts";
+import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
 interface InternalMapProps {
@@ -32,11 +26,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+    const [edges22_1, setEdges22_1] = useState<Edge[]>([]);
+    const [edges22_3, setEdges22_3] = useState<Edge[]>([]);
+    const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
+    const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<Error | null>(null);
 
-
-
-
-function clickMarker(data:Node, marker:L.Marker):void{
+    function clickMarker(data:Node, marker:L.Marker):void{
         marker.on('click', () => {
             const info = `<p>Name: ${data.shortName}</p>
             <p>Building: ${data.building}</p>
@@ -100,10 +97,23 @@ function clickMarker(data:Node, marker:L.Marker):void{
     useEffect(() => {
         const loadEdges = async () => {
             try {
-                const data = await fetchEdges20_1();
-                setEdges20_1(data);
+                setIsLoading(true);
+                const data201 = await fetchEdges20_1();
+                setEdges20_1(data201);
+                const data221 = await fetchEdges22_1();
+                setEdges22_1(data221);
+                const data223 = await fetchEdges22_3();
+                setEdges22_3(data223);
+                const data224 = await fetchEdges22_4();
+                setEdges22_4(data224);
+                const dataChestnut = await fetchEdgesChestnut();
+                setEdgesChestnut(dataChestnut);
+                setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
+                setError(err instanceof Error ? err : new Error(String(err)));
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -113,7 +123,6 @@ function clickMarker(data:Node, marker:L.Marker):void{
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
             const floorLayer20_1 = L.layerGroup();
-            const floorLayer20_3 = L.layerGroup();
             const floorLayer22_1 = L.layerGroup();
             const floorLayer22_3 = L.layerGroup();
             const floorLayer22_4 = L.layerGroup();
@@ -123,161 +132,20 @@ function clickMarker(data:Node, marker:L.Marker):void{
             const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
 
             // bounds for all floorplans
-            const bounds: L.LatLngBoundsLiteral = [[0, 0], [1000, 1000],];
+            const bounds20_1: L.LatLngBoundsLiteral = [[-1700, -1800], [1350, 2000],];
+            const bounds22_1: L.LatLngBoundsLiteral = [[-1700, -2100], [1200, 2000],];
+            const bounds22_3: L.LatLngBoundsLiteral = [[-400, -150], [1300, 1400],];
+            const bounds22_4: L.LatLngBoundsLiteral = [[-500, -100], [1500, 1400],];
+            const boundsChestnutHill: L.LatLngBoundsLiteral = [[-400, -500], [1200, 1300],];
+            const boundsFaulkner: L.LatLngBoundsLiteral = [[-200, -1000], [1000, 2250],];
 
             // image overlays
-            L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
-            L.imageOverlay(patriot20Floor3, bounds).addTo(floorLayer20_3);
-            L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
-            L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
-            L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
-            L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
-            L.imageOverlay(faulkner, bounds).addTo(floorLayerFaulkner);
-
-            addFloorTransitionMarkers(map, floorLayer20_1, floorLayer20_3, floorLayer22_1, floorLayer22_3, floorLayer22_4, floorLayerChestnutHill, floorLayerFaulkner);
-
-            connectBuildings(map, floorLayer20_3, floorLayer22_3);
-
-            // parking lot markers
-            lots
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 1)
-                .map((lot) => {
-                    const place= L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
-                    clickMarker(lot, place);
-                });
-            lots
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 1)
-                .map((lot) => {
-                    const place= L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
-                    clickMarker(lot, place);
-                });
-            lots
-                .filter(lot => lot.building === "Chestnut Hill" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).bindPopup('Entrance').addTo(floorLayerChestnutHill)
-                    clickMarker(lot, place);
-                })
-            L.marker([0.0, 0.00]).bindPopup('???').addTo(floorLayerFaulkner);
-            //TODO: add/edit faulkner markers
-
-            entrances
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 1)
-                .map((lot) => {
-                   const place= L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
-                    clickMarker(lot, place);
-                });
-
-            entrances
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
-                    clickMarker(lot, place);
-                } );
-
-            entrances
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
-                    clickMarker(lot, place);
-                })
-
-            entrances
-                .filter(lot => lot.building === "Chestnut Hill" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayerChestnutHill)
-                    clickMarker(lot, place);
-                })
-
-            checkIn
-                .filter(lot => lot.building === "Chestnut Hill" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayerChestnutHill)
-                    clickMarker(lot, place);
-                })
-
-            checkIn
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
-                    clickMarker(lot, place);
-                    })
-
-            checkIn
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
-                    clickMarker(lot, place);
-                })
-
-            checkIn
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 1)
-                .map((lot) => {
-                   const place =  L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
-                    clickMarker(lot, place);
-                })
-
-            checkIn
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_3)
-                    clickMarker(lot, place);
-                })
-
-            checkIn
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 4)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_4)
-                    clickMarker(lot, place);
-                })
-            elevators
-                .filter(lot => lot.building === "Chestnut Hill" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayerChestnutHill)
-                    clickMarker(lot, place);
-                })
-
-            elevators
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 1)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
-                    clickMarker(lot, place);
-                })
-
-            elevators
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
-                    clickMarker(lot, place);
-                })
-
-            elevators
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 1)
-                .map((lot) => {
-                    const place =  L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
-                    clickMarker(lot, place);
-                })
-
-            elevators
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_3)
-                    clickMarker(lot, place);
-                })
-
-            elevators
-                .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 4)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_4)
-                    clickMarker(lot, place);
-                })
-            //TODO: add faulkner stuff here?
-            {edges20_1
-                .map((edge) => (
-                    L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
-                    ]).addTo(floorLayer20_1)
-                ))}
+            L.imageOverlay(patriot20Floor1, bounds20_1).addTo(floorLayer20_1);
+            L.imageOverlay(patriot22Floor1, bounds22_1).addTo(floorLayer22_1);
+            L.imageOverlay(patriot22Floor3, bounds22_3).addTo(floorLayer22_3);
+            L.imageOverlay(patriot22Floor4, bounds22_4).addTo(floorLayer22_4);
+            L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
+            L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
             // add a default layer
             if (location.includes('20 Patriot Pl'))
@@ -292,7 +160,6 @@ function clickMarker(data:Node, marker:L.Marker):void{
             // === LAYER CONTROLS ===
             const baseLayers = {
                 '20 Patriot Place - Floor 1': floorLayer20_1,
-                '20 Patriot Place - Floor 3': floorLayer20_3,
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
                 '22 Patriot Place - Floor 4': floorLayer22_4,
@@ -317,7 +184,6 @@ function clickMarker(data:Node, marker:L.Marker):void{
                     floor,
                     map,
                     floorLayer20_1,
-                    floorLayer20_3,
                     floorLayer22_1,
                     floorLayer22_3,
                     floorLayer22_4,
@@ -335,7 +201,7 @@ function clickMarker(data:Node, marker:L.Marker):void{
                 mapInstance.current = null;
             }
         };
-    },);
+    }, [pathCoordinates, entrances, checkIn, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut]);
 
     return (
         <div>
