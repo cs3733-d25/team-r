@@ -3,8 +3,8 @@ import { Mic } from 'react-bootstrap-icons';
 
 interface TextDirectionsProps {
     steps: string[];
-    distance: string;
-    duration: string;
+    distance?: string;
+    duration?: string;
 }
 
 function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
