@@ -21,7 +21,8 @@ interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
     location: string;
-    newNode?:  Node;
+    onDataChange: (name:string, value:string|number) => void;
+    onNodeDelete: (nodeID:string) => Promise<void>;
 }
 
 const nodePlaceholderOptions = {
@@ -31,18 +32,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const blankNode:Node = {
-    nodeID: "",
-    nodeType: "",
-    building: "",
-    floor: 0,
-    xcoord: 0,
-    ycoord: 0,
-    longName: "",
-    shortName: "",
-}
-
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -51,10 +41,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
-    const [pendingNode, setPendingNode] = useState<Node>(blankNode);
 
 
-function clickMarker(data:Node, marker:L.Marker):void{
+    function clickMarker(data:Node, marker:L.Marker):void{
         marker.on('click', () => {
             const info = `<p>Name: ${data.shortName}</p>
             <p>Building: ${data.building}</p>
@@ -63,68 +52,65 @@ function clickMarker(data:Node, marker:L.Marker):void{
            <p> Y Coordinate: ${data.ycoord}</p>`;
             marker.bindPopup(info).openPopup();
         });
+
+        marker.on('contextmenu', () => {
+            if (data.nodeID !== undefined) {
+                // delete the node, and then reload everything from the database
+                onNodeDelete(data.nodeID).then(() => {
+                    loadCheckIn();
+                    loadEntrances();
+                    loadElevators();
+                    loadLots();
+                    loadEdges();
+                });
+            }
+        })
     }
-
+    const loadCheckIn = async () => {
+        try {
+            const data = await fetchCheckIn();
+            setCheckIn(data);
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    };
+    const loadEntrances = async () => {
+        try {
+            const data = await fetchEntrances();
+            setEntrances(data);
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    };
+    const loadElevators = async () => {
+        try {
+            const data = await fetchElevators();
+            setElevators(data);
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    };
+    const loadLots = async () => {
+        try {
+            const data = await fetchParkingLots();
+            setLots(data);
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    };
+    const loadEdges = async () => {
+        try {
+            const data = await fetchEdges20_1();
+            setEdges20_1(data);
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    };
     useEffect(() => {
-        const loadCheckIn = async () => {
-            try {
-                const data = await fetchCheckIn();
-                setCheckIn(data);
-            } catch (err) {
-                console.error('Error fetching parking lots:', err);
-            }
-        };
-
         loadCheckIn();
-    }, []);
-
-    useEffect(() => {
-        const loadEntrances = async () => {
-            try {
-                const data = await fetchEntrances();
-                setEntrances(data);
-            } catch (err) {
-                console.error('Error fetching parking lots:', err);
-            }
-        };
-
         loadEntrances();
-    }, []);
-    useEffect(() => {
-        const loadElevators = async () => {
-            try {
-                const data = await fetchElevators();
-                setElevators(data);
-            } catch (err) {
-                console.error('Error fetching parking lots:', err);
-            }
-        };
-
         loadElevators();
-    }, []);
-    useEffect(() => {
-        const loadLots = async () => {
-            try {
-                const data = await fetchParkingLots();
-                setLots(data);
-            } catch (err) {
-                console.error('Error fetching parking lots:', err);
-            }
-        };
-
         loadLots();
-    }, []);
-
-    useEffect(() => {
-        const loadEdges = async () => {
-            try {
-                const data = await fetchEdges20_1();
-                setEdges20_1(data);
-            } catch (err) {
-                console.error('Error fetching parking lots:', err);
-            }
-        };
-
         loadEdges();
     }, []);
 
@@ -311,7 +297,9 @@ function clickMarker(data:Node, marker:L.Marker):void{
                 // update the placeholder
                 nodePlaceholder.setLatLng(e.latlng);
 
-                // store the coordinates
+                // send the coordinates to the parent element to store them
+                onDataChange("xcoord", parseFloat(x));
+                onDataChange("ycoord", parseFloat(y));
             });
 
             mapInstance.current = map;

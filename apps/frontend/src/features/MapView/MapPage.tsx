@@ -5,11 +5,23 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
-import { useMapData } from '@/features/MapView/mapService';
+import {postNodeDeletion, useMapData} from '@/features/MapView/mapService';
 import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
+import {Node} from "../../../../backend/src/routes/mapData.ts";
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number, building?: string) => void;
+}
+
+const blankNode:Node = {
+    nodeID: "",
+    nodeType: "",
+    building: "",
+    floor: 0,
+    xcoord: 0,
+    ycoord: 0,
+    longName: "",
+    shortName: "",
 }
 
 export function MapPage() {
@@ -20,6 +32,20 @@ export function MapPage() {
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
+    const [pendingNode, setPendingNode] = useState<Node>(blankNode); // store the node attributes until it is ready to be submitted
+
+    // used by the internal map element to access the pendingNode attributes
+    function handleNodeChange (name:string, value:string|number) {
+        setPendingNode(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    async function deleteNode  (nodeID:string) {
+        // function from mapService that makes axios request
+        const f = await postNodeDeletion(nodeID);
+    }
 
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
@@ -60,7 +86,7 @@ export function MapPage() {
                 <NavbarMGH />
             </div>
             <div className="flex-1 w-full relative">
-                <InternalMap location={selectedLocation} ref={f}/>
+                <InternalMap location={selectedLocation} onDataChange={handleNodeChange} onNodeDelete={deleteNode} />
                 {/* Overlay sidebar */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>

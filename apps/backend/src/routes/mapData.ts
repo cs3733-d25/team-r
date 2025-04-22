@@ -134,4 +134,18 @@ router.post("/create-node", async (req: Request, res: Response) => {
   }
 });
 
+// function to delete a node
+router.post("/delete", async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    const nodeID = req.body.nodeID; // get the nodeID
+    console.log("Deleting node: " + nodeID);
+    await PrismaClient.node.delete({ where: { nodeID: nodeID } });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error deleting node:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

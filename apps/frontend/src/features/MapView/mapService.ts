@@ -25,6 +25,10 @@ export const postNode = async (node: Node): Promise<AxiosResponse> => {
     return await axios.post('/api/map/create-node', node);
 };
 
+export const postNodeDeletion  = async (nodeID: string): Promise<AxiosResponse> => {
+    return await axios.post('/api/map/delete', {nodeID: nodeID});
+}; 
+
 export const fetchCheckIn = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/check-in');
     return res.data;
