@@ -41,4 +41,20 @@ router.post("/", async function (req: Request, res: Response) {
   }
 });
 
+router.get("/session", async (req, res) => {
+  if (req.session) {
+    const userID = req.session.userId;
+    const username = req.session.username;
+    const userTypeID = req.session.userType;
+    console.log("req session in /session: ", userID);
+    console.log("req user type: ", userTypeID);
+    res.status(200).json({
+      message: "User verified",
+      userID: userID,
+      username: username,
+      userType: userTypeID,
+    });
+  }
+});
+
 export default router;

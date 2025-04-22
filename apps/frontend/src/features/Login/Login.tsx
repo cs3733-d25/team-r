@@ -6,11 +6,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 
-interface LoginProps {
-    changeUserType: (value: ((prevState: string) => string) | string) => void;
-}
-
-function Login({ changeUserType }: LoginProps) {
+function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -32,7 +28,8 @@ function Login({ changeUserType }: LoginProps) {
             if (response.data.message == 'User verified') {
                 console.log('User verified');
                 //changeState({ userType: {userType: 'admin'} });
-                changeUserType(response.data.userType);
+                console.log("Setting user type to", response.data.userType, "- Keagan");
+
                 navigate('/external-map', {
                     state: {
                         status: 'logged-in',
