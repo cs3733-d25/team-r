@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
+import {NavbarContext} from "@/components/NavBarMGH/navbar-context.ts";
 
 interface NavBarProps {
     page?: string;
@@ -15,13 +16,15 @@ export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
 
+    const navUser = useContext(NavbarContext);
+
     return (
         // main header
         <header className="sticky top-0 z-40 border-b bg-primary">
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={(props.userType === "guest") ? "/" : "/home"} className="flex items-center">
+                    <a href={(navUser.userType === "guest") ? "/" : "/home"} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -34,7 +37,7 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - Patient*/}
-                {(props.userType === 'patient') && (
+                {(navUser.userType === 'patient') && (
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
@@ -52,7 +55,7 @@ export function NavbarMGH(props: NavBarProps) {
 
                 </nav>)}
                 {/* Desktop Navigation - Admin */}
-                {(props.userType === 'admin') && (
+                {(navUser.userType === 'admin') && (
                     <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                         <Button variant="ghost" asChild>
                             <a href="/directory">Directories</a>
@@ -80,7 +83,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </nav>)}
 
                 {/* Icons on right */}
-                {(props.userType != "guest") && (
+                {(navUser.userType != "guest") && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
@@ -129,7 +132,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>)}
                 {/* Only display login button in logged-out home page */}
-                {(props.page == "home" && props.userType == "guest") && (
+                {(props.page == "home" && navUser.userType == "guest") && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>

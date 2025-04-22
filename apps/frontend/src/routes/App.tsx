@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
@@ -19,10 +19,16 @@ import SanitationRequestTabs from "@/features/Requests/SanitationForm/Sanitation
 import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
 import {EditMap} from "@/features/MapView/EditMap.tsx";
 import RequestPage  from "@/features/Requests/RequestPage.tsx";
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
+import {NavbarContext, navUser} from '@/components/NavBarMGH/navbar-context.ts';
 
 
 
 function App() {
+    const [state, setState] = useState({
+        userType: navUser.Patient
+    })
+
     const router = createBrowserRouter([
         {
             path: '/',
@@ -31,7 +37,7 @@ function App() {
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login /> },
+                { path: 'login', element: <Login changeState={setState}/> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
@@ -51,7 +57,13 @@ function App() {
         },
     ]);
 
-    return <RouterProvider router={router} />;
+    return (
+        <div>
+            <NavbarContext.Provider value={state.userType}>
+                <NavbarMGH />
+            </NavbarContext.Provider>
+            <RouterProvider router={router} />
+        </div>);
 }
 
 export default App;
