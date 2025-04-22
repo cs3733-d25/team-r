@@ -1,5 +1,5 @@
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx'
 import {DeviceReqForm} from "./DeviceReqForm";
 import {DeviceReqPage} from "./DeviceReqPage";
 
@@ -9,16 +9,15 @@ export function DeviceReq() {
             <NavbarMGH />
             <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Medical Device Request System</h1>
             <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Owen Miller & Keagan Hitt & Nora Cleary</h2>
-            <Tabs defaultValue="deviceForm" className="items-center justify-center w-full px-50">
-                <TabsList className="flex bg-hidden rounded-t-lg relative z-10">
-                    <TabsTrigger value="deviceForm"
-                                 className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
+            <Tabs defaultValue="deviceForm">
+                <TabsList>
+                    <TabsTrigger value="deviceForm">
                         Medical Device Request</TabsTrigger>
                     <TabsTrigger value="devicePage"
-                                 className="rounded-t-lg px-4 py-2 text-sm font-medium text-gray-700 bg-input data-[state=active]:bg-white data-[state=active]:border-gray-300 data-[state=active]:-mb-px transition">
-                        All Requests</TabsTrigger>
+                                 >
+                        View All Requests</TabsTrigger>
                 </TabsList>
-                <div className={"mb-6"}>
+                <div>
                     <TabsContent value="deviceForm">
                         <DeviceReqForm/>
                     </TabsContent>

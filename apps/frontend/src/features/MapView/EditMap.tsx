@@ -7,8 +7,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts';
-import {postNodeDeletion, useMapData} from '@/features/MapView/mapService.ts';
-import axios from "axios";
+import { useMapData } from '@/features/MapView/mapService.ts';
+import axios from 'axios';
 
 interface EditMapProps {
     status?: string;
