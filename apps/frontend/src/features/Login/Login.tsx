@@ -8,18 +8,10 @@ import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 interface LoginProps {
-    changeState: (
-        value:
-            | ((prevState: string ) => {
-                   userType: string ;
-              })
-            | {
-                   userType: string ;
-              }
-    ) => void;
+    changeUserType: (value: ((prevState: string) => string) | string) => void;
 }
 
-function Login({ changeState }: LoginProps) {
+function Login({ changeUserType }: LoginProps) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -41,7 +33,7 @@ function Login({ changeState }: LoginProps) {
             if (response.data.message == 'User verified') {
                 console.log('User verified');
                 //changeState({ userType: {userType: 'admin'} });
-                changeState({ userType: response.data.userType });
+                changeUserType(response.data.userType);
                 navigate('/external-map', {
                     state: {
                         status: 'logged-in',

@@ -20,12 +20,11 @@ import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
 import {EditMap} from "@/features/MapView/EditMap.tsx";
 import RequestPage  from "@/features/Requests/RequestPage.tsx";
 import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
-import {NavbarContext, navUser} from '@/components/NavBarMGH/navbar-context.ts';
 
 
 
 function App() {
-    const [userType, setUserType] = useState(navUser.Guest);
+    const [userType, setUserType] = useState("Guest");
 
     const router = createBrowserRouter([
         {
@@ -35,13 +34,13 @@ function App() {
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login changeState={setUserType}/> },
+                { path: 'login', element: <Login changeUserType={setUserType}/> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
-                 { path: 'csv', element: <CSVPage /> },
+                { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
@@ -57,9 +56,7 @@ function App() {
 
     return (
         <div>
-            <NavbarContext.Provider value={userType}>
-                <NavbarMGH />
-            </NavbarContext.Provider>
+            <NavbarMGH userType={userType}/>
             <RouterProvider router={router} />
         </div>);
 }
