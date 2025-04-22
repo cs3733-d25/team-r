@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useMapData } from '@/features/MapView/mapService';
 import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
+import { getBuildingConstant } from '@/features/MapView/mapUtils';
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number, building?: string) => void;
@@ -111,7 +112,8 @@ export function MapPage() {
                                         variant={currentFloor === floor ? 'default' : 'secondary'}
                                         onClick={() => {
                                             setCurrentFloor(floor);
-                                            (window as CustomWindow).goToFloor?.(floor, selectedBuilding);
+                                            const buildingConstant = getBuildingConstant(selectedBuilding);
+                                            (window as CustomWindow).goToFloor?.(floor, buildingConstant);
                                         }}
                                         type="button"
                                     >

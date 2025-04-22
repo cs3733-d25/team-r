@@ -11,7 +11,7 @@ function SanitationRequestTabs() {
                     <TabsTrigger value="sanitationRequestForm">
                         Sanitation Request Form</TabsTrigger>
                     <TabsTrigger value="sanitationRequestTable">
-                        Sanitation Request Table</TabsTrigger>
+                        View All Requests</TabsTrigger>
                 </TabsList>
                 <div >
                     <TabsContent value="sanitationRequestForm">

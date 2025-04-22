@@ -12,7 +12,7 @@ export function PatientRequestPage() {
                     <TabsTrigger value="patientRequest">
                         Nonemergent Patient Request</TabsTrigger>
                     <TabsTrigger value="allPatientRequests">
-                        All Requests</TabsTrigger>
+                        View All Requests</TabsTrigger>
                 </TabsList>
                     <TabsContent value="patientRequest">
                         <PatientRequestForm/>

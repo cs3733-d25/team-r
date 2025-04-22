@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button} from "@/components/ui/button.tsx";
 import { useNavigate } from 'react-router-dom';
+import Disclaimer from "../components/Disclaimer";
 
 
 interface HomeMainProps {
@@ -49,6 +50,7 @@ export function HomeMain(props: HomeMainProps) {
                         </Button>
                     </div>
                 </div>
+                <Disclaimer message="This web application is strictly a CS3733-D25 Software Engineering class project for Prof. Wilson Wong at WPI." />
             </div>
         </div>
     )

@@ -25,28 +25,26 @@ export function TransportRequestPage() {
     }
     return(
         <>
-            <h1 className = {"bold text-3xl text-center pb-2"}>Transportation Requests</h1>
             <Table>
-                <TableHeader>
+                <TableHeader >
                     <TableRow>
-                        <TableHead>Employee Name</TableHead>
-                        <TableHead>Patient</TableHead>
-                        <TableHead>Transportation Type</TableHead>
-                        <TableHead >Priority</TableHead>
-                        <TableHead>Department</TableHead>
-                        <TableHead>Current Building</TableHead>
-                        <TableHead>Desired Building</TableHead>
-                        <TableHead>Comments</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Request Time</TableHead>
+                        <TableHead className={"text-center"}>Employee Name</TableHead>
+                        <TableHead className={"text-center"}>Patient</TableHead>
+                        <TableHead className={"text-center"}>Transportation Type</TableHead>
+                        <TableHead className={"text-center"}>Priority</TableHead>
+                        <TableHead className={"text-center"}>Department</TableHead>
+                        <TableHead className={"text-center"}>Current Building</TableHead>
+                        <TableHead className={"text-center"}>Desired Building</TableHead>
+                        <TableHead className={"text-center"}>Comments</TableHead>
+                        <TableHead className={"text-center"}>Status</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody className = {"text-center"}>
+                <TableBody className="text-center">
                     {transport.map((row,index) =>
                     {
                         return(
                             <>
-                                <TableRow key = {index} >
+                                <TableRow key = {index} className={"border-t"} >
                                     <TableCell>{row.employeeName}</TableCell>
                                     <TableCell>{row.patientID}</TableCell>
                                     <TableCell >{row.transportationType}</TableCell>
@@ -56,7 +54,6 @@ export function TransportRequestPage() {
                                     <TableCell>{row.desiredBuilding}</TableCell>
                                     <TableCell>{row.comments}</TableCell>
                                     <TableCell>{row.status}</TableCell>
-                                    <TableCell>{row.requestTime}</TableCell>
 
                                 </TableRow>
 

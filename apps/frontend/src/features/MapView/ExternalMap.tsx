@@ -101,9 +101,9 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     };
 
     /**
-     * useEffect to get the user's current location
+     * Gets the user's current location
+     * @returns {void}
      */
-
     const getLocation = () => {
         if (!navigator.geolocation) {
             alert('Geolocation is not supported by your browser');
@@ -122,6 +122,18 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
             }
         );
     };
+
+    /**
+     * Converts a given LocationInput to a string representation of coords
+     */
+    const convertLocationToString = (location: LocationInput) => {
+        if (typeof location === 'string') {
+            return location;
+        } else {
+            return `${location.lat},${location.lng}`;
+        }
+    }
+
 
     return (
         <div className={'flex flex-col h-screen overflow-hidden'}>
@@ -156,6 +168,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             <Input
                                 type={'text'}
                                 placeholder={'Starting location'}
+                                value={convertLocationToString(startingLocation)}
                                 onChange={(e) => setStartingLocation(e.target.value)}
                             />
                             <div className={"flex items-center justify-center"}>

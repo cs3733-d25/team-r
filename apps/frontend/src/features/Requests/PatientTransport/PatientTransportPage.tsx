@@ -11,9 +11,9 @@ export function PatientTransportPage() {
                 <TabsList>
                     <TabsTrigger value="patientTransportForm"
                     >
-                        PatientTransportForm</TabsTrigger>
+                        Patient Transport Request</TabsTrigger>
                     <TabsTrigger value="patientTransportTable">
-                        PatientTransport Table</TabsTrigger>
+                        View All Requests</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="patientTransportForm">
