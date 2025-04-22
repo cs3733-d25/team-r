@@ -21,8 +21,9 @@ interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
     location: string;
-    onDataChange: (name:string, value:string|number) => void;
-    onNodeDelete: (nodeID:string) => Promise<void>;
+    onDataChange: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
+    onNodeDelete: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
+    loadNodes?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
 }
 
 const nodePlaceholderOptions = {
@@ -32,7 +33,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, loadNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -41,6 +42,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
+
+
+    useEffect(() => {
+        if(loadNodes) {
+            loadNodes.then(() => {
+                console.log("load all nodes");
+            });
+        }
+    }, [loadNodes]);
 
 
     function clickMarker(data:Node, marker:L.Marker):void{
