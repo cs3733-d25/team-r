@@ -37,6 +37,8 @@ export class BFS {
     return []; // No path found
   }
 }
+
+export default router;
 /*
 //does the Breadth First Search (BFS)
 async function BFS(start: string, end: string): Promise<string[]> {
