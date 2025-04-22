@@ -17,8 +17,7 @@ import pharmacyRouter from "./routes/pharmacyreqs.ts";
 import transportRequestRouter from "./routes/transportreqs.ts";
 import deviceRequestRouter from "./routes/devicereqs.ts";
 import mapRouter from "./routes/mapData.ts";
-import aStarRouter from "./routes/aStar.ts";
-import dfsService from "./routes/dfs.ts";
+
 import { API_ROUTES } from "common/src/constants";
 
 const secret = process.env.SESSION_SECRET;
@@ -70,8 +69,7 @@ app.use(API_ROUTES.PHARMACY, pharmacyRouter);
 app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
-app.use(API_ROUTES.ASTAR, aStarRouter);
-app.use(API_ROUTES.DFS, );
+
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
