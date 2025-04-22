@@ -21,7 +21,7 @@ export function NavbarMGH(props: NavBarProps) {
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={(props.page == "home" || props.page == "login") ? "/" : "/home"} className="flex items-center">
+                    <a href={(props.userType === "guest") ? "/" : "/home"} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -33,8 +33,8 @@ export function NavbarMGH(props: NavBarProps) {
                     </a>
                 </div>
 
-                {/* Desktop Navigation - default*/}
-                {(props.page != "home" && props.page != "login" && props.userType === 'Patient') && (
+                {/* Desktop Navigation - Patient*/}
+                {(props.userType === 'patient') && (
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
@@ -44,17 +44,15 @@ export function NavbarMGH(props: NavBarProps) {
                         { label: '22 Patriot Place', href: '/external-map' },
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Faulkner', href: '/external-map' },
-
                     ]}/>
                     <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
-
                         { label: 'Patient Request', href: '/patientrequestpage' },
-
                     ]}/>
 
 
                 </nav>)}
-                {(props.page != "home" && props.page != "login" && props.userType ==='Admin') && (
+                {/* Desktop Navigation - Admin */}
+                {(props.userType === 'admin') && (
                     <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                         <Button variant="ghost" asChild>
                             <a href="/directory">Directories</a>
@@ -82,7 +80,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </nav>)}
 
                 {/* Icons on right */}
-                {(props.page != "home" && props.page != "login") && (
+                {(props.userType != "guest") && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
@@ -131,7 +129,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>)}
                 {/* Only display login button in logged-out home page */}
-                {(props.page == "home") && (
+                {(props.page == "home" && props.userType == "guest") && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>

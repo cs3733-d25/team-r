@@ -82,7 +82,7 @@ export function CSVPage() {
     }
     return (
         <div className={'flex-col'} >
-            <NavbarMGH />
+            <NavbarMGH userType={"patient"} />
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
             <h2 className = {"text-xl text-center"}>Directory Table:</h2>
