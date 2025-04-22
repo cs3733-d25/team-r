@@ -4,6 +4,7 @@ import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
 export const fetchParkingLots = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/parking-lots');
+    console.log('res.data: ', res.data);
     return res.data;
 };
 
@@ -42,12 +43,15 @@ export const fetchElevators = async (): Promise<Node[]> => {
 
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
-    const [departments, setDepartments] = useState<{key: string; value: string; label: string}[]>([]);
+    const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]);
+
 
     useEffect(() => {
+        console.log('Loading parking lots');
         const loadParkingLots = async () => {
             try {
                 const data = await fetchParkingLots();
+                //console.log('Fetched parking lots:', data);
                 setParkingLots(data);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
@@ -57,15 +61,11 @@ export function useMapData(selectedBuilding: string) {
     }, []);
 
     useEffect(() => {
+        console.log('Triggering loadDepartments for building:', selectedBuilding);
         const loadDepartments = async () => {
             try {
                 const data = await fetchDepartments(selectedBuilding);
-                const formattedDepartments = data.map((dept: any) => ({
-                    key: dept.id || dept.key,
-                    value: dept.id || dept.value,
-                    label: dept.name || dept.label
-                }));
-                setDepartments(formattedDepartments);
+                setDepartments(data);
             } catch (err) {
                 console.error('Error fetching departments:', err);
             }

@@ -84,6 +84,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
           ["prisma", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:6.5.0"],\
           ["react", "npm:19.1.0"],\
+          ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
           ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"],\
           ["tailwindcss", "npm:4.1.3"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
@@ -7300,6 +7301,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.5.3"],\
           ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
           ["react", "npm:18.3.1"],\
+          ["react-bootstrap-icons", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.11.5"],\
           ["react-day-picker", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:8.10.1"],\
           ["react-dom", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:18.3.1"],\
           ["react-hook-form", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:7.55.0"],\
@@ -9747,6 +9749,43 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-bootstrap-icons", [\
+      ["npm:1.11.5", {\
+        "packageLocation": "./.yarn/cache/react-bootstrap-icons-npm-1.11.5-10163854e5-ec1cb44394.zip/node_modules/react-bootstrap-icons/",\
+        "packageDependencies": [\
+          ["react-bootstrap-icons", "npm:1.11.5"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-bootstrap-icons-virtual-b601dac37e/0/cache/react-bootstrap-icons-npm-1.11.5-10163854e5-ec1cb44394.zip/node_modules/react-bootstrap-icons/",\
+        "packageDependencies": [\
+          ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
+          ["@types/react", "npm:19.1.0"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:19.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.11.5", {\
+        "packageLocation": "./.yarn/__virtual__/react-bootstrap-icons-virtual-c4b897018e/0/cache/react-bootstrap-icons-npm-1.11.5-10163854e5-ec1cb44394.zip/node_modules/react-bootstrap-icons/",\
+        "packageDependencies": [\
+          ["react-bootstrap-icons", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.11.5"],\
+          ["@types/react", "npm:18.3.20"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-day-picker", [\
       ["npm:8.10.1", {\
         "packageLocation": "./.yarn/cache/react-day-picker-npm-8.10.1-708bfe7c0e-a0ff28c4b6.zip/node_modules/react-day-picker/",\
@@ -10711,6 +10750,7 @@ const RAW_RUNTIME_STATE =
           ["prettier-config-custom", "workspace:configs/prettier-config-custom"],\
           ["prisma", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:6.5.0"],\
           ["react", "npm:19.1.0"],\
+          ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
           ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"],\
           ["tailwindcss", "npm:4.1.3"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
