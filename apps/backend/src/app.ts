@@ -1,7 +1,9 @@
 import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 import logger from "morgan";
+
 import healthcheckRouter from "./routes/healthcheck";
 import employeeRouter from "./routes/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
@@ -16,6 +18,8 @@ import transportRequestRouter from "./routes/transportreqs.ts";
 import deviceRequestRouter from "./routes/devicereqs.ts";
 import mapRouter from "./routes/mapData.ts";
 import { API_ROUTES } from "common/src/constants";
+
+const secret = process.env.SESSION_SECRET;
 
 const app: Express = express(); // Setup the backend
 
@@ -69,6 +73,24 @@ app.use((err: HttpError, req: Request, res: Response) => {
   // Reply with the error
   res.status(err.status || 500);
 });
+
+/*
+Start session with cookie
+ */
+//check if secret is defined
+if (secret) {
+    app.use(
+        session({
+            secret: secret,
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                maxAge: 24 * 60 * 60 * 1000, // 24 hours
+            },
+        })
+    );
+}
+
 
 // Export the backend, so that www.ts can start it
 export default app;

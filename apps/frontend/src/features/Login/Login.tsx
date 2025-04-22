@@ -18,25 +18,18 @@ function Login() {
 async function handleLogin(){
     if (!username || !password) return;
     try {
-        /////////////////////////////////////////////////////////////////
-        //client side console.logs will be seen in the browser (inspect)
+
         console.log("sending username and password to the server");
 
-        //axios will handle the content-type and header for you, just need to set the body
+
         const response = await axios.post("/api/login/", {
-            //////////////////////////////////////////////////////////////////////////////
-            //here is where we are setting the body that will be sent to the server
-            //backend needs to know what variables you are sending and what the are called
             username: username,
             password: password
         })
         console.log("username and password sent to the server");
-        console.log("response.data is an object: ", response.data);
-        ////////////////////////////////////////////////////////////////////////////////////
-        //example - getting userType from backend - now use this information to decide display
         console.log("userType: ", response.data.userType);
         if(response.data.message == "User verified"){
-            console.log("yippee user is verified");
+            console.log("User verified");
             navigate('/external-map', {
                 state: {
                     status: 'logged-in',
