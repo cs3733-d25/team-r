@@ -6,9 +6,9 @@ model Directory {
 }
 
 model Node {
-  nodeID    String   @id
-  nodeType  NodeType
-  building  Building
+  nodeID    Int    @id @default(autoincrement())
+  nodeType  String
+  building  String
   floor     Int
   xcoord    Float
   ycoord    Float
@@ -20,13 +20,13 @@ model Node {
 }
 
 model Edge {
-  edgeID   String @id @default(uuid())
-  fromID   String
-  toID     String
+  edgeID   Int   @id @default(autoincrement())
+  fromID   Int
+  toID     Int
   fromX    Float
   fromY    Float
   toX      Float
   toY      Float
-  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
-  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+  fromNode Node  @relation("fromNode", fields: [fromID], references: [nodeID])
+  toNode   Node  @relation("toNode", fields: [toID], references: [nodeID])
 }

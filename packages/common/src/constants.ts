@@ -13,4 +13,5 @@ export const API_ROUTES = {
     TRANSPORT: '/api/transportreq',
     DEVICE: '/api/device',
     MAP: '/api/map',
+    NODES: '/api/nodes',
 };
