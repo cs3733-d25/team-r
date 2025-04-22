@@ -6,7 +6,7 @@ export const API_ROUTES = {
     LOGIN: '/api/login',
     SANITATION: '/api/sanitation',
     CSV: '/api/csv',
-    BFS: '/api/bfs',
+    ALGO: '/api/algo',
     PATIENTREQ: '/api/patientreq',
     PHARMACY: '/api/pharmacy',
     ENUM: '/api/enum',

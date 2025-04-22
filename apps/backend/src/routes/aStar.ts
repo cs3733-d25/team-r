@@ -51,3 +51,5 @@ export class AStar {
     return [];
   }
 }
+
+export default router;
