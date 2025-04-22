@@ -1,7 +1,11 @@
 // apps/backend/src/algorithms/dfs.ts
 
 import prismaClient from "../bin/prisma-client";
+
 import { Stack } from "./dataStructures.ts"; // update path if yours differs
+
+import { Stack } from "./dataStructures.ts";  // update path if yours differs
+
 
 // apps/backend/src/algorithms/DFS.ts
 
@@ -33,4 +37,4 @@ export default class DFS {
 
     return [];
   }
-}
+
