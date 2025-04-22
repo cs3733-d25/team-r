@@ -120,6 +120,163 @@ router.get("/edges-20-1", async (req, res) => {
   }
 });
 
+router.get("/edges-20-3", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "PATRIOT_PLACE_20",
+          floor: 3,
+        },
+        toNode: {
+          building: "PATRIOT_PLACE_20",
+          floor: 3,
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/edges-22-1", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "PATRIOT_PLACE_22",
+          floor: 1,
+        },
+        toNode: {
+          building: "PATRIOT_PLACE_22",
+          floor: 1,
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/edges-22-3", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "PATRIOT_PLACE_22",
+          floor: 3,
+        },
+        toNode: {
+          building: "PATRIOT_PLACE_22",
+          floor: 3,
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/edges-22-4", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "PATRIOT_PLACE_22",
+          floor: 4,
+        },
+        toNode: {
+          building: "PATRIOT_PLACE_22",
+          floor: 4,
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.get("/edges-chestnut", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "CHESTNUT_HILL",
+        },
+        toNode: {
+          building: "CHESTNUT_HILL",
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+router.post("/internal", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({
+      where: { nodeType: "parking" },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+/*
+// get departments
+router.get("/departments", async (req, res) => {
+  try {
+    const result = await pool.query(`
+        SELECT * FROM "Node"
+        WHERE "nodeType" = 'department';
+        `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+*/
+
 router.post("/create-node", async (req: Request, res: Response) => {
   try {
     const newNode = req.body;
