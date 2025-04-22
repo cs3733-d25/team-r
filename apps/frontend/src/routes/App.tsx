@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
@@ -20,11 +20,31 @@ import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
 import {EditMap} from "@/features/MapView/EditMap.tsx";
 import RequestPage  from "@/features/Requests/RequestPage.tsx";
 import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
-
-
+import axios from "axios";
 
 function App() {
-    const [userType, setUserType] = useState("Patient");
+    const [userType, setUserType] = useState("Guest");
+
+    async function getSession() {
+        try {
+            const response = await axios.get('api/login/session');
+            const userType = response.data.userType;
+            setUserType(userType);
+            console.log(response.data);
+            console.log("User type 1:", response.data.userType);
+            console.log("User type:", userType);
+        } catch (error) {
+            console.log('error in retrieve:', error);
+        }
+    }
+
+    function getUserType() {
+        useEffect(() => {
+            getSession();
+        }, []);
+    }
+
+    getUserType();
 
     const router = createBrowserRouter([
         {
@@ -34,7 +54,7 @@ function App() {
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login changeUserType={setUserType}/> },
+                { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
