@@ -26,8 +26,12 @@ export const postNode = async (node: Node): Promise<AxiosResponse> => {
 };
 
 export const postNodeDeletion  = async (nodeID: string): Promise<AxiosResponse> => {
-    return await axios.post('/api/map/delete', {nodeID: nodeID});
-}; 
+    return await axios.post('/api/map/delete-node', {nodeID: nodeID});
+};
+
+export const postEdgeDeletion  = async (edgeID: string): Promise<AxiosResponse> => {
+    return await axios.post('/api/map/delete-edge', {edgeID: edgeID});
+};
 
 export const fetchCheckIn = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/check-in');

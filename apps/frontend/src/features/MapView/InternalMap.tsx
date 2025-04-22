@@ -18,6 +18,7 @@ interface InternalMapProps {
     location: string;
     onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
+    onEdgeDelete?: (edgeID:string) => Promise<void>;
     loadNodes?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
@@ -30,7 +31,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, loadNodes, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, onEdgeDelete, loadNodes, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -70,14 +71,17 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             if (data.nodeID !== undefined) {
                 // delete the node, and then reload everything from the database
                 if(onNodeDelete) {
-                    onNodeDelete(data.nodeID).then(() => {
-                        loadCheckIn();
-                        loadEntrances();
-                        loadElevators();
-                        loadLots();
-                        // loadEdges();
-                    });
+                    onNodeDelete(data.nodeID).then(loadAll);
                 }
+            }
+        })
+    }
+
+    function clickEdge(edge:Edge, pLine:L.Polyline){
+        pLine.on('contextmenu', () => {
+            console.log("delete edge "+edge.edgeID);
+            if(onEdgeDelete) {
+                onEdgeDelete(edge.edgeID).then(loadAll);
             }
         })
     }
@@ -114,11 +118,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             console.error('Error fetching parking lots:', err);
         }
     };
-    useEffect(() => {
+    function loadAll () {
         loadCheckIn();
         loadEntrances();
         loadElevators();
         loadLots();
+    }
+    useEffect(() => {
+        loadAll();
     }, []);
 
     useEffect(() => {
@@ -185,6 +192,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                         [edge.fromX, edge.fromY],
                         [edge.toX, edge.toY],
                     ]).addTo(floorLayer20_1);
+
                 });
                 edges22_1.map((edge) => {
                     L.polyline([

@@ -324,7 +324,7 @@ router.post("/create-node", async (req: Request, res: Response) => {
 });
 
 // function to delete a node
-router.post("/delete", async (req: Request, res: Response) => {
+router.post("/delete-node", async (req: Request, res: Response) => {
   try {
     console.log(req.body);
     const nodeID = req.body.nodeID; // get the nodeID
@@ -333,6 +333,20 @@ router.post("/delete", async (req: Request, res: Response) => {
     res.sendStatus(200);
   } catch (error) {
     console.error("Error deleting node:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// function to delete an edge
+router.post("/delete-node", async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    const edgeID = req.body.edgeID; // get the nodeID
+    console.log("Deleting node: " + edgeID);
+    await PrismaClient.edge.delete({ where: { edgeID: edgeID } });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error deleting edge:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts';
-import { useMapData } from '@/features/MapView/mapService.ts';
+import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
 import axios from 'axios';
 
 interface EditMapProps {
@@ -51,6 +51,11 @@ export function EditMap({ status }: EditMapProps) {
     // function from mapService that makes axios request
     async function deleteNode (nodeID:string) {
         await postNodeDeletion(nodeID);
+    }
+
+    // function from mapService that makes axios request
+    async function deleteEdge (nodeID:string) {
+        await postEdgeDeletion(nodeID);
     }
 
     // map clicks
@@ -152,7 +157,7 @@ export function EditMap({ status }: EditMapProps) {
                 <NavbarMGH />
             </div>
             <div className="flex-1 relative">
-                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true}/>
+                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true} onEdgeDelete={deleteEdge} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">

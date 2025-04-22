@@ -1,15 +1,15 @@
 model Directory {
-  id          Int      @id @default(autoincrement())
-  name        String
-  floorNumber Int
-  building    String
+  id               Int     @id @default(autoincrement())
+  name             String
+  floorNumber      Int
+  building         String
   recepetionNodeID String?
-  receptionNode Node? @relation(fields:[recepetionNodeID], references: [nodeID])
+  receptionNode    Node?   @relation(fields: [recepetionNodeID], references: [nodeID])
 }
 
 model Node {
-  nodeID    String   @id
-  nodeType String
+  nodeID    String @id
+  nodeType  String
   building  String
   floor     Int
   xcoord    Float
@@ -18,9 +18,8 @@ model Node {
   shortName String
 
   departments Directory[]
-  edgesFrom Edge[] @relation("fromNode")
-  edgesTo   Edge[] @relation("toNode")
-
+  edgesFrom   Edge[]      @relation("fromNode")
+  edgesTo     Edge[]      @relation("toNode")
 }
 
 model Edge {
@@ -31,14 +30,15 @@ model Edge {
   fromY    Float
   toX      Float
   toY      Float
-  fromNode Node  @relation("fromNode", fields: [fromID], references: [nodeID])
-  toNode   Node  @relation("toNode", fields: [toID], references: [nodeID])
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
 }
 
-model Department{
-  id String @id@default(uuid())
-  name String
+// TODO: delete this table
+model Department {
+  id               String     @id @default(uuid())
+  name             String
   recepetionNodeID String
- // receptionNode Node @relation(fields:[recepetionNodeID], references: [nodeID])
-  employee  Employee[]
+  // receptionNode Node @relation(fields:[recepetionNodeID], references: [nodeID])
+  employee         Employee[]
 }
