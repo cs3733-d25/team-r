@@ -1,13 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import L, {latLng} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import patriot20Floor1 from '../../../public/20-FLOOR1-LABELED-1.svg';
-import patriot20Floor3 from '../../../public/20-FLOOR1-BASIC-1.svg';
-import patriot22Floor1 from '../../../public/22-FLOOR4-BASIC-1.svg';
-import patriot22Floor3 from '../../../public/22-FLOOR3-LABELED-1.svg';
-import patriot22Floor4 from '../../../public/22-FLOOR4-LABELED-1.svg';
-import chestnutHill from '../../../public/Chestnut-Hill.svg'
-import faulkner from '../../../public/Faulkner-Map-Draft.svg'
+import patriot20Floor1 from '../../../public/20patriot1.svg';
+import patriot22Floor1 from '../../../public/22patriot1.svg';
+import patriot22Floor3 from '../../../public/22patriot3.svg';
+import patriot22Floor4 from '../../../public/22patriot4.svg';
+import chestnutHill from '../../../public/chestnutHill1.svg'
+import faulkner from '../../../public/faulkner1.svg'
 import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import {
@@ -43,7 +42,7 @@ const blankNode:Node = {
     shortName: "",
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, newNode}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -55,24 +54,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [pendingNode, setPendingNode] = useState<Node>(blankNode);
 
 
-    // when the newNode props get updated, track them
-    // WHEN TO SUBMIT THE NODE?
-    // useEffect(() => {
-    //     const submitNode = async () => {
-    //         try {
-    //             const response = await postNode(newNode);
-    //             if (response.status === 200) {
-    //                 console.log("Node created successfully!");
-    //             }
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     if (newNode.x !== 0){
-    //     submitNode().then(loadNodes);
-    // }, [newNode]);
-
-    function clickMarker(data:Node, marker:L.Marker):void {
+function clickMarker(data:Node, marker:L.Marker):void{
         marker.on('click', () => {
             const info = `<p>Name: ${data.shortName}</p>
             <p>Building: ${data.building}</p>
@@ -149,7 +131,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
             const floorLayer20_1 = L.layerGroup();
-            const floorLayer20_3 = L.layerGroup();
             const floorLayer22_1 = L.layerGroup();
             const floorLayer22_3 = L.layerGroup();
             const floorLayer22_4 = L.layerGroup();
@@ -167,16 +148,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
 
             // image overlays
             L.imageOverlay(patriot20Floor1, bounds).addTo(floorLayer20_1);
-            L.imageOverlay(patriot20Floor3, bounds).addTo(floorLayer20_3);
             L.imageOverlay(patriot22Floor1, bounds).addTo(floorLayer22_1);
             L.imageOverlay(patriot22Floor3, bounds).addTo(floorLayer22_3);
             L.imageOverlay(patriot22Floor4, bounds).addTo(floorLayer22_4);
             L.imageOverlay(chestnutHill, bounds).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, bounds).addTo(floorLayerFaulkner);
 
-            addFloorTransitionMarkers(map, floorLayer20_1, floorLayer20_3, floorLayer22_1, floorLayer22_3, floorLayer22_4, floorLayerChestnutHill, floorLayerFaulkner);
-
-            connectBuildings(map, floorLayer20_3, floorLayer22_3);
+            addFloorTransitionMarkers(map, floorLayer20_1, floorLayer22_1, floorLayer22_3, floorLayer22_4, floorLayerChestnutHill, floorLayerFaulkner);
 
             // parking lot markers
             lots
@@ -208,13 +186,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 });
 
             entrances
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
-                    clickMarker(lot, place);
-                } );
-
-            entrances
                 .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 1)
                 .map((lot) => {
                     const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer22_1)
@@ -241,13 +212,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                     const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
                     clickMarker(lot, place);
                     })
-
-            checkIn
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
-                    clickMarker(lot, place);
-                })
 
             checkIn
                 .filter(lot => lot.building === "Patriot Place 22" && lot.floor === 1)
@@ -280,13 +244,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 1)
                 .map((lot) => {
                     const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_1)
-                    clickMarker(lot, place);
-                })
-
-            elevators
-                .filter(lot => lot.building === "Patriot Place 20" && lot.floor === 3)
-                .map((lot) => {
-                    const place = L.marker([lot.xcoord, lot.ycoord]).addTo(floorLayer20_3)
                     clickMarker(lot, place);
                 })
 
@@ -332,7 +289,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             // === LAYER CONTROLS ===
             const baseLayers = {
                 '20 Patriot Place - Floor 1': floorLayer20_1,
-                '20 Patriot Place - Floor 3': floorLayer20_3,
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
                 '22 Patriot Place - Floor 4': floorLayer22_4,
@@ -365,7 +321,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                     floor,
                     map,
                     floorLayer20_1,
-                    floorLayer20_3,
                     floorLayer22_1,
                     floorLayer22_3,
                     floorLayer22_4,
