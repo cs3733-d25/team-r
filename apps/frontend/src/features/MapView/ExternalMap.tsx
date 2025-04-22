@@ -1,4 +1,6 @@
-import {NavbarMGH} from '@/components/NavbarMGH.tsx';
+import {NavbarMGH} from '@/components/NavBarMGH/NavbarMGH.tsx';
+import {PatientNavbarMGH} from "@/components/NavBarMGH/Patient-NavBarMGH.tsx";
+import {EmployeeNavbarMGH} from "@/components/NavBarMGH/Employee-NavBarMGH.tsx";
 import Directions from '@/features/MapView/Directions.tsx';
 import {APIProvider, Map, useMap} from '@vis.gl/react-google-maps';
 import {useEffect, useState} from 'react';
@@ -82,7 +84,12 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
     const location = useLocation();
+    //props passed from login.tsx
     const status = location.state?.status;
+    const username = location.state?.username;
+    const userType = location.state?.userType;
+
+
 
     /**
      * getBuildingIdentifier function, turns the location string into a building identifier
@@ -121,7 +128,10 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
     return (
         <div className={'flex flex-col h-screen overflow-hidden'}>
-            {status == 'logged-in' ? <NavbarMGH /> : <NavbarMGH page={'home'} />}
+            {status === 'logged-in' && userType === "Employee" ?
+                <NavbarMGH userType={'Employee'}/> : status === 'logged-in' && userType === "Patient" ?
+                    <NavbarMGH userType={'Patient'}/> : status === 'logged-in' && userType === 'Admin' ?
+                        <NavbarMGH userType={'Admin'}/> : <NavbarMGH userType={''} page={'home'} />}
             <div className={'flex-1 w-full relative'}>
                 <APIProvider apiKey={apiKey} libraries={['places']}>
                     <Map

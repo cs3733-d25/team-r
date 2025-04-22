@@ -1,4 +1,4 @@
-import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
+import { NavbarMGH } from '../../../components/NavBarMGH/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx'
 import {PatientRequestForm} from "./PatientRequestForm";

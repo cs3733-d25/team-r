@@ -1,13 +1,14 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button.tsx';
+import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 
 interface NavBarProps {
     page?: string;
+    userType: string;
 }
 
 export function NavbarMGH(props: NavBarProps) {
@@ -33,7 +34,7 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - default*/}
-                {(props.page != "home" && props.page != "login") && (
+                {(props.page != "home" && props.page != "login" && props.userType === 'Patient') && (
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
@@ -43,22 +44,42 @@ export function NavbarMGH(props: NavBarProps) {
                         { label: '22 Patriot Place', href: '/external-map' },
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Faulkner', href: '/external-map' },
-                        { label: 'Edit Map', href: '/edit-map' },
+
                     ]}/>
                     <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
-                        { label: 'Sanitation', href: '/sanitation' },
-                        { label: 'Medical Device', href: '/devicerequest' },
+
                         { label: 'Patient Request', href: '/patientrequestpage' },
-                        { label: 'Patient Transport', href: '/transport' },
-                        { label: 'Prescription', href: '/prescription' },
+
                     ]}/>
 
-                    <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
-                        { label: 'Import a CSV', href: '/csv' },
-                        { label: 'Export CSV', href: '/csv' },
-                    ]
-                    }/>
+
                 </nav>)}
+                {(props.page != "home" && props.page != "login" && props.userType ==='Admin') && (
+                    <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                        <Button variant="ghost" asChild>
+                            <a href="/directory">Directories</a>
+                        </Button>
+                        <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
+                            { label: '20 Patriot Place', href: '/external-map' },
+                            { label: '22 Patriot Place', href: '/external-map' },
+                            { label: 'Chestnut Hill', href: '/external-map' },
+                            { label: 'Faulkner', href: '/external-map' },
+                            { label: 'Edit Map', href: '/edit-map' },
+                        ]}/>
+                        <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
+                            { label: 'Sanitation', href: '/sanitation' },
+                            { label: 'Medical Device', href: '/devicerequest' },
+                            { label: 'Patient Request', href: '/patientrequestpage' },
+                            { label: 'Patient Transport', href: '/transport' },
+                            { label: 'Prescription', href: '/prescription' },
+                        ]}/>
+
+                        <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
+                            { label: 'Import a CSV', href: '/csv' },
+                            { label: 'Export CSV', href: '/csv' },
+                        ]
+                        }/>
+                    </nav>)}
 
                 {/* Icons on right */}
                 {(props.page != "home" && props.page != "login") && (

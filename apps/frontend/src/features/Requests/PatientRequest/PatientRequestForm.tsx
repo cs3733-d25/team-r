@@ -1,6 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
-import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
+import { NavbarMGH } from '../../../components/NavBarMGH/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 import Dropdown from "../../../components/Dropdowns/Department.tsx";
@@ -22,7 +22,7 @@ interface SubmittedPatientRequest{
     time: string;
     status: string;
     request: string;
-    employeeName: string;
+    // employeeName: string;
 }
 
 export const PatientRequestForm = () => {
@@ -37,7 +37,7 @@ export const PatientRequestForm = () => {
         time: new Date().toString(),
         status: '',
         request: ' ',
-        employeeName: '',
+        //employeeName: '',
 
     })
 
@@ -85,7 +85,7 @@ export const PatientRequestForm = () => {
                     time: new Date().toLocaleString(),
                     status: '',
                     request: ' ',
-                    employeeName: ''
+                    //employeeName: ''
 
                 });
             }
@@ -180,21 +180,21 @@ export const PatientRequestForm = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Employee Name */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Employee Name
-                                    <span className="text-red-500">*</span>
-                                </Label>
-                                <Input
-                                    type="text"
-                                    name="employeeName"
-                                    value={formData.employeeName}
-                                    onChange={handleChange}
-                                    placeholder="Enter Employee Name"
-                                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"
-                                    required
-                                />
-                            </div>
+                            {/*<div>*/}
+                            {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
+                            {/*        Employee Name*/}
+                            {/*        <span className="text-red-500">*</span>*/}
+                            {/*    </Label>*/}
+                            {/*    <Input*/}
+                            {/*        type="text"*/}
+                            {/*        name="employeeName"*/}
+                            {/*        value={formData.employeeName}*/}
+                            {/*        onChange={handleChange}*/}
+                            {/*        placeholder="Enter Employee Name"*/}
+                            {/*        className="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-200"*/}
+                            {/*        required*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             {/* Patient ID */}
                             <div>
                                 <Label className="block text-sm font-semibold text-gray-700 mb-2">

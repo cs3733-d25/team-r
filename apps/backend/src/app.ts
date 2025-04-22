@@ -36,7 +36,22 @@ app.use(
 app.use(express.json()); // This processes requests as JSON
 app.use(express.urlencoded({ extended: false })); // URL parser
 app.use(cookieParser()); // Cookie parser
-
+/*
+Start session with cookie
+ */
+//check if secret is defined
+if (secret) {
+  app.use(
+    session({
+      secret: secret,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      },
+    }),
+  );
+}
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
 // TODO: refactor to put all of the requests in a single router
@@ -73,24 +88,6 @@ app.use((err: HttpError, req: Request, res: Response) => {
   // Reply with the error
   res.status(err.status || 500);
 });
-
-/*
-Start session with cookie
- */
-//check if secret is defined
-if (secret) {
-    app.use(
-        session({
-            secret: secret,
-            resave: false,
-            saveUninitialized: false,
-            cookie: {
-                maxAge: 24 * 60 * 60 * 1000, // 24 hours
-            },
-        })
-    );
-}
-
 
 // Export the backend, so that www.ts can start it
 export default app;

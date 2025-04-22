@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
+import {NavbarMGH} from "@/components/NavBarMGH/NavbarMGH.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
@@ -27,12 +27,15 @@ async function handleLogin(){
             password: password
         })
         console.log("username and password sent to the server");
-        console.log("userType: ", response.data.userType);
+        console.log("username: ", response.data.username);
+        console.log("usertype: ", response.data.usertype);
         if(response.data.message == "User verified"){
             console.log("User verified");
             navigate('/external-map', {
                 state: {
                     status: 'logged-in',
+                    username: response.data.username,
+                    userType: response.data.userType,
                     // Add any other props you want to pass
                 }
             })
@@ -66,7 +69,7 @@ async function handleLogin(){
     return (
         <div className={"bg-primary flex-col h-screen"}>
             <div className={""}>
-                <NavbarMGH page={"login"}/>
+                <NavbarMGH userType={''} page={"login"}/>
             </div>
             <div className="flex justify-center items-center bg-[url(/hero-page-3.jpeg)] bg-primary bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
                 <div className="bg-white p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">

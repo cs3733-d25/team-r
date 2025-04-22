@@ -19,13 +19,23 @@ router.get("/", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a patient request");
-  const {priority, status, department, comment, patient, location, request, employeeName} = req.body;
+  const {
+    patientID,
+    priority,
+    status,
+    department,
+    comment,
+    location,
+    request,
+    //employeeName,
+  } = req.body;
+  const employeeName = req.session?.username; //find better way to check null
 
   try {
     console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
-        patient,
+        patientID,
         priority,
         department,
         location,

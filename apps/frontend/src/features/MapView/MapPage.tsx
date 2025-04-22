@@ -1,4 +1,4 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
