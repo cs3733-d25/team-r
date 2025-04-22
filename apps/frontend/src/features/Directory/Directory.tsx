@@ -1,57 +1,94 @@
 import React from "react";
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
-import {allSpecialties} from '@/features/Directory/specialties.ts';
-import {GroupedList, ListGroup, ListItem} from '@/features/Directory/listTypes.ts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs.tsx';
+import { rawDirectoryItems, RawDirectoryItem } from './directoryItems.ts';
+import { HospitalDirectoryData, BuildingData, FloorGroup, DirectoryItem } from './listTypes.ts';
 
-const groupAndSortSpecialties = (specialties: string[]): GroupedList => {
-    // Sort the specialties alphabetically
-    const sortedSpecialties = [...specialties].sort();
-
-    const groupedData: { [key: string]: ListItem[] } = {};
-
-    // Group by the first letter
-    sortedSpecialties.forEach(specialty => {
-        const firstLetter = specialty.charAt(0).toUpperCase();
-        if (!groupedData[firstLetter]) {
-            groupedData[firstLetter] = [];
-        }
-        groupedData[firstLetter].push({ name: specialty });
-    });
-
-    // Convert the grouped object into an array of ListGroup
-    const groupedList: GroupedList = Object.keys(groupedData)
-        .sort() // Sort the letters alphabetically
-        .map(letter => ({
-            letter: letter,
-            items: groupedData[letter],
-        }));
-
-    return groupedList;
+const buildingDisplayNames: { [key: string]: string } = {
+    'PATRIOT_PLACE_20': '20 Patriot',
+    'PATRIOT_PLACE_22': '22 Patriot',
+    'CHESTNUT_HILL': 'Chestnut Hill',
+    'FAULKNER': 'Faulkner',
 };
 
+const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => {
+    const groupedByBuilding: { [building: string]: { [floor: number]: DirectoryItem[] } } = {};
+
+    data.forEach(item => {
+        if (!groupedByBuilding[item.building]) {
+            groupedByBuilding[item.building] = {};
+        }
+        if (!groupedByBuilding[item.building][item.floorNumber]) {
+            groupedByBuilding[item.building][item.floorNumber] = [];
+        }
+        groupedByBuilding[item.building][item.floorNumber].push({ name: item.name });
+    });
+
+    const hospitalDirectory: HospitalDirectoryData = Object.keys(groupedByBuilding)
+        .sort((a, b) => buildingDisplayNames[a].localeCompare(buildingDisplayNames[b]))
+        .map(buildingRawValue => {
+            const floorsData = groupedByBuilding[buildingRawValue];
+            const buildingDisplayName = buildingDisplayNames[buildingRawValue] || buildingRawValue;
+            const floorNumbers = Object.keys(floorsData).map(Number).sort((a, b) => a - b);
+            const floorGroups: FloorGroup[] = floorNumbers.map(floorNumber => ({
+                floor: `Floor ${floorNumber}`,
+                items: floorsData[floorNumber].sort((a, b) => a.name.localeCompare(b.name)),
+            }));
+
+            return {
+                building: buildingDisplayName,
+                buildingValue: buildingRawValue,
+                floors: floorGroups,
+            };
+        });
+
+    return hospitalDirectory;
+};
 
 export function Directory() {
-    const groupedSpecialties = groupAndSortSpecialties(allSpecialties);
+    const hospitalData = groupDirectoryData(rawDirectoryItems);
+    const defaultTabValue = hospitalData.length > 0 ? hospitalData[0].buildingValue : '';
 
     return (
         <>
             <NavbarMGH />
-            <div className="container mx-auto px-4 py-8"> {/* Use a container for better centering and padding */}
-                <h1 className="text-4xl font-bold text-center mb-8">Medical Specialties Directory</h1> {/* Add a title */}
-                <div className="flex flex-col md:flex-row md:gap-8"> {/* Flex container for columns on medium screens and up */}
-                    {groupedSpecialties.map(group => (
-                        <div key={group.letter} className="w-full md:w-1/3 mb-8"> {/* Each group takes full width on small, 1/3 on medium+ */}
-                            <h2 className="text-2xl font-semibold border-b pb-2 mb-4">{group.letter}</h2>
-                            <ul>
-                                {group.items.map((item, itemIndex) => (
-                                    <li key={itemIndex} className="mb-1">
-                                        {item.name}
-                                    </li>
+            <div className="container mx-auto px-4 py-8">
+                <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
+                <Tabs defaultValue={defaultTabValue}>
+                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {hospitalData.map(buildingInfo => (
+                            <TabsTrigger
+                                key={buildingInfo.buildingValue}
+                                value={buildingInfo.buildingValue}
+                                className="text-sm md:text-base"
+                            >
+                                {buildingInfo.building}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+
+                    {hospitalData.map(buildingInfo => (
+                        <TabsContent
+                            key={buildingInfo.buildingValue}
+                            value={buildingInfo.buildingValue}
+                        >
+                            <div className="mt-6">
+                                {buildingInfo.floors.map(floorGroup => (
+                                    <div key={floorGroup.floor} className="mb-8">
+                                        <h2 className="text-2xl font-semibold border-b pb-2 mb-4">{floorGroup.floor}</h2>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
+                                            {floorGroup.items.map((item, itemIndex) => (
+                                                <div key={itemIndex}>
+                                                    {item.name}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 ))}
-                            </ul>
-                        </div>
+                            </div>
+                        </TabsContent>
                     ))}
-                </div>
+                </Tabs>
             </div>
         </>
     );
