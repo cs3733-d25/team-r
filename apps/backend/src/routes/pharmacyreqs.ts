@@ -21,25 +21,43 @@ router.get("/all-requests", async function (req: Request, res: Response) {
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a pharmacy request");
-  const {priority, status, department, comment, patient, location, request, employeeName, patientID,
-  drugName, morningPillCount, middayPillCount, eveningPillCount, nightPillCount, days, numberOfPills, refills, additionalInstructions} = req.body;
+  const {
+    priority,
+    status,
+    department,
+    comment,
+    patient,
+    location,
+    request,
+    employee,
+    patientID,
+    drugName,
+    morningPillCount,
+    middayPillCount,
+    eveningPillCount,
+    nightPillCount,
+    days,
+    numberOfPills,
+    refills,
+    additionalInstructions,
+  } = req.body;
   // console.log(request);
   try {
     await PrismaClient.pharmacyRequest.create({
       data: {
-        employeeName,
+        employeeName: employee,
         priority,
         department,
         patientID,
         // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
         drugName,
-        morningPillCount,
-        middayPillCount,
-        eveningPillCount,
-        nightPillCount,
-        days,
-        numberOfPills,
-        refills,
+        morningPillCount: parseInt(morningPillCount),
+        middayPillCount: parseInt(middayPillCount, 10),
+        eveningPillCount: parseInt(eveningPillCount, 10),
+        nightPillCount: parseInt(nightPillCount, 10),
+        days: parseInt(days),
+        numberOfPills: parseInt(numberOfPills),
+        refills: parseInt(refills),
         additionalInstructions,
         status,
         //assignedEmployee: employeeName //connect later
