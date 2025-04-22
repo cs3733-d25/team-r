@@ -25,7 +25,6 @@ const blankNode:Node = {
     shortName: "",
 }
 
-type AsyncFunc  = () => Promise<void>;
 
 export function MapPage() {
     const location = useLocation();
@@ -35,39 +34,39 @@ export function MapPage() {
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
-    const [pendingNode, setPendingNode] = useState<Node>(blankNode); // store the node attributes until it is ready to be submitted
+    // const [pendingNode, setPendingNode] = useState<Node>(blankNode); // store the node attributes until it is ready to be submitted
     const [lNodes, setLNodes] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
 
     // used by the internal map element to access the pendingNode attributes
-    function handleNodeChange (name:string, value:string|number) {
-        setPendingNode(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    }
+    // function handleNodeChange (name:string, value:string|number) {
+    //     setPendingNode(prev => ({
+    //         ...prev,
+    //         [name]: value
+    //     }));
+    // }
 
-    async function deleteNode (nodeID:string) {
-        // function from mapService that makes axios request
-        await postNodeDeletion(nodeID);
-    }
+    // async function deleteNode (nodeID:string) {
+    //     // function from mapService that makes axios request
+    //     await postNodeDeletion(nodeID);
+    // }
 
-    async function createNode () {
-        // function from mapService that makes an axios post request
-        // this function is redundant but I thought we might need it later
-        console.log("Posting node!");
-        // TODO: check all fields are filled out
-        if(pendingNode.xcoord !== 0) {
-            await postNode(pendingNode)
-        }else{
-            // for testing, wait a second to simulate backend processing
-            await new Promise(resolve => {
-                setTimeout(() => {
-                    console.log("Created node!");
-                    resolve('resolved');
-                }, 1000);
-            });
-        }
-    }
+    // async function createNode () {
+    //     // function from mapService that makes an axios post request
+    //     // this function is redundant but I thought we might need it later
+    //     console.log("Posting node!");
+    //     // TODO: check all fields are filled out
+    //     if(pendingNode.xcoord !== 0) {
+    //         await postNode(pendingNode)
+    //     }else{
+    //         // for testing, wait a second to simulate backend processing
+    //         await new Promise(resolve => {
+    //             setTimeout(() => {
+    //                 console.log("Created node!");
+    //                 resolve('resolved');
+    //             }, 1000);
+    //         });
+    //     }
+    // }
 
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
@@ -97,7 +96,7 @@ export function MapPage() {
         try {
             console.log("parking lot: ", selectedParkinglot);
             console.log("department lot: ", selectedDepartment);
-            setLNodes(createNode());
+            // setLNodes(createNode());
         } catch {}
     };
 
@@ -109,7 +108,7 @@ export function MapPage() {
                 <NavbarMGH />
             </div>
             <div className="flex-1 w-full relative">
-                <InternalMap location={selectedLocation} onDataChange={handleNodeChange} onNodeDelete={deleteNode} loadNodes={lNodes}/>
+                <InternalMap location={selectedLocation} loadNodes={lNodes}/>
                 {/* Overlay sidebar */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>

@@ -9,16 +9,18 @@ import chestnutHill from '../../../public/chestnutHill1.svg'
 import faulkner from '../../../public/faulkner1.svg'
 import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots } from "@/features/MapView/mapService.ts";
+import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
     location: string;
-    onDataChange: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
-    onNodeDelete: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
+    onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
+    onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
     loadNodes?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
+    onNodeSelect?: (nodeID:string) => void;
+    showEdges?: boolean;
 }
 
 const nodePlaceholderOptions = {
@@ -28,7 +30,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, loadNodes}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, loadNodes, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -41,6 +43,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [edges22_3, setEdges22_3] = useState<Edge[]>([]);
     const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
     const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
+    const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -66,13 +69,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
         marker.on('contextmenu', () => {
             if (data.nodeID !== undefined) {
                 // delete the node, and then reload everything from the database
-                onNodeDelete(data.nodeID).then(() => {
-                    loadCheckIn();
-                    loadEntrances();
-                    loadElevators();
-                    loadLots();
-                    // loadEdges();
-                });
+                if(onNodeDelete) {
+                    onNodeDelete(data.nodeID).then(() => {
+                        loadCheckIn();
+                        loadEntrances();
+                        loadElevators();
+                        loadLots();
+                        // loadEdges();
+                    });
+                }
             }
         })
     }
@@ -130,6 +135,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 setEdges22_4(data224);
                 const dataChestnut = await fetchEdgesChestnut();
                 setEdgesChestnut(dataChestnut);
+                setEdgesFaulkner(await fetchEdgesFaulkner());
                 setError(null);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
@@ -173,6 +179,45 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
+            if(showEdges) {
+                edges20_1.map((edge) => {
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer20_1);
+                });
+                edges22_1.map((edge) => {
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_1);
+                });
+                edges22_3.map((edge) => {
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_3);
+                });
+                edges22_4.map((edge) => {
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayer22_4);
+                });
+                edgesChestnut.map((edge) => {
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayerChestnutHill);
+                });
+                edgesFaulkner.map((edge) => {
+                    L.polyline([
+                        [edge.fromX, edge.fromY],
+                        [edge.toX, edge.toY],
+                    ]).addTo(floorLayerFaulkner);
+                });
+            }
+
             // add a default layer
             if (location.includes('20 Patriot Pl'))
                 floorLayer20_1.addTo(map);
@@ -207,10 +252,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
 
                 // update the placeholder
                 nodePlaceholder.setLatLng(e.latlng);
-
-                // send the coordinates to the parent element to store them
-                onDataChange("xcoord", parseFloat(x));
-                onDataChange("ycoord", parseFloat(y));
             });
 
             mapInstance.current = map;
@@ -237,7 +278,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 mapInstance.current = null;
             }
         };
-    }, [pathCoordinates, entrances, checkIn, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut]);
+    }, [pathCoordinates, entrances, checkIn, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner]);
 
     return (
         <div>

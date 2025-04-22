@@ -247,6 +247,30 @@ router.get("/edges-chestnut", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+// TODO: have a single edges path that gets them with a /: request property
+router.get("/edges-faulkner", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "Faulkner",
+        },
+        toNode: {
+          building: "Faulkner",
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    console.log(request);
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 
 router.post("/internal", async (req, res) => {
   try {
@@ -281,6 +305,14 @@ router.post("/create-node", async (req: Request, res: Response) => {
   try {
     const newNode = req.body;
     console.log(newNode);
+    // if there are departments, link them by ID
+    if (newNode.departments) {
+      // map the departments to a list of names so that the departments can be linked
+      let departments = newNode.departments.map((department: string) => ({
+        department: department,
+      }));
+      // newNode.departments = { connect: { { id: "41" }, { id: "55" } };
+    }
     await PrismaClient.node.create({
       data: newNode,
     });

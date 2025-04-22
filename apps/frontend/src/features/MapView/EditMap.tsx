@@ -7,7 +7,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts';
-import { useMapData } from '@/features/MapView/mapService.ts';
+import {postNodeDeletion, useMapData} from '@/features/MapView/mapService.ts';
+import axios from "axios";
 
 interface EditMapProps {
     status?: string;
@@ -35,6 +36,7 @@ export function EditMap({ status }: EditMapProps) {
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(3);
+    const [lNodes, setLNodes] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
 
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
@@ -45,6 +47,11 @@ export function EditMap({ status }: EditMapProps) {
             setAvailableDepartments(departments);
         }
     }, [departments]);
+
+    // function from mapService that makes axios request
+    async function deleteNode (nodeID:string) {
+        await postNodeDeletion(nodeID);
+    }
 
     // map clicks
     useEffect(() => {
@@ -108,26 +115,22 @@ export function EditMap({ status }: EditMapProps) {
         }
 
         const nodeData = {
-            name: nodeName || `${nodeType}-${Date.now()}`,
-            type: nodeType,
-            xPos: coordinates.x,
-            yPos: coordinates.y,
+            nodeID: nodeName || `${nodeType}-${Date.now()}`,
+            nodeType: nodeType,
             building: currentBuilding,
             floor: currentFloor,
+            xcoord: coordinates.x,
+            ycoord: coordinates.y,
+            longName: "",
+            shortName: nodeName,
             departments: selectedDepartments
         };
 
         try {
             // call API to save node
-            const response = await fetch('/api/nodes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(nodeData),
-            });
+            const response = await axios.post('/api/map/create-node', nodeData);
 
-            if (response.ok) {
+            if (response.status === 200) {
                 alert('Node saved successfully!');
                 // reset form
                 setNodeName('');
@@ -149,9 +152,7 @@ export function EditMap({ status }: EditMapProps) {
                 <NavbarMGH />
             </div>
             <div className="flex-1 relative">
-                <InternalMap
-                    location={selectedLocation}
-                />
+                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true}/>
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">

@@ -69,6 +69,13 @@ export const fetchEdgesChestnut = async (): Promise<Edge[]> => {
     return res.data;
 };
 
+export const fetchEdgesFaulkner = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-faulkner');
+    // TODO: create backend request
+    return res.data;
+};
+
+
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);
     const [departments, setDepartments] = useState<{ id: string; name: string }[]>([]);
