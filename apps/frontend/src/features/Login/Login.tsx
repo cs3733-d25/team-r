@@ -4,6 +4,8 @@ import axios from "axios";
 import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {Checkbox} from "@/components/ui/checkbox.tsx";
 
 
 function Login() {
@@ -73,42 +75,44 @@ async function handleLogin(){
             <div className={""}>
                 <NavbarMGH page={"login"}/>
             </div>
-            <div className="flex justify-center items-center bg-[url(/hero-page-3.jpeg)] bg-gray-500 bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
-                <div className="bg-gray-100 p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">
+            <div className="flex justify-center items-center bg-[url(/hero-page-3.jpeg)] bg-primary bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
+                <div className="bg-white p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">
                     <div className={'flex items-center justify-center p-2'}>
                         <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
-                        <Label className={"text-2xl font-bold"}>
+                        <Label className={"text-2xl font-bold text-foreground"}>
                             Mass General Brigham
                         </Label>
                     </div>
                     <form className="space-y-4">
+                        <br />
                         <div>
-                            <label className="block mb-1 text-left">
+                            <Label className="block mb-1 text-left">
                                 Username:
-                                <input
-                                    type="username"
-                                    name="username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full p-2 border border-gray-300 bg-white rounded"
-                                />
-                            </label>
+                            </Label>
+                            <Input
+                                type="username"
+                                name="username"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="w-full p-2 border border-ring bg-input rounded"
+                            />
                         </div>
                         <div>
-                            <label className="block mb-1 text-left">
+                            <Label className="block mb-1 text-left">
                                 Password:
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full p-2 border border-gray-300 bg-white rounded"
-                                />
-                            </label>
+                            </Label>
+                            <Input
+                                type="password"
+                                name="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full p-2 border border-ring bg-input rounded"
+                            />
                         </div>
+                        <br />
                         <div id="rememberMe" className="flex items-center space-x-0.5">
-                            <label className={'text-xs'}>Remember Me:</label>
-                            <input id="checkbox" type="checkbox" name="remember" />
+                            <Label className={'text-xs pr-1'}>Remember Me:</Label>
+                            <Checkbox id="checkbox" name="remember" className={"w-4 transition-all duration-100 text-white"} />
                         </div>
                         <div className="flex justify-between">
                             {/*<button*/}
@@ -124,7 +128,7 @@ async function handleLogin(){
                                 e.preventDefault();
                                 handleLogin();
                             }}
-                                className="px-4 py-2 bg-primary text-white rounded hover:bg-foreground"
+                                className="px-4 py-2 bg-primary text-white rounded hover:bg-foreground transition-colors duration-200"
                             >
                                 Login
                             </Button>
@@ -133,9 +137,9 @@ async function handleLogin(){
                     {incorrectLogin && ( //for adding popup if the user logs in with the wrong username and/or password
                         <div>
                             <br />
-                            <div className={"flex items-center bg-[#ff0000]/50 justify-center w-full rounded-md"}>
-                                <p className={"inline text-xl p-1 font-bold text-[#c50101] opacity-100"}>!</p>
-                                <p className={"inline text-xs p-1 font-bold text-[#151A1A]"}>{incorrectLogin}</p> {/* displays error message from server */}
+                            <div className={"flex items-center bg-accent justify-center w-full rounded-md"}>
+                                <p className={"inline text-xl p-1 font-bold text-destructive opacity-100"}>!</p>
+                                <p className={"inline text-[13px] p-1 font-bold text-foreground font-trade"}>{incorrectLogin}</p> {/* displays error message from server */}
                             </div>
                         </div>
                     )}
