@@ -2,13 +2,13 @@ import React from "react";
 
 export const navUser = {
     Guest: {
-        userType: 'guest'
+        userType: 'Guest'
     },
     Patient: {
-        userType: 'patient'
+        userType: 'Patient'
     },
     Admin: {
-        userType: 'admin'
+        userType: 'Admin'
     }
 }
 

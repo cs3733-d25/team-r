@@ -10,11 +10,11 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 interface LoginProps {
     changeState: (
         value:
-            | ((prevState: { userType: { userType: string } }) => {
-                  userType: { userType: string };
+            | ((prevState: string ) => {
+                   userType: string ;
               })
             | {
-                  userType: { userType: string };
+                   userType: string ;
               }
     ) => void;
 }
@@ -37,10 +37,11 @@ function Login({ changeState }: LoginProps) {
             });
             console.log('username and password sent to the server');
             console.log('username: ', response.data.username);
-            console.log('usertype: ', response.data.usertype);
+            console.log('usertype: ', response.data.userType);
             if (response.data.message == 'User verified') {
                 console.log('User verified');
-                changeState({ userType: {userType: 'admin'} });
+                //changeState({ userType: {userType: 'admin'} });
+                changeState({ userType: response.data.userType });
                 navigate('/external-map', {
                     state: {
                         status: 'logged-in',

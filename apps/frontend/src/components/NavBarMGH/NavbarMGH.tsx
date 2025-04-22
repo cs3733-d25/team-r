@@ -37,7 +37,7 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - Patient*/}
-                {(navUser.userType === 'patient') && (
+                {(navUser.userType === 'Patient') && (
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
@@ -55,7 +55,7 @@ export function NavbarMGH(props: NavBarProps) {
 
                 </nav>)}
                 {/* Desktop Navigation - Admin */}
-                {(navUser.userType === 'admin') && (
+                {(navUser.userType === 'Admin') && (
                     <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                         <Button variant="ghost" asChild>
                             <a href="/directory">Directories</a>
@@ -83,7 +83,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </nav>)}
 
                 {/* Icons on right */}
-                {(navUser.userType != "guest") && (
+                {(navUser.userType != "Guest") && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>

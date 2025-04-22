@@ -25,9 +25,7 @@ import {NavbarContext, navUser} from '@/components/NavBarMGH/navbar-context.ts';
 
 
 function App() {
-    const [state, setState] = useState({
-        userType: navUser.Patient
-    })
+    const [userType, setUserType] = useState(navUser.Guest);
 
     const router = createBrowserRouter([
         {
@@ -37,7 +35,7 @@ function App() {
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login changeState={setState}/> },
+                { path: 'login', element: <Login changeState={setUserType}/> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
@@ -59,7 +57,7 @@ function App() {
 
     return (
         <div>
-            <NavbarContext.Provider value={state.userType}>
+            <NavbarContext.Provider value={userType}>
                 <NavbarMGH />
             </NavbarContext.Provider>
             <RouterProvider router={router} />
