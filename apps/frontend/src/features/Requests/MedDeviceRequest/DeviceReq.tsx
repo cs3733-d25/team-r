@@ -1,4 +1,3 @@
-import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
 import {DeviceReqForm} from "./DeviceReqForm";
 import {DeviceReqPage} from "./DeviceReqPage";
@@ -6,7 +5,6 @@ import {DeviceReqPage} from "./DeviceReqPage";
 export function DeviceReq() {
     return(
         <>
-            <NavbarMGH />
             <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Medical Device Request System</h1>
             <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Owen Miller & Keagan Hitt & Nora Cleary</h2>
             <Tabs defaultValue="deviceForm" className="items-center justify-center w-full px-50">

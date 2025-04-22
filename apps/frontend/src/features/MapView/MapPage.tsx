@@ -1,4 +1,3 @@
-import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
@@ -56,9 +55,6 @@ export function MapPage() {
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
-            <div className={'sticky top-0 z-30'}>
-                <NavbarMGH />
-            </div>
             <div className="flex-1 w-full relative">
                 <InternalMap location={selectedLocation} />
                 {/* Overlay sidebar */}

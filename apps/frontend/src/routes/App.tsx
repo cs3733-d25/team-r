@@ -24,7 +24,7 @@ import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 
 
 function App() {
-    const [userType, setUserType] = useState("Guest");
+    const [userType, setUserType] = useState("Patient");
 
     const router = createBrowserRouter([
         {

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
@@ -68,9 +67,6 @@ function Login({ changeUserType }: LoginProps) {
 
     return (
         <div className={'bg-primary flex-col h-screen'}>
-            <div className={''}>
-                <NavbarMGH userType={''} page={'login'} />
-            </div>
             <div className="flex justify-center items-center bg-[url(/hero-page-3.jpeg)] bg-primary bg-blend-soft-light bg-no-repeat bg-cover h-6/7">
                 <div className="bg-white p-5 rounded-lg shadow-md ring-2 text-center w-24/100 min-w-50">
                     <div className={'flex items-center justify-center p-2'}>

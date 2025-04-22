@@ -1,4 +1,3 @@
-import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
@@ -10,9 +9,6 @@ interface EditMapProps {
 export function EditMap(EditMapProps: EditMapProps) {
     return (
         <div className="flex flex-col h-screen">
-            <div className="sticky top-0 z-30">
-                <NavbarMGH />
-            </div>
             <div className="flex-1 relative">
                 <InternalMap
                     location={
