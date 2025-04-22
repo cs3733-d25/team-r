@@ -57,6 +57,7 @@ const TransportationRequestForm = () => {
             [name]: value
         }));
     };
+
     // Add state for the confirmation card
     const [submittedTransport, setSubmittedTransport] = useState<SubmittedTransport | null>(null);
     const handleSubmit = async (e: React.FormEvent) => {
@@ -112,6 +113,20 @@ const TransportationRequestForm = () => {
             ...prev,
             [name]: value
         }));
+    };
+    const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+    //put this in Dropdown element and it will reset on submit
+    //const [resetDropdowns, setResetDropdowns] = useState(false);
+
+
+    const handleLocationChange = (name: string, value: string) => {
+        setSelectedLocation(value);
+        handleDropdownChange(name, value); // update formData in parent
+    };
+
+
+    const handleDepartmentChange = (name: string, value: string) => {
+        handleDropdownChange(name, value);// update formData in parent
     };
 
     return (
@@ -279,27 +294,59 @@ const TransportationRequestForm = () => {
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
                                 {/* Current Location and Department */}
-                                {/*<div>*/}
-                                {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
-                                {/*        Department*/}
-                                {/*        <span className="text-accent">*</span>*/}
-                                {/*        <span className="text-xs text-gray-500 block">*/}
-                                {/*            Select the department requiring transportation*/}
-                                {/*        </span>*/}
-                                {/*    </Label>*/}
-                                {/*    <Dropdown tableName={"departments"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>*/}
-                                {/*</div>*/}
+                                <div>
+                                    {/* Location dropdown */}
+                                    <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        Location
+                                        <span className="text-red-500">*</span>
+                                        <span className="text-xs text-gray-500 block">
+                                        Select the building making the patient request.
+                                    </span>
+                                    </Label>
+                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} />
+                                    {/*select department based on location*/}
+                                    {selectedLocation && (
+                                        <>
+                                            <Label className="block text-sm font-semibold text-gray-700 mb-2">
+                                                Department
+                                                <span className="text-red-500">*</span>
+                                                <span className="text-xs text-gray-500 block">
+                                            Select a department
+                                        </span>
+                                            </Label>
+                                            {/*handle departments for location*/}
+                                            {selectedLocation === "Patriot Place 22" ? (
+                                                <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
+                                            ) : selectedLocation === "Patriot Place 20" ? (
+                                                <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
+                                            ) : selectedLocation === "Chestnut Hill" ? (
+                                                <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
+                                            ) : null}
+                                        </>
+                                    )}
+                                </div>
 
-                                {/*/!* Current Building *!/*/}
-                                {/*<div className="grid grid-cols-1 md:grid-cols-2 gap-6">*/}
-                                {/*    <div >*/}
-                                {/*        <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
-                                {/*            Current Building*/}
-                                {/*            <span className="text-accent">*</span>*/}
-                                {/*        </Label>*/}
-                                {/*        <Dropdown tableName={"locations"} fieldName={"currentBuilding"} onChange={handleDropdownChange}></Dropdown>*/}
-                                {/*    </div>*/}
-                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                                    {/* Current Building */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {/*<div >*/}
+                                    {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
+                                    {/*        Current Building*/}
+                                    {/*        <span className="text-accent">*</span>*/}
+                                    {/*    </Label>*/}
+                                    {/*    <Dropdown tableName={"building"} fieldName={"currentBuilding"} onChange={handleDropdownChange}></Dropdown>*/}
+                                    {/*</div>*/}
+                                    {/*<div>*/}
+                                    {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
+                                    {/*        Department*/}
+                                    {/*        <span className="text-accent">*</span>*/}
+                                    {/*        <span className="text-xs text-gray-500 block">*/}
+                                    {/*        Select the department requiring transportation*/}
+                                    {/*    </span>*/}
+
+                                    {/*    </Label>*/}
+                                    {/*    <Dropdown tableName={"department"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>*/}
+                                    {/*</div>*/}
+                                    {/*<LocationDepartmentDropdown onChange={handleCurrentDropdownChange} ></LocationDepartmentDropdown>*/}
 
                                     <div>
                                         <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -310,7 +357,7 @@ const TransportationRequestForm = () => {
 
 
                                     </div>
-
+                                </div>
                             </div>
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -349,6 +396,7 @@ const TransportationRequestForm = () => {
                                     Submit Request
                                 </Button>
                             </div>
+
                         </form>
                     </div>
                 </div>

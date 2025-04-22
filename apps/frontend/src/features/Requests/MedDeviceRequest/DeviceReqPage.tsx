@@ -24,7 +24,7 @@ export function DeviceReqPage() {
 
     async function retrieveFromDatabase() {
         try {
-            const response = await axios.get("api/servicereq/")
+            const response = await axios.get("api/devicereq/")
             console.log("response from / get", response.data)
             setDevice(response.data);
             console.log(response.data);
