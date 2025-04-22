@@ -13,13 +13,11 @@ interface EditMapProps {
     status?: string;
 }
 
-// Define proper types for department data
 interface Department {
     id: string;
     name: string;
 }
 
-// Extend Window interface to support our custom property
 declare global {
     interface Window {
         lastClickCoordinates?: {lat: number, lng: number};
@@ -39,20 +37,17 @@ export function EditMap({ status }: EditMapProps) {
     const [currentFloor, setCurrentFloor] = useState<number>(3);
 
     const building = getBuildingFromLocation(selectedLocation);
-
-    // Use the existing useMapData hook
     const { departments } = useMapData(building);
 
-    // Set available departments when departments data loads
+    // set available departments when departments data loads
     useEffect(() => {
         if (departments && departments.length > 0) {
             setAvailableDepartments(departments);
         }
     }, [departments]);
 
-    // Set up custom event listener for map clicks
+    // map clicks
     useEffect(() => {
-        // Custom event for map clicks
         const handleMapClick = (e: CustomEvent<{lat: number, lng: number}>) => {
             if (e.detail) {
                 setCoordinates({
@@ -63,10 +58,9 @@ export function EditMap({ status }: EditMapProps) {
             }
         };
 
-        // Override console.log to capture coordinates
+        // capture coordinates
         const originalConsoleLog = console.log;
         console.log = function(...args: unknown[]) {
-            // Check if this is a coordinate log
             const argStr = String(args[0] || '');
             const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
             if (coordMatch) {
@@ -75,13 +69,12 @@ export function EditMap({ status }: EditMapProps) {
                 setCoordinates({ x: lat, y: lng });
                 setCurrentBuilding(getBuildingConstant(building));
 
-                // Store for potential use elsewhere
                 window.lastClickCoordinates = { lat, lng };
             }
             originalConsoleLog.apply(console, args);
         };
 
-        // Listen for custom map click events
+        // listen for custom map click events
         document.addEventListener('map-click', handleMapClick as EventListener);
 
         return () => {
@@ -125,7 +118,7 @@ export function EditMap({ status }: EditMapProps) {
         };
 
         try {
-            // Call your API to save the node
+            // call API to save node
             const response = await fetch('/api/nodes', {
                 method: 'POST',
                 headers: {
@@ -136,7 +129,7 @@ export function EditMap({ status }: EditMapProps) {
 
             if (response.ok) {
                 alert('Node saved successfully!');
-                // Reset form
+                // reset form
                 setNodeName('');
                 setNodeType('');
                 setSelectedDepartments([]);
