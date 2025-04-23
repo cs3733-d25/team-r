@@ -122,11 +122,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     };
     const loadHallways = async () => {
         try {
-            setHallways(await fetchHallways());
+            const data = await fetchHallways();
+            setHallways(data);
+            console.log("data:", data);
         } catch (err) {
             console.error('Error fetching parking lots:', err);
         }
     }
+    console.log("hallways: ",hallways)
     async function loadAll() {
         await loadCheckIn();
         await loadEntrances();

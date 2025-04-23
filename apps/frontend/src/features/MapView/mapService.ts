@@ -80,7 +80,8 @@ export const fetchEdgesFaulkner = async (): Promise<Edge[]> => {
 };
 
 export const fetchHallways = async (): Promise<Node[]> => {
-    return await axios.get('/api/map/hallways');
+    const res = await axios.get('/api/map/hallways');
+    return res.data;
 }
 
 
