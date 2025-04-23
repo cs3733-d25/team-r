@@ -79,6 +79,10 @@ export const fetchEdgesFaulkner = async (): Promise<Edge[]> => {
     return res.data;
 };
 
+export const fetchHallways = async (): Promise<Node[]> => {
+    return await axios.get('/api/map/hallways');
+}
+
 
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);

@@ -80,11 +80,11 @@ export function EditMap({ status }: EditMapProps) {
                 const lng = parseFloat(coordMatch[2]);
                 setCoordinates({ x: lat, y: lng });
                 setCurrentBuilding(building);
-                console.log(building);
+                // console.log(building);
 
                 window.lastClickCoordinates = { lat, lng };
             }
-            originalConsoleLog.apply(console, args);
+            // originalConsoleLog.apply(console, args);
         };
 
         // listen for custom map click events

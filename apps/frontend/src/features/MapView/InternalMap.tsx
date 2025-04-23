@@ -9,7 +9,7 @@ import chestnutHill from '../../../public/chestnutHill1.svg'
 import faulkner from '../../../public/faulkner1.svg'
 import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner } from "@/features/MapView/mapService.ts";
+import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
 interface InternalMapProps {
@@ -39,6 +39,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [entrances, setEntrances] = useState<Node[]>([]);
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
+    const [hallways, setHallways] = useState<Node[]>([]);
     const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
     const [edges22_1, setEdges22_1] = useState<Edge[]>([]);
     const [edges22_3, setEdges22_3] = useState<Edge[]>([]);
@@ -57,6 +58,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     }, [loadNodes]);
 
 
+    // callback function for clicking on nodes
     function clickMarker(data:Node, marker:L.Marker):void{
         marker.on('click', () => {
             const info = `<p>Name: ${data.shortName}</p>
@@ -118,11 +120,19 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             console.error('Error fetching parking lots:', err);
         }
     };
+    const loadHallways = async () => {
+        try {
+            setHallways(await fetchHallways());
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    }
     function loadAll () {
         loadCheckIn();
         loadEntrances();
         loadElevators();
         loadLots();
+        loadHallways();
     }
     useEffect(() => {
         loadAll();
@@ -164,6 +174,38 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             const floorLayerChestnutHill = L.layerGroup();
             const floorLayerFaulkner = L.layerGroup();
 
+            function getLayer (building:string, floor: number){
+                switch (building) {
+                    case 'Patriot Place 20':
+                        switch (floor) {
+                            case 1:
+                                return floorLayer20_1;
+                            default:
+                                console.log("a node had an invalid floor number");
+                                return null;
+                        }
+                    case 'Patriot Place 22':
+                        switch (floor) {
+                            case 1:
+                                return floorLayer22_1;
+                            case 3:
+                                return floorLayer22_3;
+                            case 4:
+                                return floorLayer22_4;
+                            default:
+                                console.log("a node had an invalid floor number");
+                                return null;
+                        }
+                    case 'Chestnut Hill':
+                        return floorLayerChestnutHill;
+                    case 'Faulkner':
+                        return floorLayerFaulkner;
+                    default:
+                        console.log("a node had an invalid building");
+                        return null;
+                }
+            }
+
             const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
 
 
@@ -187,6 +229,20 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
             if(showEdges) {
+                // draw nodes
+                if(hallways.length > 0) {
+                    hallways.map((node) => {
+                        // put it on the correct floor
+                        const layer = getLayer(node.building, node.floor);
+                        // only place it if the floor is valid
+                        if (layer) {
+                            const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                            clickMarker(node, place);
+                        }
+                    });
+                }
+
+                // draw edges
                 edges20_1.map((edge) => {
                     L.polyline([
                         [edge.fromX, edge.fromY],
@@ -286,7 +342,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 mapInstance.current = null;
             }
         };
-    }, [pathCoordinates, entrances, checkIn, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner]);
+    }, [pathCoordinates, entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner]);
 
     return (
         <div>
