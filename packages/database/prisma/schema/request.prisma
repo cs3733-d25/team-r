@@ -1,0 +1,105 @@
+model MedicalDeviceRequest {
+  medicalDeviceId   Int          @id @default(autoincrement())
+  medicalDeviceType String
+  currentLocation   String
+  currentStatus     String
+  lastUpdated       DateTime     @default(now())
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model SanitationRequest {
+  requestId      Int             @id @default(autoincrement())
+  sanitationType String
+  priority       String
+  department     String?
+  roomNumber     String
+  requestTime    DateTime        @default(now())
+  comments       String?
+  status         String
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  location       String
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model DeviceRequest {
+  requestId    Int             @id @default(autoincrement())
+  deviceType   String
+  priority     String
+  room         String
+  department   String
+  requestTime  DateTime        @default(now())
+  comments     String?
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  status       String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+
+}
+
+model PharmacyRequest {
+  prescriptionID         Int             @id @default(autoincrement())
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  priority               String
+  department             String
+  patientID              String
+  // patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+  drugName               String
+  morningPillCount       Int
+  middayPillCount        Int
+  eveningPillCount       Int
+  nightPillCount         Int
+  days                   Int
+  numberOfPills          Int
+  refills                Int
+  additionalInstructions String
+  status                 String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model PatientRequest {
+  patientRequestID Int                @id @default(autoincrement())
+  patientID        String
+  patient          Patient            @relation(fields: [patientID], references: [id])
+  priority         String
+  department       String
+  location         String
+  status           String
+  requestTime      DateTime           @default(now())
+  request          String
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  comment          String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model TransportRequest {
+  employeeRequestID  Int      @id @default(autoincrement())
+  patientID          String
+  patient            Patient  @relation(fields: [patientID], references: [id])
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  transportationType String
+  currentBuilding    String
+  desiredBuilding    String
+
+  priority    String
+  department  String
+  comments    String
+  status      String
+  requestTime DateTime        @default(now())
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}

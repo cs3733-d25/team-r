@@ -38,20 +38,20 @@ export function AllPatientRequests() {
         <>
 
 
-            <Table className = {"mx-auto w-200"}>
-                <TableHeader className = {"border-b"}>
-                <TableRow className={'text-lg border-b'}>
-                    <TableHead className={"pl-5"}>Employee</TableHead>
-                    <TableHead className={"pl-5"}>Patient ID</TableHead>
-                    <TableHead className={"pl-5"}>Request</TableHead>
-                    <TableHead className={"pl-5"}>Priority</TableHead>
-                    <TableHead className={"pl-5"}>Department</TableHead>
-                    <TableHead className={"pl-5"}>Location</TableHead>
-                    <TableHead className={"pl-5"}>Status</TableHead>
+            <Table>
+                <TableHeader >
+                <TableRow >
+                    <TableHead className={"text-center"} >Employee</TableHead>
+                    <TableHead className={"text-center"}>Patient ID</TableHead>
+                    <TableHead className={"text-center"}>Request</TableHead>
+                    <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Department</TableHead>
+                    <TableHead className={"text-center"}>Location</TableHead>
+                    <TableHead className={"text-center"}>Status</TableHead>
 
                 </TableRow>
                 </TableHeader>
-                <tbody className = {"text-center"}>
+                <TableBody className={"text-center"}>
                 {patientRequest.map((row,index) =>
                 {
                     return(
@@ -62,7 +62,7 @@ export function AllPatientRequests() {
                                 <TableCell>{row.request}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.department}</TableCell>
-                                <TableCell>{row.department}</TableCell>
+                                <TableCell>{row.location}</TableCell>
                                 <TableCell>{row.status}</TableCell>
 
                             </TableRow>
@@ -71,7 +71,7 @@ export function AllPatientRequests() {
                     );
 
                 })}
-                </tbody>
+                </TableBody>
             </Table>
         </>
     )

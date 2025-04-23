@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
@@ -12,28 +12,53 @@ import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequest
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
-import {InternalMapNew} from "@/features/MapView/InternalMapNew.tsx";
+import {MapPage} from "@/features/MapView/MapPage.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx";
 import SanitationRequestTabs from "@/features/Requests/SanitationForm/SanitationTabs.tsx";
 import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
 import {EditMap} from "@/features/MapView/EditMap.tsx";
-
+import RequestPage  from "@/features/Requests/RequestPage.tsx";
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
+import axios from "axios";
 
 function App() {
+    const [userType, setUserType] = useState("Guest");
+    const [session, setSession] = useState(null);
+
+    async function getSession() {
+        try {
+            const response = await axios.get('api/login/session');
+            const userType = response.data.userType;
+            setUserType(userType);
+            console.log(response.data);
+            console.log("User type:", userType, "- Keagan");
+            setSession(response.data.username);
+        } catch (error) {
+            console.log('error in retrieve:', error);
+        }
+    }
+
+    useEffect(() => {
+        getSession();
+    }, []);
+
+
     const router = createBrowserRouter([
         {
             path: '/',
             errorElement:
-                <p className={'font-trade'}>Page not found</p>,
+                <div className={"bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover"}>
+                    <p className={'font-trade'}>Page not found</p>
+                </div>,
             children: [
-                { index: true, element: <HomeMain /> },
-                { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login /> },
+                { index: true, element: <HomeMain userType={userType} /> },
+                { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
+                { path: 'login', element: <Login onLogin={getSession} /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
-                { path: 'internal-map', element: <InternalMapNew /> },
+                { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
                 { path: 'csv', element: <CSVTabPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
@@ -44,11 +69,16 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'requests', element: <RequestPage /> }
             ],
         },
     ]);
 
-    return <RouterProvider router={router} />;
+    return (
+        <div>
+            <NavbarMGH userType={userType}/>
+            <RouterProvider router={router} />
+        </div>);
 }
 
 export default App;

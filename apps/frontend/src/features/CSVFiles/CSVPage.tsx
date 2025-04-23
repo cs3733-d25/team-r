@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input.tsx"
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
-
 export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [csvfile, setFile] = useState<File | null>(null);
@@ -14,12 +13,6 @@ export function CSVPage() {
 
 
 
-    function displayTable() {
-        useEffect(() => {
-            retrieveFromDatabase()
-        }, []);
-    }
-    displayTable();
 
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0]) {
@@ -30,6 +23,7 @@ export function CSVPage() {
 
     async function retrieveFromDatabase() {
         try{
+            console.log("Retrieving from database! -Keagan")
             const response = await axios.get("/api/csv/")
             console.log("response from / get", response.data)
             setDirectoryTable(response.data.currentDirectory);
@@ -114,7 +108,7 @@ export function CSVPage() {
         }
     }
     return (
-        <div >
+        <div>
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br />
                 <div>

@@ -4,7 +4,9 @@
   "version": "1.0.1",
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
-    "floorseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/floorplanSeed.ts"
+    "floorseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/floorplanSeed.ts",
+    "directoryseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/directorySeed.ts",
+    "departmentseed": "dotenv -e ${PROJECT_CWD}/.env prisma db seed --preview-feature --schema=prisma/departmentSeed.ts"
   },
   "scripts": {
     "dev": "dotenv -e .env -- turbo run dev",
@@ -20,11 +22,15 @@
     "setup": "bash ./scripts/setup.sh",
     "deploy": "bash ./scripts/deploy.sh",
     "prepare": "husky",
-    "seed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
-    "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts"
+    "userseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts",
+    "directoryseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/directorySeed.ts",
+    "departmentseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/departmentSeed.ts",
+    "seed": "yarn floorseed && yarn directoryseed && yarn departmentseed && yarn userseed"
   },
   "devDependencies": {
     "@prisma/client": "^6.5.0",
+    "@types/express-session": "1.17.0",
     "@types/multer": "^1",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.0",
@@ -52,8 +58,10 @@
     "common": "workspace:*",
     "dotenv": "^16.4.7",
     "dotenv-cli": "^7.4.4",
+    "express-session": "1.17.0",
     "multer": "^1.4.5-lts.2",
     "react": "^19.1.0",
+    "react-bootstrap-icons": "^1.11.5",
     "react-dom": "^19.1.0"
   },
   "resolutions": {
