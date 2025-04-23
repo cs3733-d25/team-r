@@ -5,6 +5,7 @@ import { Bell, Menu, User } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
+import axios from "axios";
 
 interface NavBarProps {
     page?: string;
@@ -14,6 +15,17 @@ interface NavBarProps {
 export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
+
+    async function handleLogout() {
+        try {
+            console.log("Logging user out");
+            axios.post('/api/login/reset');
+        } catch (error) {
+            console.log("Error: ", error);
+        }
+    }
+
+    console.log("HERE IT IS: ", props.userType);
 
     return (
         // main header
@@ -80,7 +92,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </nav>)}
 
                 {/* Icons on right */}
-                {(props.userType != "Guest") && (
+                {(props.userType) && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
@@ -112,7 +124,10 @@ export function NavbarMGH(props: NavBarProps) {
                                 </Button>
                                 <div className="border-t"></div>
                                 <Button variant={'ghostDestructive'}>
-                                    <a href={'/'}>Sign out</a>
+                                    <a
+                                        href={"/"}
+                                        onClick={(e) => handleLogout()}
+                                    >Sign out</a>
                                 </Button>
                             </div>
                         </PopoverContent>
@@ -129,7 +144,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>)}
                 {/* Only display login button in logged-out home page */}
-                {(props.page == "home" && props.userType == "guest") && (
+                {(!props.userType) && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>

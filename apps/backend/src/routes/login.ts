@@ -57,4 +57,10 @@ router.get("/session", async (req, res) => {
   }
 });
 
+router.post("/reset", async (req, res) => {
+  if (req.session) {
+    req.session.destroy(() => {});
+  }
+})
+
 export default router;
