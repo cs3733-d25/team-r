@@ -1,15 +1,16 @@
 import express, { Router, Request, Response } from "express";
-import { findPath } from "./algoSelection.ts";
-import PrismaClient from "../bin/prisma-client.ts";
-import { Prisma } from "database";
+import { findPath } from "./algoSelection";
+import PrismaClient from "../bin/prisma-client";
+
 const router: Router = express.Router();
 
-router.post("/reception", async (req: Request, res: Response) => {
+router.post("/reception", async (req: Request, res: Response): Promise<void> => {
   try {
     const { department, location } = req.body;
 
     if (!department || !location ) {
-      return res.status(400).json({ error: "Missing required fields" });
+      res.status(400).json({ error: "Missing required fields" });
+      return;
     }
 
     const response = await PrismaClient.directory.findFirst({
@@ -21,7 +22,8 @@ router.post("/reception", async (req: Request, res: Response) => {
     });
 
     if (!response) {
-      return res.status(404).json({ error: "Department not found" });
+      res.status(404).json({ error: "Department not found" });
+      return;
     }
 
     res.json({ receptionNodeID: response.receptionNodeID });
