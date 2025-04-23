@@ -57,6 +57,8 @@ export function MapPage() {
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
+    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
+
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
@@ -247,6 +249,23 @@ export function MapPage() {
                                 <Button type="button" onClick={() => processDirections(["swEntrance", "100.00F", "100.09", "100.10"])}>Get Directions</Button>
                             </div>
                             <div className="flex flex-col space-y-2">
+                                {/* Algorithm selector */}
+                                <div className="flex flex-col space-y-2">
+                                    <Label>Algorithm</Label>
+                                    <Select
+                                        value={algorithm}
+                                        onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
+                                    >
+                                        <SelectTrigger><SelectValue placeholder="Select algorithm"/></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="dfs">DFS</SelectItem>
+                                                <SelectItem value="bfs">BFS</SelectItem>
+                                                <SelectItem value="aStar">A* Search</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                                 <Label className={'px-2 mb-3'}>Floor selection</Label>
                                 <div className="flex flex-col space-y-2">
                                     {availableFloors.map(floor => (
