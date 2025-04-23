@@ -10,12 +10,6 @@ export function CSVPage() {
     const [csvfile, setFile] = useState<File | null>(null);
 
 
-    function displayTable() {
-        useEffect(() => {
-            retrieveFromDatabase()
-        }, []);
-    }
-    displayTable();
 
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0]) {
@@ -26,6 +20,7 @@ export function CSVPage() {
 
     async function retrieveFromDatabase() {
         try{
+            console.log("Retrieving from database! -Keagan")
             const response = await axios.get("/api/csv/")
             console.log("response from / get", response.data)
             setDirectoryTable(response.data.currentDirectory);
@@ -49,7 +44,7 @@ export function CSVPage() {
 
 
                 console.log("CSV file is sent off! :)", sendOff);
-                displayTable();
+                retrieveFromDatabase();
             } catch (error) {
                 console.error("CSV File Sendoff didn't work :(")
             }
