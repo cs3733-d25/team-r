@@ -21,7 +21,8 @@ interface InternalMapProps {
     onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
     onEdgeDelete?: (edgeID:string) => Promise<void>;
-    finishRequest?: Promise<void | AxiosResponse<any, any>>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
+    promiseNodeCreate?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
+    promiseEdgeCreate?: Promise<void>;
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
 }
@@ -33,7 +34,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, finishRequest, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -53,14 +54,24 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        if(finishRequest) {
-            console.log(finishRequest);
-            finishRequest.then(async () => {
+        if(promiseNodeCreate) {
+            console.log(promiseNodeCreate);
+            promiseNodeCreate.then(async () => {
                 await loadAll();
                 console.log("loaded all stuff");
             });
         }
-    }, [finishRequest]);
+    }, [promiseNodeCreate]);
+
+    useEffect(() => {
+        if(promiseEdgeCreate) {
+            console.log(promiseEdgeCreate);
+            promiseEdgeCreate.then(async () => {
+                await loadAll();
+                console.log("loaded all stuff");
+            });
+        }
+    }, [promiseEdgeCreate]);
 
 
     // callback function for clicking on nodes

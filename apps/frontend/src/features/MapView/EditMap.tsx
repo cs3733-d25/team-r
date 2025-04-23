@@ -37,6 +37,7 @@ export function EditMap({ status }: EditMapProps) {
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
+    const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
 
     const building = getBuildingFromLocation(selectedLocation);
@@ -191,13 +192,13 @@ export function EditMap({ status }: EditMapProps) {
 
         try {
             // call API to save edge
-            // split the promise so that the internal map can update
             const promise = axios.post('/api/map/create-edge', edgeData);
-            setRequestPromise(async () => {await promise});
+            // split the promise so that the internal map can update
+            setEdgeCreatePromise(async () => {await promise});
             const response = await promise;
 
             if (response.status === 200) {
-                alert('Edge saved successfully!');
+                // alert('Edge saved successfully!');
                 // reset form
                 setEdgeNodes([]);
             } else {
@@ -215,7 +216,7 @@ export function EditMap({ status }: EditMapProps) {
                 <NavbarMGH />
             </div>
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} onLocationChange={setLocation} onNodeDelete={deleteNode} finishRequest={requestPromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
+                <InternalMap location={selectedLocation} onLocationChange={setLocation} onNodeDelete={deleteNode} promiseNodeCreate={requestPromise} promiseEdgeCreate={edgeCreatePromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">

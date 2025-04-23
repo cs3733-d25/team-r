@@ -191,7 +191,11 @@ router.get("/edges-22-1", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request[0].fromNode.xcoord);
+    if (request.length === 0) {
+      console.log("no edges on that floor");
+    } else {
+      console.log("found " + request.length + " edges");
+    }
     res.json(request);
   } catch (err) {
     console.error(err);
