@@ -98,19 +98,14 @@ export function useMapData(selectedBuilding: string) {
 
 // Fetch path from backend routing service using DFS/BFS/A*
 export const fetchPath = async (
-  startingPoint: string,
-  endingPoint: string,
-  algorithm: 'dfs' | 'bfs' | 'aStar'
+    startingPoint: string,
+    endingPoint: string,
+    algorithm: 'dfs' | 'bfs' | 'aStar'
 ): Promise<string[]> => {
-  try {
     const response = await axios.post<{ nodeIDs: string[] }>('/api/algo', {
-      startingPoint,
-      endingPoint,
-      algorithm,
+        startingPoint,     // <-- send the real variable
+        endingPoint,
+        algorithm,
     });
     return response.data.nodeIDs;
-  } catch (error) {
-    console.error('Error fetching path:', error);
-    throw error;
-  }
 };
