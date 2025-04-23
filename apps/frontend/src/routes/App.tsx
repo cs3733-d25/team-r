@@ -49,7 +49,9 @@ function App() {
         {
             path: '/',
             errorElement:
-                <p className={'font-trade'}>Page not found</p>,
+                <div className={"bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover"}>
+                    <p className={'font-trade'}>Page not found</p>
+                </div>,
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
