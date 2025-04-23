@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input.tsx"
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 export function CSVPage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
     const [csvfile, setFile] = useState<File | null>(null);
@@ -82,7 +81,6 @@ export function CSVPage() {
     }
     return (
         <div className={'flex-col'} >
-            <NavbarMGH />
             <h1 className = {"bold text-3xl text-center"}>Import/Export CSV Files</h1>
             <br/>
             <h2 className = {"text-xl text-center"}>Directory Table:</h2>
