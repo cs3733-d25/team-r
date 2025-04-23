@@ -112,7 +112,7 @@ export function MapPage() {
             // 1) get the sequence of node IDs
             const nodeIDs = await fetchPath(
                 selectedParkinglot,
-                selectedDepartment,
+                receptionNodeID,
                 algorithm
             );
             console.log('got nodeIDs:', nodeIDs);

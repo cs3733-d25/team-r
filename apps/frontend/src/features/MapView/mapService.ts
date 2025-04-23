@@ -102,6 +102,16 @@ export function useMapData(selectedBuilding: string) {
 
     return { parkingLots, departments };
 }
+/*
+ //change the end node to receptionNodeID based on department
+            const response = await axios.post('/api/algo/reception', {
+                department: selectedDepartment,
+                location: selectedLocation,
+            });
+            const receptionNodeID = response.data.receptionNodeID;
+            console.log('in handle get directions receptionNodeID: ', receptionNodeID);
+
+ */
 
 // Fetch path from backend routing service using DFS/BFS/A*
 export const fetchPath = async (
@@ -110,7 +120,7 @@ export const fetchPath = async (
     //algorithm: 'dfs' | 'bfs' | 'aStar'
     algorithm: string
 ): Promise<string[]> => {
-    const resp = await axios.post('/api/algo/', {
+    const resp = await axios.post('/api/algo/fetchPath', {
         startingPoint,
         endingPoint,
         algorithm,
