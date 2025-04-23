@@ -14,6 +14,7 @@ import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import {postNode, postNodeDeletion, useMapData} from '@/features/MapView/mapService';
 import {Node} from "../../../../backend/src/routes/mapData.ts";
+import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number, building?: string) => void;
@@ -57,6 +58,7 @@ export function MapPage() {
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
+    const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
 
 
@@ -241,6 +243,19 @@ export function MapPage() {
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
+
+                                {/* accessible route not implemented in backend yet */}
+                                <div className="flex items-center space-x-2 pt-2">
+                                    <Checkbox
+                                        id={"accessible-route"}
+                                        checked={accessibleRoute}
+                                        onCheckedChange={(checked) => setAccessibleRoute(checked === true)}
+                                    />
+                                    <Label htmlFor={"accessible-route"} className="text-sm font-medium">
+                                        Show Accessible Route
+                                    </Label>
+                                </div>
+
                                 </Select>
                                 {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
                                 {/* test paths: */}
