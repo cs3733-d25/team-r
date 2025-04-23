@@ -33,8 +33,7 @@ function App() {
             const userType = response.data.userType;
             setUserType(userType);
             console.log(response.data);
-            console.log("User type 1:", response.data.userType);
-            console.log("User type:", userType);
+            console.log("User type:", userType, "- Keagan");
             setSession(response.data.username);
             setUsername(response.data.username);
         } catch (error) {
@@ -55,8 +54,8 @@ function App() {
                     <p className={'font-trade'}>Page not found</p>
                 </div>,
             children: [
-                { index: true, element: <HomeMain /> },
-                { path: 'home', element: <HomeMain status={'logged-in'} /> },
+                { index: true, element: <HomeMain userType={userType} /> },
+                { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
                 { path: 'login', element: <Login onLogin={getSession} /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },

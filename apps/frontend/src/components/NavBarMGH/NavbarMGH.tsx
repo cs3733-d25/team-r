@@ -219,7 +219,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </div>
                 )}
                 {/* Only display login button in logged-out home page */}
-                {!props.userType && (
+                {(!props.userType || props.userType === "Guest") && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>

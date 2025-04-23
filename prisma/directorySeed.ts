@@ -3,13 +3,15 @@ import client from "../apps/backend/src/bin/prisma-client.ts";
 async function main() {
     await client.directory.createMany({
         data: [
-            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "Patriot Place 20"},
-            {name: "Pharmacy", floorNumber: 1, building: "Patriot Place 20"},
-            {name: "Radiology", floorNumber: 1, building: "Patriot Place 20"},
-            {name: "Cardiovascular Services", floorNumber: 1, building: "Patriot Place 20"},
-            {name: "Urology", floorNumber: 1, building: "Patriot Place 20"},
-            {name: "Urgent Care Center", floorNumber: 1, building: "Patriot Place 20"},
+            //Patriot Place 20 Floor 1
+            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "Patriot Place 20", recepetionNodeID: '130.01'},
+            {name: "Pharmacy", floorNumber: 1, building: "Patriot Place 20", recepetionNodeID: '130.01'},
+            {name: "Radiology", floorNumber: 1, building: "Patriot Place 20", recepetionNodeID: '110.01'},
+            {name: "Cardiovascular Services", floorNumber: 1, building: "Patriot Place 20", recepetionNodeID: '120.01'},
+            {name: "Urology", floorNumber: 1, building: "Patriot Place 20", recepetionNodeID: '100.00F'},
+            {name: "Urgent Care Center", floorNumber: 1, building: "Patriot Place 20", recepetionNodeID: '130.01'},
 
+            //Patriot Place 20 Floor 2
             {name: "Orthopaedics", floorNumber: 2, building: "Patriot Place 20"},
             {name: "Hand and Upper Extremity", floorNumber: 2, building: "Patriot Place 20"},
             {name: "Arthroplasty", floorNumber: 2, building: "Patriot Place 20"},
@@ -26,17 +28,19 @@ async function main() {
             {name: "Clinical Lab", floorNumber: 2, building: "Patriot Place 20"},
             {name: "Surgi-Care", floorNumber: 2, building: "Patriot Place 20"},
 
-            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "ENT", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20"},
-            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20"},
+            //Patriot Place 20 Floor 3
+            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
+            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", recepetionNodeID: '3000A'},
 
+            //Patriot Place 20 Floor 4
             {name: "Electromyography", floorNumber: 4, building: "Patriot Place 20"},
             {name: "Nutrition", floorNumber: 4, building: "Patriot Place 20"},
             {name: "Pain Medicine", floorNumber: 4, building: "Patriot Place 20"},
@@ -44,9 +48,11 @@ async function main() {
             {name: "Pulmonary Function Testing", floorNumber: 4, building: "Patriot Place 20"},
             {name: "Day Surgery Center", floorNumber: 4, building: "Patriot Place 20"},
 
+            //Patriot Place 22 Floor 1
             {name: "MassGeneral Hospital for Children", floorNumber: 1, building: "Patriot Place 22"},
             {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Patriot Place 22"},
-          
+
+            ////Patriot Place 22 Floor 3
             {name: "Multi Specialty Clinic", floorNumber: 3, building: "Patriot Place 22"},
             {name: "Allergy", floorNumber: 3, building: "Patriot Place 22"},
             {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Patriot Place 22"},
@@ -64,36 +70,37 @@ async function main() {
             {name: "Women's Health", floorNumber: 3, building: "Patriot Place 22"},
             {name: "Patient Financial Services", floorNumber: 3, building: "Patriot Place 22"},
 
-            {name: "Blood Draw/Phlebotomy", floorNumber: 4, building: "Patriot Place 22"},
-            {name: "Community Room", floorNumber: 4, building: "Patriot Place 22"},
-            {name: "Primary Care", floorNumber: 4, building: "Patriot Place 22"},
+            //Patriot Place 22 Floor 4
+            {name: "Blood Draw/Phlebotomy", floorNumber: 4, building: "Patriot Place 22", recepetionNodeID: 'checkIn4000B'},
+            {name: "Community Room", floorNumber: 4, building: "Patriot Place 22", recepetionNodeID: 'checkIn4000B'},
+            {name: "Primary Care", floorNumber: 4, building: "Patriot Place 22", recepetionNodeID: 'checkIn4000B'},
 
-            {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill"},
-            {name: "Multi-Specialty Clinic", floorNumber: 1, building: "Chestnut Hill"},
-            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Chestnut Hill"},
+            {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Multi-Specialty Clinic", floorNumber: 1, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
 
-            {name: "Backup Child Care Center", floorNumber: 2, building: "Chestnut Hill"},
-            {name: "Crohn's and Colitis Center", floorNumber: 2, building: "Chestnut Hill"},
-            {name: "Endoscopy Center", floorNumber: 2, building: "Chestnut Hill"},
-            {name: "Patient Financial Services", floorNumber: 2, building: "Chestnut Hill"},
-            {name: "Rehabilitation Services", floorNumber: 2, building: "Chestnut Hill"},
-
-
-            {name: "Allergy and Clinical Immunology", floorNumber: 3, building: "Chestnut Hill"},
-            {name: "Brigham Dermatology Associates (BDA)", floorNumber: 3, building: "Chestnut Hill"},
-            {name: 'Brigham Psychiatric Specialties', floorNumber: 3, building: "Chestnut Hill"},
-            {name: "Center for Pain Medicine", floorNumber: 3, building: "Chestnut Hill"},
-            {name: "Pharmacy", floorNumber: 3, building: "Chestnut Hill"},
+            {name: "Backup Child Care Center", floorNumber: 2, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Crohn's and Colitis Center", floorNumber: 2, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Endoscopy Center", floorNumber: 2, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Patient Financial Services", floorNumber: 2, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Rehabilitation Services", floorNumber: 2, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
 
 
-            {name: "Brigham Physicians Group (BPG)", floorNumber: 4, building: "Chestnut Hill"},
-            {name: 'Gretchen S. and Edward A. Fish Center for Women\'s Health', floorNumber: 4, building: "Chestnut Hill"},
-            {name: 'Osher Clinical Center for Integrative Health', floorNumber: 4, building: "Chestnut Hill"},
+            {name: "Allergy and Clinical Immunology", floorNumber: 3, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Brigham Dermatology Associates (BDA)", floorNumber: 3, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: 'Brigham Psychiatric Specialties', floorNumber: 3, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Center for Pain Medicine", floorNumber: 3, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Pharmacy", floorNumber: 3, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
 
-            {name: "Allergy and Clinical Immunology", floorNumber: 5, building: "Chestnut Hill"},
-            {name: 'Brigham Obstetrics and Gynecology Group (BOGG)', floorNumber: 5, building: "Chestnut Hill"},
-            {name: 'Brigham Physicians Group (BPG)', floorNumber: 5, building: "Chestnut Hill"},
-            {name: "Radiology", floorNumber: 5, building: "Chestnut Hill"},
+
+            {name: "Brigham Physicians Group (BPG)", floorNumber: 4, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: 'Gretchen S. and Edward A. Fish Center for Women\'s Health', floorNumber: 4, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: 'Osher Clinical Center for Integrative Health', floorNumber: 4, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+
+            {name: "Allergy and Clinical Immunology", floorNumber: 5, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: 'Brigham Obstetrics and Gynecology Group (BOGG)', floorNumber: 5, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: 'Brigham Physicians Group (BPG)', floorNumber: 5, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
+            {name: "Radiology", floorNumber: 5, building: "Chestnut Hill", recepetionNodeID: 'specialtyCheckIn' },
 
             {name: "Admitting/Registration", floorNumber: 1, building: "Faulkner"},
             {name: "Atrium Cafe", floorNumber: 1, building: "Faulkner"},

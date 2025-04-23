@@ -1,10 +1,12 @@
 import prismaClient from "../bin/prisma-client";
-import { Stack } from "./dataStructures.ts";  // update path if yours differs
+import { Stack,  } from "./dataStructures.ts";  // update path if yours differs
 import { Graph } from "./Graph";
+import {PathfindingAlgorithm} from "./algoSelection.ts";
 
-export default class DFS {
 
-  private graph: Graph;
+export default class DFS implements PathfindingAlgorithm {
+  graph: Graph;
+  private stack: Stack<string[]> | undefined;
 
   constructor(graph: Graph) {
     this.graph = graph;
@@ -12,11 +14,12 @@ export default class DFS {
 
   public findPath(start: string, end: string): string[] {
     const visited = new Set<string>();
-    const stack = new Stack<string[]>();
-    stack.push([start]);
+    //const stack = new Stack<string[]>();
+    this.stack = new Stack<string[]>();
+    this.stack.push([start]);
 
-    while (!stack.isEmpty()) {
-      const path = stack.pop()!;
+    while (!this.stack.isEmpty()) {
+      const path = this.stack.pop()!;
       const current = path[path.length - 1];
 
       if (current === end) return path;
@@ -25,7 +28,7 @@ export default class DFS {
         visited.add(current);
         for (const neighbor of this.graph.getNeighbors(current)) {
           if (!visited.has(neighbor)) {
-            stack.push([...path, neighbor]);
+            this.stack.push([...path, neighbor]);
           }
         }
       }

@@ -1,11 +1,13 @@
-import express, { Router, Request, Response } from "express";
-import prismaClient from "../bin/prisma-client.ts";
-const router: Router = express.Router();
-
+// import express, { Router, Request, Response } from "express";
+// import prismaClient from "../bin/prisma-client.ts";
+// const router: Router = express.Router();
 import { Graph } from "./Graph";
+import {Queue, Stack} from "./dataStructures.ts";
+import {PathfindingAlgorithm} from "./algoSelection.ts";
 
-export class BFS {
-  private graph: Graph;
+export class BFS implements PathfindingAlgorithm {
+  graph: Graph;
+  private queue: Queue<string[]> | undefined;
 
   constructor(graph: Graph) {
     this.graph = graph;
@@ -13,13 +15,15 @@ export class BFS {
 
   public findPath(start: string, end: string): string[] {
     const visited = new Set<string>();
-    const queue: string[][] = [[start]];
+    //const queue = new Queue<string[]>();
+    //const queue: string[][] = [[start]]; //now using Queue class
+    this.queue = new Queue<string[]>();
+    this.queue.enqueue([start]);
 
-    while (queue.length > 0) {
-      const path = queue.shift();
-      if (!path) continue;
-
+    while (!this.queue.isEmpty()) {
+      const path = this.queue.dequeue()!;
       const currentID = path[path.length - 1];
+      if (!path) continue;
       if (currentID === end) return path;
 
       if (!visited.has(currentID)) {
@@ -28,7 +32,7 @@ export class BFS {
         const neighbors = this.graph.getNeighbors(currentID);
         for (const neighbor of neighbors) {
           if (!visited.has(neighbor)) {
-            queue.push([...path, neighbor]);
+            this.queue.enqueue([...path, neighbor]);
           }
         }
       }

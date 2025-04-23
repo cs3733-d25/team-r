@@ -170,15 +170,15 @@ const SanitationRequestForm = () => {
                   <Label className="block text-sm font-semibold text-foreground mb-2">
                     Priority Level
                     <span className="text-accent">*</span>
-                    <span className="text-xs text-secondary-foreground block">
-                      URGENT: Immediate attention required
-                      <br />
-                      HIGH: Within 1 hour
-                      <br />
-                      MEDIUM: Within 4 hours
-                      <br />
-                      LOW: Within 24 hours
-                    </span>
+                    {/*<span className="text-xs text-secondary-foreground block">*/}
+                    {/*  URGENT: Immediate attention required*/}
+                    {/*  <br />*/}
+                    {/*  HIGH: Within 1 hour*/}
+                    {/*  <br />*/}
+                    {/*  MEDIUM: Within 4 hours*/}
+                    {/*  <br />*/}
+                    {/*  LOW: Within 24 hours*/}
+                    {/*</span>*/}
                   </Label>
                   <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>

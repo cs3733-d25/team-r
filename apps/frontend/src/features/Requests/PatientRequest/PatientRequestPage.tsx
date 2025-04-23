@@ -5,8 +5,8 @@ import {AllPatientRequests} from "./AllPatientRequests";
 export function PatientRequestPage() {
     return(
         <>
-            <h1 className="text-2xl font-bold mb-0 place-self-center">Nonemergent Patient Request System</h1>
-            <h2 className="text-xl font-bold mb-6 place-self-center">Nora Cleary & Daksh Gajaria</h2>
+            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Nonemergent Patient Request System</h1>
+            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Nora Cleary & Daksh Gajaria</h2>
             <Tabs defaultValue="patientRequest">
                 <TabsList>
                     <TabsTrigger value="patientRequest">
