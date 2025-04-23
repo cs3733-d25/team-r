@@ -25,9 +25,6 @@ export function NavbarMGH(props: NavBarProps) {
         }
     }
 
-
-    console.log("HERE IT IS: ", props.userType);
-
     return (
         // main header
         <header className="sticky top-0 z-40 border-b bg-primary">
