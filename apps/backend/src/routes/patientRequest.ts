@@ -37,7 +37,9 @@ router.post("/", async function (req: Request, res: Response) {
     console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
-        patientID,
+        patient: {
+          connect: { id: req.body.patientID }, // <-- Use relation connect
+        },
         priority,
         department,
         location,

@@ -25,6 +25,7 @@ import axios from "axios";
 function App() {
     const [userType, setUserType] = useState("Guest");
     const [session, setSession] = useState(null);
+    const [username, setUsername] = useState("");
 
     async function getSession() {
         try {
@@ -34,6 +35,7 @@ function App() {
             console.log(response.data);
             console.log("User type:", userType, "- Keagan");
             setSession(response.data.username);
+            setUsername(response.data.username);
         } catch (error) {
             console.log('error in retrieve:', error);
         }

@@ -38,7 +38,9 @@ router.post("/", async function (req: Request, res: Response) {
       data: {
         employeeName,
         //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
-        patientID,
+        patient: {
+          connect: { id: req.body.patientID }, // <-- Use relation connect
+        },
         transportationType,
         currentBuilding,
         desiredBuilding,
