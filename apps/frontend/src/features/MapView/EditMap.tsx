@@ -239,9 +239,9 @@ export function EditMap({ status }: EditMapProps) {
 
                         <div className="space-y-3">
                             <div>
-                                <Label htmlFor="nodeName">Node Name (Optional)</Label>
+                                <Label >Node Name (Optional)</Label>
                                 <Input
-                                    id="nodeName"
+                                    // id="nodeName"
                                     value={nodeName}
                                     onChange={(e) => setNodeName(e.target.value)}
                                     placeholder="Enter node name"
