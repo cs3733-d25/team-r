@@ -61,6 +61,6 @@ router.post("/reset", async (req, res) => {
   if (req.session) {
     req.session.destroy(() => {});
   }
-})
+});
 
 export default router;

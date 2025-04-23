@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Navbar from '../../../components/Navbar.tsx';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Departme
 
 // Simple interface for submitted request
 interface SubmittedRequest {
-  employeeName: string;
+  //employeeName: string;
   sanitationType: string;
   priority: string;
   department: string;
@@ -26,7 +26,7 @@ interface SubmittedRequest {
 
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
-    employeeName: '',
+    //employeeName: '',
     sanitationType: '',
     priority: '',
     department: '',
@@ -79,7 +79,7 @@ const SanitationRequestForm = () => {
 
         // Reset form
         setFormData({
-          employeeName: '',
+          //employeeName: '',
           sanitationType: '',
           priority: '',
           department: '',
@@ -106,6 +106,19 @@ const SanitationRequestForm = () => {
       [name]: value
     }));
   };
+  //get username from backend
+  const [username, setusername] = useState("");
+  useEffect(() => {
+    async function getName() {
+      try {
+        const response = await axios.get("api/login/session");
+        setusername(response.data.username);
+      } catch (err) {
+        console.error("Error fetching username:", err);
+      }
+    }
+    getName();
+  }, []);
 
   return (
     <>
@@ -116,22 +129,22 @@ const SanitationRequestForm = () => {
           <div className="p-5">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Employee Name */}
-                <div>
-                  <Label className="block text-sm font-semibold text-foreground mb-2">
-                    Employee Name
-                    <span className="text-accent">*</span>
-                  </Label>
-                  <Input
-                      type="text"
-                      name="employeeName"
-                      value={formData.employeeName}
-                      onChange={handleChange}
-                      placeholder="Enter your name"
-                      className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                      required
-                  />
-                </div>
+                {/*/!* Employee Name *!/*/}
+                {/*<div>*/}
+                {/*  <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                {/*    Employee Name*/}
+                {/*    <span className="text-accent">*</span>*/}
+                {/*  </Label>*/}
+                {/*  <Input*/}
+                {/*      type="text"*/}
+                {/*      name="employeeName"*/}
+                {/*      value={formData.employeeName}*/}
+                {/*      onChange={handleChange}*/}
+                {/*      placeholder="Enter your name"*/}
+                {/*      className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                {/*      required*/}
+                {/*  />*/}
+                {/*</div>*/}
                 {/* Sanitation Type */}
                 <div>
                   <Label className= "block text-sm font-semibold text-foreground mb-2">
@@ -254,7 +267,7 @@ const SanitationRequestForm = () => {
                 <h3 className="text-lg font-semibold mb-2">Your sanitation request has been submitted</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                   <div>
-                    <span className="font-semibold">Employee Name:</span> {submittedRequest.employeeName}
+                    <span className="font-semibold">Employee Name:</span> {username}
                   </div>
                   <div>
                     <span className="font-semibold">Sanitation Type:</span> {submittedRequest.sanitationType}

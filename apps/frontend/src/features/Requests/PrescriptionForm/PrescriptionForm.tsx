@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
@@ -9,8 +9,8 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 interface SubmittedPrescription {
-    employee: string;
-    employeeID: string;
+    //employee: string;
+    //employeeID: string;
     patientID: string;
     priority: string;
     department: string;
@@ -29,8 +29,8 @@ interface SubmittedPrescription {
 
 export const PrescriptionForm = () => {
     const [formData, setFormData] = useState({
-        employee: '',
-        employeeID: '',
+        //employee: '',
+        //employeeID: '',
         patientID: '',
         priority: '',
         department: '',
@@ -58,6 +58,20 @@ export const PrescriptionForm = () => {
     const [submittedPrescription, setSubmittedPrescription] =
         useState<SubmittedPrescription | null>(null);
 
+    //get username from backend
+    const [username, setusername] = useState("");
+    useEffect(() => {
+        async function getName() {
+            try {
+                const response = await axios.get("api/login/session");
+                setusername(response.data.username);
+            } catch (err) {
+                console.error("Error fetching username:", err);
+            }
+        }
+        getName();
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitStatus(null);
@@ -82,8 +96,8 @@ export const PrescriptionForm = () => {
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
-                    employee: '',
-                    employeeID: '',
+                    //employee: '',
+                    //employeeID: '',
                     patientID: '',
                     priority: '',
                     department: '',
@@ -139,41 +153,41 @@ export const PrescriptionForm = () => {
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Employee Name */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee Name
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="employee"
-                                        value={formData.employee}
-                                        onChange={handleChange}
-                                        placeholder="Enter your name"
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                        required
-                                    />
-                                </div>
+                                {/*/!* Employee Name *!/*/}
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                                {/*        Employee Name*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*    </Label>*/}
+                                {/*    <Input*/}
+                                {/*        type="text"*/}
+                                {/*        name="employee"*/}
+                                {/*        value={formData.employee}*/}
+                                {/*        onChange={handleChange}*/}
+                                {/*        placeholder="Enter your name"*/}
+                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                                {/*        required*/}
+                                {/*    />*/}
+                                {/*</div>*/}
 
                                 {/* Employee ID */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee ID
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            ID must be a number.</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="employeeID"
-                                        value={formData.employeeID}
-                                        onChange={handleChange}
-                                        placeholder="Enter employee ID"
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                        required
-                                    />
-                                </div>
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                                {/*        Employee ID*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*        <span className="text-xs text-secondary-foreground block">*/}
+                                {/*            ID must be a number.</span>*/}
+                                {/*    </Label>*/}
+                                {/*    <Input*/}
+                                {/*        type="text"*/}
+                                {/*        name="employeeID"*/}
+                                {/*        value={formData.employeeID}*/}
+                                {/*        onChange={handleChange}*/}
+                                {/*        placeholder="Enter employee ID"*/}
+                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                                {/*        required*/}
+                                {/*    />*/}
+                                {/*</div>*/}
 
                                 {/* Patient ID */}
                                 <div>
@@ -516,12 +530,12 @@ export const PrescriptionForm = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
                                 <span className="font-semibold">Employee Name:</span>{' '}
-                                {submittedPrescription.employee}
+                                {username}
                             </div>
-                            <div>
-                                <span className="font-semibold">Employee ID:</span>{' '}
-                                {submittedPrescription.employeeID}
-                            </div>
+                            {/*<div>*/}
+                            {/*    <span className="font-semibold">Employee ID:</span>{' '}*/}
+                            {/*    {submittedPrescription.employeeID}*/}
+                            {/*</div>*/}
                             <div>
                                 <span className="font-semibold">Patient ID:</span>{' '}
                                 {submittedPrescription.patientID}

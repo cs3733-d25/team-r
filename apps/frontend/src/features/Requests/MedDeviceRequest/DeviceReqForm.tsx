@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
@@ -14,8 +14,8 @@ interface SubmittedDevice {
     priority: string;
     department: string;
     comment: string;
-    employeeName: string;
-    employeeID: string;
+    //employeeName: string;
+    //employeeID: string;
     status: string;
 
     timestamp: string;
@@ -28,8 +28,8 @@ export const DeviceReqForm = () => {
         room: '',
         department: '',
         comment: '',
-        employeeName: '',
-        employeeID: '',
+        //employeeName: '',
+        //employeeID: '',
         status: ''
     });
 
@@ -73,8 +73,8 @@ export const DeviceReqForm = () => {
                     room: '',
                     department: '',
                     comment: '',
-                    employeeName: '',
-                    employeeID: '',
+                    //employeeName: '',
+                    //employeeID: '',
                     status: ''
                 });
             }
@@ -114,6 +114,21 @@ export const DeviceReqForm = () => {
         }));
     };
 
+    //call backend for username
+    const [username, setusername] = useState("");
+    useEffect(() => {
+        async function getName() {
+            try {
+                const response = await axios.get("api/login/session");
+                setusername(response.data.username);
+            } catch (err) {
+                console.error("Error fetching username:", err);
+            }
+        }
+
+        getName();
+    }, []);
+
     return (
         <>
 
@@ -133,40 +148,40 @@ export const DeviceReqForm = () => {
                                 </div>
 
                                 {/* Employee Name */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee Name
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="employeeName"
-                                        value={formData.employeeName}
-                                        onChange={handleChange}
-                                        placeholder="Enter your name"
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                        required
-                                    />
-                                </div>
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                                {/*        Employee Name*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*    </Label>*/}
+                                {/*    <Input*/}
+                                {/*        type="text"*/}
+                                {/*        name="employeeName"*/}
+                                {/*        value={formData.employeeName}*/}
+                                {/*        onChange={handleChange}*/}
+                                {/*        placeholder="Enter your name"*/}
+                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                                {/*        required*/}
+                                {/*    />*/}
+                                {/*</div>*/}
 
                                 {/* Employee ID */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Employee ID
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            ID must be a number.</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="employeeID"
-                                        value={formData.employeeID}
-                                        onChange={handleChange}
-                                        placeholder="Enter employee ID"
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                        required
-                                    />
-                                </div>
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                                {/*        Employee ID*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*        <span className="text-xs text-secondary-foreground block">*/}
+                                {/*            ID must be a number.</span>*/}
+                                {/*    </Label>*/}
+                                {/*    <Input*/}
+                                {/*        type="text"*/}
+                                {/*        name="employeeID"*/}
+                                {/*        value={formData.employeeID}*/}
+                                {/*        onChange={handleChange}*/}
+                                {/*        placeholder="Enter employee ID"*/}
+                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                                {/*        required*/}
+                                {/*    />*/}
+                                {/*</div>*/}
 
                                 {/* Priority */}
                                 <div>
@@ -288,12 +303,12 @@ export const DeviceReqForm = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
                                 <span className="font-semibold">Employee Name:</span>{' '}
-                                {submittedDevice.employeeName}
+                                {username}
                             </div>
-                            <div>
-                                <span className="font-semibold">Employee ID:</span>{' '}
-                                {submittedDevice.employeeID}
-                            </div>
+                            {/*<div>*/}
+                            {/*    <span className="font-semibold">Employee ID:</span>{' '}*/}
+                            {/*    {submittedDevice.employeeID}*/}
+                            {/*</div>*/}
                             <div>
                                 <span className="font-semibold">Device:</span>{' '}
                                 {submittedDevice.device}

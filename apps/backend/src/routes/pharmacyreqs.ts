@@ -29,7 +29,7 @@ router.post("/", async function (req: Request, res: Response) {
     patient,
     location,
     request,
-    employee,
+    //employee,
     patientID,
     drugName,
     morningPillCount,
@@ -41,11 +41,12 @@ router.post("/", async function (req: Request, res: Response) {
     refills,
     additionalInstructions,
   } = req.body;
+  const employeeName = req.session?.username;
   // console.log(request);
   try {
     await PrismaClient.pharmacyRequest.create({
       data: {
-        employeeName: employee,
+        employeeName,
         priority,
         department,
         patientID,
