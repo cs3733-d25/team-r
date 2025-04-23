@@ -5,9 +5,9 @@ const router: Router = express.Router();
 
 router.post("/", async function (req: Request, res: Response) {
   const { startingPoint, endingPoint, algorithm } = req.body;
-  console.log(" startingPoint", startingPoint);
-  console.log(" endingPoint", endingPoint.toString());
-  console.log(" algorithm", algorithm);
+  console.log(" startingPoint in algoRouting", startingPoint);
+  console.log(" endingPoint in algoRouting", endingPoint.toString());
+  console.log(" algorithm in algoRouting", algorithm);
 
   try {
     const path = await findPath(
