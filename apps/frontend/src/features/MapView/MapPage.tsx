@@ -243,23 +243,25 @@ export function MapPage() {
                                             ))}
                                         </SelectGroup>
                                     </SelectContent>
+
+                                {/* accessible route not implemented in backend yet */}
+                                <div className="flex items-center space-x-2 pt-2">
+                                    <Checkbox
+                                        id={"accessible-route"}
+                                        checked={accessibleRoute}
+                                        onCheckedChange={(checked) => setAccessibleRoute(checked === true)}
+                                    />
+                                    <Label htmlFor={"accessible-route"} className="text-sm font-medium">
+                                        Show Accessible Route
+                                    </Label>
+                                </div>
+
                                 </Select>
                                 {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
                                 {/* test paths: */}
                                 {/* ["swEntrance", "100.00F", "100.09", "100.10"] */}
                                 {/* ["3B", "3A", "3000A", "3E"] */}
                                 <Button type="button" onClick={() => processDirections(["swEntrance", "100.00F", "100.09", "100.10"])}>Get Directions</Button>
-                            </div>
-                            {/* accessible route not implemented in backend yet */}
-                            <div className="flex items-center space-x-2 pt-2">
-                                <Checkbox
-                                    id={"accessible-route"}
-                                    checked={accessibleRoute}
-                                    onCheckedChange={(checked) => setAccessibleRoute(checked === true)}
-                                />
-                                <Label htmlFor={"accessible-route"} className="text-sm font-medium">
-                                    Show Accessible Route
-                                </Label>
                             </div>
                             <div className="flex flex-col space-y-2">
                                 {/* Algorithm selector */}
