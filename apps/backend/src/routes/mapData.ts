@@ -1,6 +1,5 @@
 import express, { Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import { Prisma } from "database";
 
 export interface Node {
   nodeID: string;
@@ -276,5 +275,22 @@ router.get("/departments", async (req, res) => {
   }
 });
 */
+
+router.get("/getNodeObjs", async (req, res) => {
+  try {
+    const nodeIDs = req.query.nodeIDs as string[];
+    console.log("nodeIDs: ", nodeIDs);
+    const nodes = await PrismaClient.node.findMany({
+      where: {
+        nodeID: { in: nodeIDs },
+      },
+    });
+    console.log("nodes: ", nodes);
+    res.json(nodes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 
 export default router;

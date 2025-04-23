@@ -1,18 +1,29 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button.tsx';
+import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
+import axios from "axios";
 
 interface NavBarProps {
     page?: string;
+    userType?: string;
 }
 
 export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
+
+    async function handleLogout() {
+        try {
+            console.log("Logging user out");
+            axios.post('/api/login/reset');
+        } catch (error) {
+            console.log("Error: ", error);
+        }
+    }
 
     return (
         // main header
@@ -20,7 +31,7 @@ export function NavbarMGH(props: NavBarProps) {
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={(props.page == "home" || props.page == "login") ? "/" : "/home"} className="flex items-center">
+                    <a href={(!props.userType) ? "/" : "/home"} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -32,8 +43,8 @@ export function NavbarMGH(props: NavBarProps) {
                     </a>
                 </div>
 
-                {/* Desktop Navigation - default*/}
-                {(props.page != "home" && props.page != "login") && (
+                {/* Desktop Navigation - Patient*/}
+                {(props.userType === 'Patient') && (
                 <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
@@ -43,25 +54,66 @@ export function NavbarMGH(props: NavBarProps) {
                         { label: '22 Patriot Place', href: '/external-map' },
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Faulkner', href: '/external-map' },
-                        { label: 'Edit Map', href: '/edit-map' },
-                    ]}/>
-                    <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
-                        { label: 'Sanitation', href: '/sanitation' },
-                        { label: 'Medical Device', href: '/devicerequest' },
-                        { label: 'Patient Request', href: '/patientrequestpage' },
-                        { label: 'Patient Transport', href: '/transport' },
-                        { label: 'Prescription', href: '/prescription' },
                     ]}/>
 
-                    <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
-                        { label: 'Import a CSV', href: '/csv' },
-                        { label: 'Export CSV', href: '/csv' },
-                    ]
-                    }/>
                 </nav>)}
+                {/* Desktop Navigation - Admin */}
+                {(props.userType === 'Admin') && (
+                    <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                        <Button variant="ghost" asChild>
+                            <a href="/directory">Directories</a>
+                        </Button>
+                        <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
+                            { label: '20 Patriot Place', href: '/external-map' },
+                            { label: '22 Patriot Place', href: '/external-map' },
+                            { label: 'Chestnut Hill', href: '/external-map' },
+                            { label: 'Faulkner', href: '/external-map' },
+                            { label: 'Edit Map', href: '/edit-map' },
+                        ]}/>
+                        <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
+                            { label: 'Sanitation', href: '/sanitation' },
+                            { label: 'Medical Device', href: '/devicerequest' },
+                            { label: 'Patient Request', href: '/patientrequestpage' },
+                            { label: 'Patient Transport', href: '/transport' },
+                            { label: 'Prescription', href: '/prescription' },
+                        ]}/>
+
+                        <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
+                            { label: 'Import a CSV', href: '/csv' },
+                            { label: 'Export CSV', href: '/csv' },
+                        ]
+                        }/>
+                    </nav>)}
+
+                {/* Desktop Navigation - Employee */}
+                {(props.userType === 'Employee') && (
+                    <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                        <Button variant="ghost" asChild>
+                            <a href="/directory">Directories</a>
+                        </Button>
+                        <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
+                            { label: '20 Patriot Place', href: '/external-map' },
+                            { label: '22 Patriot Place', href: '/external-map' },
+                            { label: 'Chestnut Hill', href: '/external-map' },
+                            { label: 'Faulkner', href: '/external-map' },
+                        ]}/>
+                        <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
+                            { label: 'Sanitation', href: '/sanitation' },
+                            { label: 'Medical Device', href: '/devicerequest' },
+                            { label: 'Patient Request', href: '/patientrequestpage' },
+                            { label: 'Patient Transport', href: '/transport' },
+                            { label: 'Prescription', href: '/prescription' },
+                        ]}/>
+
+                        <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
+                            { label: 'Import a CSV', href: '/csv' },
+                            { label: 'Export CSV', href: '/csv' },
+                        ]
+                        }/>
+                    </nav>)}
 
                 {/* Icons on right */}
-                {(props.page != "home" && props.page != "login") && (
+                {(props.userType && props.userType != "Guest") && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
@@ -93,7 +145,10 @@ export function NavbarMGH(props: NavBarProps) {
                                 </Button>
                                 <div className="border-t"></div>
                                 <Button variant={'ghostDestructive'}>
-                                    <a href={'/'}>Sign out</a>
+                                    <a
+                                        href={"/"}
+                                        onClick={(e) => handleLogout()}
+                                    >Sign out</a>
                                 </Button>
                             </div>
                         </PopoverContent>
@@ -110,7 +165,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>)}
                 {/* Only display login button in logged-out home page */}
-                {(props.page == "home") && (
+                {(!props.userType || props.userType === "Guest") && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>

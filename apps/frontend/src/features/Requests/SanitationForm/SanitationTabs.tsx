@@ -1,5 +1,3 @@
-import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
-import {Link} from "react-router-dom";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx';
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 import SanitationRequestPage from "@/features/Requests/SanitationForm/SanitationRequestPage.tsx";
@@ -7,8 +5,7 @@ import SanitationRequestPage from "@/features/Requests/SanitationForm/Sanitation
 function SanitationRequestTabs() {
     return(
         <>
-            <NavbarMGH />
-            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Sanitation Request System</h1>
+            <h1 className="text-2xl font-trade font-bold mb-0 place-self-center">Sanitation Request System</h1>
             <Tabs defaultValue="sanitationRequestForm" >
                 <TabsList>
                     <TabsTrigger value="sanitationRequestForm">

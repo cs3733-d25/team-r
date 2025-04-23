@@ -1,4 +1,3 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 import { useState } from "react";
 
@@ -25,7 +24,6 @@ function TestPage() {
 
     return (
         <div>
-            <NavbarMGH />
             {/* <InternalMap /> */}
             <LocationDepartmentDropdown
                 onChange={handleDropdownChange}
