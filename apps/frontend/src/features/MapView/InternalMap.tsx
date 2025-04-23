@@ -127,12 +127,12 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             console.error('Error fetching parking lots:', err);
         }
     }
-    function loadAll () {
-        loadCheckIn();
-        loadEntrances();
-        loadElevators();
-        loadLots();
-        loadHallways();
+    async function loadAll() {
+        await loadCheckIn();
+        await loadEntrances();
+        await loadElevators();
+        await loadLots();
+        await loadHallways();
     }
     useEffect(() => {
         loadAll();
@@ -228,7 +228,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
-            if(showEdges) {
+
                 // draw nodes
                 if(hallways.length > 0) {
                     hallways.map((node) => {
@@ -241,6 +241,42 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                         }
                     });
                 }
+                checkIn.map((node) => {
+                    // put it on the correct floor
+                    const layer = getLayer(node.building, node.floor);
+                    // only place it if the floor is valid
+                    if (layer) {
+                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        clickMarker(node, place);
+                    }
+                });
+            entrances.map((node) => {
+                // put it on the correct floor
+                const layer = getLayer(node.building, node.floor);
+                // only place it if the floor is valid
+                if (layer) {
+                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                    clickMarker(node, place);
+                }
+            });
+            lots.map((node) => {
+                // put it on the correct floor
+                const layer = getLayer(node.building, node.floor);
+                // only place it if the floor is valid
+                if (layer) {
+                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                    clickMarker(node, place);
+                }
+            });
+            elevators.map((node) => {
+                // put it on the correct floor
+                const layer = getLayer(node.building, node.floor);
+                // only place it if the floor is valid
+                if (layer) {
+                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                    clickMarker(node, place);
+                }
+            });
 
                 // draw edges
                 edges20_1.map((edge) => {
@@ -280,7 +316,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                         [edge.toX, edge.toY],
                     ]).addTo(floorLayerFaulkner);
                 });
-            }
+
 
             // add a default layer
             if (location.includes('20 Patriot Pl'))
