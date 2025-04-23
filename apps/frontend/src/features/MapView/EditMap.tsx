@@ -36,7 +36,7 @@ export function EditMap({ status }: EditMapProps) {
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(3);
-    const [requestPromise, setRequestPromise] = useState<Promise<void | AxiosResponse<any, any>>>(); // allows for the internal map to know when to reload nodes after the map page has created them
+    const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
 
     const building = getBuildingFromLocation(selectedLocation);
@@ -111,6 +111,7 @@ export function EditMap({ status }: EditMapProps) {
         };
     }, [building]);
 
+    // TODO: make this an array of strings not objects
     const nodeTypes = [
         { id: 'parking', name: 'Parking' },
         { id: 'entrance', name: 'Entrance' },
@@ -149,11 +150,14 @@ export function EditMap({ status }: EditMapProps) {
 
         try {
             // call API to save node
-            const response = await axios.post('/api/map/create-node', nodeData);
+            // split the promise so that the internal map can update
+            const promise = axios.post('/api/map/create-node', nodeData);
+            setRequestPromise(async () => {await promise});
+            const response = await promise;
 
-            alert(nodeName);
+            // alert(nodeName);
             if (response.status === 200) {
-                alert('Node saved successfully!');
+                // alert('Node saved successfully!');
                 // reset form
                 setNodeName('');
                 setNodeType('');
@@ -180,8 +184,9 @@ export function EditMap({ status }: EditMapProps) {
 
         try {
             // call API to save edge
+            // split the promise so that the internal map can update
             const promise = axios.post('/api/map/create-edge', edgeData);
-            setRequestPromise(promise);
+            setRequestPromise(async () => {await promise});
             const response = await promise;
 
             if (response.status === 200) {
@@ -243,7 +248,7 @@ export function EditMap({ status }: EditMapProps) {
                                     <SelectContent>
                                         <SelectGroup>
                                             {nodeTypes.map(type => (
-                                                <SelectItem key={type.id} value={type.id}>
+                                                <SelectItem key={type.name} value={type.name}>
                                                     {type.name}
                                                 </SelectItem>
                                             ))}

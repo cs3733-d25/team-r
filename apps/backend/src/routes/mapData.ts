@@ -100,7 +100,7 @@ router.get("/hallways", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "Hallway" },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -112,7 +112,7 @@ router.get("/other", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "Other" },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);

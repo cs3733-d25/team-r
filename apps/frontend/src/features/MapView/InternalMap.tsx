@@ -53,6 +53,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
 
     useEffect(() => {
         if(finishRequest) {
+            console.log(finishRequest);
             finishRequest.then(async () => {
                 await loadAll();
                 console.log("loaded all stuff");
