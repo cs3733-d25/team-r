@@ -9,7 +9,7 @@ import chestnutHill from '../../../public/chestnutHill1.svg'
 import faulkner from '../../../public/faulkner1.svg'
 import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor } from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways } from "@/features/MapView/mapService.ts";
+import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 
 interface InternalMapProps {
@@ -36,6 +36,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const mapInstance = useRef<L.Map | null>(null);
 
     const [checkIn, setCheckIn] = useState<Node[]>([]);
+    const [other, setOther] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
     const [elevators, setElevators] = useState<Node[]>([]);
     const [lots, setLots] = useState<Node[]>([]);
@@ -127,18 +128,29 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const loadHallways = async () => {
         try {
             const data = await fetchHallways();
-            console.log(data);
             setHallways(data);
+            console.log("data:", data);
         } catch (err) {
             console.error('Error fetching hallways lots:', err);
         }
     }
-    function loadAll () {
-        loadCheckIn();
-        loadEntrances();
-        loadElevators();
-        loadLots();
-        loadHallways();
+    const loadOther = async () => {
+        try {
+            const data = await fetchOther();
+            setOther(data);
+            console.log("data:", data);
+        } catch (err) {
+            console.error('Error fetching parking lots:', err);
+        }
+    }
+    console.log("hallways: ",hallways)
+    async function loadAll() {
+        await loadCheckIn();
+        await loadEntrances();
+        await loadElevators();
+        await loadLots();
+        await loadHallways();
+        await loadOther();
     }
     useEffect(() => {
         loadAll();
@@ -237,7 +249,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             if(showEdges) {
                 // draw nodes
                 if(hallways.length > 0) {
-                    console.log("HALLWAYS!");
                     hallways.map((node) => {
                         // put it on the correct floor
                         const layer = getLayer(node.building, node.floor);
@@ -257,6 +268,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                         clickMarker(node, place);
                     }
                 });
+            other.map((node) => {
+                // put it on the correct floor
+                const layer = getLayer(node.building, node.floor);
+                // only place it if the floor is valid
+                if (layer) {
+                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                    clickMarker(node, place);
+                }
+            });
             entrances.map((node) => {
                 // put it on the correct floor
                 const layer = getLayer(node.building, node.floor);
