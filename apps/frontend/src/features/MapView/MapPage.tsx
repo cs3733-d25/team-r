@@ -11,8 +11,8 @@ import {
     getBuildingFromLocation,
     getShortLocationName
 } from '@/features/MapView/mapUtils';
-import axios from "axios";
 import TextDirections from "@/components/TextDirections.tsx";
+import axios from "axios";
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number, building?: string) => void;
@@ -99,13 +99,78 @@ export function MapPage() {
     const processDirections = async (directions: string[]) => {
         try {
             const nodes = await getNodeObjs(directions);
-            const nodeNames = nodes.map(node => node.shortName);
+            if (nodes.length < 2) {
+                setDirectionStrings([]);
+                return;
+            }
 
-            setDirectionStrings(nodeNames);
-            console.log("Directions: ", nodeNames);
+            // reverse the order of the nodes to get the correct path
+            nodes.reverse();
+
+            const enhancedDirections: string[] = [];
+
+            // First node is starting point
+            enhancedDirections.push(`Start at ${nodes[0].shortName}`);
+
+            // For the first segment, just head toward without turn instruction
+            if (nodes.length > 1) {
+                enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
+            }
+
+            // Process middle segments to determine turns
+            for (let i = 1; i < nodes.length - 1; i++) {
+                const prevNode = nodes[i - 1];
+                const currentNode = nodes[i];
+                const nextNode = nodes[i + 1];
+
+                const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
+                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
+            }
+
+            // Final arrival
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
+            console.log("enhanced Directions: ", enhancedDirections);
+
+            setDirectionStrings(enhancedDirections);
         } catch (error) {
-            console.error("Error processing directions: ", error);
+            console.error("Error processing directions:", error);
             setDirectionStrings([]);
+        }
+    };
+
+    /**
+     * Calculates the relative direction change between path segments
+     */
+    const calculateDirectionChange = (prev: MapNode, current: MapNode, next: MapNode): string => {
+        // Calculate vectors for previous and current segments
+        const prevVector = {
+            dx: current.xcoord - prev.xcoord,
+            dy: current.ycoord - prev.ycoord
+        };
+
+        const currentVector = {
+            dx: next.xcoord - current.xcoord,
+            dy: next.ycoord - current.ycoord
+        };
+
+        // Calculate angle between vectors using atan2
+        const angle1 = Math.atan2(prevVector.dy, prevVector.dx);
+        const angle2 = Math.atan2(currentVector.dy, currentVector.dx);
+
+        // Calculate angle difference in degrees
+        let angleDiff = (angle2 - angle1) * 180 / Math.PI;
+
+        // Normalize to -180 to 180 range
+        if (angleDiff > 180) angleDiff -= 360;
+        if (angleDiff < -180) angleDiff += 360;
+
+        // Determine direction based on angle difference
+        if (angleDiff >= 30 && angleDiff < 150) {
+            return "Turn right";
+        } else if (angleDiff <= -30 && angleDiff > -150) {
+            return "Turn left";
+        } else {
+            return "Continue straight";
         }
     }
 
@@ -162,7 +227,10 @@ export function MapPage() {
                                     </SelectContent>
                                 </Select>
                                 {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
-                                <Button type="submit" onClick={() => processDirections(["canopyEntrance", "leftEntrance", "frontLotChestnut"])}>Get Directions</Button>
+                                {/* test paths: */}
+                                {/* ["swEntrance", "100.00F", "100.09", "100.10"] */}
+                                {/* ["3B", "3A", "3000A", "3E"] */}
+                                <Button type="button" onClick={() => processDirections(["swEntrance", "100.00F", "100.09", "100.10"])}>Get Directions</Button>
                             </div>
                             <div className="flex flex-col space-y-2">
                                 <Label className={'px-2 mb-3'}>Floor selection</Label>

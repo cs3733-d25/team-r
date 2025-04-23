@@ -40,7 +40,7 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                     <Label className="text-xl text-black">
                         {distance && duration
                             ? `${distance} - ${duration}`
-                            : "Read directions aloud"
+                            : "Read directions aloud:"
                         }
                     </Label>
                 <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
