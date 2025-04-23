@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx';
@@ -9,6 +7,7 @@ import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
 import axios, {AxiosPromise, AxiosResponse} from 'axios';
+import { Label } from 'recharts';
 
 interface EditMapProps {
     status?: string;
@@ -213,9 +212,6 @@ export function EditMap({ status }: EditMapProps) {
 
     return (
         <div className="flex flex-col h-screen">
-            <div className="sticky top-0 z-30">
-                <NavbarMGH />
-            </div>
             <div className="flex-1 relative cursor-pointer">
                 <InternalMap location={selectedLocation} onLocationChange={setLocation} onNodeDelete={deleteNode} promiseNodeCreate={requestPromise} promiseEdgeCreate={edgeCreatePromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
 
@@ -249,7 +245,8 @@ export function EditMap({ status }: EditMapProps) {
                             </div>
 
                             <div>
-                                <Label htmlFor="nodeType">Node Type</Label>
+                                {/*Owen took out htmlFor="nodeType"*/}
+                                <Label >Node Type</Label>
                                 <Select onValueChange={setNodeType} value={nodeType}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select node type" />
@@ -277,7 +274,8 @@ export function EditMap({ status }: EditMapProps) {
                                                     checked={selectedDepartments.includes(dept.id)}
                                                     onCheckedChange={() => handleDepartmentToggle(dept.id)}
                                                 />
-                                                <Label htmlFor={`dept-${dept.id}`} className="cursor-pointer">
+                                                {/*Owen took out htmlFor={`dept-${dept.id}`} */}
+                                                <Label  className="cursor-pointer">
                                                     {dept.name}
                                                 </Label>
                                             </div>
@@ -319,8 +317,4 @@ export function EditMap({ status }: EditMapProps) {
         </div>
     );
 
-}*/
-
-export function EditMap() {
-    return null; // Stub implementation
 }

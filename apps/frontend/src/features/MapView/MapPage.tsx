@@ -2,9 +2,7 @@ import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import {useLocation} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
-import {useMapData} from '@/features/MapView/mapService';
 import {
     floorConfig,
     getBuildingConstant,
@@ -14,10 +12,7 @@ import {
 import TextDirections from "@/components/TextDirections.tsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
-import React, { useState, useEffect, useRef } from 'react';
 import {postNode, postNodeDeletion, useMapData} from '@/features/MapView/mapService';
-import { getBuildingFromLocation, floorConfig, getShortLocationName } from '@/features/MapView/mapUtils';
-import { getBuildingConstant } from '@/features/MapView/mapUtils';
 import {Node} from "../../../../backend/src/routes/mapData.ts";
 
 interface CustomWindow extends Window {
