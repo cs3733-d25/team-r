@@ -83,6 +83,10 @@ export const fetchHallways = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/hallways');
     return res.data;
 }
+export const fetchOther = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/other');
+    return res.data;
+}
 
 
 export function useMapData(selectedBuilding: string) {
