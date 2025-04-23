@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from 'react';
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
 import { Label } from '@/components/ui/label.tsx';
@@ -8,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts';
 import { useMapData } from '@/features/MapView/mapService.ts';
+import axios from 'axios';
 
 interface EditMapProps {
     status?: string;
@@ -74,13 +76,7 @@ export function EditMap({ status }: EditMapProps) {
             originalConsoleLog.apply(console, args);
         };
 
-        // listen for custom map click events
-        document.addEventListener('map-click', handleMapClick as EventListener);
-
-        return () => {
-            document.removeEventListener('map-click', handleMapClick as EventListener);
-            console.log = originalConsoleLog;
-        };
+        // idk what goes here
     }, [building]);
 
     const nodeTypes = [
@@ -117,29 +113,7 @@ export function EditMap({ status }: EditMapProps) {
             departments: selectedDepartments
         };
 
-        try {
-            // call API to save node
-            const response = await fetch('/api/nodes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(nodeData),
-            });
-
-            if (response.ok) {
-                alert('Node saved successfully!');
-                // reset form
-                setNodeName('');
-                setNodeType('');
-                setSelectedDepartments([]);
-                setCoordinates(null);
-            } else {
-                alert('Failed to save node.');
-            }
-        } catch (error) {
-            console.error('Error saving node:', error);
-            alert('An error occurred while saving the node.');
+        // call api to save node
         }
     };
 
@@ -235,4 +209,9 @@ export function EditMap({ status }: EditMapProps) {
             </div>
         </div>
     );
+
+}*/
+
+export function EditMap() {
+    return null; // Stub implementation
 }

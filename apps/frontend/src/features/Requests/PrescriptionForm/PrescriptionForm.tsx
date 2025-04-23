@@ -133,8 +133,9 @@ export const PrescriptionForm = () => {
 
     return (
         <>
+
             <div className="max-w-7xl mx-auto">
-                <div className="bg-white rounded-b-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className=" rounded-lg mt-3">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -180,7 +181,7 @@ export const PrescriptionForm = () => {
                                         Patient ID
                                         <span className="text-accent">*</span>
                                         <span className="text-xs text-secondary-foreground block">
-                                            ID must be a number.</span>
+                                            ID must be Patient's First Name.</span>
                                     </Label>
                                     <Input
                                         type="text"
@@ -289,6 +290,7 @@ export const PrescriptionForm = () => {
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
                                     Quantity of Drug to be Taken by Patient at Each Time:
+                                    <span className="text-accent">*</span>
                                 </Label>
                                 <div className="flex flex-row justify-center">
                                     <div className="px-3">
@@ -476,119 +478,116 @@ export const PrescriptionForm = () => {
                     </div>
                 </div>
 
-                {/* Status Message */}
-                {submitStatus && submitStatus.isError && (
-                    <Alert className="mb-4 p-4 rounded-md bg-accent border border-accent-foreground">
-                        <AlertDescription className={'text-accent-foreground'}>
-                            {submitStatus.message}
-                        </AlertDescription>
-                    </Alert>
-                )}
 
-                {/* Confirmation Card */}
-                {submittedPrescription && !submitStatus?.isError && (
-                    <div className="mb-6 bg-white rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
-                        <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6 mr-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
-                            Request Confirmation
-                        </div>
-                        <div className="p-4">
-                            <h3 className="text-lg font-semibold mb-2">
-                                Your prescription request has been submitted
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                                <div>
-                                    <span className="font-semibold">Employee Name:</span>{' '}
-                                    {submittedPrescription.employee}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Employee ID:</span>{' '}
-                                    {submittedPrescription.employeeID}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Patient ID:</span>{' '}
-                                    {submittedPrescription.patientID}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Priority:</span>{' '}
-                                    {submittedPrescription.priority}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Department:</span>{' '}
-                                    {submittedPrescription.department}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Status:</span>{' '}
-                                    {submittedPrescription.status}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Morning Pill Count:</span>{' '}
-                                    {submittedPrescription.morningPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Midday Pill Count:</span>{' '}
-                                    {submittedPrescription.middayPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Evening Pill Count:</span>{' '}
-                                    {submittedPrescription.eveningPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Bedtime Pill Count:</span>{' '}
-                                    {submittedPrescription.nightPillCount}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Drug Name:</span>{' '}
-                                    {submittedPrescription.drugName}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Pills per Bottle:</span>{' '}
-                                    {submittedPrescription.numberOfPills}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Refills:</span>{' '}
-                                    {submittedPrescription.refills}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Days per Week:</span>{' '}
-                                    {submittedPrescription.days}
-                                </div>
-                                <div className="col-span-2">
-                                    <span className="font-semibold">Additional Instructions:</span>{' '}
-                                    {submittedPrescription.additionalInstructions ||
-                                        'None provided'}
-                                </div>
-                                <div className="col-span-2">
-                                    <span className="font-semibold">Submitted:</span>{' '}
-                                    {submittedPrescription.timestamp}
-                                </div>
-                            </div>
-                            <div className="mt-3 text-sm text-secondary-foreground">
-                                The prescription request has been submitted and will be filled.
-                            </div>
-                            <Button
-                                onClick={() => setSubmittedPrescription(null)}
-                                className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
-                            >
-                                Dismiss
-                            </Button>
-                        </div>
-                    </div>
-                )}
             </div>
+            {/* Status Message */}
+            {submitStatus && submitStatus.isError && (
+                <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
+                    <AlertDescription className={'text-foreground'}>
+                        {submitStatus.message}
+                    </AlertDescription>
+                </Alert>
+            )}
+
+            {/* Confirmation Card */}
+            {submittedPrescription && !submitStatus?.isError && (
+                <div  className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                    <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                        Request Confirmation
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-lg font-semibold mb-2">
+                            Your prescription request has been submitted
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div>
+                                <span className="font-semibold">Employee Name:</span>{' '}
+                                {submittedPrescription.employee}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Employee ID:</span>{' '}
+                                {submittedPrescription.employeeID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Patient ID:</span>{' '}
+                                {submittedPrescription.patientID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Priority:</span>{' '}
+                                {submittedPrescription.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Department:</span>{' '}
+                                {submittedPrescription.department}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Status:</span>{' '}
+                                {submittedPrescription.status}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Morning Pill Count:</span>{' '}
+                                {submittedPrescription.morningPillCount}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Midday Pill Count:</span>{' '}
+                                {submittedPrescription.middayPillCount}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Evening Pill Count:</span>{' '}
+                                {submittedPrescription.eveningPillCount}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Bedtime Pill Count:</span>{' '}
+                                {submittedPrescription.nightPillCount}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Drug Name:</span>{' '}
+                                {submittedPrescription.drugName}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Pills per Bottle:</span>{' '}
+                                {submittedPrescription.numberOfPills}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Refills:</span>{' '}
+                                {submittedPrescription.refills}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Days per Week:</span>{' '}
+                                {submittedPrescription.days}
+                            </div>
+                            <div className="col-span-2">
+                                <span className="font-semibold">Additional Instructions:</span>{' '}
+                                {submittedPrescription.additionalInstructions ||
+                                    'None provided'}
+                            </div>
+                        </div>
+                        <div className="mt-3 text-sm text-secondary-foreground">
+                            The prescription request has been submitted and will be filled.
+                        </div>
+                        <Button
+                            onClick={() => setSubmittedPrescription(null)}
+                            className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
+                        >
+                            Dismiss
+                        </Button>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

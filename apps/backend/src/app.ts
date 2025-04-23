@@ -9,12 +9,13 @@ import assignedRouter from "./routes/assigned.ts";
 import csvRouter from "./routes/csv.ts";
 import loginRouter from "./routes/login.ts";
 import sanitationRouter from "./routes/sanitationreqs.ts";
-import bfsRouter from "./routes/bfs.ts";
+import algoRouter from "./routes/algoRouting.ts";
 import patientRequestRouter from "./routes/patientRequest.ts";
 import pharmacyRouter from "./routes/pharmacyreqs.ts";
 import transportRequestRouter from "./routes/transportreqs.ts";
 import deviceRequestRouter from "./routes/devicereqs.ts";
 import mapRouter from "./routes/mapData.ts";
+
 import { API_ROUTES } from "common/src/constants";
 
 const app: Express = express(); // Setup the backend
@@ -43,12 +44,13 @@ app.use(API_ROUTES.ASSIGNED, assignedRouter);
 app.use(API_ROUTES.LOGIN, loginRouter);
 app.use(API_ROUTES.SANITATION, sanitationRouter);
 app.use(API_ROUTES.CSV, csvRouter);
-app.use(API_ROUTES.BFS, bfsRouter);
+app.use(API_ROUTES.ALGO, algoRouter);
 app.use(API_ROUTES.PATIENTREQ, patientRequestRouter);
 app.use(API_ROUTES.PHARMACY, pharmacyRouter);
 app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
+
 /**
  * Catch all 404 errors, and forward them to the error handler
  */

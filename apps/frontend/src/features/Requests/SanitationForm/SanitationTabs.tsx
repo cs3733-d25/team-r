@@ -8,13 +8,13 @@ function SanitationRequestTabs() {
     return(
         <>
             <NavbarMGH />
-            <h1 className="text-2xl font-bold mb-5">Sanitation Request System</h1>
+            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Sanitation Request System</h1>
             <Tabs defaultValue="sanitationRequestForm" >
                 <TabsList>
                     <TabsTrigger value="sanitationRequestForm">
                         Sanitation Request Form</TabsTrigger>
                     <TabsTrigger value="sanitationRequestTable">
-                        Sanitation Request Table</TabsTrigger>
+                        View All Requests</TabsTrigger>
                 </TabsList>
                 <div >
                     <TabsContent value="sanitationRequestForm">
