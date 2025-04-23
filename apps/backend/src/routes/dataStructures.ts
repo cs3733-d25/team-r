@@ -4,16 +4,16 @@ export class Stack<T> {
   pop(): T | undefined { return this.items.pop(); }
   peek(): T | undefined { return this.items[this.items.length - 1]; }
   isEmpty(): boolean { return this.items.length === 0; }
-
+  clear(): void {this.items = [];}
 }
 
 export class Queue<T> {
   private items: T[] = [];
-
   enqueue(item: T): void { this.items.push(item); }
   dequeue(): T | undefined { return this.items.shift(); }
   peek(): T | undefined { return this.items[0]; }
   isEmpty(): boolean { return this.items.length === 0; }
+  clear(): void {this.items = [];}
 }
 
 interface HeapNode<T> {
@@ -27,14 +27,11 @@ export class PriorityQueue<T> {
   isEmpty(): boolean {
     return this.heap.length === 0;
   }
-
-
   enqueue(value: T, priority: number): void {
     const node: HeapNode<T> = { value, priority };
     this.heap.push(node);
     this.bubbleUp();
   }
-
   dequeue(): T | undefined {
     if (this.isEmpty()) return undefined;
     const root = this.heap[0].value;
@@ -45,9 +42,7 @@ export class PriorityQueue<T> {
     }
     return root;
   }
-
   private bubbleUp(): void {
-
     let idx = this.heap.length - 1;
     const node = this.heap[idx];
     while (idx > 0) {
@@ -59,7 +54,6 @@ export class PriorityQueue<T> {
       idx = parentIdx;
     }
   }
-
   private sinkDown(): void {
     let idx = 0;
     const length = this.heap.length;
@@ -89,4 +83,5 @@ export class PriorityQueue<T> {
       idx = swapIdx;
     }
   }
+  clear(): void {this.heap = [];}
 };
