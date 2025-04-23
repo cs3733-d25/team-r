@@ -31,8 +31,8 @@ model Edge {
   fromY    Float?
   toX      Float?
   toY      Float?
-  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
-  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID], onDelete: Cascade)
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID], onDelete: Cascade)
 }
 
 // TODO: delete this table
