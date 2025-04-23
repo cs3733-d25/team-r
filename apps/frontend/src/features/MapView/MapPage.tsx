@@ -97,9 +97,11 @@ export function MapPage() {
                 selectedDepartment,
                 algorithm
             );
+            console.log('got nodeIDs:', nodeIDs);
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
             const coords = nodes.reverse().map((n) => [n.ycoord, n.xcoord] as [number, number]);
+            console.log('computed pathCoordinates:', coords);
             // 3) update map
             setPathCoordinates(coords);
         } catch (err) {
