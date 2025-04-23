@@ -169,8 +169,8 @@ export function MapPage() {
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
-                                <Button type="submit">Get Directions</Button>
-                                <Button onClick={() => processDirections(["canopyEntrance", "leftEntrance", "frontLotChestnut"])}>convert node</Button>
+                                {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
+                                <Button type="submit" onClick={() => processDirections(["canopyEntrance", "leftEntrance", "frontLotChestnut"])}>Get Directions</Button>
                             </div>
                             <div className="flex flex-col space-y-2">
                                 <Label className={'px-2 mb-3'}>Floor selection</Label>
