@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
 

@@ -2,9 +2,15 @@ import prismaClient from "../bin/prisma-client";
 import { PriorityQueue } from "./dataStructures.ts";
 import router from "./mapData";
 import { Graph } from "./Graph.ts";
+import {PathfindingAlgorithm} from "./algoSelection.ts";
 
-export class AStar {
-  constructor(private graph: Graph) {}
+export class AStar implements PathfindingAlgorithm {
+  graph: Graph;
+  private openSet: PriorityQueue<string> | undefined;
+
+  constructor(graph: Graph) {
+    this.graph = graph;
+  }
 
   private heuristic(a: string, b: string): number {
     // Placeholder: returns zero (Dijkstra). Replace if you have coords.
@@ -14,8 +20,9 @@ export class AStar {
   }
 
   public findPath(start: string, end: string): string[] {
-    const openSet = new PriorityQueue<string>();
-    openSet.enqueue(start, 0);
+    //const openSet = new PriorityQueue<string>();
+    this.openSet = new PriorityQueue<string>();
+    this.openSet.enqueue(start, 0);
 
     const cameFrom = new Map<string, string>();
     const gScore = new Map<string, number>();
@@ -24,8 +31,8 @@ export class AStar {
     const fScore = new Map<string, number>();
     fScore.set(start, this.heuristic(start, end));
 
-    while (!openSet.isEmpty()) {
-      const current = openSet.dequeue()!;
+    while (!this.openSet.isEmpty()) {
+      const current = this.openSet.dequeue()!;
       if (current === end) {
         const path: string[] = [];
         let node: string | undefined = end;
@@ -43,7 +50,7 @@ export class AStar {
           gScore.set(neighbor, tentativeG);
           const f = tentativeG + this.heuristic(neighbor, end);
           fScore.set(neighbor, f);
-          openSet.enqueue(neighbor, f);
+          this.openSet.enqueue(neighbor, f);
         }
       }
     }
@@ -51,3 +58,6 @@ export class AStar {
     return [];
   }
 }
+
+export default router;
+

@@ -30,11 +30,11 @@ router.post("/", async function (req: Request, res: Response) {
     patient,
     location,
     request,
-    employeeName,
-    employeeID,
     device,
     room,
   } = req.body;
+  const employeeName = req.session?.username;
+  const employeeID = req.session?.username;
 
   try {
     console.log("deviceType: ", device);

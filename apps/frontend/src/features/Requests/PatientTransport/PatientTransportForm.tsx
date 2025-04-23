@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {NavbarMGH} from '../../../components/NavbarMGH.tsx';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Button} from "@/components/ui/button.tsx";
@@ -198,15 +197,15 @@ const TransportationRequestForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Priority Level
                                         <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            URGENT: Immediate attention required
-                                            <br />
-                                            HIGH: Within 1 hour
-                                            <br />
-                                            MEDIUM: Within 4 hours
-                                            <br />
-                                            LOW: Within 24 hours
-                                        </span>
+                                        {/*<span className="text-xs text-secondary-foreground block">*/}
+                                        {/*    URGENT: Immediate attention required*/}
+                                        {/*    <br />*/}
+                                        {/*    HIGH: Within 1 hour*/}
+                                        {/*    <br />*/}
+                                        {/*    MEDIUM: Within 4 hours*/}
+                                        {/*    <br />*/}
+                                        {/*    LOW: Within 24 hours*/}
+                                        {/*</span>*/}
                                     </Label>
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>

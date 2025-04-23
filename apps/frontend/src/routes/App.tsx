@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
@@ -19,25 +19,50 @@ import SanitationRequestTabs from "@/features/Requests/SanitationForm/Sanitation
 import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
 import {EditMap} from "@/features/MapView/EditMap.tsx";
 import RequestPage  from "@/features/Requests/RequestPage.tsx";
-
-
+import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
+import axios from "axios";
 
 function App() {
+    const [userType, setUserType] = useState("Guest");
+    const [session, setSession] = useState(null);
+    const [username, setUsername] = useState("");
+
+    async function getSession() {
+        try {
+            const response = await axios.get('api/login/session');
+            const userType = response.data.userType;
+            setUserType(userType);
+            console.log(response.data);
+            console.log("User type:", userType, "- Keagan");
+            setSession(response.data.username);
+            setUsername(response.data.username);
+        } catch (error) {
+            console.log('error in retrieve:', error);
+        }
+    }
+
+    useEffect(() => {
+        getSession();
+    }, []);
+
+
     const router = createBrowserRouter([
         {
             path: '/',
             errorElement:
-                <p className={'font-trade'}>Page not found</p>,
+                <div className={"bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover"}>
+                    <p className={'font-trade'}>Page not found</p>
+                </div>,
             children: [
-                { index: true, element: <HomeMain /> },
-                { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login /> },
+                { index: true, element: <HomeMain userType={userType} /> },
+                { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
+                { path: 'login', element: <Login onLogin={getSession} /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
-                 { path: 'csv', element: <CSVPage /> },
+                { path: 'csv', element: <CSVPage /> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
@@ -51,7 +76,11 @@ function App() {
         },
     ]);
 
-    return <RouterProvider router={router} />;
+    return (
+        <div>
+            <NavbarMGH userType={userType}/>
+            <RouterProvider router={router} />
+        </div>);
 }
 
 export default App;

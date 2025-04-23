@@ -1,12 +1,10 @@
-import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx'
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx';
 import {DeviceReqForm} from "./DeviceReqForm";
 import {DeviceReqPage} from "./DeviceReqPage";
 
 export function DeviceReq() {
     return(
         <>
-            <NavbarMGH />
             <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Medical Device Request System</h1>
             <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Owen Miller & Keagan Hitt & Nora Cleary</h2>
             <Tabs defaultValue="deviceForm">

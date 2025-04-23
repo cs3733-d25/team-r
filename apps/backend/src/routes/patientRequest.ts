@@ -27,15 +27,19 @@ router.post("/", async function (req: Request, res: Response) {
     comment,
     location,
     request,
-    employeeName,
+    //employeeName,
   } = req.body;
-  //const employeeName = req.session?.username; //find better way to check null
+
+  const employeeName = req.session?.username;
+
 
   try {
     console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
-        patientID,
+        patient: {
+          connect: { id: req.body.patientID }, // <-- Use relation connect
+        },
         priority,
         department,
         location,

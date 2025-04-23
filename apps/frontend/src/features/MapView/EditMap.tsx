@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavbarMGH } from '@/components/NavbarMGH.tsx';
-import { Label } from '@/components/ui/label.tsx';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx';
@@ -318,4 +318,9 @@ export function EditMap({ status }: EditMapProps) {
             </div>
         </div>
     );
+
+}*/
+
+export function EditMap() {
+    return null; // Stub implementation
 }
