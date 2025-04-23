@@ -18,11 +18,18 @@ export class Graph {
     }
   }
 
-  public getNeighbors(node: string): Set<string> {
-    return this.adjacencyList.get(node) ?? new Set();
+  // public getNeighbors(node: string): Set<string> {
+  //   return this.adjacencyList.get(node) ?? new Set();
+  // }
+  getNeighbors(node: string): string[] {
+    return Array.from(this.adjacencyList.get(node) ?? []);
   }
 
   public getNodes(): IterableIterator<string> {
     return this.adjacencyList.keys();
+  }
+
+  getAllNodeIDs(): string[] {
+    return Array.from(this.adjacencyList.keys());
   }
 }
