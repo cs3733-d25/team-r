@@ -3,8 +3,8 @@ model Directory {
   name        String
   floorNumber Int
   building    String
-  recepetionNodeID String?
-  receptionNode Node? @relation(fields:[recepetionNodeID], references: [nodeID])
+  recepetionNodeID  String?
+  recepetionNode Node? @relation(fields:[recepetionNodeID], references: [nodeID])
 }
 
 model Node {
