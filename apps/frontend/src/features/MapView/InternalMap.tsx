@@ -67,6 +67,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
         if(promiseEdgeCreate) {
             console.log(promiseEdgeCreate);
             promiseEdgeCreate.then(async () => {
+                console.log("Created stuff");
                 await loadAll();
                 console.log("loaded all stuff");
             });
@@ -342,10 +343,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 });
                 if(edges22_1) {
                     edges22_1.map((edge) => {
-                        L.polyline([
+                        const line = L.polyline([
                             [edge.fromNode.xcoord, edge.fromNode.ycoord],
                             [edge.toNode.xcoord, edge.toNode.ycoord],
                         ]).addTo(floorLayer22_1);
+                        clickEdge(edge, line);
                     });
                 }
                 edges22_3.map((edge) => {

@@ -38,6 +38,7 @@ export function EditMap({ status }: EditMapProps) {
     const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
+    // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
 
     const building = getBuildingFromLocation(selectedLocation);

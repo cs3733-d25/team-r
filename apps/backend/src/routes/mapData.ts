@@ -390,7 +390,7 @@ router.post("/delete-node", async (req: Request, res: Response) => {
 });
 
 // function to delete an edge
-router.post("/delete-node", async (req: Request, res: Response) => {
+router.post("/delete-edge", async (req: Request, res: Response) => {
   try {
     console.log(req.body);
     const edgeID = req.body.edgeID; // get the nodeID
