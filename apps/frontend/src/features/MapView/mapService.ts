@@ -103,12 +103,12 @@ export const fetchPath = async (
   algorithm: 'dfs' | 'bfs' | 'aStar'
 ): Promise<string[]> => {
   try {
-    const response = await axios.post('/api/algo', {
+    const response = await axios.post<{ nodeIDs: string[] }>('/api/algo', {
       startingPoint,
       endingPoint,
       algorithm,
     });
-    return response.data as string[];
+    return response.data.nodeIDs;
   } catch (error) {
     console.error('Error fetching path:', error);
     throw error;
