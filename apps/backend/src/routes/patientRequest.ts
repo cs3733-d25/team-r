@@ -32,7 +32,6 @@ router.post("/", async function (req: Request, res: Response) {
 
   const employeeName = req.session?.username;
 
-
   try {
     console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({

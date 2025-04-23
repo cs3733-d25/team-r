@@ -44,7 +44,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -211,66 +211,66 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
         loadEdges();
     }, []);
 
+    const floorLayer20_1 = L.layerGroup();
+    const floorLayer22_1 = L.layerGroup();
+    const floorLayer22_3 = L.layerGroup();
+    const floorLayer22_4 = L.layerGroup();
+    const floorLayerChestnutHill = L.layerGroup();
+    const floorLayerFaulkner = L.layerGroup();
+
+    function getLayer (building:string, floor: number){
+        let out = null;
+        switch (building) {
+            case 'Patriot Place 20':
+                switch (floor) {
+                    case 1:
+                        out = floorLayer20_1;
+                        break;
+                    default:
+                        console.log("a node had an invalid floor number");
+                        break;
+                }
+                break;
+            case 'Patriot Place 22':
+                switch (floor) {
+                    case 1:
+                        out = floorLayer22_1;
+                        break;
+                    case 3:
+                        out = floorLayer22_3;
+                        break;
+                    case 4:
+                        out = floorLayer22_4;
+                        break;
+                    default:
+                        console.log("a node had an invalid floor number");
+                        break;
+                }
+                break;
+            case 'Chestnut Hill':
+                out = floorLayerChestnutHill;
+                break;
+            case 'Faulkner':
+                out = floorLayerFaulkner;
+                break;
+            default:
+                console.log("a node had an invalid building");
+                break;
+        }
+        return out;
+    }
+
     // Initialize map once
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
-            const floorLayer20_1 = L.layerGroup();
-            const floorLayer22_1 = L.layerGroup();
-            const floorLayer22_3 = L.layerGroup();
-            const floorLayer22_4 = L.layerGroup();
-            const floorLayerChestnutHill = L.layerGroup();
-            const floorLayerFaulkner = L.layerGroup();
-
-            function getLayer (building:string, floor: number){
-                let out = null;
-                switch (building) {
-                    case 'Patriot Place 20':
-                        switch (floor) {
-                            case 1:
-                                out = floorLayer20_1;
-                                break;
-                            default:
-                                console.log("a node had an invalid floor number");
-                                break;
-                        }
-                        break;
-                    case 'Patriot Place 22':
-                        switch (floor) {
-                            case 1:
-                                out = floorLayer22_1;
-                                break;
-                            case 3:
-                                out = floorLayer22_3;
-                                break;
-                            case 4:
-                                out = floorLayer22_4;
-                                break;
-                            default:
-                                console.log("a node had an invalid floor number");
-                                break;
-                        }
-                        break;
-                    case 'Chestnut Hill':
-                        out = floorLayerChestnutHill;
-                        break;
-                    case 'Faulkner':
-                        out = floorLayerFaulkner;
-                        break;
-                    default:
-                        console.log("a node had an invalid building");
-                        break;
-                }
-                return out;
-            }
-
-            // start the placeholer off screen
-            const nodePlaceholder = L.circle([-100,-100], nodePlaceholderOptions).addTo(map);
-
             const map = L.map(mapRef.current, {
                 crs: L.CRS.Simple,
                 minZoom: -2,
                 zoomControl: false,
             }).setView([500, 500], 0);
+
+            // start the placeholer off screen
+            const nodePlaceholder = L.circle([-100,-100], nodePlaceholderOptions).addTo(map);
 
             // Define bounds
             const bounds20_1: L.LatLngBoundsLiteral = [
@@ -303,10 +303,18 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(patriot22Floor1, bounds22_1).addTo(floorLayer22_1);
             L.imageOverlay(patriot22Floor3, bounds22_3).addTo(floorLayer22_3);
             L.imageOverlay(patriot22Floor4, bounds22_4).addTo(floorLayer22_4);
-            L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(
-                floorLayerChestnutHill
-            );
+            L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
+
+            // Layer controls
+            L.control.layers({
+                        '20 Patriot Place - Floor 1': floorLayer20_1,
+                        '22 Patriot Place - Floor 1': floorLayer22_1,
+                        '22 Patriot Place - Floor 3': floorLayer22_3,
+                        '22 Patriot Place - Floor 4': floorLayer22_4,
+                        'Chestnut Hill': floorLayerChestnutHill,
+                        'Faulkner': floorLayerFaulkner,
+                    }, {}).addTo(map);
 
             if(showEdges) {
                 // draw nodes
@@ -413,7 +421,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             }
 
             // add a default layer
-            if (location.includes('20 Patriot Pl'))
+            if (location.includes('20 Patriot Pl')) {
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
                 floorLayer22_1.addTo(map);
@@ -434,20 +442,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                 nodePlaceholder.setLatLng(e.latlng);
             });
       
-            // Layer controls
-            L.control
-                .layers(
-                    {
-                        '20 Patriot Place - Floor 1': floorLayer20_1,
-                        '22 Patriot Place - Floor 1': floorLayer22_1,
-                        '22 Patriot Place - Floor 3': floorLayer22_3,
-                        '22 Patriot Place - Floor 4': floorLayer22_4,
-                        'Chestnut Hill': floorLayerChestnutHill,
-                        'Faulkner': floorLayerFaulkner,
-                    },
-                    {}
-                )
-                .addTo(map);
+
 
             // Store instance
             mapInstance.current = map;
