@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
@@ -25,6 +25,20 @@ export function NavbarMGH(props: NavBarProps) {
         }
     }
 
+    const [username, setusername] = useState("");
+    useEffect(() => {
+        async function getName() {
+            try {
+                const response = await axios.get("api/login/session");
+                setusername(response.data.username);
+            } catch (err) {
+                console.error("Error fetching username:", err);
+            }
+        }
+
+        getName();
+    }, []);
+
 
     console.log("HERE IT IS: ", props.userType);
 
@@ -34,7 +48,7 @@ export function NavbarMGH(props: NavBarProps) {
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={(!props.userType) ? "/" : "/home"} className="flex items-center">
+                    <a href={!props.userType ? '/' : '/home'} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -47,128 +61,165 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - Patient*/}
-                {(props.userType === 'Patient') && (
-                <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
-                    <Button variant="ghost" asChild>
-                        <a href="/directory">Directories</a>
-                    </Button>
-                    <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
-                        { label: '20 Patriot Place', href: '/external-map' },
-                        { label: '22 Patriot Place', href: '/external-map' },
-                        { label: 'Chestnut Hill', href: '/external-map' },
-                        { label: 'Faulkner', href: '/external-map' },
-                    ]}/>
-
-                </nav>)}
-                {/* Desktop Navigation - Admin */}
-                {(props.userType === 'Admin') && (
+                {props.userType === 'Patient' && (
                     <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                         <Button variant="ghost" asChild>
                             <a href="/directory">Directories</a>
                         </Button>
-                        <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
-                            { label: '20 Patriot Place', href: '/external-map' },
-                            { label: '22 Patriot Place', href: '/external-map' },
-                            { label: 'Chestnut Hill', href: '/external-map' },
-                            { label: 'Faulkner', href: '/external-map' },
-                            { label: 'Edit Map', href: '/edit-map' },
-                        ]}/>
-                        <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
-                            { label: 'Sanitation', href: '/sanitation' },
-                            { label: 'Medical Device', href: '/devicerequest' },
-                            { label: 'Patient Request', href: '/patientrequestpage' },
-                            { label: 'Patient Transport', href: '/transport' },
-                            { label: 'Prescription', href: '/prescription' },
-                        ]}/>
+                        <HoverPopoverNavLink
+                            label={'Navigate'}
+                            href={'/external-map'}
+                            items={[
+                                { label: '20 Patriot Place', href: '/external-map' },
+                                { label: '22 Patriot Place', href: '/external-map' },
+                                { label: 'Chestnut Hill', href: '/external-map' },
+                                { label: 'Faulkner', href: '/external-map' },
+                            ]}
+                        />
+                    </nav>
+                )}
+                {/* Desktop Navigation - Admin */}
+                {props.userType === 'Admin' && (
+                    <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                        <Button variant="ghost" asChild>
+                            <a href="/directory">Directories</a>
+                        </Button>
+                        <HoverPopoverNavLink
+                            label={'Navigate'}
+                            href={'/external-map'}
+                            items={[
+                                { label: '20 Patriot Place', href: '/external-map' },
+                                { label: '22 Patriot Place', href: '/external-map' },
+                                { label: 'Chestnut Hill', href: '/external-map' },
+                                { label: 'Faulkner', href: '/external-map' },
+                                { label: 'Edit Map', href: '/edit-map' },
+                            ]}
+                        />
+                        <HoverPopoverNavLink
+                            label={'Request a Service'}
+                            href={'/requests'}
+                            items={[
+                                { label: 'Sanitation', href: '/sanitation' },
+                                { label: 'Medical Device', href: '/devicerequest' },
+                                { label: 'Patient Request', href: '/patientrequestpage' },
+                                { label: 'Patient Transport', href: '/transport' },
+                                { label: 'Prescription', href: '/prescription' },
+                            ]}
+                        />
 
-                        <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
-                            { label: 'Import a CSV', href: '/csv' },
-                            { label: 'Export CSV', href: '/csv' },
-                        ]
-                        }/>
-                    </nav>)}
+                        <HoverPopoverNavLink
+                            label={'Database'}
+                            href={'/csv'}
+                            items={[
+                                { label: 'Import a CSV', href: '/csv' },
+                                { label: 'Export CSV', href: '/csv' },
+                            ]}
+                        />
+                    </nav>
+                )}
 
                 {/* Desktop Navigation - Employee */}
-                {(props.userType === 'Employee') && (
+                {props.userType === 'Employee' && (
                     <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                         <Button variant="ghost" asChild>
                             <a href="/directory">Directories</a>
                         </Button>
-                        <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
-                            { label: '20 Patriot Place', href: '/external-map' },
-                            { label: '22 Patriot Place', href: '/external-map' },
-                            { label: 'Chestnut Hill', href: '/external-map' },
-                            { label: 'Faulkner', href: '/external-map' },
-                        ]}/>
-                        <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
-                            { label: 'Sanitation', href: '/sanitation' },
-                            { label: 'Medical Device', href: '/devicerequest' },
-                            { label: 'Patient Request', href: '/patientrequestpage' },
-                            { label: 'Patient Transport', href: '/transport' },
-                            { label: 'Prescription', href: '/prescription' },
-                        ]}/>
+                        <HoverPopoverNavLink
+                            label={'Navigate'}
+                            href={'/external-map'}
+                            items={[
+                                { label: '20 Patriot Place', href: '/external-map' },
+                                { label: '22 Patriot Place', href: '/external-map' },
+                                { label: 'Chestnut Hill', href: '/external-map' },
+                                { label: 'Faulkner', href: '/external-map' },
+                            ]}
+                        />
+                        <HoverPopoverNavLink
+                            label={'Request a Service'}
+                            href={'/requests'}
+                            items={[
+                                { label: 'Sanitation', href: '/sanitation' },
+                                { label: 'Medical Device', href: '/devicerequest' },
+                                { label: 'Patient Request', href: '/patientrequestpage' },
+                                { label: 'Patient Transport', href: '/transport' },
+                                { label: 'Prescription', href: '/prescription' },
+                            ]}
+                        />
 
-                        <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
-                            { label: 'Import a CSV', href: '/csv' },
-                            { label: 'Export CSV', href: '/csv' },
-                        ]
-                        }/>
-                    </nav>)}
+                        <HoverPopoverNavLink
+                            label={'Database'}
+                            href={'/csv'}
+                            items={[
+                                { label: 'Import a CSV', href: '/csv' },
+                                { label: 'Export CSV', href: '/csv' },
+                            ]}
+                        />
+                    </nav>
+                )}
 
                 {/* Icons on right */}
-                {(props.userType) && (
-                <div className="ml-auto flex items-center gap-2">
-                    {/* Bell currently non-functional*/}
-                    <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
-                        <Bell className="h-5 w-5" />
-                    </Button>
-                    <Popover>
-                        <PopoverTrigger>
-                            <Button variant="ghost" size="icon" className="rounded-full">
-                                <User className="h-5 w-5" />
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-56" align="end" sideOffset={5}>
-                            <div className="grid gap-3 p-2">
-                                <Label className={'font-trade text-base justify-center'}>
-                                    Hi, User!
-                                </Label>
-                                <div className="border-t"></div>
-                                <Button
-                                    variant={'ghostPopover'}
-                                    onClick={() => alert("This button doesn't work yet! - Akaash")}
-                                >
-                                    Profile
+                {props.userType && (
+                    <div className="ml-auto flex items-center gap-2">
+                        {/* Bell currently non-functional*/}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="rounded-full"
+                            onClick={() => alert("This button doesn't work yet! - Akaash")}
+                        >
+                            <Bell className="h-5 w-5" />
+                        </Button>
+                        <Popover>
+                            <PopoverTrigger>
+                                <Button variant="ghost" size="icon" className="rounded-full">
+                                    <User className="h-5 w-5" />
                                 </Button>
-                                <Button
-                                    variant={'ghostPopover'}
-                                    onClick={() => alert("This button doesn't work yet! - Akaash")}
-                                >
-                                    Settings
-                                </Button>
-                                <div className="border-t"></div>
-                                <Button variant={'ghostDestructive'}>
-                                    <a
-                                        href={"/"}
-                                        onClick={(e) => handleLogout()}
-                                    >Sign out</a>
-                                </Button>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-56" align="end" sideOffset={5}>
+                                <div className="grid gap-3 p-2">
+                                    <Label className={'font-trade text-base justify-center'}>
+                                        Hi, {username}!
+                                    </Label>
+                                    <div className="border-t"></div>
+                                    <Button
+                                        variant={'ghostPopover'}
+                                        onClick={() =>
+                                            alert("This button doesn't work yet! - Akaash")
+                                        }
+                                    >
+                                        Profile
+                                    </Button>
+                                    <Button
+                                        variant={'ghostPopover'}
+                                        onClick={() =>
+                                            alert("This button doesn't work yet! - Akaash")
+                                        }
+                                    >
+                                        Settings
+                                    </Button>
+                                    <div className="border-t"></div>
+                                    <Button variant={'ghostDestructive'}>
+                                        <a href={'/'} onClick={(e) => handleLogout()}>
+                                            Sign out
+                                        </a>
+                                    </Button>
+                                </div>
+                            </PopoverContent>
+                        </Popover>
 
-                    {/* Mobile Menu Button */}
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="min-[1152px]:hidden"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        <Menu className="h-5 w-5" />
-                    </Button>
-                </div>)}
+                        {/* Mobile Menu Button */}
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="min-[1152px]:hidden"
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            <Menu className="h-5 w-5" />
+                        </Button>
+                    </div>
+                )}
                 {/* Only display login button in logged-out home page */}
-                {(!props.userType) && (
+                {!props.userType && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>

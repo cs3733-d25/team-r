@@ -3032,6 +3032,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-session@npm:1.17.0":
+  version: 1.17.0
+  resolution: "@types/express-session@npm:1.17.0"
+  dependencies:
+    "@types/express": "npm:*"
+    "@types/node": "npm:*"
+  checksum: 10c0/a3082219321409309f4b9d13b15d4d8f0e2cc02f480ae0850bdbbef20fe2038061cb81946319bea655fb759db9b46fe61de68f458184a2ee1919d7d03b906875
+  languageName: node
+  linkType: hard
+
 "@types/express@npm:*, @types/express@npm:^5.0.1":
   version: 5.0.1
   resolution: "@types/express@npm:5.0.1"
@@ -3921,6 +3931,7 @@ __metadata:
     "@swc/helpers": "npm:^0.5.1"
     "@types/cookie-parser": "npm:^1.4.8"
     "@types/express": "npm:^5.0.1"
+    "@types/express-session": "npm:1.17.0"
     "@types/http-errors": "npm:^2.0.4"
     "@types/morgan": "npm:^1.9.9"
     "@types/multer": "npm:^1"
@@ -3936,6 +3947,7 @@ __metadata:
     eslint-config-custom: "npm:*"
     express: "npm:^4.19.2"
     express-oauth2-jwt-bearer: "npm:^1.5.0"
+    express-session: "npm:1.17.0"
     http-errors: "npm:~1.6.3"
     http-terminator: "npm:^3.2.0"
     jose: "npm:^5.4.0"
@@ -4525,6 +4537,13 @@ __metadata:
   version: 1.0.6
   resolution: "cookie-signature@npm:1.0.6"
   checksum: 10c0/b36fd0d4e3fef8456915fcf7742e58fbfcc12a17a018e0eb9501c9d5ef6893b596466f03b0564b81af29ff2538fd0aa4b9d54fe5ccbfb4c90ea50ad29fe2d221
+  languageName: node
+  linkType: hard
+
+"cookie@npm:0.4.0":
+  version: 0.4.0
+  resolution: "cookie@npm:0.4.0"
+  checksum: 10c0/71508a1c8a4e97bb88f42635542ef24ebe7e713f82573ac61e9b289616334d14bfb28210d7979d9ada24b0254f5fb563af938cac13bc8c0c3f60f47a2257f791
   languageName: node
   linkType: hard
 
@@ -5431,6 +5450,22 @@ __metadata:
   dependencies:
     jose: "npm:^4.15.5"
   checksum: 10c0/87ea4c7cb5f7237e3e012de38c466e8c611722f35951abac2a2a70979b64a22564c66687e28a86c5c97201d50eb3a5f296929d43669ad4a2c8d3c2296f040a6d
+  languageName: node
+  linkType: hard
+
+"express-session@npm:1.17.0":
+  version: 1.17.0
+  resolution: "express-session@npm:1.17.0"
+  dependencies:
+    cookie: "npm:0.4.0"
+    cookie-signature: "npm:1.0.6"
+    debug: "npm:2.6.9"
+    depd: "npm:~2.0.0"
+    on-headers: "npm:~1.0.2"
+    parseurl: "npm:~1.3.3"
+    safe-buffer: "npm:5.2.0"
+    uid-safe: "npm:~2.1.5"
+  checksum: 10c0/4cfcdf19a6324c135a27ffeeb0ca8ceaf0331135ff5166ec09d6cbbc9ffacf399d15487bebe3dac24b03e896365935e64ccdc3e6b64752051ace57e5f80ccd24
   languageName: node
   linkType: hard
 
@@ -7842,6 +7877,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"random-bytes@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "random-bytes@npm:1.0.0"
+  checksum: 10c0/71e7a600e0976e9ebc269793a0577d47b965fa678fcc9e9623e427f909d1b3669db5b3a178dbf61229f0724ea23dba64db389f0be0ba675c6a6b837c02f29b8f
+  languageName: node
+  linkType: hard
+
 "range-parser@npm:1.2.0":
   version: 1.2.0
   resolution: "range-parser@npm:1.2.0"
@@ -8347,6 +8389,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"safe-buffer@npm:5.2.0":
+  version: 5.2.0
+  resolution: "safe-buffer@npm:5.2.0"
+  checksum: 10c0/9e1d7f6a162b493b54ecc29e60fcedaf4d0b53aa1636088f8f1f40dc5e7ceeb44885983c0de8148a735369e1ce567abe9465e8086e413673706432d4df8cca07
+  languageName: node
+  linkType: hard
+
 "safe-buffer@npm:5.2.1, safe-buffer@npm:^5.0.1":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
@@ -8712,6 +8761,7 @@ __metadata:
   dependencies:
     "@prisma/client": "npm:^6.5.0"
     "@tailwindcss/vite": "npm:^4.1.3"
+    "@types/express-session": "npm:1.17.0"
     "@types/multer": "npm:^1"
     "@types/node": "npm:^22.14.1"
     "@types/react": "npm:^19.1.0"
@@ -8725,6 +8775,7 @@ __metadata:
     dotenv-cli: "npm:^7.4.4"
     eslint: "npm:^9.23.0"
     eslint-config-custom: "workspace:*"
+    express-session: "npm:1.17.0"
     husky: "npm:^9.1.7"
     multer: "npm:^1.4.5-lts.2"
     postcss: "npm:^8.5.3"
@@ -9369,6 +9420,15 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/5448a08e595cc558ab321e49d4cac64fb43d1fa106584f6ff9a8d8e592111b373a995a1d5c7f3046211c8a37201eb6d0f1566f15cdb7a62a5e3be01d087848e2
+  languageName: node
+  linkType: hard
+
+"uid-safe@npm:~2.1.5":
+  version: 2.1.5
+  resolution: "uid-safe@npm:2.1.5"
+  dependencies:
+    random-bytes: "npm:~1.0.0"
+  checksum: 10c0/ec96862e859fd12175f3da7fda9d1359a2cf412fd521e10837cbdc6d554774079ce252f366981df9401283841c8924782f6dbee8f82a3a81f805ed8a8584595d
   languageName: node
   linkType: hard
 
