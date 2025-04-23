@@ -106,7 +106,7 @@ export const fetchPath = async (
      algorithm: 'dfs' | 'bfs' | 'aStar'
 ): Promise<string[]> => {
       try {
-            const response = await axios.post('/api/algo-routing', {
+            const response = await axios.post('/api/algo', {
                   startingPoint,
                   endingPoint,
                   algorithm,

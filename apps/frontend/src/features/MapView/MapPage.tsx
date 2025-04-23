@@ -20,8 +20,10 @@ import {
 } from '@/features/MapView/mapUtils';
 import axios from 'axios';
 
-interface CustomWindow extends Window {
+declare global {
+  interface Window {
     goToFloor?: (floor: number, building?: string) => void;
+  }
 }
 
 interface MapNode {
@@ -166,7 +168,10 @@ export function MapPage() {
                         {/* Algorithm selector */}
                         <div className="flex flex-col space-y-2">
                             <Label>Algorithm</Label>
-                            <Select value={algorithm} onValueChange={setAlgorithm}>
+                            <Select
+                                value={algorithm}
+                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
+                            >
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select algorithm" />
                                 </SelectTrigger>
@@ -196,7 +201,7 @@ export function MapPage() {
                                 className="w-full mb-1"
                                 onClick={() => {
                                     setCurrentFloor(floor);
-                                    (window as CustomWindow).goToFloor?.(
+                                    window.goToFloor?.(
                                         floor,
                                         getBuildingConstant(selectedBuilding)
                                     );
