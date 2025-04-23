@@ -101,6 +101,10 @@ export function MapPage() {
         }
     }
 
+    /**
+     * Given a string array of nodeIDs, this function converts them to their shortNames
+     * @param directions - the string array of nodeIDs
+     */
     const processDirections = async (directions: string[]) => {
         try {
             const nodes = await getNodeObjs(directions);
