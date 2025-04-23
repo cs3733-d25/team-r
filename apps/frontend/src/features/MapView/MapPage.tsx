@@ -108,6 +108,7 @@ export function MapPage() {
             });
             const receptionNodeID = response.data.receptionNodeID;
             console.log('in handle get directions receptionNodeID: ', receptionNodeID);
+            console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
             const nodeIDs = await fetchPath(
@@ -118,6 +119,7 @@ export function MapPage() {
             console.log('got nodeIDs:', nodeIDs);
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
+            console.log('nodeIDs from getNodeObjs: ', nodes);
             const coords = nodes.reverse().map((n) => [n.ycoord, n.xcoord] as [number, number]);
             console.log('computed pathCoordinates:', coords);
             // 3) update map

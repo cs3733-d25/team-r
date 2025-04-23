@@ -30,13 +30,11 @@ router.post(
         select: { receptionNodeID: true },
       });
 
-
-
       if (!response) {
         res.status(404).json({ error: "Department not found" });
         return;
       }
-      console.log('response: ', response.receptionNodeID);
+      console.log("response: ", response.receptionNodeID);
 
       res.json({ receptionNodeID: response.receptionNodeID });
     } catch (err) {
@@ -49,7 +47,7 @@ router.post(
 router.post("/fetchPath", async function (req: Request, res: Response) {
   const { startingPoint, endingPoint, algorithm } = req.body;
   console.log(" startingPoint in algoRouting", startingPoint);
-  console.log(" endingPoint in algoRouting", endingPoint.toString());
+  console.log(" endingPoint in algoRouting", endingPoint);
   console.log(" algorithm in algoRouting", algorithm);
 
   try {
