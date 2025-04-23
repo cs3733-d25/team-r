@@ -3,7 +3,11 @@ import { Stack } from "./dataStructures.ts";  // update path if yours differs
 import { Graph } from "./Graph";
 
 export default class DFS {
-  constructor(private graph: Graph) {
+
+  private graph: Graph;
+
+  constructor(graph: Graph) {
+    this.graph = graph;
   }
 
   public findPath(start: string, end: string): string[] {

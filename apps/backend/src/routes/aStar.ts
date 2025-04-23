@@ -4,7 +4,11 @@ import router from "./mapData";
 import { Graph } from "./Graph.ts";
 
 export class AStar {
-  constructor(private graph: Graph) {}
+  private graph: Graph;
+
+  constructor(graph: Graph) {
+    this.graph = graph;
+  }
 
   private heuristic(a: string, b: string): number {
     // Placeholder: returns zero (Dijkstra). Replace if you have coords.
