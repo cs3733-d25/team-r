@@ -19,7 +19,7 @@ export function NavbarMGH(props: NavBarProps) {
     async function handleLogout() {
         try {
             console.log("Logging user out");
-            axios.post('/api/logout');
+            axios.post('/api/login/reset');
         } catch (error) {
             console.log("Error: ", error);
         }
@@ -124,8 +124,9 @@ export function NavbarMGH(props: NavBarProps) {
                                 </Button>
                                 <div className="border-t"></div>
                                 <Button variant={'ghostDestructive'}>
-                                    <a href={'/'}
-                                        onClick={handleLogout()}
+                                    <a
+                                        href={"/"}
+                                        onClick={(e) => handleLogout()}
                                     >Sign out</a>
                                 </Button>
                             </div>
