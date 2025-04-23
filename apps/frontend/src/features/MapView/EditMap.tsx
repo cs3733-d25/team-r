@@ -7,7 +7,7 @@ import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
 import axios, {AxiosPromise, AxiosResponse} from 'axios';
-import { Label } from 'recharts';
+import { Label } from '@/components/ui/label.tsx';
 
 interface EditMapProps {
     status?: string;
@@ -270,12 +270,11 @@ export function EditMap({ status }: EditMapProps) {
                                         availableDepartments.map(dept => (
                                             <div key={dept.id} className="flex items-center space-x-2 py-1">
                                                 <Checkbox
-                                                    id={`dept-${dept.id}`}
+                                                    id={"dept-${dept.id}"}
                                                     checked={selectedDepartments.includes(dept.id)}
                                                     onCheckedChange={() => handleDepartmentToggle(dept.id)}
                                                 />
-                                                {/*Owen took out htmlFor={`dept-${dept.id}`} */}
-                                                <Label  className="cursor-pointer">
+                                                <Label htmlFor={`dept-${dept.id}`} className="cursor-pointer">
                                                     {dept.name}
                                                 </Label>
                                             </div>
