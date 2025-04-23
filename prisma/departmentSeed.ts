@@ -1,4 +1,3 @@
-/*
 import client from "../apps/backend/src/bin/prisma-client.ts";
 
 async function main() {
@@ -86,6 +85,3 @@ main()
     .finally(async () => {
         await client.$disconnect();
     });
-
-
- */
