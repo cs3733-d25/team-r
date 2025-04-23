@@ -8,7 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
-import axios from 'axios';
+import axios, {AxiosPromise, AxiosResponse} from 'axios';
 
 interface EditMapProps {
     status?: string;
@@ -36,7 +36,7 @@ export function EditMap({ status }: EditMapProps) {
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(3);
-    const [lNodes, setLNodes] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
+    const [requestPromise, setRequestPromise] = useState<Promise<void | AxiosResponse<any, any>>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
 
     const building = getBuildingFromLocation(selectedLocation);
@@ -51,12 +51,14 @@ export function EditMap({ status }: EditMapProps) {
 
     // function from mapService that makes axios request
     async function deleteNode (nodeID:string) {
-        await postNodeDeletion(nodeID);
+        // make request, and pass the promise to the internal map to reload once its done
+        setRequestPromise(async () => {await postNodeDeletion(nodeID)});
     }
 
     // function from mapService that makes axios request
-    async function deleteEdge (nodeID:string) {
-        await postEdgeDeletion(nodeID);
+    async function deleteEdge (edgeID:string) {
+        // make request, and pass the promise to the internal map to reload once its done
+        setRequestPromise(async () => {await postEdgeDeletion(edgeID)});
     }
 
     function onNodeClick (nodeID:string) {
@@ -178,7 +180,9 @@ export function EditMap({ status }: EditMapProps) {
 
         try {
             // call API to save edge
-            const response = await axios.post('/api/map/create-edge', edgeData);
+            const promise = axios.post('/api/map/create-edge', edgeData);
+            setRequestPromise(promise);
+            const response = await promise;
 
             if (response.status === 200) {
                 alert('Edge saved successfully!');
@@ -199,7 +203,7 @@ export function EditMap({ status }: EditMapProps) {
                 <NavbarMGH />
             </div>
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
+                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} finishRequest={requestPromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">

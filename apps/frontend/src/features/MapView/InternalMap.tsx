@@ -11,6 +11,7 @@ import { transitionNodes, addFloorTransitionMarkers, connectBuildings, goToFloor
 import './leaflet.css';
 import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
+import { AxiosResponse } from 'axios';
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
@@ -19,7 +20,7 @@ interface InternalMapProps {
     onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
     onEdgeDelete?: (edgeID:string) => Promise<void>;
-    loadNodes?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
+    finishRequest?: Promise<void | AxiosResponse<any, any>>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
 }
@@ -31,7 +32,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, onEdgeDelete, loadNodes, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, onEdgeDelete, finishRequest, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -51,12 +52,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        if(loadNodes) {
-            loadNodes.then(() => {
-                console.log("load all nodes");
+        if(finishRequest) {
+            finishRequest.then(async () => {
+                await loadAll();
+                console.log("loaded all stuff");
             });
         }
-    }, [loadNodes]);
+    }, [finishRequest]);
 
 
     // callback function for clicking on nodes
@@ -128,8 +130,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const loadHallways = async () => {
         try {
             const data = await fetchHallways();
+            console.log(data);
             setHallways(data);
-            console.log("data:", data);
         } catch (err) {
             console.error('Error fetching hallways lots:', err);
         }
@@ -249,6 +251,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             if(showEdges) {
                 // draw nodes
                 if(hallways.length > 0) {
+                    console.log("HALLWAYS!");
                     hallways.map((node) => {
                         // put it on the correct floor
                         const layer = getLayer(node.building, node.floor);
