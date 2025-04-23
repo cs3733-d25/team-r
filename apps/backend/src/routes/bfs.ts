@@ -30,6 +30,7 @@ export class BFS implements PathfindingAlgorithm {
         visited.add(currentID);
 
         const neighbors = this.graph.getNeighbors(currentID);
+        console.log(`Visiting: ${currentID}`);
         for (const neighbor of neighbors) {
           if (!visited.has(neighbor)) {
             this.queue.enqueue([...path, neighbor]);

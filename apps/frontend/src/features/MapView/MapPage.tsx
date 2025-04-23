@@ -64,7 +64,7 @@ export function MapPage() {
                 'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                Faulkner: ['FAULKNER', 'Faulkner'],
+                'Faulkner': ['FAULKNER', 'Faulkner'],
             };
             return buildingMap[selectedBuilding]?.some((name) =>
                 lot.building.toUpperCase().includes(name.toUpperCase())
@@ -84,6 +84,13 @@ export function MapPage() {
         }
     };
 
+    /*
+    const response = await axios.post('/api/transportreq/', {
+                ...formData,
+                priority: formData.priority.toString()
+            });
+            console.log('message is here')
+     */
     // Main “Get Directions” handler
     const handleGetDirections = async () => {
         if (!selectedParkinglot || !selectedDepartment) {
@@ -91,6 +98,17 @@ export function MapPage() {
             return;
         }
         try {
+            console.log('selected location sending to router: ', selectedLocation);
+            console.log('selected department sending to router: ', selectedDepartment);
+
+            //change the end node to receptionNodeID based on department
+            const response = await axios.post('/api/algo/reception', {
+                department: selectedDepartment,
+                location: selectedLocation,
+            });
+            const receptionNodeID = response.data.receptionNodeID;
+            console.log('in handle get directions receptionNodeID: ', receptionNodeID);
+
             // 1) get the sequence of node IDs
             const nodeIDs = await fetchPath(
                 selectedParkinglot,
