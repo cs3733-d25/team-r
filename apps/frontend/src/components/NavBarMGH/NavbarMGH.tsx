@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
@@ -24,9 +24,6 @@ export function NavbarMGH(props: NavBarProps) {
             console.log("Error: ", error);
         }
     }
-
-
-    console.log("HERE IT IS: ", props.userType);
 
     return (
         // main header
@@ -116,7 +113,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </nav>)}
 
                 {/* Icons on right */}
-                {(props.userType) && (
+                {(props.userType && props.userType != "Guest") && (
                 <div className="ml-auto flex items-center gap-2">
                     {/* Bell currently non-functional*/}
                     <Button variant="ghost" size="icon" className="rounded-full" onClick={() => alert("This button doesn't work yet! - Akaash")}>
@@ -168,7 +165,7 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>)}
                 {/* Only display login button in logged-out home page */}
-                {(!props.userType) && (
+                {(!props.userType || props.userType === "Guest") && (
                     <div className="ml-auto flex items-center gap-2">
                         <Button variant="ghost">
                             <a href="/login">Login</a>
