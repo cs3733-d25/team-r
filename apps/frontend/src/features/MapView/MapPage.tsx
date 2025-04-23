@@ -108,7 +108,7 @@ export function MapPage() {
                 <NavbarMGH />
             </div>
             <div className="flex-1 w-full relative">
-                <InternalMap location={selectedLocation} loadNodes={lNodes}/>
+                <InternalMap location={selectedLocation}/>
                 {/* Overlay sidebar */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>
