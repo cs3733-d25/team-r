@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import { NavbarMGH } from '../../../components/NavbarMGH.tsx';
 import {Link} from "react-router-dom";
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 import Dropdown from "../../../components/Dropdowns/Department.tsx";

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { NavbarMGH } from '@/components/NavbarMGH';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,8 +25,6 @@ export function AllRequestsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <NavbarMGH />
-
       <div className="container mx-auto pt-12 pb-8">
         <h1 className="text-3xl font-bold mb-6 text-center">Service Request Dashboard</h1>
 

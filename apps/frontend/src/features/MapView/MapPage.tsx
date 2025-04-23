@@ -1,15 +1,6 @@
-import {NavbarMGH} from '@/components/NavbarMGH.tsx';
-import {Label} from '@/components/ui/label.tsx';
-import {Button} from '@/components/ui/button.tsx';
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue
-} from '@/components/ui/select';
+import { Label } from '@/components/ui/label.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import {useLocation} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
@@ -124,9 +115,6 @@ export function MapPage() {
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
-            <div className={'sticky top-0 z-30'}>
-                <NavbarMGH/>
-            </div>
             <div className="flex-1 w-full relative">
                 <InternalMap location={selectedLocation}/>
                 {/* Overlay sidebar */}
@@ -173,6 +161,7 @@ export function MapPage() {
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
+                                {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
                                 <Button type="submit" onClick={() => processDirections(["canopyEntrance", "leftEntrance", "frontLotChestnut"])}>Get Directions</Button>
                             </div>
                             <div className="flex flex-col space-y-2">
