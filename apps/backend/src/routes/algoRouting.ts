@@ -17,14 +17,14 @@ router.post("/reception", async (req: Request, res: Response) => {
         name: department,
         building: location,
       },
-      select: { recepetionNodeID: true },
+      select: { receptionNodeID: true },
     });
 
     if (!response) {
       return res.status(404).json({ error: "Department not found" });
     }
 
-    res.json({ receptionNodeID: response.recepetionNodeID });
+    res.json({ receptionNodeID: response.receptionNodeID });
   } catch (err) {
     console.error("Error fetching receptionNodeID:", err);
     res.status(500).json({ error: "Internal server error" });
