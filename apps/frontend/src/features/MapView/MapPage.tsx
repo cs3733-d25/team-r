@@ -99,7 +99,7 @@ export function MapPage() {
             );
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
-            const coords = nodes.reverse().map((n) => [n.xcoord, n.ycoord] as [number, number]);
+            const coords = nodes.reverse().map((n) => [n.ycoord, n.xcoord] as [number, number]);
             // 3) update map
             setPathCoordinates(coords);
         } catch (err) {
