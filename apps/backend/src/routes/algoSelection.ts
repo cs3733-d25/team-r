@@ -3,6 +3,11 @@ import DFS from "./dfs.ts";
 import { BFS } from "./bfs.ts";
 import {AStar} from "./aStar.ts";
 
+export interface PathfindingAlgorithm {
+    graph : Graph
+    findPath(start: string, end: string): string[]
+}
+
 const graph = new Graph();
 
 export async function findPath(start: string, end: string, algorithm: "dfs" | "bfs" | "aStar" = "dfs") {
@@ -23,4 +28,5 @@ export async function findPath(start: string, end: string, algorithm: "dfs" | "b
         throw new Error(`Algorithm: "${algorithm}" not supported.`)
     }
 }
+
 

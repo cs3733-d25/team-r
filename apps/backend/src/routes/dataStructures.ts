@@ -14,7 +14,6 @@ export class Queue<T> {
   dequeue(): T | undefined { return this.items.shift(); }
   peek(): T | undefined { return this.items[0]; }
   isEmpty(): boolean { return this.items.length === 0; }
-
 }
 
 interface HeapNode<T> {
