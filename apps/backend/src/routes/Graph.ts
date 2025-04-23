@@ -1,7 +1,6 @@
 import prismaClient from "../bin/prisma-client";
 
 export class Graph {
-
   private adjacencyList = new Map<string, Set<string>>();
 
     constructor() {}

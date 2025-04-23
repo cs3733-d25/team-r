@@ -2,14 +2,18 @@ import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { Edge, Node } from '../../../../backend/src/routes/mapData.ts';
 
+// Response type if backend wraps IDs in an object
+type NodeIDsResponse = { nodeIDs: string[] };
+
 export const fetchParkingLots = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/parking-lots');
     console.log('res.data: ', res.data);
     return res.data;
 };
 
-// In mapService.ts, update the fetchDepartments function
-export const fetchDepartments = async (building: string) => {
+export const fetchDepartments = async (
+    building: string
+): Promise<{ id: string; name: string }[]> => {
     try {
         console.log('Fetching departments with building:', building);
         const response = await axios.get(`/api/map/departments?building=${building}`);
@@ -47,22 +51,27 @@ export const fetchEdges20_1 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-20-1');
     return res.data;
 };
+
 export const fetchEdges20_3 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-20-3');
     return res.data;
 };
+
 export const fetchEdges22_1 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-22-1');
     return res.data;
 };
+
 export const fetchEdges22_3 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-22-3');
     return res.data;
 };
+
 export const fetchEdges22_4 = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-22-4');
     return res.data;
 };
+
 export const fetchElevators = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/elevators');
     return res.data;
@@ -98,7 +107,6 @@ export function useMapData(selectedBuilding: string) {
         const loadParkingLots = async () => {
             try {
                 const data = await fetchParkingLots();
-                //console.log('Fetched parking lots:', data);
                 setParkingLots(data);
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
@@ -122,3 +130,34 @@ export function useMapData(selectedBuilding: string) {
 
     return { parkingLots, departments };
 }
+
+// Fetch path from backend routing service using DFS/BFS/A*
+export const fetchPath = async (
+    startingPoint: string,
+    endingPoint: string,
+    //algorithm: 'dfs' | 'bfs' | 'aStar'
+    algorithm: string
+): Promise<string[]> => {
+    const resp = await axios.post('/api/algo/', {
+        startingPoint,
+        endingPoint,
+        algorithm,
+    });
+    console.log("startingPoint in fetchPath", resp.data.startingPoint);
+    console.log("endingPoint in fetchPath", resp.data.endingPoint);
+
+
+    console.log('fetchPath raw response (should be string[]):', resp.data);
+
+    // if it's already an array, just return it
+    // if (Array.isArray(resp.data)) {
+    //     return resp.data;
+    // }
+    //
+    // // otherwise fall back to the old shape
+    // const dataObj = resp.data as NodeIDsResponse;
+    // return dataObj.nodeIDs ?? [];
+    const path = resp.data.path;
+    console.log("pat in mapservice: ", path);
+    return path;
+};
