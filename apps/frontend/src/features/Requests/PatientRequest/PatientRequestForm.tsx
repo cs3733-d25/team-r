@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
@@ -22,7 +22,7 @@ interface SubmittedPatientRequest{
     time: string;
     status: string;
     request: string;
-    employeeName: string;
+    //employeeName: string;
 }
 
 export const PatientRequestForm = () => {
@@ -37,7 +37,7 @@ export const PatientRequestForm = () => {
         time: new Date().toString(),
         status: '',
         request: ' ',
-        employeeName: '',
+        //employeeName: '',
 
     })
 
@@ -85,7 +85,7 @@ export const PatientRequestForm = () => {
                     time: new Date().toLocaleString(),
                     status: '',
                     request: ' ',
-                    employeeName: ''
+                    //employeeName: ''
 
                 });
             }
@@ -119,6 +119,21 @@ export const PatientRequestForm = () => {
     //     }));
     // }
 
+    const [username, setusername] = useState("");
+    useEffect(() => {
+        async function getName() {
+            try {
+                const response = await axios.get("api/login/session");
+                setusername(response.data.username);
+            } catch (err) {
+                console.error("Error fetching username:", err);
+            }
+        }
+
+        getName();
+    }, []);
+
+
     return (
         <>
 
@@ -130,21 +145,21 @@ export const PatientRequestForm = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Employee Name */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Employee Name
-                                    <span className="text-accent">*</span>
-                                </Label>
-                                <Input
-                                    type="text"
-                                    name="employeeName"
-                                    value={formData.employeeName}
-                                    onChange={handleChange}
-                                    placeholder="Enter Employee Name"
-                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                    required
-                                />
-                            </div>
+                            {/*<div>*/}
+                            {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                            {/*        Employee Name*/}
+                            {/*        <span className="text-accent">*</span>*/}
+                            {/*    </Label>*/}
+                            {/*    <Input*/}
+                            {/*        type="text"*/}
+                            {/*        name="employeeName"*/}
+                            {/*        value={formData.employeeName}*/}
+                            {/*        onChange={handleChange}*/}
+                            {/*        placeholder="Enter Employee Name"*/}
+                            {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                            {/*        required*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             {/* Patient ID */}
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -178,15 +193,15 @@ export const PatientRequestForm = () => {
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Priority Level
                                     <span className="text-accent">*</span>
-                                    <span className="text-xs text-secondary-foreground block">
-                      EMERGENCY: Immediate attention required
-                      <br/>
-                      HIGH: Within 1 hour
-                      <br/>
-                      MEDIUM: Within 4 hours
-                      <br/>
-                      LOW: Within 24 hours
-                        </span>
+                      {/*              <span className="text-xs text-secondary-foreground block">*/}
+                      {/*EMERGENCY: Immediate attention required*/}
+                      {/*<br/>*/}
+                      {/*HIGH: Within 1 hour*/}
+                      {/*<br/>*/}
+                      {/*MEDIUM: Within 4 hours*/}
+                      {/*<br/>*/}
+                      {/*LOW: Within 24 hours*/}
+                      {/*  </span>*/}
                                 </Label>
                                 <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
                             </div>
@@ -253,8 +268,8 @@ export const PatientRequestForm = () => {
                         <h3 className="text-lg font-semibold mb-2">Your request has been submitted</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name:</span>
-                                {submittedPatientRequest.employeeName}
+                                <span className="font-semibold">Employee Name: </span>
+                                {username}
                             </div>
                             <div>
                                 <span className="font-semibold">Patient ID:</span> {submittedPatientRequest.patientID}

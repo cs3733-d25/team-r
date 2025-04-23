@@ -27,8 +27,9 @@ router.post("/", async function (req: Request, res: Response) {
     patientID,
     location,
     request,
-    employeeName,
+    //employeeName,
   } = req.body;
+  const employeeName = req.session?.username;
 
   try {
     console.log(request);
