@@ -67,6 +67,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
            <p> X Coordinate: ${data.xcoord}</p>
            <p> Y Coordinate: ${data.ycoord}</p>`;
             marker.bindPopup(info).openPopup();
+            // tell the parent element if the node has been selected
+            if(onNodeSelect) {
+                onNodeSelect(data.nodeID);
+            }
         });
 
         marker.on('contextmenu', () => {
@@ -123,19 +127,18 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
     const loadHallways = async () => {
         try {
             const data = await fetchHallways();
+            console.log(data);
             setHallways(data);
-            console.log("data:", data);
         } catch (err) {
-            console.error('Error fetching parking lots:', err);
+            console.error('Error fetching hallways lots:', err);
         }
     }
-    console.log("hallways: ",hallways)
-    async function loadAll() {
-        await loadCheckIn();
-        await loadEntrances();
-        await loadElevators();
-        await loadLots();
-        await loadHallways();
+    function loadAll () {
+        loadCheckIn();
+        loadEntrances();
+        loadElevators();
+        loadLots();
+        loadHallways();
     }
     useEffect(() => {
         loadAll();
@@ -231,9 +234,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
-
+            if(showEdges) {
                 // draw nodes
                 if(hallways.length > 0) {
+                    console.log("HALLWAYS!");
                     hallways.map((node) => {
                         // put it on the correct floor
                         const layer = getLayer(node.building, node.floor);
@@ -319,7 +323,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                         [edge.toX, edge.toY],
                     ]).addTo(floorLayerFaulkner);
                 });
-
+            }
 
             // add a default layer
             if (location.includes('20 Patriot Pl'))

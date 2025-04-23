@@ -37,6 +37,7 @@ export function EditMap({ status }: EditMapProps) {
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(3);
     const [lNodes, setLNodes] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
+    const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
 
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
@@ -56,6 +57,18 @@ export function EditMap({ status }: EditMapProps) {
     // function from mapService that makes axios request
     async function deleteEdge (nodeID:string) {
         await postEdgeDeletion(nodeID);
+    }
+
+    function onNodeClick (nodeID:string) {
+        setEdgeNodes((nodes) => {
+            if(nodes.length == 0) {
+                return [nodeID];
+            } else if (nodes.length == 1){
+                return [nodes[0], nodeID];
+            } else {
+                return [nodes[1], nodeID];
+            }
+        });
     }
 
     // map clicks
@@ -153,13 +166,40 @@ export function EditMap({ status }: EditMapProps) {
         }
     };
 
+    const saveEdge = async () => {
+        if(edgeNodes.length < 2) {
+            alert("Please select two nodes first.");
+            return;
+        }
+        const edgeData = {
+            fromID: edgeNodes[0],
+            toID: edgeNodes[1],
+        };
+
+        try {
+            // call API to save edge
+            const response = await axios.post('/api/map/create-edge', edgeData);
+
+            if (response.status === 200) {
+                alert('Edge saved successfully!');
+                // reset form
+                setEdgeNodes([]);
+            } else {
+                alert('Failed to save node.');
+            }
+        } catch (error) {
+            console.error('Error saving node:', error);
+            alert('An error occurred while saving the node.');
+        }
+    };
+
     return (
         <div className="flex flex-col h-screen">
             <div className="sticky top-0 z-30">
                 <NavbarMGH />
             </div>
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true} onEdgeDelete={deleteEdge} />
+                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">
@@ -237,6 +277,23 @@ export function EditMap({ status }: EditMapProps) {
                             className="w-full"
                         >
                             Save Node
+                        </Button>
+                        {/* TODO: change this */}
+                        <div className="bg-gray-100 p-3 rounded-md">
+                            <Label>Click on two nodes to create an edge</Label>
+                            {(edgeNodes.length > 0) ?
+                                <div className="mt-2 text-sm">
+                                    <p>Node 1: {edgeNodes[0]}</p>
+                                    <p>Node 2: {edgeNodes[1]}</p>
+                                </div>:null
+                            }
+                        </div>
+                        <Button
+                            onClick={saveEdge}
+                            disabled={edgeNodes.length != 2}
+                            className="w-full"
+                        >
+                            Save Edge
                         </Button>
                     </div>
                 </div>

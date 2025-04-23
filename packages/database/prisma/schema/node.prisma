@@ -26,10 +26,11 @@ model Edge {
   edgeID   String @id @default(uuid())
   fromID   String
   toID     String
-  fromX    Float
-  fromY    Float
-  toX      Float
-  toY      Float
+  // TODO: delete these floats and refactor to get the coordinates from the nodes
+  fromX    Float?
+  fromY    Float?
+  toX      Float?
+  toY      Float?
   fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
   toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
 }

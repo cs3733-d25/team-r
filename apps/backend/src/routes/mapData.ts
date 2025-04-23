@@ -341,6 +341,23 @@ router.post("/create-node", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/create-edge", async (req: Request, res: Response) => {
+  try {
+    const newEdge = req.body;
+    console.log(newEdge);
+    await PrismaClient.edge.create({
+      data: {
+        fromNode: { connect: { nodeID: newEdge.fromID } },
+        toNode: { connect: { nodeID: newEdge.toID } },
+      },
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error("Error creating node:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // function to delete a node
 router.post("/delete-node", async (req: Request, res: Response) => {
   try {
