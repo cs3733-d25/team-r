@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts';
+import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
 import axios from 'axios';
 
@@ -66,7 +66,7 @@ export function EditMap({ status }: EditMapProps) {
                     x: e.detail.lat,
                     y: e.detail.lng
                 });
-                setCurrentBuilding(getBuildingConstant(building));
+                setCurrentBuilding(building);
             }
         };
 
@@ -79,7 +79,8 @@ export function EditMap({ status }: EditMapProps) {
                 const lat = parseFloat(coordMatch[1]);
                 const lng = parseFloat(coordMatch[2]);
                 setCoordinates({ x: lat, y: lng });
-                setCurrentBuilding(getBuildingConstant(building));
+                setCurrentBuilding(building);
+                console.log(building);
 
                 window.lastClickCoordinates = { lat, lng };
             }
@@ -135,6 +136,7 @@ export function EditMap({ status }: EditMapProps) {
             // call API to save node
             const response = await axios.post('/api/map/create-node', nodeData);
 
+            alert(nodeName);
             if (response.status === 200) {
                 alert('Node saved successfully!');
                 // reset form
@@ -156,7 +158,7 @@ export function EditMap({ status }: EditMapProps) {
             <div className="sticky top-0 z-30">
                 <NavbarMGH />
             </div>
-            <div className="flex-1 relative">
+            <div className="flex-1 relative cursor-pointer">
                 <InternalMap location={selectedLocation} onNodeDelete={deleteNode} loadNodes={lNodes} showEdges={true} onEdgeDelete={deleteEdge} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">

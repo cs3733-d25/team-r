@@ -306,12 +306,16 @@ router.post("/create-node", async (req: Request, res: Response) => {
     const newNode = req.body;
     console.log(newNode);
     // if there are departments, link them by ID
-    if (newNode.departments) {
+    if (newNode.departments.length > 0) {
       // map the departments to a list of names so that the departments can be linked
-      let departments = newNode.departments.map((department: string) => ({
-        department: department,
+      let d = newNode.departments.map((departmentId: string) => ({
+        id: departmentId,
       }));
-      // newNode.departments = { connect: { { id: "41" }, { id: "55" } };
+      newNode.departments = { connect: d };
+      console.log(newNode.departments);
+      console.log(d);
+    } else {
+      newNode.departments = {};
     }
     await PrismaClient.node.create({
       data: newNode,
