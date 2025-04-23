@@ -1,10 +1,10 @@
 model Directory {
-  id               Int     @id @default(autoincrement())
-  name             String
-  floorNumber      Int
-  building         String
-  recepetionNodeID String?
-  receptionNode    Node?   @relation(fields: [recepetionNodeID], references: [nodeID])
+  id              Int     @id @default(autoincrement())
+  name            String
+  floorNumber     Int
+  building        String
+  receptionNodeID String?
+  receptionNode   Node?   @relation(fields: [receptionNodeID], references: [nodeID])
 }
 
 model Node {
