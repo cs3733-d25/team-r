@@ -26,12 +26,13 @@ router.post("/", async function (req: Request, res: Response) {
     patientID,
     department,
     roomNumber,
-    employeeName,
+    //employeeName,
     comments,
     transportationType,
     currentBuilding,
     desiredBuilding,
   } = req.body;
+  const employeeName = req.session?.username;
   try {
     const createRequest = await PrismaClient.transportRequest.create({
       data: {
