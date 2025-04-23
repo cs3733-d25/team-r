@@ -32,7 +32,7 @@ export const getBuildingConstant = (buildingName: string) => {
 
 export const floorConfig = {
     'Patriot Place 20': [1,],
-    'Patriot Place 22': [1, 3],
+    'Patriot Place 22': [1, 3, 4],
     'Chestnut Hill': [1],
     'Faulkner': [1]
 };
