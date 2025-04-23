@@ -1,4 +1,4 @@
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx';
 import {PrescriptionForm} from "./PrescriptionForm";
 import {PrescriptionPage} from "./PrescriptionPage";
 
