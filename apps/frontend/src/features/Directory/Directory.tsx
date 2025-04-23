@@ -1,5 +1,4 @@
 import React from "react";
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs.tsx';
 import { rawDirectoryItems, RawDirectoryItem } from './directoryItems.ts';
 import { HospitalDirectoryData, BuildingData, FloorGroup, DirectoryItem } from './listTypes.ts';
@@ -51,7 +50,7 @@ export function Directory() {
 
     return (
         <>
-            <NavbarMGH />
+
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
                 <Tabs defaultValue={defaultTabValue}>

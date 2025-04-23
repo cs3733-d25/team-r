@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {NavbarMGH} from '../../../components/NavbarMGH.tsx';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Button} from "@/components/ui/button.tsx";
