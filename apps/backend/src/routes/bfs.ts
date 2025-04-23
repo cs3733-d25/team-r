@@ -2,8 +2,8 @@
 // import prismaClient from "../bin/prisma-client.ts";
 // const router: Router = express.Router();
 import { Graph } from "./Graph";
-import {Queue, Stack} from "./dataStructures.ts";
-import {PathfindingAlgorithm} from "./algoSelection.ts";
+import { Queue, Stack } from "./dataStructures.ts";
+import { PathfindingAlgorithm } from "./algoSelection.ts";
 
 export class BFS implements PathfindingAlgorithm {
   graph: Graph;
@@ -100,4 +100,3 @@ async function BFS(start: string, end: string): Promise<string[]> {
 //send data to front end
 
 */
-

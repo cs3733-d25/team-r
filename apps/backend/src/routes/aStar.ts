@@ -2,7 +2,7 @@ import prismaClient from "../bin/prisma-client";
 import { PriorityQueue } from "./dataStructures.ts";
 import router from "./mapData";
 import { Graph } from "./Graph.ts";
-import {PathfindingAlgorithm} from "./algoSelection.ts";
+import { PathfindingAlgorithm } from "./algoSelection.ts";
 
 export class AStar implements PathfindingAlgorithm {
   graph: Graph;
@@ -60,4 +60,3 @@ export class AStar implements PathfindingAlgorithm {
 }
 
 export default router;
-
