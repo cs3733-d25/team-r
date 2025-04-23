@@ -34,15 +34,16 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
     };
 
     return (
+        steps.length > 0 && (
         <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
-            {distance && duration && (
-                <div className="flex justify-between mb-4 text-sm text-gray-600">
+            <div className="flex justify-between mb-4 text-sm text-gray-600">
+                {distance && duration && (
                     <Label>
                         {distance} - {duration}
                     </Label>
-                    <Mic className={'text-3xl'} onClick={handleTTS} />
-                </div>
-            )}
+                )}
+                <Mic className={'text-3xl'} onClick={handleTTS} />
+            </div>
             <ol className="list-decimal list-inside space-y-2">
                 {steps.map((step, index) => (
                     <li
@@ -52,7 +53,7 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                     />
                 ))}
             </ol>
-        </div>
+        </div>)
     );
 }
 
