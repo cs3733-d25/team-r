@@ -25,6 +25,7 @@ export function NavbarMGH(props: NavBarProps) {
         }
     }
 
+
     console.log("HERE IT IS: ", props.userType);
 
     return (
@@ -33,7 +34,7 @@ export function NavbarMGH(props: NavBarProps) {
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={(props.userType === "Guest") ? "/" : "/home"} className="flex items-center">
+                    <a href={(!props.userType) ? "/" : "/home"} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -57,10 +58,6 @@ export function NavbarMGH(props: NavBarProps) {
                         { label: 'Chestnut Hill', href: '/external-map' },
                         { label: 'Faulkner', href: '/external-map' },
                     ]}/>
-                    <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
-                        { label: 'Patient Request', href: '/patientrequestpage' },
-                    ]}/>
-
 
                 </nav>)}
                 {/* Desktop Navigation - Admin */}
@@ -75,6 +72,33 @@ export function NavbarMGH(props: NavBarProps) {
                             { label: 'Chestnut Hill', href: '/external-map' },
                             { label: 'Faulkner', href: '/external-map' },
                             { label: 'Edit Map', href: '/edit-map' },
+                        ]}/>
+                        <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
+                            { label: 'Sanitation', href: '/sanitation' },
+                            { label: 'Medical Device', href: '/devicerequest' },
+                            { label: 'Patient Request', href: '/patientrequestpage' },
+                            { label: 'Patient Transport', href: '/transport' },
+                            { label: 'Prescription', href: '/prescription' },
+                        ]}/>
+
+                        <HoverPopoverNavLink label={"Database"} href={"/csv"} items={[
+                            { label: 'Import a CSV', href: '/csv' },
+                            { label: 'Export CSV', href: '/csv' },
+                        ]
+                        }/>
+                    </nav>)}
+
+                {/* Desktop Navigation - Employee */}
+                {(props.userType === 'Employee') && (
+                    <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                        <Button variant="ghost" asChild>
+                            <a href="/directory">Directories</a>
+                        </Button>
+                        <HoverPopoverNavLink label={"Navigate"} href={"/external-map"} items={[
+                            { label: '20 Patriot Place', href: '/external-map' },
+                            { label: '22 Patriot Place', href: '/external-map' },
+                            { label: 'Chestnut Hill', href: '/external-map' },
+                            { label: 'Faulkner', href: '/external-map' },
                         ]}/>
                         <HoverPopoverNavLink label={"Request a Service"} href={"/requests"} items={[
                             { label: 'Sanitation', href: '/sanitation' },
