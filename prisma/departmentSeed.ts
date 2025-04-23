@@ -47,10 +47,10 @@ async function main() {
             {id: 'Kidney (Renal) Medicine PP22-3', receptionNodeID: '3000A', name: 'Kidney (Renal) Medicine'},
             {id: 'Neurology PP22-3', receptionNodeID: '3000A', name: 'Neurology'},
             {id: 'Neurosurgery PP22-3', receptionNodeID: '3000A', name: 'Neurosurgery'},
-            {id: 'Opthalmology PP22-3', receptionNodeID: '3000A', name: 'Opthalmology'},
+            {id: 'Ophthalmology PP22-3', receptionNodeID: '3000A', name: 'Ophthalmology'},
             {id: 'Optometry PP22-3', receptionNodeID: '3000A', name: 'Optometry'},
             {id: 'Pulmonology PP22-3', receptionNodeID: '3000A', name: 'Pulmonology'},
-            {id: 'Rhematology PP22-3', receptionNodeID: '3000A', name: 'Rhematology'},
+            {id: 'Rheumatology PP22-3', receptionNodeID: '3000A', name: 'Rheumatology'},
             {id: 'Vein Care Services PP22-3', receptionNodeID: '3000A', name: 'Vein Care Services'},
             {id: "Women's Health PP22-3", receptionNodeID: '3000A', name: 'Allergy'},
             {id: 'Patient Financial Services PP22-3', receptionNodeID: '3000A', name: 'Patient Financial Services'}
