@@ -21,6 +21,8 @@ export interface Edge {
   fromY: number;
   toX: number;
   toY: number;
+  fromNode: Node;
+  toNode: Node;
 }
 
 const router: Router = express.Router();
@@ -138,7 +140,6 @@ router.get("/edges-20-1", async (req, res) => {
         toNode: true,
       },
     });
-    //console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -177,11 +178,11 @@ router.get("/edges-22-1", async (req, res) => {
     const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
-          building: "PATRIOT_PLACE_22",
+          building: "Patriot Place 22",
           floor: 1,
         },
         toNode: {
-          building: "PATRIOT_PLACE_22",
+          building: "Patriot Place 22",
           floor: 1,
         },
       },
@@ -190,7 +191,7 @@ router.get("/edges-22-1", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    console.log(request[0].fromNode.xcoord);
     res.json(request);
   } catch (err) {
     console.error(err);

@@ -35,12 +35,18 @@ export function EditMap({ status }: EditMapProps) {
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
-    const [currentFloor, setCurrentFloor] = useState<number>(3);
+    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
 
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
+
+    function setLocation(building:string, floor:number){
+        console.log(building, floor);
+        setCurrentBuilding(building);
+        setCurrentFloor(floor);
+    }
 
     // set available departments when departments data loads
     useEffect(() => {
@@ -136,6 +142,7 @@ export function EditMap({ status }: EditMapProps) {
             return;
         }
 
+        console.log(currentFloor);
         const nodeData = {
             nodeID: nodeName || `${nodeType}-${Date.now()}`,
             nodeType: nodeType,
@@ -194,11 +201,11 @@ export function EditMap({ status }: EditMapProps) {
                 // reset form
                 setEdgeNodes([]);
             } else {
-                alert('Failed to save node.');
+                alert('Failed to save edge.');
             }
         } catch (error) {
-            console.error('Error saving node:', error);
-            alert('An error occurred while saving the node.');
+            console.error('Error saving edge:', error);
+            alert('An error occurred while saving the edge.');
         }
     };
 
@@ -208,7 +215,7 @@ export function EditMap({ status }: EditMapProps) {
                 <NavbarMGH />
             </div>
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} onNodeDelete={deleteNode} finishRequest={requestPromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
+                <InternalMap location={selectedLocation} onLocationChange={setLocation} onNodeDelete={deleteNode} finishRequest={requestPromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">

@@ -17,6 +17,7 @@ interface InternalMapProps {
     pathCoordinates?: [number, number][];
     path?: string[];
     location: string;
+    onLocationChange?: (building:string, floor:number) => void;
     onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
     onEdgeDelete?: (edgeID:string) => Promise<void>;
@@ -32,7 +33,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onDataChange, onNodeDelete, onEdgeDelete, finishRequest, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, finishRequest, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 
@@ -196,35 +197,45 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
             const floorLayerFaulkner = L.layerGroup();
 
             function getLayer (building:string, floor: number){
+                let out = null;
                 switch (building) {
                     case 'Patriot Place 20':
                         switch (floor) {
                             case 1:
-                                return floorLayer20_1;
+                                out = floorLayer20_1;
+                                break;
                             default:
                                 console.log("a node had an invalid floor number");
-                                return null;
+                                break;
                         }
+                        break;
                     case 'Patriot Place 22':
                         switch (floor) {
                             case 1:
-                                return floorLayer22_1;
+                                out = floorLayer22_1;
+                                break;
                             case 3:
-                                return floorLayer22_3;
+                                out = floorLayer22_3;
+                                break;
                             case 4:
-                                return floorLayer22_4;
+                                out = floorLayer22_4;
+                                break;
                             default:
                                 console.log("a node had an invalid floor number");
-                                return null;
+                                break;
                         }
+                        break;
                     case 'Chestnut Hill':
-                        return floorLayerChestnutHill;
+                        out = floorLayerChestnutHill;
+                        break;
                     case 'Faulkner':
-                        return floorLayerFaulkner;
+                        out = floorLayerFaulkner;
+                        break;
                     default:
                         console.log("a node had an invalid building");
-                        return null;
+                        break;
                 }
+                return out;
             }
 
             const map = L.map(mapRef.current, {crs: L.CRS.Simple, minZoom: -2, zoomControl: false}).setView([500, 500], 0);
@@ -272,44 +283,45 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                         clickMarker(node, place);
                     }
                 });
-            other.map((node) => {
-                // put it on the correct floor
-                const layer = getLayer(node.building, node.floor);
-                // only place it if the floor is valid
-                if (layer) {
-                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                    clickMarker(node, place);
-                }
-            });
-            entrances.map((node) => {
-                // put it on the correct floor
-                const layer = getLayer(node.building, node.floor);
-                // only place it if the floor is valid
-                if (layer) {
-                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                    clickMarker(node, place);
-                }
-            });
-            lots.map((node) => {
-                // put it on the correct floor
-                const layer = getLayer(node.building, node.floor);
-                // only place it if the floor is valid
-                if (layer) {
-                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                    clickMarker(node, place);
-                }
-            });
-            elevators.map((node) => {
-                // put it on the correct floor
-                const layer = getLayer(node.building, node.floor);
-                // only place it if the floor is valid
-                if (layer) {
-                    const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                    clickMarker(node, place);
-                }
-            });
+                other.map((node) => {
+                    // put it on the correct floor
+                    const layer = getLayer(node.building, node.floor);
+                    // only place it if the floor is valid
+                    if (layer) {
+                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        clickMarker(node, place);
+                    }
+                });
+                entrances.map((node) => {
+                    // put it on the correct floor
+                    const layer = getLayer(node.building, node.floor);
+                    // only place it if the floor is valid
+                    if (layer) {
+                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        clickMarker(node, place);
+                    }
+                });
+                lots.map((node) => {
+                    // put it on the correct floor
+                    const layer = getLayer(node.building, node.floor);
+                    // only place it if the floor is valid
+                    if (layer) {
+                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        clickMarker(node, place);
+                    }
+                });
+                elevators.map((node) => {
+                    // put it on the correct floor
+                    const layer = getLayer(node.building, node.floor);
+                    // only place it if the floor is valid
+                    if (layer) {
+                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        clickMarker(node, place);
+                    }
+                });
 
                 // draw edges
+                console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
                         [edge.fromX, edge.fromY],
@@ -317,12 +329,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, path, locatio
                     ]).addTo(floorLayer20_1);
 
                 });
-                edges22_1.map((edge) => {
-                    L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
-                    ]).addTo(floorLayer22_1);
-                });
+                if(edges22_1) {
+                    edges22_1.map((edge) => {
+                        L.polyline([
+                            [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                            [edge.toNode.xcoord, edge.toNode.ycoord],
+                        ]).addTo(floorLayer22_1);
+                    });
+                }
                 edges22_3.map((edge) => {
                     L.polyline([
                         [edge.fromX, edge.fromY],
