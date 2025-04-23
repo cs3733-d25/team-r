@@ -6,7 +6,10 @@ import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 
-function Login() {
+interface loginProps {
+    onLogin?: () => void;
+}
+function Login({onLogin}: loginProps): JSX.Element {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -38,6 +41,9 @@ function Login() {
                         // Add any other props you want to pass
                     },
                 });
+                if(response.data.message == 'User verified') {{
+                    onLogin!();
+                }}
             } else {
                 setIncorrectLogin(response.data.message);
             }

@@ -24,6 +24,7 @@ import axios from "axios";
 
 function App() {
     const [userType, setUserType] = useState("Guest");
+    const [session, setSession] = useState(null);
 
     async function getSession() {
         try {
@@ -33,18 +34,16 @@ function App() {
             console.log(response.data);
             console.log("User type 1:", response.data.userType);
             console.log("User type:", userType);
+            setSession(response.data.username);
         } catch (error) {
             console.log('error in retrieve:', error);
         }
     }
 
-    function getUserType() {
-        useEffect(() => {
-            getSession();
-        }, []);
-    }
+    useEffect(() => {
+        getSession();
+    }, []);
 
-    getUserType();
 
     const router = createBrowserRouter([
         {
@@ -54,7 +53,7 @@ function App() {
             children: [
                 { index: true, element: <HomeMain /> },
                 { path: 'home', element: <HomeMain status={'logged-in'} /> },
-                { path: 'login', element: <Login /> },
+                { path: 'login', element: <Login onLogin={getSession} /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
