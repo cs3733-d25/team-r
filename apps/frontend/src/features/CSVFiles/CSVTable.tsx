@@ -1,9 +1,6 @@
 import {useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { Button } from "@/components/ui/button"
-import {Label} from "@/components/ui/label"
-import {Input} from "@/components/ui/input.tsx"
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
 function CSVTablePage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);

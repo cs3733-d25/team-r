@@ -1,5 +1,3 @@
-import {NavbarMGH} from "@/components/NavbarMGH.tsx";
-import {Link} from "react-router-dom";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import CSVPage from "@/features/CSVFiles/CSVPage.tsx";
 import CSVTablePage from "@/features/CSVFiles/CSVTable.tsx";
@@ -7,7 +5,6 @@ import CSVTablePage from "@/features/CSVFiles/CSVTable.tsx";
 function CSVTabPage() {
     return(
         <>
-            <NavbarMGH />
             <Tabs defaultValue="CSVPage">
                 <TabsList>
                     <TabsTrigger value="CSVPage"
