@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  output          = "../.prisma/client"
+  output          = "../../.prisma/client"
   engineType      = "binary"
   previewFeatures = ["prismaSchemaFolder"]
 }
