@@ -1,20 +1,27 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     floorConfig,
     getBuildingConstant,
     getBuildingFromLocation,
-    getShortLocationName
+    getShortLocationName,
 } from '@/features/MapView/mapUtils';
-import TextDirections from "@/components/TextDirections.tsx";
-import axios from "axios";
+import TextDirections from '@/components/TextDirections.tsx';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import {fetchPath, useMapData} from '@/features/MapView/mapService';
-import {Node} from "../../../../backend/src/routes/mapData.ts";
-import { Checkbox } from '@/components/ui/checkbox.tsx';
+import { fetchPath, useMapData } from '@/features/MapView/mapService';
+import { Node } from '../../../../backend/src/routes/mapData.ts';
+import { InternalMapControls } from '@/components/InternalMapControls.tsx';
 
 declare global {
     interface Window {
@@ -22,17 +29,16 @@ declare global {
     }
 }
 
-const blankNode:Node = {
-    nodeID: "",
-    nodeType: "",
-    building: "",
+const blankNode: Node = {
+    nodeID: '',
+    nodeType: '',
+    building: '',
     floor: 0,
     xcoord: 0,
     ycoord: 0,
-    longName: "",
-    shortName: "",
-}
-
+    longName: '',
+    shortName: '',
+};
 
 interface MapNode {
     nodeID: string;
@@ -64,8 +70,10 @@ export function MapPage() {
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
-    const {parkingLots, departments} = useMapData(selectedBuilding);
+    const { parkingLots, departments } = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
+
+    const [showDirections, setShowDirections] = useState<boolean>(false);
     console.log('departments: ', departments);
 
     useEffect(() => {
@@ -74,10 +82,10 @@ export function MapPage() {
                 'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                'Faulkner': ['FAULKNER', 'Faulkner'],
+                Faulkner: ['FAULKNER', 'Faulkner'],
             };
 
-            return buildingMap[selectedBuilding]?.some(buildingName =>
+            return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
         });
@@ -86,13 +94,11 @@ export function MapPage() {
 
     //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log("parking lot: ", selectedParkinglot);
-            console.log("department lot: ", selectedDepartment);
-        } catch {
-
-        }
+            console.log('parking lot: ', selectedParkinglot);
+            console.log('department lot: ', selectedDepartment);
+        } catch {}
     };
 
     /**
@@ -105,7 +111,7 @@ export function MapPage() {
             const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
             return resp.data;
         } catch (e) {
-            console.error("Error converting node ID to name: ", e);
+            console.error('Error converting node ID to name: ', e);
             return []; // Return empty array on error
         }
     };
@@ -119,6 +125,8 @@ export function MapPage() {
      */
     // Main “Get Directions” handler
     const handleGetDirections = async () => {
+        // show the text directions and map controls on the screen
+        setShowDirections(true);
         if (!selectedParkinglot || !selectedDepartment) {
             alert('Please select both a parking lot and a department.');
             return;
@@ -137,11 +145,7 @@ export function MapPage() {
             console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
-            const nodeIDs = await fetchPath(
-                selectedParkinglot,
-                receptionNodeID,
-                algorithm
-            );
+            const nodeIDs = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
             console.log('got nodeIDs:', nodeIDs);
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
@@ -191,12 +195,12 @@ export function MapPage() {
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
-            console.log("enhanced Directions: ", enhancedDirections);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length - 1].shortName}`);
+            console.log('enhanced Directions: ', enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
         } catch (error) {
-            console.error("Error processing directions:", error);
+            console.error('Error processing directions:', error);
             setDirectionStrings([]);
         }
     };
@@ -208,12 +212,12 @@ export function MapPage() {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
-            dy: current.ycoord - prev.ycoord
+            dy: current.ycoord - prev.ycoord,
         };
 
         const currentVector = {
             dx: next.xcoord - current.xcoord,
-            dy: next.ycoord - current.ycoord
+            dy: next.ycoord - current.ycoord,
         };
 
         // Calculate angle between vectors using atan2
@@ -221,7 +225,7 @@ export function MapPage() {
         const angle2 = Math.atan2(currentVector.dy, currentVector.dx);
 
         // Calculate angle difference in degrees
-        let angleDiff = (angle2 - angle1) * 180 / Math.PI;
+        let angleDiff = ((angle2 - angle1) * 180) / Math.PI;
 
         // Normalize to -180 to 180 range
         if (angleDiff > 180) angleDiff -= 360;
@@ -229,26 +233,21 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return "Turn right";
+            return 'Turn right';
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return "Turn left";
+            return 'Turn left';
         } else {
-            return "Continue straight";
+            return 'Continue straight';
         }
-    }
+    };
 
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
-
-
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className="flex-1 w-full relative">
                 {/* Internal map with the computed path overlaid */}
-                <InternalMap
-                    location={selectedLocation}
-                    pathCoordinates={pathCoordinates}
-                />
+                <InternalMap location={selectedLocation} pathCoordinates={pathCoordinates} />
 
                 {/* Sidebar controls */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
@@ -259,10 +258,7 @@ export function MapPage() {
 
                     <div className="space-y-4">
                         {/* Parking lot picker */}
-                        <Select
-                            value={selectedParkinglot}
-                            onValueChange={setSelectedParkinglot}
-                        >
+                        <Select value={selectedParkinglot} onValueChange={setSelectedParkinglot}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Parking Lot" />
                             </SelectTrigger>
@@ -278,10 +274,7 @@ export function MapPage() {
                         </Select>
 
                         {/* Department picker */}
-                        <Select
-                            value={selectedDepartment}
-                            onValueChange={setSelectedDepartment}
-                        >
+                        <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Department" />
                             </SelectTrigger>
@@ -301,7 +294,9 @@ export function MapPage() {
                             <Label>Algorithm</Label>
                             <Select
                                 value={algorithm}
-                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
+                                onValueChange={(value: string) =>
+                                    setAlgorithm(value as 'dfs' | 'bfs' | 'aStar')
+                                }
                             >
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select algorithm" />
@@ -343,6 +338,12 @@ export function MapPage() {
                         ))}
                     </div>
                 </div>
+                {showDirections && (
+                    <div>
+                        <TextDirections steps={directionStrings} />
+                        <InternalMapControls />
+                    </div>
+                )}
             </div>
         </div>
     );
