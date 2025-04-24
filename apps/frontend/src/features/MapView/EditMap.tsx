@@ -64,6 +64,11 @@ export function EditMap({ status }: EditMapProps) {
             setAvailableDepartments(departments);
         }
     }, [departments]);
+    useEffect(() => {
+        if (departments && departments.length > 0) {
+            setEditAvailableDepartments(departments);
+        }
+    }, [departments]);
 
     // function from mapService that makes axios request
     async function deleteNode (nodeID:string) {
@@ -172,7 +177,7 @@ const editNode = async () => {
         ycoord: editcoordinates.y,
         longName: "",
         shortName: editnodeName,
-        departments: editselectedDepartments
+        departments: selectedDepartments
     };
     try {
         // call API to save node
@@ -412,8 +417,8 @@ const editNode = async () => {
                             <div>
                                 <Label>Change Associated Departments?</Label>
                                 <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
-                                    {availableDepartments.length > 0 ? (
-                                        availableDepartments.map(dept => (
+                                    {editavailableDepartments.length > 0 ? (
+                                        editavailableDepartments.map(dept => (
                                             <div key={dept.id} className="flex items-center space-x-2 py-1">
                                                 <Checkbox
                                                     id={"dept-${dept.id}"}
