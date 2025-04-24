@@ -1,39 +1,46 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     floorConfig,
     getBuildingConstant,
     getBuildingFromLocation,
-    getShortLocationName
+    getShortLocationName,
 } from '@/features/MapView/mapUtils';
-import TextDirections from "@/components/TextDirections.tsx";
-import axios from "axios";
+import TextDirections from '@/components/TextDirections.tsx';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import {postNode, postNodeDeletion, useMapData} from '@/features/MapView/mapService';
-import {Node} from "../../../../backend/src/routes/mapData.ts";
+import { useMapData } from '@/features/MapView/mapService';
+import { Node } from '../../../../backend/src/routes/mapData.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
-import {InternalMapControls} from "@/components/InternalMapControls.tsx";
+import { InternalMapControls } from '@/components/InternalMapControls.tsx';
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number, building?: string) => void;
 }
 
-const blankNode:Node = {
-    nodeID: "",
-    nodeType: "",
-    building: "",
+const blankNode: Node = {
+    nodeID: '',
+    nodeType: '',
+    building: '',
     floor: 0,
     xcoord: 0,
     ycoord: 0,
-    longName: "",
-    shortName: "",
-}
+    longName: '',
+    shortName: '',
+};
 
-
-interface MapNode{
+interface MapNode {
     nodeID: string;
     nodeType: string;
     building: string;
@@ -48,11 +55,13 @@ export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
-    const [filterParkingLots, setFilterParkingLots] = useState<{
-        building: string;
-        nodeID: string;
-        shortName: string
-    }[]>([]);
+    const [filterParkingLots, setFilterParkingLots] = useState<
+        {
+            building: string;
+            nodeID: string;
+            shortName: string;
+        }[]
+    >([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
     const [currentFloor, setCurrentFloor] = useState(1);
@@ -62,21 +71,21 @@ export function MapPage() {
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
 
-
-    const {parkingLots, departments} = useMapData(selectedBuilding);
+    const { parkingLots, departments } = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
+    const [showPath, setShowPath] = useState<boolean>(false);
     console.log('departments: ', departments);
 
     useEffect(() => {
-        const filterLots = parkingLots.filter(lot => {
+        const filterLots = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
                 'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                'Faulkner': ['FAULKNER', 'Faulkner']
+                Faulkner: ['FAULKNER', 'Faulkner'],
             };
 
-            return buildingMap[selectedBuilding]?.some(buildingName =>
+            return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
         });
@@ -84,13 +93,11 @@ export function MapPage() {
     }, [parkingLots, selectedBuilding]);
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log("parking lot: ", selectedParkinglot);
-            console.log("department lot: ", selectedDepartment);
-        } catch {
-
-        }
+            console.log('parking lot: ', selectedParkinglot);
+            console.log('department lot: ', selectedDepartment);
+        } catch {}
     };
 
     /**
@@ -99,17 +106,17 @@ export function MapPage() {
      */
     const getNodeObjs = async (nodeIDArray: string[]): Promise<MapNode[]> => {
         try {
-            const response = await axios.get("/api/map/getNodeObjs", {
+            const response = await axios.get('/api/map/getNodeObjs', {
                 params: {
-                    nodeIDs: nodeIDArray
-                }
+                    nodeIDs: nodeIDArray,
+                },
             });
             return response.data;
         } catch (e) {
-            console.error("Error converting node ID to name: ", e);
+            console.error('Error converting node ID to name: ', e);
             return []; // Return empty array on error
         }
-    }
+    };
 
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
@@ -117,6 +124,8 @@ export function MapPage() {
      */
     const processDirections = async (directions: string[]) => {
         try {
+            // show text directions and map controls on screen
+            setShowPath(true);
             const nodes = await getNodeObjs(directions);
             if (nodes.length < 2) {
                 setDirectionStrings([]);
@@ -147,12 +156,12 @@ export function MapPage() {
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
-            console.log("enhanced Directions: ", enhancedDirections);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length - 1].shortName}`);
+            console.log('enhanced Directions: ', enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
         } catch (error) {
-            console.error("Error processing directions:", error);
+            console.error('Error processing directions:', error);
             setDirectionStrings([]);
         }
     };
@@ -164,12 +173,12 @@ export function MapPage() {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
-            dy: current.ycoord - prev.ycoord
+            dy: current.ycoord - prev.ycoord,
         };
 
         const currentVector = {
             dx: next.xcoord - current.xcoord,
-            dy: next.ycoord - current.ycoord
+            dy: next.ycoord - current.ycoord,
         };
 
         // Calculate angle between vectors using atan2
@@ -177,7 +186,7 @@ export function MapPage() {
         const angle2 = Math.atan2(currentVector.dy, currentVector.dx);
 
         // Calculate angle difference in degrees
-        let angleDiff = (angle2 - angle1) * 180 / Math.PI;
+        let angleDiff = ((angle2 - angle1) * 180) / Math.PI;
 
         // Normalize to -180 to 180 range
         if (angleDiff > 180) angleDiff -= 360;
@@ -185,25 +194,22 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return "Turn right";
+            return 'Turn right';
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return "Turn left";
+            return 'Turn left';
         } else {
-            return "Continue straight";
+            return 'Continue straight';
         }
-    }
+    };
 
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
-
-
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className="flex-1 w-full relative">
-                <InternalMap location={selectedLocation}/>
+                <InternalMap location={selectedLocation} />
                 {/* Overlay sidebar */}
-                <div
-                    className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div>
                         <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
                         <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>
@@ -215,7 +221,7 @@ export function MapPage() {
                             <div className="flex flex-col space-y-2">
                                 <Select onValueChange={setSelectedParkinglot}>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Parking Lot"/>
+                                        <SelectValue placeholder="Parking Lot" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
@@ -228,11 +234,13 @@ export function MapPage() {
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
-                                <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
-
+                                <Select
+                                    value={selectedDepartment}
+                                    onValueChange={setSelectedDepartment}
+                                >
                                     {/*<Select onValueChange={setSelectedDepartment}>*/}
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Department"/>
+                                        <SelectValue placeholder="Department" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
@@ -245,24 +253,40 @@ export function MapPage() {
                                         </SelectGroup>
                                     </SelectContent>
 
-                                {/* accessible route not implemented in backend yet */}
-                                <div className="flex items-center space-x-2 pt-2">
-                                    <Checkbox
-                                        id={"accessible-route"}
-                                        checked={accessibleRoute}
-                                        onCheckedChange={(checked) => setAccessibleRoute(checked === true)}
-                                    />
-                                    <Label htmlFor={"accessible-route"} className="text-sm font-medium">
-                                        Show Accessible Route
-                                    </Label>
-                                </div>
-
+                                    {/* accessible route not implemented in backend yet */}
+                                    <div className="flex items-center space-x-2 pt-2">
+                                        <Checkbox
+                                            id={'accessible-route'}
+                                            checked={accessibleRoute}
+                                            onCheckedChange={(checked) =>
+                                                setAccessibleRoute(checked === true)
+                                            }
+                                        />
+                                        <Label
+                                            htmlFor={'accessible-route'}
+                                            className="text-sm font-medium"
+                                        >
+                                            Show Accessible Route
+                                        </Label>
+                                    </div>
                                 </Select>
                                 {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
                                 {/* test paths: */}
                                 {/* ["swEntrance", "100.00F", "100.09", "100.10"] */}
                                 {/* ["3B", "3A", "3000A", "3E"] */}
-                                <Button type="button" onClick={() => processDirections(["swEntrance", "100.00F", "100.09", "100.10"])}>Get Directions</Button>
+                                <Button
+                                    type="button"
+                                    onClick={() =>
+                                        processDirections([
+                                            'swEntrance',
+                                            '100.00F',
+                                            '100.09',
+                                            '100.10',
+                                        ])
+                                    }
+                                >
+                                    Get Directions
+                                </Button>
                             </div>
                             <div className="flex flex-col space-y-2">
                                 {/* Algorithm selector */}
@@ -270,9 +294,13 @@ export function MapPage() {
                                     <Label>Algorithm</Label>
                                     <Select
                                         value={algorithm}
-                                        onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
+                                        onValueChange={(value: string) =>
+                                            setAlgorithm(value as 'dfs' | 'bfs' | 'aStar')
+                                        }
                                     >
-                                        <SelectTrigger><SelectValue placeholder="Select algorithm"/></SelectTrigger>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select algorithm" />
+                                        </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectItem value="dfs">DFS</SelectItem>
@@ -284,14 +312,20 @@ export function MapPage() {
                                 </div>
                                 <Label className={'px-2 mb-3'}>Floor selection</Label>
                                 <div className="flex flex-col space-y-2">
-                                    {availableFloors.map(floor => (
+                                    {availableFloors.map((floor) => (
                                         <Button
                                             key={floor}
-                                            variant={currentFloor === floor ? 'default' : 'secondary'}
+                                            variant={
+                                                currentFloor === floor ? 'default' : 'secondary'
+                                            }
                                             onClick={() => {
                                                 setCurrentFloor(floor);
-                                                const buildingConstant = getBuildingConstant(selectedBuilding);
-                                                (window as CustomWindow).goToFloor?.(floor, buildingConstant);
+                                                const buildingConstant =
+                                                    getBuildingConstant(selectedBuilding);
+                                                (window as CustomWindow).goToFloor?.(
+                                                    floor,
+                                                    buildingConstant
+                                                );
                                             }}
                                             type="button"
                                         >
@@ -303,10 +337,12 @@ export function MapPage() {
                         </div>
                     </form>
                 </div>
-                {/* Text Directions on left side of screen */}
-                <TextDirections steps={directionStrings}/>
-                {/* Map controls on the bottom right of the screen */}
-                <InternalMapControls/>
+                <div className={'justify-between'}>
+                    {/* Text Directions on left side of screen */}
+                    {showPath && <TextDirections steps={directionStrings} />}
+                    {/* Map controls on the bottom right of the screen */}
+                    {showPath && <InternalMapControls />}
+                </div>
             </div>
         </div>
     );
