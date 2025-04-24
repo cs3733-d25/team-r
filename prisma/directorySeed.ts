@@ -93,7 +93,15 @@ async function main() {
             {name: "Patient Financial Services", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
         ]
     });
-    //Patriot Place 22 Floor 4
+    // Patriot Place 22 Floor 4
+    await client.directory.createMany({
+        data: [
+            {name: "Community Room", floorNumber: 4, building: "Patriot Place 22", receptionNodeID: "Primary Care"},
+            {name: "Primary Care", floorNumber: 4, building: "Patriot Place 22", receptionNodeID: "Community Room"},
+        ]
+    })
+
+    // Chestnut Hill
     await client.directory.createMany({
         data: [
             {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475750292" },
