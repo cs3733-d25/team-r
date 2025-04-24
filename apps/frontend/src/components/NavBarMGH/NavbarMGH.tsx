@@ -194,18 +194,31 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>
                 <nav className="flex flex-col gap-4 p-4">
-                    <Button variant="ghost" asChild>
-                        <a href="/directory">Directories</a>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                        <a href="/external-map">Navigate</a>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                        <a href="/sanitation">Request a Service</a>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                        <a href="/csv">Database</a>
-                    </Button>
+                    {props.userType && props.userType != "Guest" && (
+                        <Button variant="ghost" asChild>
+                            <a href="/directory">Directories</a>
+                        </Button>
+                    )}
+                    {props.userType && props.userType != "Guest" && (
+                        <Button variant="ghost" asChild>
+                            <a href="/external-map">Navigate</a>
+                        </Button>
+                    )}
+                    {props.userType === "Admin" && (
+                        <Button variant="ghost" asChild>
+                            <a href="/edit-map">Edit Map</a>
+                        </Button>
+                    )}
+                    {props.userType === "Employee" || props.userType === "Admin" && (
+                        <Button variant="ghost" asChild>
+                            <a href="/requests">Request a Service</a>
+                        </Button>
+                    )}
+                    {props.userType === "Employee" || props.userType === "Admin" && (
+                        <Button variant="ghost" asChild>
+                            <a href="/csv">Database</a>
+                        </Button>
+                    )}
                 </nav>
             </div>
         </header>
