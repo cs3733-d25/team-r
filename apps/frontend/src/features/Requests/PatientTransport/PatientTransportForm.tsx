@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
@@ -115,34 +115,35 @@ const TransportationRequestForm = () => {
     };
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
     const [selectedDesiredBuilding, setDesiredBuilding] = useState<string | null>(null);
+    const [selectedDept, setDept] = useState<string | null>(null);
+
 
     //put this in Dropdown element and it will reset on submit
     //const [resetDropdowns, setResetDropdowns] = useState(false);
 
-    //Curently this is only used by location dropdown so next dropdown can appear
+    //used by location dropdown so next dropdown can appear
     const handleLocationChange = (name: string, value: string) => {
-        console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
-        if (selectedDesiredBuilding === selectedLocation) {
-            setDesiredBuilding('');
-            console.log("Conflict in LOCATION change, DESIRED BUILDING is now: " + selectedDesiredBuilding)
-        }
-
         setSelectedLocation(value);
         handleDropdownChange(name, value); // update formData in parent
+        console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
     };
-    const handleDesiredBuildingChange = (name: string, value: string) => {
-        console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
-        if (selectedDesiredBuilding === selectedLocation) {
-            setSelectedLocation('');
-            console.log("Conflict in DESIRED BUILDING change, LOCATION is now: " + selectedLocation);
-        }
 
+    useEffect(() => {
+        setDept(null); // clear dept on new location
+        if (selectedDesiredBuilding === selectedLocation) {
+            setDesiredBuilding(null);
+            console.log("Conflict in LOCATION change, DESIRED BUILDING is now: null")
+        }
+    }, [selectedLocation]);
+
+    const handleDesiredBuildingChange = (name: string, value: string) => {
         setDesiredBuilding(value);
         handleDropdownChange(name, value); // update formData in parent
+        console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
     };
 
-
     const handleDepartmentChange = (name: string, value: string) => {
+        setDept(value)
         handleDropdownChange(name, value);// update formData in parent
     };
 
@@ -239,26 +240,27 @@ const TransportationRequestForm = () => {
                                     </Label>
                                     <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} />
                                     {/*//TODO   ^^^*/}
+
                                     {/*select department based on location*/}
-                                    {selectedLocation && (
-                                        <>
-                                            <Label className="block text-sm font-semibold text-foreground mb-2">
-                                                Department
-                                                <span className="text-accent">*</span>
-                                                <span className="text-xs text-secondary-foreground block">
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                                        Department
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
                                             Select a department
                                         </span>
-                                            </Label>
-                                            {/*handle departments given the location*/}
-                                            {selectedLocation === "Patriot Place 22" ? (
-                                                <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
-                                            ) : selectedLocation === "Patriot Place 20" ? (
-                                                <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                            ) : selectedLocation === "Chestnut Hill" ? (
-                                                <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                            ) : null}
-                                        </>
+                                    </Label>
+
+                                    {/*handle departments if given the location*/}
+                                    {selectedLocation && (
+                                        selectedLocation === "Patriot Place 22" ? (
+                                            <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
+                                        ) : selectedLocation === "Patriot Place 20" ? (
+                                            <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
+                                        ) : selectedLocation === "Chestnut Hill" ? (
+                                            <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
+                                        ) : null
                                     )}
+
                                 </div>
 
                                     {/* Current Building */}
@@ -287,18 +289,25 @@ const TransportationRequestForm = () => {
                                         <Label className="block text-sm font-semibold text-foreground mb-2">
                                             Desired Building
                                             <span className="text-accent">*</span>
+                                            <span className="text-xs text-secondary-foreground block">
+                                            Select a destination
+                                        </span>
                                         </Label>
                                         {selectedLocation && (  //location selected?
                                             <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDropdowns} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
                                         )}
-                                        {!selectedLocation && (
-                                            <p>nope!</p>
-                                        )}
+                                        {/*{!selectedLocation && (*/}
+                                        {/*    <Dropdown tableName={"blank"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDropdowns} ></Dropdown>*/}
+                                        {/*)}*/}
                                         {/*//TODO ^^^*/}
 
                                     </div>
                                 </div>
                             </div>
+                            <p> Selected Location: '{selectedLocation}' </p>
+                            <p> Selected Desired Building:  '{selectedDesiredBuilding}'</p>
+                            <p> Selected Dept.:  '{selectedDept}'</p>
+
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status
