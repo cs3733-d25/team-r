@@ -404,12 +404,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_4);
                 });
-                console.log("")
+
                 edgesChestnut.map((edge) => {
-                    L.polyline([
+                    const line = L.polyline([
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
+                    console.log("got here",edge.fromNode.xcoord)
+                    clickEdge(edge, line);
                 });
                 edgesFaulkner.map((edge) => {
                     const line = L.polyline([
