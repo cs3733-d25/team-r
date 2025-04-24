@@ -42,3 +42,8 @@ model Department {
   receptionNode   Node   @relation(fields: [receptionNodeID], references: [nodeID])
   // employee        Employee[]
 }
+
+model algorithm {
+  id Int @id @default(autoincrement())
+  algo  String @unique
+}
