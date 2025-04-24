@@ -6,10 +6,9 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation } from '@/features/MapView/mapUtils.ts';
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
-import axios, {AxiosPromise, AxiosResponse} from 'axios';
+import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
-import {marker} from "leaflet";
-import {Node} from "../../../../backend/src/routes/mapData.ts";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 
 interface EditMapProps {
     status?: string;
@@ -52,6 +51,7 @@ export function EditMap({ status }: EditMapProps) {
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
     const [nodes, setNodes] = useState<string>('');
+    const [activeTab, setActiveTab] = useState<string>('place-node');
 
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
@@ -283,6 +283,7 @@ const editNode = async () => {
     };
     console.log("edit Coordinates", editcoordinates);
     console.log(" Coordinates", coordinates);
+
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-1 relative cursor-pointer">
