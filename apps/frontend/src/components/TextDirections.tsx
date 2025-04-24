@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label.tsx';
-import {Mic, VolumeUp, VolumeUpFill} from 'react-bootstrap-icons';
+import {VolumeUp} from 'react-bootstrap-icons';
+import {useState} from "react";
 
 interface TextDirectionsProps {
     steps: string[];
@@ -15,22 +16,30 @@ interface TextDirectionsProps {
  * @constructor
  */
 function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
+    const [speaking, setSpeaking] = useState<boolean>(false);
+
     /**
      * handleTTS - handles the text-to-speech functionality
      * only accepts external maps for now
      */
     const handleTTS = () => {
-        // remove HTML tags from the steps using regex
-        const cleanedSteps = steps.map((step) => step.replace(/<[^>]+>/g, ''));
-        // convert the string array of steps to a single string
-        const speech = new SpeechSynthesisUtterance(cleanedSteps.join('. '));
-        // show the steps in the console
-        console.log(speech);
-        // set lang
-        speech.lang = 'en-US';
-        speech.rate = 0.85;
-        // speak
-        window.speechSynthesis.speak(speech);
+        if (!speaking) {
+            // remove HTML tags from the steps using regex
+            const cleanedSteps = steps.map((step) => step.replace(/<[^>]+>/g, ''));
+            // convert the string array of steps to a single string
+            const speech = new SpeechSynthesisUtterance(cleanedSteps.join('. '));
+            // show the steps in the console
+            console.log(speech);
+            // set lang
+            speech.lang = 'en-US';
+            speech.rate = 0.85;
+            // speak
+            window.speechSynthesis.speak(speech);
+            setSpeaking(true);
+        } else {
+            window.speechSynthesis.cancel();
+            setSpeaking(false);
+        }
     };
 
     return (

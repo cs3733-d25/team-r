@@ -71,7 +71,7 @@ export function PrescriptionPage() {
                             <>
                                 <TableRow key={index} className={'border-t'}>
                                     <TableCell >
-                                        {row.employeeName}
+                                        {row.employeeID}
                                     </TableCell>
                                     <TableCell >
                                         {row.drugName}

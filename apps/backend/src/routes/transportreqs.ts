@@ -32,13 +32,19 @@ router.post("/", async function (req: Request, res: Response) {
     currentBuilding,
     desiredBuilding,
   } = req.body;
-  const employeeName = req.session?.username;
+  const employeeID = req.session?.username;
   try {
     const createRequest = await PrismaClient.transportRequest.create({
       data: {
-        employeeName,
+        employeeName: {
+          connect: {
+            id: employeeID,
+          },
+        },
         //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
-        patientID,
+        patient: {
+          connect: { id: req.body.patientID }, // <-- Use relation connect
+        },
         transportationType,
         currentBuilding,
         desiredBuilding,
