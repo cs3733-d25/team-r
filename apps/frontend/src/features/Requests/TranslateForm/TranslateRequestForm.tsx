@@ -73,21 +73,26 @@ const TranslateRequestForm = () => {
             }
         } catch (error) {
             console.error('Error submitting request:', error);
-            setSubmitStatus({ message: 'Failed to submit request. Please try again.', isError: true });
+            setSubmitStatus({
+                message: 'Failed to submit request. Please try again.',
+                isError: true
+            });
         }
     };
 
-    const [username, setUsername] = useState('');
+    //call backend for username
+    const [username, setusername] = useState("");
     useEffect(() => {
-        async function fetchUsername() {
+        async function getName() {
             try {
-                const res = await axios.get('/api/login/session');
-                setUsername(res.data.username);
+                const response = await axios.get("api/login/session");
+                setusername(response.data.username);
             } catch (err) {
-                console.error('Error fetching username:', err);
+                console.error("Error fetching username:", err);
             }
         }
-        fetchUsername();
+
+        getName();
     }, []);
 
     return (
@@ -98,14 +103,14 @@ const TranslateRequestForm = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Requestor Name<span className="text-accent">*</span>
+                                    Patient ID<span className="text-accent">*</span>
                                 </Label>
                                 <Input
                                     type="text"
                                     name="requestorName"
                                     value={formData.requestorName}
                                     onChange={handleChange}
-                                    placeholder="Enter your name"
+                                    placeholder="Enter patient ID"
                                     className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     required
                                 />
@@ -198,14 +203,37 @@ const TranslateRequestForm = () => {
                     <div className="p-4">
                         <h3 className="text-lg font-semibold mb-2">Your translator request has been submitted</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                            <div><span className="font-semibold">Requestor:</span> {username}</div>
-                            <div><span className="font-semibold">Language:</span> {submittedRequest.language}</div>
-                            <div><span className="font-semibold">Priority:</span> {submittedRequest.priority}</div>
-                            <div><span className="font-semibold">Department:</span> {submittedRequest.department}</div>
-                            <div><span className="font-semibold">Location:</span> {submittedRequest.location}</div>
-                            <div><span className="font-semibold">Room:</span> {submittedRequest.roomNumber}</div>
-                            <div><span className="font-semibold">Status:</span> {submittedRequest.status}</div>
-                            <div><span className="font-semibold">Notes:</span> {submittedRequest.notes || "None provided"}</div>
+                            <div>
+                                <span className="font-semibold">Requestor:
+                                </span> {username}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Language:</span>
+                                {submittedRequest.language}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Priority:</span>
+                                {submittedRequest.priority}</div>
+                            <div>
+                                <span className="font-semibold">Department:</span>
+                                {submittedRequest.department}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Location:</span>
+                                {submittedRequest.location}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Room:</span>
+                                {submittedRequest.roomNumber}
+                            </div>
+                            <div>\
+                                <span className="font-semibold">Status:</span>
+                                {submittedRequest.status}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Notes:</span>
+                                {submittedRequest.notes || "None provided"}
+                            </div>
                         </div>
                         <div className="mt-3 text-sm text-secondary-foreground">
                             The Translator Request Has Been Submitted and Will Be Addressed.
