@@ -9,7 +9,8 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 interface loginProps {
     onLogin?: () => void;
 }
-function Login({onLogin}: loginProps): JSX.Element {
+
+function Login({ onLogin }: loginProps): JSX.Element {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ function Login({onLogin}: loginProps): JSX.Element {
             if (response.data.message == 'User verified') {
                 console.log('User verified');
                 //changeState({ userType: {userType: 'admin'} });
-                console.log("Setting user type to", response.data.userType, "- Keagan");
+                console.log('Setting user type to', response.data.userType, '- Keagan');
 
                 navigate('/external-map', {
                     state: {
@@ -41,9 +42,11 @@ function Login({onLogin}: loginProps): JSX.Element {
                         // Add any other props you want to pass
                     },
                 });
-                if(response.data.message == 'User verified') {{
-                    onLogin!();
-                }}
+                if (response.data.message == 'User verified') {
+                    {
+                        onLogin!();
+                    }
+                }
             } else {
                 setIncorrectLogin(response.data.message);
             }
@@ -134,7 +137,7 @@ function Login({onLogin}: loginProps): JSX.Element {
                             <br />
                             <div
                                 className={
-                                    'flex items-center bg-accent justify-center w-full rounded-md'
+                                    'flex items-center justify-center w-full rounded-md bg-destructive/40 border border-accent-foreground'
                                 }
                             >
                                 <p
