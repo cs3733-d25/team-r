@@ -33,7 +33,6 @@ router.post("/", async function (req: Request, res: Response) {
     device,
     room,
   } = req.body;
-  const employeeName = req.session?.username;
   const employeeID = req.session?.username;
 
   try {
@@ -47,7 +46,6 @@ router.post("/", async function (req: Request, res: Response) {
         status,
         room,
         comments,
-        employeeName,
         employeeID, //
         //assignedEmployee: employeeName //connect later
       },
