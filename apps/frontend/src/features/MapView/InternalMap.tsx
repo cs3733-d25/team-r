@@ -50,7 +50,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
-
+    const activeLayerInfo = useRef<{building: string, floor: number}>({
+        building: '20 Patriot Place',
+        floor: 1
+    });
     const [checkIn, setCheckIn] = useState<Node[]>([]);
     const [other, setOther] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
@@ -65,6 +68,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
     const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+
 
     useEffect(() => {
         if(promiseNodeCreate) {
@@ -87,6 +91,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
         }
     }, [promiseEdgeCreate]);
 
+    // get current active layer info
+    const getActiveLayerInfo = () => {
+        return activeLayerInfo.current;
+    };
 
     // callback function for clicking on nodes
     function clickMarker(data:Node, marker:L.Marker):void{
@@ -271,7 +279,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
                 zoomControl: false,
             }).setView([500, 500], 0);
 
-            // start the placeholer off screen
+            // start the placeholder off-screen
             const nodePlaceholder = L.circle([-100,-100], nodePlaceholderOptions).addTo(map);
 
             // Define bounds
@@ -308,15 +316,59 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
             L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
-            // Layer controls
+            // layer controls
             L.control.layers({
-                        '20 Patriot Place - Floor 1': floorLayer20_1,
-                        '22 Patriot Place - Floor 1': floorLayer22_1,
-                        '22 Patriot Place - Floor 3': floorLayer22_3,
-                        '22 Patriot Place - Floor 4': floorLayer22_4,
-                        'Chestnut Hill': floorLayerChestnutHill,
-                        'Faulkner': floorLayerFaulkner,
-                    }, {}).addTo(map);
+                '20 Patriot Place - Floor 1': floorLayer20_1,
+                '22 Patriot Place - Floor 1': floorLayer22_1,
+                '22 Patriot Place - Floor 3': floorLayer22_3,
+                '22 Patriot Place - Floor 4': floorLayer22_4,
+                'Chestnut Hill': floorLayerChestnutHill,
+                'Faulkner': floorLayerFaulkner,
+            }, {}).addTo(map);
+
+            // tracking layer changes
+            map.on('baselayerchange', function(e) {
+                // extract info from layer name
+                const layerName = e.name;
+                let building = '';
+                let floor = 1;
+
+                if (layerName.includes('20 Patriot Place')) {
+                    building = 'Patriot Place 20';
+                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                } else if (layerName.includes('22 Patriot Place')) {
+                    building = 'Patriot Place 22';
+                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                } else if (layerName.includes('Chestnut Hill')) {
+                    building = 'Chestnut Hill';
+                } else if (layerName.includes('Faulkner')) {
+                    building = 'Faulkner';
+                }
+
+                activeLayerInfo.current = {building, floor};
+                console.log("Layer changed to:", building, floor);
+
+                if (onLocationChange) {
+                    onLocationChange(building, floor);
+                }
+            });
+
+            // initialize starting layer
+            if (location.includes('20 Patriot Pl')) {
+                activeLayerInfo.current = { building: 'Patriot Place 20', floor: 1 };
+                floorLayer20_1.addTo(map);
+            } else if (location.includes('22 Patriot Pl')) {
+                activeLayerInfo.current = { building: 'Patriot Place 22', floor };
+                if(floor == 1) floorLayer22_1.addTo(map);
+                else if(floor == 3) floorLayer22_3.addTo(map);
+                else if(floor == 4) floorLayer22_4.addTo(map);
+            } else if (location.includes('Chestnut Hill')) {
+                activeLayerInfo.current = { building: 'Chestnut Hill', floor: 1 };
+                floorLayerChestnutHill.addTo(map);
+            } else if (location.includes('Faulkner')) {
+                activeLayerInfo.current = { building: 'Faulkner', floor: 1 };
+                floorLayerFaulkner.addTo(map);
+            }
 
             if(showEdges) {
                 // draw nodes
@@ -454,8 +506,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
                 // update the placeholder
                 nodePlaceholder.setLatLng(e.latlng);
             });
-      
-
 
             // Store instance
             mapInstance.current = map;

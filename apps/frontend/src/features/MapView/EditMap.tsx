@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
+import { getBuildingFromLocation } from '@/features/MapView/mapUtils.ts';
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
 import axios, {AxiosPromise, AxiosResponse} from 'axios';
 import { Label } from '@/components/ui/label.tsx';
@@ -18,6 +18,10 @@ interface EditMapProps {
 interface Department {
     id: string;
     name: string;
+}
+
+interface InternalMapProps {
+    onLocationChange?: (building: string, floor: number) => void;
 }
 
 declare global {
@@ -53,7 +57,7 @@ export function EditMap({ status }: EditMapProps) {
     const { departments } = useMapData(building);
 
     function setLocation(building:string, floor:number){
-        console.log(building, floor);
+        console.log("Active Layer Changed", building, floor);
         setCurrentBuilding(building);
         setCurrentFloor(floor);
     }
@@ -210,6 +214,8 @@ const editNode = async () => {
         }
 
         console.log(currentFloor);
+
+        // use currentBuilding and currentFloor from state (automatically updated when layer changes)
         const nodeData = {
             nodeID: nodeName || `${nodeType}-${Date.now()}`,
             nodeType: nodeType,
@@ -280,7 +286,17 @@ const editNode = async () => {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} floor={currentFloor} onNodeDelete={deleteNode} promiseNodeCreate={requestPromise} promiseEdgeCreate={edgeCreatePromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
+                <InternalMap
+                    location={selectedLocation}
+                    floor={currentFloor}
+                    onNodeDelete={deleteNode}
+                    promiseNodeCreate={requestPromise}
+                    promiseEdgeCreate={edgeCreatePromise}
+                    showEdges={true}
+                    onEdgeDelete={deleteEdge}
+                    onNodeSelect={onNodeClick}
+                    onLocationChange={setLocation}
+                />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">
