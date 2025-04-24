@@ -104,7 +104,7 @@ export function CSVPage() {
                     console.log('CSV Downloaded Yay!');
                 })
                 .catch((error) => {
-                    console.error("CSV Didn't fully download :(");
+                    console.error("CSV Didn't fully download :(", error);
                 });
         }
     }
