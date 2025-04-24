@@ -76,9 +76,9 @@ async function main() {
             {name: "Community Room", floorNumber: 4, building: "Patriot Place 22", receptionNodeID: 'checkIn4000B'},
             {name: "Primary Care", floorNumber: 4, building: "Patriot Place 22", receptionNodeID: 'checkIn4000B'},
 
-            {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Multi-Specialty Clinic", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
+            {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475750292" },
+            {name: "Multi-Specialty Clinic", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475823905" },
+            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475823905" },
 
             {name: "Backup Child Care Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
             {name: "Crohn's and Colitis Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },

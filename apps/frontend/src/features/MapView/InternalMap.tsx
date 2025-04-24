@@ -427,7 +427,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
                 floorLayer22_1.addTo(map);
-            } else if (location.includes('Chestnut Hill')) {
+            } else if (location.includes('Chestnut Hill 1st Floor')) {
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
                 floorLayerFaulkner.addTo(map);
