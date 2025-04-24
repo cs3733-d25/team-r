@@ -172,6 +172,28 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
             console.error('Error fetching parking lots:', err);
         }
     }
+    const loadEdges = async () => {
+        try {
+            setIsLoading(true);
+            const data201 = await fetchEdges20_1();
+            setEdges20_1(data201);
+            const data221 = await fetchEdges22_1();
+            setEdges22_1(data221);
+            const data223 = await fetchEdges22_3();
+            setEdges22_3(data223);
+            const data224 = await fetchEdges22_4();
+            setEdges22_4(data224);
+            const dataChestnut = await fetchEdgesChestnut();
+            setEdgesChestnut(dataChestnut);
+            setEdgesFaulkner(await fetchEdgesFaulkner());
+            setError(null);
+        } catch (err) {
+            console.error('Error fetching edges:', err);
+            setError(err instanceof Error ? err : new Error(String(err)));
+        } finally {
+            setIsLoading(false);
+        }
+    };
     console.log("hallways: ",hallways)
     async function loadAll() {
         await loadCheckIn();
@@ -180,35 +202,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
         await loadLots();
         await loadHallways();
         await loadOther();
+        await loadEdges();
     }
     useEffect(() => {
         loadAll();
-    }, []);
-
-    useEffect(() => {
-        const loadEdges = async () => {
-            try {
-                setIsLoading(true);
-                const data201 = await fetchEdges20_1();
-                setEdges20_1(data201);
-                const data221 = await fetchEdges22_1();
-                setEdges22_1(data221);
-                const data223 = await fetchEdges22_3();
-                setEdges22_3(data223);
-                const data224 = await fetchEdges22_4();
-                setEdges22_4(data224);
-                const dataChestnut = await fetchEdgesChestnut();
-                setEdgesChestnut(dataChestnut);
-                setEdgesFaulkner(await fetchEdgesFaulkner());
-                setError(null);
-            } catch (err) {
-                console.error('Error fetching edges:', err);
-                setError(err instanceof Error ? err : new Error(String(err)));
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        loadEdges();
     }, []);
 
     const floorLayer20_1 = L.layerGroup();
@@ -413,10 +410,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                     ]).addTo(floorLayerChestnutHill);
                 });
                 edgesFaulkner.map((edge) => {
-                    L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                    const line = L.polyline([
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerFaulkner);
+                    clickEdge(edge, line);
                 });
             }
 
