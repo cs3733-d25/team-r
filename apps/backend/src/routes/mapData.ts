@@ -11,6 +11,7 @@ export interface Node {
   ycoord: number;
   longName: string;
   shortName: string;
+  departments?: string[];
 }
 
 export interface Edge {
@@ -459,7 +460,6 @@ router.post("/reset", async (req: Request, res: Response) => {
       await prisma.node.deleteMany({});
 
       // import default map data from JSON
-      // TODO: add updated file
       const defaultMapData = await import(
         "../../../../API-testing/defaultMapData.json"
       );
@@ -468,20 +468,34 @@ router.post("/reset", async (req: Request, res: Response) => {
 
       // insert nodes
       for (const node of nodes) {
-        const nodeData = {
-          ...node,
-          departments:
-            node.departments && node.departments.length > 0
-              ? {
-                  connect: node.departments.map((id: string) => ({
-                    id: Number(id),
-                  })),
-                }
-              : {},
+        const typedNode = node as Node;
+
+        // extract base fields without departments
+        const baseNodeData = {
+          nodeID: typedNode.nodeID,
+          nodeType: typedNode.nodeType,
+          building: typedNode.building,
+          floor: typedNode.floor,
+          xcoord: typedNode.xcoord,
+          ycoord: typedNode.ycoord,
+          longName: typedNode.longName,
+          shortName: typedNode.shortName,
         };
 
+        // add departments connection only if needed
+        const createData = typedNode.departments && typedNode.departments.length > 0
+          ? {
+            ...baseNodeData,
+            departments: {
+              connect: typedNode.departments.map((id: string) => ({
+                id: Number(id)
+              }))
+            }
+          }
+          : baseNodeData;
+
         await prisma.node.create({
-          data: nodeData,
+          data: createData
         });
       }
 
