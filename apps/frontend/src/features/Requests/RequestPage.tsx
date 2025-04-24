@@ -47,12 +47,12 @@ export function AllRequestsPage() {
               {requestTypes.map((type) => (
                 <Card
                   key={type.name}
-                  className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                  className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary"
                 >
-                  <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+                  <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                     <CardTitle>{type.name} Requests</CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-6 px-6 pb-6">
+                  <CardContent className="pt-6 px-6 pb-6 bg-white">
                     <p className="text-muted-foreground mb-4">{type.description}</p>
                     <div className="flex flex-col space-y-2">
                       <Button
@@ -72,66 +72,66 @@ export function AllRequestsPage() {
           </TabsContent>
 
           <TabsContent value="medical-device" className="-mt-px">
-            <Card className="rounded-lg overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+            <Card className="rounded-lg overflow-hidden bg-primary">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                 <CardTitle>Medical Device Requests</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-6 pb-6 bg-white">
                 <DeviceReqPage />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="prescription" className="-mt-px">
-            <Card className="rounded-lg overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+            <Card className="rounded-lg overflow-hidden bg-primary">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                 <CardTitle>Prescription Requests</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-6 pb-6 bg-white">
                 <PrescriptionPage />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="patient" className="-mt-px">
-            <Card className="rounded-lg overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+            <Card className="rounded-lg overflow-hidden bg-primary">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                 <CardTitle>Patient Requests</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-6 pb-6 bg-white">
                 <AllPatientRequests />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="transport" className="-mt-px">
-            <Card className="rounded-lg overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+            <Card className="rounded-lg overflow-hidden bg-primary">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                 <CardTitle>Transport Requests</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-6 pb-6 bg-white">
                 <TransportRequestPage />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="sanitation" className="-mt-px">
-            <Card className="rounded-lg overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+            <Card className="rounded-lg overflow-hidden bg-primary">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                 <CardTitle>Sanitation Requests</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-6 pb-6 bg-white">
                 <SanitationRequestPage />
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="all-requests" className="-mt-px">
-            <Card className="rounded-lg overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+            <Card className="rounded-lg overflow-hidden bg-primary">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                 <CardTitle>All Requests</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-6 pb-6 bg-white">
                 <AllRequestsTable />
               </CardContent>
             </Card>
