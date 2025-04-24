@@ -17,9 +17,9 @@ import {Node} from "../../../../backend/src/routes/mapData.ts";
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 declare global {
-  interface Window {
-    goToFloor?: (floor: number, building?: string) => void;
-}
+    interface Window {
+        goToFloor?: (floor: number, building?: string) => void;
+    }
 }
 
 const blankNode:Node = {
