@@ -303,7 +303,7 @@ async function main() {
         skipDuplicates: true
     });
 
-    // some (most) faulkner nodes
+    // all faulkner nodes
     await client.node.createMany({
         data: [
             {
@@ -515,8 +515,49 @@ async function main() {
                 "ycoord": 807.25,
                 "longName": "",
                 "shortName": ""
+            },
+            {
+                "nodeID": "Parking-1745468723599",
+                "nodeType": "Parking",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 719.67,
+                "ycoord": 313,
+                "longName": "",
+                "shortName": "THE Faulkner Parking Lot"
+            },
+            {
+                "nodeID": "Hallway-1745469182158",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 450.42,
+                "ycoord": 668.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Faulkner Entrance",
+                "nodeType": "Entrance",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 722.0,
+                "ycoord": 622.0,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "a faulkner hallway",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 630.5,
+                "ycoord": 620.5,
+                "longName": "",
+                "shortName": ""
             }
-        ]
+        ],
+        skipDuplicates: true
     });
 
     // patriot 20 floor 3
@@ -654,41 +695,110 @@ async function main() {
         ]
     });
 
-    // faulkner floor 1
-    await client.node.createMany({
+    // create faulkner edges
+    await client.edge.createMany({
         data: [
             {
-                nodeID: 'valetParkingFaulkner',
-                nodeType: 'Parking',
-                building: 'Faulkner',
-                floor: 1,
-                xcoord: 0,
-                ycoord: 0,
-                longName: 'Valet Parking Lot',
-                shortName: 'Valet Parking Lot'
+                "fromID": "Faulkner Entrance",
+                "toID": "a faulkner hallway"
             },
             {
-                nodeID: 'leftLotFaulkner',
-                nodeType: 'Parking',
-                building: 'Faulkner',
-                floor: 1,
-                xcoord: 0,
-                ycoord: 0,
-                longName: 'Left Parking Lot',
-                shortName: 'Left Parking Lot'
+                "fromID": "a faulkner hallway",
+                "toID": "Hallway-1745468089659"
             },
             {
-                nodeID: 'rightLotFaulkner',
-                nodeType: 'Parking',
-                building: 'Faulkner',
-                floor: 1,
-                xcoord: 0,
-                ycoord: 0,
-                longName: 'Right Parking Lot',
-                shortName: 'Right Parking Lot'
+                "fromID": "Hallway-1745468089659",
+                "toID": "Hallway-1745468111109"
             },
-        ],
-        skipDuplicates: true
+            {
+                "fromID": "Hallway-1745468111109",
+                "toID": "Hallway-1745468120025"
+            },
+            {
+                "fromID": "Hallway-1745468120025",
+                "toID": "Reception-1745468203626"
+            },
+            {
+                "fromID": "Hallway-1745468120025",
+                "toID": "Reception-1745468181591"
+            },
+            {
+                "fromID": "Hallway-1745468089659",
+                "toID": "Hallway-1745468105189"
+            },
+            {
+                "fromID": "Reception-1745468241433",
+                "toID": "Hallway-1745468105189"
+            },
+            {
+                "fromID": "Hallway-1745468105189",
+                "toID": "Reception-1745468256681"
+            },
+            {
+                "fromID": "Hallway-1745468089659",
+                "toID": "Hallway-1745468129629"
+            },
+            {
+                "fromID": "Hallway-1745468089659",
+                "toID": "Reception-1745468225241"
+            },
+            {
+                "fromID": "Hallway-1745468105189",
+                "toID": "Hallway-1745468125283"
+            },
+            {
+                "fromID": "Hallway-1745468416845",
+                "toID": "Hallway-1745468125283"
+            },
+            {
+                "fromID": "Hallway-1745468416845",
+                "toID": "Reception-1745468408887"
+            },
+            {
+                "fromID": "Parking-1745468723599",
+                "toID": "Faulkner Entrance"
+            },
+            {
+                "fromID": "Hallway-1745468125283",
+                "toID": "Hallway-1745468133623"
+            },
+            {
+                "fromID": "Hallway-1745468133623",
+                "toID": "Hallway-1745469182158"
+            },
+            {
+                "fromID": "Hallway-1745468133623",
+                "toID": "Hallway-1745468129629"
+            },
+            {
+                "fromID": "Hallway-1745468129629",
+                "toID": "Hallway-1745468140562"
+            },
+            {
+                "fromID": "Hallway-1745468140562",
+                "toID": "Reception-1745468279713"
+            },
+            {
+                "fromID": "Hallway-1745468140562",
+                "toID": "Reception-1745468288835"
+            },
+            {
+                "fromID": "Hallway-1745468129629",
+                "toID": "Reception-1745468299003"
+            },
+            {
+                "fromID": "Hallway-1745468129629",
+                "toID": "Reception-1745468308859"
+            },
+            {
+                "fromID": "Hallway-1745469182158",
+                "toID": "Hallway-1745468326007"
+            },
+            {
+                "fromID": "Hallway-1745468326007",
+                "toID": "Hallway-1745468331257"
+            }
+        ]
     });
 
     console.log('Floorplan seeded successfully!');
