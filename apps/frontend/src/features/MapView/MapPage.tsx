@@ -12,12 +12,14 @@ import {
 import TextDirections from "@/components/TextDirections.tsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
-import {postNode, postNodeDeletion, useMapData} from '@/features/MapView/mapService';
+import {fetchPath, useMapData} from '@/features/MapView/mapService';
 import {Node} from "../../../../backend/src/routes/mapData.ts";
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 
-interface CustomWindow extends Window {
-    goToFloor?: (floor: number, building?: string) => void;
+declare global {
+    interface Window {
+        goToFloor?: (floor: number, building?: string) => void;
+    }
 }
 
 const blankNode:Node = {
@@ -32,7 +34,7 @@ const blankNode:Node = {
 }
 
 
-interface MapNode{
+interface MapNode {
     nodeID: string;
     nodeType: string;
     building: string;
@@ -46,42 +48,43 @@ interface MapNode{
 export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
-    const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
-    const [filterParkingLots, setFilterParkingLots] = useState<{
-        building: string;
-        nodeID: string;
-        shortName: string
-    }[]>([]);
-    const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const buildingIdentifier = location.state?.buildingIdentifier;
-    const [currentFloor, setCurrentFloor] = useState(1);
+
+    // --- Component state ---
+    const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
+    const [filterParkingLots, setFilterParkingLots] = useState<
+        { building: string; nodeID: string; shortName: string }[]
+    >([]);
+    const [selectedDepartment, setSelectedDepartment] = useState<string>('');
+    const [currentFloor, setCurrentFloor] = useState<number>(1);
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
-
+    const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     console.log('departments: ', departments);
 
     useEffect(() => {
-        const filterLots = parkingLots.filter(lot => {
+        const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
                 'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                'Faulkner': ['FAULKNER', 'Faulkner']
+                'Faulkner': ['FAULKNER', 'Faulkner'],
             };
 
             return buildingMap[selectedBuilding]?.some(buildingName =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
         });
-        setFilterParkingLots(filterLots);
+        setFilterParkingLots(filtered);
     }, [parkingLots, selectedBuilding]);
 
+    //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
@@ -96,19 +99,61 @@ export function MapPage() {
      * Given an array of node IDs, this function will convert them to their corresponding node objects
      * @param nodeIDArray
      */
-    const getNodeObjs = async (nodeIDArray: string[]): Promise<MapNode[]> => {
+    // Helper: convert node IDs → full node objects
+    const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
         try {
-            const response = await axios.get("/api/map/getNodeObjs", {
-                params: {
-                    nodeIDs: nodeIDArray
-                }
-            });
-            return response.data;
+            const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
+            return resp.data;
         } catch (e) {
             console.error("Error converting node ID to name: ", e);
             return []; // Return empty array on error
         }
-    }
+    };
+
+    /*
+    const response = await axios.post('/api/transportreq/', {
+                ...formData,
+                priority: formData.priority.toString()
+            });
+            console.log('message is here')
+     */
+    // Main “Get Directions” handler
+    const handleGetDirections = async () => {
+        if (!selectedParkinglot || !selectedDepartment) {
+            alert('Please select both a parking lot and a department.');
+            return;
+        }
+        try {
+            console.log('selected location sending to router: ', selectedLocation);
+            console.log('selected department sending to router: ', selectedDepartment);
+
+            //change the end node to receptionNodeID based on department
+            const response = await axios.post('/api/algo/reception', {
+                department: selectedDepartment,
+                location: selectedLocation,
+            });
+            const receptionNodeID = response.data.receptionNodeID;
+            console.log('in handle get directions receptionNodeID: ', receptionNodeID);
+            console.log('ALGO IN HANDLE: ', algorithm);
+
+            // 1) get the sequence of node IDs
+            const nodeIDs = await fetchPath(
+                selectedParkinglot,
+                receptionNodeID,
+                algorithm
+            );
+            console.log('got nodeIDs:', nodeIDs);
+            // 2) fetch their full data, reverse to start→end
+            const nodes = await getNodeObjs(nodeIDs);
+            console.log('nodeIDs from getNodeObjs: ', nodes);
+            const coords = nodes.reverse().map((n) => [n.ycoord, n.xcoord] as [number, number]);
+            console.log('computed pathCoordinates:', coords);
+            // 3) update map
+            setPathCoordinates(coords);
+        } catch (err) {
+            console.error('Error fetching path:', err);
+        }
+    };
 
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
@@ -199,110 +244,105 @@ export function MapPage() {
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <div className="flex-1 w-full relative">
-                <InternalMap location={selectedLocation}/>
-                {/* Overlay sidebar */}
-                <div
-                    className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
-                    <div>
-                        <Label className={'p-2 pb-0 font-bold text-2xl'}>Selected Location:</Label>
-                        <Label className={'p-2 pt-0 font-bold text-xl text-secondary'}>
-                            {getShortLocationName(selectedLocation)}
-                        </Label>
+                {/* Internal map with the computed path overlaid */}
+                <InternalMap
+                    location={selectedLocation}
+                    pathCoordinates={pathCoordinates}
+                />
+
+                {/* Sidebar controls */}
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
+                    <div className="mb-4">
+                        <Label className="font-bold text-xl">Selected Location</Label>
+                        <div>{getShortLocationName(selectedLocation)}</div>
                     </div>
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div className="space-y-4 flex-grow overflow-auto">
-                            <div className="flex flex-col space-y-2">
-                                <Select onValueChange={setSelectedParkinglot}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Parking Lot"/>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Parking Lots</SelectLabel>
-                                            {filterParkingLots.map((lot) => (
-                                                <SelectItem key={lot.nodeID} value={lot.shortName}>
-                                                    {lot.shortName}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                                <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
 
-                                    {/*<Select onValueChange={setSelectedDepartment}>*/}
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Department"/>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Departments</SelectLabel>
-                                            {departments.map((dept) => (
-                                                <SelectItem key={dept.id} value={dept.name}>
-                                                    {dept.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-
-                                {/* accessible route not implemented in backend yet */}
-                                <div className="flex items-center space-x-2 pt-2">
-                                    <Checkbox
-                                        id={"accessible-route"}
-                                        checked={accessibleRoute}
-                                        onCheckedChange={(checked) => setAccessibleRoute(checked === true)}
-                                    />
-                                    <Label htmlFor={"accessible-route"} className="text-sm font-medium">
-                                        Show Accessible Route
-                                    </Label>
-                                </div>
-
-                                </Select>
-                                {/* currently passing in hardcoded directions to see on page, replace with return from bfs for actual text directions */}
-                                {/* test paths: */}
-                                {/* ["swEntrance", "100.00F", "100.09", "100.10"] */}
-                                {/* ["3B", "3A", "3000A", "3E"] */}
-                                <Button type="button" onClick={() => processDirections(["swEntrance", "100.00F", "100.09", "100.10"])}>Get Directions</Button>
-                            </div>
-                            <div className="flex flex-col space-y-2">
-                                {/* Algorithm selector */}
-                                <div className="flex flex-col space-y-2">
-                                    <Label>Algorithm</Label>
-                                    <Select
-                                        value={algorithm}
-                                        onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
-                                    >
-                                        <SelectTrigger><SelectValue placeholder="Select algorithm"/></SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectItem value="dfs">DFS</SelectItem>
-                                                <SelectItem value="bfs">BFS</SelectItem>
-                                                <SelectItem value="aStar">A* Search</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <Label className={'px-2 mb-3'}>Floor selection</Label>
-                                <div className="flex flex-col space-y-2">
-                                    {availableFloors.map(floor => (
-                                        <Button
-                                            key={floor}
-                                            variant={currentFloor === floor ? 'default' : 'secondary'}
-                                            onClick={() => {
-                                                setCurrentFloor(floor);
-                                                const buildingConstant = getBuildingConstant(selectedBuilding);
-                                                (window as CustomWindow).goToFloor?.(floor, buildingConstant);
-                                            }}
-                                            type="button"
-                                        >
-                                            Floor {floor}
-                                        </Button>
+                    <div className="space-y-4">
+                        {/* Parking lot picker */}
+                        <Select
+                            value={selectedParkinglot}
+                            onValueChange={setSelectedParkinglot}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Parking Lot" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {filterParkingLots.map((lot) => (
+                                        <SelectItem key={lot.nodeID} value={lot.nodeID}>
+                                            {lot.shortName}
+                                        </SelectItem>
                                     ))}
-                                </div>
-                            </div>
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
+                        {/* Department picker */}
+                        <Select
+                            value={selectedDepartment}
+                            onValueChange={setSelectedDepartment}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Department" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {departments.map((dept) => (
+                                        <SelectItem key={dept.id} value={dept.id}>
+                                            {dept.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+
+                        {/* Algorithm selector */}
+                        <div className="flex flex-col space-y-2">
+                            <Label>Algorithm</Label>
+                            <Select
+                                value={algorithm}
+                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select algorithm" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="dfs">DFS</SelectItem>
+                                        <SelectItem value="bfs">BFS</SelectItem>
+                                        <SelectItem value="aStar">A* Search</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </div>
-                    </form>
+
+                        {/* Trigger pathfinding */}
+                        <Button className="w-full" onClick={handleGetDirections}>
+                            Get Directions
+                        </Button>
+                    </div>
+
+                    {/* Floor navigation */}
+                    <div className="mt-4 pt-4 border-t">
+                        <Label className="font-bold mb-2">Floors</Label>
+                        {availableFloors.map((floor) => (
+                            <Button
+                                key={floor}
+                                variant={currentFloor === floor ? 'default' : 'secondary'}
+                                className="w-full mb-1"
+                                onClick={() => {
+                                    setCurrentFloor(floor);
+                                    window.goToFloor?.(
+                                        floor,
+                                        getBuildingConstant(selectedBuilding)
+                                    );
+                                }}
+                            >
+                                Floor {floor}
+                            </Button>
+                        ))}
+                    </div>
                 </div>
-                <TextDirections steps={directionStrings}/>
             </div>
         </div>
     );

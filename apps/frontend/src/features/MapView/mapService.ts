@@ -130,7 +130,21 @@ export function useMapData(selectedBuilding: string) {
 
     return { parkingLots, departments };
 }
+/*
+ //change the end node to receptionNodeID based on department
+            const response = await axios.post('/api/algo/reception', {
+                department: selectedDepartment,
+                location: selectedLocation,
+            });
+            const receptionNodeID = response.data.receptionNodeID;
+            console.log('in handle get directions receptionNodeID: ', receptionNodeID);
 
+ */
+interface PathResponse {
+    path: string[];
+    startingPoint?: string;
+    endingPoint?: string;
+}
 // Fetch path from backend routing service using DFS/BFS/A*
 export const fetchPath = async (
     startingPoint: string,
@@ -138,7 +152,7 @@ export const fetchPath = async (
     //algorithm: 'dfs' | 'bfs' | 'aStar'
     algorithm: string
 ): Promise<string[]> => {
-    const resp = await axios.post('/api/algo/', {
+    const resp = await axios.post<PathResponse>('/api/algo/fetchPath', {
         startingPoint,
         endingPoint,
         algorithm,
@@ -148,16 +162,19 @@ export const fetchPath = async (
 
 
     console.log('fetchPath raw response (should be string[]):', resp.data);
-
     // if it's already an array, just return it
-    // if (Array.isArray(resp.data)) {
-    //     return resp.data;
-    // }
-    //
+    if (Array.isArray(resp.data)) {
+        return resp.data;
+    }
+    else {
+        console.log('broken returning []');
+        return [];
+    }
+
     // // otherwise fall back to the old shape
-    // const dataObj = resp.data as NodeIDsResponse;
-    // return dataObj.nodeIDs ?? [];
-    const path = resp.data.path;
-    console.log("pat in mapservice: ", path);
-    return path;
+    //const dataObj = resp.data as NodeIDsResponse;
+    //return dataObj.nodeIDs ?? [];
+    //const path = resp.data;
+    //console.log("pat in fetchPath mapservice: ", path);
+    //return path;
 };
