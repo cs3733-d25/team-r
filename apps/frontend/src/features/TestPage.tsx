@@ -1,5 +1,6 @@
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 import { useState } from "react";
+import {InternalMapControls} from "@/components/InternalMapControls.tsx";
 
 function TestPage() {
     const [formData, setFormData] = useState({
@@ -24,10 +25,7 @@ function TestPage() {
 
     return (
         <div>
-            {/* <InternalMap /> */}
-            <LocationDepartmentDropdown
-                onChange={handleDropdownChange}
-            />
+            <InternalMapControls/>
         </div>
     );
 }

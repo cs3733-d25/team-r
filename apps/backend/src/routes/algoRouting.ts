@@ -16,6 +16,8 @@ router.post(
         locationFormat = "Patriot Place 20";
       } else if (location.includes("Patriot Place 22")) {
         locationFormat = "Patriot Place 22";
+      } else if (location.includes("Faulkner")) {
+        locationFormat = "Faulkner";
       }
       if (!department || !location) {
         res.status(400).json({ error: "Missing required fields" });

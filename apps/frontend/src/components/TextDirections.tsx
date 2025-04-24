@@ -1,5 +1,5 @@
 import { Label } from '@/components/ui/label.tsx';
-import {Mic, VolumeUp, VolumeUpFill} from 'react-bootstrap-icons';
+import {VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
 
 interface TextDirectionsProps {

@@ -27,322 +27,266 @@ async function main() {
     })
 
     // patriot 20 floor 1
+    /*await client.node.createMany({
+        data: [],
+        skipDuplicates: true
+    });*/
+
+    // all faulkner nodes
     await client.node.createMany({
         data: [
             {
-                nodeID: 'valetParking20',
-                nodeType: 'Parking',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 594.87,
-                ycoord: 43.05,
-                longName: 'Valet Parking 20 Patriot',
-                shortName: 'Valet Parking 20 Patriot',
+                "nodeID": "Hallway-1745468089659",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 582.42,
+                "ycoord": 620.75,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: 'patientParking20',
-                nodeType: 'Parking',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 166.45,
-                ycoord: 36.50,
-                longName: 'Patient Parking 20 Patriot',
-                shortName: 'Patient Parking 20 Patriot',
+                "nodeID": "Hallway-1745468105189",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 581.83,
+                "ycoord": 668,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: 'extendedParking20',
-                nodeType: 'Parking',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 125.94,
-                ycoord: 265.92,
-                longName: 'Extended Patient Parking 20 Patriot',
-                shortName: 'Extended Patient Parking 20 Patriot',
+                "nodeID": "Hallway-1745468111109",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 582.83,
+                "ycoord": 578,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: 'swEntrance',
-                nodeType: 'Entrance',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 186.48,
-                ycoord: 134.00,
-                longName: 'SW Entrance',
-                shortName: 'Entrance',
+                "nodeID": "Hallway-1745468120025",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 559.42,
+                "ycoord": 576,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: 'seEntrance',
-                nodeType: 'Entrance',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 253.24,
-                ycoord: 841.50,
-                longName: 'SE Entrance',
-                shortName: 'Entrance',
+                "nodeID": "Hallway-1745468125283",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 510.42,
+                "ycoord": 670.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '130.01',
-                nodeType: 'Reception',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 333.24,
-                ycoord: 342.00,
-                longName: 'Reception 130.01',
-                shortName: 'Reception 130.01',
+                "nodeID": "Hallway-1745468129629",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 480.17,
+                "ycoord": 621.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.01',
-                nodeType: 'Reception',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 412.74,
-                ycoord: 221.00,
-                longName: 'Check-In 110.01',
-                shortName: 'Check-In 110.01',
+                "nodeID": "Hallway-1745468133623",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 478.83,
+                "ycoord": 669,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '120.01',
-                nodeType: 'Reception',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 256.24,
-                ycoord: 466.00,
-                longName: 'Check-In 120.01',
-                shortName: 'Check-In 120.01',
+                "nodeID": "Hallway-1745468140562",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 480.42,
+                "ycoord": 515.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '100.00F',
-                nodeType: 'Reception',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 190.74,
-                ycoord: 589.50,
-                longName: 'Check-In 100.00F',
-                shortName: 'Check-In 100.00F',
+                "nodeID": "Reception-1745468181591",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 561.42,
+                "ycoord": 591,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '100.13',
-                nodeType: 'Stairs',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 767.24,
-                ycoord: 243.00,
-                longName: 'Stairs 100.13',
-                shortName: 'Stairs 100.13',
+                "nodeID": "Reception-1745468203626",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 561.71,
+                "ycoord": 553,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '100.14',
-                nodeType: 'Stairs',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 218.74,
-                ycoord: 818.00,
-                longName: 'Stairs 100.14',
-                shortName: 'Stairs 100.14',
+                "nodeID": "Reception-1745468225241",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 568.92,
+                "ycoord": 631.75,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '100.10',
-                nodeType: 'Elevator',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 191.74,
-                ycoord: 757.50,
-                longName: 'Elevator 100.10',
-                shortName: 'Elevator 100.10',
+                "nodeID": "Reception-1745468241433",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 596.92,
+                "ycoord": 668,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '100.00',
-                nodeType: 'Hallway',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 192.74,
-                ycoord: 234.50,
-                longName: 'Lobby 100.00 intersection',
-                shortName: 'Lobby 100.00',
+                "nodeID": "Reception-1745468256681",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 581.92,
+                "ycoord": 721,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '100.04',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 458.74,
-                ycoord: 234.50,
-                longName: 'Pharmacy Consult',
-                shortName: 'Pharmacy Consult',
+                "nodeID": "Reception-1745468279713",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 481.42,
+                "ycoord": 498,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.20A',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 519.24,
-                ycoord: 231.50,
-                longName: 'Patient Toilet 110.20A',
-                shortName: 'Patient Toilet 110.20A',
+                "nodeID": "Reception-1745468288835",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 451.33,
+                "ycoord": 514.75,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.03',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 520.24,
-                ycoord: 258.00,
-                longName: 'Public Toilet 110.03',
-                shortName: 'Public Toilet 110.03',
+                "nodeID": "Reception-1745468299003",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 466.08,
+                "ycoord": 629.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.20',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 570.24,
-                ycoord: 258.50,
-                longName: 'Ultrasound 6 110.20',
-                shortName: 'Ultrasound 6 110.20',
+                "nodeID": "Reception-1745468308859",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 449.21,
+                "ycoord": 630.75,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.09',
-                nodeType: 'Hallway',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 682.24,
-                ycoord: 259.50,
-                longName: 'Corridor 110.09',
-                shortName: 'Corridor 110.09',
+                "nodeID": "Hallway-1745468326007",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 383.42,
+                "ycoord": 669.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.12A',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 721.74,
-                ycoord: 254.50,
-                longName: 'Water Service 110.12A',
-                shortName: 'Water Service 110.12A',
+                "nodeID": "Hallway-1745468331257",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 385.58,
+                "ycoord": 789.25,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.33',
-                nodeType: 'Hallway',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 575.24,
-                ycoord: 518.50,
-                longName: 'Corridor 110.33',
-                shortName: 'Corridor 110.33',
+                "nodeID": "Reception-1745468408887",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 495,
+                "ycoord": 807.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '110.60',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 549.74,
-                ycoord: 536.00,
-                longName: 'Sub Wait 110.60',
-                shortName: 'Sub Wait 110.60',
+                "nodeID": "Hallway-1745468416845",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 511.5,
+                "ycoord": 807.25,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '120.26',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 418.24,
-                ycoord: 532.50,
-                longName: 'Practice Manager 120.26',
-                shortName: 'Practice Manager 120.26',
+                "nodeID": "Parking-1745468723599",
+                "nodeType": "Parking",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 719.67,
+                "ycoord": 313,
+                "longName": "",
+                "shortName": "THE Faulkner Parking Lot"
             },
             {
-                nodeID: '100.09',
-                nodeType: 'Hallway',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 191.24,
-                ycoord: 530.50,
-                longName: 'Corridor 100.09',
-                shortName: 'Corridor 100.09',
+                "nodeID": "Hallway-1745469182158",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 450.42,
+                "ycoord": 668.5,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '120.00B',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 196.74,
-                ycoord: 451.50,
-                longName: 'Wheelchair Storage 120.00B',
-                shortName: 'Wheelchair Storage 120.00B',
+                "nodeID": "Faulkner Entrance",
+                "nodeType": "Entrance",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 722.0,
+                "ycoord": 622.0,
+                "longName": "",
+                "shortName": ""
             },
             {
-                nodeID: '150.30',
-                nodeType: 'Hallway',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 338.74,
-                ycoord: 702.50,
-                longName: 'Corridor 150.30',
-                shortName: 'Corridor 150.30',
-            },
-            {
-                nodeID: '150.36',
-                nodeType: 'Hallway',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 311.24,
-                ycoord: 672.50,
-                longName: 'Corridor 150.36',
-                shortName: 'Corridor 150.36',
-            },
-            {
-                nodeID: '130.00',
-                nodeType: 'Other',
-                building: 'Patriot Place 20',
-                floor: 1,
-                xcoord: 324.74,
-                ycoord: 247.00,
-                longName: 'Waiting Room 130.00',
-                shortName: 'Waiting Room 130.00',
+                "nodeID": "a faulkner hallway",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 630.5,
+                "ycoord": 620.5,
+                "longName": "",
+                "shortName": ""
             }
         ],
         skipDuplicates: true
-    });
-
-    // patriot 20 floor 3
-    await client.node.createMany({
-        data: [
-            {nodeID: 'bridgePatriot20', nodeType: 'Entrance', building: 'Patriot Place 20', floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
-            {nodeID: '300.13', nodeType: 'Stairs', building: 'Patriot Place 20', floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
-            {nodeID: '300.14', nodeType: 'Stairs', building: 'Patriot Place 20', floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
-            {nodeID: '300.10', nodeType: 'Elevator', building: 'Patriot Place 20', floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '3rd Floor Elevator', shortName: '3rd Floor Elevator'}
-        ],
-        skipDuplicates: true
-    });
-
-    await client.edge.createMany({
-        data: [
-            {fromID: 'swEntrance', toID: '100.00', fromX: 186.48, fromY: 134.00, toX: 192.74, toY: 234.50},
-            {fromID: '100.00', toID: '120.00B', fromX: 192.74, fromY: 234.50, toX: 196.74, toY: 451.50},
-            {fromID: '120.00B', toID: '120.01', fromX: 196.74, fromY: 451.50, toX: 256.24, toY: 466.00},
-            {fromID: '120.00B', toID: '100.09', fromX: 196.74, fromY: 451.50, toX: 191.24, toY: 530.50},
-            {fromID: '100.09', toID: '100.00F', fromX: 191.24, fromY: 530.50, toX: 190.74, toY: 589.50},
-            {fromID: '100.09', toID: '100.10', fromX: 191.24, fromY: 530.50, toX: 191.74, toY: 757.50},
-            {fromID: 'seEntrance', toID: '100.14', fromX: 253.24, fromY: 841.50, toX: 218.74, toY: 818.00},
-            {fromID: '100.14', toID: '100.10', fromX: 218.74, fromY: 818.00, toX: 191.74, toY: 757.50},
-            {fromID: '100.00', toID: '130.00', fromX: 192.74, fromY: 234.50, toX: 324.74, toY: 247.00},
-            {fromID: '130.00', toID: '130.01', fromX: 324.74, fromY: 247.00, toX: 333.24, toY: 342.00},
-            {fromID: '130.00', toID: '100.04', fromX: 324.74, fromY: 247.00, toX: 458.74, toY: 234.50},
-            {fromID: '100.04', toID: '110.20A', fromX: 458.74, fromY: 234.50, toX: 519.24, toY: 231.50},
-            {fromID: '110.20A', toID: '110.03', fromX: 519.24, fromY: 231.50, toX: 520.24, toY: 258.00},
-            {fromID: '110.03', toID: '110.20', fromX: 520.24, fromY: 258.00, toX: 570.24, toY: 258.50},
-            {fromID: '110.20', toID: '110.09', fromX: 570.24, fromY: 258.50, toX: 682.24, toY: 259.50},
-            {fromID: '110.09', toID: '110.12A', fromX: 682.24, fromY: 259.50, toX: 721.74, toY: 254.50},
-            {fromID: '110.12A', toID: '100.13', fromX: 721.74, fromY: 254.50, toX: 767.24, toY: 243.00},
-            {fromID: '110.20', toID: '110.33', fromX: 570.24, fromY: 258.50, toX: 575.24, toY: 518.50},
-            {fromID: '110.33', toID: '110.60', fromX: 575.24, fromY: 518.50, toX: 549.74, toY: 536.00},
-            {fromID: '110.60', toID: '150.30', fromX: 549.74, fromY: 536.00, toX: 338.74, toY: 702.50},
-            {fromID: '110.60', toID: '120.26', fromX: 549.74, fromY: 536.00, toX: 418.24, toY: 532.50},
-            {fromID: '120.26', toID: '100.09', fromX: 418.24, fromY: 532.50, toX: 191.24, toY: 530.50},
-            {fromID: '150.30', toID: '150.36', fromX: 338.74, fromY: 702.50, toX: 311.24, toY: 672.50},
-            {fromID: '100.13', toID: '300.13', fromX: 767.24, fromY: 243.00, toX: 767.24, toY: 243.00},
-            {fromID: '100.14', toID: '300.14', fromX: 218.74, fromY: 818.00, toX: 218.74, toY: 818.00},
-            {fromID: '100.10', toID: '300.10', fromX: 191.74, fromY: 757.50, toX: 191.74, toY: 757.50}
-        ]
     });
 
     // patriot 22 floor 1
@@ -438,41 +382,110 @@ async function main() {
         ]
     });
 
-    // faulkner floor 1
-    await client.node.createMany({
+    // create faulkner edges
+    await client.edge.createMany({
         data: [
             {
-                nodeID: 'valetParkingFaulkner',
-                nodeType: 'Parking',
-                building: 'Faulkner',
-                floor: 1,
-                xcoord: 0,
-                ycoord: 0,
-                longName: 'Valet Parking Lot',
-                shortName: 'Valet Parking Lot'
+                "fromID": "Faulkner Entrance",
+                "toID": "a faulkner hallway"
             },
             {
-                nodeID: 'leftLotFaulkner',
-                nodeType: 'Parking',
-                building: 'Faulkner',
-                floor: 1,
-                xcoord: 0,
-                ycoord: 0,
-                longName: 'Left Parking Lot',
-                shortName: 'Left Parking Lot'
+                "fromID": "a faulkner hallway",
+                "toID": "Hallway-1745468089659"
             },
             {
-                nodeID: 'rightLotFaulkner',
-                nodeType: 'Parking',
-                building: 'Faulkner',
-                floor: 1,
-                xcoord: 0,
-                ycoord: 0,
-                longName: 'Right Parking Lot',
-                shortName: 'Right Parking Lot'
+                "fromID": "Hallway-1745468089659",
+                "toID": "Hallway-1745468111109"
             },
-        ],
-        skipDuplicates: true
+            {
+                "fromID": "Hallway-1745468111109",
+                "toID": "Hallway-1745468120025"
+            },
+            {
+                "fromID": "Hallway-1745468120025",
+                "toID": "Reception-1745468203626"
+            },
+            {
+                "fromID": "Hallway-1745468120025",
+                "toID": "Reception-1745468181591"
+            },
+            {
+                "fromID": "Hallway-1745468089659",
+                "toID": "Hallway-1745468105189"
+            },
+            {
+                "fromID": "Reception-1745468241433",
+                "toID": "Hallway-1745468105189"
+            },
+            {
+                "fromID": "Hallway-1745468105189",
+                "toID": "Reception-1745468256681"
+            },
+            {
+                "fromID": "Hallway-1745468089659",
+                "toID": "Hallway-1745468129629"
+            },
+            {
+                "fromID": "Hallway-1745468089659",
+                "toID": "Reception-1745468225241"
+            },
+            {
+                "fromID": "Hallway-1745468105189",
+                "toID": "Hallway-1745468125283"
+            },
+            {
+                "fromID": "Hallway-1745468416845",
+                "toID": "Hallway-1745468125283"
+            },
+            {
+                "fromID": "Hallway-1745468416845",
+                "toID": "Reception-1745468408887"
+            },
+            {
+                "fromID": "Parking-1745468723599",
+                "toID": "Faulkner Entrance"
+            },
+            {
+                "fromID": "Hallway-1745468125283",
+                "toID": "Hallway-1745468133623"
+            },
+            {
+                "fromID": "Hallway-1745468133623",
+                "toID": "Hallway-1745469182158"
+            },
+            {
+                "fromID": "Hallway-1745468133623",
+                "toID": "Hallway-1745468129629"
+            },
+            {
+                "fromID": "Hallway-1745468129629",
+                "toID": "Hallway-1745468140562"
+            },
+            {
+                "fromID": "Hallway-1745468140562",
+                "toID": "Reception-1745468279713"
+            },
+            {
+                "fromID": "Hallway-1745468140562",
+                "toID": "Reception-1745468288835"
+            },
+            {
+                "fromID": "Hallway-1745468129629",
+                "toID": "Reception-1745468299003"
+            },
+            {
+                "fromID": "Hallway-1745468129629",
+                "toID": "Reception-1745468308859"
+            },
+            {
+                "fromID": "Hallway-1745469182158",
+                "toID": "Hallway-1745468326007"
+            },
+            {
+                "fromID": "Hallway-1745468326007",
+                "toID": "Hallway-1745468331257"
+            }
+        ]
     });
 
     console.log('Floorplan seeded successfully!');
