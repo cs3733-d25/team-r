@@ -220,6 +220,7 @@ const TransportationRequestForm = () => {
                                     </span>
                                     </Label>
                                     <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} />
+                                    {/*//TODO   ^^^*/}
                                     {/*select department based on location*/}
                                     {selectedLocation && (
                                         <>
@@ -230,7 +231,7 @@ const TransportationRequestForm = () => {
                                             Select a department
                                         </span>
                                             </Label>
-                                            {/*handle departments for location*/}
+                                            {/*handle departments given the location*/}
                                             {selectedLocation === "Patriot Place 22" ? (
                                                 <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
                                             ) : selectedLocation === "Patriot Place 20" ? (
@@ -269,8 +270,8 @@ const TransportationRequestForm = () => {
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-
+                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns} mutuallyExclusiveOption={'Patriot Place 20'} ></Dropdown>
+                                        {/*//TODO ^^^*/}
 
                                     </div>
                                 </div>
