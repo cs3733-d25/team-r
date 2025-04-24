@@ -60,6 +60,18 @@ router.post(
           building: row.building,
         }));
 
+        //checks if transformed correctly
+        for (const row of transformation) {
+          if (
+            !row.name ||
+            !row.building ||
+            Number.isNaN(row.id) ||
+            Number.isNaN(row.building)
+          ) {
+            throw new Error("File not formatted correctly.");
+          }
+        }
+
         // deletes everything from the directory database
         await PrismaClient.directory.deleteMany({});
 
