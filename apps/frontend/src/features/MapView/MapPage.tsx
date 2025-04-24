@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import {fetchPath, useMapData} from '@/features/MapView/mapService';
 import {Node} from "../../../../backend/src/routes/mapData.ts";
 import { Checkbox } from '@/components/ui/checkbox.tsx';
+import { InternalMapControls } from '@/components/InternalMapControls.tsx';
 
 declare global {
     interface Window {
@@ -67,6 +68,8 @@ export function MapPage() {
     const {parkingLots, departments} = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     console.log('departments: ', departments);
+
+    const [showDirections, setShowDirections] = useState(false);
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -157,6 +160,9 @@ export function MapPage() {
             // const OwenCoords = [[711, 314], [702, 630]];
             // 3) update map
             setPathCoordinates(coords);
+            // give the node ID's to the calculateTextDirections function to turn into text directions
+            calculateTextDirections(nodeIDs)
+
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -166,25 +172,27 @@ export function MapPage() {
      * Given a string array of nodeIDs, this function converts them to their shortNames
      * @param directions - the string array of nodeIDs
      */
-    const processDirections = async (directions: string[]) => {
+    const calculateTextDirections = async (directions: string[]) => {
         try {
             const nodes = await getNodeObjs(directions);
             if (nodes.length < 2) {
                 setDirectionStrings([]);
                 return;
             }
+            // be sure to show the directions since we have a valid path
+            setShowDirections(true);
 
             // reverse the order of the nodes to get the correct path
-            nodes.reverse();
+            // nodes.reverse();
 
             const enhancedDirections: string[] = [];
 
             // First node is starting point
-            enhancedDirections.push(`Start at ${nodes[0].shortName}`);
+            enhancedDirections.push(`Start at ${nodes[0].longName}`);
 
             // For the first segment, just head toward without turn instruction
             if (nodes.length > 1) {
-                enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
+                enhancedDirections.push(`Head toward ${nodes[1].longName}`);
             }
 
             // Process middle segments to determine turns
@@ -194,11 +202,11 @@ export function MapPage() {
                 const nextNode = nodes[i + 1];
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
+                enhancedDirections.push(`${directionChange} toward ${nextNode.longName}`);
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].longName}`);
             console.log("enhanced Directions: ", enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
@@ -350,6 +358,14 @@ export function MapPage() {
                         ))}
                     </div>
                 </div>
+                {showDirections && (
+                    <div>
+                        <TextDirections
+                            steps={directionStrings}
+                        />
+                        <InternalMapControls/>
+                    </div>
+                )}
             </div>
         </div>
     );
