@@ -39,7 +39,7 @@ const values = {
     departmentsF3: F3,
     departmentsF4: F4,
     departmentsF5: F5,
-    departmentsFAll: FAll,
+    departmentsFAll: FAll, //see above
 };
 
 export type valueKey = keyof typeof values; // "priority" | "status"

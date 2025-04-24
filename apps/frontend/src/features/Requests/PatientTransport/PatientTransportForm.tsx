@@ -57,6 +57,22 @@ const TransportationRequestForm = () => {
         }));
     };
 
+    //helper function for dept
+    const renderDepartmentDropdown = () => {
+        switch (selectedLocation) {
+            case "Patriot Place 22":
+                return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} />;
+            case "Patriot Place 20":
+                return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} />;
+            case "Chestnut Hill":
+                return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} />;
+            case "Faulkner":
+                return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} />;
+            default:
+                return null;
+        }
+    };
+
     // Add state for the confirmation card
     const [submittedTransport, setSubmittedTransport] = useState<SubmittedTransport | null>(null);
     const handleSubmit = async (e: React.FormEvent) => {
@@ -132,7 +148,7 @@ const TransportationRequestForm = () => {
         handleDepartmentChange('department', null); //set dept to null on location change
 
         if (selectedDesiredBuilding === selectedLocation) {
-            handleDesiredBuildingChange('desiredBuilding', null); //update desired building
+            handleDesiredBuildingChange('desiredBuilding', null); //update desired building //TODO RELOAD THE DROPDOWN TO PREVENT PREVIOUS SELECTION FROM POPPING UP EVEN IF CLEARED HERE
             console.log("Conflict in LOCATION change, DESIRED BUILDING is now: null")
         }
     }, [selectedLocation]);
@@ -240,7 +256,6 @@ const TransportationRequestForm = () => {
                                     </span>
                                     </Label>
                                     <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} />
-                                    {/*//TODO   ^^^*/}
 
                                     {/*select department based on location*/}
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -252,15 +267,8 @@ const TransportationRequestForm = () => {
                                     </Label>
 
                                     {/*handle departments if given the location*/}
-                                    {selectedLocation && (
-                                        selectedLocation === "Patriot Place 22" ? (
-                                            <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
-                                        ) : selectedLocation === "Patriot Place 20" ? (
-                                            <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                        ) : selectedLocation === "Chestnut Hill" ? (
-                                            <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                        ) : null
-                                    )}
+                                    <p> selected location: {selectedLocation} </p>
+                                    {renderDepartmentDropdown()}
 
                                 </div>
 
