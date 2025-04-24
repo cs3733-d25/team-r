@@ -8,6 +8,8 @@ import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
 import axios, {AxiosPromise, AxiosResponse} from 'axios';
 import { Label } from '@/components/ui/label.tsx';
+import {marker} from "leaflet";
+import {Node} from "../../../../backend/src/routes/mapData.ts";
 
 interface EditMapProps {
     status?: string;
@@ -62,6 +64,7 @@ export function EditMap({ status }: EditMapProps) {
         // make request, and pass the promise to the internal map to reload once its done
         setRequestPromise(async () => {await postNodeDeletion(nodeID)});
     }
+
 
     // function from mapService that makes axios request
     async function deleteEdge (edgeID:string) {
@@ -137,6 +140,13 @@ export function EditMap({ status }: EditMapProps) {
                 : [...prev, departmentId]
         );
     };
+    function dragMarker(data:Node, marker:L.Marker):void{
+        marker.on('dragend', async function (e) {
+            const position = marker.getLatLng()
+            setCoordinates({x: position.lat, y: position.lng});
+            const promise = await axios.post('/api/map/edit-node',coordinates)
+        })
+    }
 
     const saveNode = async () => {
         if (!coordinates) {

@@ -35,7 +35,8 @@ router.post("/", async function (req: Request, res: Response) {
   try {
     const createRequest = await PrismaClient.sanitationRequest.create({
       data: {
-        employeeName,
+        // employeeName,
+        employeeID: employeeName,
         sanitationType,
         priority,
         department,

@@ -323,7 +323,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                         // only place it if the floor is valid
                         if (layer) {
                             const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                            clickMarker(node, place);
+                            place.on('click', () => clickMarker(node,place));
+
                         }
                     });
                 }
@@ -333,7 +334,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                     // only place it if the floor is valid
                     if (layer) {
                         const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                        clickMarker(node, place);
+                        place.on('click', () => clickMarker(node,place));
                     }
                 });
                 other.map((node) => {
@@ -342,7 +343,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                     // only place it if the floor is valid
                     if (layer) {
                         const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                        clickMarker(node, place);
+                        place.on('click', () => clickMarker(node,place));
                     }
                 });
                 entrances.map((node) => {
@@ -351,7 +352,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                     // only place it if the floor is valid
                     if (layer) {
                         const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                        clickMarker(node, place);
+                        place.on('click', () => clickMarker(node,place));
                     }
                 });
                 lots.map((node) => {
@@ -360,7 +361,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                     // only place it if the floor is valid
                     if (layer) {
                         const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                        clickMarker(node, place);
+                        place.on('click', () => clickMarker(node,place));
                     }
                 });
                 elevators.map((node) => {
@@ -369,7 +370,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                     // only place it if the floor is valid
                     if (layer) {
                         const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                        clickMarker(node, place);
+                        place.on('click', () => clickMarker(node,place));
                     }
                 });
 

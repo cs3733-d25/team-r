@@ -58,6 +58,31 @@ function MapController({ selectedLocation }: { selectedLocation: string }) {
     return null;
 }
 
+function ReverseGeocoder({ coordinates, onAddressFound }: {
+    coordinates: {lat: number, lng: number} | null,
+    onAddressFound: (address: string) => void
+}) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map || !coordinates) return;
+
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ location: coordinates })
+            .then(response => {
+                if (response.results[0]) {
+                    onAddressFound(response.results[0].formatted_address);
+                }
+            })
+            .catch(error => {
+                console.error('Reverse geocoding error:', error);
+            });
+    }, [coordinates, map, onAddressFound]);
+
+    return null;
+}
+
 /**
  * ExternalMap component
  * @param initialLocation - the location to be pre-selected
@@ -78,6 +103,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
               lng: number;
           };
     const [startingLocation, setStartingLocation] = useState<LocationInput>('');
+    const [displayAddress, setDisplayAddress] = useState<string>('');
+    const [currentCoordinates, setCurrentCoordinates] = useState<{ lat: number; lng: number } | null>(null);
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
     const location = useLocation();
@@ -112,10 +139,12 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                setStartingLocation({
+                const coords = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
-                });
+                };
+                setStartingLocation(coords);
+                setCurrentCoordinates(coords);
             },
             (err) => {
                 alert(`Error getting location: ${err.message}`);
@@ -129,6 +158,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const convertLocationToString = (location: LocationInput) => {
         if (typeof location === 'string') {
             return location;
+        } else if (displayAddress && currentCoordinates?.lat === location.lat && currentCoordinates?.lng === location.lng) {
+            return displayAddress;
         } else {
             return `${location.lat},${location.lng}`;
         }
@@ -149,6 +180,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                     {/* on the fritz, will flash screen with zoomed in locations before displaying
                     Temporarily disabled for now, in Jira as a bug fix*/}
                     {/*<MapController selectedLocation={selectedLocation} />*/}
+                    <ReverseGeocoder coordinates={currentCoordinates} onAddressFound={setDisplayAddress} />
                     <Directions
                         selectedLocation={selectedLocation}
                         startingLocation={
@@ -169,7 +201,11 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 type={'text'}
                                 placeholder={'Starting location'}
                                 value={convertLocationToString(startingLocation)}
-                                onChange={(e) => setStartingLocation(e.target.value)}
+                                onChange={(e) => {
+                                    setStartingLocation(e.target.value);
+                                    setCurrentCoordinates(null);
+                                    setDisplayAddress('');
+                                }}
                             />
                             <div className={"flex items-center justify-center"}>
                                 <Label>Or</Label>
