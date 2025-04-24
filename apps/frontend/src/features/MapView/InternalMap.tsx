@@ -17,6 +17,7 @@ import './leaflet.css';
 import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 import { AxiosResponse } from 'axios';
+import 'leaflet-ant-path';
 
 declare global {
   interface Window {
@@ -476,22 +477,45 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
     // Redraw route whenever pathCoordinates change
     useEffect(() => {
         if (!mapInstance.current) return;
-        // Remove existing route
+        // remove existing route
         if (routeLayer.current) {
             routeLayer.current.remove();
             routeLayer.current = null;
         }
-        // Draw new route
+
+        // draw new route
         if (pathCoordinates && pathCoordinates.length > 1) {
             console.log("path coordinates in internal map");
             console.log(pathCoordinates);
-            const poly = L.polyline(pathCoordinates, {
-                color: 'red',
-                weight: 3,
-                opacity: 0.8,
-            });
-            poly.addTo(mapInstance.current);
-            routeLayer.current = poly;
+
+            // ant path animation
+            const antPathOptions = {
+                delay: 100, // Delay in milliseconds between dashes
+                dashArray: [10, 20], // Defines the pattern of dashes and gaps
+                weight: 5, // Line weight
+                color: 'darkorange', // Line color
+                pulseColor: '#FFFFFF', // Color of the pulsing outline
+                paused: false, // Whether the animation is paused
+                reverse: false, // Reverse the animation direction
+                hardwareAccelerated: true // Use hardware acceleration if possible
+            };
+
+            const antPoly = L.polyline.antPath(pathCoordinates, antPathOptions);
+
+            antPoly.addTo(mapInstance.current);
+            routeLayer.current = antPoly;
+
+            // start marker
+            const startMarker = L.marker(pathCoordinates[0], {
+                title: "Start",
+                icon: L.divIcon({ className: 'start-marker' }),
+            }).addTo(mapInstance.current);
+
+            // end marker
+            const endMarker = L.marker(pathCoordinates[pathCoordinates.length - 1], {
+                title: "End",
+                icon: L.divIcon({ className: 'end-marker' }),
+            }).addTo(mapInstance.current);
         }
     }, [pathCoordinates]);
 

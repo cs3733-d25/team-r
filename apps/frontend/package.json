@@ -53,6 +53,7 @@
         "embla-carousel-react": "^8.6.0",
         "input-otp": "^1.4.2",
         "leaflet": "^1.9.4",
+        "leaflet-ant-path": "^1.3.0",
         "localforage": "^1.10.0",
         "lucide-react": "^0.487.0",
         "match-sorter": "^6.3.1",
