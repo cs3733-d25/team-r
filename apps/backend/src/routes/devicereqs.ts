@@ -30,8 +30,6 @@ router.post("/", async function (req: Request, res: Response) {
     patient,
     location,
     request,
-    //employeeName,
-    //employeeID,
     device,
     room,
   } = req.body;

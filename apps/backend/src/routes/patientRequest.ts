@@ -20,27 +20,34 @@ router.get("/", async function (req: Request, res: Response) {
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a patient request");
   const {
+    patientID,
     priority,
     status,
     department,
     comment,
-    patientID,
     location,
     request,
     //employeeName,
   } = req.body;
+
   const employeeName = req.session?.username;
 
   try {
     console.log(request);
     const createRequest = await PrismaClient.patientRequest.create({
       data: {
-        patientID,
+        patient: {
+          connect: { id: patientID },
+        },
         priority,
         department,
         location,
         status,
-        employeeName,
+        employeeName: {
+          connect: {
+            id: employeeName,
+          },
+        },
         request,
         comment,
         //assignedEmployee: employeeName //fix this to connect correctly

@@ -46,7 +46,7 @@ router.post("/", async function (req: Request, res: Response) {
   try {
     await PrismaClient.pharmacyRequest.create({
       data: {
-        employeeName,
+        employeeID: employeeName,
         priority,
         department,
         patientID,

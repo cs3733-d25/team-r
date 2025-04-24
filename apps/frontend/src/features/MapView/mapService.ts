@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { useState, useEffect } from 'react';
-import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
+import axios, { AxiosResponse } from 'axios';
+import { useEffect, useState } from 'react';
+import { Edge, Node } from '../../../../backend/src/routes/mapData.ts';
 
 // Response type if backend wraps IDs in an object
 type NodeIDsResponse = { nodeIDs: string[] };
@@ -23,6 +23,18 @@ export const fetchDepartments = async (
         console.error('Error fetching departments:', error);
         throw error;
     }
+};
+
+export const postNode = async (node: Node): Promise<AxiosResponse> => {
+    return await axios.post('/api/map/create-node', node);
+};
+
+export const postNodeDeletion  = async (nodeID: string): Promise<AxiosResponse> => {
+    return await axios.post('/api/map/delete-node', {nodeID: nodeID});
+};
+
+export const postEdgeDeletion  = async (edgeID: string): Promise<AxiosResponse> => {
+    return await axios.post('/api/map/delete-edge', {edgeID: edgeID});
 };
 
 export const fetchCheckIn = async (): Promise<Node[]> => {
@@ -69,6 +81,22 @@ export const fetchEdgesChestnut = async (): Promise<Edge[]> => {
     const res = await axios.get('/api/map/edges-chestnut');
     return res.data;
 };
+
+export const fetchEdgesFaulkner = async (): Promise<Edge[]> => {
+    const res = await axios.get('/api/map/edges-faulkner');
+    // TODO: create backend request
+    return res.data;
+};
+
+export const fetchHallways = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/hallways');
+    return res.data;
+}
+export const fetchOther = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/other');
+    return res.data;
+}
+
 
 export function useMapData(selectedBuilding: string) {
     const [parkingLots, setParkingLots] = useState<Node[]>([]);

@@ -1,30 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import InternalMap from '@/features/MapView/InternalMap';
-import { useMapData, fetchPath } from '@/features/MapView/mapService';
+import { Label } from '@/components/ui/label.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import InternalMap from '@/features/MapView/InternalMap.tsx';
+import React, {useEffect, useState} from 'react';
 import {
     floorConfig,
     getBuildingConstant,
     getBuildingFromLocation,
-    getShortLocationName,
+    getShortLocationName
 } from '@/features/MapView/mapUtils';
-import axios from 'axios';
+import TextDirections from "@/components/TextDirections.tsx";
+import axios from "axios";
+import { useLocation } from 'react-router-dom';
+import {fetchPath, useMapData} from '@/features/MapView/mapService';
+import {Node} from "../../../../backend/src/routes/mapData.ts";
+import { Checkbox } from '@/components/ui/checkbox.tsx';
 
 declare global {
   interface Window {
     goToFloor?: (floor: number, building?: string) => void;
-  }
 }
+}
+
+const blankNode:Node = {
+    nodeID: "",
+    nodeType: "",
+    building: "",
+    floor: 0,
+    xcoord: 0,
+    ycoord: 0,
+    longName: "",
+    shortName: "",
+}
+
 
 interface MapNode {
     nodeID: string;
@@ -52,12 +60,14 @@ export function MapPage() {
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
-
-    const { parkingLots, departments } = useMapData(selectedBuilding);
+    const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
-    // Filter parking lots by the current building
+    const {parkingLots, departments} = useMapData(selectedBuilding);
+    const [directionStrings, setDirectionStrings] = useState<string[]>([]);
+    console.log('departments: ', departments);
+
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
@@ -66,21 +76,37 @@ export function MapPage() {
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner': ['FAULKNER', 'Faulkner'],
             };
-            return buildingMap[selectedBuilding]?.some((name) =>
-                lot.building.toUpperCase().includes(name.toUpperCase())
+
+            return buildingMap[selectedBuilding]?.some(buildingName =>
+                lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
         });
         setFilterParkingLots(filtered);
     }, [parkingLots, selectedBuilding]);
 
+    //from iteration 3
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            console.log("parking lot: ", selectedParkinglot);
+            console.log("department lot: ", selectedDepartment);
+        } catch {
+
+        }
+    };
+
+    /**
+     * Given an array of node IDs, this function will convert them to their corresponding node objects
+     * @param nodeIDArray
+     */
     // Helper: convert node IDs → full node objects
     const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
         try {
             const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
             return resp.data;
         } catch (e) {
-            console.error('Error fetching node objects:', e);
-            return [];
+            console.error("Error converting node ID to name: ", e);
+            return []; // Return empty array on error
         }
     };
 
@@ -129,8 +155,91 @@ export function MapPage() {
         }
     };
 
-    const availableFloors =
-        floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
+    /**
+     * Given a string array of nodeIDs, this function converts them to their shortNames
+     * @param directions - the string array of nodeIDs
+     */
+    const processDirections = async (directions: string[]) => {
+        try {
+            const nodes = await getNodeObjs(directions);
+            if (nodes.length < 2) {
+                setDirectionStrings([]);
+                return;
+            }
+
+            // reverse the order of the nodes to get the correct path
+            nodes.reverse();
+
+            const enhancedDirections: string[] = [];
+
+            // First node is starting point
+            enhancedDirections.push(`Start at ${nodes[0].shortName}`);
+
+            // For the first segment, just head toward without turn instruction
+            if (nodes.length > 1) {
+                enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
+            }
+
+            // Process middle segments to determine turns
+            for (let i = 1; i < nodes.length - 1; i++) {
+                const prevNode = nodes[i - 1];
+                const currentNode = nodes[i];
+                const nextNode = nodes[i + 1];
+
+                const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
+                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
+            }
+
+            // Final arrival
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
+            console.log("enhanced Directions: ", enhancedDirections);
+
+            setDirectionStrings(enhancedDirections);
+        } catch (error) {
+            console.error("Error processing directions:", error);
+            setDirectionStrings([]);
+        }
+    };
+
+    /**
+     * Calculates the relative direction change between path segments
+     */
+    const calculateDirectionChange = (prev: MapNode, current: MapNode, next: MapNode): string => {
+        // Calculate vectors for previous and current segments
+        const prevVector = {
+            dx: current.xcoord - prev.xcoord,
+            dy: current.ycoord - prev.ycoord
+        };
+
+        const currentVector = {
+            dx: next.xcoord - current.xcoord,
+            dy: next.ycoord - current.ycoord
+        };
+
+        // Calculate angle between vectors using atan2
+        const angle1 = Math.atan2(prevVector.dy, prevVector.dx);
+        const angle2 = Math.atan2(currentVector.dy, currentVector.dx);
+
+        // Calculate angle difference in degrees
+        let angleDiff = (angle2 - angle1) * 180 / Math.PI;
+
+        // Normalize to -180 to 180 range
+        if (angleDiff > 180) angleDiff -= 360;
+        if (angleDiff < -180) angleDiff += 360;
+
+        // Determine direction based on angle difference
+        if (angleDiff >= 30 && angleDiff < 150) {
+            return "Turn right";
+        } else if (angleDiff <= -30 && angleDiff > -150) {
+            return "Turn left";
+        } else {
+            return "Continue straight";
+        }
+    }
+
+    const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
+
+
 
     return (
         <div className="flex flex-col h-screen overflow-hidden">

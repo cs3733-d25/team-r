@@ -46,7 +46,7 @@ async function main() {
     await client.employee.create({
         data: {
             id: 'admin',
-            firstName: 'Wilson',
+            firstName: 'admin',
             lastName: 'Wong',
             departmentId: 'Blood Draw/Phlebotomy PP20-1',
             role: 'Administrator',
