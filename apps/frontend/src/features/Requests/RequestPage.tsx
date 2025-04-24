@@ -52,7 +52,7 @@ export function AllRequestsPage() {
                   <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                     <CardTitle>{type.name} Requests</CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-6 px-6 pb-6 bg-white">
+                  <CardContent className="pt-6 px-6 pb-6 bg-white h-full">
                     <p className="text-muted-foreground mb-4">{type.description}</p>
                     <div className="flex flex-col space-y-2">
                       <Button
