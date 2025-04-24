@@ -33,7 +33,7 @@ router.get("/parking-lots", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "Parking" },
     });
-    //console.log(request);
+    console.log("found " + request.length + " parking lots");
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -295,7 +295,7 @@ router.get("/edges-faulkner", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -336,11 +336,16 @@ router.get("/getNodeObjs", async (req, res) => {
   try {
     const nodeIDs = req.query.nodeIDs as string[];
     console.log("nodeIDs: ", nodeIDs);
-    const nodes = await PrismaClient.node.findMany({
-      where: {
-        nodeID: { in: nodeIDs },
-      },
-    });
+    const nodes = [];
+    for (const nodeID of nodeIDs) {
+      nodes.push(
+        await PrismaClient.node.findUnique({
+          where: {
+            nodeID: nodeID,
+          },
+        }),
+      );
+    }
     console.log("nodes: ", nodes);
     res.json(nodes);
   } catch (err) {

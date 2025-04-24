@@ -303,6 +303,222 @@ async function main() {
         skipDuplicates: true
     });
 
+    // some (most) faulkner nodes
+    await client.node.createMany({
+        data: [
+            {
+                "nodeID": "Hallway-1745468089659",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 582.42,
+                "ycoord": 620.75,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468105189",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 581.83,
+                "ycoord": 668,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468111109",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 582.83,
+                "ycoord": 578,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468120025",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 559.42,
+                "ycoord": 576,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468125283",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 510.42,
+                "ycoord": 670.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468129629",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 480.17,
+                "ycoord": 621.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468133623",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 478.83,
+                "ycoord": 669,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468140562",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 480.42,
+                "ycoord": 515.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468181591",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 561.42,
+                "ycoord": 591,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468203626",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 561.71,
+                "ycoord": 553,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468225241",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 568.92,
+                "ycoord": 631.75,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468241433",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 596.92,
+                "ycoord": 668,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468256681",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 581.92,
+                "ycoord": 721,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468279713",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 481.42,
+                "ycoord": 498,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468288835",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 451.33,
+                "ycoord": 514.75,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468299003",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 466.08,
+                "ycoord": 629.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468308859",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 449.21,
+                "ycoord": 630.75,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468326007",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 383.42,
+                "ycoord": 669.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468331257",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 385.58,
+                "ycoord": 789.25,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745468408887",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 495,
+                "ycoord": 807.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745468416845",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 511.5,
+                "ycoord": 807.25,
+                "longName": "",
+                "shortName": ""
+            }
+        ]
+    });
+
     // patriot 20 floor 3
     await client.node.createMany({
         data: [

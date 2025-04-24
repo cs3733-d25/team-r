@@ -101,8 +101,10 @@ export function MapPage() {
      */
     // Helper: convert node IDs → full node objects
     const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
+        console.log('nodeIDs before get: ', nodeIDs);
         try {
             const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
+            console.log("node coords after get: ", resp.data);
             return resp.data;
         } catch (e) {
             console.error("Error converting node ID to name: ", e);
@@ -146,8 +148,13 @@ export function MapPage() {
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
             console.log('nodeIDs from getNodeObjs: ', nodes);
-            const coords = nodes.reverse().map((n) => [n.ycoord, n.xcoord] as [number, number]);
+            const coords = nodes.map((n) => [n.xcoord, n.ycoord] as [number, number]);
+            const reversedCoords = [];
+            for (let i=coords.length-1; i>=0; i--) {
+                reversedCoords.push(coords[i]);
+            }
             console.log('computed pathCoordinates:', coords);
+            // const OwenCoords = [[711, 314], [702, 630]];
             // 3) update map
             setPathCoordinates(coords);
         } catch (err) {
