@@ -209,12 +209,12 @@ export function NavbarMGH(props: NavBarProps) {
                             <a href="/edit-map">Edit Map</a>
                         </Button>
                     )}
-                    {props.userType === "Employee" || props.userType === "Admin" && (
+                    {(props.userType === "Employee" || props.userType === "Admin") && (
                         <Button variant="ghost" asChild>
                             <a href="/requests">Request a Service</a>
                         </Button>
                     )}
-                    {props.userType === "Employee" || props.userType === "Admin" && (
+                    {(props.userType === "Employee" || props.userType === "Admin") && (
                         <Button variant="ghost" asChild>
                             <a href="/csv">Database</a>
                         </Button>
