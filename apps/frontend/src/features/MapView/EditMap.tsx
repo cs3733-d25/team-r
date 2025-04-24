@@ -31,16 +31,22 @@ export function EditMap({ status }: EditMapProps) {
         'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
+    const [editcoordinates, setEditCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [nodeName, setNodeName] = useState<string>('');
     const [nodeType, setNodeType] = useState<string>('');
+    const [editnodeName, setEditNodeName] = useState<string>('');
+    const [editnodeType, setEditNodeType] = useState<string>('');
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
+    const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
+    const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
+    const [nodes, setNodes] = useState<string>('');
 
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
@@ -72,6 +78,7 @@ export function EditMap({ status }: EditMapProps) {
     }
 
     function onNodeClick (nodeID:string) {
+        setNodes(nodeID)
         setEdgeNodes((nodes) => {
             if(nodes.length == 0) {
                 return [nodeID];
@@ -80,14 +87,18 @@ export function EditMap({ status }: EditMapProps) {
             } else {
                 return [nodes[1], nodeID];
             }
-        });
-    }
+        })
 
+    }
     // map clicks
     useEffect(() => {
         const handleMapClick = (e: CustomEvent<{lat: number, lng: number}>) => {
             if (e.detail) {
                 setCoordinates({
+                    x: e.detail.lat,
+                    y: e.detail.lng
+                });
+                setEditCoordinates({
                     x: e.detail.lat,
                     y: e.detail.lng
                 });
@@ -104,8 +115,8 @@ export function EditMap({ status }: EditMapProps) {
                 const lat = parseFloat(coordMatch[1]);
                 const lng = parseFloat(coordMatch[2]);
                 setCoordinates({ x: lat, y: lng });
+                setEditCoordinates({ x: lat, y: lng });
                 setCurrentBuilding(building);
-                // console.log(building);
 
                 window.lastClickCoordinates = { lat, lng };
             }
@@ -139,13 +150,52 @@ export function EditMap({ status }: EditMapProps) {
                 : [...prev, departmentId]
         );
     };
-    function dragMarker(data:Node, marker:L.Marker):void{
-        marker.on('dragend', async function (e) {
-            const position = marker.getLatLng()
-            setCoordinates({x: position.lat, y: position.lng});
-            const promise = await axios.post('/api/map/edit-node',coordinates)
-        })
+    const handleEditDepartmentToggle = (departmentId: string) => {
+        setEditSelectedDepartments(prev =>
+            prev.includes(departmentId)
+                ? prev.filter(id => id !== departmentId)
+                : [...prev, departmentId]
+        );
+    };
+const editNode = async () => {
+    if (!editcoordinates) {
+        alert('Please select a location on the map first.');
+        return;
     }
+    const nodeData = {
+        nodeID: editnodeName,
+        nodeType: editnodeType,
+        building: currentBuilding,
+        floor: currentFloor,
+        xcoord: editcoordinates.x,
+        ycoord: editcoordinates.y,
+        longName: "",
+        shortName: editnodeName,
+        departments: editselectedDepartments
+    };
+    try {
+        // call API to save node
+        // split the promise so that the internal map can update
+        const promise = axios.post('/api/map/edit-node', nodeData);
+        setRequestPromise(async () => {await promise});
+        const response = await promise;
+
+        // alert(nodeName);
+        if (response.status === 200) {
+            // alert('Node saved successfully!');
+            // reset form
+            setEditNodeName('');
+            setEditNodeType('');
+            setEditSelectedDepartments([]);
+            setEditCoordinates(null);
+        } else {
+            alert('Failed to save node.');
+        }
+    } catch (error) {
+        console.error('Error saving node:', error);
+        alert('An error occurred while saving the node.');
+    }
+}
 
     const saveNode = async () => {
         if (!coordinates) {
@@ -219,7 +269,8 @@ export function EditMap({ status }: EditMapProps) {
             alert('An error occurred while saving the edge.');
         }
     };
-
+    console.log("edit Coordinates", editcoordinates);
+    console.log(" Coordinates", coordinates);
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-1 relative cursor-pointer">
@@ -319,6 +370,95 @@ export function EditMap({ status }: EditMapProps) {
                             className="w-full"
                         >
                             Save Edge
+                        </Button>
+                        <div className="bg-gray-100 p-3 rounded-md">
+                            {(nodes!=null) ?
+                                <div className="mt-2 text-sm">
+                                    <p>Selected Node: {nodes}</p>
+                                </div>:null
+                            }
+                        </div>
+                        <div className="space-y-3">
+                            <div>
+                                <Label >Change Node Name? </Label>
+                                <Input
+                                    // id="nodeName"
+                                    value={editnodeName}
+                                    onChange={(e) => setEditNodeName(e.target.value)}
+                                    placeholder="Enter New node name"
+                                />
+                            </div>
+
+                            <div>
+                                {/*Owen took out htmlFor="nodeType"*/}
+                                <Label >Change Node Type? </Label>
+                                <Select onValueChange={setEditNodeType} value={editnodeType}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select node type" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            {nodeTypes.map(type => (
+                                                <SelectItem key={type.name} value={type.name}>
+                                                    {type.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div>
+                                <Label>Change Associated Departments?</Label>
+                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
+                                    {availableDepartments.length > 0 ? (
+                                        availableDepartments.map(dept => (
+                                            <div key={dept.id} className="flex items-center space-x-2 py-1">
+                                                <Checkbox
+                                                    id={"dept-${dept.id}"}
+                                                    checked={editselectedDepartments.includes(dept.id)}
+                                                    onCheckedChange={() => handleEditDepartmentToggle(dept.id)}
+                                                />
+                                                <Label htmlFor={`dept-${dept.id}`} className="cursor-pointer">
+                                                    {dept.name}
+                                                </Label>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="text-gray-500 text-sm">No departments available</p>
+                                    )}
+                                </div>
+                            </div>
+                            {editcoordinates !=null?
+                            <div>
+                                <Label >Change X Coordinate? </Label>
+                                <Input
+                                    // id="nodeName"
+                                    value={editcoordinates.x}
+                                    onChange={() => setEditCoordinates({
+                                        x:editcoordinates.x,
+                                        y:editcoordinates.y
+                                    })}
+                                    placeholder="Enter new X Coordinate"
+                                />
+                            </div>:null}
+                            {editcoordinates !=null?
+                                <div>
+                                    <Label >Change Y Coordinate? </Label>
+                                    <Input
+                                        // id="nodeName"
+                                        value={editcoordinates.y}
+                                        onChange={() => setEditCoordinates({
+                                            x:editcoordinates.x,
+                                            y:editcoordinates.y
+                                        })}
+                                        placeholder="Enter new Y Coordinate"
+                                    />
+                                </div>:null}
+                        </div>
+
+                        <Button onClick={editNode}>
+                            Edit Node
                         </Button>
                     </div>
                 </div>
