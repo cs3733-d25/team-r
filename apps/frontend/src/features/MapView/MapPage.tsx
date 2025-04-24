@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import {postNode, postNodeDeletion, useMapData} from '@/features/MapView/mapService';
 import {Node} from "../../../../backend/src/routes/mapData.ts";
 import { Checkbox } from '@/components/ui/checkbox.tsx';
+import {InternalMapControls} from "@/components/InternalMapControls.tsx";
 
 interface CustomWindow extends Window {
     goToFloor?: (floor: number, building?: string) => void;
@@ -302,7 +303,10 @@ export function MapPage() {
                         </div>
                     </form>
                 </div>
+                {/* Text Directions on left side of screen */}
                 <TextDirections steps={directionStrings}/>
+                {/* Map controls on the bottom right of the screen */}
+                <InternalMapControls/>
             </div>
         </div>
     );
