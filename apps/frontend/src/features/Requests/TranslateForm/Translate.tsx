@@ -5,11 +5,11 @@ import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateReq
 function TranslateRequestTabs() {
     return (
         <>
-            <h1 className="text-2xl font-trade font-bold mb-0 place-self-center">Translation Request System</h1>
+            <h1 className="text-2xl font-trade font-bold mb-0 place-self-center">Translator Request System</h1>
             <Tabs defaultValue="translateRequestForm">
                 <TabsList>
                     <TabsTrigger value="translateRequestForm">
-                        Translation Request Form
+                        Translator Request Form
                     </TabsTrigger>
                     <TabsTrigger value="translateRequestTable">
                         View All Requests

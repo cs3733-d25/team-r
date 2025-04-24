@@ -22,7 +22,7 @@ export function AllRequestsPage() {
     { name: 'Patient',        description: 'Non-emergency patient service requests', path: '/patientrequestpage' },
     { name: 'Transport',      description: 'Patient transportation between facilities', path: '/transport' },
     { name: 'Sanitation',     description: 'Cleaning and sanitation service requests', path: '/sanitation' },
-    { name: 'Translation',    description: 'Language translation service requests', path: '/translation' }, // ✅ NEW CARD
+    { name: 'Translator',    description: 'Language translator service requests', path: '/translation' }, // ✅ NEW CARD
   ];
 
   return (
@@ -38,7 +38,7 @@ export function AllRequestsPage() {
               <TabsTrigger value="patient">Patient</TabsTrigger>
               <TabsTrigger value="transport">Transport</TabsTrigger>
               <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
-              <TabsTrigger value="translation">Translation</TabsTrigger> {/* ✅ NEW TAB */}
+              <TabsTrigger value="translation">Translator</TabsTrigger> {/* ✅ NEW TAB */}
               <TabsTrigger value="all-requests">All Requests</TabsTrigger>
             </TabsList>
 

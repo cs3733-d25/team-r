@@ -45,7 +45,7 @@ export function AllRequestsTable() {
             const translateRes = await axios.get("/api/translate/");
             const translateReqWType = translateRes.data.map(req => ({
                 ...req,
-                type: "Translation",
+                type: "Translator",
             }))
 
             //set all requests to be added to the table

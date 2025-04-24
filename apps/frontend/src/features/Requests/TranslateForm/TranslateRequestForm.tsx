@@ -57,7 +57,7 @@ const TranslateRequestForm = () => {
 
             if (response.status === 200) {
                 setSubmittedRequest({ ...formData, timestamp: new Date().toLocaleString() });
-                setSubmitStatus({ message: 'Translation request submitted successfully!', isError: false });
+                setSubmitStatus({ message: 'Translator request submitted successfully!', isError: false });
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
@@ -196,7 +196,7 @@ const TranslateRequestForm = () => {
                         Request Confirmation
                     </div>
                     <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-2">Your translation request has been submitted</h3>
+                        <h3 className="text-lg font-semibold mb-2">Your translator request has been submitted</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div><span className="font-semibold">Requestor:</span> {username}</div>
                             <div><span className="font-semibold">Language:</span> {submittedRequest.language}</div>
@@ -208,7 +208,7 @@ const TranslateRequestForm = () => {
                             <div><span className="font-semibold">Notes:</span> {submittedRequest.notes || "None provided"}</div>
                         </div>
                         <div className="mt-3 text-sm text-secondary-foreground">
-                            The Translation Request Has Been Submitted and Will Be Addressed.
+                            The Translator Request Has Been Submitted and Will Be Addressed.
                         </div>
                         <Button onClick={() => setSubmittedRequest(null)} className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200">
                             Dismiss
