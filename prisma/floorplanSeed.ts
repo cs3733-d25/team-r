@@ -535,8 +535,29 @@ async function main() {
                 "ycoord": 668.5,
                 "longName": "",
                 "shortName": ""
+            },
+            {
+                "nodeID": "Faulkner Entrance",
+                "nodeType": "Entrance",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 722.0,
+                "ycoord": 622.0,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "a faulkner hallway",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 630.5,
+                "ycoord": 620.5,
+                "longName": "",
+                "shortName": ""
             }
-        ]
+        ],
+        skipDuplicates: true
     });
 
     // patriot 20 floor 3
