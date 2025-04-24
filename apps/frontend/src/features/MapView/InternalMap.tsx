@@ -93,12 +93,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
         marker.on('click', () => {
             const info = `
         <p>Name: ${data.shortName}</p>
+        <p>Node Type: ${data.nodeType}</p>
         <p>Building: ${data.building}</p>
         <p>Floor: ${data.floor}</p>
-        <p>X Coordinate: ${data.xcoord}</p>
+        <p>X Coordinate: ${data.xcoord}</p> 
         <p>Y Coordinate: ${data.ycoord}</p>
+        
       `;
             marker.bindPopup(info).openPopup();
+
             // tell the parent element if the node has been selected
             if(onNodeSelect) {
                 onNodeSelect(data.nodeID);
