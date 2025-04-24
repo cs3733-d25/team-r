@@ -1,3 +1,4 @@
+
 import client from "../apps/backend/src/bin/prisma-client.ts";
 
 async function main() {
