@@ -289,48 +289,6 @@ async function main() {
         skipDuplicates: true
     });
 
-    // patriot 20 floor 3
-    await client.node.createMany({
-        data: [
-            {nodeID: 'bridgePatriot20', nodeType: 'Entrance', building: 'Patriot Place 20', floor: 3, xcoord: 237.41, ycoord: 111.00, longName: 'Bridge from 20 Patriot', shortName: 'Bridge'},
-            {nodeID: '300.13', nodeType: 'Stairs', building: 'Patriot Place 20', floor: 3, xcoord: 767.24, ycoord: 243.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
-            {nodeID: '300.14', nodeType: 'Stairs', building: 'Patriot Place 20', floor: 3, xcoord: 218.74, ycoord: 818.00, longName: '3rd Floor Stairs', shortName: '3rd Floor Stairs'},
-            {nodeID: '300.10', nodeType: 'Elevator', building: 'Patriot Place 20', floor: 3, xcoord: 191.74, ycoord: 757.50, longName: '3rd Floor Elevator', shortName: '3rd Floor Elevator'}
-        ],
-        skipDuplicates: true
-    });
-
-    await client.edge.createMany({
-        data: [
-            {fromID: 'swEntrance', toID: '100.00', fromX: 186.48, fromY: 134.00, toX: 192.74, toY: 234.50},
-            {fromID: '100.00', toID: '120.00B', fromX: 192.74, fromY: 234.50, toX: 196.74, toY: 451.50},
-            {fromID: '120.00B', toID: '120.01', fromX: 196.74, fromY: 451.50, toX: 256.24, toY: 466.00},
-            {fromID: '120.00B', toID: '100.09', fromX: 196.74, fromY: 451.50, toX: 191.24, toY: 530.50},
-            {fromID: '100.09', toID: '100.00F', fromX: 191.24, fromY: 530.50, toX: 190.74, toY: 589.50},
-            {fromID: '100.09', toID: '100.10', fromX: 191.24, fromY: 530.50, toX: 191.74, toY: 757.50},
-            {fromID: 'seEntrance', toID: '100.14', fromX: 253.24, fromY: 841.50, toX: 218.74, toY: 818.00},
-            {fromID: '100.14', toID: '100.10', fromX: 218.74, fromY: 818.00, toX: 191.74, toY: 757.50},
-            {fromID: '100.00', toID: '130.00', fromX: 192.74, fromY: 234.50, toX: 324.74, toY: 247.00},
-            {fromID: '130.00', toID: '130.01', fromX: 324.74, fromY: 247.00, toX: 333.24, toY: 342.00},
-            {fromID: '130.00', toID: '100.04', fromX: 324.74, fromY: 247.00, toX: 458.74, toY: 234.50},
-            {fromID: '100.04', toID: '110.20A', fromX: 458.74, fromY: 234.50, toX: 519.24, toY: 231.50},
-            {fromID: '110.20A', toID: '110.03', fromX: 519.24, fromY: 231.50, toX: 520.24, toY: 258.00},
-            {fromID: '110.03', toID: '110.20', fromX: 520.24, fromY: 258.00, toX: 570.24, toY: 258.50},
-            {fromID: '110.20', toID: '110.09', fromX: 570.24, fromY: 258.50, toX: 682.24, toY: 259.50},
-            {fromID: '110.09', toID: '110.12A', fromX: 682.24, fromY: 259.50, toX: 721.74, toY: 254.50},
-            {fromID: '110.12A', toID: '100.13', fromX: 721.74, fromY: 254.50, toX: 767.24, toY: 243.00},
-            {fromID: '110.20', toID: '110.33', fromX: 570.24, fromY: 258.50, toX: 575.24, toY: 518.50},
-            {fromID: '110.33', toID: '110.60', fromX: 575.24, fromY: 518.50, toX: 549.74, toY: 536.00},
-            {fromID: '110.60', toID: '150.30', fromX: 549.74, fromY: 536.00, toX: 338.74, toY: 702.50},
-            {fromID: '110.60', toID: '120.26', fromX: 549.74, fromY: 536.00, toX: 418.24, toY: 532.50},
-            {fromID: '120.26', toID: '100.09', fromX: 418.24, fromY: 532.50, toX: 191.24, toY: 530.50},
-            {fromID: '150.30', toID: '150.36', fromX: 338.74, fromY: 702.50, toX: 311.24, toY: 672.50},
-            {fromID: '100.13', toID: '300.13', fromX: 767.24, fromY: 243.00, toX: 767.24, toY: 243.00},
-            {fromID: '100.14', toID: '300.14', fromX: 218.74, fromY: 818.00, toX: 218.74, toY: 818.00},
-            {fromID: '100.10', toID: '300.10', fromX: 191.74, fromY: 757.50, toX: 191.74, toY: 757.50}
-        ]
-    });
-
     // patriot 22 floor 1
     await client.node.createMany({
         data: [
