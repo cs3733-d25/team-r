@@ -29,7 +29,7 @@ declare global {
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<string>(
         // "Faulkner 1st Floor"
-        'Multispecialty Clinic, 22 Patriot Pl 1rd Floor, Foxborough, MA 02035'
+        'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [nodeName, setNodeName] = useState<string>('');
@@ -37,7 +37,7 @@ export function EditMap({ status }: EditMapProps) {
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
-    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
+    const [currentFloor, setCurrentFloor] = useState<number>(3); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
@@ -224,7 +224,7 @@ export function EditMap({ status }: EditMapProps) {
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} onLocationChange={setLocation} onNodeDelete={deleteNode} promiseNodeCreate={requestPromise} promiseEdgeCreate={edgeCreatePromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
+                <InternalMap location={selectedLocation} floor={currentFloor} onNodeDelete={deleteNode} promiseNodeCreate={requestPromise} promiseEdgeCreate={edgeCreatePromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <div className="flex flex-col space-y-2">
