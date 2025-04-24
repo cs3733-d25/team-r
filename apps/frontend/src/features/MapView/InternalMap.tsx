@@ -27,6 +27,7 @@ declare global {
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     location: string;
+    floor: number;
     onLocationChange?: (building:string, floor:number) => void;
     onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
@@ -44,7 +45,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, floor, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -426,8 +427,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
             if (location.includes('20 Patriot Pl')) {
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
-                floorLayer22_1.addTo(map);
-            } else if (location.includes('Chestnut Hill 1st Floor')) {
+                if(floor == 1) {
+                    floorLayer22_1.addTo(map);
+                }else if(floor == 3) {
+                    floorLayer22_3.addTo(map);
+                }else if(floor == 4) {
+                    floorLayer22_4.addTo(map);
+                }
+            } else if (location.includes('Chestnut Hill')) {
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
                 floorLayerFaulkner.addTo(map);
