@@ -378,8 +378,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer20_1);
 
                 });
@@ -394,21 +394,24 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 }
                 edges22_3.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_3);
                 });
                 edges22_4.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_4);
                 });
+
                 edgesChestnut.map((edge) => {
-                    L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                    const line = L.polyline([
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
+                    console.log("got here",edge.fromNode.xcoord)
+                    clickEdge(edge, line);
                 });
                 edgesFaulkner.map((edge) => {
                     const line = L.polyline([
@@ -424,7 +427,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
                 floorLayer22_1.addTo(map);
-            } else if (location.includes('Chestnut Hill')) {
+            } else if (location.includes('Chestnut Hill 1st Floor')) {
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
                 floorLayerFaulkner.addTo(map);
