@@ -326,21 +326,21 @@ async function main() {
 
     await client.edge.createMany({
         data: [
-            {fromID: 'ST02', toID: '3000C', fromX: 442.88, fromY: 327.00, toX: 444.25, toY: 344.00},
-            { fromID: '3000C', toID: '3E', fromX: 444.25, fromY: 344.00, toX: 466.88, toY: 345.00 },
-            { fromID: '3E', toID: '3001', fromX: 466.88, fromY: 345.00, toX: 466.63, toY: 432.00 },
-            { fromID: '3001', toID: '3000A', fromX: 466.63, fromY: 432.00, toX: 418.63, toY: 419.25 },
-            { fromID: '3000A', toID: 'ST01', fromX: 418.63, fromY: 419.25, toX: 436.13, toY: 470.25 },
-            { fromID: 'ST01', toID: '3A', fromX: 436.13, fromY: 470.25, toX: 438.88, toY: 538.75 },
-            { fromID: '3000A', toID: '3B', fromX: 418.63, fromY: 419.25, toX: 438.13, toY: 592.50 },
-            { fromID: '3A', toID: '3B', fromX: 438.88, fromY: 538.75, toX: 438.13, toY: 592.50 },
-            { fromID: '3B', toID: '307', fromX: 438.13, fromY: 592.50, toX: 275.38, toY: 693.50 },
-            { fromID: '3A', toID: '3000B', fromX: 438.88, fromY: 538.75, toX: 436.13, toY: 643.75 },
-            { fromID: '3000B', toID: '3104', fromX: 436.13, fromY: 643.75, toX: 595.13, toY: 639.00 },
-            { fromID: '3104', toID: '3S', fromX: 595.13, fromY: 639.00, toX: 595.13, toY: 733.25 },
-            { fromID: '3S', toID: '3112', fromX: 595.13, fromY: 733.25, toX: 645.88, toY: 732.50 },
-            { fromID: '3112', toID: 'ST03', fromX: 645.88, fromY: 732.50, toX: 660.63, toY: 805.25 },
-            { fromID: 'bridgePatriot20', toID: '307', fromX: 237.41, fromY: 111.00, toX: 275.38, toY: 693.50 }
+            // {fromID: 'ST02', toID: '3000C', fromX: 442.88, fromY: 327.00, toX: 444.25, toY: 344.00},
+            // { fromID: '3000C', toID: '3E', fromX: 444.25, fromY: 344.00, toX: 466.88, toY: 345.00 },
+            // { fromID: '3E', toID: '3001', fromX: 466.88, fromY: 345.00, toX: 466.63, toY: 432.00 },
+            // { fromID: '3001', toID: '3000A', fromX: 466.63, fromY: 432.00, toX: 418.63, toY: 419.25 },
+            // { fromID: '3000A', toID: 'ST01', fromX: 418.63, fromY: 419.25, toX: 436.13, toY: 470.25 },
+            // { fromID: 'ST01', toID: '3A', fromX: 436.13, fromY: 470.25, toX: 438.88, toY: 538.75 },
+            // { fromID: '3000A', toID: '3B', fromX: 418.63, fromY: 419.25, toX: 438.13, toY: 592.50 },
+            // { fromID: '3A', toID: '3B', fromX: 438.88, fromY: 538.75, toX: 438.13, toY: 592.50 },
+            // { fromID: '3B', toID: '307', fromX: 438.13, fromY: 592.50, toX: 275.38, toY: 693.50 },
+            // { fromID: '3A', toID: '3000B', fromX: 438.88, fromY: 538.75, toX: 436.13, toY: 643.75 },
+            // { fromID: '3000B', toID: '3104', fromX: 436.13, fromY: 643.75, toX: 595.13, toY: 639.00 },
+            // { fromID: '3104', toID: '3S', fromX: 595.13, fromY: 639.00, toX: 595.13, toY: 733.25 },
+            // { fromID: '3S', toID: '3112', fromX: 595.13, fromY: 733.25, toX: 645.88, toY: 732.50 },
+            // { fromID: '3112', toID: 'ST03', fromX: 645.88, fromY: 732.50, toX: 660.63, toY: 805.25 },
+            // { fromID: 'bridgePatriot20', toID: '307', fromX: 237.41, fromY: 111.00, toX: 275.38, toY: 693.50 }
         ]
     });
 
