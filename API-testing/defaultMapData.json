@@ -47,8 +47,16 @@
     {"nodeID": "Parking-1745468723599", "nodeType": "Parking", "building": "Faulkner", "floor": 1, "xcoord": 719.67, "ycoord": 313, "longName": "THE Faulkner Parking Lot", "shortName": "Parking Lot"},
     {"nodeID": "Hallway-1745469182158", "nodeType": "Hallway", "building": "Faulkner", "floor": 1, "xcoord": 450.42, "ycoord": 668.5, "longName": "", "shortName": "West Central Hallway"},
     {"nodeID": "Faulkner Entrance", "nodeType": "Entrance", "building": "Faulkner", "floor": 1, "xcoord": 722.0, "ycoord": 622.0, "longName": "Faulkner front entrance", "shortName": "Front Entrance"},
-    {"nodeID": "a faulkner hallway", "nodeType": "Hallway", "building": "Faulkner", "floor": 1, "xcoord": 630.5, "ycoord": 620.5, "longName": "", "shortName": "East Entrance Hallway"}
+    {"nodeID": "a faulkner hallway", "nodeType": "Hallway", "building": "Faulkner", "floor": 1, "xcoord": 630.5, "ycoord": 620.5, "longName": "", "shortName": "East Entrance Hallway"},
 
+    {"nodeID": "Extended Patient Parking", "nodeType": "Parking", "building": "Patriot Place 22", "floor": 1, "xcoord": 15.83, "ycoord": 10, "longName": "", "shortName": "Extended Patient Parking"},
+    {"nodeID": "Valet Parking", "nodeType": "Parking", "building": "Patriot Place 22", "floor": 1, "xcoord": 1.67, "ycoord": 707, "longName": "", "shortName": "Valet Parking"},
+    {"nodeID": "Valet Parking Lot", "nodeType": "Parking", "building": "Patriot Place 22", "floor": 1, "xcoord": 424.67, "ycoord": 923, "longName": "", "shortName": "Valet Parking Lot"},
+    {"nodeID": "Sidewalk-1745515004862", "nodeType": "Sidewalk", "building": "Patriot Place 22", "floor": 1, "xcoord": 119.67, "ycoord": 690, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745515017629", "nodeType": "Hallway", "building": "Patriot Place 22", "floor": 1, "xcoord": 130.67, "ycoord": 691, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745515041197", "nodeType": "Hallway", "building": "Patriot Place 22", "floor": 1, "xcoord": 258.67, "ycoord": 792, "longName": "", "shortName": ""},
+    {"nodeID": "Entrance-1745515055030", "nodeType": "Entrance", "building": "Patriot Place 22", "floor": 1, "xcoord": 357.67, "ycoord": 746, "longName": "", "shortName": ""},
+    {"nodeID": "Elevator-1745515093551", "nodeType": "Elevator", "building": "Patriot Place 22", "floor": 1, "xcoord": 412.67, "ycoord": 682, "longName": "", "shortName": ""}
 
 
   ],
@@ -75,7 +83,7 @@
     {"edgeID": "ea7bea0a-ef04-4bf7-af4d-719bf52c113e", "fromID": "Entrance-1745475321572", "toID": "Hallway-1745476252825", "fromX": null, "fromY": null, "toX": null, "toY": null},
     {"edgeID": "dad3ff3c-1219-4966-a5a1-64a7303627c9", "fromID": "Entrance-1745475321572", "toID": "Reception-1745475823905", "fromX": null, "fromY": null, "toX": null, "toY": null},
     {"edgeID": "45c6b47f-4d95-4265-af1f-bc9b5c743e5b", "fromID": "Entrance-1745475279866", "toID": "Reception-1745475750292", "fromX": null, "fromY": null, "toX": null, "toY": null},
-    {"edgeID": "c5d0acfc-020c-41da-aa18-8e58b00d9591", "fromID": "Entrance-1745475279866", "toID": "Hallway-1745476477762", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "c5d0acfc-020c-41da-aa18-8e58b00d9591", "fromID": "Entrance-1745475279866", "toID": "Hallway-1745476477762", "fromX": null, "fromY": null, "toX": null, "toY": null}
 
 
   ]
