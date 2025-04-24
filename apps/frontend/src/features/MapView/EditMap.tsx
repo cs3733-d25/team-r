@@ -167,45 +167,46 @@ export function EditMap({ status }: EditMapProps) {
                 : [...prev, departmentId]
         );
     };
-const editNode = async () => {
-    if (!editcoordinates) {
-        alert('Please select a location on the map first.');
-        return;
-    }
-    const nodeData = {
-        nodeID: editnodeName,
-        nodeType: editnodeType,
-        building: currentBuilding,
-        floor: currentFloor,
-        xcoord: editcoordinates.x,
-        ycoord: editcoordinates.y,
-        longName: "",
-        shortName: editnodeName,
-        departments: selectedDepartments
-    };
-    try {
-        // call API to save node
-        // split the promise so that the internal map can update
-        const promise = axios.post('/api/map/edit-node', nodeData);
-        setRequestPromise(async () => {await promise});
-        const response = await promise;
 
-        // alert(nodeName);
-        if (response.status === 200) {
-            // alert('Node saved successfully!');
-            // reset form
-            setEditNodeName('');
-            setEditNodeType('');
-            setEditSelectedDepartments([]);
-            setEditCoordinates(null);
-        } else {
-            alert('Failed to save node.');
+    const editNode = async () => {
+        if (!editcoordinates) {
+            alert('Please select a location on the map first.');
+            return;
         }
-    } catch (error) {
-        console.error('Error saving node:', error);
-        alert('An error occurred while saving the node.');
+        const nodeData = {
+            nodeID: editnodeName,
+            nodeType: editnodeType,
+            building: currentBuilding,
+            floor: currentFloor,
+            xcoord: editcoordinates.x,
+            ycoord: editcoordinates.y,
+            longName: "",
+            shortName: editnodeName,
+            departments: selectedDepartments
+        };
+        try {
+            // call API to save node
+            // split the promise so that the internal map can update
+            const promise = axios.post('/api/map/edit-node', nodeData);
+            setRequestPromise(async () => {await promise});
+            const response = await promise;
+
+            // alert(nodeName);
+            if (response.status === 200) {
+                // alert('Node saved successfully!');
+                // reset form
+                setEditNodeName('');
+                setEditNodeType('');
+                setEditSelectedDepartments([]);
+                setEditCoordinates(null);
+            } else {
+                alert('Failed to save node.');
+            }
+        } catch (error) {
+            console.error('Error saving node:', error);
+            alert('An error occurred while saving the node.');
+        }
     }
-}
 
     const saveNode = async () => {
         if (!coordinates) {
@@ -281,8 +282,14 @@ const editNode = async () => {
             alert('An error occurred while saving the edge.');
         }
     };
+
+    const resetMap = () => {
+
+    }
+
     console.log("edit Coordinates", editcoordinates);
     console.log(" Coordinates", coordinates);
+
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-1 relative cursor-pointer">
