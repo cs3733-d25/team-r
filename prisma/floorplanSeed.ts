@@ -16,6 +16,7 @@ async function main() {
         skipDuplicates: true
     })
 
+    //chesnut edges
     await client.edge.createMany({
         data:[
             {fromID: 'frontLotChestnut', toID: 'canopyEntrance', fromX: 130.02, fromY: 592.90, toX: 160.01, toY: 342.94},
