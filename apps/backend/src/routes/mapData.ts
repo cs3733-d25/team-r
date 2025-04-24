@@ -152,11 +152,11 @@ router.get("/edges-20-3", async (req, res) => {
     const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
-          building: "PATRIOT_PLACE_20",
+          building: "Patriot Place 20",
           floor: 3,
         },
         toNode: {
-          building: "PATRIOT_PLACE_20",
+          building: "Patriot Place 20",
           floor: 3,
         },
       },
@@ -208,11 +208,11 @@ router.get("/edges-22-3", async (req, res) => {
     const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
-          building: "PATRIOT_PLACE_22",
+          building: "Patriot Place 22",
           floor: 3,
         },
         toNode: {
-          building: "PATRIOT_PLACE_22",
+          building: "Patriot Place 22",
           floor: 3,
         },
       },
@@ -234,11 +234,11 @@ router.get("/edges-22-4", async (req, res) => {
     const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
-          building: "PATRIOT_PLACE_22",
+          building: "Patriot Place 22",
           floor: 4,
         },
         toNode: {
-          building: "PATRIOT_PLACE_22",
+          building: "Patriot Place 22",
           floor: 4,
         },
       },
