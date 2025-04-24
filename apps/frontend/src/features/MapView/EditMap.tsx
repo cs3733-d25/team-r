@@ -299,17 +299,17 @@ const editNode = async () => {
                     onLocationChange={setLocation}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
-                    <div className="flex flex-col space-y-2">
-                        <Label className={'p-2 font-bold text-2xl'}>Edit Map</Label>
-                    </div>
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-100 max-h-[90%] overflow-y-auto z-10 flex flex-col justify-start">
 
-                    <Tabs defaultValue="place-node" value={activeTab} onValueChange={setActiveTab} className="w-full">
-                        <TabsList className="grid grid-cols-2 mb-4">
+<div className="flex  flex-col justify-start float-left">
+    <Label className={' font-bold text-2xl'}>Edit Map</Label>
+    <div className="flex  flex-col justify-start text-left">
+                    <Tabs defaultValue="place-node" value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col">
+                        <TabsList className = " w-80 flex">
                             <TabsTrigger value="place-node">Place Node</TabsTrigger>
                             <TabsTrigger value="edit-node">Edit Node</TabsTrigger>
                         </TabsList>
-
+<div className={"w-80 flex flex-col"}>
                         <TabsContent value="place-node" className="space-y-4">
                             <div className="bg-gray-100 p-3 rounded-md">
                                 <Label>Click on map to select node location</Label>
@@ -483,7 +483,10 @@ const editNode = async () => {
 
                             <Button onClick={editNode} disabled={!nodes} className="w-full">Save Changes</Button>
                         </TabsContent>
+</div>
                     </Tabs>
+</div>
+                </div>
                 </div>
             </div>
         </div>
