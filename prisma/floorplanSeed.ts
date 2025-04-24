@@ -27,10 +27,10 @@ async function main() {
     })
 
     // patriot 20 floor 1
-    await client.node.createMany({
+    /*await client.node.createMany({
         data: [],
         skipDuplicates: true
-    });
+    });*/
 
     // all faulkner nodes
     await client.node.createMany({
