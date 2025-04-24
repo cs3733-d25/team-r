@@ -1,0 +1,77 @@
+{
+  "nodes": [
+    {
+      "nodeID": "entrance-main",
+      "nodeType": "Entrance",
+      "building": "Patriot Place 22",
+      "floor": 3,
+      "xcoord": 42.092311,
+      "ycoord": -71.264321,
+      "longName": "Main Entrance",
+      "shortName": "Main",
+      "departments": []
+    },
+    {
+      "nodeID": "reception-lobby",
+      "nodeType": "Reception",
+      "building": "Patriot Place 22",
+      "floor": 3,
+      "xcoord": 42.092347,
+      "ycoord": -71.264389,
+      "longName": "Lobby Reception Desk",
+      "shortName": "Reception",
+      "departments": []
+    },
+    {
+      "nodeID": "hallway-central",
+      "nodeType": "Hallway",
+      "building": "Patriot Place 22",
+      "floor": 3,
+      "xcoord": 42.092398,
+      "ycoord": -71.264412,
+      "longName": "Central Hallway",
+      "shortName": "Hall",
+      "departments": []
+    },
+    {
+      "nodeID": "elevator-main",
+      "nodeType": "Elevator",
+      "building": "Patriot Place 22",
+      "floor": 3,
+      "xcoord": 42.092437,
+      "ycoord": -71.264372,
+      "longName": "Main Elevator",
+      "shortName": "Elev",
+      "departments": []
+    },
+    {
+      "nodeID": "parking-lot",
+      "nodeType": "Parking",
+      "building": "Patriot Place 22",
+      "floor": 3,
+      "xcoord": 42.092274,
+      "ycoord": -71.264285,
+      "longName": "Visitor Parking Lot",
+      "shortName": "Parking",
+      "departments": []
+    }
+  ],
+  "edges": [
+    {
+      "fromID": "parking-lot",
+      "toID": "entrance-main"
+    },
+    {
+      "fromID": "entrance-main",
+      "toID": "reception-lobby"
+    },
+    {
+      "fromID": "reception-lobby",
+      "toID": "hallway-central"
+    },
+    {
+      "fromID": "hallway-central",
+      "toID": "elevator-main"
+    }
+  ]
+}
