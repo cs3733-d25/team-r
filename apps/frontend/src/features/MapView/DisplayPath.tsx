@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useLocation} from 'react-router-dom';
 import {getBuildingFromLocation} from '@/features/MapView/mapUtils.ts';
 import {fetchPath} from './mapService';
+import {Button} from '@/components/ui/button.tsx';
 import { node } from 'prop-types';
 import * as process from 'node:process';
 
@@ -137,7 +138,37 @@ const DisplayPath: React.FC<DisplayPathProps> = ({
 
     const uniqueFloors = Array.from(new Set(pathNodes.map(node => node.floor))).sort();
 
-    return ();
+    return (
+        <div className="absolute bottom-16 left-16 bg-white rounded-lg shadow-lg p-4 w-60 max-h-[90%] overflow-y-auto z-10">
+            {error ? (
+                <div className="text-red-500">{error}</div>
+            ) : (
+                <>
+                    <div className="flex justify-center text-sm text-gray-600">
+                        <div className="text-xl text-black">Floor Navigation</div>
+                    </div>
+                    <div className="mt-2">
+                        {uniqueFloors.length > 0 ? (
+                            <div className="flex flex-col space-y-2">
+                                {uniqueFloors.map(floor => (
+                                    <Button
+                                        key={floor}
+                                        variant={currentFloor === floor ? 'default' : 'secondary'}
+                                        onClick={() => handleFloorChange(floor)}
+                                        className="w-full"
+                                    >
+                                        Floor {floor}
+                                    </Button>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center text-gray-500">No path found</div>
+                        )}
+                    </div>
+                </>
+            )}
+        </div>
+    );
 
 };
 
