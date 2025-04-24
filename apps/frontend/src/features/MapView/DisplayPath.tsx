@@ -141,8 +141,6 @@ const DisplayPath: React.FC<DisplayPathProps> = ({
 
 };
 
-// UI buttons interface for path across floors/buildings
-
 // end screen
 
 
