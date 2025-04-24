@@ -283,9 +283,28 @@ export function EditMap({ status }: EditMapProps) {
         }
     };
 
-    const resetMap = () => {
+    const resetMap = async () => {
+        if (confirm('Are you sure you want to reset the map?')) {
+            try {
+                const promise = axios.post('/api/map/reset');
+                setRequestPromise(async () => {await promise});
+                const response = await promise;
 
-    }
+                if (response.status === 200) {
+                    alert('Map reset successfully!');
+                    setEdgeNodes([]);
+                    setNodes('');
+                    setCoordinates(null);
+                    setEditCoordinates(null);
+                } else {
+                    alert('Failed to reset map.');
+                }
+            } catch (error) {
+                console.error('Error resetting map:', error);
+                alert('An error occurred while resetting the map.');
+            }
+        }
+    };
 
     console.log("edit Coordinates", editcoordinates);
     console.log(" Coordinates", coordinates);
@@ -489,6 +508,8 @@ export function EditMap({ status }: EditMapProps) {
                         <Button onClick={editNode}>
                             Edit Node
                         </Button>
+
+                        <Button onClick={resetMap} className="w-full mt-4 bg-red-600 hover:bg-red-700">Reset Map to Default</Button>
                     </div>
                 </div>
             </div>
