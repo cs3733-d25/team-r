@@ -37,16 +37,16 @@ async function main() {
     //Patriot Place 20 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
+            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
         ]
     });
     //Patriot Place 20 Floor 4
@@ -75,25 +75,33 @@ async function main() {
     //Patriot Place 22 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Multi Specialty Clinic", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Allergy", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Dermatology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Endocrinology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Gastroenterology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Neurology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Neurosurgery", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Ophthalmology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Optometry", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Pulmonology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Rheumatology", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Vein Care Services", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Women's Health", floorNumber: 3, building: "Patriot Place 22"},
-            {name: "Patient Financial Services", floorNumber: 3, building: "Patriot Place 22"},
+            {name: "Multi Specialty Clinic", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Allergy", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Dermatology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Endocrinology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Gastroenterology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Neurology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Neurosurgery", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Ophthalmology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Optometry", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Pulmonology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Rheumatology", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Vein Care Services", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Women's Health", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Patient Financial Services", floorNumber: 3, building: "Patriot Place 22", receptionNodeID:"all-patriot-22-3-departments"},
         ]
     });
-    //Patriot Place 22 Floor 4
+    // Patriot Place 22 Floor 4
+    await client.directory.createMany({
+        data: [
+            {name: "Community Room", floorNumber: 4, building: "Patriot Place 22", receptionNodeID: "Primary Care"},
+            {name: "Primary Care", floorNumber: 4, building: "Patriot Place 22", receptionNodeID: "Community Room"},
+        ]
+    })
+
+    // Chestnut Hill
     await client.directory.createMany({
         data: [
             {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475750292" },

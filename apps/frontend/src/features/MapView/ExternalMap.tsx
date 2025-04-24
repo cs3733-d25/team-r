@@ -15,7 +15,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import {HeadingLabel} from '@/components/ui/heading-label';
-
+import { ZoomIn} from 'lucide-react';
 /**
  * ExternalMapProps
  * passed in from parent (navbar) to pre-select a location
@@ -24,38 +24,51 @@ interface ExternalMapProps {
     selectedLocation?: string;
 }
 
+
+
 /**
  * MapController component, used to control the zoom of the map
  * @param selectedLocation - the location to be zoomed in on
  * @constructor
  */
-function MapController({ selectedLocation }: { selectedLocation: string }) {
+const MapController=({ selectedLocation }: { selectedLocation: string })=> {
     const map = useMap();
 
     /**
      * broken useEffect, will flash screen with zoomed in locations before displaying
      */
-    useEffect(() => {
-        if (!map || !selectedLocation) return;
+    const zoomIn=()=> {
+        if (map && selectedLocation) {
 
-        const geocoder = new google.maps.Geocoder();
+            const geocoder = new google.maps.Geocoder();
 
-        geocoder
-            .geocode({ address: selectedLocation })
-            .then((response) => {
-                const { results } = response;
-                if (results[0]) {
-                    const location = results[0].geometry.location;
-                    map.panTo(location);
-                    map.setZoom(15);
-                }
-            })
-            .catch((error) => {
-                console.error('Geocoding error:', error);
-            });
-    }, [map, selectedLocation]);
+            geocoder
+                .geocode({address: selectedLocation})
+                .then((response) => {
+                    const {results} = response;
+                    if (results[0]) {
+                        const location = results[0].geometry.location;
+                        map.panTo(location);
+                        map.setZoom(17);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Geocoding error:', error);
+                });
+        }
+    }
 
-    return null;
+    return ( <div className="mt-4 pt-2">
+        <Button
+            variant = "selected"
+            disabled={selectedLocation === ''}
+            className={'rounded-full'}
+            onClick={zoomIn
+            }
+        >
+<ZoomIn/>
+        </Button>
+    </div>);
 }
 
 function ReverseGeocoder({ coordinates, onAddressFound }: {
@@ -190,6 +203,9 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         }
                         travelMode={travelMode}
                     />
+                    <div className={'absolute top-123 right-3'}>
+                    <MapController selectedLocation={selectedLocation} />
+                    </div>
                 </APIProvider>
 
                 {/* Overlay sidebar */}
