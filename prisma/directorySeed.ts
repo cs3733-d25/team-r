@@ -63,7 +63,12 @@ async function main() {
     //Patriot Place 22 Floor 1
     await client.directory.createMany({
         data: [
-            {name: "MassGeneral Hospital for Children", floorNumber: 1, building: "Patriot Place 22"},
+            {
+                "name": "MassGeneral Hospital for Children",
+                "floorNumber": 1,
+                "building": "Patriot Place 22",
+                "receptionNodeID": "Entrance-1745515055030"
+            },
             {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Patriot Place 22"},
         ]
     });

@@ -700,15 +700,121 @@ async function main() {
     // patriot 22 floor 1
     await client.node.createMany({
         data: [
-            {nodeID: 'valetParking22', nodeType: 'Parking', building: 'Patriot Place 22', floor: 1, xcoord: 576.44, ycoord: 35.10, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
-            {nodeID: 'patientParking22', nodeType: 'Parking', building: 'Patriot Place 22', floor: 1, xcoord: 217.98, ycoord: 221.99, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
-            {nodeID: 'extendedParking22', nodeType: 'Parking', building: 'Patriot Place 22', floor: 1, xcoord: 128.70, ycoord: 226.15, longName: 'Extended Patient Parking 22 Patriot', shortName: 'Extended Patient Parking 22 Patriot',},
-            {nodeID: '1ST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
-            { nodeID: '1ST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
-            { nodeID: '1EA', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
-            { nodeID: '22entrance1', nodeType: 'Entrance', building: 'Patriot Place 22', floor: 1, xcoord: 333.39, ycoord: 719.00, longName: 'Entrance', shortName: 'Entrance'}
+            {
+                "nodeID": "Extended Patient Parking",
+                "nodeType": "Parking",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 15.83,
+                "ycoord": 10,
+                "longName": "",
+                "shortName": "Extended Patient Parking"
+            },
+            {
+                "nodeID": "Valet Parking",
+                "nodeType": "Parking",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 1.67,
+                "ycoord": 707,
+                "longName": "",
+                "shortName": "Valet Parking"
+            },
+            {
+                "nodeID": "Valet Parking Lot",
+                "nodeType": "Parking",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 424.67,
+                "ycoord": 923,
+                "longName": "",
+                "shortName": "Valet Parking Lot"
+            },
+            {
+                "nodeID": "Sidewalk-1745515004862",
+                "nodeType": "Sidewalk",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 119.67,
+                "ycoord": 690,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745515017629",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 130.67,
+                "ycoord": 691,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745515041197",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 258.67,
+                "ycoord": 792,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Entrance-1745515055030",
+                "nodeType": "Entrance",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 357.67,
+                "ycoord": 746,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Elevator-1745515093551",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 412.67,
+                "ycoord": 682,
+                "longName": "",
+                "shortName": ""
+            }
         ],
         skipDuplicates: true
+    });
+
+    await client.edge.createMany({
+        data: [
+            {
+                "fromID": "Hallway-1745468326007",
+                "toID": "Hallway-1745468331257"
+            },
+            {
+                "fromID": "Hallway-1745515017629",
+                "toID": "Valet Parking"
+            },
+            {
+                "fromID": "Hallway-1745515017629",
+                "toID": "Extended Patient Parking"
+            },
+            {
+                "fromID": "Entrance-1745515055030",
+                "toID": "Hallway-1745515041197"
+            },
+            {
+                "fromID": "Valet Parking Lot",
+                "toID": "Hallway-1745515041197"
+            },
+            {
+                "fromID": "Hallway-1745515041197",
+                "toID": "Hallway-1745515017629"
+            },
+            {
+                "fromID": "Elevator-1745515093551",
+                "toID": "Entrance-1745515055030"
+            }
+        ]
     });
 
     // patriot 22 floor 3
