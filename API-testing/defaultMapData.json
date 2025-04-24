@@ -21,10 +21,37 @@
     {"nodeID": "Hallway-1745476440148", "nodeType": "Hallway", "building": "Chestnut Hill", "floor": 1, "xcoord": 710.04, "ycoord": 685.12, "longName": "", "shortName": ""},
     {"nodeID": "Hallway-1745476454878", "nodeType": "Hallway", "building": "Chestnut Hill", "floor": 1, "xcoord": 770.07, "ycoord": 683.1, "longName": "", "shortName": ""},
     {"nodeID": "Hallway-1745476466618", "nodeType": "Hallway", "building": "Chestnut Hill", "floor": 1, "xcoord": 771.02, "ycoord": 412.09, "longName": "", "shortName": ""},
-    {"nodeID": "Hallway-1745476477762", "nodeType": "Hallway", "building": "Chestnut Hill", "floor": 1, "xcoord": 591.07, "ycoord": 411.09, "longName": "", "shortName": ""}
+    {"nodeID": "Hallway-1745476477762", "nodeType": "Hallway", "building": "Chestnut Hill", "floor": 1, "xcoord": 591.07, "ycoord": 411.09, "longName": "", "shortName": ""},
+
+
+
+
   ],
 
   "edges": [
+    {"edgeID": "e3519bcb-a853-4da1-ba2b-31142b151244", "fromID": "Parking-1745476124817", "toID": "Entrance-1745475279866", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "25cbdf9d-2f36-426d-a887-ebd578c3a3e3", "fromID": "Hallway-1745476466618", "toID": "Hallway-1745476454878", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "04525e00-1ac6-4a12-ac97-30b952e61bb4", "fromID": "Hallway-1745476466618", "toID": "Hallway-1745476477762", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "9d008868-3e64-4879-b288-47702e44b5d3", "fromID": "Hallway-1745476440148", "toID": "Hallway-1745476418680", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "f62e8c26-e49f-4d0b-801d-a79d84ad5d11", "fromID": "Hallway-1745476454878", "toID": "Hallway-1745476440148", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "67d5e250-7946-4269-82a4-bec57573faed", "fromID": "Hallway-1745476418680", "toID": "Hallway-1745476392418", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "2666f7ed-781c-4e56-b972-e8d355e320f6", "fromID": "Hallway-1745476392418", "toID": "Hallway-1745476316023", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "9ca61dfa-6448-43a7-83d3-ede06e306e78", "fromID": "Hallway-1745476316023", "toID": "Hallway-1745476377768", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "85f5b038-de17-406d-80c3-2874ff5f7f49", "fromID": "Hallway-1745476392418", "toID": "Hallway-1745476405531", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "17925112-bada-4dfb-bfc8-d838c39bcd93", "fromID": "Hallway-1745476405531", "toID": "Hallway-1745476336196", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "b8b37346-c04c-4bc3-bb4b-8f2628a7fd2b", "fromID": "Hallway-1745476336196", "toID": "Hallway-1745476325501", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "0cfb6592-666a-4d6f-9d78-33990c5749cc", "fromID": "Hallway-1745476325501", "toID": "Hallway-1745476377768", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "6e5b3d02-6036-49af-9dd5-9474e7e64698", "fromID": "Hallway-1745476377768", "toID": "Hallway-1745476355584", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "dd73e1c5-9884-458a-9d2e-54642840c206", "fromID": "Hallway-1745476355584", "toID": "Hallway-1745476286280", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "2c256ba2-f5ce-4dff-a30c-665cc57751ab", "fromID": "Hallway-1745476274839", "toID": "Hallway-1745476286280", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "cbbae1fe-be02-48b6-8a04-7eca0fea909b", "fromID": "Hallway-1745476274839", "toID": "Hallway-1745476261869", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "84d21992-474d-4d1a-b661-788f514acd29", "fromID": "Hallway-1745476261869", "toID": "Hallway-1745476252825", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "7b679f05-01af-4522-ab8b-685269030e93", "fromID": "Parking-1745476137948", "toID": "Entrance-1745475321572", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "ea7bea0a-ef04-4bf7-af4d-719bf52c113e", "fromID": "Entrance-1745475321572", "toID": "Hallway-1745476252825", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "dad3ff3c-1219-4966-a5a1-64a7303627c9", "fromID": "Entrance-1745475321572", "toID": "Reception-1745475823905", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "45c6b47f-4d95-4265-af1f-bc9b5c743e5b", "fromID": "Entrance-1745475279866", "toID": "Reception-1745475750292", "fromX": null, "fromY": null, "toX": null, "toY": null},
+    {"edgeID": "c5d0acfc-020c-41da-aa18-8e58b00d9591", "fromID": "Entrance-1745475279866", "toID": "Hallway-1745476477762", "fromX": null, "fromY": null, "toX": null, "toY": null},
+
 
   ]
 }
