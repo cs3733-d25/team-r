@@ -80,6 +80,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["express-session", "npm:1.17.0"],\
           ["husky", "npm:9.1.7"],\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["multer", "npm:1.4.5-lts.2"],\
           ["postcss", "npm:8.5.3"],\
           ["prettier", "npm:3.5.3"],\
@@ -7332,6 +7333,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.4.19"],\
           ["input-otp", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.4.2"],\
           ["leaflet", "npm:1.9.4"],\
+          ["leaflet-ant-path", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
           ["localforage", "npm:1.10.0"],\
           ["lucide-react", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.487.0"],\
           ["match-sorter", "npm:6.3.4"],\
@@ -8145,6 +8147,41 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/leaflet-npm-1.9.4-8d372b0fe6-f639441dbb.zip/node_modules/leaflet/",\
         "packageDependencies": [\
           ["leaflet", "npm:1.9.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["leaflet-ant-path", [\
+      ["npm:1.3.0", {\
+        "packageLocation": "./.yarn/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
+        "packageDependencies": [\
+          ["leaflet-ant-path", "npm:1.3.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0", {\
+        "packageLocation": "./.yarn/__virtual__/leaflet-ant-path-virtual-b4125fad15/0/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
+        "packageDependencies": [\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
+          ["@types/leaflet", null],\
+          ["leaflet", null]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet",\
+          "leaflet"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0", {\
+        "packageLocation": "./.yarn/__virtual__/leaflet-ant-path-virtual-413a392f0e/0/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
+        "packageDependencies": [\
+          ["leaflet-ant-path", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
+          ["@types/leaflet", "npm:1.9.17"],\
+          ["leaflet", "npm:1.9.4"]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet",\
+          "leaflet"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -10801,6 +10838,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["express-session", "npm:1.17.0"],\
           ["husky", "npm:9.1.7"],\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["multer", "npm:1.4.5-lts.2"],\
           ["postcss", "npm:8.5.3"],\
           ["prettier", "npm:3.5.3"],\
