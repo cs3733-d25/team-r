@@ -114,12 +114,30 @@ const TransportationRequestForm = () => {
         }));
     };
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+    const [selectedDesiredBuilding, setDesiredBuilding] = useState<string | null>(null);
+
     //put this in Dropdown element and it will reset on submit
     //const [resetDropdowns, setResetDropdowns] = useState(false);
 
-
+    //Curently this is only used by location dropdown so next dropdown can appear
     const handleLocationChange = (name: string, value: string) => {
+        console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
+        if (selectedDesiredBuilding === selectedLocation) {
+            setDesiredBuilding('');
+            console.log("Conflict in LOCATION change, DESIRED BUILDING is now: " + selectedDesiredBuilding)
+        }
+
         setSelectedLocation(value);
+        handleDropdownChange(name, value); // update formData in parent
+    };
+    const handleDesiredBuildingChange = (name: string, value: string) => {
+        console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
+        if (selectedDesiredBuilding === selectedLocation) {
+            setSelectedLocation('');
+            console.log("Conflict in DESIRED BUILDING change, LOCATION is now: " + selectedLocation);
+        }
+
+        setDesiredBuilding(value);
         handleDropdownChange(name, value); // update formData in parent
     };
 
@@ -270,7 +288,12 @@ const TransportationRequestForm = () => {
                                             Desired Building
                                             <span className="text-accent">*</span>
                                         </Label>
-                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns} mutuallyExclusiveOption={'Patriot Place 20'} ></Dropdown>
+                                        {selectedLocation && (  //location selected?
+                                            <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDropdowns} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
+                                        )}
+                                        {!selectedLocation && (
+                                            <p>nope!</p>
+                                        )}
                                         {/*//TODO ^^^*/}
 
                                     </div>
