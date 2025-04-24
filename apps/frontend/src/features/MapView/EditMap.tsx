@@ -509,10 +509,10 @@ export function EditMap({ status }: EditMapProps) {
                             </div>
 
 
-                        <Button onClick={resetMap} variant="ghostDestructive" className="w-full mt-4">Reset Map to Default</Button>
-                    </div>
+
                             <Button onClick={editNode} disabled={!nodes} className="w-full">Save Changes</Button>
                         </TabsContent>
+    <Button onClick={resetMap} variant="ghostDestructive" className="w-full mt-4">Reset Map to Default</Button>
 </div>
                     </Tabs>
 </div>
