@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from "../../../components/Navbar.tsx";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 
 export function TranslateRequestPage() {
@@ -31,7 +30,6 @@ export function TranslateRequestPage() {
 
     return (
         <>
-            <Navbar />
             <div className="p-4">
                 <Table>
                     <TableHeader>
