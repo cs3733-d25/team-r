@@ -179,8 +179,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                     />
                     {/* on the fritz, will flash screen with zoomed in locations before displaying
                     Temporarily disabled for now, in Jira as a bug fix*/}
+                    {/*<MapController selectedLocation={selectedLocation} />*/}
                     <ReverseGeocoder coordinates={currentCoordinates} onAddressFound={setDisplayAddress} />
-                    <MapController selectedLocation={selectedLocation} />
                     <Directions
                         selectedLocation={selectedLocation}
                         startingLocation={
