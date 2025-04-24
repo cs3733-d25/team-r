@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import { Edge, Node } from '../../../../backend/src/routes/mapData.ts';
+import client from '../../../../../apps/backend/src/bin/prisma-client.ts'
+
 
 // Response type if backend wraps IDs in an object
 type NodeIDsResponse = { nodeIDs: string[] };
@@ -130,16 +132,8 @@ export function useMapData(selectedBuilding: string) {
 
     return { parkingLots, departments };
 }
-/*
- //change the end node to receptionNodeID based on department
-            const response = await axios.post('/api/algo/reception', {
-                department: selectedDepartment,
-                location: selectedLocation,
-            });
-            const receptionNodeID = response.data.receptionNodeID;
-            console.log('in handle get directions receptionNodeID: ', receptionNodeID);
 
- */
+
 interface PathResponse {
     path: string[];
     startingPoint?: string;
@@ -149,7 +143,6 @@ interface PathResponse {
 export const fetchPath = async (
     startingPoint: string,
     endingPoint: string,
-    //algorithm: 'dfs' | 'bfs' | 'aStar'
     algorithm: string
 ): Promise<string[]> => {
     const resp = await axios.post<PathResponse>('/api/algo/fetchPath', {
@@ -157,6 +150,13 @@ export const fetchPath = async (
         endingPoint,
         algorithm,
     });
+
+    //save the algorithm selection in the database
+    await client.algorithm.updateMany({
+        where: {},
+        data: {algo: algorithm}
+    });
+
     console.log("startingPoint in fetchPath", resp.data.startingPoint);
     console.log("endingPoint in fetchPath", resp.data.endingPoint);
 

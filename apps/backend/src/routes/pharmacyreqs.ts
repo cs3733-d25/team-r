@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 import { Prisma } from "database";
 
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
@@ -8,7 +8,7 @@ const router: Router = express.Router();
 
 router.get("/all-requests", async function (req: Request, res: Response) {
   try {
-    const requests = await PrismaClient.pharmacyRequest.findMany({
+    const requests = await client.pharmacyRequest.findMany({
       orderBy: { priority: "asc" },
     });
     console.log(requests);
@@ -44,7 +44,7 @@ router.post("/", async function (req: Request, res: Response) {
   const employeeName = req.session?.username;
   // console.log(request);
   try {
-    await PrismaClient.pharmacyRequest.create({
+    await client.pharmacyRequest.create({
       data: {
         employeeID: employeeName,
         priority,

@@ -6,10 +6,9 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
-import axios, {AxiosPromise, AxiosResponse} from 'axios';
+import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
-import {marker} from "leaflet";
-import {Node} from "../../../../backend/src/routes/mapData.ts";
+
 
 interface EditMapProps {
     status?: string;
@@ -48,6 +47,8 @@ export function EditMap({ status }: EditMapProps) {
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
     const [nodes, setNodes] = useState<string>('');
+    //for algo selection
+    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
 
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
@@ -466,6 +467,25 @@ const editNode = async () => {
                         <Button onClick={editNode}>
                             Edit Node
                         </Button>
+                        {/* Algorithm selector */}
+                        <div className="flex flex-col space-y-2">
+                            <Label>Algorithm</Label>
+                            <Select
+                                value={algorithm}
+                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "dijkstra")}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select algorithm" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="dfs">DFS</SelectItem>
+                                        <SelectItem value="bfs">BFS</SelectItem>
+                                        <SelectItem value="dijkstra">Dijkstra's</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </div>
             </div>

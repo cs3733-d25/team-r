@@ -44,6 +44,6 @@ model Department {
 }
 
 model algorithm {
-  id Int @id @default(autoincrement())
-  algo  String @unique
+  id   Int    @id @default(autoincrement())
+  algo String
 }

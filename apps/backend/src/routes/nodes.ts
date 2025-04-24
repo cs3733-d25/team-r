@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 
 const router: Router = express.Router();
 
@@ -8,7 +8,7 @@ router.post("/create", async (req: Request, res: Response) => {
   try {
     const newNode = req.body;
     console.log(newNode);
-    await PrismaClient.node.create({
+    await client.node.create({
       data: newNode,
     });
     res.sendStatus(200);
@@ -22,7 +22,7 @@ router.post("/create", async (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   try {
     // return all the nodes on that floor
-    const nodes = await PrismaClient.node.findMany({});
+    const nodes = await client.node.findMany({});
     // console.log(nodes);
     res.status(200).json(nodes); // Send node data as JSON
   } catch (error) {
@@ -38,7 +38,7 @@ router.post("/update", async (req: Request, res: Response) => {
     console.log("Updating node: " + nodeID);
     console.log(req.body);
     // replace the whole entry of whatever node had that ID
-    await PrismaClient.node.update({
+    await client.node.update({
       where: { nodeID: nodeID },
       data: req.body,
     });
@@ -55,7 +55,7 @@ router.post("/delete", async (req: Request, res: Response) => {
     console.log(req.body);
     const nodeID = req.body.nodeID; // get the nodeID
     console.log("Deleting node: " + nodeID);
-    await PrismaClient.node.delete({ where: { nodeID: nodeID } });
+    await client.node.delete({ where: { nodeID: nodeID } });
     res.sendStatus(200);
   } catch (error) {
     console.error("Error deleting node:", error);

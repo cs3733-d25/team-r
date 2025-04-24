@@ -62,7 +62,7 @@ export function MapPage() {
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
-    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
+
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
@@ -121,6 +121,10 @@ export function MapPage() {
             alert('Please select both a parking lot and a department.');
             return;
         }
+        //get the algortihm set by the admin - stored in database
+        const response = await axios.get('/api/algo/');
+        const algorithm = response.data.algorithm;
+
         try {
             console.log('selected location sending to router: ', selectedLocation);
             console.log('selected department sending to router: ', selectedDepartment);
@@ -304,25 +308,7 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
-                        {/* Algorithm selector */}
-                        <div className="flex flex-col space-y-2">
-                            <Label>Algorithm</Label>
-                            <Select
-                                value={algorithm}
-                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "dijkstra")}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select algorithm" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="dfs">DFS</SelectItem>
-                                        <SelectItem value="bfs">BFS</SelectItem>
-                                        <SelectItem value="dijkstra">Dijkstra's</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </div>
+
 
                         {/* Trigger pathfinding */}
                         <Button className="w-full" onClick={handleGetDirections}>
