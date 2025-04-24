@@ -21,6 +21,10 @@ import {EditMap} from "@/features/MapView/EditMap.tsx";
 import RequestPage  from "@/features/Requests/RequestPage.tsx";
 import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
+import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
+import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
+import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
+
 
 function App() {
     const [userType, setUserType] = useState("Guest");
@@ -71,6 +75,7 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'translation', element: <Translate /> },
                 { path: 'requests', element: <RequestPage /> }
             ],
         },

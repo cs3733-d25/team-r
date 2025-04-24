@@ -15,7 +15,7 @@ export function AllRequestsTable() {
     displayTable();
 
     async function retrieveFromDatabase() {
-        try{
+        try {
             //individually add requests from each api, then add type
             const sanitationRes = await axios.get("/api/sanitation/")
             const sanitationResWType = sanitationRes.data.map(req => ({
@@ -42,20 +42,30 @@ export function AllRequestsTable() {
                 ...req,
                 type: "Transport",
             }))
+            const translateRes = await axios.get("/api/translate/");
+            const translateReqWType = translateRes.data.map(req => ({
+                ...req,
+                type: "Translation",
+            }))
 
             //set all requests to be added to the table
-            setRequests([...sanitationResWType, ...prescriptionReqWType, ...deviceReqWType, ...patientReqWType, ...transportReqWType]);
-        }
-        catch(error){
+            setRequests([
+                ...sanitationResWType,
+                ...prescriptionReqWType,
+                ...deviceReqWType,
+                ...patientReqWType,
+                ...transportReqWType,
+                ...translateReqWType
+            ]);
+        } catch (error) {
             console.log("error in retrieve:", error);
         }
     }
+
     return(
         <>
-
-
             <Table>
-                <TableHeader >
+                <TableHeader>
                     <TableRow>
                         <TableHead className={"text-center"}>Request Type</TableHead>
                         <TableHead className={"text-center"}>Department</TableHead>
@@ -65,22 +75,15 @@ export function AllRequestsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody className="text-center">
-                    {requests.map((row,index) =>
-                    {
-                        return(
-                            <>
-                                <TableRow key = {index} className = 'border-t'>
-                                    <TableCell>{row.type}</TableCell>
-                                    <TableCell>{row.department}</TableCell>
-                                    <TableCell>{row.employeeID}</TableCell>
-                                    <TableCell>{row.priority}</TableCell>
-                                    <TableCell>{row.status}</TableCell>
-                                </TableRow>
-
-                            </>
-                        );
-
-                    })}
+                    {requests.map((row, index) => (
+                        <TableRow key={index} className="border-t">
+                            <TableCell>{row.type}</TableCell>
+                            <TableCell>{row.department}</TableCell>
+                            <TableCell>{row.employeeID}</TableCell>
+                            <TableCell>{row.priority}</TableCell>
+                            <TableCell>{row.status}</TableCell>
+                        </TableRow>
+                    ))}
                 </TableBody>
             </Table>
         </>
