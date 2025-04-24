@@ -43,7 +43,7 @@ async function main() {
                 "xcoord": 582.42,
                 "ycoord": 620.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Central Hallway"
             },
             {
                 "nodeID": "Hallway-1745468105189",
@@ -53,7 +53,7 @@ async function main() {
                 "xcoord": 581.83,
                 "ycoord": 668,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Southeast Hallway"
             },
             {
                 "nodeID": "Hallway-1745468111109",
@@ -63,7 +63,7 @@ async function main() {
                 "xcoord": 582.83,
                 "ycoord": 578,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Northeast Hallway"
             },
             {
                 "nodeID": "Hallway-1745468120025",
@@ -73,7 +73,7 @@ async function main() {
                 "xcoord": 559.42,
                 "ycoord": 576,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Wing Hallway"
             },
             {
                 "nodeID": "Hallway-1745468125283",
@@ -83,7 +83,7 @@ async function main() {
                 "xcoord": 510.42,
                 "ycoord": 670.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Hallway"
             },
             {
                 "nodeID": "Hallway-1745468129629",
@@ -93,7 +93,7 @@ async function main() {
                 "xcoord": 480.17,
                 "ycoord": 621.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Central Hallway"
             },
             {
                 "nodeID": "Hallway-1745468133623",
@@ -103,7 +103,7 @@ async function main() {
                 "xcoord": 478.83,
                 "ycoord": 669,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Central Hallway"
             },
             {
                 "nodeID": "Hallway-1745468140562",
@@ -113,7 +113,7 @@ async function main() {
                 "xcoord": 480.42,
                 "ycoord": 515.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Northeast Central"
             },
             {
                 "nodeID": "Reception-1745468181591",
@@ -123,7 +123,7 @@ async function main() {
                 "xcoord": 561.42,
                 "ycoord": 591,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Reception"
             },
             {
                 "nodeID": "Reception-1745468203626",
@@ -133,7 +133,7 @@ async function main() {
                 "xcoord": 561.71,
                 "ycoord": 553,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Northeast Reception"
             },
             {
                 "nodeID": "Reception-1745468225241",
@@ -143,7 +143,7 @@ async function main() {
                 "xcoord": 568.92,
                 "ycoord": 631.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Pre-Admit Reception"
             },
             {
                 "nodeID": "Reception-1745468241433",
@@ -153,7 +153,7 @@ async function main() {
                 "xcoord": 596.92,
                 "ycoord": 668,
                 "longName": "",
-                "shortName": ""
+                "shortName": "MRI Reception"
             },
             {
                 "nodeID": "Reception-1745468256681",
@@ -163,7 +163,7 @@ async function main() {
                 "xcoord": 581.92,
                 "ycoord": 721,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Radiology Reception"
             },
             {
                 "nodeID": "Reception-1745468279713",
@@ -173,7 +173,7 @@ async function main() {
                 "xcoord": 481.42,
                 "ycoord": 498,
                 "longName": "",
-                "shortName": ""
+                "shortName": "North Reception"
             },
             {
                 "nodeID": "Reception-1745468288835",
@@ -183,7 +183,7 @@ async function main() {
                 "xcoord": 451.33,
                 "ycoord": 514.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "GI Reception"
             },
             {
                 "nodeID": "Reception-1745468299003",
@@ -193,7 +193,7 @@ async function main() {
                 "xcoord": 466.08,
                 "ycoord": 629.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Pulmonary Reception"
             },
             {
                 "nodeID": "Reception-1745468308859",
@@ -203,7 +203,7 @@ async function main() {
                 "xcoord": 449.21,
                 "ycoord": 630.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Central Reception"
             },
             {
                 "nodeID": "Hallway-1745468326007",
@@ -213,7 +213,7 @@ async function main() {
                 "xcoord": 383.42,
                 "ycoord": 669.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "West Hallway"
             },
             {
                 "nodeID": "Hallway-1745468331257",
@@ -223,7 +223,7 @@ async function main() {
                 "xcoord": 385.58,
                 "ycoord": 789.25,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Southwest Hallway"
             },
             {
                 "nodeID": "Reception-1745468408887",
@@ -233,7 +233,7 @@ async function main() {
                 "xcoord": 495,
                 "ycoord": 807.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Reception"
             },
             {
                 "nodeID": "Hallway-1745468416845",
@@ -243,7 +243,7 @@ async function main() {
                 "xcoord": 511.5,
                 "ycoord": 807.25,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Corridor"
             },
             {
                 "nodeID": "Parking-1745468723599",
@@ -252,8 +252,8 @@ async function main() {
                 "floor": 1,
                 "xcoord": 719.67,
                 "ycoord": 313,
-                "longName": "",
-                "shortName": "THE Faulkner Parking Lot"
+                "longName": "THE Faulkner Parking Lot",
+                "shortName": "Parking Lot"
             },
             {
                 "nodeID": "Hallway-1745469182158",
@@ -263,7 +263,7 @@ async function main() {
                 "xcoord": 450.42,
                 "ycoord": 668.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "West Central Hallway"
             },
             {
                 "nodeID": "Faulkner Entrance",
@@ -272,8 +272,8 @@ async function main() {
                 "floor": 1,
                 "xcoord": 722.0,
                 "ycoord": 622.0,
-                "longName": "",
-                "shortName": ""
+                "longName": "Faulkner front entrance",
+                "shortName": "Front Entrance"
             },
             {
                 "nodeID": "a faulkner hallway",
@@ -283,7 +283,7 @@ async function main() {
                 "xcoord": 630.5,
                 "ycoord": 620.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Entrance Hallway"
             }
         ],
         skipDuplicates: true

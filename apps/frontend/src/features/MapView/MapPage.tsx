@@ -188,11 +188,11 @@ export function MapPage() {
             const enhancedDirections: string[] = [];
 
             // First node is starting point
-            enhancedDirections.push(`Start at ${nodes[0].longName}`);
+            enhancedDirections.push(`Start at ${nodes[0].shortName}`);
 
             // For the first segment, just head toward without turn instruction
             if (nodes.length > 1) {
-                enhancedDirections.push(`Head toward ${nodes[1].longName}`);
+                enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
             }
 
             // Process middle segments to determine turns
@@ -202,11 +202,11 @@ export function MapPage() {
                 const nextNode = nodes[i + 1];
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`${directionChange} toward ${nextNode.longName}`);
+                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].longName}`);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
             console.log("enhanced Directions: ", enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
