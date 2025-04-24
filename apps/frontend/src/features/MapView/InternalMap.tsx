@@ -483,6 +483,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
         }
         // Draw new route
         if (pathCoordinates && pathCoordinates.length > 1) {
+            console.log("path coordinates in internal map");
+            console.log(pathCoordinates);
             const poly = L.polyline(pathCoordinates, {
                 color: 'red',
                 weight: 3,
