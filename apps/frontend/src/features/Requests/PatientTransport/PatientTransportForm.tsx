@@ -129,22 +129,23 @@ const TransportationRequestForm = () => {
     };
 
     useEffect(() => {
-        setDept(null); // clear dept on new location
+        handleDepartmentChange('department', null); //set dept to null on location change
+
         if (selectedDesiredBuilding === selectedLocation) {
-            setDesiredBuilding(null);
+            handleDesiredBuildingChange('desiredBuilding', null); //update desired building
             console.log("Conflict in LOCATION change, DESIRED BUILDING is now: null")
         }
     }, [selectedLocation]);
 
-    const handleDesiredBuildingChange = (name: string, value: string) => {
+    const handleDesiredBuildingChange = (name: string, value: string | null) => {
         setDesiredBuilding(value);
-        handleDropdownChange(name, value); // update formData in parent
+        handleDropdownChange(name, value!); // update formData in parent
         console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
     };
 
-    const handleDepartmentChange = (name: string, value: string) => {
+    const handleDepartmentChange = (name: string, value: string | null) => {
         setDept(value)
-        handleDropdownChange(name, value);// update formData in parent
+        handleDropdownChange(name, value!);// update formData in parent
     };
 
     return (
@@ -296,9 +297,6 @@ const TransportationRequestForm = () => {
                                         {selectedLocation && (  //location selected?
                                             <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDropdowns} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
                                         )}
-                                        {/*{!selectedLocation && (*/}
-                                        {/*    <Dropdown tableName={"blank"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDropdowns} ></Dropdown>*/}
-                                        {/*)}*/}
                                         {/*//TODO ^^^*/}
 
                                     </div>
