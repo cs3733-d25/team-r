@@ -378,8 +378,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer20_1);
 
                 });
@@ -394,20 +394,21 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 }
                 edges22_3.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_3);
                 });
                 edges22_4.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_4);
                 });
+                console.log("")
                 edgesChestnut.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
                 });
                 edgesFaulkner.map((edge) => {

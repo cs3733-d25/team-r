@@ -28,7 +28,7 @@ declare global {
 
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<string>(
-        "Faulkner 1st Floor"
+        "Chestnut Hill 1st Floor"
         // 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
