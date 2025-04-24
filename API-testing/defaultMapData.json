@@ -83,7 +83,15 @@
     {"edgeID": "ea7bea0a-ef04-4bf7-af4d-719bf52c113e", "fromID": "Entrance-1745475321572", "toID": "Hallway-1745476252825", "fromX": null, "fromY": null, "toX": null, "toY": null},
     {"edgeID": "dad3ff3c-1219-4966-a5a1-64a7303627c9", "fromID": "Entrance-1745475321572", "toID": "Reception-1745475823905", "fromX": null, "fromY": null, "toX": null, "toY": null},
     {"edgeID": "45c6b47f-4d95-4265-af1f-bc9b5c743e5b", "fromID": "Entrance-1745475279866", "toID": "Reception-1745475750292", "fromX": null, "fromY": null, "toX": null, "toY": null},
-    {"edgeID": "c5d0acfc-020c-41da-aa18-8e58b00d9591", "fromID": "Entrance-1745475279866", "toID": "Hallway-1745476477762", "fromX": null, "fromY": null, "toX": null, "toY": null}
+    {"edgeID": "c5d0acfc-020c-41da-aa18-8e58b00d9591", "fromID": "Entrance-1745475279866", "toID": "Hallway-1745476477762", "fromX": null, "fromY": null, "toX": null, "toY": null},
+
+    {"fromID": "Hallway-1745468326007", "toID": "Hallway-1745468331257"},
+    {"fromID": "Hallway-1745515017629", "toID": "Valet Parking"},
+    {"fromID": "Hallway-1745515017629", "toID": "Extended Patient Parking"},
+    {"fromID": "Entrance-1745515055030", "toID": "Hallway-1745515041197"},
+    {"fromID": "Valet Parking Lot", "toID": "Hallway-1745515041197"},
+    {"fromID": "Hallway-1745515041197", "toID": "Hallway-1745515017629"},
+    {"fromID": "Elevator-1745515093551", "toID": "Entrance-1745515055030"}
 
 
   ]
