@@ -260,10 +260,10 @@ router.get("/edges-chestnut", async (req, res) => {
     const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
-          building: "CHESTNUT_HILL",
+          building: "Chestnut Hill",
         },
         toNode: {
-          building: "CHESTNUT_HILL",
+          building: "Chestnut Hill",
         },
       },
       include: {
