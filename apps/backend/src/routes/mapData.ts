@@ -459,8 +459,11 @@ router.post("/reset", async (req: Request, res: Response) => {
       await prisma.node.deleteMany({});
 
       // import default map data from JSON
-      // TODO: add a defaultMapData.json file in the ../data/ directory with node and edge arrays
-      const defaultMapData = await import("../data/defaultMapData.json");
+      // TODO: add updated file
+      const defaultMapData = await import(
+        "../../../../API-testing/defaultMapData.json"
+      );
+
       const { nodes, edges } = defaultMapData.default;
 
       // insert nodes
@@ -469,7 +472,11 @@ router.post("/reset", async (req: Request, res: Response) => {
           ...node,
           departments:
             node.departments && node.departments.length > 0
-              ? { connect: node.departments.map((id: string) => ({ id })) }
+              ? {
+                  connect: node.departments.map((id: string) => ({
+                    id: Number(id),
+                  })),
+                }
               : {},
         };
 
