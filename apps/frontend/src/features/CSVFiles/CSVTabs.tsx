@@ -5,7 +5,7 @@ import CSVTablePage from "@/features/CSVFiles/CSVTable.tsx";
 function CSVTabPage() {
     return(
         <>
-            <Tabs defaultValue="CSVPage">
+            <Tabs defaultValue="CSVPage" className={"py-5"}>
                 <TabsList>
                     <TabsTrigger value="CSVPage"
                                  >

@@ -5,14 +5,6 @@ import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/c
 function CSVTablePage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
 
-////Changed so useEffect isn't called inside the function, apparently that breaks reacts rules according to stackoverflow --Riley
-    /*function displayTable() {
-        useEffect(() => {
-            retrieveFromDatabase()
-        }, []);
-    }
-    displayTable();
-    */
     useEffect(() => {
         retrieveFromDatabase();
     }, []);
