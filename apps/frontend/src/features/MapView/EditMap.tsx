@@ -505,11 +505,9 @@ export function EditMap({ status }: EditMapProps) {
                                 </div>:null}
                         </div>
 
-                        <Button onClick={editNode}>
-                            Edit Node
-                        </Button>
+                        <Button onClick={editNode}>Edit Node</Button>
 
-                        <Button onClick={resetMap} className="w-full mt-4 bg-red-600 hover:bg-red-700">Reset Map to Default</Button>
+                        <Button onClick={resetMap} variant="ghostDestructive" className="w-full mt-4">Reset Map to Default</Button>
                     </div>
                 </div>
             </div>
