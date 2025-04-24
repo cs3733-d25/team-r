@@ -85,6 +85,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 { label: 'Patient Request', href: '/patientrequestpage' },
                                 { label: 'Patient Transport', href: '/transport' },
                                 { label: 'Prescription', href: '/prescription' },
+                                { label: 'View All Requests', href: '/requests' },
                             ]}
                         />)}
 

@@ -10,6 +10,7 @@ import { PrescriptionPage } from './PrescriptionForm/PrescriptionPage';
 import { AllPatientRequests } from './PatientRequest/AllPatientRequests';
 import TransportRequestPage from './PatientTransport/PatientTransport';
 import SanitationRequestPage from './SanitationForm/SanitationRequestPage';
+import AllRequestsTable from "@/features/Requests/AllRequestsTable.tsx";
 
 export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -37,6 +38,7 @@ export function AllRequestsPage() {
             <TabsTrigger value="patient">Patient</TabsTrigger>
             <TabsTrigger value="transport">Transport</TabsTrigger>
             <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
+            <TabsTrigger value="all-requests">All Requests</TabsTrigger>
           </TabsList>
 
           {/* pull content up by 1px to kill any gap */}
@@ -120,6 +122,17 @@ export function AllRequestsPage() {
               </CardHeader>
               <CardContent className="px-6 pb-6">
                 <SanitationRequestPage />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="all-requests" className="-mt-px">
+            <Card className="rounded-lg overflow-hidden">
+              <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+                <CardTitle>All Requests</CardTitle>
+              </CardHeader>
+              <CardContent className="px-6 pb-6">
+                <AllRequestsTable />
               </CardContent>
             </Card>
           </TabsContent>

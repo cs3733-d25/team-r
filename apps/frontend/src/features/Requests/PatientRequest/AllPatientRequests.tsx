@@ -14,7 +14,7 @@ export function AllPatientRequests() {
         comment:null,
         time:null,
         status:null,
-        employeeName:null,
+        employeeID:null,
         request: null}]);
 
     function displayTable() {
@@ -57,7 +57,7 @@ export function AllPatientRequests() {
                     return(
                         <>
                             <TableRow key = {index} className = { "border-t"}>
-                                <TableCell>{row.employeeName}</TableCell>
+                                <TableCell>{row.employeeID}</TableCell>
                                 <TableCell>{row.patientID}</TableCell>
                                 <TableCell>{row.request}</TableCell>
                                 <TableCell>{row.priority}</TableCell>

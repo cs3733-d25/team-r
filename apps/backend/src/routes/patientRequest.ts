@@ -30,7 +30,7 @@ router.post("/", async function (req: Request, res: Response) {
     //employeeName,
   } = req.body;
 
-  const employeeName = req.session?.username;
+  const employeeID = req.session?.username;
 
   try {
     console.log(request);
@@ -45,7 +45,7 @@ router.post("/", async function (req: Request, res: Response) {
         status,
         employeeName: {
           connect: {
-            id: employeeName,
+            id: employeeID,
           },
         },
         request,
