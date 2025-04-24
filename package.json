@@ -26,7 +26,7 @@
     "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts",
     "directoryseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/directorySeed.ts",
     "departmentseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/departmentSeed.ts",
-    "seed": "yarn floorseed && yarn directoryseed && yarn departmentseed && yarn userseed"
+    "seed": "yarn floorseed && yarn directoryseed && yarn userseed"
   },
   "devDependencies": {
     "@prisma/client": "^6.5.0",
