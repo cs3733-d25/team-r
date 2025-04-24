@@ -37,16 +37,16 @@ async function main() {
     //Patriot Place 20 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
-            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: '3000A'},
+            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
         ]
     });
     //Patriot Place 20 Floor 4

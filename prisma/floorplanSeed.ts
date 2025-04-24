@@ -1256,20 +1256,20 @@ async function main() {
 
     await client.edge.createMany({
         data: [
-            { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
-            { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: 353.25, fromY: 655.50, toX: 351.25, toY: 535.50 },
-            { fromID:'elevatorLobby4A', toID:'lobbyStairsHallway', fromX: 351.25, fromY: 535.50, toX: 350.75, toY: 455.50 },
-            { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: 350.75, fromY: 455.50, toX: 419.75, toY: 455.00 },
-            { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
-            { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
-            { fromID:'checkIn4000B', toID:'rightWaitingHallway', fromX: 319.25, fromY: 654.50, toX: 250.25, toY: 633.50 },
-            { fromID:'checkIn4000B', toID:'waiting4000', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
-            { fromID:'rightEntranceHallway', toID:'corridor4R', fromX: 353.25, fromY: 655.50, toX: 468.75, toY: 653.50 },
-            { fromID:'corridor4R', toID:'checkOutWait4083', fromX: 468.75, fromY: 653.50, toX: 470.25, toY: 615.00 },
-            { fromID:'corridor4R', toID:'checkOut4090', fromX: 468.75, fromY: 653.50, toX: 497.25, toY: 708.00 },
-            {fromID: 'ST02', toID: 'stairST02', fromX: 442.88, fromY: 327.00, toX: 355.25, toY: 280.50},
-            {fromID: 'ST01', toID: 'stairST01', fromX: 436.13, fromY: 470.25, toX: 419.75, toY: 455.00},
-            {fromID: '3A', toID: 'elevatorLobby4A', fromX: 438.88, fromY: 538.75, toX: 351.25, toY: 535.50}
+            // { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
+            // { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: 353.25, fromY: 655.50, toX: 351.25, toY: 535.50 },
+            // { fromID:'elevatorLobby4A', toID:'lobbyStairsHallway', fromX: 351.25, fromY: 535.50, toX: 350.75, toY: 455.50 },
+            // { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: 350.75, fromY: 455.50, toX: 419.75, toY: 455.00 },
+            // { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
+            // { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
+            // { fromID:'checkIn4000B', toID:'rightWaitingHallway', fromX: 319.25, fromY: 654.50, toX: 250.25, toY: 633.50 },
+            // { fromID:'checkIn4000B', toID:'waiting4000', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
+            // { fromID:'rightEntranceHallway', toID:'corridor4R', fromX: 353.25, fromY: 655.50, toX: 468.75, toY: 653.50 },
+            // { fromID:'corridor4R', toID:'checkOutWait4083', fromX: 468.75, fromY: 653.50, toX: 470.25, toY: 615.00 },
+            // { fromID:'corridor4R', toID:'checkOut4090', fromX: 468.75, fromY: 653.50, toX: 497.25, toY: 708.00 },
+            // {fromID: 'ST02', toID: 'stairST02', fromX: 442.88, fromY: 327.00, toX: 355.25, toY: 280.50},
+            // {fromID: 'ST01', toID: 'stairST01', fromX: 436.13, fromY: 470.25, toX: 419.75, toY: 455.00},
+            // {fromID: '3A', toID: 'elevatorLobby4A', fromX: 438.88, fromY: 538.75, toX: 351.25, toY: 535.50}
         ]
     });
 
