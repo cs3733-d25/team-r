@@ -4,7 +4,7 @@ import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
 export function SanitationRequestPage() {
-    const [sanitation, setSanitation] = useState([{employeeName:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
+    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
     function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
@@ -45,7 +45,7 @@ export function SanitationRequestPage() {
                     return(
                         <>
                             <TableRow key = {index} className = 'border-t'>
-                                <TableCell>{row.employeeName}</TableCell>
+                                <TableCell>{row.employeeID}</TableCell>
                                 <TableCell>{row.sanitationType}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.department}</TableCell>
