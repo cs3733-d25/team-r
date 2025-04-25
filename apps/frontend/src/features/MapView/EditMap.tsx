@@ -597,6 +597,24 @@ export function EditMap({ status }: EditMapProps) {
                                             Save Changes
                                         </Button>
                                     </TabsContent>
+                                    <div className="flex flex-col space-y-2">
+                                        <Label>Algorithm</Label>
+                                        <Select
+                                            value={algorithm}
+                                            onValueChange={(value: string) => setAlgorithm(value as 'dfs' | 'bfs' | 'dijkstra')}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select algorithm" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="dfs">DFS</SelectItem>
+                                                    <SelectItem value="bfs">BFS</SelectItem>
+                                                    <SelectItem value="dijkstra">Dijkstra's</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                     <Button
                                         onClick={resetMap}
                                         variant="ghostDestructive"
@@ -609,27 +627,7 @@ export function EditMap({ status }: EditMapProps) {
                         </div>
                     </div>
 
-                    {/* Algorithm selector */}
-                    <div className="flex flex-col space-y-2">
-                        <Label>Algorithm</Label>
-                        <Select
-                            value={algorithm}
-                            onValueChange={(value: string) =>
-                                setAlgorithm(value as 'dfs' | 'bfs' | 'dijkstra')
-                            }
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select algorithm" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    <SelectItem value="dfs">DFS</SelectItem>
-                                    <SelectItem value="bfs">BFS</SelectItem>
-                                    <SelectItem value="dijkstra">Dijkstra's</SelectItem>
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-                    </div>
+
                 </div>
             </div>
         </div>
