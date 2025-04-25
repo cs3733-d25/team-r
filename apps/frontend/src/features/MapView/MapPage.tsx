@@ -124,7 +124,7 @@ export function MapPage() {
         }
         //get the algortihm set by the admin - stored in database
         const response = await axios.get('/api/algo');
-        const algorithm = response.data.algorithm;
+        const algorithm = response.data.algo;
 
         try {
             console.log('selected location sending to router: ', selectedLocation);
@@ -363,7 +363,6 @@ export function MapPage() {
                         <TextDirections
                             steps={directionStrings}
                         />
-                        <InternalMapControls/>
                     </div>
                 )}
             </div>

@@ -49,6 +49,32 @@
     {"nodeID": "Faulkner Entrance", "nodeType": "Entrance", "building": "Faulkner", "floor": 1, "xcoord": 722.0, "ycoord": 622.0, "longName": "Faulkner front entrance", "shortName": "Front Entrance"},
     {"nodeID": "a faulkner hallway", "nodeType": "Hallway", "building": "Faulkner", "floor": 1, "xcoord": 630.5, "ycoord": 620.5, "longName": "", "shortName": "East Entrance Hallway"},
 
+    {"nodeID": "Entrance-1745538360518", "nodeType": "Entrance", "building": "Patriot Place 20", "floor": 1, "xcoord": 211.67, "ycoord": 386, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745538370323", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 216.67, "ycoord": 475, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745538375613", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 314.83, "ycoord": 470, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745538396035", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 197.67, "ycoord": 761, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745538418396", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 289.83, "ycoord": 760, "longName": "", "shortName": ""},
+    {"nodeID": "Specialty Clinic", "nodeType": "Reception", "building": "Patriot Place 20", "floor": 1, "xcoord": 289.83, "ycoord": 738, "longName": "", "shortName": "Specialty Clinic"},
+    {"nodeID": "Hallway-1745538474179", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 502.83, "ycoord": 470, "longName": "", "shortName": ""},
+    {"nodeID": "Imaging Suite", "nodeType": "Reception", "building": "Patriot Place 20", "floor": 1, "xcoord": 504.83, "ycoord": 437, "longName": "", "shortName": "Imaging Suite"},
+    {"nodeID": "Hallway-1745538516214", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 315.92, "ycoord": 760, "longName": "", "shortName": ""},
+    {"nodeID": "Hallway-1745538522550", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 317.92, "ycoord": 632.5, "longName": "", "shortName": ""},
+    {"nodeID": "Ambulatory/Urgent Care", "nodeType": "Reception", "building": "Patriot Place 20", "floor": 1, "xcoord": 342.83, "ycoord": 631, "longName": "", "shortName": "Ambulatory/Urgent Care"},
+    {"nodeID": "Hallway-1745538550406", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 314.83, "ycoord": 527, "longName": "", "shortName": ""},
+    {"nodeID": "Phlebotomy", "nodeType": "Reception", "building": "Patriot Place 20", "floor": 1, "xcoord": 336.92, "ycoord": 528.5, "longName": "", "shortName": "Phlebotomy"},
+    {"nodeID": "Hallway-1745538612201", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 225.67, "ycoord": 273, "longName": "", "shortName": ""},
+    {"nodeID": "Handicap Parking", "nodeType": "Parking", "building": "Patriot Place 20", "floor": 1, "xcoord": 498.67, "ycoord": 296, "longName": "", "shortName": "Handicap Parking"},
+    {"nodeID": "Hallway-1745539562747", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 74.67, "ycoord": 103, "longName": "", "shortName": ""},
+    {"nodeID": "Patient Parking", "nodeType": "Parking", "building": "Patriot Place 20", "floor": 1, "xcoord": 9.67, "ycoord": 165, "longName": "", "shortName": "Patient Parking"},
+    {"nodeID": "Stairs 20 1", "nodeType": "Elevator", "building": "Patriot Place 20", "floor": 1, "xcoord": 188, "ycoord": 1039.1, "longName": "Patriot 20 Stairs 1", "shortName": "Patriot 20 Stairs 1"},
+    {"nodeID": "Stairs 20 2", "nodeType": "Elevator", "building": "Patriot Place 20", "floor": 1, "xcoord": 244, "ycoord": 600, "longName": "Patriot 20 Stairs 2", "shortName": "Patriot 20 Stairs 2"},
+    {"nodeID": "Stairs 20 3", "nodeType": "Elevator", "building": "Patriot Place 20", "floor": 1, "xcoord": 771.4, "ycoord": 454, "longName": "Patriot 20 Stairs 3", "shortName": "Patriot 20 Stairs 3"},
+    {"nodeID": "Elevator 20", "nodeType": "Elevator", "building": "Patriot Place 20", "floor": 1, "xcoord": 256, "ycoord": 992, "longName": "Patriot 20 Elevator", "shortName": "Patriot 20 Elevator"},
+    {"nodeID": "hallway20stairs1", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 199, "ycoord": 992.2, "longName": "Hallway 20 Stairs 1", "shortName": "Hallway 20 Stairs 1"},
+    {"nodeID": "hallway20stairs2", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 211, "ycoord": 587, "longName": "Hallway 20 Stairs 2", "shortName": "Hallway 20 Stairs 2"},
+    {"nodeID": "hallwayaroundthatcorner20", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 541.7, "ycoord": 489.8, "longName": "Hallway Around A Corner", "shortName": "Hallway Around A Corner"},
+    {"nodeID": "hallway20stairs3", "nodeType": "Hallway", "building": "Patriot Place 20", "floor": 1, "xcoord": 767, "ycoord": 482, "longName": "Hallway 20 Stairs 3", "shortName": "Hallway 20 Stairs 3"},
+
     {"nodeID": "Extended Patient Parking", "nodeType": "Parking", "building": "Patriot Place 22", "floor": 1, "xcoord": 15.83, "ycoord": 10, "longName": "", "shortName": "Extended Patient Parking"},
     {"nodeID": "Valet Parking", "nodeType": "Parking", "building": "Patriot Place 22", "floor": 1, "xcoord": 1.67, "ycoord": 707, "longName": "", "shortName": "Valet Parking"},
     {"nodeID": "Valet Parking Lot", "nodeType": "Parking", "building": "Patriot Place 22", "floor": 1, "xcoord": 424.67, "ycoord": 923, "longName": "", "shortName": "Valet Parking Lot"},
@@ -238,8 +264,10 @@
     {"fromID": "Hallway-1745468129629", "toID": "Reception-1745468299003"},
     {"fromID": "Hallway-1745468129629", "toID": "Reception-1745468308859"},
     {"fromID": "Hallway-1745469182158", "toID": "Hallway-1745468326007"},
-    {"fromID": "Hallway-1745468326007", "toID": "Hallway-1745468331257"}
-
+    {"fromID": "Hallway-1745468326007", "toID": "Hallway-1745468331257"},
+    {"fromID": "Dialysis Entrance", "toID": "Hallway-1745546310011"},
+    {"fromID": "Hallway-1745546310011", "toID": "Faulkner Entrance"},
+    {"fromID": "Dialysis Reception", "toID": "Dialysis Entrance"}
   ]
 }
 

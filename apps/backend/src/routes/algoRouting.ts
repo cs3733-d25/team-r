@@ -12,9 +12,9 @@ router.post(
       let locationFormat = "";
       if (location.includes("Chestnut Hill")) {
         locationFormat = "Chestnut Hill";
-      } else if (location.includes("Patriot Place 20")) {
+      } else if (location.includes("20 Patriot")) {
         locationFormat = "Patriot Place 20";
-      } else if (location.includes("Patriot Place 22")) {
+      } else if (location.includes("22 Patriot")) {
         locationFormat = "Patriot Place 22";
       } else if (location.includes("Faulkner")) {
         locationFormat = "Faulkner";
@@ -38,7 +38,7 @@ router.post(
       if (!algorithmDB) {
         algorithm = "bfs";
       } else {
-        algorithm = algorithmDB.toString();
+        algorithm = algorithmDB.algo.toString();
       }
       console.log("this is the algorithm in algoRouting: ", algorithm);
 
@@ -83,7 +83,7 @@ router.get("/", async function (req: Request, res: Response) {
   try {
     const algorithm = await client.algorithm.findFirst();
 
-    console.log(algorithm);
+    console.log("Algorithm:", algorithm);
     res.status(200).json(algorithm); // Send employee data as JSON
   } catch (error) {
     console.error("Error fetching algorithm:", error);
