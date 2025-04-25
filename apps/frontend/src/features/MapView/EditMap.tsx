@@ -343,7 +343,7 @@ export function EditMap({ status }: EditMapProps) {
                     onLocationChange={setLocation}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-160 max-h-[100%] overflow-y-auto z-10 flex flex-col justify-start">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-160 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
                         <Label className="font-bold text-2xl pt-4 pl-4 pb-4">Edit Map</Label>
                         <div className="flex flex-col items-center justify-center text-left overflow-y-auto pl-1">
