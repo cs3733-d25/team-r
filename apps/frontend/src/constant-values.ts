@@ -4,7 +4,7 @@
     - const statusOptions = values.status;
  */
 
-const F1 = ['Admitting/Registration', 'Atrium Cafe', 'Audiology', 'Blood Drawing Lab', 'Cardiac Rehab', 'Emergency Department', 'Emergency Entrance', 'GI Endoscopy', 'Information', 'MRI/CT', 'Patient Finances', 'Pre-Admittance Screening', 'Pulmonary Lab', 'Radiology', 'Special Testing', 'Starbucks', 'Taiclet Family Center', 'Vascular Lab'];
+const F1 = ['Admitting/Registration', 'Atrium Cafe', 'Audiology', 'Blood Drawing Lab', 'Cardiac Rehab', 'Dialysis', 'Emergency Department', 'Emergency Entrance', 'GI Endoscopy', 'Information', 'MRI/CT', 'Patient Finances', 'Pre-Admittance Screening', 'Pulmonary Lab', 'Radiology', 'Special Testing', 'Starbucks', 'Taiclet Family Center', 'Vascular Lab'];
 const F2 = ['Biomedical Engineering', 'Food Services', 'Morgue', 'Occupational Therapy', 'Otolaryngology', 'Pharmacy', 'Physical Therapy', 'Plastic Surgery', 'Psychiatric Inpatient Care', 'Psychiatric/Addiction Recovery', 'Rehabilitation Services'];
 const F3 = ['Cafeteria', 'Chapel', 'Family/Patient Resources', 'Gift Shop', 'Gynecology & Oncology', 'Huvos Auditorium', 'Information', 'Obstetrics and Gynecology Associates', 'Outdoor Dining Terrace', 'Roslindale Pediatric Associates', 'Shuttle Pickup', 'Volunteer Services'];
 const F4 = ['Cardiology', 'Foot and Ankle Center', 'Gastroenterology Associates', 'HVMA Internal Medicine', 'HVMA Neurology', 'Medical Library', 'Medical Records', 'MOHS Clinic', 'Neurology', 'Primary care Physicians', 'Pulmonary Services', 'Rheumatology Center', 'Sadowsky Conference Room', 'Social Work', 'Tynan Conference Room', 'Urology'];

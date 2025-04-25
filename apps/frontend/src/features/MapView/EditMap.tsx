@@ -38,8 +38,8 @@ declare global {
 
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<string>(
-        // "Faulkner 1st Floor"
-        'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+        "Faulkner 1st Floor"
+        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [editcoordinates, setEditCoordinates] = useState<{ x: number; y: number } | null>(null);
@@ -52,7 +52,7 @@ export function EditMap({ status }: EditMapProps) {
     const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
     const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
-    const [currentFloor, setCurrentFloor] = useState<number>(3); // TODO: this be the problem
+    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
@@ -343,10 +343,10 @@ export function EditMap({ status }: EditMapProps) {
                     onLocationChange={setLocation}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-100 max-h-[90%] overflow-y-auto z-10 flex flex-col justify-start">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-160 max-h-[100%] overflow-y-auto z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
                         <Label className="font-bold text-2xl pt-4 pl-4 pb-4">Edit Map</Label>
-                        <div className="flex  flex-col justify-start text-left overflow-y-auto">
+                        <div className="flex flex-col items-center justify-center text-left overflow-y-auto pl-1">
                             <Tabs
                                 defaultValue="place-node"
                                 value={activeTab}
@@ -618,7 +618,7 @@ export function EditMap({ status }: EditMapProps) {
                                     <Button
                                         onClick={resetMap}
                                         variant="ghostDestructive"
-                                        className="w-full mt-4"
+                                        className="w-full mt-4 mb-6"
                                     >
                                         Reset Map to Default
                                     </Button>
