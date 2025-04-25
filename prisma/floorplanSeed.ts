@@ -1,9 +1,9 @@
-import client from "../apps/backend/src/bin/prisma-client.ts";
+import PrismaClient from "../apps/backend/src/bin/prisma-client.ts";
 
 
 async function main() {
     // chestnut hill floor 1
-    await client.node.createMany({
+    await PrismaClient.node.createMany({
         data:[
             {
                     "nodeID": "Entrance-1745475279866",
@@ -230,7 +230,7 @@ async function main() {
         skipDuplicates: true
     })
 
-    await client.edge.createMany({
+    await PrismaClient.edge.createMany({
         data:[
                 {
                     "edgeID": "e3519bcb-a853-4da1-ba2b-31142b151244",
@@ -441,7 +441,7 @@ async function main() {
     });*/
 
     // all faulkner nodes
-    await client.node.createMany({
+    await PrismaClient.node.createMany({
         data: [
             {
                 "nodeID": "Hallway-1745468089659",
@@ -698,7 +698,7 @@ async function main() {
     });
 
     // patriot 22 floor 1
-    await client.node.createMany({
+    await PrismaClient.node.createMany({
         data: [
             {
                 "nodeID": "Extended Patient Parking",
@@ -784,7 +784,7 @@ async function main() {
         skipDuplicates: true
     });
 
-    await client.edge.createMany({
+    await PrismaClient.edge.createMany({
         data: [
             {
                 "fromID": "Hallway-1745468326007",
@@ -818,7 +818,7 @@ async function main() {
     });
 
     // patriot 22 floor 3
-    await client.node.createMany({
+    await PrismaClient.node.createMany({
         data: [
             {
                 "nodeID": "Elevator-1745530797419",
@@ -1094,7 +1094,7 @@ async function main() {
         skipDuplicates: true
     });
 
-    await client.edge.createMany({
+    await PrismaClient.edge.createMany({
         data: [
             {
                 "fromID": "Hallway-1745530900471",
@@ -1237,7 +1237,7 @@ async function main() {
 
 
     // patriot 22 floor 4
-    await client.node.createMany({
+    await PrismaClient.node.createMany({
         data: [
             {
                 "nodeID": "Hallway-1745532856923",
@@ -1493,7 +1493,7 @@ async function main() {
         skipDuplicates: true
     });
 
-    await client.edge.createMany({
+    await PrismaClient.edge.createMany({
         data: [
             {
                 "fromID": "Hallway-1745532895073",
@@ -1627,7 +1627,7 @@ async function main() {
     });
 
     // create faulkner edges
-    await client.edge.createMany({
+    await PrismaClient.edge.createMany({
         data: [
             {
                 "fromID": "Faulkner Entrance",
@@ -1741,5 +1741,5 @@ async function main() {
             return Promise.reject(e);
         })
         .finally(async () => {
-            await client.$disconnect();
+            await PrismaClient.$disconnect();
         });
