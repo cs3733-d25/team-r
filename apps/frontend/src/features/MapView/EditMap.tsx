@@ -609,7 +609,6 @@ export function EditMap({ status }: EditMapProps) {
                         </div>
                     </div>
 
-                    <Button onClick={editNode}>Edit Node</Button>
                     {/* Algorithm selector */}
                     <div className="flex flex-col space-y-2">
                         <Label>Algorithm</Label>
