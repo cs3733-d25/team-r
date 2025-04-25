@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 import session from "express-session";
 
 const router: Router = express.Router();
@@ -9,7 +9,7 @@ router.post("/", async function (req: Request, res: Response) {
   const { username, password } = req.body;
   //check if the password is in the users database
   try {
-    const user = await PrismaClient.user.findUnique({
+    const user = await client.user.findUnique({
       where: {
         username: username,
       },
