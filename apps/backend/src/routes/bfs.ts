@@ -1,26 +1,73 @@
-import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
-import prismaClient from "../bin/prisma-client.ts";
-const router: Router = express.Router();
-//const prisma = new PrismaClient();
+// import express, { Router, Request, Response } from "express";
+// import prismaClient from "../bin/prisma-client.ts";
+// const router: Router = express.Router();
+import { Graph } from "./Graph";
+import { Queue, Stack } from "./dataStructures.ts";
+import { PathfindingAlgorithm } from "./algoSelection.ts";
 
+export class BFS implements PathfindingAlgorithm {
+  graph: Graph;
+  private queue: Queue<string[]> | undefined;
+
+  constructor(graph: Graph) {
+    this.graph = graph;
+  }
+
+  public findPath(start: string, end: string): string[] {
+    console.log("in bfs.pathFind()");
+    console.log(" startingPoint inf BFS pathfind: ", start);
+    console.log(" endingPoint in BFS pathfind: ", end);
+
+    const visited = new Set<string>();
+    //const queue = new Queue<string[]>();
+    //const queue: string[][] = [[start]]; //now using Queue class
+    this.queue = new Queue<string[]>();
+    this.queue.enqueue([start]);
+
+    console.log("Graph snapshot:");
+    for (const node of this.graph.getAllNodeIDs()) {
+      console.log(`${node} -> ${this.graph.getNeighbors(node)}`);
+    }
+    while (!this.queue.isEmpty()) {
+      const path = this.queue.dequeue()!;
+      const currentID = path[path.length - 1];
+      if (!path) continue;
+      if (currentID === end) return path;
+
+      if (!visited.has(currentID)) {
+        visited.add(currentID);
+
+        const neighbors = this.graph.getNeighbors(currentID);
+        console.log(`Visiting: ${currentID}`);
+        for (const neighbor of neighbors) {
+          if (!visited.has(neighbor)) {
+            this.queue.enqueue([...path, neighbor]);
+          }
+        }
+      }
+    }
+
+    return []; // No path found
+  }
+}
+/*
 //does the Breadth First Search (BFS)
 async function BFS(start: string, end: string): Promise<string[]> {
-  const visited = new Set<string>(); //visited list
-  const queue: string[][] = [[start]]; //where to go next
 
-  //const nodes = await prisma.nodes.findMany()
-  const edges = await prismaClient.edge.findMany();
 
-  const graph = new Map<string, Set<string>>();
+export default router;
+/*
+//does the Breadth First Search (BFS)
+async function BFS(start: string, end: string): Promise<string[]> {
 
-  for (const edge of edges) {
-    if (!graph.has(edge.fromID)) graph.set(edge.fromID, new Set());
-    if (!graph.has(edge.toID)) graph.set(edge.toID, new Set());
 
-    graph.get(edge.fromID)!.add(edge.toID);
-    graph.get(edge.toID)!.add(edge.fromID);
-  }
+  while (queue.length > 0) {
+    //while we have nodes to visit
+    const path = queue.shift();
+    if (!path) continue;
+
+    const currentID = path[path.length - 1];
+
 
   while (queue.length > 0) {
     //while we have nodes to visit
@@ -34,10 +81,19 @@ async function BFS(start: string, end: string): Promise<string[]> {
       return path;
     }
 
+
     if (!visited.has(currentID)) {
       //have we been here? If not...
       visited.add(currentID); //add to visited list
       const neighbors = graph.get(currentID) || new Set();
+
+
+
+    if (!visited.has(currentID)) {
+      //have we been here? If not...
+      visited.add(currentID); //add to visited list
+      const neighbors = graph.get(currentID) || new Set();
+
 
       for (const neighborId of neighbors) {
         if (!visited.has(neighborId)) {
@@ -51,54 +107,5 @@ async function BFS(start: string, end: string): Promise<string[]> {
 }
 
 //send data to front end
-router.post("/", async function (req: Request, res: Response) {
-  const { startingPoint, endingPoint } = req.body;
-  console.log("Starting BFS algorithm");
 
-  try {
-    const departmentToCheckIns: Record<string, string[]> = {
-      Primary_care: ["checkin4000B"],
-      Community_: ["checkin4000B"],
-      Blood_draw: ["checkin4000B"],
-
-      radiology: ["r2"],
-      pharmacy: ["r4"],
-    };
-
-    const path = await BFS(startingPoint, endingPoint);
-    //const pf = BFS(startingPoint, endingPoint);
-    if (path.length > 0) {
-      res.status(200).json(path);
-    } else {
-      res.status(404).json({
-        message:
-          "Path not found between " +
-          startingPoint +
-          " and " +
-          endingPoint +
-          " and " +
-          endingPoint,
-      });
-    }
-  } catch (error) {
-    console.error("Pathfinding error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-router.get("/full", async (req: Request, res: Response) => {
-  try {
-    const nodes: any = await prismaClient.node.findMany();
-    const edges: any = await prismaClient.edge.findMany();
-
-    res.json({
-      nodes,
-      edges,
-    });
-  } catch (error) {
-    console.error("Failed to load full graph:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-export default router;
+*/

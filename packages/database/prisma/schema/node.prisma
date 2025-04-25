@@ -1,32 +1,49 @@
 model Directory {
-  id          Int      @id @default(autoincrement())
-  name        String
-  floorNumber Int
-  building    Building
+  id              Int     @id @default(autoincrement())
+  name            String
+  floorNumber     Int
+  building        String
+  receptionNodeID String?
+  receptionNode   Node?   @relation(fields: [receptionNodeID], references: [nodeID])
 }
 
 model Node {
-  nodeID    String   @id
-  nodeType  NodeType
-  building  Building
+  nodeID    String @id
+  nodeType  String
+  building  String
   floor     Int
   xcoord    Float
   ycoord    Float
   longName  String
   shortName String
 
-  edgesFrom Edge[] @relation("fromNode")
-  edgesTo   Edge[] @relation("toNode")
+  departments   Directory[]
+  departmentBoo Department[]
+  edgesFrom     Edge[]       @relation("fromNode")
+  edgesTo       Edge[]       @relation("toNode")
 }
 
 model Edge {
   edgeID   String @id @default(uuid())
   fromID   String
   toID     String
-  fromX    Float
-  fromY    Float
-  toX      Float
-  toY      Float
-  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID])
-  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID])
+  fromX    Float?
+  fromY    Float?
+  toX      Float?
+  toY      Float?
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID], onDelete: Cascade)
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID], onDelete: Cascade)
+}
+
+model Department {
+  id              String @id @default(uuid())
+  name            String
+  receptionNodeID String
+  receptionNode   Node   @relation(fields: [receptionNodeID], references: [nodeID])
+  // employee        Employee[]
+}
+
+model Algorithm {
+  id   Int    @id @default(autoincrement())
+  algo String
 }

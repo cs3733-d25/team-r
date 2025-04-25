@@ -1,20 +1,13 @@
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
-import { $Enums, Prisma } from "../../../../packages/database";
+import client from "../bin/prisma-client.ts";
+import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
-import {
-  RequestPriority,
-  Department,
-  Building,
-} from "../../../../packages/database";
-import RequestStatus = $Enums.RequestStatus;
-import { parseStatus, parseBuilding } from "./enum.ts"; //here?
 
 const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
   try {
-    const requests = await PrismaClient.transportRequest.findMany({
+    const requests = await client.transportRequest.findMany({
       orderBy: { priority: "asc" },
     });
     console.log(requests);
@@ -25,54 +18,45 @@ router.get("/", async function (req: Request, res: Response) {
   }
 });
 
-// a function to cast a string to a RequestPriority enum type
-function parseRequestPriority(value: string): RequestPriority {
-  return RequestPriority[value as keyof typeof RequestPriority];
-}
-// a function to cast a string to a Department enum type
-function parseDepartment(value: string): Department {
-  return Department[value as keyof typeof Department];
-}
-
-//generic enum parse
-// function parseEnum<T extends { [key: string]: string | number }>(
-//   enumType: T,
-//   value: string,
-// ): T[keyof T] {
-//   if (value in enumType) {
-//     return enumType[value as keyof T];
-//   }
-//   throw new Error(`Invalid enum value: ${value}`);
-// }
-
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a transportation request");
-  const request = req.body;
+  const {
+    priority,
+    status,
+    patientID,
+    department,
+    roomNumber,
+    //employeeName,
+    comments,
+    transportationType,
+    currentBuilding,
+    desiredBuilding,
+  } = req.body;
+  const employeeID = req.session?.username;
   try {
-    // assumes that the request is formatted with the exact fields as the TransporationRequest table in the prisma schema (packages/database/prisma/schema.prisma)
-    // console.log(parseRequestPriority(request.priority));
-    console.log("priority: ", request.priority);
-    //console.log(request.department);
-    console.log(parseDepartment(request.department));
-    console.log(parseRequestPriority(request.priority));
-    const createRequest = await PrismaClient.transportRequest.create({
+    const createRequest = await client.transportRequest.create({
       data: {
-        employeeName: request.employeeName,
+        employeeName: {
+          connect: {
+            id: employeeID,
+          },
+        },
         //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
-        patient: { connect: { id: parseInt(request.patientID, 10) } },
-
-        transportationType: request.transportationType,
-        currentBuilding: await parseBuilding(request.currentBuilding),
-        desiredBuilding: await parseBuilding(request.desiredBuilding),
-
-        priority: parseRequestPriority(request.priority),
-        department: parseDepartment(request.department),
-        comments: request.comments,
-        status: await parseStatus(request.status), //
+        patient: {
+          connect: { id: req.body.patientID }, // <-- Use relation connect
+        },
+        transportationType,
+        currentBuilding,
+        desiredBuilding,
+        priority,
+        department,
+        comments,
+        status,
+        //assignedEmployee: employeeName //connect later
         //user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });
-    // console.log(createRequest);
+
     res
       .status(200)
       .json({ message: "Successfully entered transportation request" });

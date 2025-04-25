@@ -8,7 +8,7 @@
     "scripts": {
         "lint": "dotenv -e ${PROJECT_CWD}/.env -- yarn shared:prettier && dotenv -e ${PROJECT_CWD}/.env -- prisma validate && dotenv -e ${PROJECT_CWD}/.env -- yarn shared:eslint && dotenv -e ${PROJECT_CWD}/.env -- yarn shared:tslint",
         "lint:fix": "dotenv -e ${PROJECT_CWD}/.env -- yarn shared:prettier:fix && dotenv -e ${PROJECT_CWD}/.env -- prisma format && dotenv -e ${PROJECT_CWD}/.env -- yarn shared:eslint:fix && dotenv -e ${PROJECT_CWD}/.env -- yarn shared:tslint",
-        "generate": "pnpify prisma generate --schema=${INIT_CWD}/prisma/schema.prisma",
+        "generate": "pnpify prisma generate ",
         "migrate:dev": "dotenv -e ${PROJECT_CWD}/.env -- prisma migrate devn --skip-generate",
         "migrate:dev:wpi": "dotenv -e ${PROJECT_CWD}/.env.wpi -- prisma migrate dev --skip-generate",
         "migrate:dev:prod": "dotenv -e ${PROJECT_CWD}/.env.prod -- prisma migrate dev --skip-generate",

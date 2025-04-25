@@ -4,4 +4,5 @@ import { PrismaClient } from "database";
 const client = new PrismaClient();
 
 // Export the client
+
 export default client;

@@ -1071,6 +1071,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@prisma/client@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "@prisma/client@npm:6.6.0"
+  peerDependencies:
+    prisma: "*"
+    typescript: ">=5.1.0"
+  peerDependenciesMeta:
+    prisma:
+      optional: true
+    typescript:
+      optional: true
+  checksum: 10c0/174e4f445ae671dc16af272743b33312f36be34d8d5c0ab92eba8c81d74dc86967fa316bd4db082f1aa0970abf31899a8305e09a6717cb285bdc700aa9273f70
+  languageName: node
+  linkType: hard
+
 "@prisma/config@npm:6.5.0":
   version: 6.5.0
   resolution: "@prisma/config@npm:6.5.0"
@@ -3032,6 +3047,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-session@npm:1.17.0":
+  version: 1.17.0
+  resolution: "@types/express-session@npm:1.17.0"
+  dependencies:
+    "@types/express": "npm:*"
+    "@types/node": "npm:*"
+  checksum: 10c0/a3082219321409309f4b9d13b15d4d8f0e2cc02f480ae0850bdbbef20fe2038061cb81946319bea655fb759db9b46fe61de68f458184a2ee1919d7d03b906875
+  languageName: node
+  linkType: hard
+
 "@types/express@npm:*, @types/express@npm:^5.0.1":
   version: 5.0.1
   resolution: "@types/express@npm:5.0.1"
@@ -3917,10 +3942,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "backend@workspace:apps/backend"
   dependencies:
+    "@prisma/client": "npm:^6.6.0"
     "@swc/core": "npm:^1.3.60"
     "@swc/helpers": "npm:^0.5.1"
     "@types/cookie-parser": "npm:^1.4.8"
     "@types/express": "npm:^5.0.1"
+    "@types/express-session": "npm:1.17.0"
     "@types/http-errors": "npm:^2.0.4"
     "@types/morgan": "npm:^1.9.9"
     "@types/multer": "npm:^1"
@@ -3936,6 +3963,7 @@ __metadata:
     eslint-config-custom: "npm:*"
     express: "npm:^4.19.2"
     express-oauth2-jwt-bearer: "npm:^1.5.0"
+    express-session: "npm:1.17.0"
     http-errors: "npm:~1.6.3"
     http-terminator: "npm:^3.2.0"
     jose: "npm:^5.4.0"
@@ -4525,6 +4553,13 @@ __metadata:
   version: 1.0.6
   resolution: "cookie-signature@npm:1.0.6"
   checksum: 10c0/b36fd0d4e3fef8456915fcf7742e58fbfcc12a17a018e0eb9501c9d5ef6893b596466f03b0564b81af29ff2538fd0aa4b9d54fe5ccbfb4c90ea50ad29fe2d221
+  languageName: node
+  linkType: hard
+
+"cookie@npm:0.4.0":
+  version: 0.4.0
+  resolution: "cookie@npm:0.4.0"
+  checksum: 10c0/71508a1c8a4e97bb88f42635542ef24ebe7e713f82573ac61e9b289616334d14bfb28210d7979d9ada24b0254f5fb563af938cac13bc8c0c3f60f47a2257f791
   languageName: node
   linkType: hard
 
@@ -5434,6 +5469,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express-session@npm:1.17.0":
+  version: 1.17.0
+  resolution: "express-session@npm:1.17.0"
+  dependencies:
+    cookie: "npm:0.4.0"
+    cookie-signature: "npm:1.0.6"
+    debug: "npm:2.6.9"
+    depd: "npm:~2.0.0"
+    on-headers: "npm:~1.0.2"
+    parseurl: "npm:~1.3.3"
+    safe-buffer: "npm:5.2.0"
+    uid-safe: "npm:~2.1.5"
+  checksum: 10c0/4cfcdf19a6324c135a27ffeeb0ca8ceaf0331135ff5166ec09d6cbbc9ffacf399d15487bebe3dac24b03e896365935e64ccdc3e6b64752051ace57e5f80ccd24
+  languageName: node
+  linkType: hard
+
 "express@npm:^4.19.2":
   version: 4.21.2
   resolution: "express@npm:4.21.2"
@@ -5739,6 +5790,7 @@ __metadata:
     eslint-plugin-react-refresh: "npm:^0.4.19"
     input-otp: "npm:^1.4.2"
     leaflet: "npm:^1.9.4"
+    leaflet-ant-path: "npm:^1.3.0"
     localforage: "npm:^1.10.0"
     lucide-react: "npm:^0.487.0"
     match-sorter: "npm:^6.3.1"
@@ -5747,12 +5799,14 @@ __metadata:
     prettier: "npm:*"
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
+    react-bootstrap-icons: "npm:^1.11.5"
     react-day-picker: "npm:8.10.1"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.55.0"
     react-resizable-panels: "npm:^2.1.7"
     react-router-bootstrap: "npm:^0.26.2"
     react-router-dom: "npm:^6.11.2"
+    react-speech: "npm:^1.0.2"
     recharts: "npm:^2.15.2"
     serve: "npm:^14.2.0"
     sonner: "npm:^2.0.3"
@@ -6157,6 +6211,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immutability-helper@npm:^3.0.1":
+  version: 3.1.1
+  resolution: "immutability-helper@npm:3.1.1"
+  checksum: 10c0/daf4f3a696b8735c5d2c9b1bac42908b66bfc18ea5484bccf6658f3e622e1486663b5ef781e1a407ee81183e16942e8b2596cc859ea94d522ba07731c2845f0e
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.2.1":
   version: 3.3.1
   resolution: "import-fresh@npm:3.3.1"
@@ -6453,6 +6514,13 @@ __metadata:
   dependencies:
     json-buffer: "npm:3.0.1"
   checksum: 10c0/aa52f3c5e18e16bb6324876bb8b59dd02acf782a4b789c7b2ae21107fab95fab3890ed448d4f8dba80ce05391eeac4bfabb4f02a20221342982f806fa2cf271e
+  languageName: node
+  linkType: hard
+
+"leaflet-ant-path@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "leaflet-ant-path@npm:1.3.0"
+  checksum: 10c0/4f77a629ed5cfe1d56e1ba816880e72236c67e065528ad14a9bec22ced97bdd1a4ce34035ae9678d850cce6f44513671373b05adc51189cf17fa867049a2a9fd
   languageName: node
   linkType: hard
 
@@ -7841,6 +7909,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"random-bytes@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "random-bytes@npm:1.0.0"
+  checksum: 10c0/71e7a600e0976e9ebc269793a0577d47b965fa678fcc9e9623e427f909d1b3669db5b3a178dbf61229f0724ea23dba64db389f0be0ba675c6a6b837c02f29b8f
+  languageName: node
+  linkType: hard
+
 "range-parser@npm:1.2.0":
   version: 1.2.0
   resolution: "range-parser@npm:1.2.0"
@@ -7878,6 +7953,17 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 10c0/24a07653150f0d9ac7168e52943cc3cb4b7a22c0e43c7dff3219977c2fdca5a2760a304a029c20811a0e79d351f57d46c9bde216193a0f73978496afc2b85b15
+  languageName: node
+  linkType: hard
+
+"react-bootstrap-icons@npm:^1.11.5":
+  version: 1.11.5
+  resolution: "react-bootstrap-icons@npm:1.11.5"
+  dependencies:
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ">=16.8.6"
+  checksum: 10c0/ec1cb4439460c80de58762d88848493a9d17147b4c26390cf610d42b0223a28aee2ddd7b502ce9db4c4aa910d42536b3e18ff609de155711f2e8e1827467b02a
   languageName: node
   linkType: hard
 
@@ -8032,6 +8118,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-speech@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "react-speech@npm:1.0.2"
+  dependencies:
+    immutability-helper: "npm:^3.0.1"
+    react: "npm:^16.10.1"
+  peerDependencies:
+    react: ">=0.14"
+  checksum: 10c0/368ee86261801dc0783ecd2d194e75eef5827ea168eea936ab6b7b577c724a4beb4e965455edcb48f327e1086287edfb359901b5973210708d6336c6536f7790
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.2.2, react-style-singleton@npm:^2.2.3":
   version: 2.2.3
   resolution: "react-style-singleton@npm:2.2.3"
@@ -8048,6 +8146,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-text-to-speech@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-text-to-speech@npm:2.0.2"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/03bbca55bf809be73ff84008d2d244367254c41f8ea740d60ba6c9b0cd52cacb608230a4de4fdb702b490caffbc40a42be04ac5a70cb090aff2ce00868cca59b
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -8060,6 +8168,17 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 10c0/2ba754ba748faefa15f87c96dfa700d5525054a0141de8c75763aae6734af0740e77e11261a1e8f4ffc08fd9ab78510122e05c21c2d79066c38bb6861a886c82
+  languageName: node
+  linkType: hard
+
+"react@npm:^16.10.1":
+  version: 16.14.0
+  resolution: "react@npm:16.14.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    object-assign: "npm:^4.1.1"
+    prop-types: "npm:^15.6.2"
+  checksum: 10c0/df8faae43e01387013900e8f8fb3c4ce9935b7edbcbaa77e12999c913eb958000a0a8750bf9a0886dae0ad768dd4a4ee983752d5bade8d840adbe0ce890a2438
   languageName: node
   linkType: hard
 
@@ -8332,6 +8451,13 @@ __metadata:
   version: 5.1.2
   resolution: "safe-buffer@npm:5.1.2"
   checksum: 10c0/780ba6b5d99cc9a40f7b951d47152297d0e260f0df01472a1b99d4889679a4b94a13d644f7dbc4f022572f09ae9005fa2fbb93bbbd83643316f365a3e9a45b21
+  languageName: node
+  linkType: hard
+
+"safe-buffer@npm:5.2.0":
+  version: 5.2.0
+  resolution: "safe-buffer@npm:5.2.0"
+  checksum: 10c0/9e1d7f6a162b493b54ecc29e60fcedaf4d0b53aa1636088f8f1f40dc5e7ceeb44885983c0de8148a735369e1ce567abe9465e8086e413673706432d4df8cca07
   languageName: node
   linkType: hard
 
@@ -8700,6 +8826,7 @@ __metadata:
   dependencies:
     "@prisma/client": "npm:^6.5.0"
     "@tailwindcss/vite": "npm:^4.1.3"
+    "@types/express-session": "npm:1.17.0"
     "@types/multer": "npm:^1"
     "@types/node": "npm:^22.14.1"
     "@types/react": "npm:^19.1.0"
@@ -8713,14 +8840,19 @@ __metadata:
     dotenv-cli: "npm:^7.4.4"
     eslint: "npm:^9.23.0"
     eslint-config-custom: "workspace:*"
+    express-session: "npm:1.17.0"
     husky: "npm:^9.1.7"
+    leaflet-ant-path: "npm:^1.3.0"
     multer: "npm:^1.4.5-lts.2"
     postcss: "npm:^8.5.3"
     prettier: "npm:^3.5.3"
     prettier-config-custom: "workspace:*"
     prisma: "npm:^6.5.0"
     react: "npm:^19.1.0"
+    react-bootstrap-icons: "npm:^1.11.5"
     react-dom: "npm:^19.1.0"
+    react-speech: "npm:^1.0.2"
+    react-text-to-speech: "npm:^2.0.2"
     tailwindcss: "npm:^4.1.3"
     ts-config-custom: "workspace:*"
     ts-node: "npm:^9.1.1"
@@ -9356,6 +9488,15 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/5448a08e595cc558ab321e49d4cac64fb43d1fa106584f6ff9a8d8e592111b373a995a1d5c7f3046211c8a37201eb6d0f1566f15cdb7a62a5e3be01d087848e2
+  languageName: node
+  linkType: hard
+
+"uid-safe@npm:~2.1.5":
+  version: 2.1.5
+  resolution: "uid-safe@npm:2.1.5"
+  dependencies:
+    random-bytes: "npm:~1.0.0"
+  checksum: 10c0/ec96862e859fd12175f3da7fda9d1359a2cf412fd521e10837cbdc6d554774079ce252f366981df9401283841c8924782f6dbee8f82a3a81f805ed8a8584595d
   languageName: node
   linkType: hard
 

@@ -1,57 +1,65 @@
-import express, { Request, Response, Router } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import express, { Router, Request, Response } from "express";
+import client from "../bin/prisma-client.ts";
 import { Prisma } from "database";
-import {
-  parseDepartment,
-  parseRequestPriority,
-  parseBuilding,
-  parseStatus,
-} from "./enum.ts";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
 const router: Router = express.Router();
 
-router.get("/all-requests", async function (req: Request, res: Response) {
+router.get("/", async function (req: Request, res: Response) {
+  console.log("hello requests");
+
   try {
-    const requests = await PrismaClient.deviceRequest.findMany({
+    const requests = await client.deviceRequest.findMany({
       orderBy: { priority: "asc" },
     });
     console.log(requests);
-    res.status(200).json(requests); // Send sanitation data as JSON
+    res.status(200).json(requests); // Send employee data as JSON
   } catch (error) {
-    console.error("Error fetching pharmacy request data:", error);
+    console.error("Error fetching med device:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 router.post("/", async function (req: Request, res: Response) {
-  console.log("A user entered a device request");
-  const request = req.body;
-  // console.log(request);
+  console.log("A user entered a med device request");
+  const {
+    priority,
+    status,
+    department,
+    comments,
+    patient,
+    location,
+    request,
+    device,
+    room,
+  } = req.body;
+  const employeeID = req.session?.username;
+
   try {
-    await PrismaClient.deviceRequest.create({
+    console.log("deviceType: ", device);
+    const createRequest = await client.deviceRequest.create({
       data: {
-        deviceType: request.deviceType, // connect to whatever employee has that ID number
-        priority: parseRequestPriority(request.priority),
-        room: request.room,
-        department: await parseDepartment(request.deparment),
-        comments: request.comment,
-        employeeName: request.employeeName,
-        employeeID: request.employeeID,
-        status: await parseStatus(request.status),
-        // also a timestamp of when it was submitted?
+        deviceType: device,
+        //patient: { connect: { id: parseInt(request.patientID, 10) } },
+        priority,
+        department,
+        status,
+        room,
+        comments,
+        employeeID, //
+        //assignedEmployee: employeeName //connect later
       },
     });
-    res.status(200).json({ message: "Successfully entered pharmacy request" });
+    // console.log(createRequest);
+    res.status(200).json({ message: "Successfully entered patient request" });
   } catch (error) {
     if (error instanceof PrismaClientValidationError) {
       console.log(error);
       console.log("that user may not exist");
     } else {
-      console.error("Error entering pharmacy request data:", error);
+      console.error("Error entering service request data:", error);
     }
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 export default router;

@@ -1,10 +1,9 @@
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
 import { parseCSV } from "common/src/parseCSV.ts";
-import { Building } from "../../../../packages/database";
 import multer from "multer";
 
 const router: Router = express.Router();
@@ -19,7 +18,7 @@ const upload = multer({
 // export directory data as CSV
 router.get("/export", async (req: Request, res: Response) => {
   try {
-    const directoryData = await PrismaClient.directory.findMany();
+    const directoryData = await client.directory.findMany();
     const csv = toCSV(directoryData);
 
     // set response headers
@@ -31,11 +30,6 @@ router.get("/export", async (req: Request, res: Response) => {
     res.sendStatus(500);
   }
 });
-
-// a function to cast a string to a Buildings enum type
-function parseBuilding(value: string): Building {
-  return Building[value as keyof typeof Building];
-}
 
 // import directory from CSV
 router.post(
@@ -63,11 +57,26 @@ router.post(
           id: parseInt(row.id),
           name: row.name,
           floorNumber: parseInt(row.floorNumber),
-          building: parseBuilding(row.building),
+          building: row.building,
         }));
 
+        //checks if transformed correctly
+        for (const row of transformation) {
+          if (
+            !row.name ||
+            !row.building ||
+            Number.isNaN(row.id) ||
+            Number.isNaN(row.building)
+          ) {
+            throw new Error("File not formatted correctly.");
+          }
+        }
+
+        // deletes everything from the directory database
+        await client.directory.deleteMany({});
+
         // create a call to prisma to insert the new entries to the directory table
-        PrismaClient.directory
+        client.directory
           .createMany({
             data: transformation,
           })
@@ -75,6 +84,11 @@ router.post(
             // wait until the call has finished to send the sendStatus
             res.sendStatus(200);
           });
+
+        const currentDirectory = await client.directory.findMany({
+          orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
+        });
+        console.log("current directory", currentDirectory);
       }
     } catch (error) {
       console.error("Error importing directory data:", error);
@@ -86,7 +100,7 @@ router.post(
 //get all data for display
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const currentDirectory = await PrismaClient.directory.findMany({
+    const currentDirectory = await client.directory.findMany({
       orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
     });
     //console.log("current directory", currentDirectory);
