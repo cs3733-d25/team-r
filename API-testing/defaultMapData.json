@@ -264,8 +264,10 @@
     {"fromID": "Hallway-1745468129629", "toID": "Reception-1745468299003"},
     {"fromID": "Hallway-1745468129629", "toID": "Reception-1745468308859"},
     {"fromID": "Hallway-1745469182158", "toID": "Hallway-1745468326007"},
-    {"fromID": "Hallway-1745468326007", "toID": "Hallway-1745468331257"}
-
+    {"fromID": "Hallway-1745468326007", "toID": "Hallway-1745468331257"},
+    {"fromID": "Dialysis Entrance", "toID": "Hallway-1745546310011"},
+    {"fromID": "Hallway-1745546310011", "toID": "Faulkner Entrance"},
+    {"fromID": "Dialysis Reception", "toID": "Dialysis Entrance"}
   ]
 }
 
