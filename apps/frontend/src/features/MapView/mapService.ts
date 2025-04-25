@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
+import { Node } from '../../../../backend/src/routes/mapData.ts';
 
 // Response type if backend wraps IDs in an object
 type NodeIDsResponse = { nodeIDs: string[] };
