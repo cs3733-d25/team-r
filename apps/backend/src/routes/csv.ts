@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";
@@ -18,7 +18,7 @@ const upload = multer({
 // export directory data as CSV
 router.get("/export", async (req: Request, res: Response) => {
   try {
-    const directoryData = await PrismaClient.directory.findMany();
+    const directoryData = await client.directory.findMany();
     const csv = toCSV(directoryData);
 
     // set response headers
@@ -73,10 +73,10 @@ router.post(
         }
 
         // deletes everything from the directory database
-        await PrismaClient.directory.deleteMany({});
+        await client.directory.deleteMany({});
 
         // create a call to prisma to insert the new entries to the directory table
-        PrismaClient.directory
+        client.directory
           .createMany({
             data: transformation,
           })
@@ -85,7 +85,7 @@ router.post(
             res.sendStatus(200);
           });
 
-        const currentDirectory = await PrismaClient.directory.findMany({
+        const currentDirectory = await client.directory.findMany({
           orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
         });
         console.log("current directory", currentDirectory);
@@ -100,7 +100,7 @@ router.post(
 //get all data for display
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const currentDirectory = await PrismaClient.directory.findMany({
+    const currentDirectory = await client.directory.findMany({
       orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
     });
     //console.log("current directory", currentDirectory);

@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import { Prisma } from "database";
 
 export interface Node {
   nodeID: string;
@@ -483,19 +482,20 @@ router.post("/reset", async (req: Request, res: Response) => {
         };
 
         // add departments connection only if needed
-        const createData = typedNode.departments && typedNode.departments.length > 0
-          ? {
-            ...baseNodeData,
-            departments: {
-              connect: typedNode.departments.map((id: string) => ({
-                id: Number(id)
-              }))
-            }
-          }
-          : baseNodeData;
+        const createData =
+          typedNode.departments && typedNode.departments.length > 0
+            ? {
+                ...baseNodeData,
+                departments: {
+                  connect: typedNode.departments.map((id: string) => ({
+                    id: Number(id),
+                  })),
+                },
+              }
+            : baseNodeData;
 
         await prisma.node.create({
-          data: createData
+          data: createData,
         });
       }
 

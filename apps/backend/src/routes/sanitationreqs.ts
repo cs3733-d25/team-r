@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 import { Prisma } from "../../../../packages/database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
@@ -7,7 +7,7 @@ const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
   try {
-    const requests = await PrismaClient.sanitationRequest.findMany({
+    const requests = await client.sanitationRequest.findMany({
       orderBy: { priority: "asc" },
     });
     console.log(requests);
@@ -33,9 +33,8 @@ router.post("/", async function (req: Request, res: Response) {
   const employeeName = req.session?.username;
 
   try {
-    const createRequest = await PrismaClient.sanitationRequest.create({
+    const createRequest = await client.sanitationRequest.create({
       data: {
-        // employeeName,
         employeeID: employeeName,
         sanitationType,
         priority,
@@ -44,8 +43,6 @@ router.post("/", async function (req: Request, res: Response) {
         roomNumber,
         comments,
         status,
-        //assignedEmployee: employeeName //connect later
-        // user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
       },
     });
     // console.log(createRequest);
