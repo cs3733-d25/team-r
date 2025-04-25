@@ -142,6 +142,7 @@ async function main() {
             {name: "Audiology", floorNumber: 1, building: "Faulkner"},
             {name: "Blood Drawing Lab", floorNumber: 1, building: "Faulkner"},
             {name: "Cardiac Rehab", floorNumber: 1, building: "Faulkner"},
+            {name: "Dialysis", floorNumber: 1, building: "Faulkner", receptionNodeID: "Dialysis Reception"},
             {name: "Emergency Department", floorNumber: 1, building: "Faulkner"},
             {name: "Emergency Entrance", floorNumber: 1, building: "Faulkner"},
             {name: "GI Endoscopy", floorNumber: 1, building: "Faulkner",  receptionNodeID: 'Reception-1745468288835' },
@@ -154,7 +155,9 @@ async function main() {
             {name: "Special Testing", floorNumber: 1, building: "Faulkner"},
             {name: "Starbucks", floorNumber: 1, building: "Faulkner"},
             {name: "Taiclet Family Center", floorNumber: 1, building: "Faulkner"},
-            {name: "Vascular Lab", floorNumber: 1, building: "Faulkner"},
+            {name: "Vascular Lab", floorNumber: 1, building: "Faulkner"}
+
+
 
             // {name: 'Biomedical Engineering', floorNumber: 2, building: "Faulkner"},
             // {name: 'Food Services', floorNumber: 2, building: "Faulkner"},

@@ -937,7 +937,38 @@ async function main() {
                 "ycoord": 620.5,
                 "longName": "",
                 "shortName": "East Entrance Hallway"
+            },
+            {
+                "nodeID": "Dialysis Entrance",
+                "nodeType": "Entrance",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 795,
+                "ycoord": 316,
+                "longName": "",
+                "shortName": "Dialysis Entrance"
+            },
+            {
+                "nodeID": "Hallway-1745546310011",
+                "nodeType": "Hallway",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 750,
+                "ycoord": 364,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Dialysis Reception",
+                "nodeType": "Reception",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 823,
+                "ycoord": 291,
+                "longName": "",
+                "shortName": "Dialysis Reception"
             }
+
         ],
         skipDuplicates: true
     });
@@ -1973,7 +2004,21 @@ async function main() {
             {
                 "fromID": "Hallway-1745468326007",
                 "toID": "Hallway-1745468331257"
+            },
+
+            {
+                "fromID": "Dialysis Entrance",
+                "toID": "Hallway-1745546310011",
+            },
+            {
+                "fromID": "Hallway-1745546310011",
+                "toID": "Faulkner Entrance",
+            },
+            {
+                "fromID": "Dialysis Reception",
+                "toID": "Dialysis Entrance",
             }
+
         ]
     });
 
