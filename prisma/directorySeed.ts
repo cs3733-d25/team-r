@@ -158,7 +158,7 @@ async function main() {
             {name: "Vascular Lab", floorNumber: 1, building: "Faulkner"},
 
 
-
+/*
             {name: 'Biomedical Engineering', floorNumber: 2, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
             {name: 'Food Services', floorNumber: 2, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
             {name: 'Morgue', floorNumber: 2, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
@@ -213,8 +213,14 @@ async function main() {
             {name: 'Surgical Specialties', floorNumber: 5, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
             {name: 'X-Ray', floorNumber: 5, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
             {name: 'X-Ray Waiting Room', floorNumber: 5, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
+        */
         ]
+
+
+
     });
+
+
     console.log('Directory seeded successfully!');
 }
 
