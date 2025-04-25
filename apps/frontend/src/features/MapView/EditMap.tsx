@@ -61,9 +61,21 @@ export function EditMap({ status }: EditMapProps) {
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
-    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
+    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
+
+    async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
+        try {
+            const response = await axios.post(`/api/algo/setalgo`, {
+                algo,
+            });
+            setAlgorithm(algo);
+        } catch (error) {
+            console.error('Error saving algorithm:', error);
+            alert('An error occurred while saving the algorithm.');
+        }
+    }
 
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
@@ -602,15 +614,17 @@ export function EditMap({ status }: EditMapProps) {
                                         <Label>Algorithm</Label>
                                         <Select
                                             value={algorithm}
-                                            onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+                                            //onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+                                            onValueChange={(value: string) => saveAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select algorithm" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
-                                                    <SelectItem value="dfs">BFS</SelectItem>
-                                                    <SelectItem value="bfs">DFS</SelectItem>
+                                                    <SelectItem value="bfs">BFS</SelectItem>
+                                                    <SelectItem value="dfs">DFS</SelectItem>
                                                     <SelectItem value="dijkstra">Dijkstra's</SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>

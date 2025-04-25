@@ -1115,7 +1115,7 @@ async function main() {
                 "xcoord": 1.67,
                 "ycoord": 707,
                 "longName": "",
-                "shortName": "Valet Parking"
+                "shortName": "Accessible Parking Lot"
             },
             {
                 "nodeID": "Valet Parking Lot",
@@ -2768,7 +2768,7 @@ async function main() {
 
 
 
-
+    //22 floor 4 edges
     await PrismaClient.edge.createMany({
         data: [
 
@@ -3006,6 +3006,10 @@ async function main() {
             {
                 "fromID": "Hallway-1745532940204",
                 "toID": "Community Room"
+            },
+            { //elevator between floor 1 and 4
+                "fromID": "Elevator-1745549209837",
+                "toID": "Elevator-1745532984035"
             }
         ]
     });
