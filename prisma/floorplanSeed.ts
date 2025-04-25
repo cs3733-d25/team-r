@@ -937,6 +937,16 @@ async function main() {
                 "ycoord": 620.5,
                 "longName": "",
                 "shortName": "East Entrance Hallway"
+            },
+            {
+                "nodeID": "Faulkner Elevator",
+                "nodeType": "Elevator",
+                "building": "Faulkner",
+                "floor": 1,
+                "xcoord": 620.46,
+                "ycoord": 595.78,
+                "longName": "Faulkner Elevator",
+                "shortName": "Faulkner Elevator"
             }
         ],
         skipDuplicates: true
@@ -1973,6 +1983,10 @@ async function main() {
             {
                 "fromID": "Hallway-1745468326007",
                 "toID": "Hallway-1745468331257"
+            },
+            {
+                "fromID": "a faulkner hallway",
+                "toID": "Faulkner Elevator"
             }
         ]
     });
