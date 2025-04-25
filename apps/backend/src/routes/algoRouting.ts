@@ -32,6 +32,16 @@ router.post(
         select: { receptionNodeID: true },
       });
 
+      //find the algorithm in the database
+      let algorithm: string;
+      const algorithmDB = await PrismaClient.algorithm.findFirst();
+      if (!algorithmDB) {
+        algorithm = "bfs";
+      } else {
+        algorithm = algorithmDB.toString();
+      }
+      console.log("this is the algorithm in algoRouting: ", algorithm);
+
       if (!response) {
         res.status(404).json({ error: "Department not found" });
         return;
