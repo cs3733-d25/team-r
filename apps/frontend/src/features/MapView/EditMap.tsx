@@ -41,23 +41,24 @@ export function EditMap({ status }: EditMapProps) {
         "Faulkner 1st Floor"
         //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
+    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
+
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [editcoordinates, setEditCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [nodeName, setNodeName] = useState<string>('');
     const [nodeType, setNodeType] = useState<string>('');
     const [editnodeName, setEditNodeName] = useState<string>('');
-    const [editnodeType, setEditNodeType] = useState<string>('');
+    const [editnodeType, setEditNodeType] = useState<string>('Hallway');
+    const [nodeID, setNodeID] = useState<string>(''); // stores the nodeID that was selected when a node was clicked on
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
     const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
-    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
-    const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
-    const [nodes, setNodes] = useState<string>('');
+    const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
@@ -99,7 +100,7 @@ export function EditMap({ status }: EditMapProps) {
     }
 
     function onNodeClick(nodeID: string) {
-        setNodes(nodeID);
+        setNodeID(nodeID);
         setEdgeNodes((nodes) => {
             if (nodes.length == 0) {
                 return [nodeID];
@@ -185,7 +186,7 @@ export function EditMap({ status }: EditMapProps) {
             return;
         }
         const nodeData = {
-            nodeID: editnodeName,
+            nodeID: nodeID,
             nodeType: editnodeType,
             building: currentBuilding,
             floor: currentFloor,
@@ -312,7 +313,7 @@ export function EditMap({ status }: EditMapProps) {
                 if (response.status === 200) {
                     alert('Map reset successfully!');
                     setEdgeNodes([]);
-                    setNodes('');
+                    setNodeID('');
                     setCoordinates(null);
                     setEditCoordinates(null);
                 } else {
@@ -473,9 +474,9 @@ export function EditMap({ status }: EditMapProps) {
                                     <TabsContent value="edit-node" className="space-y-4">
                                         <div className="bg-gray-100 p-3 rounded-md">
                                             <Label>Selected Node to Edit</Label>
-                                            {nodes !== '' ? (
+                                            {nodeID !== '' ? (
                                                 <div className="mt-2 text-sm">
-                                                    <p>Selected Node: {nodes}</p>
+                                                    <p>Selected Node: {nodeID}</p>
                                                 </div>
                                             ) : (
                                                 <p className="text-sm text-gray-500">
@@ -591,7 +592,7 @@ export function EditMap({ status }: EditMapProps) {
 
                                         <Button
                                             onClick={editNode}
-                                            disabled={!nodes}
+                                            disabled={!nodeID}
                                             className="w-full"
                                         >
                                             Save Changes

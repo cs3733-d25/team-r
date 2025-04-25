@@ -271,7 +271,7 @@ router.get("/edges-chestnut", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
