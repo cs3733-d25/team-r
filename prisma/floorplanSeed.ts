@@ -435,10 +435,255 @@ async function main() {
     })
 
     // patriot 20 floor 1
-    /*await client.node.createMany({
-        data: [],
+    await client.node.createMany({
+        data: [
+            {
+                "nodeID": "Entrance-1745538360518",
+                "nodeType": "Entrance",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 211.67,
+                "ycoord": 386,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745538370323",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 216.67,
+                "ycoord": 475,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745538375613",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 314.83,
+                "ycoord": 470,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745538396035",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 197.67,
+                "ycoord": 761,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745538418396",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 289.83,
+                "ycoord": 760,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Specialty Clinic",
+                "nodeType": "Reception",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 289.83,
+                "ycoord": 738,
+                "longName": "",
+                "shortName": "Specialty Clinic"
+            },
+            {
+                "nodeID": "Hallway-1745538474179",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 502.83,
+                "ycoord": 470,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Imaging Suite",
+                "nodeType": "Reception",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 504.83,
+                "ycoord": 437,
+                "longName": "",
+                "shortName": "Imaging Suite"
+            },
+            {
+                "nodeID": "Hallway-1745538516214",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 315.92,
+                "ycoord": 760,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745538522550",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 317.92,
+                "ycoord": 632.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Ambulatory/Urgent Care",
+                "nodeType": "Reception",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 342.83,
+                "ycoord": 631,
+                "longName": "",
+                "shortName": "Ambulatory/Urgent Care"
+            },
+            {
+                "nodeID": "Hallway-1745538550406",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 314.83,
+                "ycoord": 527,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Phlebotomy",
+                "nodeType": "Reception",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 336.92,
+                "ycoord": 528.5,
+                "longName": "",
+                "shortName": "Phlebotomy"
+            },
+            {
+                "nodeID": "Hallway-1745538612201",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 225.67,
+                "ycoord": 273,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Handicap Parking",
+                "nodeType": "Parking",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 498.67,
+                "ycoord": 296,
+                "longName": "",
+                "shortName": "Handicap Parking"
+            },
+            {
+                "nodeID": "Hallway-1745539562747",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 74.67,
+                "ycoord": 103,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Patient Parking",
+                "nodeType": "Parking",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 9.67,
+                "ycoord": 165,
+                "longName": "",
+                "shortName": "Patient Parking"
+            }
+        ],
         skipDuplicates: true
-    });*/
+    });
+
+    await client.edge.createMany({
+        data: [
+            {
+                "fromID": "Hallway-1745538418396",
+                "toID": "Specialty Clinic"
+            },
+            {
+                "fromID": "Hallway-1745538418396",
+                "toID": "Hallway-1745538396035"
+            },
+            {
+                "fromID": "Hallway-1745538396035",
+                "toID": "Hallway-1745538370323"
+            },
+            {
+                "fromID": "Hallway-1745538370323",
+                "toID": "Entrance-1745538360518"
+            },
+            {
+                "fromID": "Hallway-1745538375613",
+                "toID": "Hallway-1745538370323"
+            },
+            {
+                "fromID": "Imaging Suite",
+                "toID": "Hallway-1745538474179"
+            },
+            {
+                "fromID": "Hallway-1745538474179",
+                "toID": "Hallway-1745538375613"
+            },
+            {
+                "fromID": "Hallway-1745538375613",
+                "toID": "Hallway-1745538550406"
+            },
+            {
+                "fromID": "Phlebotomy",
+                "toID": "Hallway-1745538550406"
+            },
+            {
+                "fromID": "Hallway-1745538522550",
+                "toID": "Hallway-1745538550406"
+            },
+            {
+                "fromID": "Ambulatory/Urgent Care",
+                "toID": "Hallway-1745538522550"
+            },
+            {
+                "fromID": "Hallway-1745538522550",
+                "toID": "Hallway-1745538516214"
+            },
+            {
+                "fromID": "Hallway-1745538516214",
+                "toID": "Hallway-1745538418396"
+            },
+            {
+                "fromID": "Hallway-1745538612201",
+                "toID": "Entrance-1745538360518"
+            },
+            {
+                "fromID": "Handicap Parking",
+                "toID": "Hallway-1745538612201"
+            },
+            {
+                "fromID": "Hallway-1745538612201",
+                "toID": "Hallway-1745539562747"
+            },
+            {
+                "fromID": "Hallway-1745539562747",
+                "toID": "Patient Parking"
+            }
+        ],
+        skipDuplicates: true
+    });
 
     // all faulkner nodes
     await PrismaClient.node.createMany({

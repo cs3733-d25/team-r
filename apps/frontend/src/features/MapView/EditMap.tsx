@@ -39,7 +39,7 @@ declare global {
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<string>(
         // "Faulkner 1st Floor"
-        'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+        'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [editcoordinates, setEditCoordinates] = useState<{ x: number; y: number } | null>(null);
@@ -52,7 +52,7 @@ export function EditMap({ status }: EditMapProps) {
     const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
     const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
-    const [currentFloor, setCurrentFloor] = useState<number>(3); // TODO: this be the problem
+    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
