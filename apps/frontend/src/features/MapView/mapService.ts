@@ -1,8 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { Edge, Node } from '../../../../backend/src/routes/mapData.ts';
-import client from '../../../../../apps/backend/src/bin/prisma-client.ts'
-
 
 // Response type if backend wraps IDs in an object
 type NodeIDsResponse = { nodeIDs: string[] };
@@ -49,27 +46,27 @@ export const fetchEntrances = async (): Promise<Node[]> => {
     return res.data;
 };
 
-export const fetchEdges20_1 = async (): Promise<Edge[]> => {
+export const fetchEdges20_1 = async () => {
     const res = await axios.get('/api/map/edges-20-1');
     return res.data;
 };
 
-export const fetchEdges20_3 = async (): Promise<Edge[]> => {
+export const fetchEdges20_3 = async ()  => {
     const res = await axios.get('/api/map/edges-20-3');
     return res.data;
 };
 
-export const fetchEdges22_1 = async (): Promise<Edge[]> => {
+export const fetchEdges22_1 = async() => {
     const res = await axios.get('/api/map/edges-22-1');
     return res.data;
 };
 
-export const fetchEdges22_3 = async (): Promise<Edge[]> => {
+export const fetchEdges22_3 = async () => {
     const res = await axios.get('/api/map/edges-22-3');
     return res.data;
 };
 
-export const fetchEdges22_4 = async (): Promise<Edge[]> => {
+export const fetchEdges22_4 = async () => {
     const res = await axios.get('/api/map/edges-22-4');
     return res.data;
 };
@@ -79,12 +76,12 @@ export const fetchElevators = async (): Promise<Node[]> => {
     return res.data;
 };
 
-export const fetchEdgesChestnut = async (): Promise<Edge[]> => {
+export const fetchEdgesChestnut = async () => {
     const res = await axios.get('/api/map/edges-chestnut');
     return res.data;
 };
 
-export const fetchEdgesFaulkner = async (): Promise<Edge[]> => {
+export const fetchEdgesFaulkner = async () => {
     const res = await axios.get('/api/map/edges-faulkner');
     // TODO: create backend request
     return res.data;
@@ -151,12 +148,6 @@ export const fetchPath = async (
         algorithm,
     });
 
-    //save the algorithm selection in the database
-    await client.algorithm.updateMany({
-        where: {},
-        data: {algo: algorithm}
-    });
-
     console.log("startingPoint in fetchPath", resp.data.startingPoint);
     console.log("endingPoint in fetchPath", resp.data.endingPoint);
 
@@ -170,11 +161,4 @@ export const fetchPath = async (
         console.log('broken returning []');
         return [];
     }
-
-    // // otherwise fall back to the old shape
-    //const dataObj = resp.data as NodeIDsResponse;
-    //return dataObj.nodeIDs ?? [];
-    //const path = resp.data;
-    //console.log("pat in fetchPath mapservice: ", path);
-    //return path;
 };

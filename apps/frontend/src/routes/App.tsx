@@ -8,18 +8,18 @@ import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
-import PatientRequest from "@/features/Requests/PatientRequest/AllPatientRequests.tsx";
+import PatientRequest from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
-import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
-import {ExternalMap} from "@/features/MapView/ExternalMap.tsx";
-import {MapPage} from "@/features/MapView/MapPage.tsx";
-import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
-import Prescription from "@/features/Requests/PrescriptionForm/Prescription.tsx";
-import SanitationRequestTabs from "@/features/Requests/SanitationForm/SanitationTabs.tsx";
-import {DeviceReq} from "@/features/Requests/MedDeviceRequest/DeviceReq.tsx";
-import {EditMap} from "@/features/MapView/EditMap.tsx";
-import RequestPage  from "@/features/Requests/RequestPage.tsx";
-import { NavbarMGH } from '@/components/NavBarMGH/NavbarMGH.tsx';
+import PatientRequestPage from "../features/Requests/PatientRequest/PatientRequestPage.tsx";
+import {ExternalMap} from "../features/MapView/ExternalMap.tsx";
+import {MapPage} from "../features/MapView/MapPage.tsx";
+import PatientTransportPage from "../features/Requests/PatientTransport/PatientTransportPage.tsx";
+import Prescription from "../features/Requests/PrescriptionForm/Prescription.tsx";
+import SanitationRequestTabs from "../features/Requests/SanitationForm/SanitationTabs.tsx";
+import {DeviceReq} from "../features/Requests/MedDeviceRequest/DeviceReq.tsx";
+import {EditMap} from "../features/MapView/EditMap.tsx";
+import RequestPage  from "../features/Requests/RequestPage.tsx";
+import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 
 function App() {
@@ -80,7 +80,8 @@ function App() {
         <div>
             <NavbarMGH userType={userType}/>
             <RouterProvider router={router} />
-        </div>);
+        </div>
+    );
 }
 
 export default App;

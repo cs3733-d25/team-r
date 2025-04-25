@@ -13,7 +13,7 @@ import TextDirections from "@/components/TextDirections.tsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import {fetchPath, useMapData} from '@/features/MapView/mapService';
-import {Node} from "../../../../backend/src/routes/mapData.ts";
+
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { InternalMapControls } from '@/components/InternalMapControls.tsx';
 
@@ -23,7 +23,7 @@ declare global {
     }
 }
 
-const blankNode:Node = {
+const blankNode = {
     nodeID: "",
     nodeType: "",
     building: "",
@@ -122,7 +122,7 @@ export function MapPage() {
             return;
         }
         //get the algortihm set by the admin - stored in database
-        const response = await axios.get('/api/algo/');
+        const response = await axios.get('/api/algo');
         const algorithm = response.data.algorithm;
 
         try {
