@@ -38,7 +38,7 @@ router.post(
       if (!algorithmDB) {
         algorithm = "bfs";
       } else {
-        algorithm = algorithmDB.toString();
+        algorithm = algorithmDB.algo.toString();
       }
       console.log("this is the algorithm in algoRouting: ", algorithm);
 
@@ -83,7 +83,7 @@ router.get("/", async function (req: Request, res: Response) {
   try {
     const algorithm = await client.algorithm.findFirst();
 
-    console.log(algorithm);
+    console.log("Algorithm:", algorithm);
     res.status(200).json(algorithm); // Send employee data as JSON
   } catch (error) {
     console.error("Error fetching algorithm:", error);

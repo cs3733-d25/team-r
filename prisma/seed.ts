@@ -251,6 +251,12 @@ async function main() {
 
 
     console.log('Database seeded successfully!');
+
+    await client.algorithm.create({
+        data: {
+            algo: 'bfs',
+        }
+    })
 }
 
 main()
