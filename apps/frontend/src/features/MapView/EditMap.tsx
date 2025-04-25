@@ -601,15 +601,15 @@ export function EditMap({ status }: EditMapProps) {
                                         <Label>Algorithm</Label>
                                         <Select
                                             value={algorithm}
-                                            onValueChange={(value: string) => setAlgorithm(value as 'dfs' | 'bfs' | 'dijkstra')}
+                                            onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select algorithm" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
-                                                    <SelectItem value="dfs">DFS</SelectItem>
-                                                    <SelectItem value="bfs">BFS</SelectItem>
+                                                    <SelectItem value="dfs">BFS</SelectItem>
+                                                    <SelectItem value="bfs">DFS</SelectItem>
                                                     <SelectItem value="dijkstra">Dijkstra's</SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
