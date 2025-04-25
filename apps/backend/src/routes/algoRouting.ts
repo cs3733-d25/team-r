@@ -12,9 +12,9 @@ router.post(
       let locationFormat = "";
       if (location.includes("Chestnut Hill")) {
         locationFormat = "Chestnut Hill";
-      } else if (location.includes("Patriot Place 20")) {
+      } else if (location.includes("20 Patriot")) {
         locationFormat = "Patriot Place 20";
-      } else if (location.includes("Patriot Place 22")) {
+      } else if (location.includes("22 Patriot")) {
         locationFormat = "Patriot Place 22";
       } else if (location.includes("Faulkner")) {
         locationFormat = "Faulkner";
