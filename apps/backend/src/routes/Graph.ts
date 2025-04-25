@@ -1,4 +1,4 @@
-import prismaClient from "../bin/prisma-client";
+import client from "../bin/prisma-client";
 
 export class Graph {
   private adjacencyList = new Map<string, Set<string>>();
@@ -7,7 +7,7 @@ export class Graph {
 
   //building graph from prisma
   public async loadGraph(): Promise<void> {
-    const edges = await prismaClient.edge.findMany();
+    const edges = await client.edge.findMany();
     for (const { fromID, toID } of edges) {
       if (!this.adjacencyList.has(fromID))
         this.adjacencyList.set(fromID, new Set());

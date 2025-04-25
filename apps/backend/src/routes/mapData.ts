@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from "express";
 import PrismaClient from "../bin/prisma-client.ts";
-import { Prisma } from "database";
 
 export interface Node {
   nodeID: string;
@@ -11,6 +10,7 @@ export interface Node {
   ycoord: number;
   longName: string;
   shortName: string;
+  departments?: string[];
 }
 
 export interface Edge {
@@ -369,7 +369,8 @@ router.post("/edit-node", async (req: Request, res: Response) => {
     } else {
       newNode.departments = {};
     }
-    await PrismaClient.node.update({where:{nodeID:newNode.nodeID},
+    await PrismaClient.node.update({
+      where: { nodeID: newNode.nodeID },
       data: req.body,
     });
     res.sendStatus(200);
@@ -377,7 +378,6 @@ router.post("/edit-node", async (req: Request, res: Response) => {
     console.error("Error creating node:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-
 });
 
 router.post("/create-node", async (req: Request, res: Response) => {
@@ -447,6 +447,72 @@ router.post("/delete-edge", async (req: Request, res: Response) => {
     res.sendStatus(200);
   } catch (error) {
     console.error("Error deleting edge:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/reset", async (req: Request, res: Response) => {
+  try {
+    console.log("Resetting map to default state");
+    await PrismaClient.$transaction(async (prisma) => {
+      await prisma.edge.deleteMany({});
+      await prisma.node.deleteMany({});
+
+      // import default map data from JSON
+      const defaultMapData = await import(
+        "../../../../API-testing/defaultMapData.json"
+      );
+
+      const { nodes, edges } = defaultMapData.default;
+
+      // insert nodes
+      for (const node of nodes) {
+        const typedNode = node as Node;
+
+        // extract base fields without departments
+        const baseNodeData = {
+          nodeID: typedNode.nodeID,
+          nodeType: typedNode.nodeType,
+          building: typedNode.building,
+          floor: typedNode.floor,
+          xcoord: typedNode.xcoord,
+          ycoord: typedNode.ycoord,
+          longName: typedNode.longName,
+          shortName: typedNode.shortName,
+        };
+
+        // add departments connection only if needed
+        const createData =
+          typedNode.departments && typedNode.departments.length > 0
+            ? {
+                ...baseNodeData,
+                departments: {
+                  connect: typedNode.departments.map((id: string) => ({
+                    id: Number(id),
+                  })),
+                },
+              }
+            : baseNodeData;
+
+        await prisma.node.create({
+          data: createData,
+        });
+      }
+
+      // insert edges
+      for (const edge of edges) {
+        await prisma.edge.create({
+          data: {
+            fromNode: { connect: { nodeID: edge.fromID } },
+            toNode: { connect: { nodeID: edge.toID } },
+          },
+        });
+      }
+    });
+
+    res.status(200).json({ message: "Map reset successfully" });
+  } catch (error) {
+    console.error("Error resetting map:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
