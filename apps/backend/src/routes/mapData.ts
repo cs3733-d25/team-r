@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import client from "../bin/prisma-client.ts";
-import { Prisma } from "database";
+import PrismaClient from "../bin/prisma-client.ts";
 
 export interface Node {
   nodeID: string;
@@ -31,7 +30,7 @@ const router: Router = express.Router();
 // get parking lots
 router.get("/parking-lots", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "Parking" },
     });
     console.log("found " + request.length + " parking lots");
@@ -48,7 +47,7 @@ router.get("/departments", async (req, res) => {
     const buildingStr = req.query.building as string;
     //console.log("building str", buildingStr);
 
-    const request = await client.directory.findMany({
+    const request = await PrismaClient.directory.findMany({
       where: { building: buildingStr },
     });
     //console.log("departments: ", request);
@@ -61,7 +60,7 @@ router.get("/departments", async (req, res) => {
 
 router.get("/check-in", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "Reception" },
     });
     //console.log(request);
@@ -74,7 +73,7 @@ router.get("/check-in", async (req, res) => {
 
 router.get("/entrances", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "Entrance" },
     });
     //console.log(request);
@@ -87,7 +86,7 @@ router.get("/entrances", async (req, res) => {
 
 router.get("/elevators", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "Elevator" },
     });
     //console.log(request);
@@ -100,7 +99,7 @@ router.get("/elevators", async (req, res) => {
 
 router.get("/hallways", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "Hallway" },
     });
     // console.log(request);
@@ -112,7 +111,7 @@ router.get("/hallways", async (req, res) => {
 });
 router.get("/other", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "Other" },
     });
     // console.log(request);
@@ -125,7 +124,7 @@ router.get("/other", async (req, res) => {
 
 router.get("/edges-20-1", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Patriot Place 20",
@@ -150,7 +149,7 @@ router.get("/edges-20-1", async (req, res) => {
 
 router.get("/edges-20-3", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Patriot Place 20",
@@ -176,7 +175,7 @@ router.get("/edges-20-3", async (req, res) => {
 
 router.get("/edges-22-1", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Patriot Place 22",
@@ -206,7 +205,7 @@ router.get("/edges-22-1", async (req, res) => {
 
 router.get("/edges-22-3", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Patriot Place 22",
@@ -232,7 +231,7 @@ router.get("/edges-22-3", async (req, res) => {
 
 router.get("/edges-22-4", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Patriot Place 22",
@@ -258,7 +257,7 @@ router.get("/edges-22-4", async (req, res) => {
 
 router.get("/edges-chestnut", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Chestnut Hill",
@@ -282,7 +281,7 @@ router.get("/edges-chestnut", async (req, res) => {
 // TODO: have a single edges path that gets them with a /: request property
 router.get("/edges-faulkner", async (req, res) => {
   try {
-    const request = await client.edge.findMany({
+    const request = await PrismaClient.edge.findMany({
       where: {
         fromNode: {
           building: "Faulkner",
@@ -306,7 +305,7 @@ router.get("/edges-faulkner", async (req, res) => {
 
 router.post("/internal", async (req, res) => {
   try {
-    const request = await client.node.findMany({
+    const request = await PrismaClient.node.findMany({
       where: { nodeType: "parking" },
     });
     console.log(request);
@@ -340,7 +339,7 @@ router.get("/getNodeObjs", async (req, res) => {
     const nodes = [];
     for (const nodeID of nodeIDs) {
       nodes.push(
-        await client.node.findUnique({
+        await PrismaClient.node.findUnique({
           where: {
             nodeID: nodeID,
           },
@@ -397,7 +396,7 @@ router.post("/create-node", async (req: Request, res: Response) => {
     } else {
       newNode.departments = {};
     }
-    await client.node.create({
+    await PrismaClient.node.create({
       data: newNode,
     });
     res.sendStatus(200);
@@ -411,7 +410,7 @@ router.post("/create-edge", async (req: Request, res: Response) => {
   try {
     const newEdge = req.body;
     console.log(newEdge);
-    await client.edge.create({
+    await PrismaClient.edge.create({
       data: {
         fromNode: { connect: { nodeID: newEdge.fromID } },
         toNode: { connect: { nodeID: newEdge.toID } },
@@ -430,7 +429,7 @@ router.post("/delete-node", async (req: Request, res: Response) => {
     console.log(req.body);
     const nodeID = req.body.nodeID; // get the nodeID
     console.log("Deleting node: " + nodeID);
-    await client.node.delete({ where: { nodeID: nodeID } });
+    await PrismaClient.node.delete({ where: { nodeID: nodeID } });
     res.sendStatus(200);
   } catch (error) {
     console.error("Error deleting node:", error);
@@ -444,7 +443,7 @@ router.post("/delete-edge", async (req: Request, res: Response) => {
     console.log(req.body);
     const edgeID = req.body.edgeID; // get the nodeID
     console.log("Deleting node: " + edgeID);
-    await client.edge.delete({ where: { edgeID: edgeID } });
+    await PrismaClient.edge.delete({ where: { edgeID: edgeID } });
     res.sendStatus(200);
   } catch (error) {
     console.error("Error deleting edge:", error);
@@ -483,19 +482,20 @@ router.post("/reset", async (req: Request, res: Response) => {
         };
 
         // add departments connection only if needed
-        const createData = typedNode.departments && typedNode.departments.length > 0
-          ? {
-            ...baseNodeData,
-            departments: {
-              connect: typedNode.departments.map((id: string) => ({
-                id: Number(id)
-              }))
-            }
-          }
-          : baseNodeData;
+        const createData =
+          typedNode.departments && typedNode.departments.length > 0
+            ? {
+                ...baseNodeData,
+                departments: {
+                  connect: typedNode.departments.map((id: string) => ({
+                    id: Number(id),
+                  })),
+                },
+              }
+            : baseNodeData;
 
         await prisma.node.create({
-          data: createData
+          data: createData,
         });
       }
 
