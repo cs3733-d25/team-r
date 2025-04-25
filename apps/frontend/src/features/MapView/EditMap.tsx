@@ -597,7 +597,7 @@ export function EditMap({ status }: EditMapProps) {
                                             Save Changes
                                         </Button>
                                     </TabsContent>
-                                    <div className="flex flex-col space-y-2">
+                                    <div className="flex flex-col space-y-2 mt-4">
                                         <Label>Algorithm</Label>
                                         <Select
                                             value={algorithm}
