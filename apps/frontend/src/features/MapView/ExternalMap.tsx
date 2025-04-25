@@ -203,7 +203,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         }
                         travelMode={travelMode}
                     />
-                    <div className={'absolute top-123 right-3'}>
+                    <div className={'absolute top-138 right-3'}>
                     <MapController selectedLocation={selectedLocation} />
                     </div>
                 </APIProvider>
