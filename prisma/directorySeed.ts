@@ -69,7 +69,7 @@ async function main() {
                 "building": "Patriot Place 22",
                 "receptionNodeID": "Entrance-1745515055030"
             },
-            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Patriot Place 22"},
+            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Patriot Place 22", receptionNodeID: "Entrance-1745515055030"},
         ]
     });
     //Patriot Place 22 Floor 3
@@ -107,31 +107,29 @@ async function main() {
             {name: "Laboratory", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475750292" },
             {name: "Multi-Specialty Clinic", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475823905" },
             {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Chestnut Hill", receptionNodeID: "Reception-1745475823905" },
-/*
-            {name: "Backup Child Care Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Crohn's and Colitis Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Endoscopy Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Patient Financial Services", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Rehabilitation Services", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
+
+            {name: "Backup Child Care Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Crohn's and Colitis Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Endoscopy Center", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Patient Financial Services", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Rehabilitation Services", floorNumber: 2, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
 
 
-            {name: "Allergy and Clinical Immunology", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Brigham Dermatology Associates (BDA)", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: 'Brigham Psychiatric Specialties', floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Center for Pain Medicine", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Pharmacy", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
+            {name: "Allergy and Clinical Immunology", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Brigham Dermatology Associates (BDA)", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: 'Brigham Psychiatric Specialties', floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Center for Pain Medicine", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Pharmacy", floorNumber: 3, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
 
 
-            {name: "Brigham Physicians Group (BPG)", floorNumber: 4, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: 'Gretchen S. and Edward A. Fish Center for Women\'s Health', floorNumber: 4, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: 'Osher Clinical Center for Integrative Health', floorNumber: 4, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
+            {name: "Brigham Physicians Group (BPG)", floorNumber: 4, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: 'Gretchen S. and Edward A. Fish Center for Women\'s Health', floorNumber: 4, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: 'Osher Clinical Center for Integrative Health', floorNumber: 4, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
 
-            {name: "Allergy and Clinical Immunology", floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: 'Brigham Obstetrics and Gynecology Group (BOGG)', floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: 'Brigham Physicians Group (BPG)', floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-            {name: "Radiology", floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'specialtyCheckIn' },
-
- */
+            {name: "Allergy and Clinical Immunology", floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: 'Brigham Obstetrics and Gynecology Group (BOGG)', floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: 'Brigham Physicians Group (BPG)', floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
+            {name: "Radiology", floorNumber: 5, building: "Chestnut Hill", receptionNodeID: 'Reception-1745475750292' },
         ]
     });
     // Faulkner floor 1
