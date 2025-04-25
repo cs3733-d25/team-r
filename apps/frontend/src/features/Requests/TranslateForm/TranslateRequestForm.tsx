@@ -204,8 +204,8 @@ const TranslateRequestForm = () => {
                         <h3 className="text-lg font-semibold mb-2">Your translator request has been submitted</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Requestor:
-                                </span> {username}
+                                <span className="font-semibold">Employee Name:</span>
+                                {username}
                             </div>
                             <div>
                                 <span className="font-semibold">Language:</span>
