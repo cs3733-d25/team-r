@@ -17,47 +17,47 @@ async function main() {
     //Patriot Place 20 Floor 2
     await client.directory.createMany({
         data: [
-            {name: "Orthopaedics", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Hand and Upper Extremity", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Arthroplasty", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Pediatric Trauma", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Physiatry", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Podiatry", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Rehabilitation Services", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Cardiac Rehab", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Occupational Therapy", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Hand Therapy", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Upper Extremity", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Physical Therapy", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Speech - Language", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Clinical Lab", floorNumber: 2, building: "Patriot Place 20"},
-            {name: "Surgi-Care", floorNumber: 2, building: "Patriot Place 20"},
+            {name: "Orthopaedics", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Hand and Upper Extremity", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Arthroplasty", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Pediatric Trauma", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Physiatry", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Podiatry", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Rehabilitation Services", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Cardiac Rehab", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Occupational Therapy", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Hand Therapy", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Upper Extremity", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Physical Therapy", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Speech - Language", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Clinical Lab", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Surgi-Care", floorNumber: 2, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
         ]
     });
     //Patriot Place 20 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
-            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: null},
+            {name: "Surgical Specialties", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Audiology", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "ENT", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Plastic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Thoracic Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Vascular Surgery", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Weight Management and Wellness", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Sports Medicine Center", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "X-Ray Suite", floorNumber: 3, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
         ]
     });
     //Patriot Place 20 Floor 4
     await client.directory.createMany({
         data: [
-            {name: "Electromyography", floorNumber: 4, building: "Patriot Place 20"},
-            {name: "Nutrition", floorNumber: 4, building: "Patriot Place 20"},
-            {name: "Pain Medicine", floorNumber: 4, building: "Patriot Place 20"},
-            {name: "Physiatry", floorNumber: 4, building: "Patriot Place 20"},
-            {name: "Pulmonary Function Testing", floorNumber: 4, building: "Patriot Place 20"},
-            {name: "Day Surgery Center", floorNumber: 4, building: "Patriot Place 20"},
+            {name: "Electromyography", floorNumber: 4, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Nutrition", floorNumber: 4, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Pain Medicine", floorNumber: 4, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Physiatry", floorNumber: 4, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Pulmonary Function Testing", floorNumber: 4, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
+            {name: "Day Surgery Center", floorNumber: 4, building: "Patriot Place 20", receptionNodeID: "Elevator 20"},
         ]
     });
     //Patriot Place 22 Floor 1
