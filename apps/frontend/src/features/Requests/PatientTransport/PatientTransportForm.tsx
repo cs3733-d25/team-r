@@ -52,17 +52,17 @@ const TransportationRequestForm = () => {
     const [resetDesiredBuilding, setResetDesiredBuilding] = useState(false); //swaps value for desired building
 
 
-    useEffect(() => {
-        console.log("RESET is changed to: ", resetDropdowns)
-    }, [resetDropdowns])
-
-    useEffect(() => {
-        console.log("RESET Department changed to: ", resetDept)
-    }, [resetDept])
-
-    useEffect(() => {
-        console.log("RESET Desired Building changed to: ", resetDesiredBuilding)
-    }, [resetDesiredBuilding])
+    // useEffect(() => {
+    //     console.log("RESET is changed to: ", resetDropdowns)
+    // }, [resetDropdowns])
+    //
+    // useEffect(() => {
+    //     console.log("RESET Department changed to: ", resetDept)
+    // }, [resetDept])
+    //
+    // useEffect(() => {
+    //     console.log("RESET Desired Building changed to: ", resetDesiredBuilding)
+    // }, [resetDesiredBuilding])
 
 
     const handleDropdownChange = (name:string, value:string) => {
@@ -155,11 +155,11 @@ const TransportationRequestForm = () => {
     const handleLocationChange = (name: string, value: string) => {
         setSelectedLocation(value);
         handleDropdownChange(name, value); // update formData in parent
-        console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
+        //console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
     };
 
     useEffect(() => { //WHEN location changes...
-        console.log("Use Effect detected LOCATION change")
+        //console.log("Use Effect detected LOCATION change")
         setResetDept(!resetDept); //swap state to reset
         handleDepartmentChange('department', null);
 
@@ -174,7 +174,7 @@ const TransportationRequestForm = () => {
     const handleDesiredBuildingChange = (name: string, value: string | null) => {
         setDesiredBuilding(value);
         handleDropdownChange(name, value!); // update formData in parent
-        console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
+        //console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
     };
 
     const handleDepartmentChange = (name: string, value: string | null) => {
