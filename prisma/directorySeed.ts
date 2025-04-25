@@ -155,7 +155,8 @@ async function main() {
             {name: "Special Testing", floorNumber: 1, building: "Faulkner"},
             {name: "Starbucks", floorNumber: 1, building: "Faulkner"},
             {name: "Taiclet Family Center", floorNumber: 1, building: "Faulkner"},
-            {name: "Vascular Lab", floorNumber: 1, building: "Faulkner"}
+            {name: "Vascular Lab", floorNumber: 1, building: "Faulkner"},
+
 
 
             {name: 'Biomedical Engineering', floorNumber: 2, building: "Faulkner", receptionNodeID: "Faulkner Elevator"},
