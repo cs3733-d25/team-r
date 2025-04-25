@@ -5806,6 +5806,7 @@ __metadata:
     react-resizable-panels: "npm:^2.1.7"
     react-router-bootstrap: "npm:^0.26.2"
     react-router-dom: "npm:^6.11.2"
+    react-speech: "npm:^1.0.2"
     recharts: "npm:^2.15.2"
     serve: "npm:^14.2.0"
     sonner: "npm:^2.0.3"
@@ -6207,6 +6208,13 @@ __metadata:
   version: 3.0.6
   resolution: "immediate@npm:3.0.6"
   checksum: 10c0/f8ba7ede69bee9260241ad078d2d535848745ff5f6995c7c7cb41cfdc9ccc213f66e10fa5afb881f90298b24a3f7344b637b592beb4f54e582770cdce3f1f039
+  languageName: node
+  linkType: hard
+
+"immutability-helper@npm:^3.0.1":
+  version: 3.1.1
+  resolution: "immutability-helper@npm:3.1.1"
+  checksum: 10c0/daf4f3a696b8735c5d2c9b1bac42908b66bfc18ea5484bccf6658f3e622e1486663b5ef781e1a407ee81183e16942e8b2596cc859ea94d522ba07731c2845f0e
   languageName: node
   linkType: hard
 
@@ -8110,6 +8118,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-speech@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "react-speech@npm:1.0.2"
+  dependencies:
+    immutability-helper: "npm:^3.0.1"
+    react: "npm:^16.10.1"
+  peerDependencies:
+    react: ">=0.14"
+  checksum: 10c0/368ee86261801dc0783ecd2d194e75eef5827ea168eea936ab6b7b577c724a4beb4e965455edcb48f327e1086287edfb359901b5973210708d6336c6536f7790
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.2.2, react-style-singleton@npm:^2.2.3":
   version: 2.2.3
   resolution: "react-style-singleton@npm:2.2.3"
@@ -8126,6 +8146,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-text-to-speech@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-text-to-speech@npm:2.0.2"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10c0/03bbca55bf809be73ff84008d2d244367254c41f8ea740d60ba6c9b0cd52cacb608230a4de4fdb702b490caffbc40a42be04ac5a70cb090aff2ce00868cca59b
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -8138,6 +8168,17 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 10c0/2ba754ba748faefa15f87c96dfa700d5525054a0141de8c75763aae6734af0740e77e11261a1e8f4ffc08fd9ab78510122e05c21c2d79066c38bb6861a886c82
+  languageName: node
+  linkType: hard
+
+"react@npm:^16.10.1":
+  version: 16.14.0
+  resolution: "react@npm:16.14.0"
+  dependencies:
+    loose-envify: "npm:^1.1.0"
+    object-assign: "npm:^4.1.1"
+    prop-types: "npm:^15.6.2"
+  checksum: 10c0/df8faae43e01387013900e8f8fb3c4ce9935b7edbcbaa77e12999c913eb958000a0a8750bf9a0886dae0ad768dd4a4ee983752d5bade8d840adbe0ce890a2438
   languageName: node
   linkType: hard
 
@@ -8810,6 +8851,8 @@ __metadata:
     react: "npm:^19.1.0"
     react-bootstrap-icons: "npm:^1.11.5"
     react-dom: "npm:^19.1.0"
+    react-speech: "npm:^1.0.2"
+    react-text-to-speech: "npm:^2.0.2"
     tailwindcss: "npm:^4.1.3"
     ts-config-custom: "workspace:*"
     ts-node: "npm:^9.1.1"

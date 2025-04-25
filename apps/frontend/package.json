@@ -91,6 +91,7 @@
         "eslint-plugin-react-refresh": "^0.4.19",
         "prettier": "*",
         "prettier-config-custom": "workspace:*",
+        "react-speech": "^1.0.2",
         "tailwindcss": "^4.0.17",
         "ts-config-custom": "workspace:*",
         "typescript": "*",

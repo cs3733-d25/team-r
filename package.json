@@ -63,7 +63,9 @@
     "multer": "^1.4.5-lts.2",
     "react": "^19.1.0",
     "react-bootstrap-icons": "^1.11.5",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-speech": "^1.0.2",
+    "react-text-to-speech": "^2.0.2"
   },
   "resolutions": {
     "dotenv": "^16.4.7",

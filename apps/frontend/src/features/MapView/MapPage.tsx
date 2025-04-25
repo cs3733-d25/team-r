@@ -12,8 +12,8 @@ import {
 import TextDirections from "@/components/TextDirections.tsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
-import {fetchPath, useMapData} from '@/features/MapView/mapService';
-
+import { fetchPath, useMapData } from '@/features/MapView/mapService';
+import { Node } from '../../../../backend/src/routes/mapData.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { InternalMapControls } from '@/components/InternalMapControls.tsx';
 
@@ -65,11 +65,12 @@ export function MapPage() {
 
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
-    const {parkingLots, departments} = useMapData(selectedBuilding);
+    const { parkingLots, departments } = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     console.log('departments: ', departments);
 
     const [showDirections, setShowDirections] = useState(false);
+    const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -158,8 +159,9 @@ export function MapPage() {
             // 3) update map
             setPathCoordinates(coords);
             // give the node ID's to the calculateTextDirections function to turn into text directions
-            calculateTextDirections(nodeIDs)
-
+            calculateTextDirections(nodeIDs);
+            // set the floors that need to flash
+            floorsTraveled(nodeIDs)
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -247,7 +249,25 @@ export function MapPage() {
         } else {
             return "Continue straight";
         }
-    }
+    };
+
+    /**
+     * Given a string array of nodeIDs, this function determines the floors the user will travel
+     * Note: Excludes floor 1 since user is already on that floor
+     * @param directions - the string array of nodeIDs
+     */
+    const floorsTraveled = async (directions: string[]) => {
+        const nodeObjs = await getNodeObjs(directions);
+
+        // get the floors of the nodes
+        const floors = nodeObjs.map((node) => node.floor);
+        // remove floor 1 (user is already on that floor)
+        // TODO: find out the floor the user is on rather than assuming floor 1
+        const floorsExcluding1 = floors.filter((floor) => floor !== 1);
+
+        console.log(`floors traveled: ${floorsExcluding1}`);
+        setFlashingFloors(floorsExcluding1);
+    };
 
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
@@ -323,7 +343,8 @@ export function MapPage() {
                             <Button
                                 key={floor}
                                 variant={currentFloor === floor ? 'default' : 'secondary'}
-                                className="w-full mb-1"
+                                // TODO: add a for loop to check all indices in flashingFloors
+                                className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {
                                     setCurrentFloor(floor);
                                     window.goToFloor?.(
