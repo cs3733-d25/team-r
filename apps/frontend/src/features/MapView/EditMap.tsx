@@ -618,7 +618,7 @@ export function EditMap({ status }: EditMapProps) {
                                     <Button
                                         onClick={resetMap}
                                         variant="ghostDestructive"
-                                        className="w-full mt-4"
+                                        className="w-full mt-4 mb-6"
                                     >
                                         Reset Map to Default
                                     </Button>
