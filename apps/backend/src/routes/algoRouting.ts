@@ -77,19 +77,19 @@ router.post("/fetchPath", async function (req: Request, res: Response) {
   }
 });
 
-router.post("/setalgo", async function (req: Request, res: Response) {
+router.post("/setalgo", async function (req: Request, res: Response)  {
   const { algo } = req.body;
 
   try {
     const updatedAlgo = await client.algorithm.updateMany({
-      where: {},
+      where: { },
       data: { algo: algo },
     });
 
     res.status(200).json(updatedAlgo);
   } catch (error) {
-    console.error("Error updating algorithm:", error);
-    res.status(500).json({ error: "Internal server error." });
+    console.error('Error updating algorithm:', error);
+    res.status(500).json({ error: 'Internal server error.' });
   }
 });
 
