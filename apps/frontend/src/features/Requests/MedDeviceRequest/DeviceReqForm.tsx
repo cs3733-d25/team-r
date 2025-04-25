@@ -206,10 +206,10 @@ export const DeviceReqForm = () => {
 
                                 {/* Status */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-foreground mb-2">
+                                    <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Request Status
                                         <span className="text-accent">*</span>
-                                    </label>
+                                    </Label>
                                     <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
                                 </div>
 
