@@ -37,10 +37,9 @@ declare global {
 }
 
 export function EditMap({ status }: EditMapProps) {
-    const [selectedLocation, setSelectedLocation] = useState<string>(
-        "Faulkner 1st Floor"
-        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
-    );
+    const [selectedLocation, setSelectedLocation] = useState<string>(() => {
+        return localStorage.getItem('selectedLocation') || 'Default Location';
+    });
     const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
