@@ -239,6 +239,7 @@
     {"fromID": "Hallway-1745532862197", "toID": "Hallway-1745532856923"},
     {"fromID": "Primary Care", "toID": "Hallway-1745533011435"},
     {"fromID": "Hallway-1745532940204", "toID": "Community Room"},
+    {"fromID": "Elevator-1745549209837", "toID": "Elevator-1745532984035"},
 
     {"fromID": "Faulkner Entrance", "toID": "a faulkner hallway"},
     {"fromID": "a faulkner hallway", "toID": "Hallway-1745468089659"},
