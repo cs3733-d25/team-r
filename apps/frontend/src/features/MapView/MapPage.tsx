@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
 import React, {useEffect, useState} from 'react';
 import {
@@ -13,9 +13,6 @@ import TextDirections from "@/components/TextDirections.tsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
-import { Node } from '../../../../backend/src/routes/mapData.ts';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { InternalMapControls } from '@/components/InternalMapControls.tsx';
 
 declare global {
     interface Window {
@@ -50,8 +47,6 @@ export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const buildingIdentifier = location.state?.buildingIdentifier;
-
-    // --- Component state ---
     const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
     const [filterParkingLots, setFilterParkingLots] = useState<
         { building: string; nodeID: string; shortName: string }[]
@@ -62,15 +57,13 @@ export function MapPage() {
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
-
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
-
     const { parkingLots, departments } = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     console.log('departments: ', departments);
-
     const [showDirections, setShowDirections] = useState(false);
     const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
+    const [pathByFloor, setPathByFloor] = useState<Record<number, [number, number][]>>({});
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -149,6 +142,16 @@ export function MapPage() {
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
             console.log('nodeIDs from getNodeObjs: ', nodes);
+            // group coordinates by floor
+            const pathByFloor: Record<number, [number, number][]> = {};
+            nodes.forEach(node => {
+                if (!pathByFloor[node.floor]) {
+                    pathByFloor[node.floor] = [];
+                }
+                pathByFloor[node.floor].push([node.xcoord, node.ycoord]);
+            })
+
+            // set both full path and floor segments
             const coords = nodes.map((n) => [n.xcoord, n.ycoord] as [number, number]);
             const reversedCoords = [];
             for (let i=coords.length-1; i>=0; i--) {
@@ -158,6 +161,7 @@ export function MapPage() {
             // const OwenCoords = [[711, 314], [702, 630]];
             // 3) update map
             setPathCoordinates(coords);
+            setPathByFloor(pathByFloor);
             // give the node ID's to the calculateTextDirections function to turn into text directions
             calculateTextDirections(nodeIDs);
             // set the floors that need to flash
@@ -280,6 +284,8 @@ export function MapPage() {
                 <InternalMap
                     location={selectedLocation}
                     pathCoordinates={pathCoordinates}
+                    pathByFloor={pathByFloor}
+                    currentFloor={currentFloor}
                 />
 
                 {/* Sidebar controls */}

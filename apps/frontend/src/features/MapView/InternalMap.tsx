@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import L, {latLng} from 'leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20patriot1.svg';
 import patriot22Floor1 from '../../../public/22patriot1.svg';
@@ -7,26 +7,34 @@ import patriot22Floor3 from '../../../public/22patriot3.svg';
 import patriot22Floor4 from '../../../public/22patriot4.svg';
 import chestnutHill from '../../../public/chestnutHill1.svg';
 import faulkner from '../../../public/faulkner1.svg';
-import {
-    transitionNodes,
-    addFloorTransitionMarkers,
-    connectBuildings,
-    goToFloor,
-} from '../MapView/floorNavigation.ts';
+import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
-import { AxiosResponse } from 'axios';
 import 'leaflet-ant-path';
 
-declare global {
-  interface Window {
-    goToFloor?: (floor: number, building?: string) => void;
-  }
+declare module 'leaflet' {
+    interface PolylineStatic {
+        antPath(
+            latlngs: L.LatLngExpression[] | L.LatLngExpression[][],
+            options?: L.PolylineOptions & {
+                delay?: number;
+                dashArray?: [number, number]; // Proper tuple type
+                weight?: number;
+                color?: string;
+                pulseColor?: string;
+                paused?: boolean;
+                reverse?: boolean;
+                hardwareAccelerated?: boolean;
+            }
+        ): L.Polyline;
+    }
 }
 
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
+    pathByFloor?: Record<number, [number, number][]>;
+    currentFloor?: number;
     location: string;
     floor?: number;
     onLocationChange?: (building:string, floor:number) => void;
@@ -46,7 +54,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, floor=1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -546,10 +554,12 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
             routeLayer.current = null;
         }
 
+        const currentFloorPath = pathByFloor?.[currentFloor || 1] || [];
+
         // draw new route
-        if (pathCoordinates && pathCoordinates.length > 1) {
-            console.log("path coordinates in internal map");
-            console.log(pathCoordinates);
+        if (currentFloorPath.length > 1) {
+            console.log("Drawing path for floor", currentFloor);
+
 
             // ant path animation
             const antPathOptions = {
@@ -563,24 +573,31 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, flo
                 hardwareAccelerated: true // Use hardware acceleration if possible
             };
 
-            const antPoly = L.polyline.antPath(pathCoordinates, antPathOptions);
-
+            const antPoly = L.polyline.antPath(currentFloorPath, antPathOptions);
             antPoly.addTo(mapInstance.current);
-            routeLayer.current = antPoly;
+            routeLayer.current = antPoly
 
-            // start marker
-            const startMarker = L.marker(pathCoordinates[0], {
-                title: "Start",
-                icon: L.divIcon({ className: 'start-marker' }),
-            }).addTo(mapInstance.current);
+            // Check if this floor has the start or end points
+            if (pathCoordinates && pathCoordinates.length > 0) {
+                // Start marker - only if this is the first floor in the path
+                if (JSON.stringify(currentFloorPath[0]) === JSON.stringify(pathCoordinates[0])) {
+                    L.marker(currentFloorPath[0], {
+                        title: "Start",
+                        icon: L.divIcon({ className: 'start-marker' }),
+                    }).addTo(mapInstance.current);
+                }
 
-            // end marker
-            const endMarker = L.marker(pathCoordinates[pathCoordinates.length - 1], {
-                title: "End",
-                icon: L.divIcon({ className: 'end-marker' }),
-            }).addTo(mapInstance.current);
+                // End marker - only if this is the last floor in the path
+                if (JSON.stringify(currentFloorPath[currentFloorPath.length - 1]) ===
+                    JSON.stringify(pathCoordinates[pathCoordinates.length - 1])) {
+                    L.marker(currentFloorPath[currentFloorPath.length - 1], {
+                        title: "End",
+                        icon: L.divIcon({ className: 'end-marker' }),
+                    }).addTo(mapInstance.current);
+                }
+            }
         }
-    }, [pathCoordinates]);
+    }, [pathCoordinates, pathByFloor, currentFloor]);
 
     return (
         <div>

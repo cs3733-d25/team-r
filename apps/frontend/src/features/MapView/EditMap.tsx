@@ -61,7 +61,7 @@ export function EditMap({ status }: EditMapProps) {
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
-    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
+    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
 
@@ -623,8 +623,8 @@ export function EditMap({ status }: EditMapProps) {
                                             </SelectTrigger>
                                             <SelectContent>
                                                 <SelectGroup>
-                                                    <SelectItem value="dfs">BFS</SelectItem>
-                                                    <SelectItem value="bfs">DFS</SelectItem>
+                                                    <SelectItem value="bfs">BFS</SelectItem>
+                                                    <SelectItem value="dfs">DFS</SelectItem>
                                                     <SelectItem value="dijkstra">Dijkstra's</SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
