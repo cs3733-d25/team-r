@@ -354,8 +354,8 @@ export function EditMap({ status }: EditMapProps) {
                                 className="w-full flex flex-col"
                             >
                                 <TabsList className=" w-80 flex">
-                                    <TabsTrigger value="place-node">Place Node</TabsTrigger>
-                                    <TabsTrigger value="edit-node">Edit Node</TabsTrigger>
+                                    <TabsTrigger value="place-node" className="border border-gray-300">Place Node</TabsTrigger>
+                                    <TabsTrigger value="edit-node" className="border border-gray-300">Edit Node</TabsTrigger>
                                 </TabsList>
                                 <div className={'w-80 flex flex-col'}>
                                     <TabsContent value="place-node" className="space-y-4">
