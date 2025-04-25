@@ -14,12 +14,17 @@ import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 import 'leaflet-ant-path';
 
 declare module 'leaflet' {
+    interface Map {
+        startMarker?: L.Marker | null;
+        endMarker?: L.Marker | null;
+    }
+
     interface PolylineStatic {
         antPath(
             latlngs: L.LatLngExpression[] | L.LatLngExpression[][],
             options?: L.PolylineOptions & {
                 delay?: number;
-                dashArray?: [number, number]; // Proper tuple type
+                dashArray?: [number, number];
                 weight?: number;
                 color?: string;
                 pulseColor?: string;
@@ -577,24 +582,36 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             antPoly.addTo(mapInstance.current);
             routeLayer.current = antPoly
 
-            // Check if this floor has the start or end points
-            if (pathCoordinates && pathCoordinates.length > 0) {
-                // Start marker - only if this is the first floor in the path
-                if (JSON.stringify(currentFloorPath[0]) === JSON.stringify(pathCoordinates[0])) {
-                    L.marker(currentFloorPath[0], {
-                        title: "Start",
-                        icon: L.divIcon({ className: 'start-marker' }),
-                    }).addTo(mapInstance.current);
+            // Always create start and end markers for each floor's path segment
+            if (pathCoordinates && pathCoordinates.length > 0 && currentFloorPath.length > 0) {
+                // Create references to store markers so we can remove them later
+                if (!mapInstance.current.startMarker) {
+                    mapInstance.current.startMarker = null;
+                    mapInstance.current.endMarker = null;
                 }
 
-                // End marker - only if this is the last floor in the path
-                if (JSON.stringify(currentFloorPath[currentFloorPath.length - 1]) ===
-                    JSON.stringify(pathCoordinates[pathCoordinates.length - 1])) {
-                    L.marker(currentFloorPath[currentFloorPath.length - 1], {
-                        title: "End",
-                        icon: L.divIcon({ className: 'end-marker' }),
-                    }).addTo(mapInstance.current);
+                // Remove previous markers if they exist
+                if (mapInstance.current.startMarker) {
+                    mapInstance.current.startMarker.remove();
+                    mapInstance.current.startMarker = null;
                 }
+
+                if (mapInstance.current.endMarker) {
+                    mapInstance.current.endMarker.remove();
+                    mapInstance.current.endMarker = null;
+                }
+
+                // Add start marker for this floor's path segment
+                mapInstance.current.startMarker = L.marker(currentFloorPath[0], {
+                    title: "Start",
+                    icon: L.divIcon({ className: 'start-marker' }),
+                }).addTo(mapInstance.current);
+
+                // Add end marker for this floor's path segment
+                mapInstance.current.endMarker = L.marker(currentFloorPath[currentFloorPath.length - 1], {
+                    title: "End",
+                    icon: L.divIcon({ className: 'end-marker' }),
+                }).addTo(mapInstance.current);
             }
         }
     }, [pathCoordinates, pathByFloor, currentFloor]);
