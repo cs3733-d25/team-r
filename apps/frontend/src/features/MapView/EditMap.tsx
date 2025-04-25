@@ -37,10 +37,9 @@ declare global {
 }
 
 export function EditMap({ status }: EditMapProps) {
-    const [selectedLocation, setSelectedLocation] = useState<string>(
-        "Faulkner 1st Floor"
-        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
-    );
+    const [selectedLocation, setSelectedLocation] = useState<string>(() => {
+        return localStorage.getItem('selectedLocation') || 'Default Location';
+    });
     const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
@@ -64,6 +63,18 @@ export function EditMap({ status }: EditMapProps) {
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
+
+    async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
+        try {
+            const response = await axios.post(`/api/algo/setalgo`, {
+                algo,
+            });
+            setAlgorithm(algo);
+        } catch (error) {
+            console.error('Error saving algorithm:', error);
+            alert('An error occurred while saving the algorithm.');
+        }
+    }
 
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
@@ -602,7 +613,9 @@ export function EditMap({ status }: EditMapProps) {
                                         <Label>Algorithm</Label>
                                         <Select
                                             value={algorithm}
-                                            onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+                                            //onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+                                            onValueChange={(value: string) => saveAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select algorithm" />

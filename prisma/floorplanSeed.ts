@@ -1115,7 +1115,7 @@ async function main() {
                 "xcoord": 1.67,
                 "ycoord": 707,
                 "longName": "",
-                "shortName": "Valet Parking"
+                "shortName": "Accessible Parking Lot"
             },
             {
                 "nodeID": "Valet Parking Lot",
