@@ -52,8 +52,8 @@ async function main() {
                     "floor": 1,
                     "xcoord": 533.09,
                     "ycoord": 213.06,
-                    "longName": "",
-                    "shortName": ""
+                    "longName": "Left Parking Lot",
+                    "shortName": "Left Parking Lot"
                 },
                 {
                     "nodeID": "Parking-1745476137948",
@@ -62,8 +62,8 @@ async function main() {
                     "floor": 1,
                     "xcoord": 151.2,
                     "ycoord": 675.12,
-                    "longName": "",
-                    "shortName": ""
+                    "longName": "Main Parking Lot",
+                    "shortName": "Main Parking Lot"
                 },
                 {
                     "nodeID": "Hallway-1745476252825",
