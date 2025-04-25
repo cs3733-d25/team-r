@@ -606,6 +606,86 @@ async function main() {
                 "ycoord": 165,
                 "longName": "",
                 "shortName": "Patient Parking"
+            },
+            {
+                "nodeID": "Stairs 20 1",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 188,
+                "ycoord": 1039.1,
+                "longName": "Patriot 20 Stairs 1",
+                "shortName": "Patriot 20 Stairs 1"
+            },
+            {
+                "nodeID": "Stairs 20 2",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 244,
+                "ycoord": 600,
+                "longName": "Patriot 20 Stairs 2",
+                "shortName": "Patriot 20 Stairs 2"
+            },
+            {
+                "nodeID": "Stairs 20 3",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 771.4,
+                "ycoord": 454,
+                "longName": "Patriot 20 Stairs 3",
+                "shortName": "Patriot 20 Stairs 3"
+            },
+            {
+                "nodeID": "Elevator 20",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 256,
+                "ycoord": 992,
+                "longName": "Patriot 20 Elevator",
+                "shortName": "Patriot 20 Elevator"
+            },
+            {
+                "nodeID": "hallway20stairs1",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 199,
+                "ycoord": 992.2,
+                "longName": "Hallway 20 Stairs 1",
+                "shortName": "Hallway 20 Stairs 1"
+            },
+            {
+                "nodeID": "hallway20stairs2",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 211,
+                "ycoord": 587,
+                "longName": "Hallway 20 Stairs 2",
+                "shortName": "Hallway 20 Stairs 2"
+            },
+            {
+                "nodeID": "hallwayaroundthatcorner20",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 541.7,
+                "ycoord": 489.8,
+                "longName": "Hallway Around A Corner",
+                "shortName": "Hallway Around A Corner"
+            },
+            {
+                "nodeID": "hallway20stairs3",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 20",
+                "floor": 1,
+                "xcoord": 767,
+                "ycoord": 482,
+                "longName": "Hallway 20 Stairs 3",
+                "shortName": "Hallway 20 Stairs 3"
             }
         ],
         skipDuplicates: true
@@ -622,8 +702,28 @@ async function main() {
                 "toID": "Hallway-1745538396035"
             },
             {
+                "fromID": "hallway20stairs1",
+                "toID": "Hallway-1745538396035"
+            },
+            {
+                "fromID": "hallway20stairs1",
+                "toID": "Elevator 20"
+            },
+            {
+                "fromID": "hallway20stairs1",
+                "toID": "Stairs 20 1"
+            },
+            {
                 "fromID": "Hallway-1745538396035",
+                "toID": "hallway20stairs2"
+            },
+            {
+                "fromID": "hallway20stairs2",
                 "toID": "Hallway-1745538370323"
+            },
+            {
+                "fromID": "hallway20stairs2",
+                "toID": "Stairs 20 2"
             },
             {
                 "fromID": "Hallway-1745538370323",
@@ -640,6 +740,18 @@ async function main() {
             {
                 "fromID": "Hallway-1745538474179",
                 "toID": "Hallway-1745538375613"
+            },
+            {
+                "fromID": "Hallway-1745538474179",
+                "toID": "hallwayaroundthatcorner20"
+            },
+            {
+                "fromID": "hallwayaroundthatcorner20",
+                "toID": "hallway20stairs3"
+            },
+            {
+                "fromID": "hallway20stairs3",
+                "toID": "Stairs 20 3"
             },
             {
                 "fromID": "Hallway-1745538375613",
