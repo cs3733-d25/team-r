@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
 
 export function TransportRequestPage() {
-    const [transport, setTransport] = useState([{employeeID:null, patientID:null, employeeName:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
+    const [transport, setTransport] = useState([{employeeID:null, patientID:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
     function displayTable() {
         useEffect(() => {
             retrieveFromDatabase()
@@ -44,7 +44,7 @@ export function TransportRequestPage() {
                         return(
                             <>
                                 <TableRow key = {index} className={"border-t"} >
-                                    <TableCell>{row.employeeName}</TableCell>
+                                    <TableCell>{row.employeeID}</TableCell>
                                     <TableCell>{row.patientID}</TableCell>
                                     <TableCell >{row.transportationType}</TableCell>
                                     <TableCell>{row.priority}</TableCell>

@@ -26,7 +26,7 @@
     "floorseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/floorplanSeed.ts",
     "directoryseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/directorySeed.ts",
     "departmentseed": "dotenv -e ${PROJECT_CWD}/.env ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/departmentSeed.ts",
-    "seed": "yarn floorseed && yarn directoryseed && yarn departmentseed && yarn userseed"
+    "seed": "yarn floorseed && yarn directoryseed && yarn userseed"
   },
   "devDependencies": {
     "@prisma/client": "^6.5.0",
@@ -59,6 +59,7 @@
     "dotenv": "^16.4.7",
     "dotenv-cli": "^7.4.4",
     "express-session": "1.17.0",
+    "leaflet-ant-path": "^1.3.0",
     "multer": "^1.4.5-lts.2",
     "react": "^19.1.0",
     "react-bootstrap-icons": "^1.11.5",

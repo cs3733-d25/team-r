@@ -62,7 +62,7 @@ export function MapPage() {
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
-    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
+
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
     const {parkingLots, departments} = useMapData(selectedBuilding);
@@ -115,19 +115,16 @@ export function MapPage() {
         }
     };
 
-    /*
-    const response = await axios.post('/api/transportreq/', {
-                ...formData,
-                priority: formData.priority.toString()
-            });
-            console.log('message is here')
-     */
     // Main “Get Directions” handler
     const handleGetDirections = async () => {
         if (!selectedParkinglot || !selectedDepartment) {
             alert('Please select both a parking lot and a department.');
             return;
         }
+        //get the algortihm set by the admin - stored in database
+        const response = await axios.get('/api/algo/');
+        const algorithm = response.data.algorithm;
+
         try {
             console.log('selected location sending to router: ', selectedLocation);
             console.log('selected department sending to router: ', selectedDepartment);
@@ -188,11 +185,11 @@ export function MapPage() {
             const enhancedDirections: string[] = [];
 
             // First node is starting point
-            enhancedDirections.push(`Start at ${nodes[0].longName}`);
+            enhancedDirections.push(`Start at ${nodes[0].shortName}`);
 
             // For the first segment, just head toward without turn instruction
             if (nodes.length > 1) {
-                enhancedDirections.push(`Head toward ${nodes[1].longName}`);
+                enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
             }
 
             // Process middle segments to determine turns
@@ -202,11 +199,11 @@ export function MapPage() {
                 const nextNode = nodes[i + 1];
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`${directionChange} toward ${nextNode.longName}`);
+                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].longName}`);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
             console.log("enhanced Directions: ", enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
@@ -311,25 +308,7 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
-                        {/* Algorithm selector */}
-                        <div className="flex flex-col space-y-2">
-                            <Label>Algorithm</Label>
-                            <Select
-                                value={algorithm}
-                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select algorithm" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="dfs">DFS</SelectItem>
-                                        <SelectItem value="bfs">BFS</SelectItem>
-                                        <SelectItem value="aStar">A* Search</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </div>
+
 
                         {/* Trigger pathfinding */}
                         <Button className="w-full" onClick={handleGetDirections}>

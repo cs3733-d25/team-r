@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from "express";
 import { findPath } from "./algoSelection";
-import PrismaClient from "../bin/prisma-client";
+import client from "../bin/prisma-client";
 
 const router: Router = express.Router();
 
@@ -24,13 +24,23 @@ router.post(
         return;
       }
 
-      const response = await PrismaClient.directory.findFirst({
+      const response = await client.directory.findFirst({
         where: {
           id: department,
           building: locationFormat,
         },
         select: { receptionNodeID: true },
       });
+
+      //find the algorithm in the database
+      let algorithm = "";
+      const algorithmDB = await client.algorithm.findFirst();
+      if (!algorithmDB) {
+        algorithm = "bfs";
+      } else {
+        algorithm = algorithmDB.toString();
+      }
+      console.log("this is the algorithm in algoRouting: ", algorithm);
 
       if (!response) {
         res.status(404).json({ error: "Department not found" });
@@ -67,4 +77,17 @@ router.post("/fetchPath", async function (req: Request, res: Response) {
   }
 });
 
+router.get("/", async function (req: Request, res: Response) {
+  console.log("in /algo/ requests");
+
+  try {
+    const algorithm = await client.algorithm.findFirst();
+
+    console.log(algorithm);
+    res.status(200).json(algorithm); // Send employee data as JSON
+  } catch (error) {
+    console.error("Error fetching algorithm:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 export default router;

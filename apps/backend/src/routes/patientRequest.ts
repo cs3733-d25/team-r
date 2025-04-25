@@ -1,12 +1,12 @@
 import express, { Router, Request, Response } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import client from "../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
 const router: Router = express.Router();
 router.get("/", async function (req: Request, res: Response) {
   try {
-    const requests = await PrismaClient.patientRequest.findMany({
+    const requests = await client.patientRequest.findMany({
       orderBy: { priority: "asc" },
     });
     console.log(requests);
@@ -30,11 +30,11 @@ router.post("/", async function (req: Request, res: Response) {
     //employeeName,
   } = req.body;
 
-  const employeeName = req.session?.username;
+  const employeeID = req.session?.username;
 
   try {
     console.log(request);
-    const createRequest = await PrismaClient.patientRequest.create({
+    const createRequest = await client.patientRequest.create({
       data: {
         patient: {
           connect: { id: patientID },
@@ -45,7 +45,7 @@ router.post("/", async function (req: Request, res: Response) {
         status,
         employeeName: {
           connect: {
-            id: employeeName,
+            id: employeeID,
           },
         },
         request,

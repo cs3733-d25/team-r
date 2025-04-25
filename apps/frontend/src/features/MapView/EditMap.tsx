@@ -4,12 +4,13 @@ import { Input } from '@/components/ui/input.tsx';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import { getBuildingFromLocation, getBuildingConstant } from '@/features/MapView/mapUtils.ts'; // don't use getBuildingConstant we don't need it since we can store strings now
+import { getBuildingFromLocation } from '@/features/MapView/mapUtils.ts';
 import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapView/mapService.ts';
-import axios, {AxiosPromise, AxiosResponse} from 'axios';
+import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import {marker} from "leaflet";
 import {Node} from "../../../../backend/src/routes/mapData.ts";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 
 interface EditMapProps {
     status?: string;
@@ -20,6 +21,10 @@ interface Department {
     name: string;
 }
 
+interface InternalMapProps {
+    onLocationChange?: (building: string, floor: number) => void;
+}
+
 declare global {
     interface Window {
         lastClickCoordinates?: {lat: number, lng: number};
@@ -28,8 +33,8 @@ declare global {
 
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<string>(
-        "Faulkner 1st Floor"
-        // 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+        // "Faulkner 1st Floor"
+        'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035'
     );
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
     const [editcoordinates, setEditCoordinates] = useState<{ x: number; y: number } | null>(null);
@@ -42,18 +47,20 @@ export function EditMap({ status }: EditMapProps) {
     const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
     const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
-    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
+    const [currentFloor, setCurrentFloor] = useState<number>(3); // TODO: this be the problem
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]);
     const [nodes, setNodes] = useState<string>('');
-
+    const [activeTab, setActiveTab] = useState<string>('place-node');
+    //for algo selection
+    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('dfs');
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
 
     function setLocation(building:string, floor:number){
-        console.log(building, floor);
+        console.log("Active Layer Changed", building, floor);
         setCurrentBuilding(building);
         setCurrentFloor(floor);
     }
@@ -72,14 +79,14 @@ export function EditMap({ status }: EditMapProps) {
 
     // function from mapService that makes axios request
     async function deleteNode (nodeID:string) {
-        // make request, and pass the promise to the internal map to reload once its done
+        // make request, and pass the promise to the internal map to reload once it's done
         setRequestPromise(async () => {await postNodeDeletion(nodeID)});
     }
 
 
     // function from mapService that makes axios request
     async function deleteEdge (edgeID:string) {
-        // make request, and pass the promise to the internal map to reload once its done
+        // make request, and pass the promise to the internal map to reload once it's done
         setRequestPromise(async () => {await postEdgeDeletion(edgeID)});
     }
 
@@ -163,45 +170,46 @@ export function EditMap({ status }: EditMapProps) {
                 : [...prev, departmentId]
         );
     };
-const editNode = async () => {
-    if (!editcoordinates) {
-        alert('Please select a location on the map first.');
-        return;
-    }
-    const nodeData = {
-        nodeID: editnodeName,
-        nodeType: editnodeType,
-        building: currentBuilding,
-        floor: currentFloor,
-        xcoord: editcoordinates.x,
-        ycoord: editcoordinates.y,
-        longName: "",
-        shortName: editnodeName,
-        departments: selectedDepartments
-    };
-    try {
-        // call API to save node
-        // split the promise so that the internal map can update
-        const promise = axios.post('/api/map/edit-node', nodeData);
-        setRequestPromise(async () => {await promise});
-        const response = await promise;
 
-        // alert(nodeName);
-        if (response.status === 200) {
-            // alert('Node saved successfully!');
-            // reset form
-            setEditNodeName('');
-            setEditNodeType('');
-            setEditSelectedDepartments([]);
-            setEditCoordinates(null);
-        } else {
-            alert('Failed to save node.');
+    const editNode = async () => {
+        if (!editcoordinates) {
+            alert('Please select a location on the map first.');
+            return;
         }
-    } catch (error) {
-        console.error('Error saving node:', error);
-        alert('An error occurred while saving the node.');
+        const nodeData = {
+            nodeID: editnodeName,
+            nodeType: editnodeType,
+            building: currentBuilding,
+            floor: currentFloor,
+            xcoord: editcoordinates.x,
+            ycoord: editcoordinates.y,
+            longName: "",
+            shortName: editnodeName,
+            departments: selectedDepartments
+        };
+        try {
+            // call API to save node
+            // split the promise so that the internal map can update
+            const promise = axios.post('/api/map/edit-node', nodeData);
+            setRequestPromise(async () => {await promise});
+            const response = await promise;
+
+            // alert(nodeName);
+            if (response.status === 200) {
+                // alert('Node saved successfully!');
+                // reset form
+                setEditNodeName('');
+                setEditNodeType('');
+                setEditSelectedDepartments([]);
+                setEditCoordinates(null);
+            } else {
+                alert('Failed to save node.');
+            }
+        } catch (error) {
+            console.error('Error saving node:', error);
+            alert('An error occurred while saving the node.');
+        }
     }
-}
 
     const saveNode = async () => {
         if (!coordinates) {
@@ -210,6 +218,8 @@ const editNode = async () => {
         }
 
         console.log(currentFloor);
+
+        // use currentBuilding and currentFloor from state (automatically updated when layer changes)
         const nodeData = {
             nodeID: nodeName || `${nodeType}-${Date.now()}`,
             nodeType: nodeType,
@@ -275,201 +285,264 @@ const editNode = async () => {
             alert('An error occurred while saving the edge.');
         }
     };
+
+    const resetMap = async () => {
+        if (confirm('Are you sure you want to reset the map?')) {
+            try {
+                const promise = axios.post('/api/map/reset');
+                setRequestPromise(async () => {await promise});
+                const response = await promise;
+
+                if (response.status === 200) {
+                    alert('Map reset successfully!');
+                    setEdgeNodes([]);
+                    setNodes('');
+                    setCoordinates(null);
+                    setEditCoordinates(null);
+                } else {
+                    alert('Failed to reset map.');
+                }
+            } catch (error) {
+                console.error('Error resetting map:', error);
+                alert('An error occurred while resetting the map.');
+            }
+        }
+    };
+
     console.log("edit Coordinates", editcoordinates);
     console.log(" Coordinates", coordinates);
+
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-1 relative cursor-pointer">
-                <InternalMap location={selectedLocation} onLocationChange={setLocation} onNodeDelete={deleteNode} promiseNodeCreate={requestPromise} promiseEdgeCreate={edgeCreatePromise} showEdges={true} onEdgeDelete={deleteEdge} onNodeSelect={onNodeClick} />
+                <InternalMap
+                    location={selectedLocation}
+                    floor={currentFloor}
+                    onNodeDelete={deleteNode}
+                    promiseNodeCreate={requestPromise}
+                    promiseEdgeCreate={edgeCreatePromise}
+                    showEdges={true}
+                    onEdgeDelete={deleteEdge}
+                    onNodeSelect={onNodeClick}
+                    onLocationChange={setLocation}
+                />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
-                    <div className="flex flex-col space-y-2">
-                        <Label className={'p-2 font-bold text-2xl'}>Edit Map</Label>
-                    </div>
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-100 max-h-[90%] overflow-y-auto z-10 flex flex-col justify-start">
 
-                    <div className="space-y-4 flex-grow overflow-auto p-2">
-                        <div className="bg-gray-100 p-3 rounded-md">
-                            <Label>Click on map to select node location</Label>
-                            {coordinates && (
-                                <div className="mt-2 text-sm">
-                                    <p>X: {coordinates.x.toFixed(2)}</p>
-                                    <p>Y: {coordinates.y.toFixed(2)}</p>
-                                    <p>Building: {currentBuilding}</p>
-                                    <p>Floor: {currentFloor}</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="space-y-3">
-                            <div>
-                                <Label >Node Name (Optional)</Label>
-                                <Input
-                                    // id="nodeName"
-                                    value={nodeName}
-                                    onChange={(e) => setNodeName(e.target.value)}
-                                    placeholder="Enter node name"
-                                />
+<div className="flex  flex-col justify-start float-left">
+    <Label className={' font-bold text-2xl'}>Edit Map</Label>
+    <div className="flex  flex-col justify-start text-left">
+                    <Tabs defaultValue="place-node" value={activeTab} onValueChange={setActiveTab} className="w-full flex flex-col">
+                        <TabsList className = " w-80 flex">
+                            <TabsTrigger value="place-node">Place Node</TabsTrigger>
+                            <TabsTrigger value="edit-node">Edit Node</TabsTrigger>
+                        </TabsList>
+<div className={"w-80 flex flex-col"}>
+                        <TabsContent value="place-node" className="space-y-4">
+                            <div className="bg-gray-100 p-3 rounded-md">
+                                <Label>Click on map to select node location</Label>
+                                {coordinates && (
+                                    <div className="mt-2 text-sm">
+                                        <p>X: {coordinates.x.toFixed(2)}</p>
+                                        <p>Y: {coordinates.y.toFixed(2)}</p>
+                                        <p>Building: {currentBuilding}</p>
+                                        <p>Floor: {currentFloor}</p>
+                                    </div>
+                                )}
                             </div>
 
-                            <div>
-                                {/*Owen took out htmlFor="nodeType"*/}
-                                <Label >Node Type</Label>
-                                <Select onValueChange={setNodeType} value={nodeType}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select node type" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            {nodeTypes.map(type => (
-                                                <SelectItem key={type.name} value={type.name}>
-                                                    {type.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div>
-                                <Label>Associated Departments</Label>
-                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
-                                    {availableDepartments.length > 0 ? (
-                                        availableDepartments.map(dept => (
-                                            <div key={dept.id} className="flex items-center space-x-2 py-1">
-                                                <Checkbox
-                                                    id={"dept-${dept.id}"}
-                                                    checked={selectedDepartments.includes(dept.id)}
-                                                    onCheckedChange={() => handleDepartmentToggle(dept.id)}
-                                                />
-                                                <Label htmlFor={`dept-${dept.id}`} className="cursor-pointer">
-                                                    {dept.name}
-                                                </Label>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p className="text-gray-500 text-sm">No departments available</p>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-
-                        <Button
-                            onClick={saveNode}
-                            disabled={!coordinates || !nodeType}
-                            className="w-full"
-                        >
-                            Save Node
-                        </Button>
-                        {/* TODO: change this */}
-                        <div className="bg-gray-100 p-3 rounded-md">
-                            <Label>Click on two nodes to create an edge</Label>
-                            {(edgeNodes.length > 0) ?
-                                <div className="mt-2 text-sm">
-                                    <p>Node 1: {edgeNodes[0]}</p>
-                                    <p>Node 2: {edgeNodes[1]}</p>
-                                </div>:null
-                            }
-                        </div>
-                        <Button
-                            onClick={saveEdge}
-                            disabled={edgeNodes.length != 2}
-                            className="w-full"
-                        >
-                            Save Edge
-                        </Button>
-                        <div className="bg-gray-100 p-3 rounded-md">
-                            {(nodes!=null) ?
-                                <div className="mt-2 text-sm">
-                                    <p>Selected Node: {nodes}</p>
-                                </div>:null
-                            }
-                        </div>
-                        <div className="space-y-3">
-                            <div>
-                                <Label >Change Node Name? </Label>
-                                <Input
-                                    // id="nodeName"
-                                    value={editnodeName}
-                                    onChange={(e) => setEditNodeName(e.target.value)}
-                                    placeholder="Enter New node name"
-                                />
-                            </div>
-
-                            <div>
-                                {/*Owen took out htmlFor="nodeType"*/}
-                                <Label >Change Node Type? </Label>
-                                <Select onValueChange={setEditNodeType} value={editnodeType}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select node type" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            {nodeTypes.map(type => (
-                                                <SelectItem key={type.name} value={type.name}>
-                                                    {type.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div>
-                                <Label>Change Associated Departments?</Label>
-                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
-                                    {editavailableDepartments.length > 0 ? (
-                                        editavailableDepartments.map(dept => (
-                                            <div key={dept.id} className="flex items-center space-x-2 py-1">
-                                                <Checkbox
-                                                    id={"dept-${dept.id}"}
-                                                    checked={editselectedDepartments.includes(dept.id)}
-                                                    onCheckedChange={() => handleEditDepartmentToggle(dept.id)}
-                                                />
-                                                <Label htmlFor={`dept-${dept.id}`} className="cursor-pointer">
-                                                    {dept.name}
-                                                </Label>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p className="text-gray-500 text-sm">No departments available</p>
-                                    )}
-                                </div>
-                            </div>
-                            {editcoordinates !=null?
-                            <div>
-                                <Label >Change X Coordinate? </Label>
-                                <Input
-                                    // id="nodeName"
-                                    value={editcoordinates.x}
-                                    onChange={() => setEditCoordinates({
-                                        x:editcoordinates.x,
-                                        y:editcoordinates.y
-                                    })}
-                                    placeholder="Enter new X Coordinate"
-                                />
-                            </div>:null}
-                            {editcoordinates !=null?
+                            <div className="space-y-3">
                                 <div>
-                                    <Label >Change Y Coordinate? </Label>
+                                    <Label>Node Name (Optional)</Label>
                                     <Input
-                                        // id="nodeName"
-                                        value={editcoordinates.y}
-                                        onChange={() => setEditCoordinates({
-                                            x:editcoordinates.x,
-                                            y:editcoordinates.y
-                                        })}
-                                        placeholder="Enter new Y Coordinate"
+                                        value={nodeName}
+                                        onChange={(e) => setNodeName(e.target.value)}
+                                        placeholder="Enter node name"
                                     />
-                                </div>:null}
-                        </div>
+                                </div>
 
+                                <div>
+                                    <Label>Node Type</Label>
+                                    <Select onValueChange={setNodeType} value={nodeType}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select node type" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {nodeTypes.map(type => (
+                                                    <SelectItem key={type.name} value={type.name}>
+                                                        {type.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div>
+                                    <Label>Associated Departments</Label>
+                                    <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
+                                        {availableDepartments.length > 0 ? (
+                                            availableDepartments.map(dept => (
+                                                <div key={dept.id} className="flex items-center space-x-2 py-1">
+                                                    <Checkbox
+                                                        id={"dept-${dept.id}"}
+                                                        checked={selectedDepartments.includes(dept.id)}
+                                                        onCheckedChange={() => handleDepartmentToggle(dept.id)}
+                                                    />
+                                                    <Label htmlFor={`dept-${dept.id}`} className="cursor-pointer">
+                                                        {dept.name}
+                                                    </Label>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-500 text-sm">No departments available</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <Button onClick={saveNode} disabled={!coordinates || !nodeType} className={"w-full"}>Save Node</Button>
+
+                            <div className="mt-6 pt-4 border-t border-gray-200">
+                                <div className="bg-gray-100 p-3 rounded-md">
+                                    <Label>Click on two nodes to create an edge</Label>
+                                    {(edgeNodes.length > 0) ?
+                                        <div className="mt-2 text-sm">
+                                            <p>Node 1: {edgeNodes[0]}</p>
+                                            <p>Node 2: {edgeNodes[1]}</p>
+                                        </div> : null
+                                    }
+                                </div>
+                                <Button onClick={saveEdge} disabled={edgeNodes.length != 2} className="w-full mt-2">Save Edge</Button>
+                            </div>
+                        </TabsContent>
+
+                        <TabsContent value="edit-node" className="space-y-4">
+                            <div className="bg-gray-100 p-3 rounded-md">
+                                <Label>Selected Node to Edit</Label>
+                                {(nodes !== "") ? (
+                                    <div className="mt-2 text-sm">
+                                        <p>Selected Node: {nodes}</p>
+                                    </div>
+                                ) : (
+                                    <p className="text-sm text-gray-500">Click on a node to select it for editing</p>
+                                )}
+                            </div>
+
+                            <div className="space-y-3">
+                                <div>
+                                    <Label>Change Node Name</Label>
+                                    <Input
+                                        value={editnodeName}
+                                        onChange={(e) => setEditNodeName(e.target.value)}
+                                        placeholder="Enter new node name"
+                                    />
+                                </div>
+
+                                <div>
+                                    <Label>Change Node Type</Label>
+                                    <Select onValueChange={setEditNodeType} value={editnodeType}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select node type" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {nodeTypes.map(type => (
+                                                    <SelectItem key={type.name} value={type.name}>
+                                                        {type.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div>
+                                    <Label>Change Associated Departments</Label>
+                                    <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
+                                        {editavailableDepartments.length > 0 ? (
+                                            editavailableDepartments.map(dept => (
+                                                <div key={dept.id} className="flex items-center space-x-2 py-1">
+                                                    <Checkbox
+                                                        id={`edit-dept-${dept.id}`}
+                                                        checked={editselectedDepartments.includes(dept.id)}
+                                                        onCheckedChange={() => handleEditDepartmentToggle(dept.id)}
+                                                    />
+                                                    <Label htmlFor={`edit-dept-${dept.id}`} className="cursor-pointer">
+                                                        {dept.name}
+                                                    </Label>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-500 text-sm">No departments available</p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {editcoordinates != null ? (
+                                    <div>
+                                        <Label>Change X Coordinate</Label>
+                                        <Input
+                                            value={editcoordinates.x}
+                                            onChange={() => setEditCoordinates({
+                                                x: editcoordinates.x,
+                                                y: editcoordinates.y
+                                            })}
+                                            placeholder="Enter new X Coordinate"
+                                        />
+                                    </div>
+                                ) : null}
+
+                                {editcoordinates != null ? (
+                                    <div>
+                                        <Label>Change Y Coordinate</Label>
+                                        <Input
+                                            value={editcoordinates.y}
+                                            onChange={() => setEditCoordinates({
+                                                x: editcoordinates.x,
+                                                y: editcoordinates.y
+                                            })}
+                                            placeholder="Enter new Y Coordinate"
+                                        />
+                                    </div>
+                                ) : null}
+                            </div>
+
+
+
+                            <Button onClick={editNode} disabled={!nodes} className="w-full">Save Changes</Button>
+                        </TabsContent>
+    <Button onClick={resetMap} variant="ghostDestructive" className="w-full mt-4">Reset Map to Default</Button>
+</div>
+                    </Tabs>
+</div>
+                </div>
                         <Button onClick={editNode}>
                             Edit Node
                         </Button>
+                        {/* Algorithm selector */}
+                        <div className="flex flex-col space-y-2">
+                            <Label>Algorithm</Label>
+                            <Select
+                                value={algorithm}
+                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "dijkstra")}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select algorithm" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectItem value="dfs">DFS</SelectItem>
+                                        <SelectItem value="bfs">BFS</SelectItem>
+                                        <SelectItem value="dijkstra">Dijkstra's</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-
 }

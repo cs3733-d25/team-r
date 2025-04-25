@@ -36,9 +36,14 @@ model Edge {
 }
 
 model Department {
-  id              String     @id @default(uuid())
+  id              String @id @default(uuid())
   name            String
   receptionNodeID String
-  receptionNode   Node       @relation(fields: [receptionNodeID], references: [nodeID])
-  employee        Employee[]
+  receptionNode   Node   @relation(fields: [receptionNodeID], references: [nodeID])
+  // employee        Employee[]
+}
+
+model Algorithm {
+  id   Int    @id @default(autoincrement())
+  algo String
 }

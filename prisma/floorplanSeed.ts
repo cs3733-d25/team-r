@@ -5,24 +5,432 @@ async function main() {
     // chestnut hill floor 1
     await client.node.createMany({
         data:[
-            {nodeID: 'canopyEntrance', nodeType: 'Entrance', building: 'Chestnut Hill', floor: 1, xcoord: 160.01, ycoord: 342.94, longName: '', shortName: 'canopyEntrance'},
-            {nodeID: 'leftEntrance', nodeType: 'Entrance', building: 'Chestnut Hill', floor: 1, xcoord: 496.92, ycoord: 127.98, longName: '', shortName: 'leftEntrance'},
-            {nodeID: 'frontLotChestnut', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 130.02, ycoord: 592.90, longName: 'Front Parking Lot', shortName: 'Front Parking Lot'},
-            {nodeID: 'leftWaiting', nodeType: 'Other', building: 'Chestnut Hill', floor: 1, xcoord: 437.93, ycoord: 152.98, longName: '', shortName: 'leftWaiting'},
-            {nodeID: 'leftLotChestnut', nodeType: 'Parking', building: 'Chestnut Hill', floor: 1, xcoord: 587.89, ycoord: 20.00, longName: 'Left Parking Lot', shortName: 'Left Parking Lot'},
-            {nodeID: 'specialtyCheckIn', nodeType: 'Reception', building: 'Chestnut Hill', floor: 1, xcoord: 262.98, ycoord: 449.93, longName: '', shortName: 'specialtyCheckIn'},
-            {nodeID: 'canopyEntranceHallway', nodeType: 'Hallway', building: 'Chestnut Hill', floor: 1, xcoord: 179.01, ycoord: 343.94, longName: '', shortName: 'canopyEntranceHallway'},
+            {
+                    "nodeID": "Entrance-1745475279866",
+                    "nodeType": "Entrance",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 528.89,
+                    "ycoord": 323.08,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Entrance-1745475321572",
+                    "nodeType": "Entrance",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 241.77,
+                    "ycoord": 506.1,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Reception-1745475750292",
+                    "nodeType": "Reception",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 465.11,
+                    "ycoord": 394.09,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Reception-1745475823905",
+                    "nodeType": "Reception",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 364.14,
+                    "ycoord": 660.12,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Parking-1745476124817",
+                    "nodeType": "Parking",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 533.09,
+                    "ycoord": 213.06,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Parking-1745476137948",
+                    "nodeType": "Parking",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 151.2,
+                    "ycoord": 675.12,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476252825",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 379.12,
+                    "ycoord": 614.09,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476261869",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 377.14,
+                    "ycoord": 715.13,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476274839",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 315.15,
+                    "ycoord": 714.13,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476286280",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 317.15,
+                    "ycoord": 804.14,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476316023",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 590.07,
+                    "ycoord": 861.15,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476325501",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 381.13,
+                    "ycoord": 956.16,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476336196",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 425.12,
+                    "ycoord": 956.16,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476355584",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 377.14,
+                    "ycoord": 801.14,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476377768",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 385.13,
+                    "ycoord": 871.15,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476392418",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 591.07,
+                    "ycoord": 921.16,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476405531",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 436.12,
+                    "ycoord": 928.16,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476418680",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 705.04,
+                    "ycoord": 922.16,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476440148",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 710.04,
+                    "ycoord": 685.12,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476454878",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 770.07,
+                    "ycoord": 683.1,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476466618",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 771.02,
+                    "ycoord": 412.09,
+                    "longName": "",
+                    "shortName": ""
+                },
+                {
+                    "nodeID": "Hallway-1745476477762",
+                    "nodeType": "Hallway",
+                    "building": "Chestnut Hill",
+                    "floor": 1,
+                    "xcoord": 591.07,
+                    "ycoord": 411.09,
+                    "longName": "",
+                    "shortName": ""
+                }
+
         ],
         skipDuplicates: true
     })
 
     await client.edge.createMany({
         data:[
-            {fromID: 'frontLotChestnut', toID: 'canopyEntrance', fromX: 130.02, fromY: 592.90, toX: 160.01, toY: 342.94},
-            {fromID: 'leftLotChestnut', toID: 'leftEntrance', fromX: 587.89, fromY: 20.00, toX: 496.92, toY: 127.98},
-            {fromID: 'leftEntrance', toID: 'leftWaiting', fromX: 496.92, fromY: 127.98, toX: 437.93, toY: 152.98},
-            {fromID: 'canopyEntrance', toID: 'canopyEntranceHallway', fromX: 160.01, fromY: 342.94, toX: 179.01, toY: 343.94},
-            {fromID: 'canopyEntranceHallway', toID: 'specialtyCheckIn', fromX: 179.01, fromY: 343.94, toX: 262.98, toY: 449.93}
+                {
+                    "edgeID": "e3519bcb-a853-4da1-ba2b-31142b151244",
+                    "fromID": "Parking-1745476124817",
+                    "toID": "Entrance-1745475279866",
+                    "fromX": null,
+                    "fromY": null,
+                    "toX": null,
+                    "toY": null
+                },
+                    {
+                        "edgeID": "25cbdf9d-2f36-426d-a887-ebd578c3a3e3",
+                        "fromID": "Hallway-1745476466618",
+                        "toID": "Hallway-1745476454878",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "04525e00-1ac6-4a12-ac97-30b952e61bb4",
+                        "fromID": "Hallway-1745476466618",
+                        "toID": "Hallway-1745476477762",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "9d008868-3e64-4879-b288-47702e44b5d3",
+                        "fromID": "Hallway-1745476440148",
+                        "toID": "Hallway-1745476418680",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "f62e8c26-e49f-4d0b-801d-a79d84ad5d11",
+                        "fromID": "Hallway-1745476454878",
+                        "toID": "Hallway-1745476440148",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "67d5e250-7946-4269-82a4-bec57573faed",
+                        "fromID": "Hallway-1745476418680",
+                        "toID": "Hallway-1745476392418",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "2666f7ed-781c-4e56-b972-e8d355e320f6",
+                        "fromID": "Hallway-1745476392418",
+                        "toID": "Hallway-1745476316023",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "9ca61dfa-6448-43a7-83d3-ede06e306e78",
+                        "fromID": "Hallway-1745476316023",
+                        "toID": "Hallway-1745476377768",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "85f5b038-de17-406d-80c3-2874ff5f7f49",
+                        "fromID": "Hallway-1745476392418",
+                        "toID": "Hallway-1745476405531",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "17925112-bada-4dfb-bfc8-d838c39bcd93",
+                        "fromID": "Hallway-1745476405531",
+                        "toID": "Hallway-1745476336196",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "b8b37346-c04c-4bc3-bb4b-8f2628a7fd2b",
+                        "fromID": "Hallway-1745476336196",
+                        "toID": "Hallway-1745476325501",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "0cfb6592-666a-4d6f-9d78-33990c5749cc",
+                        "fromID": "Hallway-1745476325501",
+                        "toID": "Hallway-1745476377768",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "6e5b3d02-6036-49af-9dd5-9474e7e64698",
+                        "fromID": "Hallway-1745476377768",
+                        "toID": "Hallway-1745476355584",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "dd73e1c5-9884-458a-9d2e-54642840c206",
+                        "fromID": "Hallway-1745476355584",
+                        "toID": "Hallway-1745476286280",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "2c256ba2-f5ce-4dff-a30c-665cc57751ab",
+                        "fromID": "Hallway-1745476274839",
+                        "toID": "Hallway-1745476286280",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "cbbae1fe-be02-48b6-8a04-7eca0fea909b",
+                        "fromID": "Hallway-1745476274839",
+                        "toID": "Hallway-1745476261869",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "84d21992-474d-4d1a-b661-788f514acd29",
+                        "fromID": "Hallway-1745476261869",
+                        "toID": "Hallway-1745476252825",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "7b679f05-01af-4522-ab8b-685269030e93",
+                        "fromID": "Parking-1745476137948",
+                        "toID": "Entrance-1745475321572",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "ea7bea0a-ef04-4bf7-af4d-719bf52c113e",
+                        "fromID": "Entrance-1745475321572",
+                        "toID": "Hallway-1745476252825",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "dad3ff3c-1219-4966-a5a1-64a7303627c9",
+                        "fromID": "Entrance-1745475321572",
+                        "toID": "Reception-1745475823905",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "45c6b47f-4d95-4265-af1f-bc9b5c743e5b",
+                        "fromID": "Entrance-1745475279866",
+                        "toID": "Reception-1745475750292",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    },
+                    {
+                        "edgeID": "c5d0acfc-020c-41da-aa18-8e58b00d9591",
+                        "fromID": "Entrance-1745475279866",
+                        "toID": "Hallway-1745476477762",
+                        "fromX": null,
+                        "fromY": null,
+                        "toX": null,
+                        "toY": null
+                    }
+
         ]
     })
 
@@ -43,7 +451,7 @@ async function main() {
                 "xcoord": 582.42,
                 "ycoord": 620.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Central Hallway"
             },
             {
                 "nodeID": "Hallway-1745468105189",
@@ -53,7 +461,7 @@ async function main() {
                 "xcoord": 581.83,
                 "ycoord": 668,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Southeast Hallway"
             },
             {
                 "nodeID": "Hallway-1745468111109",
@@ -63,7 +471,7 @@ async function main() {
                 "xcoord": 582.83,
                 "ycoord": 578,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Northeast Hallway"
             },
             {
                 "nodeID": "Hallway-1745468120025",
@@ -73,7 +481,7 @@ async function main() {
                 "xcoord": 559.42,
                 "ycoord": 576,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Wing Hallway"
             },
             {
                 "nodeID": "Hallway-1745468125283",
@@ -83,7 +491,7 @@ async function main() {
                 "xcoord": 510.42,
                 "ycoord": 670.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Hallway"
             },
             {
                 "nodeID": "Hallway-1745468129629",
@@ -93,7 +501,7 @@ async function main() {
                 "xcoord": 480.17,
                 "ycoord": 621.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Central Hallway"
             },
             {
                 "nodeID": "Hallway-1745468133623",
@@ -103,7 +511,7 @@ async function main() {
                 "xcoord": 478.83,
                 "ycoord": 669,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Central Hallway"
             },
             {
                 "nodeID": "Hallway-1745468140562",
@@ -113,7 +521,7 @@ async function main() {
                 "xcoord": 480.42,
                 "ycoord": 515.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Northeast Central"
             },
             {
                 "nodeID": "Reception-1745468181591",
@@ -123,7 +531,7 @@ async function main() {
                 "xcoord": 561.42,
                 "ycoord": 591,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Reception"
             },
             {
                 "nodeID": "Reception-1745468203626",
@@ -133,7 +541,7 @@ async function main() {
                 "xcoord": 561.71,
                 "ycoord": 553,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Northeast Reception"
             },
             {
                 "nodeID": "Reception-1745468225241",
@@ -143,7 +551,7 @@ async function main() {
                 "xcoord": 568.92,
                 "ycoord": 631.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Pre-Admit Reception"
             },
             {
                 "nodeID": "Reception-1745468241433",
@@ -153,7 +561,7 @@ async function main() {
                 "xcoord": 596.92,
                 "ycoord": 668,
                 "longName": "",
-                "shortName": ""
+                "shortName": "MRI Reception"
             },
             {
                 "nodeID": "Reception-1745468256681",
@@ -163,7 +571,7 @@ async function main() {
                 "xcoord": 581.92,
                 "ycoord": 721,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Radiology Reception"
             },
             {
                 "nodeID": "Reception-1745468279713",
@@ -173,7 +581,7 @@ async function main() {
                 "xcoord": 481.42,
                 "ycoord": 498,
                 "longName": "",
-                "shortName": ""
+                "shortName": "North Reception"
             },
             {
                 "nodeID": "Reception-1745468288835",
@@ -183,7 +591,7 @@ async function main() {
                 "xcoord": 451.33,
                 "ycoord": 514.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "GI Reception"
             },
             {
                 "nodeID": "Reception-1745468299003",
@@ -193,7 +601,7 @@ async function main() {
                 "xcoord": 466.08,
                 "ycoord": 629.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Pulmonary Reception"
             },
             {
                 "nodeID": "Reception-1745468308859",
@@ -203,7 +611,7 @@ async function main() {
                 "xcoord": 449.21,
                 "ycoord": 630.75,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Central Reception"
             },
             {
                 "nodeID": "Hallway-1745468326007",
@@ -213,7 +621,7 @@ async function main() {
                 "xcoord": 383.42,
                 "ycoord": 669.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "West Hallway"
             },
             {
                 "nodeID": "Hallway-1745468331257",
@@ -223,7 +631,7 @@ async function main() {
                 "xcoord": 385.58,
                 "ycoord": 789.25,
                 "longName": "",
-                "shortName": ""
+                "shortName": "Southwest Hallway"
             },
             {
                 "nodeID": "Reception-1745468408887",
@@ -233,7 +641,7 @@ async function main() {
                 "xcoord": 495,
                 "ycoord": 807.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Reception"
             },
             {
                 "nodeID": "Hallway-1745468416845",
@@ -243,7 +651,7 @@ async function main() {
                 "xcoord": 511.5,
                 "ycoord": 807.25,
                 "longName": "",
-                "shortName": ""
+                "shortName": "South Corridor"
             },
             {
                 "nodeID": "Parking-1745468723599",
@@ -252,8 +660,8 @@ async function main() {
                 "floor": 1,
                 "xcoord": 719.67,
                 "ycoord": 313,
-                "longName": "",
-                "shortName": "THE Faulkner Parking Lot"
+                "longName": "THE Faulkner Parking Lot",
+                "shortName": "Parking Lot"
             },
             {
                 "nodeID": "Hallway-1745469182158",
@@ -263,7 +671,7 @@ async function main() {
                 "xcoord": 450.42,
                 "ycoord": 668.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "West Central Hallway"
             },
             {
                 "nodeID": "Faulkner Entrance",
@@ -272,8 +680,8 @@ async function main() {
                 "floor": 1,
                 "xcoord": 722.0,
                 "ycoord": 622.0,
-                "longName": "",
-                "shortName": ""
+                "longName": "Faulkner front entrance",
+                "shortName": "Front Entrance"
             },
             {
                 "nodeID": "a faulkner hallway",
@@ -283,7 +691,7 @@ async function main() {
                 "xcoord": 630.5,
                 "ycoord": 620.5,
                 "longName": "",
-                "shortName": ""
+                "shortName": "East Entrance Hallway"
             }
         ],
         skipDuplicates: true
@@ -292,55 +700,538 @@ async function main() {
     // patriot 22 floor 1
     await client.node.createMany({
         data: [
-            {nodeID: 'valetParking22', nodeType: 'Parking', building: 'Patriot Place 22', floor: 1, xcoord: 576.44, ycoord: 35.10, longName: 'Valet Parking 22 Patriot', shortName: 'Valet Parking 22 Patriot',},
-            {nodeID: 'patientParking22', nodeType: 'Parking', building: 'Patriot Place 22', floor: 1, xcoord: 217.98, ycoord: 221.99, longName: 'Patient Parking 22 Patriot', shortName: 'Patient Parking 22 Patriot',},
-            {nodeID: 'extendedParking22', nodeType: 'Parking', building: 'Patriot Place 22', floor: 1, xcoord: 128.70, ycoord: 226.15, longName: 'Extended Patient Parking 22 Patriot', shortName: 'Extended Patient Parking 22 Patriot',},
-            {nodeID: '1ST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 1, xcoord: 419.75, ycoord: 455.00, longName: '', shortName: ''},
-            { nodeID: '1ST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 1, xcoord: 355.25, ycoord: 280.50, longName: '', shortName: ''},
-            { nodeID: '1EA', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 1, xcoord: 351.25, ycoord: 535.50, longName: 'Elevator 1A', shortName: 'Elevator 1A'},
-            { nodeID: '22entrance1', nodeType: 'Entrance', building: 'Patriot Place 22', floor: 1, xcoord: 333.39, ycoord: 719.00, longName: 'Entrance', shortName: 'Entrance'}
-        ],
-        skipDuplicates: true
-    });
-
-    // patriot 22 floor 3
-    await client.node.createMany({
-        data: [
-            {nodeID: 'ST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 3, xcoord: 442.88, ycoord: 327.00, longName: 'Stair ST02', shortName: 'Stair ST02'},
-            {nodeID: '3000C', nodeType: 'Other', building: 'Patriot Place 22', floor: 3, xcoord: 444.25, ycoord: 344.00, longName: 'Copy 3000C', shortName: 'Copy 3000C'},
-            {nodeID: '3E', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 3, xcoord: 466.88, ycoord: 345.00, longName: 'Corridor 3E', shortName: 'Corridor 3E'},
-            {nodeID: '3001', nodeType: 'Other', building: 'Patriot Place 22', floor: 3, xcoord: 466.63, ycoord: 432.00, longName: 'Touchdown 3001', shortName: 'Touchdown 3001'},
-            {nodeID: '3000A', nodeType: 'Reception', building: 'Patriot Place 22', floor: 3, xcoord: 418.63, ycoord: 419.25, longName: 'Check-In 3000A', shortName: 'Check-In 3000A'},
-            {nodeID: 'ST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 3, xcoord: 436.13, ycoord: 470.25, longName: 'Tenant Stair ST01', shortName: 'Tenant Stair ST01'},
-            {nodeID: '3A', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 3, xcoord: 438.88, ycoord: 538.75, longName: 'Elevator 3A', shortName: 'Elevator 3A'},
-            {nodeID: '3B', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 3, xcoord: 438.13, ycoord: 592.50, longName: 'Corridor 3B', shortName: 'Corridor 3B'},
-            {nodeID: '3000B', nodeType: 'Other', building: 'Patriot Place 22', floor: 3, xcoord: 436.13, ycoord: 643.75, longName: 'Waiting 3000B', shortName: 'Waiting 3000B'},
-            {nodeID: '3104', nodeType: 'Other', building: 'Patriot Place 22', floor: 3, xcoord: 595.13, ycoord: 639.00, longName: 'EQ Alcohol 3104', shortName: 'EQ Alcohol 3104'},
-            {nodeID: '3S', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 3, xcoord: 595.13, ycoord: 733.25, longName: 'Corridor 3S', shortName: 'Corridor 3S'},
-            {nodeID: '3112', nodeType: 'Other', building: 'Patriot Place 22', floor: 3, xcoord: 645.88, ycoord: 732.50, longName: 'Exam 3112', shortName: 'Exam 3112'},
-            {nodeID: 'ST03', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 3, xcoord: 660.63, ycoord: 805.25, longName: 'Stair ST03', shortName: 'Stair ST03'},
-            {nodeID: '307', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 3, xcoord: 275.38, ycoord: 693.50, longName: 'Bridge 307', shortName: 'Bridge 307'}
+            {
+                "nodeID": "Extended Patient Parking",
+                "nodeType": "Parking",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 15.83,
+                "ycoord": 10,
+                "longName": "",
+                "shortName": "Extended Patient Parking"
+            },
+            {
+                "nodeID": "Valet Parking",
+                "nodeType": "Parking",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 1.67,
+                "ycoord": 707,
+                "longName": "",
+                "shortName": "Valet Parking"
+            },
+            {
+                "nodeID": "Valet Parking Lot",
+                "nodeType": "Parking",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 424.67,
+                "ycoord": 923,
+                "longName": "",
+                "shortName": "Valet Parking Lot"
+            },
+            {
+                "nodeID": "Sidewalk-1745515004862",
+                "nodeType": "Sidewalk",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 119.67,
+                "ycoord": 690,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745515017629",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 130.67,
+                "ycoord": 691,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745515041197",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 258.67,
+                "ycoord": 792,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Entrance-1745515055030",
+                "nodeType": "Entrance",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 357.67,
+                "ycoord": 746,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Elevator-1745515093551",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 22",
+                "floor": 1,
+                "xcoord": 412.67,
+                "ycoord": 682,
+                "longName": "",
+                "shortName": ""
+            }
         ],
         skipDuplicates: true
     });
 
     await client.edge.createMany({
         data: [
-            {fromID: 'ST02', toID: '3000C', fromX: 442.88, fromY: 327.00, toX: 444.25, toY: 344.00},
-            { fromID: '3000C', toID: '3E', fromX: 444.25, fromY: 344.00, toX: 466.88, toY: 345.00 },
-            { fromID: '3E', toID: '3001', fromX: 466.88, fromY: 345.00, toX: 466.63, toY: 432.00 },
-            { fromID: '3001', toID: '3000A', fromX: 466.63, fromY: 432.00, toX: 418.63, toY: 419.25 },
-            { fromID: '3000A', toID: 'ST01', fromX: 418.63, fromY: 419.25, toX: 436.13, toY: 470.25 },
-            { fromID: 'ST01', toID: '3A', fromX: 436.13, fromY: 470.25, toX: 438.88, toY: 538.75 },
-            { fromID: '3000A', toID: '3B', fromX: 418.63, fromY: 419.25, toX: 438.13, toY: 592.50 },
-            { fromID: '3A', toID: '3B', fromX: 438.88, fromY: 538.75, toX: 438.13, toY: 592.50 },
-            { fromID: '3B', toID: '307', fromX: 438.13, fromY: 592.50, toX: 275.38, toY: 693.50 },
-            { fromID: '3A', toID: '3000B', fromX: 438.88, fromY: 538.75, toX: 436.13, toY: 643.75 },
-            { fromID: '3000B', toID: '3104', fromX: 436.13, fromY: 643.75, toX: 595.13, toY: 639.00 },
-            { fromID: '3104', toID: '3S', fromX: 595.13, fromY: 639.00, toX: 595.13, toY: 733.25 },
-            { fromID: '3S', toID: '3112', fromX: 595.13, fromY: 733.25, toX: 645.88, toY: 732.50 },
-            { fromID: '3112', toID: 'ST03', fromX: 645.88, fromY: 732.50, toX: 660.63, toY: 805.25 },
-            { fromID: 'bridgePatriot20', toID: '307', fromX: 237.41, fromY: 111.00, toX: 275.38, toY: 693.50 }
+            {
+                "fromID": "Hallway-1745468326007",
+                "toID": "Hallway-1745468331257"
+            },
+            {
+                "fromID": "Hallway-1745515017629",
+                "toID": "Valet Parking"
+            },
+            {
+                "fromID": "Hallway-1745515017629",
+                "toID": "Extended Patient Parking"
+            },
+            {
+                "fromID": "Entrance-1745515055030",
+                "toID": "Hallway-1745515041197"
+            },
+            {
+                "fromID": "Valet Parking Lot",
+                "toID": "Hallway-1745515041197"
+            },
+            {
+                "fromID": "Hallway-1745515041197",
+                "toID": "Hallway-1745515017629"
+            },
+            {
+                "fromID": "Elevator-1745515093551",
+                "toID": "Entrance-1745515055030"
+            }
+        ]
+    });
+
+    // patriot 22 floor 3
+    await client.node.createMany({
+        data: [
+            {
+                "nodeID": "Elevator-1745530797419",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 441.67,
+                "ycoord": 694,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530802852",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 396.83,
+                "ycoord": 697.5,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530806495",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 401.67,
+                "ycoord": 778,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530812008",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 557.67,
+                "ycoord": 772,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530816898",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 567.67,
+                "ycoord": 672,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530821770",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 569.67,
+                "ycoord": 868,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530827906",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 725.67,
+                "ycoord": 772,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530836846",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 727.67,
+                "ycoord": 670,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530842426",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 725.67,
+                "ycoord": 872,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530850336",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 397.67,
+                "ycoord": 548,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530855313",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 425.67,
+                "ycoord": 522,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530859661",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 429.67,
+                "ycoord": 464,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530864206",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 563.67,
+                "ycoord": 462,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530869011",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 571.67,
+                "ycoord": 572,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530885789",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 566.67,
+                "ycoord": 352,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530891145",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 560.67,
+                "ycoord": 248,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530895797",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 720.67,
+                "ycoord": 352,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745530900471",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 722.67,
+                "ycoord": 248,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531120923",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 384.67,
+                "ycoord": 248,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531125317",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 388.67,
+                "ycoord": 356,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531142253",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 722.67,
+                "ycoord": 458,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531147438",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 726.67,
+                "ycoord": 570,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531167025",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 694.67,
+                "ycoord": 990,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531176179",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 727.83,
+                "ycoord": 988,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531180756",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 616.67,
+                "ycoord": 934,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745531232798",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 617.42,
+                "ycoord": 876,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "all-patriot-22-3-departments",
+                "nodeType": "Reception",
+                "building": "Patriot Place 22",
+                "floor": 3,
+                "xcoord": 591.42,
+                "ycoord": 587.5,
+                "longName": "",
+                "shortName": "all-patriot-22-3-departments"
+            }
+        ],
+        skipDuplicates: true
+    });
+
+    await client.edge.createMany({
+        data: [
+            {
+                "fromID": "Hallway-1745530900471",
+                "toID": "Hallway-1745530895797"
+            },
+            {
+                "fromID": "Hallway-1745530895797",
+                "toID": "Hallway-1745530885789"
+            },
+            {
+                "fromID": "Hallway-1745530885789",
+                "toID": "Hallway-1745530864206"
+            },
+            {
+                "fromID": "Hallway-1745530900471",
+                "toID": "Hallway-1745530891145"
+            },
+            {
+                "fromID": "Hallway-1745530885789",
+                "toID": "Hallway-1745530891145"
+            },
+            {
+                "fromID": "Hallway-1745530864206",
+                "toID": "Hallway-1745530869011"
+            },
+            {
+                "fromID": "Hallway-1745530864206",
+                "toID": "Hallway-1745530859661"
+            },
+            {
+                "fromID": "Hallway-1745530869011",
+                "toID": "Hallway-1745530816898"
+            },
+            {
+                "fromID": "Hallway-1745530836846",
+                "toID": "Hallway-1745530816898"
+            },
+            {
+                "fromID": "Hallway-1745530836846",
+                "toID": "Hallway-1745530827906"
+            },
+            {
+                "fromID": "Hallway-1745530827906",
+                "toID": "Hallway-1745530842426"
+            },
+            {
+                "fromID": "Hallway-1745530842426",
+                "toID": "Hallway-1745530821770"
+            },
+            {
+                "fromID": "Hallway-1745530827906",
+                "toID": "Hallway-1745530812008"
+            },
+            {
+                "fromID": "Hallway-1745530821770",
+                "toID": "Hallway-1745530812008"
+            },
+            {
+                "fromID": "Hallway-1745530812008",
+                "toID": "Hallway-1745530816898"
+            },
+            {
+                "fromID": "Hallway-1745530812008",
+                "toID": "Hallway-1745530806495"
+            },
+            {
+                "fromID": "Hallway-1745530806495",
+                "toID": "Hallway-1745530802852"
+            },
+            {
+                "fromID": "Elevator-1745530797419",
+                "toID": "Hallway-1745530802852"
+            },
+            {
+                "fromID": "Hallway-1745530802852",
+                "toID": "Hallway-1745530850336"
+            },
+            {
+                "fromID": "Hallway-1745530855313",
+                "toID": "Hallway-1745530850336"
+            },
+            {
+                "fromID": "Hallway-1745530855313",
+                "toID": "Hallway-1745530859661"
+            },
+            {
+                "fromID": "Hallway-1745530891145",
+                "toID": "Hallway-1745531120923"
+            },
+            {
+                "fromID": "Hallway-1745531120923",
+                "toID": "Hallway-1745531125317"
+            },
+            {
+                "fromID": "Hallway-1745531125317",
+                "toID": "Hallway-1745530885789"
+            },
+            {
+                "fromID": "Hallway-1745531147438",
+                "toID": "Hallway-1745531142253"
+            },
+            {
+                "fromID": "Hallway-1745531147438",
+                "toID": "Hallway-1745530869011"
+            },
+            {
+                "fromID": "Hallway-1745531142253",
+                "toID": "Hallway-1745530864206"
+            },
+            {
+                "fromID": "Hallway-1745530842426",
+                "toID": "Hallway-1745531176179"
+            },
+            {
+                "fromID": "Hallway-1745531176179",
+                "toID": "Hallway-1745531167025"
+            },
+            {
+                "fromID": "Hallway-1745531167025",
+                "toID": "Hallway-1745531180756"
+            },
+            {
+                "fromID": "Hallway-1745531180756",
+                "toID": "Hallway-1745531232798"
+            },
+            {
+                "fromID": "Hallway-1745531232798",
+                "toID": "Hallway-1745530821770"
+            },
+            {
+                "fromID": "Hallway-1745530842426",
+                "toID": "Hallway-1745531232798"
+            },
+            {
+                "fromID": "all-patriot-22-3-departments",
+                "toID": "Hallway-1745530869011"
+            }
         ]
     });
 
@@ -348,37 +1239,390 @@ async function main() {
     // patriot 22 floor 4
     await client.node.createMany({
         data: [
-            { nodeID: 'checkIn4000B', nodeType: 'Reception', building: 'Patriot Place 22', floor: 4, xcoord: 319.25, ycoord: 654.50, longName: 'rightCheckIn', shortName: 'rightCheckIn'},
-            { nodeID: 'waiting4000', nodeType: 'Other', building: 'Patriot Place 22', floor: 4, xcoord: 299.25, ycoord: 579.50, longName: 'rightEntranceWaiting', shortName: 'rightEntranceWaiting'},
-            { nodeID: 'rightWaitingHallway', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 4, xcoord: 250.25, ycoord: 633.50, longName: 'rightWaitingHallway', shortName: 'rightWaitingHallway'},
-            { nodeID: 'rightEntranceHallway', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 4, xcoord: 353.25, ycoord: 655.50, longName: 'rightEntranceHallway', shortName: 'rightEntranceHallway'},
-            { nodeID: 'elevatorLobby4A', nodeType: 'Elevator', building: 'Patriot Place 22', floor: 4, xcoord: 351.25, ycoord: 535.50, longName: 'elevatorLobby', shortName: 'elevatorLobby'},
-            { nodeID: 'lobbyStairsHallway', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 4, xcoord: 350.75, ycoord: 455.50, longName: 'lobbyStairsHallway', shortName: 'lobbyStairsHallway'},
-            { nodeID: 'stairST01', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 4, xcoord: 419.75, ycoord: 455.00, longName: 'lobbyStairs', shortName: 'lobbyStairs'},
-            { nodeID: 'stairST02', nodeType: 'Stairs', building: 'Patriot Place 22', floor: 4, xcoord: 355.25, ycoord: 280.50, longName: 'leftStairs', shortName: 'leftStairs'},
-            { nodeID: 'corridor4R', nodeType: 'Hallway', building: 'Patriot Place 22', floor: 4, xcoord: 468.75, ycoord: 653.50, longName: 'checkOutHallway', shortName: 'checkOutHallway'},
-            { nodeID: 'checkOutWait4083', nodeType: 'Other', building: 'Patriot Place 22', floor: 4, xcoord: 470.25, ycoord: 615.00, longName: 'checkOutWait', shortName: 'checkOutWait'},
-            { nodeID: 'checkOut4090', nodeType: 'Other', building: 'Patriot Place 22', floor: 4, xcoord: 497.25, ycoord: 708.00, longName: 'checkOut', shortName: 'checkOut'}
+            {
+                "nodeID": "Hallway-1745532856923",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 555.67,
+                "ycoord": 808,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532862197",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 557.67,
+                "ycoord": 698,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532884703",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 707.67,
+                "ycoord": 694,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532889474",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 709.67,
+                "ycoord": 808,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532895073",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 707.67,
+                "ycoord": 922,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532907419",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 709.67,
+                "ycoord": 590,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532911792",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 705.67,
+                "ycoord": 462,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532916746",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 709.67,
+                "ycoord": 350,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532920640",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 707.67,
+                "ycoord": 234,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532926189",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 551.67,
+                "ycoord": 232,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532934749",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 555.67,
+                "ycoord": 350,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532940204",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 321.67,
+                "ycoord": 232,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532945413",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 323.67,
+                "ycoord": 352,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532949809",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 555.67,
+                "ycoord": 460,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532954933",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 557.67,
+                "ycoord": 592,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532960565",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 551.67,
+                "ycoord": 506,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532969426",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 511.67,
+                "ycoord": 508,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532974069",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 341.67,
+                "ycoord": 506,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532978783",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 339.67,
+                "ycoord": 716,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Elevator-1745532984035",
+                "nodeType": "Elevator",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 370.83,
+                "ycoord": 719,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532989467",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 339.83,
+                "ycoord": 819,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745532994775",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 556.83,
+                "ycoord": 924,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745533011435",
+                "nodeType": "Hallway",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 552.83,
+                "ycoord": 869,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Primary Care",
+                "nodeType": "Reception",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 586.83,
+                "ycoord": 870,
+                "longName": "",
+                "shortName": "Primary Care"
+            },
+            {
+                "nodeID": "Community Room",
+                "nodeType": "Reception",
+                "building": "Patriot Place 22",
+                "floor": 4,
+                "xcoord": 298.83,
+                "ycoord": 232,
+                "longName": "",
+                "shortName": "Community Room"
+            }
         ],
         skipDuplicates: true
     });
 
     await client.edge.createMany({
         data: [
-            { fromID:'checkIn4000B', toID:'rightEntranceHallway', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
-            { fromID:'rightEntranceHallway', toID:'elevatorLobby4A', fromX: 353.25, fromY: 655.50, toX: 351.25, toY: 535.50 },
-            { fromID:'elevatorLobby4A', toID:'lobbyStairsHallway', fromX: 351.25, fromY: 535.50, toX: 350.75, toY: 455.50 },
-            { fromID:'lobbyStairsHallway', toID:'stairST01', fromX: 350.75, fromY: 455.50, toX: 419.75, toY: 455.00 },
-            { fromID:'lobbyStairsHallway', toID:'stairST02', fromX: 350.75, fromY: 455.50, toX: 355.25, toY: 280.50 },
-            { fromID:'rightWaitingHallway', toID:'waiting4000', fromX: 250.25, fromY: 633.50, toX: 353.25, toY: 655.50 },
-            { fromID:'checkIn4000B', toID:'rightWaitingHallway', fromX: 319.25, fromY: 654.50, toX: 250.25, toY: 633.50 },
-            { fromID:'checkIn4000B', toID:'waiting4000', fromX: 319.25, fromY: 654.50, toX: 353.25, toY: 655.50 },
-            { fromID:'rightEntranceHallway', toID:'corridor4R', fromX: 353.25, fromY: 655.50, toX: 468.75, toY: 653.50 },
-            { fromID:'corridor4R', toID:'checkOutWait4083', fromX: 468.75, fromY: 653.50, toX: 470.25, toY: 615.00 },
-            { fromID:'corridor4R', toID:'checkOut4090', fromX: 468.75, fromY: 653.50, toX: 497.25, toY: 708.00 },
-            {fromID: 'ST02', toID: 'stairST02', fromX: 442.88, fromY: 327.00, toX: 355.25, toY: 280.50},
-            {fromID: 'ST01', toID: 'stairST01', fromX: 436.13, fromY: 470.25, toX: 419.75, toY: 455.00},
-            {fromID: '3A', toID: 'elevatorLobby4A', fromX: 438.88, fromY: 538.75, toX: 351.25, toY: 535.50}
+            {
+                "fromID": "Hallway-1745532895073",
+                "toID": "Hallway-1745532889474"
+            },
+            {
+                "fromID": "Hallway-1745532889474",
+                "toID": "Hallway-1745532884703"
+            },
+            {
+                "fromID": "Hallway-1745532884703",
+                "toID": "Hallway-1745532907419"
+            },
+            {
+                "fromID": "Hallway-1745532911792",
+                "toID": "Hallway-1745532907419"
+            },
+            {
+                "fromID": "Hallway-1745532911792",
+                "toID": "Hallway-1745532916746"
+            },
+            {
+                "fromID": "Hallway-1745532916746",
+                "toID": "Hallway-1745532920640"
+            },
+            {
+                "fromID": "Hallway-1745532920640",
+                "toID": "Hallway-1745532926189"
+            },
+            {
+                "fromID": "Hallway-1745532926189",
+                "toID": "Hallway-1745532940204"
+            },
+            {
+                "fromID": "Hallway-1745532934749",
+                "toID": "Hallway-1745532926189"
+            },
+            {
+                "fromID": "Hallway-1745532940204",
+                "toID": "Hallway-1745532945413"
+            },
+            {
+                "fromID": "Hallway-1745532934749",
+                "toID": "Hallway-1745532945413"
+            },
+            {
+                "fromID": "Hallway-1745532916746",
+                "toID": "Hallway-1745532934749"
+            },
+            {
+                "fromID": "Hallway-1745532911792",
+                "toID": "Hallway-1745532949809"
+            },
+            {
+                "fromID": "Hallway-1745532949809",
+                "toID": "Hallway-1745532934749"
+            },
+            {
+                "fromID": "Hallway-1745532907419",
+                "toID": "Hallway-1745532954933"
+            },
+            {
+                "fromID": "Hallway-1745532884703",
+                "toID": "Hallway-1745532862197"
+            },
+            {
+                "fromID": "Hallway-1745532889474",
+                "toID": "Hallway-1745532856923"
+            },
+            {
+                "fromID": "Hallway-1745532895073",
+                "toID": "Hallway-1745532994775"
+            },
+            {
+                "fromID": "Hallway-1745532994775",
+                "toID": "Hallway-1745533011435"
+            },
+            {
+                "fromID": "Hallway-1745533011435",
+                "toID": "Hallway-1745532856923"
+            },
+            {
+                "fromID": "Hallway-1745532856923",
+                "toID": "Hallway-1745532989467"
+            },
+            {
+                "fromID": "Hallway-1745532989467",
+                "toID": "Hallway-1745532978783"
+            },
+            {
+                "fromID": "Elevator-1745532984035",
+                "toID": "Hallway-1745532978783"
+            },
+            {
+                "fromID": "Hallway-1745532978783",
+                "toID": "Hallway-1745532974069"
+            },
+            {
+                "fromID": "Hallway-1745532969426",
+                "toID": "Hallway-1745532974069"
+            },
+            {
+                "fromID": "Hallway-1745532949809",
+                "toID": "Hallway-1745532960565"
+            },
+            {
+                "fromID": "Hallway-1745532960565",
+                "toID": "Hallway-1745532969426"
+            },
+            {
+                "fromID": "Hallway-1745532960565",
+                "toID": "Hallway-1745532954933"
+            },
+            {
+                "fromID": "Hallway-1745532954933",
+                "toID": "Hallway-1745532862197"
+            },
+            {
+                "fromID": "Hallway-1745532862197",
+                "toID": "Hallway-1745532856923"
+            },
+            {
+                "fromID": "Primary Care",
+                "toID": "Hallway-1745533011435"
+            },
+            {
+                "fromID": "Hallway-1745532940204",
+                "toID": "Community Room"
+            }
         ]
     });
 

@@ -17,6 +17,7 @@ import './leaflet.css';
 import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 import { AxiosResponse } from 'axios';
+import 'leaflet-ant-path';
 
 declare global {
   interface Window {
@@ -27,6 +28,7 @@ declare global {
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     location: string;
+    floor?: number;
     onLocationChange?: (building:string, floor:number) => void;
     onDataChange?: (name:string, value:string|number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID:string) => Promise<void>;           // for actions that are triggered in the internal map using data from the internal map
@@ -44,11 +46,14 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, floor=1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
-
+    const activeLayerInfo = useRef<{building: string, floor: number}>({
+        building: '20 Patriot Place',
+        floor: 1
+    });
     const [checkIn, setCheckIn] = useState<Node[]>([]);
     const [other, setOther] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
@@ -63,6 +68,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
     const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+
 
     useEffect(() => {
         if(promiseNodeCreate) {
@@ -85,6 +91,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
         }
     }, [promiseEdgeCreate]);
 
+    // get current active layer info
+    const getActiveLayerInfo = () => {
+        return activeLayerInfo.current;
+    };
 
     // callback function for clicking on nodes
     function clickMarker(data:Node, marker:L.Marker):void{
@@ -269,7 +279,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 zoomControl: false,
             }).setView([500, 500], 0);
 
-            // start the placeholer off screen
+            // start the placeholder off-screen
             const nodePlaceholder = L.circle([-100,-100], nodePlaceholderOptions).addTo(map);
 
             // Define bounds
@@ -306,15 +316,59 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
             L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
 
-            // Layer controls
+            // layer controls
             L.control.layers({
-                        '20 Patriot Place - Floor 1': floorLayer20_1,
-                        '22 Patriot Place - Floor 1': floorLayer22_1,
-                        '22 Patriot Place - Floor 3': floorLayer22_3,
-                        '22 Patriot Place - Floor 4': floorLayer22_4,
-                        'Chestnut Hill': floorLayerChestnutHill,
-                        'Faulkner': floorLayerFaulkner,
-                    }, {}).addTo(map);
+                '20 Patriot Place - Floor 1': floorLayer20_1,
+                '22 Patriot Place - Floor 1': floorLayer22_1,
+                '22 Patriot Place - Floor 3': floorLayer22_3,
+                '22 Patriot Place - Floor 4': floorLayer22_4,
+                'Chestnut Hill': floorLayerChestnutHill,
+                'Faulkner': floorLayerFaulkner,
+            }, {}).addTo(map);
+
+            // tracking layer changes
+            map.on('baselayerchange', function(e) {
+                // extract info from layer name
+                const layerName = e.name;
+                let building = '';
+                let floor = 1;
+
+                if (layerName.includes('20 Patriot Place')) {
+                    building = 'Patriot Place 20';
+                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                } else if (layerName.includes('22 Patriot Place')) {
+                    building = 'Patriot Place 22';
+                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                } else if (layerName.includes('Chestnut Hill')) {
+                    building = 'Chestnut Hill';
+                } else if (layerName.includes('Faulkner')) {
+                    building = 'Faulkner';
+                }
+
+                activeLayerInfo.current = {building, floor};
+                console.log("Layer changed to:", building, floor);
+
+                if (onLocationChange) {
+                    onLocationChange(building, floor);
+                }
+            });
+
+            // initialize starting layer
+            if (location.includes('20 Patriot Pl')) {
+                activeLayerInfo.current = { building: 'Patriot Place 20', floor: 1 };
+                floorLayer20_1.addTo(map);
+            } else if (location.includes('22 Patriot Pl')) {
+                activeLayerInfo.current = { building: 'Patriot Place 22', floor };
+                if(floor == 1) floorLayer22_1.addTo(map);
+                else if(floor == 3) floorLayer22_3.addTo(map);
+                else if(floor == 4) floorLayer22_4.addTo(map);
+            } else if (location.includes('Chestnut Hill')) {
+                activeLayerInfo.current = { building: 'Chestnut Hill', floor: 1 };
+                floorLayerChestnutHill.addTo(map);
+            } else if (location.includes('Faulkner')) {
+                activeLayerInfo.current = { building: 'Faulkner', floor: 1 };
+                floorLayerFaulkner.addTo(map);
+            }
 
             if(showEdges) {
                 // draw nodes
@@ -381,8 +435,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer20_1);
 
                 });
@@ -397,21 +451,24 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 }
                 edges22_3.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_3);
                 });
                 edges22_4.map((edge) => {
                     L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayer22_4);
                 });
+
                 edgesChestnut.map((edge) => {
-                    L.polyline([
-                        [edge.fromX, edge.fromY],
-                        [edge.toX, edge.toY],
+                    const line = L.polyline([
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
+                    console.log("got here",edge.fromNode.xcoord)
+                    clickEdge(edge, line);
                 });
                 edgesFaulkner.map((edge) => {
                     const line = L.polyline([
@@ -426,7 +483,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
             if (location.includes('20 Patriot Pl')) {
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
-                floorLayer22_1.addTo(map);
+                if(floor == 1) {
+                    floorLayer22_1.addTo(map);
+                }else if(floor == 3) {
+                    floorLayer22_3.addTo(map);
+                }else if(floor == 4) {
+                    floorLayer22_4.addTo(map);
+                }
             } else if (location.includes('Chestnut Hill')) {
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
@@ -443,8 +506,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
                 // update the placeholder
                 nodePlaceholder.setLatLng(e.latlng);
             });
-      
-
 
             // Store instance
             mapInstance.current = map;
@@ -479,22 +540,45 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, location, onL
     // Redraw route whenever pathCoordinates change
     useEffect(() => {
         if (!mapInstance.current) return;
-        // Remove existing route
+        // remove existing route
         if (routeLayer.current) {
             routeLayer.current.remove();
             routeLayer.current = null;
         }
-        // Draw new route
+
+        // draw new route
         if (pathCoordinates && pathCoordinates.length > 1) {
             console.log("path coordinates in internal map");
             console.log(pathCoordinates);
-            const poly = L.polyline(pathCoordinates, {
-                color: 'red',
-                weight: 3,
-                opacity: 0.8,
-            });
-            poly.addTo(mapInstance.current);
-            routeLayer.current = poly;
+
+            // ant path animation
+            const antPathOptions = {
+                delay: 100, // Delay in milliseconds between dashes
+                dashArray: [10, 20], // Defines the pattern of dashes and gaps
+                weight: 5, // Line weight
+                color: 'darkorange', // Line color
+                pulseColor: '#FFFFFF', // Color of the pulsing outline
+                paused: false, // Whether the animation is paused
+                reverse: false, // Reverse the animation direction
+                hardwareAccelerated: true // Use hardware acceleration if possible
+            };
+
+            const antPoly = L.polyline.antPath(pathCoordinates, antPathOptions);
+
+            antPoly.addTo(mapInstance.current);
+            routeLayer.current = antPoly;
+
+            // start marker
+            const startMarker = L.marker(pathCoordinates[0], {
+                title: "Start",
+                icon: L.divIcon({ className: 'start-marker' }),
+            }).addTo(mapInstance.current);
+
+            // end marker
+            const endMarker = L.marker(pathCoordinates[pathCoordinates.length - 1], {
+                title: "End",
+                icon: L.divIcon({ className: 'end-marker' }),
+            }).addTo(mapInstance.current);
         }
     }, [pathCoordinates]);
 
