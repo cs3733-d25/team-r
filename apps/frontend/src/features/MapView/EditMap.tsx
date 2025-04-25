@@ -65,6 +65,18 @@ export function EditMap({ status }: EditMapProps) {
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
 
+    async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
+        try {
+            const response = await axios.post(`/api/algo/setalgo`, {
+                algo,
+            });
+            setAlgorithm(algo);
+        } catch (error) {
+            console.error('Error saving algorithm:', error);
+            alert('An error occurred while saving the algorithm.');
+        }
+    }
+
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
         setCurrentBuilding(building);
@@ -602,7 +614,9 @@ export function EditMap({ status }: EditMapProps) {
                                         <Label>Algorithm</Label>
                                         <Select
                                             value={algorithm}
-                                            onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+                                            //onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+                                            onValueChange={(value: string) => saveAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
+
                                         >
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select algorithm" />
