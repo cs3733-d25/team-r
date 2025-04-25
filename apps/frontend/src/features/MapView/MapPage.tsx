@@ -292,7 +292,7 @@ export function MapPage() {
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
                         <Label className="font-bold text-xl">Selected Location</Label>
-                        <div>{getShortLocationName(selectedLocation)}</div>
+                        <div className={"font-bold text-secondary text-lg"}>{getShortLocationName(selectedLocation)}</div>
                     </div>
 
                     <div className="space-y-4">

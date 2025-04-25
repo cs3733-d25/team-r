@@ -6,226 +6,225 @@ async function main() {
     await PrismaClient.node.createMany({
         data:[
             {
-                    "nodeID": "Entrance-1745475279866",
-                    "nodeType": "Entrance",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 528.89,
-                    "ycoord": 323.08,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Entrance-1745475321572",
-                    "nodeType": "Entrance",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 241.77,
-                    "ycoord": 506.1,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Reception-1745475750292",
-                    "nodeType": "Reception",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 465.11,
-                    "ycoord": 394.09,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Reception-1745475823905",
-                    "nodeType": "Reception",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 364.14,
-                    "ycoord": 660.12,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Parking-1745476124817",
-                    "nodeType": "Parking",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 533.09,
-                    "ycoord": 213.06,
-                    "longName": "Left Parking Lot",
-                    "shortName": "Left Parking Lot"
-                },
-                {
-                    "nodeID": "Parking-1745476137948",
-                    "nodeType": "Parking",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 151.2,
-                    "ycoord": 675.12,
-                    "longName": "Main Parking Lot",
-                    "shortName": "Main Parking Lot"
-                },
-                {
-                    "nodeID": "Hallway-1745476252825",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 379.12,
-                    "ycoord": 614.09,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476261869",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 377.14,
-                    "ycoord": 715.13,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476274839",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 315.15,
-                    "ycoord": 714.13,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476286280",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 317.15,
-                    "ycoord": 804.14,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476316023",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 590.07,
-                    "ycoord": 861.15,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476325501",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 381.13,
-                    "ycoord": 956.16,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476336196",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 425.12,
-                    "ycoord": 956.16,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476355584",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 377.14,
-                    "ycoord": 801.14,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476377768",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 385.13,
-                    "ycoord": 871.15,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476392418",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 591.07,
-                    "ycoord": 921.16,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476405531",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 436.12,
-                    "ycoord": 928.16,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476418680",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 705.04,
-                    "ycoord": 922.16,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476440148",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 710.04,
-                    "ycoord": 685.12,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476454878",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 770.07,
-                    "ycoord": 683.1,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476466618",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 771.02,
-                    "ycoord": 412.09,
-                    "longName": "",
-                    "shortName": ""
-                },
-                {
-                    "nodeID": "Hallway-1745476477762",
-                    "nodeType": "Hallway",
-                    "building": "Chestnut Hill",
-                    "floor": 1,
-                    "xcoord": 591.07,
-                    "ycoord": 411.09,
-                    "longName": "",
-                    "shortName": ""
-                }
-
+                'nodeID': 'Entrance-1745475279866',
+                'nodeType': 'Entrance',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 528.89,
+                'ycoord': 323.08,
+                'longName': 'Left Entrance',
+                'shortName': 'Left Entrance',
+            },
+            {
+                'nodeID': 'Entrance-1745475321572',
+                'nodeType': 'Entrance',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 241.77,
+                'ycoord': 506.1,
+                'longName': 'Bottom Entrance',
+                'shortName': 'Bottom Entrance',
+            },
+            {
+                'nodeID': 'Reception-1745475750292',
+                'nodeType': 'Reception',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 465.11,
+                'ycoord': 394.09,
+                'longName': 'Reception',
+                'shortName': 'Reception',
+            },
+            {
+                'nodeID': 'Reception-1745475823905',
+                'nodeType': 'Reception',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 364.14,
+                'ycoord': 660.12,
+                'longName': 'Reception',
+                'shortName': 'Reception',
+            },
+            {
+                'nodeID': 'Parking-1745476124817',
+                'nodeType': 'Parking',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 533.09,
+                'ycoord': 213.06,
+                'longName': 'Left Parking Lot',
+                'shortName': 'Left Parking Lot',
+            },
+            {
+                'nodeID': 'Parking-1745476137948',
+                'nodeType': 'Parking',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 151.2,
+                'ycoord': 675.12,
+                'longName': 'Main Parking Lot',
+                'shortName': 'Main Parking Lot',
+            },
+            {
+                'nodeID': 'Hallway-1745476252825',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 379.12,
+                'ycoord': 614.09,
+                'longName': 'Central Reception Hallway',
+                'shortName': 'Central Reception Hallway',
+            },
+            {
+                'nodeID': 'Hallway-1745476261869',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 377.14,
+                'ycoord': 715.13,
+                'longName': 'West Central Corridor',
+                'shortName': 'West Central Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476274839',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 315.15,
+                'ycoord': 714.13,
+                'longName': 'Northwest Corridor',
+                'shortName': 'Northwest Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476286280',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 317.15,
+                'ycoord': 804.14,
+                'longName': 'Far Northwest Corridor',
+                'shortName': 'Far Northwest Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476316023',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 590.07,
+                'ycoord': 861.15,
+                'longName': 'South Wing West Corridor',
+                'shortName': 'South Wing West Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476325501',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 381.13,
+                'ycoord': 956.16,
+                'longName': 'Far Southwest Corridor',
+                'shortName': 'Far Southwest Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476336196',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 425.12,
+                'ycoord': 956.16,
+                'longName': 'South Wing Central Hallway',
+                'shortName': 'South Wing Central Hallway',
+            },
+            {
+                'nodeID': 'Hallway-1745476355584',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 377.14,
+                'ycoord': 801.14,
+                'longName': 'West Wing Central Hallway',
+                'shortName': 'West Wing Central Hallway',
+            },
+            {
+                'nodeID': 'Hallway-1745476377768',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 385.13,
+                'ycoord': 871.15,
+                'longName': 'Southwest Corridor Junction',
+                'shortName': 'Southwest Corridor Junction',
+            },
+            {
+                'nodeID': 'Hallway-1745476392418',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 591.07,
+                'ycoord': 921.16,
+                'longName': 'South Wing East Corridor',
+                'shortName': 'South Wing East Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476405531',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 436.12,
+                'ycoord': 928.16,
+                'longName': 'South Wing Central Junction',
+                'shortName': 'South Wing Central Junction',
+            },
+            {
+                'nodeID': 'Hallway-1745476418680',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 705.04,
+                'ycoord': 922.16,
+                'longName': 'Southeast Corner Hallway',
+                'shortName': 'Southeast Corner Hallway',
+            },
+            {
+                'nodeID': 'Hallway-1745476440148',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 710.04,
+                'ycoord': 685.12,
+                'longName': 'East Wing Central Corridor',
+                'shortName': 'East Wing Central Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476454878',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 770.07,
+                'ycoord': 683.1,
+                'longName': 'Far East Corridor',
+                'shortName': 'Far East Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476466618',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 771.02,
+                'ycoord': 412.09,
+                'longName': 'Northeast Corridor',
+                'shortName': 'Northeast Corridor',
+            },
+            {
+                'nodeID': 'Hallway-1745476477762',
+                'nodeType': 'Hallway',
+                'building': 'Chestnut Hill',
+                'floor': 1,
+                'xcoord': 591.07,
+                'ycoord': 411.09,
+                'longName': 'North Wing East Hallway',
+                'shortName': 'North Wing East Hallway',
+            },
         ],
         skipDuplicates: true
     })
@@ -2772,62 +2771,62 @@ async function main() {
     await PrismaClient.edge.createMany({
         data: [
 
-                {
-                    "fromID": "Hallway-1745532974069",
-                    "toID": "Elevator-1745548183505",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
-                {
-                    "fromID": "Hallway-1745548192350",
-                    "toID": "Elevator-1745548135350",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
-                {
-                    "fromID": "Hallway-1745532895073",
-                    "toID": "Hallway-1745548206618",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
-                {
-                    "fromID": "Hallway-1745548206618",
-                    "toID": "Hallway-1745548218279",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
-                {
-                    "fromID": "Hallway-1745532994775",
-                    "toID": "Hallway-1745548270903",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
-                {
-                    "fromID": "Hallway-1745548270903",
-                    "toID": "Hallway-1745548218279",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
-                {
-                    "fromID": "Hallway-1745548218279",
-                    "toID": "Elevator-1745548156316",
-                    "fromX": null,
-                    "fromY": null,
-                    "toX": null,
-                    "toY": null
-                },
+            {
+                "fromID": "Hallway-1745532974069",
+                "toID": "Elevator-1745548183505",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+                "fromID": "Hallway-1745548192350",
+                "toID": "Elevator-1745548135350",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+                "fromID": "Hallway-1745532895073",
+                "toID": "Hallway-1745548206618",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+                "fromID": "Hallway-1745548206618",
+                "toID": "Hallway-1745548218279",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+                "fromID": "Hallway-1745532994775",
+                "toID": "Hallway-1745548270903",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+                "fromID": "Hallway-1745548270903",
+                "toID": "Hallway-1745548218279",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+                "fromID": "Hallway-1745548218279",
+                "toID": "Elevator-1745548156316",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
 
                 {
                     "fromID": "Elevator-1745547664565",
@@ -3135,13 +3134,13 @@ async function main() {
     });
 
     console.log('Floorplan seeded successfully!');
-    }
+}
 
-    main()
-        .catch((e) => {
-            console.error(e);
-            return Promise.reject(e);
-        })
-        .finally(async () => {
-            await PrismaClient.$disconnect();
-        });
+main()
+    .catch((e) => {
+        console.error(e);
+        return Promise.reject(e);
+    })
+    .finally(async () => {
+        await PrismaClient.$disconnect();
+    });
