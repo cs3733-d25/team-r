@@ -363,7 +363,6 @@ export function MapPage() {
                         <TextDirections
                             steps={directionStrings}
                         />
-                        <InternalMapControls/>
                     </div>
                 )}
             </div>
