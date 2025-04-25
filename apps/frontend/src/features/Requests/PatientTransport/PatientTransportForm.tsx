@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
@@ -24,7 +24,6 @@ interface SubmittedTransport {
     department: string;
     comments: string;
     timestamp: string;
-
 }
 
 
@@ -48,13 +47,45 @@ const TransportationRequestForm = () => {
     } | null>(null);
 
     //put this in Dropdown element and it will reset on submit
-    const [resetDropdowns, setResetDropdowns] = useState(false);
+    const [resetDropdowns, setResetDropdowns] = useState(false); //swaps value to trigger
+    const [resetDept, setResetDept] = useState(false); //swaps value for resetting dept
+    const [resetDesiredBuilding, setResetDesiredBuilding] = useState(false); //swaps value for desired building
+
+
+    useEffect(() => {
+        console.log("RESET is changed to: ", resetDropdowns)
+    }, [resetDropdowns])
+
+    useEffect(() => {
+        console.log("RESET Department changed to: ", resetDept)
+    }, [resetDept])
+
+    useEffect(() => {
+        console.log("RESET Desired Building changed to: ", resetDesiredBuilding)
+    }, [resetDesiredBuilding])
+
 
     const handleDropdownChange = (name:string, value:string) => {
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
+    };
+
+    //helper function for dept
+    const renderDepartmentDropdown = () => {
+        switch (selectedLocation) {
+            case "Patriot Place 22":
+                return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} reset={resetDept} />;
+            case "Patriot Place 20":
+                return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Chestnut Hill":
+                return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Faulkner":
+                return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            default:
+                return null;
+        }
     };
 
     // Add state for the confirmation card
@@ -81,7 +112,9 @@ const TransportationRequestForm = () => {
                     isError: false
                 });
 
-                setResetDropdowns(!resetDropdowns);
+                setResetDropdowns(!resetDropdowns); //swap state to reset
+                setResetDept(!resetDept); //swap state to reset
+                setResetDesiredBuilding(!resetDesiredBuilding); //swap state to reset
 
                 // Reset form
                 setFormData({
@@ -114,18 +147,39 @@ const TransportationRequestForm = () => {
         }));
     };
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-    //put this in Dropdown element and it will reset on submit
-    //const [resetDropdowns, setResetDropdowns] = useState(false);
+    const [selectedDesiredBuilding, setDesiredBuilding] = useState<string | null>(null);
+    const [selectedDept, setDept] = useState<string | null>(null);
 
 
+    //used by location dropdown so next dropdown can appear
     const handleLocationChange = (name: string, value: string) => {
         setSelectedLocation(value);
         handleDropdownChange(name, value); // update formData in parent
+        console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
     };
 
+    useEffect(() => { //WHEN location changes...
+        console.log("Use Effect detected LOCATION change")
+        setResetDept(!resetDept); //swap state to reset
+        handleDepartmentChange('department', null);
 
-    const handleDepartmentChange = (name: string, value: string) => {
-        handleDropdownChange(name, value);// update formData in parent
+        if (selectedDesiredBuilding === selectedLocation) {
+            setResetDesiredBuilding(!resetDesiredBuilding);
+            handleDesiredBuildingChange('department', null);
+
+            console.log("Conflict in LOCATION change, DESIRED BUILDING is reset")
+        }
+    }, [selectedLocation]);
+
+    const handleDesiredBuildingChange = (name: string, value: string | null) => {
+        setDesiredBuilding(value);
+        handleDropdownChange(name, value!); // update formData in parent
+        console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
+    };
+
+    const handleDepartmentChange = (name: string, value: string | null) => {
+        setDept(value)
+        handleDropdownChange(name, value!);// update formData in parent
     };
 
     return (
@@ -219,7 +273,8 @@ const TransportationRequestForm = () => {
                                         Select the building making the patient request.
                                     </span>
                                     </Label>
-                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} />
+                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} reset={resetDropdowns}/>
+
                                     {/*select department based on location*/}
                                     {selectedLocation && (
                                         <>
@@ -227,19 +282,15 @@ const TransportationRequestForm = () => {
                                                 Department
                                                 <span className="text-accent">*</span>
                                                 <span className="text-xs text-secondary-foreground block">
-                                            Select a department
-                                        </span>
+                                                Select a department
+                                            </span>
                                             </Label>
-                                            {/*handle departments for location*/}
-                                            {selectedLocation === "Patriot Place 22" ? (
-                                                <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
-                                            ) : selectedLocation === "Patriot Place 20" ? (
-                                                <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                            ) : selectedLocation === "Chestnut Hill" ? (
-                                                <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                            ) : null}
                                         </>
-                                    )}
+                                        )}
+                                    {selectedLocation && renderDepartmentDropdown()}
+                                    {/*//returns dept dropdown*/}
+
+                                    {/*handle departments if given the location*/}
                                 </div>
 
                                     {/* Current Building */}
@@ -265,16 +316,25 @@ const TransportationRequestForm = () => {
                                     {/*<LocationDepartmentDropdown onChange={handleCurrentDropdownChange} ></LocationDepartmentDropdown>*/}
 
                                     <div>
-                                        <Label className="block text-sm font-semibold text-foreground mb-2">
-                                            Desired Building
-                                            <span className="text-accent">*</span>
-                                        </Label>
-                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-
-
+                                        {selectedLocation && (  //location selected?
+                                            <>
+                                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                                    Desired Building
+                                                    <span className="text-accent">*</span>
+                                                    <span className="text-xs text-secondary-foreground block">
+                                                    Select a destination
+                                                </span>
+                                                </Label>
+                                                <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDesiredBuilding} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
+                            {/*<p> Selected Location: '{selectedLocation}' </p>*/}
+                            {/*<p> Selected Desired Building:  '{selectedDesiredBuilding}'</p>*/}
+                            {/*<p> Selected Dept.:  '{selectedDept}'</p>*/}
+
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status
@@ -300,8 +360,6 @@ const TransportationRequestForm = () => {
                                     rows={4}
                                 />
                             </div>
-
-
 
                             {/* Submit Button */}
                             <div className="flex justify-end">

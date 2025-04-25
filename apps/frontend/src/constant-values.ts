@@ -22,6 +22,7 @@ const values = {
     priority: ['Urgent', 'High', 'Medium', 'Low'],
     building: ['Chestnut Hill', 'Patriot Place 20', 'Patriot Place 22', 'Faulkner'],
     employeeRole: ['Doctor', 'Nurse', 'IT Support', 'Maintenance', 'Administrator'],
+    blank: [''],  //for dropdowns requiring another dropdown to be completed first
 
     nodeType: ['Entrance', 'Reception', 'Parking', 'Hallway', 'Department', 'Elevator', 'Stairs', 'Other'],
 
@@ -38,7 +39,7 @@ const values = {
     departmentsF3: F3,
     departmentsF4: F4,
     departmentsF5: F5,
-    departmentsFAll: FAll,
+    departmentsFAll: FAll, //see above
 };
 
 export type valueKey = keyof typeof values; // "priority" | "status"
