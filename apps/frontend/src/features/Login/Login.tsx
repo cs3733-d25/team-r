@@ -5,11 +5,12 @@ import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
+import { useAuth0 } from "@auth0/auth0-react";
+//auth0 variables
 
 interface loginProps {
     onLogin?: () => void;
 }
-
 function Login({ onLogin }: loginProps): JSX.Element {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +18,14 @@ function Login({ onLogin }: loginProps): JSX.Element {
 
     const [incorrectLogin, setIncorrectLogin] = useState(''); //to add a popup if the user logs in incorrectly
 
+    //auth0 set up
+    const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+
+    function auth0login(){
+        if(!isAuthenticated){
+            loginWithRedirect();
+        }
+    }
     async function handleLogin() {
         if (!username || !password) return;
         try {
@@ -81,57 +90,60 @@ function Login({ onLogin }: loginProps): JSX.Element {
                             Mass General Brigham
                         </Label>
                     </div>
-                    <form className="space-y-4">
-                        <br />
-                        <div>
-                            <Label className="block mb-1 text-left">Username:</Label>
-                            <Input
-                                type="username"
-                                name="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className="w-full p-2 border border-ring bg-input rounded"
-                            />
-                        </div>
-                        <div>
-                            <Label className="block mb-1 text-left">Password:</Label>
-                            <Input
-                                type="password"
-                                name="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full p-2 border border-ring bg-input rounded"
-                            />
-                        </div>
-                        <br />
-                        <div id="rememberMe" className="flex items-center space-x-0.5">
-                            <Label className={'text-xs pr-1'}>Remember Me:</Label>
-                            <Checkbox
-                                id="checkbox"
-                                name="remember"
-                                className={'w-4 transition-all duration-100 text-white'}
-                            />
-                        </div>
-                        <div className="flex justify-between">
-                            {/*<button*/}
-                            {/*    type="button"*/}
-                            {/*    className="px-4 py-2 bg-mgb-light-blue-600 text-white rounded hover:bg-mgb-light-blue-700 active:bg-mgb-light-blue-800 text-xs"*/}
-                            {/*    onClick={(e) => handleGuestLogin(e)}*/}
-                            {/*>*/}
-                            {/*    Continue as Guest*/}
-                            {/*</button>*/}
+                    {/*<form className="space-y-4">*/}
+                    {/*    <br />*/}
+                    {/*    <div>*/}
+                    {/*        <Label className="block mb-1 text-left">Username:</Label>*/}
+                    {/*        <Input*/}
+                    {/*            type="username"*/}
+                    {/*            name="username"*/}
+                    {/*            value={username}*/}
+                    {/*            onChange={(e) => setUsername(e.target.value)}*/}
+                    {/*            className="w-full p-2 border border-ring bg-input rounded"*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*    <div>*/}
+                    {/*        <Label className="block mb-1 text-left">Password:</Label>*/}
+                    {/*        <Input*/}
+                    {/*            type="password"*/}
+                    {/*            name="password"*/}
+                    {/*            value={password}*/}
+                    {/*            onChange={(e) => setPassword(e.target.value)}*/}
+                    {/*            className="w-full p-2 border border-ring bg-input rounded"*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*    <br />*/}
+                    {/*    <div id="rememberMe" className="flex items-center space-x-0.5">*/}
+                    {/*        <Label className={'text-xs pr-1'}>Remember Me:</Label>*/}
+                    {/*        <Checkbox*/}
+                    {/*            id="checkbox"*/}
+                    {/*            name="remember"*/}
+                    {/*            className={'w-4 transition-all duration-100 text-white'}*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*    <div className="flex justify-between">*/}
+                    {/*        /!*<button*!/*/}
+                    {/*        /!*    type="button"*!/*/}
+                    {/*        /!*    className="px-4 py-2 bg-mgb-light-blue-600 text-white rounded hover:bg-mgb-light-blue-700 active:bg-mgb-light-blue-800 text-xs"*!/*/}
+                    {/*        /!*    onClick={(e) => handleGuestLogin(e)}*!/*/}
+                    {/*        /!*>*!/*/}
+                    {/*        /!*    Continue as Guest*!/*/}
+                    {/*        /!*</button>*!/*/}
                             <Button
                                 type="submit"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    handleLogin();
+                                    //handleLogin();
+                                    auth0login();
                                 }}
                                 className="px-4 py-2 bg-primary text-white rounded hover:bg-foreground transition-colors duration-200"
                             >
                                 Login
                             </Button>
-                        </div>
-                    </form>
+                    {/*    </div>*/}
+                    {/*</form>*/}
+
+
                     {incorrectLogin && ( //for adding popup if the user logs in with the wrong username and/or password
                         <div>
                             <br />

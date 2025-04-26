@@ -3,7 +3,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
-
+//const { auth } = require('express-openid-connect');
 import healthcheckRouter from "./routes/healthcheck";
 import employeeRouter from "./routes/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
@@ -23,7 +23,21 @@ import { API_ROUTES } from "common/src/constants";
 const secret = process.env.SESSION_SECRET;
 
 const app: Express = express(); // Setup the backend
-
+//auth0 config
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: 'a long, randomly-generated string stored in env',
+    baseURL: 'http://localhost:3000',
+    clientID: 'DgTFKpfFlNqWW99tagFKa3mqyVeq1zbw',
+    issuerBaseURL: 'https://dev-dnteto2dhanul662.us.auth0.com'
+};
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+// app.use(auth(config));
+// // req.isAuthenticated is provided from the auth router
+// app.get('/', (req, res) => {
+//     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
 // Setup generic middlewear
 app.use(
   logger("dev", {
