@@ -38,33 +38,54 @@ router.post("/", async function (req: Request, res: Response) {
   }
 });
 
-router.post("/signup", async function (req: Request, res: Response) {
-  const { userType, email, id } = req.body;
-  console.log("inside /signup: ", userType);
-  await PrismaClient.user.create({
-    data: {
-      id: id,
-      email: email,
-      userType: userType,
-    },
-  });
-});
+// router.post("/signup", async function (req: Request, res: Response) {
+//   const { userType, email, id } = req.body;
+//   console.log("inside /signup: ", userType);
+//   await PrismaClient.user.create({
+//     data: {
+//       id: id,
+//       email: email,
+//       userType: userType,
+//     },
+//   });
+// });
 
 router.get("/session", async (req, res) => {
+  console.log("req session: ", req.session);
   if (req.session) {
     const userID = req.session.userId;
-    const username = req.session.username;
-    const userTypeID = req.session.userType;
+    //const username = req.session.username;
+    const userType = req.session.userType;
     console.log("req session in /session: ", userID);
-    console.log("req user type: ", userTypeID);
+    console.log("req user type: ", userType);
     res.status(200).json({
       message: "User verified",
       userID: userID,
-      username: username,
-      userType: userTypeID,
+      // username: username,
+      userType: userType,
     });
   }
 });
+
+router.post("/create-session", async function (req: Request, res: Response) {
+  const { userId, userType, email } = req.body;
+  if (req.session) {
+    req.session.userId = userId;
+    req.session.userType = userType;
+    req.session.email = email;
+    console.log("Session created:", req.session);
+    res.status(200).json({ message: "Session created" });
+  } else {
+    res.status(500).json({ message: "No session found" });
+  }
+});
+
+router.post("/usertype", async function (req: Request, res: Response) {
+  const userType = await PrismaClient.user.findUnique({
+    where: {email: req.body.email}
+  });
+  res.status(200).json({ message: "User Type Found" });
+})
 
 router.post("/reset", async (req, res) => {
   if (req.session) {

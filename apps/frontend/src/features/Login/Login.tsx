@@ -42,6 +42,13 @@ function Login({ onLogin }: loginProps): JSX.Element {
             const email = user?.email;
             try{
                 const response = await axios.post('/api/login/usertype', email);
+                console.log('repsonse.data.usertype: ', response.data.usertype);
+                //need to start express session
+                await axios.post('/api/login/create-session', {
+                    userId: user?.id,
+                    userType: response.data.userType,
+                    email: user?.email,
+                });
                 navigate('/external-map', {
                     state: {
                         status: 'logged-in',
@@ -55,28 +62,28 @@ function Login({ onLogin }: loginProps): JSX.Element {
         }
     }
 
-    useEffect(() => {
-        async function handleSignUp(){
-            const userType = localStorage.getItem("signup_role");
-            console.log("inside useeffect: ", userType);
-            if(isAuthenticated && userType && user?.email){
-                try{
-                    await axios.post('/api/login/signup', {
-                        userType: userType,
-                        email: user?.email,
-                        id: user?.name,
-                    })
-                    localStorage.removeItem("signup_role");
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        }
-        if(isAuthenticated){
-            handleSignUp();
-        }
-
-    },[isAuthenticated, user]);
+    // useEffect(() => {
+    //     async function handleSignUp(){
+    //         const userType = localStorage.getItem("signup_role");
+    //         console.log("inside useeffect: ", userType);
+    //         if(isAuthenticated && userType && user?.email){
+    //             try{
+    //                 await axios.post('/api/login/signup', {
+    //                     userType: userType,
+    //                     email: user?.email,
+    //                     id: user?.name,
+    //                 })
+    //                 localStorage.removeItem("signup_role");
+    //             } catch (error) {
+    //                 console.error(error);
+    //             }
+    //         }
+    //     }
+    //     if(isAuthenticated){
+    //         handleSignUp();
+    //     }
+    //
+    // },[isAuthenticated, user]);
 
     return (
         <div className={'bg-primary flex-col h-screen'}>

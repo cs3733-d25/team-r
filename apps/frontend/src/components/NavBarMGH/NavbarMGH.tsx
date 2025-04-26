@@ -30,7 +30,7 @@ export function NavbarMGH(props: NavBarProps) {
         async function getName() {
             try {
                 const response = await axios.get("api/login/session");
-                setusername(response.data.username);
+                setusername(response.data.userType);
             } catch (err) {
                 console.error("Error fetching username:", err);
             }
