@@ -1,37 +1,34 @@
 import express, { Router, Request, Response } from "express";
 import client from "../bin/prisma-client.ts";
 import session from "express-session";
+import PrismaClient from "../bin/prisma-client.ts";
 
 const router: Router = express.Router();
 
 //receive the username and password from the client
 router.post("/", async function (req: Request, res: Response) {
-  const { username, password } = req.body;
+  const { email, userType } = req.body;
   //check if the password is in the users database
   try {
     const user = await client.user.findUnique({
       where: {
-        username: username,
+        email: email,
       },
     });
     //check if the username has password associated
     if (user !== null) {
-      if (user.password == password) {
-        if (req.session) {
-          req.session.userId = user.id;
-          req.session.username = user.username;
-          req.session.userType = user.userTypeID;
-          console.log("req session: ", user.id);
-          res.status(200).json({
-            message: "User verified",
-            username: username,
-            userType: user.userTypeID,
-          });
-        } else {
-          console.log("No req.session");
-        }
+      if (req.session) {
+        req.session.userId = user.id;
+        //req.session.username = user.username;
+        req.session.userType = user.userType;
+        console.log("req session: ", user.id);
+        res.status(200).json({
+          message: "User verified",
+          //username: username,
+          userType: user.userType,
+        });
       } else {
-        res.status(200).json({ message: "The password entered is incorrect." });
+        console.log("No req.session");
       }
     } else {
       res.status(200).json({ message: "User not found." });
@@ -39,6 +36,18 @@ router.post("/", async function (req: Request, res: Response) {
   } catch (error) {
     res.status(200).json({ message: "Error: something went wrong." });
   }
+});
+
+router.post("/signup", async function (req: Request, res: Response) {
+  const { userType, email, id } = req.body;
+  console.log("inside /signup: ", userType);
+  await PrismaClient.user.create({
+    data: {
+      id: id,
+      email: email,
+      userType: userType,
+    },
+  });
 });
 
 router.get("/session", async (req, res) => {

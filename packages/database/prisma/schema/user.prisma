@@ -1,10 +1,12 @@
 model User {
   id         String   @id @default(uuid())
-  username   String   @unique
-  password   String
-  userTypeID String
-  userType   UserType @relation(fields: [userTypeID], references: [id])
-  updatedAt  DateTime @default(now())
+  //username   String   @unique
+  //password   String
+  email String  @unique
+  userType String
+  // userTypeID String
+  // userType   UserType @relation(fields: [userTypeID], references: [id])
+  // updatedAt  DateTime @default(now())
 
   employee Employee?
   patient  Patient?
@@ -14,7 +16,7 @@ model UserType {
   id   String @id @default(uuid())
   name String
 
-  users User[]
+ // users User[]
 }
 
 model Employee {

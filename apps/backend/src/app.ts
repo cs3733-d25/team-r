@@ -25,12 +25,12 @@ const secret = process.env.SESSION_SECRET;
 const app: Express = express(); // Setup the backend
 //auth0 config
 const config = {
-    authRequired: false,
-    auth0Logout: true,
-    secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'http://localhost:3000',
-    clientID: 'DgTFKpfFlNqWW99tagFKa3mqyVeq1zbw',
-    issuerBaseURL: 'https://dev-dnteto2dhanul662.us.auth0.com'
+  authRequired: false,
+  auth0Logout: true,
+  secret: "a long, randomly-generated string stored in env",
+  baseURL: "http://localhost:3000",
+  clientID: "DgTFKpfFlNqWW99tagFKa3mqyVeq1zbw",
+  issuerBaseURL: "https://dev-dnteto2dhanul662.us.auth0.com",
 };
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 // app.use(auth(config));
