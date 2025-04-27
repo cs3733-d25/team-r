@@ -7,6 +7,7 @@ import patriot22Floor3 from '../../../public/22patriot3.svg';
 import patriot22Floor4 from '../../../public/22patriot4.svg';
 import chestnutHill from '../../../public/chestnutHill1.svg';
 import faulkner from '../../../public/faulkner1.svg';
+// import womens from '../../../public/womens2.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
