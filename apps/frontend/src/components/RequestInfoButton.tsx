@@ -15,6 +15,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         try {
             switch (props.type) {
                 case 'Sanitation': {
+                    retrieveSanitation();
                     break;
                 }
                 case 'Prescription': {
@@ -22,12 +23,15 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
                     break;
                 }
                 case 'Medical Device': {
+                    retrieveDevice();
                     break;
                 }
                 case 'Patient Request': {
+                    retrievePatientRequest();
                     break;
                 }
                 case 'Transport': {
+                    retrieveTransport();
                     break;
                 }
             }
@@ -60,12 +64,67 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
             status: null,
         },
     ]);
-
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrievePrescription() {
         const request = await axios.post('api/pharmacy/single-request', {id: props.id});
         console.log('response from /single-request', request.data);
         setPrescription(request.data);
+    }
+
+    //sanitation request
+    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
+    //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
+    async function retrieveSanitation() {
+        const request = await axios.post('api/sanitation/single-request', {id: props.id});
+        console.log('response from /single-request', request.data);
+        setSanitation(request.data);
+    }
+
+    //medical device request
+    const [device, setDevice] = useState([{
+        deviceID: null,
+        deviceType: null,
+        priority: null,
+        room: null,
+        department: null,
+        comments: null,
+        employeeID: null,
+        status: null
+    }]);
+    //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
+    async function retrieveDevice() {
+        const request = await axios.post('api/devicereq/single-request', {id: props.id});
+        console.log('response from /single-request', request.data);
+        setDevice(request.data);
+    }
+
+    //patient request
+    const [patientRequest, setPatientRequest] = useState([{
+        patientRequestID:null,
+        patientID:null,
+        assignedEmpID:null,
+        priority:null,
+        department:null,
+        location:null,
+        comment:null,
+        time:null,
+        status:null,
+        employeeID:null,
+        request: null}]);
+    //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
+    async function retrievePatientRequest() {
+        const request = await axios.post('api/patientreq/single-request', {id: props.id});
+        console.log('response from /single-request', request.data);
+        setPatientRequest(request.data);
+    }
+
+    //patient transport request
+    const [transport, setTransport] = useState([{employeeID:null, patientID:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
+    //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
+    async function retrieveTransport() {
+        const request = await axios.post('api/transportreq/single-request', {id: props.id});
+        console.log('response from /single-request', request.data);
+        setTransport(request.data);
     }
 
     //gets and returns element displaying info about request

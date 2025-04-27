@@ -60,4 +60,20 @@ router.post("/", async function (req: Request, res: Response) {
   }
 });
 
+router.post("/single-request", async function (req: Request, res: Response) {
+  const id = req.body.id;
+  try {
+    const request = await client.sanitationRequest.findMany({
+      where: {
+        requestId: id,
+      },
+    });
+    console.log("Got request ", request);
+    res.status(200).json(request);
+  } catch (error) {
+    console.error("Error fetching pharmacy request data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;
