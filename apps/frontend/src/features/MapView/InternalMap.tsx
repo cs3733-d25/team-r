@@ -512,13 +512,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
             map.on('click', function (e) {
                 // parse the new coordinates
-                const x = e.latlng.lat.toFixed(2)
-                const y = e.latlng.lng.toFixed(2);
+                // super ugly way of truncating to two digits
+                const x = parseFloat(e.latlng.lat.toFixed(2));
+                const y = parseFloat(e.latlng.lng.toFixed(2));
                 console.log("["+x+", "+y+"]");
 
                 // send coordinates to parent function
                 if(onCoordSelect) {
-                    onCoordSelect(e.latlng.lat, e.latlng.lng);
+                    onCoordSelect(x, y);
                 }
 
                 // update the placeholder

@@ -124,48 +124,47 @@ export function EditMap({ status }: EditMapProps) {
     }
 
     // map clicks
-    useEffect(() => {
-        const handleMapClick = (e: CustomEvent<{ lat: number; lng: number }>) => {
-            if (e.detail) {
-                setCoordinates({
-                    x: e.detail.lat,
-                    y: e.detail.lng,
-                });
-                setEditCoordinates({
-                    x: e.detail.lat.toString(),
-                    y: e.detail.lng.toString(),
-                });
-                setCurrentBuilding(building);
-            }
-        };
+    const handleMapClick = (lat: number, lng: number) => {
+        setCoordinates({
+            x: lat,
+            y: lng,
+        });
+        setEditCoordinates({
+            x: lat.toString(),
+            y: lng.toString(),
+        });
+        setCurrentBuilding(building);
+    };
+    // useEffect(() => {
+
 
         // capture coordinates
 
-        const originalConsoleLog = console.log;
-        // what the heck does this do?
-        /*console.log = function (...args: unknown[]) {
-            const argStr = String(args[0] || '');
-            const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
-            if (coordMatch) {
-                const lat = parseFloat(coordMatch[1]);
-                const lng = parseFloat(coordMatch[2]);
-                setCoordinates({ x: lat, y: lng });
-                setEditCoordinates({ x: lat, y: lng });
-                setCurrentBuilding(building);
-
-                window.lastClickCoordinates = { lat, lng };
-            }
-            // originalConsoleLog.apply(console, args);
-        };*/
+        // const originalConsoleLog = console.log;
+        // what the heck does this do? answer: breaks the console.log statements everywhere else
+        // console.log = function (...args: unknown[]) {
+        //     const argStr = String(args[0] || '');
+        //     const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
+        //     if (coordMatch) {
+        //         const lat = parseFloat(coordMatch[1]);
+        //         const lng = parseFloat(coordMatch[2]);
+        //         setCoordinates({ x: lat, y: lng });
+        //         setEditCoordinates({ x: lat, y: lng });
+        //         setCurrentBuilding(building);
+        //
+        //         window.lastClickCoordinates = { lat, lng };
+        //     }
+        //     // originalConsoleLog.apply(console, args);
+        // };
 
         // listen for custom map click events
-        document.addEventListener('map-click', handleMapClick as EventListener);
+        // document.addEventListener('map-click', handleMapClick as EventListener);
 
-        return () => {
-            document.removeEventListener('map-click', handleMapClick as EventListener);
-            console.log = originalConsoleLog;
-        };
-    }, [building]);
+        // return () => {
+        //     document.removeEventListener('map-click', handleMapClick as EventListener);
+        //     console.log = originalConsoleLog;
+        // };
+    // }, [building]);
 
     // TODO: make this an array of strings not objects
     const nodeTypes = [
@@ -198,7 +197,7 @@ export function EditMap({ status }: EditMapProps) {
             alert('Please select a location on the map first.');
             return;
         }
-        if (isNaN(parseFloat(editcoordinates.x)) && isNaN(parseFloat(editcoordinates.y))){
+        if (isNaN(parseFloat(editcoordinates.x)) || isNaN(parseFloat(editcoordinates.y))){
             alert('Please enter a valid coordinate.');
             return;
         }
@@ -359,6 +358,7 @@ export function EditMap({ status }: EditMapProps) {
                     onEdgeDelete={deleteEdge}
                     onNodeSelect={onNodeClick}
                     onLocationChange={setLocation}
+                    onCoordSelect={handleMapClick}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
