@@ -88,6 +88,8 @@ export const fetchEdgesFaulkner = async () => {
     return res.data;
 };
 
+// TODO: create backend request for womens hospital
+
 export const fetchHallways = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/hallways');
     return res.data;
