@@ -10,7 +10,7 @@ import faulkner from '../../../public/faulkner1.svg';
 import womens from '../../../public/womens2.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
+import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEdgesWomensHospital, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 import 'leaflet-ant-path';
 
@@ -81,6 +81,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
     const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
     const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
+    const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -214,6 +215,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             const dataChestnut = await fetchEdgesChestnut();
             setEdgesChestnut(dataChestnut);
             setEdgesFaulkner(await fetchEdgesFaulkner());
+            const dataWomens = await fetchEdgesWomensHospital();
+            setEdgesWomens(dataWomens);
             setError(null);
         } catch (err) {
             console.error('Error fetching edges:', err);
