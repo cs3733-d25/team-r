@@ -67,9 +67,8 @@ router.get("/session", async (req, res) => {
   }
 });
 
-
 router.post("/usertype", async function (req: Request, res: Response) {
-  console.log('IN USERTYPE HELLO');
+  console.log("IN USERTYPE HELLO");
   const user = await PrismaClient.user.findUnique({
     where: { email: req.body.email },
   });

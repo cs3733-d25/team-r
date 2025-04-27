@@ -3,7 +3,8 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
-//const { auth } = require('express-openid-connect');
+import { auth } from "express-openid-connect";
+
 import healthcheckRouter from "./routes/healthcheck";
 import employeeRouter from "./routes/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
@@ -27,11 +28,12 @@ const app: Express = express(); // Setup the backend
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: "a long, randomly-generated string stored in env",
+  secret: secret!,
   baseURL: "http://localhost:3000",
   clientID: "DgTFKpfFlNqWW99tagFKa3mqyVeq1zbw",
   issuerBaseURL: "https://dev-dnteto2dhanul662.us.auth0.com",
 };
+app.use(auth(config));
 
 // Setup generic middlewear
 app.use(

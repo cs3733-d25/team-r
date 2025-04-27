@@ -28,19 +28,19 @@ export function NavbarMGH(props: NavBarProps) {
         }
     }
 
-    const [username, setusername] = useState("");
-    useEffect(() => {
-        async function getName() {
-            try {
-                const response = await axios.get("api/login/session");
-                setusername(response.data.username);
-            } catch (err) {
-                console.error("Error fetching username:", err);
-            }
-        }
-
-        getName();
-    }, []);
+    // const [username, setusername] = useState("");
+    // useEffect(() => {
+    //     async function getName() {
+    //         try {
+    //             const response = await axios.get("api/login/session");
+    //             setusername(response.data.username);
+    //         } catch (err) {
+    //             console.error("Error fetching username:", err);
+    //         }
+    //     }
+    //
+    //     getName();
+    // }, []);
 
     return (
         // main header
@@ -125,7 +125,7 @@ export function NavbarMGH(props: NavBarProps) {
                             <PopoverContent className="w-56" align="end" sideOffset={5}>
                                 <div className="grid gap-3 p-2">
                                     <Label className={'font-trade text-base justify-center'}>
-                                        Hi, {username}!
+                                        Hi, !
                                     </Label>
                                     <div className="border-t"></div>
                                     <Button

@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             domain={domain}
             clientId={clientID}
             authorizationParams={{
-                redirect_uri: 'http://localhost:3000/external-map',
+                redirect_uri: window.location.origin + '/external-map',
             }}
         >
                 <App />

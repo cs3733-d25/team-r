@@ -88,7 +88,6 @@ function App() {
     return (
         <div>
             <NavbarMGH userType={userType}/>
-
             <RouterProvider router={router} />
         </div>
     );
