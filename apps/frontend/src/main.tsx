@@ -10,15 +10,15 @@ const domain = import.meta.env.VITE_AUTH_DOMAIN;
 const clientID = import.meta.env.VITE_AUTH_CLIENT_ID
 // Entry point where root component is rendered into the DOM
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-        <Auth0Provider
+    <React.StrictMode>
+    <Auth0Provider
             domain={domain}
             clientId={clientID}
             authorizationParams={{
-                redirect_uri: 'http://localhost:3000/directory',
+                redirect_uri: 'http://localhost:3000/external-map',
             }}
         >
-            <React.StrictMode>
                 <App />
-            </React.StrictMode>
         </Auth0Provider>
+    </React.StrictMode>
 );

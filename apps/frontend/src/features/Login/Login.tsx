@@ -41,28 +41,7 @@ function Login({ onLogin }: loginProps): JSX.Element {
 
     }
 
-    // useEffect(() => {
-    //     async function handleSignUp(){
-    //         const userType = localStorage.getItem("signup_role");
-    //         console.log("inside useeffect: ", userType);
-    //         if(isAuthenticated && userType && user?.email){
-    //             try{
-    //                 await axios.post('/api/login/signup', {
-    //                     userType: userType,
-    //                     email: user?.email,
-    //                     id: user?.name,
-    //                 })
-    //                 localStorage.removeItem("signup_role");
-    //             } catch (error) {
-    //                 console.error(error);
-    //             }
-    //         }
-    //     }
-    //     if(isAuthenticated){
-    //         handleSignUp();
-    //     }
-    //
-    // },[isAuthenticated, user]);
+
 
     return (
         <div className={'bg-primary flex-col h-screen'}>

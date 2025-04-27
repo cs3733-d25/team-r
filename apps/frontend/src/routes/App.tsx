@@ -26,24 +26,30 @@ import {useAuth0} from "@auth0/auth0-react";
 function App() {
     const {isAuthenticated, user, isLoading} = useAuth0();
     const [userType, setUserType] = useState("Guest");
+    console.log('APP IS RENDERED');
 
     //get the usertype from the database after the user has logged in
     useEffect(() => {
-        async function getUserType(){
-            try{
-                const response = await axios.post('/api/login/usertype', {
-                    email: user?.email,
-                });
-                const userType = response.data.userType;
-                console.log("FROM /USERTYOE: ", userType);
-                setUserType(userType);
-            } catch (error){
-                //if no user found set to guest
-                setUserType("Guest");
-                console.log(error);
+        console.log('isLoading', isLoading);
+        console.log('userType', userType);
+        console.log('user', user);
+        console.log('isAuthenticated', isAuthenticated);
+
+        if (isAuthenticated && user?.email) {
+            async function getUserType() {
+                try {
+                    const response = await axios.post('/api/login/usertype', {
+                        email: user?.email,
+                    });
+                    const userType = response.data.userType;
+                    console.log("FROM /USERTYOE: ", userType);
+                    setUserType(userType);
+                } catch (error) {
+                    //if no user found set to guest
+                    setUserType("Guest");
+                    console.log(error);
+                }
             }
-        }
-        if(isAuthenticated && user?.email){
             getUserType();
         }
     }, [isAuthenticated, user]);
@@ -59,7 +65,7 @@ function App() {
             children: [
                 { index: true, element: <HomeMain userType={userType} /> },
                 { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
-                { path: 'login', element: <Login  /> },
+                { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
@@ -82,6 +88,7 @@ function App() {
     return (
         <div>
             <NavbarMGH userType={userType}/>
+
             <RouterProvider router={router} />
         </div>
     );

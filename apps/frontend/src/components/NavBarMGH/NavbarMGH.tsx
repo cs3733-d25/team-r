@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState} from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
@@ -6,6 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 import axios from "axios";
+import {useAuth0} from "@auth0/auth0-react";
 
 interface NavBarProps {
     page?: string;
@@ -15,6 +17,7 @@ interface NavBarProps {
 export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
+    const {loginWithRedirect, isAuthenticated, user} = useAuth0();
 
     async function handleLogout() {
         try {
@@ -30,7 +33,7 @@ export function NavbarMGH(props: NavBarProps) {
         async function getName() {
             try {
                 const response = await axios.get("api/login/session");
-                setusername(response.data.userType);
+                setusername(response.data.username);
             } catch (err) {
                 console.error("Error fetching username:", err);
             }
@@ -45,7 +48,7 @@ export function NavbarMGH(props: NavBarProps) {
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={!props.userType ? '/' : '/home'} className="flex items-center">
+                    <a href={!props.userType && props.userType !== "Guest" ? '/' : '/home'} className="flex items-center">
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -58,7 +61,7 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - Non-Guests */}
-                {props.userType && props.userType != "Guest" && (
+                {props.userType && props.userType !== "Guest" && (
                     <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                         <Button variant="ghost" asChild>
                             <a href="/directory">Directories</a>
@@ -76,28 +79,28 @@ export function NavbarMGH(props: NavBarProps) {
                         />
 
                         {(props.userType === 'Admin' || props.userType === 'Employee') && (
-                        <HoverPopoverNavLink
-                            label={'Request a Service'}
-                            href={'/requests'}
-                            items={[
-                                { label: 'Sanitation', href: '/sanitation' },
-                                { label: 'Medical Device', href: '/devicerequest' },
-                                { label: 'Patient Request', href: '/patientrequestpage' },
-                                { label: 'Patient Transport', href: '/transport' },
-                                { label: 'Prescription', href: '/prescription' },
-                                { label: 'View All Requests', href: '/requests' },
-                            ]}
-                        />)}
+                            <HoverPopoverNavLink
+                                label={'Request a Service'}
+                                href={'/requests'}
+                                items={[
+                                    { label: 'Sanitation', href: '/sanitation' },
+                                    { label: 'Medical Device', href: '/devicerequest' },
+                                    { label: 'Patient Request', href: '/patientrequestpage' },
+                                    { label: 'Patient Transport', href: '/transport' },
+                                    { label: 'Prescription', href: '/prescription' },
+                                    { label: 'View All Requests', href: '/requests' },
+                                ]}
+                            />)}
 
                         {(props.userType === 'Admin' || props.userType === 'Employee') && (
-                        <HoverPopoverNavLink
-                            label={'Database'}
-                            href={'/csv'}
-                            items={[
-                                { label: 'Import a CSV', href: '/csv' },
-                                { label: 'Export CSV', href: '/csv' },
-                            ]}
-                        />)}
+                            <HoverPopoverNavLink
+                                label={'Database'}
+                                href={'/csv'}
+                                items={[
+                                    { label: 'Import a CSV', href: '/csv' },
+                                    { label: 'Export CSV', href: '/csv' },
+                                ]}
+                            />)}
                     </nav>
                 )}
 
@@ -163,11 +166,12 @@ export function NavbarMGH(props: NavBarProps) {
                     </div>
                 )}
                 {/* Only display login button in logged-out home page */}
-                {(!props.userType) && (
+                {(!isAuthenticated) && (
                     <div className="ml-auto flex items-center gap-2">
-                        <Button variant="ghost">
-                            <a href="/login">Login</a>
-                        </Button>
+                        {/*<Button variant="ghost">*/}
+                        {/*    <a href="/login">Login</a>*/}
+                        {/*</Button>*/}
+                        <Button onClick={() => loginWithRedirect()}>Login</Button>
                     </div>
                 )}
             </div>
