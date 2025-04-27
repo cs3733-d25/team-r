@@ -124,6 +124,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
       `;
             marker.bindPopup(info).openPopup();
 
+
             // tell the parent element if the node has been selected
             if(onNodeSelect) {
                 onNodeSelect(data.nodeID);
@@ -234,7 +235,54 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     useEffect(() => {
         loadAll();
     }, []);
-
+    const greenIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    const violetIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    const blackIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    const orangeIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    const yellowIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    const greyIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
     const floorLayer20_1 = L.layerGroup();
     const floorLayer22_1 = L.layerGroup();
     const floorLayer22_3 = L.layerGroup();
@@ -393,7 +441,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         const layer = getLayer(node.building, node.floor);
                         // only place it if the floor is valid
                         if (layer) {
-                            const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                            const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon}).addTo(layer);
                             clickMarker(node, place);
 
                         }
@@ -404,7 +452,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:violetIcon}).addTo(layer);
                         clickMarker(node, place);
                     }
                 });
@@ -413,7 +461,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:blackIcon}).addTo(layer);
                         clickMarker(node, place);
                     }
                 });
@@ -422,7 +470,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:greenIcon}).addTo(layer);
                         clickMarker(node, place);
                     }
                 });
@@ -431,7 +479,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:yellowIcon}).addTo(layer);
                         clickMarker(node, place);
                     }
                 });
