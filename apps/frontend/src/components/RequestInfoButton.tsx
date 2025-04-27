@@ -3,6 +3,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import axios from 'axios';
 import { PrescriptionTable } from '@/features/Requests/PrescriptionForm/PrescriptionTable.tsx';
 import { useState } from 'react';
+import {DeviceReqTable} from "@/features/Requests/MedDeviceRequest/DeviceReqTable.tsx";
+import {SanitationTable} from "@/features/Requests/SanitationForm/SanitationTable.tsx";
+import {PatientRequestTable} from "@/features/Requests/PatientRequest/PatientRequestTable.tsx";
+import {PatientTransportTable} from "@/features/Requests/PatientTransport/PatientTransportTable.tsx";
 
 interface RequestInfoButtonProps {
     id: number | null;
@@ -132,19 +136,19 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         if (props.id && props.type) {
             switch (props.type) {
                 case 'Sanitation': {
-                    return <div>Sanitation!</div>;
+                    return <SanitationTable sanitation={sanitation} />;
                 }
                 case 'Prescription': {
                     return <PrescriptionTable prescription={prescription} />;
                 }
                 case 'Medical Device': {
-                    return <div>Medical Device!</div>;
+                    return <DeviceReqTable device={device} />;
                 }
                 case 'Patient Request': {
-                    return <div>Patient Request!</div>;
+                    return <PatientRequestTable patientRequest={patientRequest} />;
                 }
                 case 'Transport': {
-                    return <div>Transport!</div>;
+                    return <PatientTransportTable transport={transport} />;
                 }
             }
         }
