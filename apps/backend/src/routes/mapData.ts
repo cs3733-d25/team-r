@@ -165,7 +165,7 @@ router.get("/edges-20-3", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -221,7 +221,7 @@ router.get("/edges-22-3", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -247,7 +247,7 @@ router.get("/edges-22-4", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -346,7 +346,7 @@ router.get("/getNodeObjs", async (req, res) => {
         }),
       );
     }
-    console.log("nodes: ", nodes);
+    // console.log("nodes: ", nodes);
     res.json(nodes);
   } catch (err) {
     console.error(err);

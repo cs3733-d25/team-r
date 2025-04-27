@@ -43,9 +43,9 @@ export function EditMap({ status }: EditMapProps) {
     );
     const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
-    const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
-    const [editcoordinates, setEditCoordinates] = useState<{ x: number; y: number } | null>(null);
-    const [nodeName, setNodeName] = useState<string>('');
+    const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);          // coordinates that were last clicked
+    const [editcoordinates, setEditCoordinates] = useState<{ x: string; y: string } | null>({x:"", y:""});  // coordinates that are entered into the textbox (also get updated when map is clicked)
+    const [nodeName, setNodeName] = useState<string>(''); // TODO: it would be nice if the existing node name autopopulated when a node is clicked
     const [nodeType, setNodeType] = useState<string>('');
     const [editnodeName, setEditNodeName] = useState<string>('');
     const [editnodeType, setEditNodeType] = useState<string>('Hallway');
@@ -57,7 +57,6 @@ export function EditMap({ status }: EditMapProps) {
     const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
-    // const [edgeDeletePromise, setEdgeDeletePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
@@ -133,16 +132,18 @@ export function EditMap({ status }: EditMapProps) {
                     y: e.detail.lng,
                 });
                 setEditCoordinates({
-                    x: e.detail.lat,
-                    y: e.detail.lng,
+                    x: e.detail.lat.toString(),
+                    y: e.detail.lng.toString(),
                 });
                 setCurrentBuilding(building);
             }
         };
 
         // capture coordinates
+
         const originalConsoleLog = console.log;
-        console.log = function (...args: unknown[]) {
+        // what the heck does this do?
+        /*console.log = function (...args: unknown[]) {
             const argStr = String(args[0] || '');
             const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
             if (coordMatch) {
@@ -155,7 +156,7 @@ export function EditMap({ status }: EditMapProps) {
                 window.lastClickCoordinates = { lat, lng };
             }
             // originalConsoleLog.apply(console, args);
-        };
+        };*/
 
         // listen for custom map click events
         document.addEventListener('map-click', handleMapClick as EventListener);
@@ -197,13 +198,17 @@ export function EditMap({ status }: EditMapProps) {
             alert('Please select a location on the map first.');
             return;
         }
+        if (isNaN(parseFloat(editcoordinates.x)) && isNaN(parseFloat(editcoordinates.y))){
+            alert('Please enter a valid coordinate.');
+            return;
+        }
         const nodeData = {
             nodeID: nodeID,
             nodeType: editnodeType,
             building: currentBuilding,
             floor: currentFloor,
-            xcoord: editcoordinates.x,
-            ycoord: editcoordinates.y,
+            xcoord: parseFloat(editcoordinates.x),
+            ycoord: parseFloat(editcoordinates.y),
             longName: '',
             shortName: editnodeName,
             departments: selectedDepartments,
@@ -224,7 +229,7 @@ export function EditMap({ status }: EditMapProps) {
                 setEditNodeName('');
                 setEditNodeType('');
                 setEditSelectedDepartments([]);
-                setEditCoordinates(null);
+                setEditCoordinates({x:"", y:""});
             } else {
                 alert('Failed to save node.');
             }
@@ -327,7 +332,7 @@ export function EditMap({ status }: EditMapProps) {
                     setEdgeNodes([]);
                     setNodeID('');
                     setCoordinates(null);
-                    setEditCoordinates(null);
+                    setEditCoordinates({x:"", y:""});
                 } else {
                     alert('Failed to reset map.');
                 }
@@ -575,12 +580,12 @@ export function EditMap({ status }: EditMapProps) {
                                                         <Label>Change X Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.x}
-                                                            onChange={() =>
+                                                            onChange={(e) => {
                                                                 setEditCoordinates({
-                                                                    x: editcoordinates.x,
-                                                                    y: editcoordinates.y,
+                                                                x: e.target.value,
+                                                                y: editcoordinates.y,
                                                                 })
-                                                            }
+                                                            }}
                                                             placeholder="Enter new X Coordinate"
                                                         />
                                                     </div>
@@ -589,10 +594,10 @@ export function EditMap({ status }: EditMapProps) {
                                                         <Label>Change Y Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.y}
-                                                            onChange={() =>
+                                                            onChange={(e) =>
                                                                 setEditCoordinates({
                                                                     x: editcoordinates.x,
-                                                                    y: editcoordinates.y,
+                                                                    y: e.target.value,
                                                                 })
                                                             }
                                                             placeholder="Enter new Y Coordinate"
