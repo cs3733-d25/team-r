@@ -578,6 +578,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 hardwareAccelerated: true // Use hardware acceleration if possible
             };
 
+            // ignore the fact that antPath never resolves properly for me
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             const antPoly = L.polyline.antPath(currentFloorPath, antPathOptions);
             antPoly.addTo(mapInstance.current);
             routeLayer.current = antPoly
