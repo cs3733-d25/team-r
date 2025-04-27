@@ -3,6 +3,7 @@ import axios from 'axios'
 import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
+import {SanitationTable} from "@/features/Requests/SanitationForm/SanitationTable.tsx";
 export function SanitationRequestPage() {
     const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
     function displayTable() {
@@ -24,44 +25,7 @@ export function SanitationRequestPage() {
     }
     return(
         <>
-
-
-            <Table>
-                <TableHeader >
-                <TableRow>
-                    <TableHead className={"text-center"}>Employee Name</TableHead>
-                    <TableHead className={"text-center"}>Sanitation Type</TableHead>
-                    <TableHead className={"text-center"}>Priority</TableHead>
-                    <TableHead className={"text-center"}>Department</TableHead>
-                    <TableHead className={"text-center"}>Location</TableHead>
-                    <TableHead className={"text-center"}>Room Number</TableHead>
-                    <TableHead className={"text-center"}>Comments</TableHead>
-                    <TableHead className={"text-center"}>Status</TableHead>
-                </TableRow>
-                </TableHeader>
-                <TableBody className="text-center">
-                {sanitation.map((row,index) =>
-                {
-                    return(
-                        <>
-                            <TableRow key = {index} className = 'border-t'>
-                                <TableCell>{row.employeeID}</TableCell>
-                                <TableCell>{row.sanitationType}</TableCell>
-                                <TableCell>{row.priority}</TableCell>
-                                <TableCell>{row.department}</TableCell>
-                                <TableCell>{row.location}</TableCell>
-                                <TableCell>{row.roomNumber}</TableCell>
-                                <TableCell>{row.comments}</TableCell>
-                                <TableCell>{row.status}</TableCell>
-
-                            </TableRow>
-
-                        </>
-                    );
-
-                })}
-                </TableBody>
-            </Table>
+            <SanitationTable sanitation={sanitation}/>
         </>
     )
 }

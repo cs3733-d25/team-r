@@ -26,7 +26,7 @@ router.post("/", async function (req: Request, res: Response) {
     priority,
     status,
     department,
-    comments,
+    comment,
     patient,
     location,
     request,
@@ -40,12 +40,12 @@ router.post("/", async function (req: Request, res: Response) {
     const createRequest = await client.deviceRequest.create({
       data: {
         deviceType: device,
+        comments: comment,
         //patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority,
         department,
         status,
         room,
-        comments,
         employeeID, //
         //assignedEmployee: employeeName //connect later
       },
@@ -62,4 +62,21 @@ router.post("/", async function (req: Request, res: Response) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+router.post("/single-request", async function (req: Request, res: Response) {
+  const id = req.body.id;
+  try {
+    const request = await client.deviceRequest.findMany({
+      where: {
+        requestId: id,
+      },
+    });
+    console.log("Got request ", request);
+    res.status(200).json(request);
+  } catch (error) {
+    console.error("Error fetching pharmacy request data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;
