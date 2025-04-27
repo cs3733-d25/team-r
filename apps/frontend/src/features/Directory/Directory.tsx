@@ -8,6 +8,7 @@ const buildingDisplayNames: { [key: string]: string } = {
     'PATRIOT_PLACE_22': '22 Patriot',
     'CHESTNUT_HILL': 'Chestnut Hill',
     'FAULKNER': 'Faulkner',
+    'WOMENS': 'Women\s Hospital',
 };
 
 const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => {
