@@ -18,11 +18,11 @@ const AboutPage = () => {
     return (
         <div className="flex flex-col items-center p-6 space-y-8">
             <div className="text-center space-y-2">
-                <h1 className="text-4xl font-bold">About Us</h1>
-                <p className="text-lg">WPI Computer Science Department</p>
-                <p className="text-lg">CS3733-D25 Software Engineering</p>
-                <p className="text-lg">Professor: Wilson Wong</p>
-                <p className="text-lg">Team Coach: Keira Schoolcraft</p>
+                <h1 className="text-4xl font-bold place-self-center">About Us</h1>
+                <h2 className="text-xl font-bold font-trade place-self-center">WPI Computer Science Department</h2>
+                <h2 className="text-xl font-bold font-trade place-self-center">CS3733-D25 Software Engineering</h2>
+                <h2 className="text-xl font-bold font-trade place-self-center">Professor: Wilson Wong</h2>
+                <h2 className="text-xl font-bold font-trade place-self-center">Team Coach: Keira Schoolcraft</h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
