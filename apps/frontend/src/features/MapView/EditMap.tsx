@@ -17,6 +17,17 @@ import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
 
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
 interface EditMapProps {
     status?: string;
 }
@@ -30,11 +41,6 @@ interface InternalMapProps {
     onLocationChange?: (building: string, floor: number) => void;
 }
 
-declare global {
-    interface Window {
-        lastClickCoordinates?: { lat: number; lng: number };
-    }
-}
 
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<string>(
@@ -63,6 +69,8 @@ export function EditMap({ status }: EditMapProps) {
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
     const building = getBuildingFromLocation(selectedLocation);
     const { departments } = useMapData(building);
+    // for map editing instructions
+    const [isDialogOpen, setDialogOpen] = useState(false);
 
     async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
         try {
@@ -93,6 +101,13 @@ export function EditMap({ status }: EditMapProps) {
             setEditAvailableDepartments(departments);
         }
     }, [departments]);
+
+    // check if the instructions should be opened
+    useEffect(() => {
+        if(true){
+            setDialogOpen(true);
+        }
+    }, []);
 
     // function from mapService that makes axios request
     async function deleteNode(nodeID: string) {
@@ -135,36 +150,6 @@ export function EditMap({ status }: EditMapProps) {
         });
         setCurrentBuilding(building);
     };
-    // useEffect(() => {
-
-
-        // capture coordinates
-
-        // const originalConsoleLog = console.log;
-        // what the heck does this do? answer: breaks the console.log statements everywhere else
-        // console.log = function (...args: unknown[]) {
-        //     const argStr = String(args[0] || '');
-        //     const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
-        //     if (coordMatch) {
-        //         const lat = parseFloat(coordMatch[1]);
-        //         const lng = parseFloat(coordMatch[2]);
-        //         setCoordinates({ x: lat, y: lng });
-        //         setEditCoordinates({ x: lat, y: lng });
-        //         setCurrentBuilding(building);
-        //
-        //         window.lastClickCoordinates = { lat, lng };
-        //     }
-        //     // originalConsoleLog.apply(console, args);
-        // };
-
-        // listen for custom map click events
-        // document.addEventListener('map-click', handleMapClick as EventListener);
-
-        // return () => {
-        //     document.removeEventListener('map-click', handleMapClick as EventListener);
-        //     console.log = originalConsoleLog;
-        // };
-    // }, [building]);
 
     // TODO: make this an array of strings not objects
     const nodeTypes = [
@@ -642,12 +627,38 @@ export function EditMap({ status }: EditMapProps) {
                                     >
                                         Reset Map to Default
                                     </Button>
+
+                                    <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+                                        <DialogContent className="sm:max-w-[425px]">
+                                            <DialogHeader>
+                                                <DialogTitle>Edit profile</DialogTitle>
+                                                <DialogDescription>
+                                                    Make changes to your profile here. Click save when you're done.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <div className="grid gap-4 py-4">
+                                                <div className="grid grid-cols-4 items-center gap-4">
+                                                    <Label htmlFor="name" className="text-right">
+                                                        Name
+                                                    </Label>
+                                                    <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                                                </div>
+                                                <div className="grid grid-cols-4 items-center gap-4">
+                                                    <Label htmlFor="username" className="text-right">
+                                                        Username
+                                                    </Label>
+                                                    <Input id="username" value="@peduarte" className="col-span-3" />
+                                                </div>
+                                            </div>
+                                            <DialogFooter>
+                                                <Button type="submit">Save changes</Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                             </Tabs>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
