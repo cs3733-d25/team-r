@@ -36,30 +36,9 @@ function Login({ onLogin }: loginProps): JSX.Element {
 
     async function auth0Login() {
         if(!isAuthenticated){
-            loginWithRedirect();
-        } else{
-            //get the username from auth0 and check the usertype from the database
-            const email = user?.email;
-            try{
-                const response = await axios.post('/api/login/usertype', email);
-                console.log('repsonse.data.usertype: ', response.data.usertype);
-                //need to start express session
-                await axios.post('/api/login/create-session', {
-                    userId: user?.id,
-                    userType: response.data.userType,
-                    email: user?.email,
-                });
-                navigate('/external-map', {
-                    state: {
-                        status: 'logged-in',
-                        userType: response.data.userType,
-                    },
-                });
-
-            } catch (error) {
-                console.error(error);
-            }
+            await loginWithRedirect();
         }
+
     }
 
     // useEffect(() => {

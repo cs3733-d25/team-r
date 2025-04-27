@@ -21,29 +21,32 @@ import {EditMap} from "../features/MapView/EditMap.tsx";
 import RequestPage  from "../features/Requests/RequestPage.tsx";
 import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
+import {useAuth0} from "@auth0/auth0-react";
 
 function App() {
+    const {isAuthenticated, user, isLoading} = useAuth0();
     const [userType, setUserType] = useState("Guest");
-    const [session, setSession] = useState(null);
-    const [username, setUsername] = useState("");
 
-    async function getSession() {
-        try {
-            const response = await axios.get('api/login/session');
-            const userType = response.data.userType;
-            setUserType(userType);
-            console.log(response.data);
-            console.log("User type:", userType, "- Keagan");
-            setSession(response.data.username);
-            setUsername(response.data.username);
-        } catch (error) {
-            console.log('error in retrieve:', error);
-        }
-    }
-
+    //get the usertype from the database after the user has logged in
     useEffect(() => {
-        getSession();
-    }, []);
+        async function getUserType(){
+            try{
+                const response = await axios.post('/api/login/usertype', {
+                    email: user?.email,
+                });
+                const userType = response.data.userType;
+                console.log("FROM /USERTYOE: ", userType);
+                setUserType(userType);
+            } catch (error){
+                //if no user found set to guest
+                setUserType("Guest");
+                console.log(error);
+            }
+        }
+        if(isAuthenticated && user?.email){
+            getUserType();
+        }
+    }, [isAuthenticated, user]);
 
 
     const router = createBrowserRouter([
@@ -56,7 +59,7 @@ function App() {
             children: [
                 { index: true, element: <HomeMain userType={userType} /> },
                 { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
-                { path: 'login', element: <Login onLogin={getSession} /> },
+                { path: 'login', element: <Login  /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
