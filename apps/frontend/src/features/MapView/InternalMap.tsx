@@ -50,6 +50,7 @@ interface InternalMapProps {
     promiseEdgeCreate?: Promise<void>;
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
+    onCoordSelect?: (x:number, y:number) => void;
 }
 
 const nodePlaceholderOptions = {
@@ -59,7 +60,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -509,12 +510,16 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 floorLayerFaulkner.addTo(map);
             }
 
-            // for getting coordinates (can delete later)
             map.on('click', function (e) {
                 // parse the new coordinates
                 const x = e.latlng.lat.toFixed(2)
                 const y = e.latlng.lng.toFixed(2);
                 console.log("["+x+", "+y+"]");
+
+                // send coordinates to parent function
+                if(onCoordSelect) {
+                    onCoordSelect(e.latlng.lat, e.latlng.lng);
+                }
 
                 // update the placeholder
                 nodePlaceholder.setLatLng(e.latlng);
