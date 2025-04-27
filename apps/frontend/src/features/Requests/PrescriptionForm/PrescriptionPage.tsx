@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Table, TableHeader, TableRow, TableHead, TableCell, TableBody} from '@/components/ui/table.tsx';
+import {PrescriptionTable} from "@/features/Requests/PrescriptionForm/PrescriptionTable.tsx";
 
 export function PrescriptionPage() {
     const [prescription, setPrescription] = useState([
@@ -45,79 +45,7 @@ export function PrescriptionPage() {
 
     return (
         <div>
-
-            <Table >
-                <TableHeader >
-                    <TableRow >
-                        <TableHead className={"text-center"}>Employee Name</TableHead>
-                        <TableHead className={"text-center"}>Prescription Name</TableHead>
-                        <TableHead className={"text-center"}>Priority</TableHead>
-                        <TableHead className={"text-center"}>Department</TableHead>
-                        <TableHead className={"text-center"}>Patient ID</TableHead>
-                        <TableHead className={"text-center"}>Morning Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Midday Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Evening Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Bedtime Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Days Per Week</TableHead>
-                        <TableHead className={"text-center"}>Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Refills</TableHead>
-                        <TableHead className={"text-center"}>Additional Instructions</TableHead>
-                        <TableHead className={"text-center"}>Status</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className={'text-center'}>
-                    {prescription.map((row, index) => {
-                        return (
-                            <>
-                                <TableRow key={index} className={'border-t'}>
-                                    <TableCell >
-                                        {row.employeeID}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.drugName}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.priority}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.department}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.patientID}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.morningPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.middayPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.eveningPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.nightPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.days}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.numberOfPills}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.refills}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.additionalInstructions}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.status}
-                                    </TableCell>
-                                </TableRow>
-                            </>
-                        );
-                    })}
-                </TableBody>
-            </Table>
+            <PrescriptionTable prescription={prescription}></PrescriptionTable>
         </div>
     );
 }
