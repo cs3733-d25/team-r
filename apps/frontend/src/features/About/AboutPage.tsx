@@ -78,14 +78,14 @@ const AboutPage = () => {
                 <div className="flex flex-col items-center space-y-6">
                     <h2 className="text-2xl font-bold text-center">Management Team</h2>
 
-                    {/* Top Management Row */}
+                    {/* Top Management Row -> Product Owner/Project Manager*/}
                     <div className="flex justify-center gap-8">
                         {managementTop.map((member, idx) => (
                             <Card key={idx} name={member.name} role={member.role} />
                         ))}
                     </div>
 
-                    {/* Bottom Management Row */}
+                    {/* Bottom Management Row ->Documentation/Scrum Master*/}
                     <div className="flex justify-center gap-8">
                         {managementBottom.map((member, idx) => (
                             <Card key={idx} name={member.name} role={member.role} />
