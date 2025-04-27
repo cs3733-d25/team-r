@@ -26,7 +26,7 @@ router.post("/", async function (req: Request, res: Response) {
     priority,
     status,
     department,
-    comments,
+    comment,
     patient,
     location,
     request,
@@ -40,12 +40,12 @@ router.post("/", async function (req: Request, res: Response) {
     const createRequest = await client.deviceRequest.create({
       data: {
         deviceType: device,
+        comments: comment,
         //patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority,
         department,
         status,
         room,
-        comments,
         employeeID, //
         //assignedEmployee: employeeName //connect later
       },
