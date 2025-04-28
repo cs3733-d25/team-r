@@ -4,11 +4,11 @@ import { RawDirectoryItem, rawDirectoryItems } from './directoryItems.ts';
 import { DirectoryItem, FloorGroup, HospitalDirectoryData } from './listTypes.ts';
 
 const buildingDisplayNames: { [key: string]: string } = {
-    PATRIOT_PLACE_20: '20 Patriot',
-    PATRIOT_PLACE_22: '22 Patriot',
-    CHESTNUT_HILL: 'Chestnut Hill',
-    FAULKNER: 'Faulkner',
-    WOMENS: "Women's Hospital",
+    PATRIOT_PLACE_20: 'Healthcare Center (20 Patriot Pl.)',
+    PATRIOT_PLACE_22: 'Healthcare Center (20 Patriot Pl.)',
+    CHESTNUT_HILL: 'Healthcare Center (Chestnut Hill)',
+    FAULKNER: 'Faulkner Hospital',
+    WOMENS: "Main Campus Hospital (75 Francis St.)",
 };
 
 const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => {

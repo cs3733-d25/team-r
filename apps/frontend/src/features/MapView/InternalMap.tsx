@@ -298,7 +298,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     function getLayer (building:string, floor: number){
         let out = null;
         switch (building) {
-            case 'Patriot Place 20':
+            case 'Healthcare Center (20 Patriot Pl.)':
                 switch (floor) {
                     case 1:
                         out = floorLayer20_1;
@@ -308,7 +308,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Patriot Place 22':
+            case 'Healthcare Center (22 Patriot Pl.)':
                 switch (floor) {
                     case 1:
                         out = floorLayer22_1;
@@ -324,13 +324,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Chestnut Hill':
+            case 'Healthcare Center (Chestnut Hill)':
                 out = floorLayerChestnutHill;
                 break;
-            case 'Faulkner':
+            case 'Faulkner Hospital':
                 out = floorLayerFaulkner;
                 break;
-            case 'Womens':
+            case 'Main Campus Hospital (75 Francis St.)':
                 out = floorLayerWomens;
                 break;
             default:
@@ -378,10 +378,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 [1000, 2250],
             ];
 
-            // TODO: add bounds for womens
             const boundsWomens: L.LatLngBoundsLiteral = [
-                [-400, -500],
-                [1200, 1300],
+                [-80, -35],
+                [900, 1300],
             ];
 
             // Add floorplan overlays
@@ -399,9 +398,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
                 '22 Patriot Place - Floor 4': floorLayer22_4,
-                'Chestnut Hill': floorLayerChestnutHill,
-                'Faulkner': floorLayerFaulkner,
-                'Womens': floorLayerWomens,
+                'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
+                'Faulkner Hospital': floorLayerFaulkner,
+                'Main Campus Hospital': floorLayerWomens,
             }, {}).addTo(map);
 
             // tracking layer changes
@@ -411,17 +410,17 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 let building = '';
                 let floor = 1;
 
-                if (layerName.includes('20 Patriot Place')) {
+                if (layerName.includes('Healthcare Center (20 Patriot Pl.)')) {
                     building = 'Patriot Place 20';
                     floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('22 Patriot Place')) {
+                } else if (layerName.includes('Healthcare Center (22 Patriot Pl.)')) {
                     building = 'Patriot Place 22';
                     floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('Chestnut Hill')) {
+                } else if (layerName.includes('Healthcare Center (Chestnut Hill)')) {
                     building = 'Chestnut Hill';
-                } else if (layerName.includes('Faulkner')) {
+                } else if (layerName.includes('Faulkner Hospital')) {
                     building = 'Faulkner';
-                } else if (layerName.includes('Womens')) {
+                } else if (layerName.includes('Main Campus Hospital (75 Francis St.)')) {
                     building = 'Womens';
                 }
 
@@ -435,20 +434,21 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
             // initialize starting layer
             if (location.includes('20 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Patriot Place 20', floor: 1 };
+                activeLayerInfo.current = { building: 'Healthcare Center (20 Patriot Pl.)', floor: 1 };
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Patriot Place 22', floor };
+                activeLayerInfo.current = { building: 'Healthcare Center (22 Patriot Pl.)', floor };
                 if(floor == 1) floorLayer22_1.addTo(map);
                 else if(floor == 3) floorLayer22_3.addTo(map);
                 else if(floor == 4) floorLayer22_4.addTo(map);
             } else if (location.includes('Chestnut Hill')) {
-                activeLayerInfo.current = { building: 'Chestnut Hill', floor: 1 };
+                activeLayerInfo.current = { building: 'Healthcare Center (Chestnut Hill)', floor: 1 };
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
-                activeLayerInfo.current = { building: 'Faulkner', floor: 1 };
+                activeLayerInfo.current = { building: 'Faulkner Hospital', floor: 1 };
                 floorLayerFaulkner.addTo(map);
             } else if (location.includes('Womens')) {
+                activeLayerInfo.current = { building: 'Main Campus Hospital (75 Francis St.)', floor: 1 };
                 floorLayerWomens.addTo(map);
             }
 
