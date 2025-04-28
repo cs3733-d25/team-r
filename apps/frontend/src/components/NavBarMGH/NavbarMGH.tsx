@@ -142,7 +142,7 @@ export function NavbarMGH(props: NavBarProps) {
                                         Settings
                                     </Button>
                                     <div className="border-t"></div>
-                                    <Button variant={'ghostDestructive'}>
+                                    <Button variant={'ghostDestructive'} asChild>
                                         <a href={'/'} onClick={(e) => handleLogout()}>
                                             Sign out
                                         </a>
@@ -165,7 +165,7 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Only display login button in logged-out home page */}
                 {(!props.userType) && (
                     <div className="ml-auto flex items-center gap-2">
-                        <Button variant="ghost">
+                        <Button variant="ghost" asChild>
                             <a href="/login">Login</a>
                         </Button>
                     </div>
