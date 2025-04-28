@@ -31,7 +31,9 @@ const blankNode = {
     shortName: "",
 }
 
-
+/**
+ * Interface representing a node in the map
+ */
 interface MapNode {
     nodeID: string;
     nodeType: string;
@@ -94,7 +96,7 @@ export function MapPage() {
 
     /**
      * Given an array of node IDs, this function will convert them to their corresponding node objects
-     * @param nodeIDArray
+     * @param nodeIDs - the string array of node IDs to convert
      */
     // Helper: convert node IDs → full node objects
     const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
@@ -115,7 +117,7 @@ export function MapPage() {
             alert('Please select both a parking lot and a department.');
             return;
         }
-        //get the algortihm set by the admin - stored in database
+        //get the algorithm set by the admin - stored in database
         const response = await axios.get('/api/algo');
         const algorithm = response.data.algo;
 
@@ -348,7 +350,7 @@ export function MapPage() {
                         {availableFloors.map((floor) => (
                             <Button
                                 key={floor}
-                                variant={currentFloor === floor ? 'default' : 'secondary'}
+                                variant={currentFloor === floor ? 'secondary' : 'unselected'}
                                 // TODO: add a for loop to check all indices in flashingFloors
                                 className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {

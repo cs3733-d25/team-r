@@ -60,7 +60,7 @@ const MapController=({ selectedLocation }: { selectedLocation: string })=> {
 
     return ( <div className="mt-4 pt-2">
         <Button
-            variant = "selected"
+            variant = "unselected"
             disabled={selectedLocation === ''}
             className={'rounded-full'}
             onClick={zoomIn
@@ -251,7 +251,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 <Button
                                     variant={
                                         selectedLocation !== patriotPlace20
-                                            ? 'selected'
+                                            ? 'unselected'
                                             : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(patriotPlace20)}
@@ -261,7 +261,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 <Button
                                     variant={
                                         selectedLocation !== patriotPlace22
-                                            ? 'selected'
+                                            ? 'unselected'
                                             : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(patriotPlace22)}
@@ -270,7 +270,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== chestnutHill ? 'selected' : 'secondary'
+                                        selectedLocation !== chestnutHill ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
@@ -278,7 +278,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== faulkner ? 'selected' : 'secondary'
+                                        selectedLocation !== faulkner ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(faulkner)}
                                 >
