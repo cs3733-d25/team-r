@@ -108,7 +108,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const patriotPlace22 = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
     const faulkner = '1153 Centre Street, Faulkner, Boston MA 02130';
-    const womensHospital = '75 Francis St, Boston MA 02115';
+    const mainCampus = '75 Francis St, Boston MA 02115';
     const [selectedLocation, setSelectedLocation] = useState<string>(initialLocation || '');
     type LocationInput =
         | string
@@ -138,7 +138,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         if (location === patriotPlace22) return 'Patriot Place 22';
         if (location === chestnutHill) return 'Chestnut Hill';
         if (location === faulkner) return 'Faulkner';
-        if (location === womensHospital) return 'Womens';
+        if (location === mainCampus) return 'Womens';
         return '';
     };
 
@@ -288,9 +288,9 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== womensHospital  ? 'selected' : 'secondary'
+                                        selectedLocation !== mainCampus  ? 'selected' : 'secondary'
                                     }
-                                    onClick={() => setSelectedLocation(womensHospital)}
+                                    onClick={() => setSelectedLocation(mainCampus)}
                                 >
                                     Main Campus Hospital
                                 </Button>

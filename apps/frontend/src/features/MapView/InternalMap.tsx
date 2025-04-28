@@ -447,7 +447,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             } else if (location.includes('Faulkner')) {
                 activeLayerInfo.current = { building: 'Faulkner Hospital', floor: 1 };
                 floorLayerFaulkner.addTo(map);
-            } else if (location.includes('Womens')) {
+            } else if (location.includes('Francis St') || location.includes('Womens')) {
                 activeLayerInfo.current = { building: 'Main Campus Hospital (75 Francis St.)', floor: 1 };
                 floorLayerWomens.addTo(map);
             }
