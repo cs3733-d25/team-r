@@ -27,11 +27,12 @@ const W2 = ['Ambulatory Radiology (X-Ray and CT Scan)', 'Bornstein Amphitheater'
 const W3 = ['Center for Fetal Medicine & Reproductive Genetics', 'Center for Infertility & Reproductive Surgery', 'Connors Center for Women\'s Health', 'Dialysis', 'Gynecologic Oncology', 'High Risk Obstetric Ultrasound', 'Infertility & Reproductive Surgery', 'Maternal Fetal Medicine', 'Minimally Invasive Gynecologic Surgery', 'Reproductive Endocrinology Lab', 'Urology', 'Vascular Diagnostic Laboratory'];
 const W4 = ['Infectious Disease'];
 const W6 = ['Dana-Farber Cancer Inpatient Hospital'];
-const WAll : string[] = [];
+const WDups : string[] = [];
 //pushes all floors to the all floors list, then sorts
 for (const floor of [WN2, WN1, W0, W1, W2, W3, W4, W6]) {
-    WAll.push(...floor);
+    WDups.push(...floor);
 }
+const WAll = [...new Set(WDups)];
 WAll.sort();
 
 const values = {
