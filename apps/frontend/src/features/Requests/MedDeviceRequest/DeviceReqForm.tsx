@@ -233,24 +233,24 @@ export const DeviceReqForm = () => {
                                     />
                                 </div>
                                 <br />
+                            </div>
 
-                                {/* Comments */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Comments
-                                        <span className="text-xs text-secondary-foreground block">
+                            {/* Comments */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Comments
+                                    <span className="text-xs text-secondary-foreground block">
                                         Enter any additional comments.
                                     </span>
-                                    </Label>
-                                    <Textarea
-                                        name="comment"
-                                        value={formData.comment}
-                                        onChange={handleChange2}
-                                        placeholder="Enter any additional comments."
-                                        rows={4}
-                                        className="w-250 px-4 py-2 rounded-md border border-border bg-input"
-                                    />
-                                </div>
+                                </Label>
+                                <Textarea
+                                    name="comment"
+                                    value={formData.comment}
+                                    onChange={handleChange2}
+                                    placeholder="Enter any additional comments."
+                                    rows={4}
+                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                />
                             </div>
 
                             {/* Submit Button */}
