@@ -135,6 +135,17 @@ export function EditMap({ status }: EditMapProps) {
         });
         setCurrentBuilding(building);
     };
+    const handleNodeDrag = (lat: number, lng: number, nodeID:string, nodeTypes:string) => {
+        setNodeID(nodeID)
+        setEditNodeType(nodeTypes)
+        console.log("Setting coordinates: x = ", lat, " y = ", lng);
+        setEditCoordinates({
+            x: lat.toString(),
+            y: lng.toString(),
+        });
+        setCurrentBuilding(building);
+    };
+    console.log("nodeType:", nodeType);
     // useEffect(() => {
 
 
@@ -201,6 +212,8 @@ export function EditMap({ status }: EditMapProps) {
             alert('Please enter a valid coordinate.');
             return;
         }
+
+
         const nodeData = {
             nodeID: nodeID,
             nodeType: editnodeType,
@@ -359,6 +372,8 @@ export function EditMap({ status }: EditMapProps) {
                     onNodeSelect={onNodeClick}
                     onLocationChange={setLocation}
                     onCoordSelect={handleMapClick}
+                    onNodeDrag={handleNodeDrag}
+                    onNodeEdit={editNode}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
