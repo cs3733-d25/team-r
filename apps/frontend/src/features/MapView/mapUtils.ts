@@ -8,11 +8,11 @@ export const getBuildingFromLocation = (location: string) => {
 };
 
 export const getShortLocationName = (location: string) => {
-    if (location.includes('20 Patriot Pl')) return '20 Patriot Place';
-    if (location.includes('22 Patriot Pl')) return '22 Patriot Place';
-    if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
-    if (location.includes('Faulkner')) return 'Faulkner';
-    if (location.includes('Womens')) return 'Womens';
+    if (location.includes('20 Patriot Pl')) return 'Healthcare Center (20 Patriot Pl.)';
+    if (location.includes('22 Patriot Pl')) return 'Healthcare Center (22 Patriot Pl.)';
+    if (location.includes('Chestnut Hill')) return 'Healthcare Center (Chestnut Hill)';
+    if (location.includes('Faulkner')) return 'Faulkner Hospital';
+    if (location.includes('Francis St')) return 'Main Campus Hospital (75 Francis St.)';
     return location;
 };
 
