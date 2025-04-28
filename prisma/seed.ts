@@ -18,7 +18,7 @@ async function main() {
                 email: 'softengd25r@gmail.com',
                 firstName: 'Wilson',
                 lastName: 'Wong',
-                userType: 'Employee'
+                userType: 'Admin'
             }
         });
 
@@ -181,7 +181,7 @@ async function main() {
     await client.user.create({
         data: {
             id: 'Daksh',
-            email: 'dgajaria@wpi.edu',
+            email: 'dgajaria@gmail.com',
             firstName: 'Daksh',
             lastName: 'Gajaria',
             userType: 'Employee',
@@ -194,6 +194,27 @@ async function main() {
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Nurse',
+            onShift: false,
+        }
+    });
+
+    //Daksh - admin
+    await client.user.create({
+        data: {
+            id: 'DakshAdmin',
+            email: 'dgajaria@wpi.edu',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'DakshAdmin',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
             onShift: false,
         }
     });
