@@ -246,9 +246,9 @@ export const DeviceReqForm = () => {
                                         name="comment"
                                         value={formData.comment}
                                         onChange={handleChange2}
-                                        placeholder="Enter any additional comments."
+                                        placeholder="Include any additional comments or instructions."
                                         rows={4}
-                                        className="w-250 px-4 py-2 rounded-md border border-border bg-input"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     />
                                 </div>
                             </div>

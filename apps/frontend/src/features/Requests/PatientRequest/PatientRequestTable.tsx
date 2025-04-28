@@ -21,7 +21,7 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
         <Table>
             <TableHeader >
                 <TableRow >
-                    <TableHead className={"text-center"} >Employee</TableHead>
+                    <TableHead className={"text-center"}>Employee</TableHead>
                     <TableHead className={"text-center"}>Patient ID</TableHead>
                     <TableHead className={"text-center"}>Request</TableHead>
                     <TableHead className={"text-center"}>Priority</TableHead>
