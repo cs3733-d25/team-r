@@ -36,6 +36,7 @@ function App() {
         console.log('isAuthenticated', isAuthenticated);
 
         if (isAuthenticated && user?.email) {
+            console.log("in if statement");
             async function getUserType() {
                 try {
                     const response = await axios.post('/api/login/usertype', {

@@ -10,7 +10,6 @@ const domain = import.meta.env.VITE_AUTH_DOMAIN;
 const clientID = import.meta.env.VITE_AUTH_CLIENT_ID
 // Entry point where root component is rendered into the DOM
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
     <Auth0Provider
             domain={domain}
             clientId={clientID}
@@ -20,5 +19,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         >
                 <App />
         </Auth0Provider>
-    </React.StrictMode>
+
 );
