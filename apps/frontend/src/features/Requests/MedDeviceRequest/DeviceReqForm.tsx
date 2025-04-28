@@ -233,12 +233,13 @@ export const DeviceReqForm = () => {
                                     />
                                 </div>
                                 <br />
+                            </div>
 
-                                {/* Comments */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Comments
-                                        <span className="text-xs text-secondary-foreground block">
+                            {/* Comments */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Comments
+                                    <span className="text-xs text-secondary-foreground block">
                                         Enter any additional comments.
                                     </span>
                                     </Label>
@@ -250,7 +251,6 @@ export const DeviceReqForm = () => {
                                         rows={4}
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     />
-                                </div>
                             </div>
 
                             {/* Submit Button */}
