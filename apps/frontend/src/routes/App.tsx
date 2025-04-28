@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, useNavigate} from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
@@ -22,38 +22,45 @@ import RequestPage  from "../features/Requests/RequestPage.tsx";
 import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
+import {navigate} from "next/dist/client/components/segment-cache-impl/navigation";
 
 function App() {
-    const {isAuthenticated, user, isLoading} = useAuth0();
+    const {isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState("Guest");
     console.log('APP IS RENDERED');
 
     //get the usertype from the database after the user has logged in
     useEffect(() => {
+        if(user){
+            console.log('user exists', user);
+        } else{
+            console.log('No user found: ', user);
+        }
         console.log('isLoading', isLoading);
         console.log('userType', userType);
         console.log('user', user);
         console.log('isAuthenticated', isAuthenticated);
-
-        if (isAuthenticated && user?.email) {
+        if (isAuthenticated && !isLoading && user) {
             console.log("in if statement");
+            //navigate to neck page
             async function getUserType() {
                 try {
-                    const response = await axios.post('/api/login/usertype', {
-                        email: user?.email,
-                    });
+                    const response = await axios.post(
+                        '/api/login/usertype',
+                        {email: user?.email},
+                        { withCredentials: true }
+                    );
                     const userType = response.data.userType;
-                    console.log("FROM /USERTYOE: ", userType);
                     setUserType(userType);
                 } catch (error) {
                     //if no user found set to guest
-                    setUserType("Guest");
+                    //setUserType("Guest");
                     console.log(error);
                 }
             }
             getUserType();
         }
-    }, [isAuthenticated, user]);
+    }, [isAuthenticated, user, isLoading]);
 
 
     const router = createBrowserRouter([

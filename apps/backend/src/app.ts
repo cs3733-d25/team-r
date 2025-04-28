@@ -24,16 +24,16 @@ import { API_ROUTES } from "common/src/constants";
 const secret = process.env.SESSION_SECRET;
 
 const app: Express = express(); // Setup the backend
-//auth0 config
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: secret!,
-  baseURL: "http://localhost:3000",
-  clientID: "DgTFKpfFlNqWW99tagFKa3mqyVeq1zbw",
-  issuerBaseURL: "https://dev-dnteto2dhanul662.us.auth0.com",
-};
-app.use(auth(config));
+// //auth0 config
+// const config = {
+//   authRequired: false,
+//   auth0Logout: true,
+//   secret: secret!,
+//   baseURL: "http://localhost:3000",
+//   clientID: "DgTFKpfFlNqWW99tagFKa3mqyVeq1zbw",
+//   issuerBaseURL: "https://dev-dnteto2dhanul662.us.auth0.com",
+// };
+// app.use(auth(config));
 
 // Setup generic middlewear
 app.use(

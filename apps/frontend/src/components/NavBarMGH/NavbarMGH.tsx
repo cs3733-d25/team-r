@@ -17,12 +17,13 @@ interface NavBarProps {
 export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
-    const {loginWithRedirect, isAuthenticated, user} = useAuth0();
+    const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0();
 
     async function handleLogout() {
         try {
             console.log("Logging user out");
-            axios.post('/api/login/reset');
+            //axios.post('/api/login/reset');
+            logout(); //auth0 logout
         } catch (error) {
             console.log("Error: ", error);
         }
@@ -168,10 +169,7 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Only display login button in logged-out home page */}
                 {(!isAuthenticated) && (
                     <div className="ml-auto flex items-center gap-2">
-                        {/*<Button variant="ghost">*/}
-                        {/*    <a href="/login">Login</a>*/}
-                        {/*</Button>*/}
-                        <Button onClick={() => loginWithRedirect()}>Login</Button>
+                        <Button variant="ghost" onClick={() => loginWithRedirect()}>Login</Button>
                     </div>
                 )}
             </div>

@@ -72,7 +72,9 @@ router.post("/usertype", async function (req: Request, res: Response) {
   const user = await PrismaClient.user.findUnique({
     where: { email: req.body.email },
   });
-  res.status(200).json(user?.userType);
+  console.log("User from database: ", user);
+  console.log("userTYpe: ", user!.userType);
+  res.status(200).json({userType: user!.userType});
 });
 
 router.post("/reset", async (req, res) => {
