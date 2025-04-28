@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
@@ -8,7 +7,6 @@ import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
-import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 
 // Simple interface for submitted request
@@ -275,7 +273,7 @@ const TransportationRequestForm = () => {
                                         Select the building making the patient request.
                                     </span>
                                     </Label>
-                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} reset={resetDropdowns}/>
+                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} alternateFieldName={'building'} onChange={handleLocationChange} reset={resetDropdowns}/>
 
                                     {/*select department based on location*/}
                                     {selectedLocation && (
@@ -327,7 +325,7 @@ const TransportationRequestForm = () => {
                                                     Select a destination
                                                 </span>
                                                 </Label>
-                                                <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDesiredBuilding} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
+                                                <Dropdown tableName={"building"} fieldName={"desiredBuilding"} alternateFieldName={"building"} onChange={handleDesiredBuildingChange} reset={resetDesiredBuilding} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
                                             </>
                                         )}
                                     </div>
