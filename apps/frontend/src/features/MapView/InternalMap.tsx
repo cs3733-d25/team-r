@@ -162,22 +162,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
 
     }
-    function dragMarkerEnd(node:Node, e:LeafletEvent):void {
-        {
-            console.log("dragMarkerEnd Event:", e);
-            const marker =e.target as L.Marker
-            const draggedLatlng = marker.getLatLng();
-            console.log("Dragged LatLng:", draggedLatlng);
-            const x = parseFloat(draggedLatlng.lat.toFixed(2));
-            const y = parseFloat(draggedLatlng.lng.toFixed(2));
-            if (onNodeEdit) {
-                console.log("Calling onNodeEdit with:", x, y, node.nodeID);
-                onNodeEdit(x,y,node.nodeID);
-            }
 
-        }
-
-    }
 
 
     function clickEdge(edge:Edge, pLine:L.Polyline){
@@ -483,7 +468,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                             const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
                             place.on('click', () => clickMarker(node,place));
                             place.on('drag', (e) => dragMarker(node,place,e));
-                            place.on('dragend', (e) => dragMarkerEnd(node,e));
 
                         }
                     });

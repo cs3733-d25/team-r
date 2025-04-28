@@ -203,22 +203,24 @@ export function EditMap({ status }: EditMapProps) {
         );
     };
 
-    const editNode = async (x:number, y:number, nodeIDs:string) => {
+    const editNode = async () => {
         if (!editcoordinates) {
             alert('Please select a location on the map first.');
             return;
         }
-        const chosenX =editcoordinates?.x&& isNaN(parseFloat(editcoordinates.x))? editcoordinates.x:x
-        const chosenY =editcoordinates?.y&& isNaN(parseFloat(editcoordinates.y))? editcoordinates.y:y
-        console.log("Edit coordinates:", editcoordinates);
+        if (isNaN(parseFloat(editcoordinates.x)) || isNaN(parseFloat(editcoordinates.y))){
+            alert('Please enter a valid coordinate.');
+            return;
+        }
+
 
         const nodeData = {
-            nodeID: nodeID ||nodeIDs,
+            nodeID: nodeID,
             nodeType: editnodeType,
             building: currentBuilding,
             floor: currentFloor,
-            xcoord: chosenX,
-            ycoord: chosenY,
+            xcoord: parseFloat(editcoordinates.x),
+            ycoord: parseFloat(editcoordinates.y),
             longName: '',
             shortName: editnodeName,
             departments: selectedDepartments,
@@ -621,10 +623,7 @@ export function EditMap({ status }: EditMapProps) {
                                         </div>
 
                                         <Button
-                                            onClick={()=>{if(editcoordinates){
-                                                const x =parseFloat(editcoordinates.x)
-                                                const y = parseFloat(editcoordinates.y)
-                                                editNode(x,y,nodeID)}}}
+                                            onClick={editNode}
                                             disabled={!nodeID}
                                             className="w-full"
                                         >
