@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
-import {RequestInfoButton} from "@/components/RequestInfoButton.tsx";
+import {RequestInfoButton} from "@/components/ServiceRequests/RequestInfoButton.tsx";
 
 export function AllRequestsTable() {
     //array of all requests

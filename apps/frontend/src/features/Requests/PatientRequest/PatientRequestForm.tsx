@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 
 
 
@@ -248,11 +249,7 @@ export const PatientRequestForm = () => {
         </div>
         </div>
             {submitStatus && submitStatus.isError && (
-                <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-                    <AlertDescription className={'text-foreground'}>
-                        {submitStatus.message}
-                    </AlertDescription>
-                </Alert>
+                <ErrorCard message={submitStatus.message} />
             )}
             {/* Confirmation Card */}
             {submittedPatientRequest && !submitStatus?.isError && (

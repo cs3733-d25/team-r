@@ -9,6 +9,7 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 
 // Simple interface for submitted request
 interface SubmittedRequest {
@@ -247,11 +248,7 @@ const SanitationRequestForm = () => {
         </div>
         {/* Status Message */}
         {submitStatus && submitStatus.isError && (
-            <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-              <AlertDescription className={'text-foreground'}>
-                {submitStatus.message}
-              </AlertDescription>
-            </Alert>
+            <ErrorCard message={submitStatus.message} />
         )}
 
         {/* Confirmation Card */}
