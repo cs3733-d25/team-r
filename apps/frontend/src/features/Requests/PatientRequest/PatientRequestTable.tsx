@@ -28,7 +28,7 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
                     <TableHead className={"text-center"}>Department</TableHead>
                     <TableHead className={"text-center"}>Location</TableHead>
                     <TableHead className={"text-center"}>Status</TableHead>
-
+                    <TableHead className={"text-center"}>Comments</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className={"text-center"}>
@@ -44,7 +44,7 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.location}</TableCell>
                                 <TableCell>{row.status}</TableCell>
-
+                                <TableCell>{row.comment}</TableCell>
                             </TableRow>
 
                         </>
