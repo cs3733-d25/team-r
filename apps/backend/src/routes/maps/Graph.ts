@@ -1,4 +1,4 @@
-import client from "../bin/prisma-client";
+import client from "../../bin/prisma-client.ts";
 
 export class Graph {
   private adjacencyList = new Map<string, Set<string>>();

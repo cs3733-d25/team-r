@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import client from "../bin/prisma-client.ts";
+import client from "../../bin/prisma-client.ts";
 import session from "express-session";
 
 const router: Router = express.Router();

@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import client from "../bin/prisma-client.ts";
+import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
