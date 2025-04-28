@@ -235,6 +235,7 @@ export const rawDirectoryItems: RawDirectoryItem[] = [
     {name: 'Urology', floorNumber: 3, building: "WOMENS"},
 
     {name: 'Infectious Disease', floorNumber: 4, building: "WOMENS"},
+    {name: 'Dana-Farber Cancer Inpatient Hospital', floorNumber: 6, building: "WOMENS"},
 
     {name: 'Infusion', floorNumber: 0, building: "WOMENS"},
     {name: 'Phlebotomy, Outpatient', floorNumber: 0, building: "WOMENS"},
