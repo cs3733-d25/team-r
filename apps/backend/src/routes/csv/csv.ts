@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import client from "../bin/prisma-client.ts";
+import client from "../../bin/prisma-client.ts";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { toCSV } from "common/src/toCSV.ts";

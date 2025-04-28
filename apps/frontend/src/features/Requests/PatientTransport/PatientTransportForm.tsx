@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
-import Dropdown from "@/components/Dropdowns/Department.tsx";
-import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 
 
 // Simple interface for submitted request
@@ -83,6 +82,8 @@ const TransportationRequestForm = () => {
                 return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
             case "Faulkner":
                 return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Brigham and Women\'s Hospital":
+                return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
             default:
                 return null;
         }
@@ -273,7 +274,7 @@ const TransportationRequestForm = () => {
                                         Select the building making the patient request.
                                     </span>
                                     </Label>
-                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} reset={resetDropdowns}/>
+                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} alternateFieldName={'building'} onChange={handleLocationChange} reset={resetDropdowns}/>
 
                                     {/*select department based on location*/}
                                     {selectedLocation && (
@@ -325,7 +326,7 @@ const TransportationRequestForm = () => {
                                                     Select a destination
                                                 </span>
                                                 </Label>
-                                                <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDesiredBuildingChange} reset={resetDesiredBuilding} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
+                                                <Dropdown tableName={"building"} fieldName={"desiredBuilding"} alternateFieldName={"building"} onChange={handleDesiredBuildingChange} reset={resetDesiredBuilding} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
                                             </>
                                         )}
                                     </div>
@@ -376,11 +377,7 @@ const TransportationRequestForm = () => {
                 </div>
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
-                    <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-                        <AlertDescription className={'text-foreground'}>
-                            {submitStatus.message}
-                        </AlertDescription>
-                    </Alert>
+                    <ErrorCard message={submitStatus.message} />
                 )}
 
                 {/* Confirmation Card */}

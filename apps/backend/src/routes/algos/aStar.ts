@@ -1,7 +1,7 @@
-import prismaClient from "../bin/prisma-client";
-import { PriorityQueue } from "./dataStructures.ts";
-import router from "./mapData";
-import { Graph } from "./Graph.ts";
+import prismaClient from "../../bin/prisma-client.ts";
+import { PriorityQueue } from "../datastructures/dataStructures.ts";
+import router from "../maps/mapData.ts";
+import { Graph } from "../maps/Graph.ts";
 import { PathfindingAlgorithm } from "./algoSelection.ts";
 
 export class AStar implements PathfindingAlgorithm {

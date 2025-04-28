@@ -1,4 +1,4 @@
-import { Graph } from "./Graph";
+import { Graph } from "../maps/Graph.ts";
 import DFS from "./dfs.ts";
 import { BFS } from "./bfs.ts";
 import { AStar } from "./aStar.ts";
