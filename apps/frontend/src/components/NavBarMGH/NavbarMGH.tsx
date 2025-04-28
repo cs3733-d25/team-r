@@ -132,7 +132,7 @@ export function NavbarMGH(props: NavBarProps) {
                                         Settings
                                     </Button>
                                     <div className="border-t"></div>
-                                    <Button variant={'ghostDestructive'}>
+                                    <Button variant={'ghostDestructive'} asChild>
                                         <a href={'/'} onClick={(e) => handleLogout()}>
                                             Sign out
                                         </a>

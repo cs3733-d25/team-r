@@ -72,6 +72,7 @@ export function MapPage() {
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner': ['FAULKNER', 'Faulkner'],
+                // TODO: add women's hospital parking lots
             };
 
             return buildingMap[selectedBuilding]?.some(buildingName =>

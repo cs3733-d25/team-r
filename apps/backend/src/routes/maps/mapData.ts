@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import PrismaClient from "../../bin/prisma-client.ts";
 
 export interface Node {
   nodeID: string;
@@ -165,7 +165,7 @@ router.get("/edges-20-3", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -221,7 +221,7 @@ router.get("/edges-22-3", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -247,7 +247,7 @@ router.get("/edges-22-4", async (req, res) => {
         toNode: true,
       },
     });
-    console.log(request);
+    // console.log(request);
     res.json(request);
   } catch (err) {
     console.error(err);
@@ -303,6 +303,29 @@ router.get("/edges-faulkner", async (req, res) => {
   }
 });
 
+router.get("/edges-womens", async (req, res) => {
+  try {
+    const request = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: {
+          building: "Womens",
+        },
+        toNode: {
+          building: "Womens",
+        },
+      },
+      include: {
+        fromNode: true,
+        toNode: true,
+      },
+    });
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 router.post("/internal", async (req, res) => {
   try {
     const request = await PrismaClient.node.findMany({
@@ -346,7 +369,7 @@ router.get("/getNodeObjs", async (req, res) => {
         }),
       );
     }
-    console.log("nodes: ", nodes);
+    // console.log("nodes: ", nodes);
     res.json(nodes);
   } catch (err) {
     console.error(err);
@@ -460,7 +483,7 @@ router.post("/reset", async (req: Request, res: Response) => {
 
       // import default map data from JSON
       const defaultMapData = await import(
-        "../../../../API-testing/defaultMapData.json"
+        "../../../../../API-testing/defaultMapData.json"
       );
 
       const { nodes, edges } = defaultMapData.default;

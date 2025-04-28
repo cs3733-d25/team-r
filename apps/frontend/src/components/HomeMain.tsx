@@ -52,7 +52,7 @@ export function HomeMain(props: HomeMainProps) {
                         </Button>
                     </div>
                 </div>
-                <Disclaimer message="This web application is strictly a CS3733-D25 Software Engineering class project for Prof. Wilson Wong at WPI." />
+                <Disclaimer message="This website is a term project exercise for WPI CS 3733 Software Engineering (Prof. Wong) and is not to be confused with the actual Brigham & Women’s Hospital website." />
             </div>
         </div>
     )

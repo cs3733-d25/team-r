@@ -5,19 +5,19 @@ import session from "express-session";
 import logger from "morgan";
 import { auth } from "express-openid-connect";
 
-import healthcheckRouter from "./routes/healthcheck";
-import employeeRouter from "./routes/employee.ts";
+import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
+import employeeRouter from "./routes/userdata/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
-import assignedRouter from "./routes/assigned.ts";
-import csvRouter from "./routes/csv.ts";
-import loginRouter from "./routes/login.ts";
-import sanitationRouter from "./routes/sanitationreqs.ts";
-import algoRouter from "./routes/algoRouting.ts";
-import patientRequestRouter from "./routes/patientRequest.ts";
-import pharmacyRouter from "./routes/pharmacyreqs.ts";
-import transportRequestRouter from "./routes/transportreqs.ts";
-import deviceRequestRouter from "./routes/devicereqs.ts";
-import mapRouter from "./routes/mapData.ts";
+import assignedRouter from "./routes/uselessroutes/assigned.ts";
+import csvRouter from "./routes/csv/csv.ts";
+import loginRouter from "./routes/userdata/login.ts";
+import sanitationRouter from "./routes/servicereqs/sanitationreqs.ts";
+import algoRouter from "./routes/algos/algoRouting.ts";
+import patientRequestRouter from "./routes/servicereqs/patientRequest.ts";
+import pharmacyRouter from "./routes/servicereqs/pharmacyreqs.ts";
+import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
+import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
+import mapRouter from "./routes/maps/mapData.ts";
 
 import { API_ROUTES } from "common/src/constants";
 

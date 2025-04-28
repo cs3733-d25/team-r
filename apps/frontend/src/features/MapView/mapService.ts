@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-import { Node } from '../../../../backend/src/routes/mapData.ts';
+import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
 
 // Response type if backend wraps IDs in an object
 type NodeIDsResponse = { nodeIDs: string[] };
@@ -85,6 +85,11 @@ export const fetchEdgesChestnut = async () => {
 export const fetchEdgesFaulkner = async () => {
     const res = await axios.get('/api/map/edges-faulkner');
     // TODO: create backend request
+    return res.data;
+};
+
+export const fetchEdgesWomensHospital = async () => {
+    const res = await axios.get('/api/map/edges-womens-hospital');
     return res.data;
 };
 
