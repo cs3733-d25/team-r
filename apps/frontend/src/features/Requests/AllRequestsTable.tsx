@@ -100,10 +100,9 @@ export function AllRequestsTable() {
 
     return(
         <>
-            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="mb-6 pt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div className="flex flex-col gap-2 md:flex-row md:items-end">
                     <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="employeeID">Employee ID</Label>
                         <Input
                             id="employeeID"
                             value={employeeID}
