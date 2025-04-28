@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
-import Dropdown from "../../../components/Dropdowns/Department.tsx";
+import Dropdown from "../../../components/Dropdowns/Dropdown.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import { Input } from '@/components/ui/input.tsx';

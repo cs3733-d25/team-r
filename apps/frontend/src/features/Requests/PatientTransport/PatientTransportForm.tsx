@@ -7,7 +7,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
-import Dropdown from "@/components/Dropdowns/Department.tsx";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 

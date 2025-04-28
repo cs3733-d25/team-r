@@ -7,7 +7,7 @@ import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import Dropdown from "@/components/Dropdowns/Department.tsx";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
 
 // Simple interface for submitted request
