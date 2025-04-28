@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import PrismaClient from "../bin/prisma-client.ts";
+import PrismaClient from "../../bin/prisma-client.ts";
 
 export interface Node {
   nodeID: string;
@@ -483,7 +483,7 @@ router.post("/reset", async (req: Request, res: Response) => {
 
       // import default map data from JSON
       const defaultMapData = await import(
-        "../../../../API-testing/defaultMapData.json"
+        "../../../../../API-testing/defaultMapData.json"
       );
 
       const { nodes, edges } = defaultMapData.default;
