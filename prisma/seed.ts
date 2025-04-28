@@ -11,48 +11,50 @@ async function main() {
         skipDuplicates: true
     });
 
-        // // 3. Create user
-        // await client.user.create({
-        //     data: {
-        //         id: 'John',
-        //         username: 'employee1@example.com',
-        //         password: 'password123',
-        //         userTypeID: 'Employee'
-        //     }
-        // });
-        //
-        // // 4. Create employee (after department is available)
-        // await client.employee.create({
-        //     data: {
-        //         id: 'John',
-        //         firstName: 'John',
-        //         lastName: 'Doe',
-        //         departmentId: 'Urology PP20-1',
-        //         role: 'Doctor',
-        //         onShift: true,
-        //     }
-        //
-        // });
+        // 3. Create user
+        await client.user.create({
+            data: {
+                id: 'admin1',
+                email: 'softengD25X@gmail.com',
+                firstName: 'Wilson',
+                lastName: 'Wong',
+                userType: 'Employee'
+            }
+        });
 
-    //     //admin
-    //     await client.user.create({
-    //         data: {
-    //             id: 'admin',
-    //             username: 'admin',
-    //             password: 'admin',
-    //             userTypeID: 'Admin',
-    //         }
-    //     });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'admin',
-    //         firstName: 'admin',
-    //         lastName: 'Wong',
-    //         departmentId: 'Blood Draw/Phlebotomy PP20-1',
-    //         role: 'Administrator',
-    //         onShift: true,
-    //     }
-    // });
+        // 4. Create employee (after department is available)
+        await client.employee.create({
+            data: {
+                id: 'admin1',
+                firstName: 'Wilson',
+                lastName: 'Wong',
+                departmentId: 'Urology PP20-1',
+                role: 'Admin',
+                onShift: true,
+            }
+
+        });
+
+        //admin
+        await client.user.create({
+            data: {
+                id: 'admin2',
+                email: 'staffD25X@gmail.com',
+                firstName: 'Admin',
+                lastName: 'Admin',
+                userType: 'Admin',
+            }
+        });
+    await client.employee.create({
+        data: {
+            id: 'admin2',
+            firstName: 'Admin',
+            lastName: 'Admin',
+            departmentId: 'Blood Draw/Phlebotomy PP20-1',
+            role: 'Administrator',
+            onShift: true,
+        }
+    });
 
         //employees
     await client.user.create({
@@ -231,24 +233,25 @@ async function main() {
     //     }
     // });
 
-    // await client.user.create({
-    //     data: {
-    //         id: 'Keagan',
-    //         username: 'Keagan',
-    //         password: '1',
-    //         userTypeID: 'Patient',
-    //     }
-    // });
-    // await client.patient.create({
-    //     data: {
-    //         id: 'Keagan',
-    //         firstName: 'Keagan',
-    //         lastName: 'Hitt',
-    //         dateOfBirth: new Date('1990-05-15'),
-    //         phone: '123-456-7890',
-    //         assignedDoctorId: 'John'
-    //     }
-    // });
+    await client.user.create({
+        data: {
+            id: 'Keagan',
+            email: 'kjhitt@wpi.edu',
+            firstName: 'Roboto',
+            lastName: 'Hitt',
+            userType: 'Patient',
+        }
+    });
+    await client.patient.create({
+        data: {
+            id: 'Keagan',
+            firstName: 'Keagan',
+            lastName: 'Hitt',
+            dateOfBirth: new Date('1990-05-15'),
+            phone: '123-456-7890',
+            assignedDoctorId: 'admin1'
+        }
+    });
 
 
     console.log('Database seeded successfully!');
