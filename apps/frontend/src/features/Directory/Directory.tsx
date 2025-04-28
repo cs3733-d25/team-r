@@ -1,7 +1,7 @@
-import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs.tsx';
+import React, { useState } from 'react';
 import { RawDirectoryItem, rawDirectoryItems } from './directoryItems.ts';
 import { DirectoryItem, FloorGroup, HospitalDirectoryData } from './listTypes.ts';
+import { Button } from '@/components/ui/button.tsx';
 
 const buildingDisplayNames: { [key: string]: string } = {
     PATRIOT_PLACE_20: 'Healthcare Center (20 Patriot Pl.)',
@@ -47,49 +47,50 @@ const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => 
 
 export function Directory() {
     const hospitalData = groupDirectoryData(rawDirectoryItems);
-    const defaultTabValue = hospitalData.length > 0 ? hospitalData[0].buildingValue : '';
+    const [selectedBuilding, setSelectedBuilding] = useState(
+        hospitalData.length > 0 ? hospitalData[0].buildingValue : ''
+    );
+
+    const selectedBuildingData = hospitalData.find(building => building.buildingValue === selectedBuilding);
 
     return (
-        <>
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
-                <Tabs defaultValue={defaultTabValue}>
-                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
+            <div className="flex flex-col md:flex-row gap-6">
+                <div className="w-full md:w-1/4">
+                    <div className="flex flex-col space-y-2">
                         {hospitalData.map((buildingInfo) => (
-                            <TabsTrigger
+                            <Button
                                 key={buildingInfo.buildingValue}
-                                value={buildingInfo.buildingValue}
-                                className="text-sm md:text-base"
+                                onClick={() => setSelectedBuilding(buildingInfo.buildingValue)}
+                                variant={selectedBuilding === buildingInfo.buildingValue ? 'default' : 'secondary'}
                             >
                                 {buildingInfo.building}
-                            </TabsTrigger>
+                            </Button>
                         ))}
-                    </TabsList>
+                    </div>
+                </div>
 
-                    {hospitalData.map((buildingInfo) => (
-                        <TabsContent
-                            key={buildingInfo.buildingValue}
-                            value={buildingInfo.buildingValue}
-                        >
-                            <div className="mt-6">
-                                {buildingInfo.floors.map((floorGroup) => (
-                                    <div key={floorGroup.floor} className="mb-8">
-                                        <h2 className="text-2xl font-semibold border-b pb-2 mb-4">
-                                            {floorGroup.floor}
-                                        </h2>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
-                                            {floorGroup.items.map((item, itemIndex) => (
-                                                <div key={itemIndex}>{item.name}</div>
-                                            ))}
-                                        </div>
+                <div className="w-full md:w-3/4">
+                    {selectedBuildingData && (
+                        <div className="mt-2">
+                            {selectedBuildingData.floors.map((floorGroup) => (
+                                <div key={floorGroup.floor} className="mb-8">
+                                    <h2 className="text-2xl font-semibold border-b pb-2 mb-4">
+                                        {floorGroup.floor}
+                                    </h2>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
+                                        {floorGroup.items.map((item, itemIndex) => (
+                                            <div key={itemIndex}>{item.name}</div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        </TabsContent>
-                    ))}
-                </Tabs>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
-        </>
+        </div>
     );
 }
 
