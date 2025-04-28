@@ -7,6 +7,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
 import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 
 
 // Simple interface for submitted request
@@ -376,11 +377,7 @@ const TransportationRequestForm = () => {
                 </div>
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
-                    <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-                        <AlertDescription className={'text-foreground'}>
-                            {submitStatus.message}
-                        </AlertDescription>
-                    </Alert>
+                    <ErrorCard message={submitStatus.message} />
                 )}
 
                 {/* Confirmation Card */}
