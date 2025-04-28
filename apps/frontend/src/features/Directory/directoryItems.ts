@@ -235,4 +235,13 @@ export const rawDirectoryItems: RawDirectoryItem[] = [
     {name: 'Urology', floorNumber: 3, building: "WOMENS"},
 
     {name: 'Infectious Disease', floorNumber: 4, building: "WOMENS"},
+
+    {name: 'Cross-Sectional Interventional Radiology', floorNumber: -1, building: "WOMENS"},
+    {name: 'Day Surgery Check-in / Pre-Op', floorNumber: -1, building: "WOMENS"},
+    {name: 'Nuclear Medicine & Molecular Imaging', floorNumber: -1, building: "WOMENS"},
+    {name: 'Outpatient X-ray', floorNumber: -1, building: "WOMENS"},
+    {name: 'PACU', floorNumber: -1, building: "WOMENS"},
+    {name: 'Radiology (MRI and CSIR)', floorNumber: -1, building: "WOMENS"},
+    {name: 'Ultrasound', floorNumber: -1, building: "WOMENS"},
+    {name: 'Medical Records / Film Library', floorNumber: 1, building: "WOMENS"},
 ];
