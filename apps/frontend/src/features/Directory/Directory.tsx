@@ -58,7 +58,7 @@ export function Directory() {
             <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
             <div className="flex flex-col md:flex-row gap-6">
                 <div className="w-full md:w-1/4">
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex flex-col space-y-2 bg-white p-4 rounded-lg shadow-sm">
                         {hospitalData.map((buildingInfo) => (
                             <Button
                                 key={buildingInfo.buildingValue}
@@ -75,7 +75,7 @@ export function Directory() {
                     {selectedBuildingData && (
                         <div className="mt-2">
                             {selectedBuildingData.floors.map((floorGroup) => (
-                                <div key={floorGroup.floor} className="mb-8">
+                                <div key={floorGroup.floor} className="mb-8 bg-white p-6 rounded-lg shadow-sm">
                                     <h2 className="text-2xl font-semibold border-b pb-2 mb-4">
                                         {floorGroup.floor}
                                     </h2>
