@@ -7,6 +7,13 @@ model Directory {
   receptionNode   Node?   @relation(fields: [receptionNodeID], references: [nodeID])
 }
 
+model CSVDatabase {
+  id              Int     @id @default(autoincrement())
+  name            String
+  floorNumber     Int
+  building        String
+}
+
 model Node {
   nodeID    String @id
   nodeType  String
