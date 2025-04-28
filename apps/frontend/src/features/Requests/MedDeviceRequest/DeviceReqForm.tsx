@@ -4,9 +4,10 @@ import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import Dropdown from "@/components/Dropdowns/Department.tsx";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 
 interface SubmittedDevice {
     device: string;
@@ -233,12 +234,13 @@ export const DeviceReqForm = () => {
                                     />
                                 </div>
                                 <br />
+                            </div>
 
-                                {/* Comments */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Comments
-                                        <span className="text-xs text-secondary-foreground block">
+                            {/* Comments */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Comments
+                                    <span className="text-xs text-secondary-foreground block">
                                         Enter any additional comments.
                                     </span>
                                     </Label>
@@ -246,11 +248,10 @@ export const DeviceReqForm = () => {
                                         name="comment"
                                         value={formData.comment}
                                         onChange={handleChange2}
-                                        placeholder="Enter any additional comments."
+                                        placeholder="Include any additional comments or instructions."
                                         rows={4}
-                                        className="w-250 px-4 py-2 rounded-md border border-border bg-input"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     />
-                                </div>
                             </div>
 
                             {/* Submit Button */}
@@ -269,11 +270,7 @@ export const DeviceReqForm = () => {
 
             </div>
             {submitStatus && submitStatus.isError && (
-                <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-                    <AlertDescription className={'text-foreground'}>
-                        {submitStatus.message}
-                    </AlertDescription>
-                </Alert>
+                <ErrorCard message={submitStatus.message} />
             )}
 
             {/* Confirmation Card */}
