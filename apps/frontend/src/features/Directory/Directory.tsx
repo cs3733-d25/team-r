@@ -1,19 +1,20 @@
-import React from "react";
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs.tsx';
-import { rawDirectoryItems, RawDirectoryItem } from './directoryItems.ts';
-import { HospitalDirectoryData, BuildingData, FloorGroup, DirectoryItem } from './listTypes.ts';
+import { RawDirectoryItem, rawDirectoryItems } from './directoryItems.ts';
+import { DirectoryItem, FloorGroup, HospitalDirectoryData } from './listTypes.ts';
 
 const buildingDisplayNames: { [key: string]: string } = {
-    'PATRIOT_PLACE_20': '20 Patriot',
-    'PATRIOT_PLACE_22': '22 Patriot',
-    'CHESTNUT_HILL': 'Chestnut Hill',
-    'FAULKNER': 'Faulkner',
+    PATRIOT_PLACE_20: '20 Patriot',
+    PATRIOT_PLACE_22: '22 Patriot',
+    CHESTNUT_HILL: 'Chestnut Hill',
+    FAULKNER: 'Faulkner',
+    WOMENS: "Women's Hospital",
 };
 
 const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => {
     const groupedByBuilding: { [building: string]: { [floor: number]: DirectoryItem[] } } = {};
 
-    data.forEach(item => {
+    data.forEach((item) => {
         if (!groupedByBuilding[item.building]) {
             groupedByBuilding[item.building] = {};
         }
@@ -23,13 +24,15 @@ const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => 
         groupedByBuilding[item.building][item.floorNumber].push({ name: item.name });
     });
 
-    const hospitalDirectory: HospitalDirectoryData = Object.keys(groupedByBuilding)
+    return Object.keys(groupedByBuilding)
         .sort((a, b) => buildingDisplayNames[a].localeCompare(buildingDisplayNames[b]))
-        .map(buildingRawValue => {
+        .map((buildingRawValue) => {
             const floorsData = groupedByBuilding[buildingRawValue];
             const buildingDisplayName = buildingDisplayNames[buildingRawValue] || buildingRawValue;
-            const floorNumbers = Object.keys(floorsData).map(Number).sort((a, b) => a - b);
-            const floorGroups: FloorGroup[] = floorNumbers.map(floorNumber => ({
+            const floorNumbers = Object.keys(floorsData)
+                .map(Number)
+                .sort((a, b) => a - b);
+            const floorGroups: FloorGroup[] = floorNumbers.map((floorNumber) => ({
                 floor: `Floor ${floorNumber}`,
                 items: floorsData[floorNumber].sort((a, b) => a.name.localeCompare(b.name)),
             }));
@@ -40,8 +43,6 @@ const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => 
                 floors: floorGroups,
             };
         });
-
-    return hospitalDirectory;
 };
 
 export function Directory() {
@@ -50,12 +51,11 @@ export function Directory() {
 
     return (
         <>
-
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
                 <Tabs defaultValue={defaultTabValue}>
-                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {hospitalData.map(buildingInfo => (
+                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+                        {hospitalData.map((buildingInfo) => (
                             <TabsTrigger
                                 key={buildingInfo.buildingValue}
                                 value={buildingInfo.buildingValue}
@@ -66,20 +66,20 @@ export function Directory() {
                         ))}
                     </TabsList>
 
-                    {hospitalData.map(buildingInfo => (
+                    {hospitalData.map((buildingInfo) => (
                         <TabsContent
                             key={buildingInfo.buildingValue}
                             value={buildingInfo.buildingValue}
                         >
                             <div className="mt-6">
-                                {buildingInfo.floors.map(floorGroup => (
+                                {buildingInfo.floors.map((floorGroup) => (
                                     <div key={floorGroup.floor} className="mb-8">
-                                        <h2 className="text-2xl font-semibold border-b pb-2 mb-4">{floorGroup.floor}</h2>
+                                        <h2 className="text-2xl font-semibold border-b pb-2 mb-4">
+                                            {floorGroup.floor}
+                                        </h2>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2">
                                             {floorGroup.items.map((item, itemIndex) => (
-                                                <div key={itemIndex}>
-                                                    {item.name}
-                                                </div>
+                                                <div key={itemIndex}>{item.name}</div>
                                             ))}
                                         </div>
                                     </div>

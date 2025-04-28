@@ -32,12 +32,12 @@ export function AllRequestsPage() {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="mb-0 border-b-0 shadow-none">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="all-requests">All Requests</TabsTrigger>
               <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
               <TabsTrigger value="prescription">Prescription</TabsTrigger>
               <TabsTrigger value="patient">Patient</TabsTrigger>
               <TabsTrigger value="transport">Transport</TabsTrigger>
               <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
-              <TabsTrigger value="all-requests">All Requests</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6 -mt-px">

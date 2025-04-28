@@ -242,15 +242,15 @@ export const DeviceReqForm = () => {
                                     <span className="text-xs text-secondary-foreground block">
                                         Enter any additional comments.
                                     </span>
-                                </Label>
-                                <Textarea
-                                    name="comment"
-                                    value={formData.comment}
-                                    onChange={handleChange2}
-                                    placeholder="Enter any additional comments."
-                                    rows={4}
-                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                />
+                                    </Label>
+                                    <Textarea
+                                        name="comment"
+                                        value={formData.comment}
+                                        onChange={handleChange2}
+                                        placeholder="Include any additional comments or instructions."
+                                        rows={4}
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                    />
                             </div>
 
                             {/* Submit Button */}
