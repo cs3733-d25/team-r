@@ -53,7 +53,10 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
                         <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
                     ) : selectedLocation === "Faulkner" ? (
                         <Dropdown tableName={"departmentsFAll"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : null}
+                        // TODO: women's hospital implementation
+                    // ) : selectedLocation === "Womens" ? (
+                    //     <Dropdown tableName={departments} fieldName={} onChange={} />
+                     ) : null}
                 </>
             )}
         </div>
