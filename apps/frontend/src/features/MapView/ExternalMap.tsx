@@ -138,6 +138,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         if (location === patriotPlace22) return 'Patriot Place 22';
         if (location === chestnutHill) return 'Chestnut Hill';
         if (location === faulkner) return 'Faulkner';
+        if (location === womensHospital) return "Women's Hospital";
         return '';
     };
 
@@ -257,7 +258,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     }
                                     onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
-                                    Patriot Place 20
+                                    Healthcare Center (20 Patriot Place)
                                 </Button>
                                 <Button
                                     variant={
@@ -267,7 +268,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     }
                                     onClick={() => setSelectedLocation(patriotPlace22)}
                                 >
-                                    Patriot Place 22
+                                    Healthcare Center (22 Patriot Place)
                                 </Button>
                                 <Button
                                     variant={
@@ -275,7 +276,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     }
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
-                                    Chestnut Hill
+                                    Chestnut Hill Healthcare Center
                                 </Button>
                                 <Button
                                     variant={
@@ -283,7 +284,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     }
                                     onClick={() => setSelectedLocation(faulkner)}
                                 >
-                                    Faulkner
+                                    Faulkner Hospital
                                 </Button>
                                 <Button
                                     variant={
@@ -291,7 +292,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     }
                                     onClick={() => setSelectedLocation(womensHospital)}
                                 >
-                                    Women's Hospital
+                                    Main Campus Hospital
                                 </Button>
                             </div>
                         </div>
