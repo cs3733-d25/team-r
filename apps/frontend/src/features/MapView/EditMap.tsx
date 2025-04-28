@@ -135,6 +135,17 @@ export function EditMap({ status }: EditMapProps) {
         });
         setCurrentBuilding(building);
     };
+    const handleNodeDrag = (lat: number, lng: number, nodeID:string, nodeTypes:string) => {
+        setNodeID(nodeID)
+        setEditNodeType(nodeTypes)
+        console.log("Setting coordinates: x = ", lat, " y = ", lng);
+        setEditCoordinates({
+            x: lat.toString(),
+            y: lng.toString(),
+        });
+        setCurrentBuilding(building);
+    };
+    console.log("nodeType:", nodeType);
     // useEffect(() => {
 
 
@@ -192,22 +203,22 @@ export function EditMap({ status }: EditMapProps) {
         );
     };
 
-    const editNode = async () => {
+    const editNode = async (x:number, y:number, nodeIDs:string) => {
         if (!editcoordinates) {
             alert('Please select a location on the map first.');
             return;
         }
-        if (isNaN(parseFloat(editcoordinates.x)) || isNaN(parseFloat(editcoordinates.y))){
-            alert('Please enter a valid coordinate.');
-            return;
-        }
+        const chosenX =editcoordinates?.x&& isNaN(parseFloat(editcoordinates.x))? editcoordinates.x:x
+        const chosenY =editcoordinates?.y&& isNaN(parseFloat(editcoordinates.y))? editcoordinates.y:y
+        console.log("Edit coordinates:", editcoordinates);
+
         const nodeData = {
-            nodeID: nodeID,
+            nodeID: nodeID ||nodeIDs,
             nodeType: editnodeType,
             building: currentBuilding,
             floor: currentFloor,
-            xcoord: parseFloat(editcoordinates.x),
-            ycoord: parseFloat(editcoordinates.y),
+            xcoord: chosenX,
+            ycoord: chosenY,
             longName: '',
             shortName: editnodeName,
             departments: selectedDepartments,
@@ -359,6 +370,8 @@ export function EditMap({ status }: EditMapProps) {
                     onNodeSelect={onNodeClick}
                     onLocationChange={setLocation}
                     onCoordSelect={handleMapClick}
+                    onNodeDrag={handleNodeDrag}
+                    onNodeEdit={editNode}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
@@ -608,7 +621,10 @@ export function EditMap({ status }: EditMapProps) {
                                         </div>
 
                                         <Button
-                                            onClick={editNode}
+                                            onClick={()=>{if(editcoordinates){
+                                                const x =parseFloat(editcoordinates.x)
+                                                const y = parseFloat(editcoordinates.y)
+                                                editNode(x,y,nodeID)}}}
                                             disabled={!nodeID}
                                             className="w-full"
                                         >

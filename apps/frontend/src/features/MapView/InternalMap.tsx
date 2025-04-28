@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import L from 'leaflet';
+import L, {LeafletEvent, DragEndEvent, LatLng} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20patriot1.svg';
 import patriot22Floor1 from '../../../public/22patriot1.svg';
@@ -51,6 +51,8 @@ interface InternalMapProps {
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
     onCoordSelect?: (x:number, y:number) => void;
+    onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
+    onNodeEdit?: (x:number, y:number, nodeID:string) => void;
 }
 
 const nodePlaceholderOptions = {
@@ -60,7 +62,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -112,7 +114,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
     // callback function for clicking on nodes
     function clickMarker(data:Node, marker:L.Marker):void{
-        marker.on('click', () => {
+        marker.on('click',()=> {
             const info = `
         <p>Name: ${data.shortName}</p>
         <p>Node Type: ${data.nodeType}</p>
@@ -126,10 +128,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
 
             // tell the parent element if the node has been selected
-            if(onNodeSelect) {
+            if (onNodeSelect) {
                 onNodeSelect(data.nodeID);
             }
-        });
+        })
 
         marker.on('contextmenu', () => {
             if (data.nodeID !== undefined) {
@@ -140,6 +142,43 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
         })
     }
+    function dragMarker(node:Node, marker: L.Marker, e:LeafletEvent):void{
+        marker.on('drag',()=>{
+            // parse the new coordinates
+            // super ugly way of truncating to two digits
+        const marker =e.target as L.Marker
+            const draggedLatlng = marker.getLatLng();
+            const x = parseFloat(draggedLatlng.lat.toFixed(2));
+            const y = parseFloat(draggedLatlng.lng.toFixed(2));
+            console.log("[x: "+x+", y:"+y+"]");
+
+            // send coordinates to parent function
+        if(onNodeDrag) {
+            console.log("Calling onNodeEdit with:", x, y, node.nodeID);
+            onNodeDrag(x, y, node.nodeID, node.nodeType);
+
+        }
+    })
+
+
+    }
+    function dragMarkerEnd(node:Node, e:LeafletEvent):void {
+        {
+            console.log("dragMarkerEnd Event:", e);
+            const marker =e.target as L.Marker
+            const draggedLatlng = marker.getLatLng();
+            console.log("Dragged LatLng:", draggedLatlng);
+            const x = parseFloat(draggedLatlng.lat.toFixed(2));
+            const y = parseFloat(draggedLatlng.lng.toFixed(2));
+            if (onNodeEdit) {
+                console.log("Calling onNodeEdit with:", x, y, node.nodeID);
+                onNodeEdit(x,y,node.nodeID);
+            }
+
+        }
+
+    }
+
 
     function clickEdge(edge:Edge, pLine:L.Polyline){
         pLine.on('contextmenu', () => {
@@ -441,8 +480,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         const layer = getLayer(node.building, node.floor);
                         // only place it if the floor is valid
                         if (layer) {
-                            const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon}).addTo(layer);
-                            clickMarker(node, place);
+                            const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                            place.on('click', () => clickMarker(node,place));
+                            place.on('drag', (e) => dragMarker(node,place,e));
+                            place.on('dragend', (e) => dragMarkerEnd(node,e));
 
                         }
                     });
@@ -452,8 +493,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:violetIcon}).addTo(layer);
-                        clickMarker(node, place);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:violetIcon, draggable:true}).addTo(layer);
+                        place.on('click', () => clickMarker(node,place));
+                        place.on('drag', (e) => dragMarker(node,place,e));
+
                     }
                 });
                 other.map((node) => {
@@ -461,8 +504,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:blackIcon}).addTo(layer);
-                        clickMarker(node, place);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:blackIcon, draggable:true}).addTo(layer);
+                        place.on('click', () => clickMarker(node,place));
+                        place.on('drag', (e) => dragMarker(node,place,e));
+
                     }
                 });
                 entrances.map((node) => {
@@ -470,8 +515,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:greenIcon}).addTo(layer);
-                        clickMarker(node, place);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:greenIcon, draggable:true}).addTo(layer);
+                        place.on('click', () => clickMarker(node,place));
+                        place.on('drag', (e) => dragMarker(node,place,e));
+
                     }
                 });
                 lots.map((node) => {
@@ -479,8 +526,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:yellowIcon}).addTo(layer);
-                        clickMarker(node, place);
+                        const place = L.marker([node.xcoord, node.ycoord],{icon:yellowIcon, draggable:true}).addTo(layer);
+                        place.on('click', () => clickMarker(node,place));
+                        place.on('drag', (e) => dragMarker(node,place,e));
+
+
                     }
                 });
                 elevators.map((node) => {
@@ -488,8 +538,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord]).addTo(layer);
-                        clickMarker(node, place);
+                        const place = L.marker([node.xcoord, node.ycoord],{draggable:true}).addTo(layer);
+                        place.on('click', () => clickMarker(node,place));
+                        place.on('drag', (e) => dragMarker(node,place,e));
                     }
                 });
 
@@ -569,6 +620,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 if(onCoordSelect) {
                     onCoordSelect(x, y);
                 }
+
 
                 // update the placeholder
                 nodePlaceholder.setLatLng(e.latlng);
