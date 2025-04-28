@@ -4,6 +4,8 @@ model User {
   //password   String
   email String  @unique
   userType String
+  firstName String?
+  lastName String?
   // userTypeID String
   // userType   UserType @relation(fields: [userTypeID], references: [id])
   // updatedAt  DateTime @default(now())

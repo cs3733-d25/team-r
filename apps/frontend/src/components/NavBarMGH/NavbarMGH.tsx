@@ -12,6 +12,7 @@ import {useAuth0} from "@auth0/auth0-react";
 interface NavBarProps {
     page?: string;
     userType?: string;
+    userName?: string;
 }
 
 export function NavbarMGH(props: NavBarProps) {
@@ -22,26 +23,11 @@ export function NavbarMGH(props: NavBarProps) {
     async function handleLogout() {
         try {
             console.log("Logging user out");
-            //axios.post('/api/login/reset');
             logout(); //auth0 logout
         } catch (error) {
             console.log("Error: ", error);
         }
     }
-
-    // const [username, setusername] = useState("");
-    // useEffect(() => {
-    //     async function getName() {
-    //         try {
-    //             const response = await axios.get("api/login/session");
-    //             setusername(response.data.username);
-    //         } catch (err) {
-    //             console.error("Error fetching username:", err);
-    //         }
-    //     }
-    //
-    //     getName();
-    // }, []);
 
     return (
         // main header
@@ -126,7 +112,7 @@ export function NavbarMGH(props: NavBarProps) {
                             <PopoverContent className="w-56" align="end" sideOffset={5}>
                                 <div className="grid gap-3 p-2">
                                     <Label className={'font-trade text-base justify-center'}>
-                                        Hi, !
+                                        Hi, {props.userName}!
                                     </Label>
                                     <div className="border-t"></div>
                                     <Button

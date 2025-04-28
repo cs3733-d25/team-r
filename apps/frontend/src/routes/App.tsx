@@ -27,6 +27,7 @@ import {navigate} from "next/dist/client/components/segment-cache-impl/navigatio
 function App() {
     const {isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState("Guest");
+    const [userFirstName, setUserFirstName] = useState("");
     console.log('APP IS RENDERED');
 
     //get the usertype from the database after the user has logged in
@@ -46,12 +47,15 @@ function App() {
             async function getUserType() {
                 try {
                     const response = await axios.post(
-                        '/api/login/usertype',
+                        '/api/login/userInfo',
                         {email: user?.email},
                         { withCredentials: true }
                     );
+                    console.log("firstName: ", response.data.firstName);
                     const userType = response.data.userType;
+                    const firstName = response.data.firstName;
                     setUserType(userType);
+                    setUserFirstName(firstName);
                 } catch (error) {
                     //if no user found set to guest
                     //setUserType("Guest");
@@ -95,7 +99,7 @@ function App() {
 
     return (
         <div>
-            <NavbarMGH userType={userType}/>
+            <NavbarMGH userType={userType} userName={userFirstName}/>
             <RouterProvider router={router} />
         </div>
     );

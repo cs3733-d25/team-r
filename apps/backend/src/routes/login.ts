@@ -5,38 +5,6 @@ import PrismaClient from "../bin/prisma-client.ts";
 
 const router: Router = express.Router();
 
-//receive the username and password from the client
-// router.post("/", async function (req: Request, res: Response) {
-//   const { email, userType } = req.body;
-//   //check if the password is in the users database
-//   try {
-//     const user = await client.user.findUnique({
-//       where: {
-//         email: email,
-//       },
-//     });
-//     //check if the username has password associated
-//     if (user !== null) {
-//       if (req.session) {
-//         req.session.userId = user.id;
-//         //req.session.username = user.username;
-//         req.session.userType = user.userType;
-//         console.log("req session: ", user.id);
-//         res.status(200).json({
-//           message: "User verified",
-//           //username: username,
-//           userType: user.userType,
-//         });
-//       } else {
-//         console.log("No req.session");
-//       }
-//     } else {
-//       res.status(200).json({ message: "User not found." });
-//     }
-//   } catch (error) {
-//     res.status(200).json({ message: "Error: something went wrong." });
-//   }
-// });
 
 // router.post("/signup", async function (req: Request, res: Response) {
 //   const { userType, email, id } = req.body;
@@ -50,31 +18,20 @@ const router: Router = express.Router();
 //   });
 // });
 
-router.get("/session", async (req, res) => {
-  console.log("req session: ", req.session);
-  if (req.session) {
-    const userID = req.session.userId;
-    //const username = req.session.username;
-    const userType = req.session.userType;
-    console.log("req session in /session: ", userID);
-    console.log("req user type: ", userType);
-    res.status(200).json({
-      message: "User verified",
-      userID: userID,
-      // username: username,
-      userType: userType,
-    });
-  }
-});
 
-router.post("/usertype", async function (req: Request, res: Response) {
+router.post("/userInfo", async (req, res ) => {
   console.log("IN USERTYPE");
   const user = await PrismaClient.user.findUnique({
     where: { email: req.body.email },
   });
-  console.log("User from database: ", user);
-  console.log("userTYpe: ", user!.userType);
-  res.status(200).json({userType: user!.userType});
+  if (!user) {
+    console.error("User not found for email:", req.body.email);
+    res.status(404).json({ error: "User not found" });
+  } else{
+    console.log("User from database: ", user);
+    console.log("firstName: ", user.firstName);
+    res.status(200).json({ userType: user.userType, firstName: user.firstName});
+  }
 });
 
 router.post("/reset", async (req, res) => {

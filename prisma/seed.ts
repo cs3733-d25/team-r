@@ -58,10 +58,10 @@ async function main() {
     await client.user.create({
         data: {
             id: 'Nora',
-            //username: 'Nora',
-            //password: '1',
             email: 'noracleary@gmail.com',
             userType: 'Employee',
+            firstName: 'Nora',
+            lastName: 'Cleary',
         }
     });
     await client.employee.create({
