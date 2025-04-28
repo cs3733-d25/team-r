@@ -138,7 +138,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
         if (location === patriotPlace22) return 'Patriot Place 22';
         if (location === chestnutHill) return 'Chestnut Hill';
         if (location === faulkner) return 'Faulkner';
-        if (location === womensHospital) return "Women's Hospital";
+        if (location === womensHospital) return 'Womens';
         return '';
     };
 

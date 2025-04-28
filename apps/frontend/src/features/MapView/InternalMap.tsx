@@ -434,20 +434,21 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
             // initialize starting layer
             if (location.includes('20 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Patriot Place 20', floor: 1 };
+                activeLayerInfo.current = { building: 'Healthcare Center (20 Patriot Pl.)', floor: 1 };
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Patriot Place 22', floor };
+                activeLayerInfo.current = { building: 'Healthcare Center (22 Patriot Pl.)', floor };
                 if(floor == 1) floorLayer22_1.addTo(map);
                 else if(floor == 3) floorLayer22_3.addTo(map);
                 else if(floor == 4) floorLayer22_4.addTo(map);
             } else if (location.includes('Chestnut Hill')) {
-                activeLayerInfo.current = { building: 'Chestnut Hill', floor: 1 };
+                activeLayerInfo.current = { building: 'Healthcare Center (Chestnut Hill)', floor: 1 };
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
-                activeLayerInfo.current = { building: 'Faulkner', floor: 1 };
+                activeLayerInfo.current = { building: 'Faulkner Hospital', floor: 1 };
                 floorLayerFaulkner.addTo(map);
             } else if (location.includes('Womens')) {
+                activeLayerInfo.current = { building: 'Main Campus Hospital (75 Francis St.)', floor: 1 };
                 floorLayerWomens.addTo(map);
             }
 
