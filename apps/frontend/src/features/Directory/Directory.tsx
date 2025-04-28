@@ -54,7 +54,7 @@ export function Directory() {
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
                 <Tabs defaultValue={defaultTabValue}>
-                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
                         {hospitalData.map((buildingInfo) => (
                             <TabsTrigger
                                 key={buildingInfo.buildingValue}
