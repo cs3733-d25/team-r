@@ -14,8 +14,8 @@ async function main() {
         // 3. Create user
         await client.user.create({
             data: {
-                id: 'admin1',
-                email: 'softengD25X@gmail.com',
+                id: 'admin',
+                email: 'softengd25r@gmail.com',
                 firstName: 'Wilson',
                 lastName: 'Wong',
                 userType: 'Employee'
@@ -25,7 +25,7 @@ async function main() {
         // 4. Create employee (after department is available)
         await client.employee.create({
             data: {
-                id: 'admin1',
+                id: 'admin',
                 firstName: 'Wilson',
                 lastName: 'Wong',
                 departmentId: 'Urology PP20-1',
@@ -38,18 +38,18 @@ async function main() {
         //admin
         await client.user.create({
             data: {
-                id: 'admin2',
-                email: 'staffD25X@gmail.com',
-                firstName: 'Admin',
-                lastName: 'Admin',
+                id: 'Staff',
+                email: 'staffd25r@gmail.com',
+                firstName: 'Staff',
+                lastName: 'Staff',
                 userType: 'Admin',
             }
         });
     await client.employee.create({
         data: {
-            id: 'admin2',
-            firstName: 'Admin',
-            lastName: 'Admin',
+            id: 'Staff',
+            firstName: 'Staff',
+            lastName: 'Staff',
             departmentId: 'Blood Draw/Phlebotomy PP20-1',
             role: 'Administrator',
             onShift: true,
@@ -77,161 +77,169 @@ async function main() {
         }
     });
 
-    // await client.user.create({
-    //     data: {
-    //         id: 'Akaash',
-    //         username: 'Akaash',
-    //         password: '1',
-    //         userTypeID: 'Employee',
-    //     }
-    // });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'Akaash',
-    //         firstName: 'Akaash',
-    //         lastName: 'Walker',
-    //         departmentId: 'Radiology CH-1',
-    //         role: 'Doctor',
-    //         onShift: true,
-    //     }
-    // });
+    await client.user.create({
+        data: {
+            id: 'Akaash',
+            email: 'ajwalker@wpi.edu',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            userType: 'Employee',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'Akaash',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            departmentId: 'Radiology CH-1',
+            role: 'Doctor',
+            onShift: true,
+        }
+    });
 
-    // await client.user.create({
-    //     data: {
-    //         id: 'Sarayu',
-    //         username: 'Sarayu',
-    //         password: '1',
-    //         userTypeID: 'Employee',
-    //     }
-    // });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'Sarayu',
-    //         firstName: 'Sarayu',
-    //         lastName: 'Vijayanagaram',
-    //         departmentId: 'Vein Care Services PP22-3',
-    //         role: 'Doctor',
-    //         onShift: true,
-    //     }
-    // });
+    await client.user.create({
+        data: {
+            id: 'Sarayu',
+            email: 'svijayanagaram@wpi.edu',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            userType: 'Employee',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'Sarayu',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Doctor',
+            onShift: true,
+        }
+    });
 
-    // await client.user.create({
-    //     data: {
-    //         id: 'Owen',
-    //         username: 'Owen',
-    //         password: '1',
-    //         userTypeID: 'Employee',
-    //     }
-    // });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'Owen',
-    //         firstName: 'Owen',
-    //         lastName: 'Miller',
-    //         departmentId: 'Vein Care Services PP22-3',
-    //         role: 'Doctor',
-    //         onShift: true,
-    //     }
-    // });
-    //
-    // //Eployee not on shift - Brian, Riley, Daksh
-    // await client.user.create({
-    //     data: {
-    //         id: 'Brian',
-    //         username: 'Brian',
-    //         password: '1',
-    //         userTypeID: 'Employee',
-    //     }
-    // });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'Brian',
-    //         firstName: 'Brian',
-    //         lastName: 'Grande',
-    //         departmentId: 'Primary Care PP22-4',
-    //         role: 'Doctor',
-    //         onShift: false,
-    //     }
-    // });
-    //
-    // await client.user.create({
-    //     data: {
-    //         id: 'Riley',
-    //         username: 'Riley',
-    //         password: '1',
-    //         userTypeID: 'Employee',
-    //     }
-    // });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'Riley',
-    //         firstName: 'Riley',
-    //         lastName: 'Meyers',
-    //         departmentId: 'Kidney (Renal) Medicine PP22-3',
-    //         role: 'IT Support',
-    //         onShift: false,
-    //     }
-    // });
+    await client.user.create({
+        data: {
+            id: 'Owen',
+            email: 'ormiller@wpi.edu',
+            firstName: 'O-bot',
+            lastName: 'Miller',
+            userType: 'Employee',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'Owen',
+            firstName: 'Owen',
+            lastName: 'Miller',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Doctor',
+            onShift: true,
+        }
+    });
 
-    // await client.user.create({
-    //     data: {
-    //         id: 'Daksh',
-    //         username: 'Daksh',
-    //         password: '1',
-    //         userTypeID: 'Employee',
-    //     }
-    // });
-    // await client.employee.create({
-    //     data: {
-    //         id: 'Daksh',
-    //         firstName: 'Daksh',
-    //         lastName: 'Gajaria',
-    //         departmentId: 'Kidney (Renal) Medicine PP22-3',
-    //         role: 'Nurse',
-    //         onShift: false,
-    //     }
-    // });
+    //Eployee not on shift - Brian, Riley, Daksh
+    await client.user.create({
+        data: {
+            id: 'Brian',
+            email: 'brian@wpi.edu',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            userType: 'Employee',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'Brian',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            departmentId: 'Primary Care PP22-4',
+            role: 'Doctor',
+            onShift: false,
+        }
+    });
 
-    //
-    //
-    // //Patient
-    // await client.user.create({
-    //     data: {
-    //         id: 'Josh',
-    //         username: 'Josh',
-    //         password: '1',
-    //         userTypeID: 'Patient',
-    //     }
-    // });
-    // await client.patient.create({
-    //     data: {
-    //         id: 'Josh',
-    //         firstName: 'Josh',
-    //         lastName: 'Gifford',
-    //         dateOfBirth: new Date('1990-05-15'),
-    //         phone: '123-456-7890',
-    //         assignedDoctorId: 'John'
-    //     }
-    // });
-    //
-    // await client.user.create({
-    //     data: {
-    //         id: 'Alex',
-    //         username: 'Alex',
-    //         password: '1',
-    //         userTypeID: 'Patient',
-    //     }
-    // });
-    // await client.patient.create({
-    //     data: {
-    //         id: 'Alex',
-    //         firstName: 'Alex',
-    //         lastName: 'Lowczyk',
-    //         dateOfBirth: new Date('1990-05-15'),
-    //         phone: '123-456-7890',
-    //         assignedDoctorId: 'John'
-    //     }
-    // });
+    await client.user.create({
+        data: {
+            id: 'Riley',
+            email: 'rmeyers@wpi.edu',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            userType: 'Employee',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'Riley',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'IT Support',
+            onShift: false,
+        }
+    });
+
+    await client.user.create({
+        data: {
+            id: 'Daksh',
+            email: 'dgajaria@wpi.edu',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            userType: 'Employee',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'Daksh',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Nurse',
+            onShift: false,
+        }
+    });
+
+
+
+    //Patient
+    await client.user.create({
+        data: {
+            id: 'Josh',
+            email: 'jmgifford@wpi.edu',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            userType: 'Patient',
+        }
+    });
+    await client.patient.create({
+        data: {
+            id: 'Josh',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            dateOfBirth: new Date('1990-05-15'),
+            phone: '123-456-7890',
+            assignedDoctorId: 'Akaash'
+        }
+    });
+
+    await client.user.create({
+        data: {
+            id: 'Alex',
+            email: 'amlowczyk@wpi.edu',
+            firstName: 'Alex',
+            lastName: 'lowczyk',
+            userType: 'Patient',
+        }
+    });
+    await client.patient.create({
+        data: {
+            id: 'Alex',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            dateOfBirth: new Date('1990-05-15'),
+            phone: '123-456-7890',
+            assignedDoctorId: 'Akaash'
+        }
+    });
 
     await client.user.create({
         data: {
@@ -249,7 +257,7 @@ async function main() {
             lastName: 'Hitt',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'admin1'
+            assignedDoctorId: 'Owen'
         }
     });
 
@@ -297,7 +305,7 @@ async function main() {
 
     await client.pharmacyRequest.create({
         data: {
-            employeeID: 'John',
+            employeeID: 'Nora',
             /*employeeName: */
             priority: 'Medium',
             department: "Allergy",
@@ -339,7 +347,7 @@ async function main() {
     });
     await client.pharmacyRequest.create({
         data: {
-            employeeID: 'Nora',
+            employeeID: 'Sarayu',
             /*employeeName: */
             priority: 'High',
             department: "Foot and Ankle Center",
@@ -422,7 +430,7 @@ async function main() {
     });
     await client.transportRequest.create({
         data: {
-            employeeID: 'John',
+            employeeID: 'Sarayu',
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
             patientID: 'Josh',
             transportationType: 'Non-Emergency Ambulance',
@@ -438,7 +446,7 @@ async function main() {
     });
     await client.transportRequest.create({
         data: {
-            employeeID: 'John',
+            employeeID: 'Brian',
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
             patientID: 'Alex',
             transportationType: 'Emergency Ambulance',
