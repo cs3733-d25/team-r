@@ -3,7 +3,6 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
-import { auth } from "express-openid-connect";
 
 import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
 import employeeRouter from "./routes/userdata/employee.ts";
