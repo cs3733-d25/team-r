@@ -1,8 +1,12 @@
-import prismaClient from "../../bin/prisma-client.ts";
-import { PriorityQueue } from "../datastructures/dataStructures.ts";
-import router from "../maps/mapData.ts";
-import { Graph } from "../maps/Graph.ts";
-import { PathfindingAlgorithm } from "./algoSelection.ts";
+
+
+import prismaClient from "../../bin/prisma-client";
+import { PriorityQueue }    from "../datastructures/dataStructures";
+import router                from "../maps/mapData";
+import { Graph }             from "../maps/Graph";
+import { PathfindingAlgorithm } from "./algoSelection";
+
+
 
 export class AStar implements PathfindingAlgorithm {
   graph: Graph;
@@ -12,15 +16,24 @@ export class AStar implements PathfindingAlgorithm {
     this.graph = graph;
   }
 
+  // ——— MINIMAL CHANGE HERE ———
+  // Now scales straight‐line distance by the true edge weight
   private heuristic(a: string, b: string): number {
-    // Placeholder: returns zero (Dijkstra). Replace if you have coords.
-    // I was thinking we either use the distance between the nodes or the number of edges between them.
-    // we can also use E-disance, Minkowski, or chebyshev distance.
-    return 0;
+    // get node coordinates
+    const pa = this.graph.getNodePosition(a);
+    const pb = this.graph.getNodePosition(b);
+    const dx = pa.x - pb.x;
+    const dy = pa.y - pb.y;
+    const euclid = Math.hypot(dx, dy);
+
+    // get the actual weight for edge a→b
+    const w = this.graph.getEdgeWeight(a, b);
+
+    // return weighted heuristic
+    return w * euclid;
   }
 
   public findPath(start: string, end: string): string[] {
-    //const openSet = new PriorityQueue<string>();
     this.openSet = new PriorityQueue<string>();
     this.openSet.enqueue(start, 0);
 
@@ -44,10 +57,15 @@ export class AStar implements PathfindingAlgorithm {
       }
 
       for (const neighbor of this.graph.getNeighbors(current)) {
-        const tentativeG = (gScore.get(current) ?? Infinity) + 1; // assume unweighted
+        // ——— MINIMAL CHANGE HERE ———
+        // use the true edge weight instead of +1
+        const w = this.graph.getEdgeWeight(current, neighbor);
+        const tentativeG = (gScore.get(current) ?? Infinity) + w;
+
         if (tentativeG < (gScore.get(neighbor) ?? Infinity)) {
           cameFrom.set(neighbor, current);
           gScore.set(neighbor, tentativeG);
+
           const f = tentativeG + this.heuristic(neighbor, end);
           fScore.set(neighbor, f);
           this.openSet.enqueue(neighbor, f);
