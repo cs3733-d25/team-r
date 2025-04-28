@@ -16,6 +16,7 @@ import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapVi
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
+import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group.tsx'
 
 interface EditMapProps {
     status?: string;
@@ -379,6 +380,15 @@ export function EditMap({ status }: EditMapProps) {
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
                         <Label className="font-bold text-2xl pt-4 pl-4 pb-4">Edit Map</Label>
+                        <ToggleGroup type={"multiple"}>
+                            <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
+                            <ToggleGroupItem value={"Hallways"}>H</ToggleGroupItem>
+                            <ToggleGroupItem value={"Entrances"}>EN</ToggleGroupItem>
+                            <ToggleGroupItem value={"Parking Lots"}>PL</ToggleGroupItem>
+                            <ToggleGroupItem value={"Reception"}>R</ToggleGroupItem>
+                            <ToggleGroupItem value={"Elevator"}>EL</ToggleGroupItem>
+                            <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
+                        </ToggleGroup>
                         <div className="flex flex-col items-center justify-center text-left overflow-y-auto pl-1">
                             <Tabs
                                 defaultValue="place-node"
