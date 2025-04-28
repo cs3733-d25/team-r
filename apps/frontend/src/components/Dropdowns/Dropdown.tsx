@@ -15,9 +15,10 @@ interface DropdownProps {
     reset?: boolean;
     currentSelection?: string;
     mutuallyExclusiveOption?: string; //cant select this option from valueKey table
+    alternateFieldName?: string; //in case the field name is not user-friendly
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange, reset, currentSelection, mutuallyExclusiveOption}) => {
+const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange, reset, currentSelection, mutuallyExclusiveOption, alternateFieldName}) => {
     let resetForm = true; //if submitted, resetForm will change and the key should change making the dropdown reset
     if (!reset) {resetForm = false;} else {resetForm = true;} //if statement because props.reset can be undefined
 
@@ -34,7 +35,7 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, fieldName, onChange, res
         <Select onValueChange={handleChange} key={resetForm.toString()}>
             {/*<Select onValueChange={handleChange}>*/}
              <SelectTrigger className={"bg-input"}>
-                <SelectValue placeholder={'Select a ' + fieldName}></SelectValue>
+                <SelectValue placeholder={alternateFieldName ? 'Select a ' + alternateFieldName : 'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
             <SelectContent className={"bg-input"} >
                 <SelectGroup>
