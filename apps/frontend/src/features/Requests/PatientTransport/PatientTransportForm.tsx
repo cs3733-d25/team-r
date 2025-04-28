@@ -83,6 +83,8 @@ const TransportationRequestForm = () => {
                 return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
             case "Faulkner":
                 return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Brigham and Women\'s Hospital":
+                return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
             default:
                 return null;
         }
