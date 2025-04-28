@@ -59,11 +59,13 @@ export function Directory() {
             <div className="flex flex-col md:flex-row gap-6">
                 <div className="w-full md:w-1/4">
                     <div className="flex flex-col space-y-2 bg-white p-4 rounded-lg shadow-sm">
+                        <h2 className="text-xl font-semibold mb-2">Locations</h2>
                         {hospitalData.map((buildingInfo) => (
                             <Button
                                 key={buildingInfo.buildingValue}
                                 onClick={() => setSelectedBuilding(buildingInfo.buildingValue)}
                                 variant={selectedBuilding === buildingInfo.buildingValue ? 'default' : 'secondary'}
+                                className="whitespace-normal text-left h-auto justify-start py-3 w-full"
                             >
                                 {buildingInfo.building}
                             </Button>
