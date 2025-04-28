@@ -378,10 +378,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 [1000, 2250],
             ];
 
-            // TODO: add bounds for womens
             const boundsWomens: L.LatLngBoundsLiteral = [
-                [-400, -500],
-                [1200, 1300],
+                [-80, -35],
+                [900, 1300],
             ];
 
             // Add floorplan overlays
