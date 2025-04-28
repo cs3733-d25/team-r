@@ -5807,6 +5807,7 @@ __metadata:
     react-router-bootstrap: "npm:^0.26.2"
     react-router-dom: "npm:^6.11.2"
     react-speech: "npm:^1.0.2"
+    react-speech-recognition: "npm:^4.0.0"
     recharts: "npm:^2.15.2"
     serve: "npm:^14.2.0"
     sonner: "npm:^2.0.3"
@@ -8118,6 +8119,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-speech-recognition@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "react-speech-recognition@npm:4.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/25261044669980daeae6e2d93ad236473844abb04302446fc8fcc3070b04d02031a47fbc190db562cdf339072f326df3f0e45a3015a035638f7ecdb617e697c7
+  languageName: node
+  linkType: hard
+
 "react-speech@npm:^1.0.2":
   version: 1.0.2
   resolution: "react-speech@npm:1.0.2"
@@ -8852,6 +8862,7 @@ __metadata:
     react-bootstrap-icons: "npm:^1.11.5"
     react-dom: "npm:^19.1.0"
     react-speech: "npm:^1.0.2"
+    react-speech-recognition: "npm:^4.0.0"
     react-text-to-speech: "npm:^2.0.2"
     tailwindcss: "npm:^4.1.3"
     ts-config-custom: "workspace:*"

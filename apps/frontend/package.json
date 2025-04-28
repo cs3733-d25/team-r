@@ -67,6 +67,7 @@
         "react-resizable-panels": "^2.1.7",
         "react-router-bootstrap": "^0.26.2",
         "react-router-dom": "^6.11.2",
+        "react-speech-recognition": "^4.0.0",
         "recharts": "^2.15.2",
         "serve": "^14.2.0",
         "sonner": "^2.0.3",

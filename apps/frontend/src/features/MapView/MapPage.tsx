@@ -13,6 +13,7 @@ import TextDirections from "@/components/TextDirections.tsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
+import { VoiceControl } from '@/components/VoiceControl.tsx';
 
 declare global {
     interface Window {
@@ -275,6 +276,9 @@ export function MapPage() {
         setFlashingFloors(floorsExcluding1);
     };
 
+    /**
+     * Returns an array of available floors for the selected building
+     */
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
 
@@ -293,7 +297,10 @@ export function MapPage() {
                 {/* Sidebar controls */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
-                        <Label className="font-bold text-xl">Selected Location</Label>
+                        <div className="flex items-center justify-between mb-2">
+                            <Label className="font-bold text-xl">Selected Location</Label>
+                            <VoiceControl/>
+                        </div>
                         <div className={"font-bold text-secondary text-lg"}>{getShortLocationName(selectedLocation)}</div>
                     </div>
 

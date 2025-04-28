@@ -65,6 +65,7 @@
     "react-bootstrap-icons": "^1.11.5",
     "react-dom": "^19.1.0",
     "react-speech": "^1.0.2",
+    "react-speech-recognition": "^4.0.0",
     "react-text-to-speech": "^2.0.2"
   },
   "resolutions": {
