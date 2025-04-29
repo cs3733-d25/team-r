@@ -217,13 +217,13 @@ model Employee {
   onShift Boolean @default(false)
   user    User    @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients      Patient[]
-  sanitationRequests    SanitationRequest[]
-  deviceRequests        DeviceRequest[]
-  pharmacyRequests      PharmacyRequest[]
-  patientRequests       PatientRequest[]
-  transportRequests     TransportRequest[]
-  tranlateRequests      TranslateRequest[]
+  assignedPatients   Patient[]
+  sanitationRequests SanitationRequest[]
+  deviceRequests     DeviceRequest[]
+  pharmacyRequests   PharmacyRequest[]
+  patientRequests    PatientRequest[]
+  transportRequests  TransportRequest[]
+  tranlateRequests   TranslateRequest[]
 }
 
 model Patient {
