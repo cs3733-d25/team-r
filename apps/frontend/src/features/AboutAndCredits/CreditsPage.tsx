@@ -4,20 +4,21 @@ import React from 'react'
 
 
 export const CreditsPage = () => {
+    const root = './DevTools/'; //image link comes after this
     const devTools = [
-        {name: 'PostgresSQL', link: 'https://www.postgresql.org/', image: ''},
-        {name: 'Express', link: 'https://expressjs.com/', image: ''},
+        {name: 'PostgresSQL', link: 'https://www.postgresql.org/', image: 'PostgreSQL.svg'},
+        {name: 'Express', link: 'https://expressjs.com/', image: 'express1.png'},
         {name: 'React', link: 'https://react.dev/', image: 'react.svg'},
-        {name: 'Node.js', link: 'https://nodejs.org/en', image: ''},
+        {name: 'Node.js', link: 'https://nodejs.org/en', image: 'node-js.svg'},
         {name: 'Vite', link: 'https://vite.dev/', image: 'vite.svg'},
-        {name: 'Tailwind', link: 'https://nodejs.org/en', image: ''},
-        {name: 'Shadcn', link: 'https://nodejs.org/en', image: ''},
-        {name: 'Git', link: 'https://nodejs.org/en', image: ''},
-        {name: 'Docker', link: 'https://nodejs.org/en', image: ''},
-        {name: 'Webstorm', link: 'https://nodejs.org/en', image: ''},
-        {name: 'Bruno', link: 'https://nodejs.org/en', image: ''},
-        {name: 'Jira', link: 'https://nodejs.org/en', image: ''},
-        {name: 'AWS', link: 'https://aws.amazon.com/', image: ''},
+        {name: 'Tailwind', link: 'https://nodejs.org/en', image: 'tailwind.svg'},
+        {name: 'Shadcn', link: 'https://nodejs.org/en', image: 'shadcn-ui.svg'},
+        {name: 'GitHub', link: 'https://nodejs.org/en', image: 'github.svg'},
+        {name: 'Docker', link: 'https://nodejs.org/en', image: 'docker.svg'},
+        {name: 'Webstorm', link: 'https://nodejs.org/en', image: 'WebStorm.svg'},
+        {name: 'Bruno', link: 'https://nodejs.org/en', image: 'bruno.png'},
+        {name: 'Jira', link: 'https://nodejs.org/en', image: 'Jira.svg'},
+        {name: 'AWS', link: 'https://aws.amazon.com/', image: 'aws.svg'},
     ]
     
     return (
@@ -30,7 +31,7 @@ export const CreditsPage = () => {
             <div className='w-full flex flex-wrap justify-center gap-10 p-10'>
                 {devTools.map((tool)  => (
                 <Card key={tool.name} className='w-48 h-48'>
-                    <a className='flex-grow flex items-end justify-center' href={tool.link}> <img src={tool.image} alt={tool.name} className='w-30 h-30'/> </a>
+                    <a className='flex-grow flex items-end justify-center' href={tool.link}> <img src={root + tool.image} alt={tool.name} className='w-30 h-30'/> </a>
                     <CardHeader className='justify-center px-0'>
                         <CardTitle>{tool.name}</CardTitle>
                     </CardHeader>
