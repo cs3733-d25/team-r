@@ -450,12 +450,6 @@ export function AllRequestsTable() {
                             </div>
                         </div>
 
-                        <div className="flex items-end">
-                            <Button variant="secondary" onClick={retrieveFromDatabase}>
-                                Refresh Data
-                            </Button>
-                        </div>
-
                         {/*building filter*/}
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="building">Building</Label>
