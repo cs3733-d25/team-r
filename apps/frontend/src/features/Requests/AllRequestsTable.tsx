@@ -1,11 +1,11 @@
-import {useState, useEffect} from 'react'
-import axios from 'axios'
-import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
-import {RequestInfoButton} from "@/components/ServiceRequests/RequestInfoButton.tsx";
-import {Button} from "@/components/ui/button.tsx"
-import {Input} from "@/components/ui/input"
-import {Label} from "@/components/ui/label"
-import values from "@/constant-values.ts"
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, } from '@/components/ui/table';
+import { RequestInfoButton } from '@/components/ServiceRequests/RequestInfoButton.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import values from '@/constant-values.ts';
 
 interface BaseRequest {
     department: string | null;
@@ -19,7 +19,6 @@ interface TypedRequest extends BaseRequest {
     id: string | number | null;
 }
 
-// Specific request type interfaces
 interface SanitationRequest extends BaseRequest {
     requestId: string | number;
 }
@@ -42,31 +41,42 @@ interface TransportRequest extends BaseRequest {
 
 export function AllRequestsTable() {
     //array of all requests
-    const [requests, setRequests] = useState([{type: null, department: null, employeeID: null, status: null, priority: null, id: null}]);
+    const [requests, setRequests] = useState([
+        {
+            type: null,
+            department: null,
+            employeeID: null,
+            status: null,
+            priority: null,
+            id: null,
+        },
+    ]);
 
     // filters
     const [filterByEmployee, setFilterByEmployee] = useState(false);
-    const [employeeID, setEmployeeID] = useState("");
+    const [employeeID, setEmployeeID] = useState('');
     const [filterByStatus, setFilterByStatus] = useState(false);
-    const [selectedStatus, setSelectedStatus] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState('');
     const [filterByPriority, setFilterByPriority] = useState(false);
-    const [selectedPriority, setSelectedPriority] = useState("");
+    const [selectedPriority, setSelectedPriority] = useState('');
     const [filterByBuilding, setFilterByBuilding] = useState(false);
-    const [selectedBuilding, setSelectedBuilding] = useState("");
+    const [selectedBuilding, setSelectedBuilding] = useState('');
     const [filterByDepartment, setFilterByDepartment] = useState(false);
-    const [selectedDepartment, setSelectedDepartment] = useState("");
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [sortField, setSortField] = useState<string | null>(null);
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
     const getDepartmentsForBuilding = (building: string) => {
-        switch(building) {
-            case "Faulkner Hospital":
+        switch (building) {
+            case 'Faulkner Hospital':
                 return values.departmentsFAll;
-            case "Main Campus Hospital (75 Francis St.)":
+            case 'Main Campus Hospital (75 Francis St.)':
                 return values.departmentsWAll;
-            case "Healthcare Center (Chestnut Hill)":
+            case 'Healthcare Center (Chestnut Hill)':
                 return values.departmentsCH;
-            case "Healthcare Center (20 Patriot Pl.)":
+            case 'Healthcare Center (20 Patriot Pl.)':
                 return values.departmentsPP20;
-            case "Healthcare Center (22 Patriot Pl.)":
+            case 'Healthcare Center (22 Patriot Pl.)':
                 return values.departmentsPP22;
             default:
                 return [
@@ -82,67 +92,113 @@ export function AllRequestsTable() {
         }
     };
 
+    const getPriorityRank = (priority: string | null): number => {
+        switch (priority) {
+            case 'Urgent':
+                return 4;
+            case 'High':
+                return 3;
+            case 'Medium':
+                return 2;
+            case 'Low':
+                return 1;
+            default:
+                return 0;
+        }
+    };
+    const sortRequests = (requests: TypedRequest[]) => {
+        if (!sortField) return requests;
+
+        return [...requests].sort((a, b) => {
+            if (sortField === 'priority') {
+                const rankA = getPriorityRank(a.priority);
+                const rankB = getPriorityRank(b.priority);
+                return sortDirection === 'asc' ? rankA - rankB : rankB - rankA;
+            }
+
+            const valueA = String((sortField && sortField in a) ? a[sortField as keyof TypedRequest] : '');
+            const valueB = String((sortField && sortField in b) ? b[sortField as keyof TypedRequest] : '');
+            return sortDirection === 'asc'
+                ? valueA.localeCompare(valueB)
+                : valueB.localeCompare(valueA);
+        });
+    };
+
+    const toggleSort = (field: string) => {
+        if (sortField === field) {
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortField(field);
+            setSortDirection('desc'); // defaults to higher priority first
+        }
+    };
+
     const availableDepartments = getDepartmentsForBuilding(selectedBuilding);
 
     useEffect(() => {
-        retrieveFromDatabase()
+        retrieveFromDatabase();
     }, []);
 
     async function retrieveFromDatabase() {
-        try{
+        try {
             //individually add requests from each api, then add type
-            const sanitationRes = await axios.get("/api/sanitation/")
+            const sanitationRes = await axios.get('/api/sanitation/');
             const sanitationResWType = sanitationRes.data.map((req: SanitationRequest) => ({
                 ...req,
-                type: "Sanitation",
+                type: 'Sanitation',
                 id: req.requestId,
-            }))
-            const prescriptionRes = await axios.get("/api/pharmacy/all-requests");
+            }));
+            const prescriptionRes = await axios.get('/api/pharmacy/all-requests');
             const prescriptionReqWType = prescriptionRes.data.map((req: PrescriptionRequest) => ({
                 ...req,
-                type: "Prescription",
+                type: 'Prescription',
                 id: req.prescriptionID,
-            }))
-            const deviceRes = await axios.get("/api/devicereq/");
+            }));
+            const deviceRes = await axios.get('/api/devicereq/');
             const deviceReqWType = deviceRes.data.map((req: DeviceRequest) => ({
                 ...req,
-                type: "Medical Device",
+                type: 'Medical Device',
                 id: req.requestId,
-            }))
-            const patientRes = await axios.get("/api/patientreq/");
+            }));
+            const patientRes = await axios.get('/api/patientreq/');
             const patientReqWType = patientRes.data.map((req: PatientRequest) => ({
                 ...req,
-                type: "Patient Request",
+                type: 'Patient Request',
                 id: req.patientRequestID,
-            }))
-            const transportRes = await axios.get("/api/transportreq/");
+            }));
+            const transportRes = await axios.get('/api/transportreq/');
             const transportReqWType = transportRes.data.map((req: TransportRequest) => ({
                 ...req,
-                type: "Transport",
+                type: 'Transport',
                 id: req.employeeRequestID,
-            }))
+            }));
 
             //set all requests to be added to the table
-            setRequests([...sanitationResWType, ...prescriptionReqWType, ...deviceReqWType, ...patientReqWType, ...transportReqWType]);
-        }
-        catch(error){
-            console.log("error in retrieve:", error);
+            setRequests([
+                ...sanitationResWType,
+                ...prescriptionReqWType,
+                ...deviceReqWType,
+                ...patientReqWType,
+                ...transportReqWType,
+            ]);
+        } catch (error) {
+            console.log('error in retrieve:', error);
         }
     }
 
     const isDepartmentInBuilding = (department: string | null, building: string): boolean => {
         if (!department) return false;
 
-        switch(building) {
-            case "Faulkner Hospital":
+        switch (building) {
+            case 'Faulkner Hospital':
                 return values.departmentsFAll.includes(department);
-            case "Main Campus Hospital (75 Francis St.)":
+            case 'Main Campus Hospital (75 Francis St.)':
                 return values.departmentsWAll.includes(department);
-            case "Healthcare Center (Chestnut Hill)":
+            case 'Healthcare Center (Chestnut Hill)':
                 return values.departmentsCH.includes(department);
-            case "Healthcare Center (20 Patriot Pl.)":
+            case 'Healthcare Center (20 Patriot Pl.)':
                 return values.departmentsPP20.includes(department);
-            case "Healthcare Center (22 Patriot Pl.)":
+            case 'Healthcare Center (22 Patriot Pl.)':
                 return values.departmentsPP22.includes(department);
             default:
                 return true;
@@ -150,31 +206,64 @@ export function AllRequestsTable() {
     };
 
     // filtering logic
-    const filteredRequests = requests.filter(req => {
-        if (filterByEmployee && employeeID && (!req.employeeID || String(req.employeeID) !== employeeID)) {
+    const filteredRequests = requests.filter((req) => {
+        if (
+            filterByEmployee &&
+            employeeID &&
+            (!req.employeeID || String(req.employeeID) !== employeeID)
+        ) {
             return false;
         }
         if (filterByStatus && selectedStatus && (!req.status || req.status !== selectedStatus)) {
             return false;
         }
-        if (filterByPriority && selectedPriority && (!req.priority || req.priority !== selectedPriority)) {
+        if (
+            filterByPriority &&
+            selectedPriority &&
+            (!req.priority || req.priority !== selectedPriority)
+        ) {
             return false;
         }
-        if (filterByBuilding && selectedBuilding && !isDepartmentInBuilding(req.department, selectedBuilding)) {
+        if (
+            filterByBuilding &&
+            selectedBuilding &&
+            !isDepartmentInBuilding(req.department, selectedBuilding)
+        ) {
             return false;
         }
-        if (filterByDepartment && selectedDepartment && (!req.department || req.department !== selectedDepartment)) {
+        if (
+            filterByDepartment &&
+            selectedDepartment &&
+            (!req.department || req.department !== selectedDepartment)
+        ) {
             return false;
         }
         return true;
     });
 
-    const FilterPill = ({ label, value, onRemove }: { label: string, value: string, onRemove: () => void }) => (
+    const FilterPill = ({
+        label,
+        value,
+        onRemove,
+    }: {
+        label: string;
+        value: string;
+        onRemove: () => void;
+    }) => (
         <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
             <span className="mr-1 font-medium">{label}:</span> {value}
             <button onClick={onRemove} className="ml-2 hover:text-gray-200">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
@@ -191,8 +280,8 @@ export function AllRequestsTable() {
             value: employeeID,
             onRemove: () => {
                 setFilterByEmployee(false);
-                setEmployeeID("");
-            }
+                setEmployeeID('');
+            },
         });
     }
 
@@ -203,8 +292,8 @@ export function AllRequestsTable() {
             value: selectedStatus,
             onRemove: () => {
                 setFilterByStatus(false);
-                setSelectedStatus("");
-            }
+                setSelectedStatus('');
+            },
         });
     }
 
@@ -215,8 +304,8 @@ export function AllRequestsTable() {
             value: selectedPriority,
             onRemove: () => {
                 setFilterByPriority(false);
-                setSelectedPriority("");
-            }
+                setSelectedPriority('');
+            },
         });
     }
 
@@ -227,8 +316,8 @@ export function AllRequestsTable() {
             value: selectedBuilding,
             onRemove: () => {
                 setFilterByBuilding(false);
-                setSelectedBuilding("");
-            }
+                setSelectedBuilding('');
+            },
         });
     }
 
@@ -239,12 +328,12 @@ export function AllRequestsTable() {
             value: selectedDepartment,
             onRemove: () => {
                 setFilterByDepartment(false);
-                setSelectedDepartment("");
-            }
+                setSelectedDepartment('');
+            },
         });
     }
 
-    return(
+    return (
         <>
             {/*filter controls and active filters*/}
             <div className="mb-6 pt-4 space-y-4">
@@ -266,15 +355,15 @@ export function AllRequestsTable() {
                                 size="sm"
                                 onClick={() => {
                                     setFilterByEmployee(false);
-                                    setEmployeeID("");
+                                    setEmployeeID('');
                                     setFilterByStatus(false);
-                                    setSelectedStatus("");
+                                    setSelectedStatus('');
                                     setFilterByPriority(false);
-                                    setSelectedPriority("");
+                                    setSelectedPriority('');
                                     setFilterByBuilding(false);
-                                    setSelectedBuilding("");
+                                    setSelectedBuilding('');
                                     setFilterByDepartment(false);
-                                    setSelectedDepartment("");
+                                    setSelectedDepartment('');
                                 }}
                                 className="ml-2 text-sm"
                             >
@@ -299,11 +388,11 @@ export function AllRequestsTable() {
                                     className="w-40"
                                 />
                                 <Button
-                                    variant={filterByEmployee ? "default" : "outline"}
+                                    variant={filterByEmployee ? 'default' : 'outline'}
                                     size="sm"
                                     onClick={() => setFilterByEmployee(!filterByEmployee)}
                                 >
-                                    {filterByEmployee ? "Applied" : "Apply"}
+                                    {filterByEmployee ? 'Applied' : 'Apply'}
                                 </Button>
                             </div>
                         </div>
@@ -326,11 +415,11 @@ export function AllRequestsTable() {
                                     <option value="Accepted">Accepted</option>
                                 </select>
                                 <Button
-                                    variant={filterByStatus ? "default" : "outline"}
+                                    variant={filterByStatus ? 'default' : 'outline'}
                                     size="sm"
                                     onClick={() => setFilterByStatus(!filterByStatus)}
                                 >
-                                    {filterByStatus ? "Applied" : "Apply"}
+                                    {filterByStatus ? 'Applied' : 'Apply'}
                                 </Button>
                             </div>
                         </div>
@@ -352,20 +441,17 @@ export function AllRequestsTable() {
                                     <option value="Urgent">Urgent</option>
                                 </select>
                                 <Button
-                                    variant={filterByPriority ? "default" : "outline"}
+                                    variant={filterByPriority ? 'default' : 'outline'}
                                     size="sm"
                                     onClick={() => setFilterByPriority(!filterByPriority)}
                                 >
-                                    {filterByPriority ? "Applied" : "Apply"}
+                                    {filterByPriority ? 'Applied' : 'Apply'}
                                 </Button>
                             </div>
                         </div>
 
                         <div className="flex items-end">
-                            <Button
-                                variant="secondary"
-                                onClick={retrieveFromDatabase}
-                            >
+                            <Button variant="secondary" onClick={retrieveFromDatabase}>
                                 Refresh Data
                             </Button>
                         </div>
@@ -381,7 +467,7 @@ export function AllRequestsTable() {
                                         const newBuilding = e.target.value;
                                         setSelectedBuilding(newBuilding);
                                         // Reset department when building changes
-                                        setSelectedDepartment("");
+                                        setSelectedDepartment('');
                                     }}
                                     className="rounded-md border h-10 px-3 py-2 w-40"
                                 >
@@ -393,11 +479,11 @@ export function AllRequestsTable() {
                                     ))}
                                 </select>
                                 <Button
-                                    variant={filterByBuilding ? "default" : "outline"}
+                                    variant={filterByBuilding ? 'default' : 'outline'}
                                     size="sm"
                                     onClick={() => setFilterByBuilding(!filterByBuilding)}
                                 >
-                                    {filterByBuilding ? "Applied" : "Apply"}
+                                    {filterByBuilding ? 'Applied' : 'Apply'}
                                 </Button>
                             </div>
                         </div>
@@ -420,11 +506,11 @@ export function AllRequestsTable() {
                                     ))}
                                 </select>
                                 <Button
-                                    variant={filterByDepartment ? "default" : "outline"}
+                                    variant={filterByDepartment ? 'default' : 'outline'}
                                     size="sm"
                                     onClick={() => setFilterByDepartment(!filterByDepartment)}
                                 >
-                                    {filterByDepartment ? "Applied" : "Apply"}
+                                    {filterByDepartment ? 'Applied' : 'Apply'}
                                 </Button>
                             </div>
                         </div>
@@ -432,23 +518,32 @@ export function AllRequestsTable() {
                 </div>
             </div>
 
-
-
             <Table>
-                <TableHeader >
+                <TableHeader>
                     <TableRow>
-                        <TableHead className={"text-center"}>Request Type</TableHead>
-                        <TableHead className={"text-center"}>Department</TableHead>
-                        <TableHead className={"text-center"}>Employee</TableHead>
-                        <TableHead className={"text-center"}>Priority</TableHead>
-                        <TableHead className={"text-center"}>Status</TableHead>
-                        <TableHead className={"text-center"}>Details</TableHead>
+                        <TableHead className={'text-center'}>Request Type</TableHead>
+                        <TableHead className={'text-center'}>Department</TableHead>
+                        <TableHead className={'text-center'}>Employee</TableHead>
+                        <TableHead
+                            className="text-center cursor-pointer hover:bg-muted/50"
+                            onClick={() => toggleSort('priority')}
+                        >
+                            <div className="flex items-center justify-center gap-1">
+                                Priority
+                                {sortField === 'priority' && (
+                                    <span className="ml-1">
+                                        {sortDirection === 'asc' ? '↑' : '↓'}
+                                    </span>
+                                )}
+                            </div>
+                        </TableHead>
+                        <TableHead className={'text-center'}>Status</TableHead>
+                        <TableHead className={'text-center'}>Details</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody className="text-center">
-                    {filteredRequests.map((row,index) =>
-                    {
-                        return(
+                    {sortRequests(filteredRequests).map((row, index) => {
+                        return (
                             <TableRow key={index} className='border-t'>
                                 <TableCell>{row.type}</TableCell>
                                 <TableCell>{row.department}</TableCell>
@@ -456,7 +551,7 @@ export function AllRequestsTable() {
                                 <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>
-                                    <RequestInfoButton type={row.type} id={row.id} />
+                                    <RequestInfoButton type={row.type} id={typeof row.id === 'string' ? Number(row.id) : row.id} />
                                 </TableCell>
                             </TableRow>
                         );
@@ -464,7 +559,7 @@ export function AllRequestsTable() {
                 </TableBody>
             </Table>
         </>
-    )
+    );
 }
 
 export default AllRequestsTable;
