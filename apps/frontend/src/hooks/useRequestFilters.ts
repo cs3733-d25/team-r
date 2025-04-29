@@ -62,6 +62,41 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
     // filter the data
     const filteredData = useMemo(() => {
         return data.filter((item) => {
+            // employee filter
+            if (filterState.filterByEmployee && filterOptions.employeeID) {
+                if (!item.employeeID || !item.employeeID.includes(filterOptions.employeeID)) {
+                    return false;
+                }
+            }
+
+            // status filter
+            if (filterState.filterByStatus && filterOptions.status) {
+                if (!item.status || item.status !== filterOptions.status) {
+                    return false;
+                }
+            }
+
+            // priority filter
+            if (filterState.filterByPriority && filterOptions.priority) {
+                if (!item.priority || item.priority !== filterOptions.priority) {
+                    return false;
+                }
+            }
+
+            // building filter
+            if (filterState.filterByBuilding && filterOptions.building) {
+                if (!item.building || item.building !== filterOptions.building) {
+                    return false;
+                }
+            }
+
+            // department filter
+            if (filterState.filterByDepartment && filterOptions.department) {
+                if (!item.department || item.department !== filterOptions.department) {
+                    return false;
+                }
+            }
+
             return true;
         });
     }, [data, filterState, filterOptions]);
@@ -71,7 +106,27 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
         if (!sortField) return filteredData;
 
         return [...filteredData].sort((a, b) => {
-            return 0;
+            const aValue = a[sortField as keyof T];
+            const bValue = b[sortField as keyof T];
+
+            // handle priority specially
+            if (sortField === 'priority') {
+                const aRank = getPriorityRank(aValue as string | null);
+                const bRank = getPriorityRank(bValue as string | null);
+                return sortDirection === 'asc' ? aRank - bRank : bRank - aRank;
+            }
+
+            // handle other fields
+            if (aValue === bValue) return 0;
+            if (aValue === null || aValue === undefined) return 1;
+            if (bValue === null || bValue === undefined) return -1;
+
+            const aString = String(aValue).toLowerCase();
+            const bString = String(bValue).toLowerCase();
+
+            return sortDirection === 'asc'
+                ? aString.localeCompare(bString)
+                : bString.localeCompare(aString);
         });
     }, [filteredData, sortField, sortDirection]);
 
