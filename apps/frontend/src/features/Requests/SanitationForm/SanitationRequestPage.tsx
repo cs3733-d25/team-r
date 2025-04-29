@@ -59,7 +59,7 @@ export function SanitationRequestPage() {
         {field: 'employeeID', header: 'Employee', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
-        {field: 'actions', header: 'Details', cellRenderer: (item: SanitationRequest) => (<RequestInfoButton type="Sanitation" id={item.requestId} />) }
+        {field: 'actions', header: 'Details', cellRenderer: (item: SanitationRequest) => (<RequestInfoButton type="Sanitation" id={item.requestId ? Number(item.requestId) : null} />) }
     ];
 
     return(
