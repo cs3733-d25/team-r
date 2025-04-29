@@ -65,6 +65,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
     // generate active filters
     const activeFilters = [];
+
     if (localState.filterByEmployee && localOptions.employeeID) {
         activeFilters.push({
             type: 'employee',
@@ -77,7 +78,55 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
         });
     }
 
-    // TODO: add other filters here
+    if (localState.filterByStatus && localOptions.status) {
+        activeFilters.push({
+            type: 'status',
+            label: 'Status',
+            value: localOptions.status,
+            onRemove: () => {
+                setLocalState({...localState, filterByStatus: false});
+                setLocalOptions({...localOptions, status: ''});
+            },
+        });
+    }
+
+    if (localState.filterByPriority && localOptions.priority) {
+        activeFilters.push({
+            type: 'priority',
+            label: 'Priority',
+            value: localOptions.priority,
+            onRemove: () => {
+                setLocalState({...localState, filterByPriority: false});
+                setLocalOptions({...localOptions, priority: ''});
+            },
+        });
+    }
+
+    if (localState.filterByBuilding && localOptions.building) {
+        activeFilters.push({
+            type: 'building',
+            label: 'Building',
+            value: localOptions.building,
+            onRemove: () => {
+                setLocalState({...localState, filterByBuilding: false});
+                setLocalOptions({...localOptions, building: '', department: ''});
+                setLocalState({...localState, filterByBuilding: false, filterByDepartment: false});
+            },
+        });
+    }
+
+    if (localState.filterByDepartment && localOptions.department) {
+        activeFilters.push({
+            type: 'department',
+            label: 'Department',
+            value: localOptions.department,
+            onRemove: () => {
+                setLocalState({...localState, filterByDepartment: false});
+                setLocalOptions({...localOptions, department: ''});
+            },
+        });
+    }
+
 
     return (
         <div className="mb-6 pt-4 space-y-4">
@@ -109,21 +158,183 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
             {/* Filter cards UI */}
             <div className="bg-muted/40 rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {/* Location filters group */}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        {/* Building filter */}
-                        {/* Department filter */}
+                        <h3 className="text-sm font-medium">Location Filters</h3>
+                        <div className="space-y-3">
+                            {/*building filter*/}
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="building">Building</label>
+                                <div className="flex space-x-2">
+                                    <select
+                                        id="building"
+                                        value={localOptions.building}
+                                        onChange={(e) => {
+                                            const newBuilding = e.target.value;
+                                            setLocalOptions({
+                                                ...localOptions,
+                                                building: newBuilding,
+                                                department: ''
+                                            });
+                                        }}
+                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                    >
+                                        <option value="">All Buildings</option>
+                                        {values.building.map((building) => (
+                                            <option key={building} value={building}>
+                                                {building}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <Button
+                                        variant={localState.filterByBuilding ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setLocalState({
+                                            ...localState,
+                                            filterByBuilding: !localState.filterByBuilding
+                                        })}
+                                    >
+                                        {localState.filterByBuilding ? 'Applied' : 'Apply'}
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/*department filter*/}
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="department">Department</label>
+                                <div className="flex space-x-2">
+                                    <select
+                                        id="department"
+                                        value={localOptions.department}
+                                        onChange={(e) => setLocalOptions({
+                                            ...localOptions,
+                                            department: e.target.value
+                                        })}
+                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                    >
+                                        <option value="">All Departments</option>
+                                        {availableDepartments.map((dept) => (
+                                            <option key={dept} value={dept}>
+                                                {dept}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <Button
+                                        variant={localState.filterByDepartment ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setLocalState({
+                                            ...localState,
+                                            filterByDepartment: !localState.filterByDepartment
+                                        })}
+                                    >
+                                        {localState.filterByDepartment ? 'Applied' : 'Apply'}
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Status filters group */}
+                    {/*status filters group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        {/* Status filter */}
-                        {/* Priority filter */}
+                        <h3 className="text-sm font-medium">Request Status</h3>
+                        <div className="space-y-3">
+                            {/*status filter*/}
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="status">Status</label>
+                                <div className="flex space-x-2">
+                                    <select
+                                        id="status"
+                                        value={localOptions.status}
+                                        onChange={(e) => setLocalOptions({
+                                            ...localOptions,
+                                            status: e.target.value
+                                        })}
+                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                    >
+                                        <option value="">All Statuses</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
+                                        <option value="Canceled">Canceled</option>
+                                        <option value="Accepted">Accepted</option>
+                                    </select>
+                                    <Button
+                                        variant={localState.filterByStatus ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setLocalState({
+                                            ...localState,
+                                            filterByStatus: !localState.filterByStatus
+                                        })}
+                                    >
+                                        {localState.filterByStatus ? 'Applied' : 'Apply'}
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/*priority filter*/}
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="priority">Priority</label>
+                                <div className="flex space-x-2">
+                                    <select
+                                        id="priority"
+                                        value={localOptions.priority}
+                                        onChange={(e) => setLocalOptions({
+                                            ...localOptions,
+                                            priority: e.target.value
+                                        })}
+                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                    >
+                                        <option value="">All Priorities</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                        <option value="Urgent">Urgent</option>
+                                    </select>
+                                    <Button
+                                        variant={localState.filterByPriority ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setLocalState({
+                                            ...localState,
+                                            filterByPriority: !localState.filterByPriority
+                                        })}
+                                    >
+                                        {localState.filterByPriority ? 'Applied' : 'Apply'}
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Personnel filters */}
+                    {/*personnel filter group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        {/* Employee filter */}
+                        <h3 className="text-sm font-medium">Personnel</h3>
+                        <div className="space-y-3">
+                            {/*employee filter*/}
+                            <div className="flex flex-col space-y-1.5">
+                                <label htmlFor="employeeID">Employee ID</label>
+                                <div className="flex space-x-2">
+                                    <input
+                                        id="employeeID"
+                                        value={localOptions.employeeID}
+                                        onChange={(e) => setLocalOptions({
+                                            ...localOptions,
+                                            employeeID: e.target.value
+                                        })}
+                                        placeholder="Enter ID"
+                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                    />
+                                    <Button
+                                        variant={localState.filterByEmployee ? 'default' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setLocalState({
+                                            ...localState,
+                                            filterByEmployee: !localState.filterByEmployee
+                                        })}
+                                    >
+                                        {localState.filterByEmployee ? 'Applied' : 'Apply'}
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
