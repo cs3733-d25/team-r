@@ -78,11 +78,12 @@ export function MapPage() {
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
-                'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
-                'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                'Faulkner': ['FAULKNER', 'Faulkner'],
+                'Healthcare Center (20 Patriot Pl.)': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
+                'Heathcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
+                'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
                 // TODO: add women's hospital parking lots
+                'Main Campus Hospital (75 Francis St.)': ['WOMENS'],
             };
 
             return buildingMap[selectedBuilding]?.some((buildingName) =>
