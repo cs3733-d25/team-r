@@ -28,6 +28,7 @@ import {navigate} from "next/dist/client/components/segment-cache-impl/navigatio
 import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
 import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
+import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 
 
 function App() {
@@ -99,7 +100,7 @@ function App() {
                 { path: 'prescription', element: <Prescription /> },
                 { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
-                { path: 'transport',element: <PatientTransportPage /> },
+                { path: 'transport',element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
                 { path: 'translation', element: <Translate /> },
                 { path: 'requests', element: <RequestPage /> }
