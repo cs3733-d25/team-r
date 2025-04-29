@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import {createBrowserRouter, RouterProvider, useNavigate} from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
-import AboutPage from '../features/About/AboutPage.tsx';
+import AboutPage from '../features/AboutAndCredits/AboutPage.tsx';
+import CreditsPage from '../features/AboutAndCredits/CreditsPage.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
@@ -82,6 +83,7 @@ function App() {
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'about', element: <AboutPage /> },
+                { path: 'credits', element: <CreditsPage />},
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <MapPage /> },
