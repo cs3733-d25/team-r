@@ -11,13 +11,13 @@ export const CreditsPage = () => {
         {name: 'React', link: 'https://react.dev/', image: 'react.svg'},
         {name: 'Node.js', link: 'https://nodejs.org/en', image: 'node-js.svg'},
         {name: 'Vite', link: 'https://vite.dev/', image: 'vite.svg'},
-        {name: 'Tailwind', link: 'https://nodejs.org/en', image: 'tailwind.svg'},
-        {name: 'Shadcn', link: 'https://nodejs.org/en', image: 'shadcn-ui.svg'},
-        {name: 'GitHub', link: 'https://nodejs.org/en', image: 'github.svg'},
-        {name: 'Docker', link: 'https://nodejs.org/en', image: 'docker.svg'},
-        {name: 'Webstorm', link: 'https://nodejs.org/en', image: 'WebStorm.svg'},
-        {name: 'Bruno', link: 'https://nodejs.org/en', image: 'bruno.png'},
-        {name: 'Jira', link: 'https://nodejs.org/en', image: 'Jira.svg'},
+        {name: 'Tailwind', link: 'https://tailwindcss.com/', image: 'tailwind.svg'},
+        {name: 'Shadcn', link: 'https://ui.shadcn.com/', image: 'shadcn-ui.svg'},
+        {name: 'GitHub', link: 'https://github.com/', image: 'github.svg'},
+        {name: 'Docker', link: 'https://www.docker.com/', image: 'docker.svg'},
+        {name: 'Webstorm', link: 'https://www.jetbrains.com/webstorm/', image: 'WebStorm.svg'},
+        {name: 'Bruno', link: 'https://www.usebruno.com/', image: 'bruno.png'},
+        {name: 'Jira', link: 'https://www.atlassian.com/software/jira', image: 'Jira.svg'},
         {name: 'AWS', link: 'https://aws.amazon.com/', image: 'aws.svg'},
     ]
     
@@ -27,7 +27,7 @@ export const CreditsPage = () => {
             {/*<Label/>*/}
             <p className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center'> This web application was developed using the PERN (PostgreSQL, Express, React, Node.js) stack with
                 Typescript, Prisma ORM, Shadcn and Tailwind. Deployment on the cloud was accomplished using AWS EC, a
-                Docker container, and AWS RDS to run the PostgreSQL server. </p>
+                Docker container, and AWS RDS to run the PostgreSQL server. Click on any of the icons below to learn more. </p>
             <div className='w-full flex flex-wrap justify-center gap-10 p-10'>
                 {devTools.map((tool)  => (
                 <Card key={tool.name} className='w-48 h-48'>
