@@ -342,9 +342,16 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     function allNodes (nodeType:string, node:Node, layer:L.LayerGroup){
         switch (nodeType) {
             case 'Reception':
-                const reception = L.marker([node.xcoord, node.ycoord],{icon:violetIcon, draggable:true}).addTo(layer);
-                reception.on('click', () => clickMarker(node, reception));
-                reception.on('drag', (e) => dragMarker(node, reception, e));
+                if (receptionFiltered) {
+                    const reception = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                    setReceptionFiltered(!receptionFiltered);
+                }
+                else {
+                    const reception = L.marker([node.xcoord, node.ycoord],{icon:violetIcon, draggable:true}).addTo(layer);
+                    reception.on('click', () => clickMarker(node, reception));
+                    reception.on('drag', (e) => dragMarker(node, reception, e));
+                    setReceptionFiltered(receptionFiltered);
+                }
                 break;
 
             case 'Elevator':
@@ -385,19 +392,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
                 })
                 fil.map((node)=>{
-                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                    if(!receptionFiltered) {
-                        console.log("CHANGE TO BLACK:", place.getIcon());
-
-                        setReceptionFiltered(true);
-                        makeMarkerReappear(place,"Reception");
-                    }
-                    else{
-                        console.log("CHANGE TO VIOLET:", place.getIcon());
-
-                        setReceptionFiltered(false);
-                        makeMarkerDisappear(place);
-                    }
+                    allNodes("Reception",node,layer)
                 })
 
                 break;
