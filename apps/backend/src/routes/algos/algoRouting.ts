@@ -11,14 +11,15 @@ router.post(
       const { department, location } = req.body;
       let locationFormat = "";
       if (location.includes("Chestnut Hill")) {
-        locationFormat = "Chestnut Hill";
+        locationFormat = "Healthcare Center (Chestnut Hill)";
       } else if (location.includes("20 Patriot")) {
-        locationFormat = "Patriot Place 20";
+        locationFormat = "Healthcare Center (20 Patriot Pl.)";
       } else if (location.includes("22 Patriot")) {
-        locationFormat = "Patriot Place 22";
+        locationFormat = "Healthcare Center (22 Patriot Pl.)";
       } else if (location.includes("Faulkner")) {
-        locationFormat = "Faulkner";
+        locationFormat = "Faulkner Hospital";
       }
+      // TODO: add main campus location
       if (!department || !location) {
         res.status(400).json({ error: "Missing required fields" });
         return;
