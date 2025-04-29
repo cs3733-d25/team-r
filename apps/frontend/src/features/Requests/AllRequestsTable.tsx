@@ -5,6 +5,7 @@ import {RequestInfoButton} from "@/components/ServiceRequests/RequestInfoButton.
 import {Button} from "@/components/ui/button.tsx"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
+import values from "@/constant-values.ts"
 
 interface BaseRequest {
     department: string | null;
@@ -50,8 +51,38 @@ export function AllRequestsTable() {
     const [selectedStatus, setSelectedStatus] = useState("");
     const [filterByPriority, setFilterByPriority] = useState(false);
     const [selectedPriority, setSelectedPriority] = useState("");
+    const [filterByBuilding, setFilterByBuilding] = useState(false);
+    const [selectedBuilding, setSelectedBuilding] = useState("");
     const [filterByDepartment, setFilterByDepartment] = useState(false);
     const [selectedDepartment, setSelectedDepartment] = useState("");
+
+    const getDepartmentsForBuilding = (building: string) => {
+        switch(building) {
+            case "Faulkner":
+                return values.departmentsFAll;
+            case "Brigham and Women's Hospital":
+                return values.departmentsWAll;
+            case "Chestnut Hill":
+                return values.departmentsCH;
+            case "Patriot Place 20":
+                return values.departmentsPP20;
+            case "Patriot Place 22":
+                return values.departmentsPP22;
+            default:
+                return [
+                    // create a comprehensive list of all departments
+                    ...new Set([
+                        ...values.departmentsFAll,
+                        ...values.departmentsWAll,
+                        ...values.departmentsCH,
+                        ...values.departmentsPP20,
+                        ...values.departmentsPP22,
+                    ]),
+                ].sort();
+        }
+    };
+
+    const availableDepartments = getDepartmentsForBuilding(selectedBuilding);
 
     useEffect(() => {
         retrieveFromDatabase()
@@ -167,6 +198,18 @@ export function AllRequestsTable() {
         });
     }
 
+    if (filterByBuilding && selectedBuilding) {
+        activeFilters.push({
+            type: 'building',
+            label: 'Building',
+            value: selectedBuilding,
+            onRemove: () => {
+                setFilterByBuilding(false);
+                setSelectedBuilding("");
+            }
+        });
+    }
+
     if (filterByDepartment && selectedDepartment) {
         activeFilters.push({
             type: 'department',
@@ -206,6 +249,8 @@ export function AllRequestsTable() {
                                     setSelectedStatus("");
                                     setFilterByPriority(false);
                                     setSelectedPriority("");
+                                    setFilterByBuilding(false);
+                                    setSelectedBuilding("");
                                     setFilterByDepartment(false);
                                     setSelectedDepartment("");
                                 }}
@@ -303,6 +348,38 @@ export function AllRequestsTable() {
                             </Button>
                         </div>
 
+                        {/*building filter*/}
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="building">Building</Label>
+                            <div className="flex space-x-2">
+                                <select
+                                    id="building"
+                                    value={selectedBuilding}
+                                    onChange={(e) => {
+                                        const newBuilding = e.target.value;
+                                        setSelectedBuilding(newBuilding);
+                                        // Reset department when building changes
+                                        setSelectedDepartment("");
+                                    }}
+                                    className="rounded-md border h-10 px-3 py-2 w-40"
+                                >
+                                    <option value="">All Buildings</option>
+                                    {values.building.map((building) => (
+                                        <option key={building} value={building}>
+                                            {building}
+                                        </option>
+                                    ))}
+                                </select>
+                                <Button
+                                    variant={filterByBuilding ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setFilterByBuilding(!filterByBuilding)}
+                                >
+                                    {filterByBuilding ? "Applied" : "Apply"}
+                                </Button>
+                            </div>
+                        </div>
+
                         {/*department filter*/}
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="department">Department</Label>
@@ -314,12 +391,11 @@ export function AllRequestsTable() {
                                     className="rounded-md border h-10 px-3 py-2 w-40"
                                 >
                                     <option value="">All Departments</option>
-                                    <option value="Radiology">Radiology</option>
-                                    <option value="Neurology">Neurology</option>
-                                    <option value="Cardiology">Cardiology</option>
-                                    <option value="Emergency">Emergency</option>
-                                    <option value="ICU">ICU</option>
-                                    <option value="Pharmacy">Pharmacy</option>
+                                    {availableDepartments.map((dept) => (
+                                        <option key={dept} value={dept}>
+                                            {dept}
+                                        </option>
+                                    ))}
                                 </select>
                                 <Button
                                     variant={filterByDepartment ? "default" : "outline"}
