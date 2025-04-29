@@ -478,6 +478,7 @@ async function main() {
         data: {
             deviceType: 'X-Ray',
             priority: 'High',
+            building: 'Healthcare Center (Chestnut Hill)',
             room: '111',
             department: "Endoscopy Center",
             //requestTime:
