@@ -37,6 +37,10 @@ interface TransportRequest {
     [key: string]: unknown;
 }
 
+interface TranslateRequest extends BaseRequest {
+    translateRequestID: string | number;
+}
+
 export function AllRequestsTable() {
     const [requests, setRequests] = useState<TypedRequest[]>([{
         type: null,
@@ -55,6 +59,7 @@ export function AllRequestsTable() {
 
     async function retrieveFromDatabase() {
         try {
+            //individually add requests from each api, then add type
             const sanitationRes = await axios.get('/api/sanitation/');
             const sanitationResWType = sanitationRes.data.map((req: SanitationRequest) => ({
                 ...req,
@@ -94,6 +99,12 @@ export function AllRequestsTable() {
                 id: req.employeeRequestID,
                 employeeID: typeof req.employeeID === 'number' ? String(req.employeeID) : req.employeeID
             }));
+            const translateRes = await axios.get('/api/translate/');
+            const translateReqWType = translateRes.data.map((req: TranslateRequest) => ({
+                ...req,
+                type: 'Translate',
+                id: req.translateRequestID,
+            }));
 
             // combine all requests
             setRequests([
@@ -102,6 +113,7 @@ export function AllRequestsTable() {
                 ...deviceReqWType,
                 ...patientReqWType,
                 ...transportReqWType,
+                ...translateReqWType
             ]);
         } catch (error) {
             console.log('error in retrieve:', error);
@@ -159,7 +171,7 @@ export function AllRequestsTable() {
                 }}
             />
         </>
-    );
+    )
 }
 
 export default AllRequestsTable;

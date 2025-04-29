@@ -9,6 +9,7 @@ import PrescriptionPage from '@/features/Requests/PrescriptionForm/PrescriptionP
 import PatientRequestPage from '@/features/Requests/PatientRequest/PatientRequestPage.tsx';
 import SanitationRequestPage from '@/features/Requests/SanitationForm/SanitationRequestPage.tsx';
 import PatientTransportPage from '@/features/Requests/PatientTransport/PatientTransportPage.tsx';
+import TranslateRequestPage from './TranslateForm/TranslateRequestPage';
 
 export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -16,11 +17,14 @@ export function AllRequestsPage() {
 
 
   const requestTypes = [
+
     { name: 'Medical Device', description: 'Requests for medical devices', path: '/devicerequest', tab: 'medical-device' },
     { name: 'Prescription',   description: 'Medication prescriptions for patients', path: '/prescription', tab: 'prescription' },
     { name: 'Patient',        description: 'Non-emergency patient service requests', path: '/patientrequestpage', tab: 'patient' },
     { name: 'Transport',      description: 'Patient transportation between facilities', path: '/transport', tab: 'transport' },
     { name: 'Sanitation',     description: 'Cleaning and sanitation service requests', path: '/sanitation', tab: 'sanitation' },
+      { name: 'Translator',    description: 'Language translator service requests', path: '/translation', tab: 'translator' },
+
   ];
 
   return (
@@ -28,16 +32,17 @@ export function AllRequestsPage() {
           <div className="container mx-auto pt-12 pb-8">
               <h1 className="text-3xl font-bold mb-6 text-center">Service Request Dashboard</h1>
 
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="mb-0 border-b-0 shadow-none">
-                      <TabsTrigger value="overview">Overview</TabsTrigger>
-                      <TabsTrigger value="all-requests">All Requests</TabsTrigger>
-                      <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
-                      <TabsTrigger value="prescription">Prescription</TabsTrigger>
-                      <TabsTrigger value="patient">Patient</TabsTrigger>
-                      <TabsTrigger value="transport">Transport</TabsTrigger>
-                      <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
-                  </TabsList>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="mb-0 border-b-0 shadow-none">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="all-requests">All Requests</TabsTrigger>
+              <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
+              <TabsTrigger value="prescription">Prescription</TabsTrigger>
+              <TabsTrigger value="patient">Patient</TabsTrigger>
+              <TabsTrigger value="transport">Transport</TabsTrigger>
+                <TabsTrigger value="translation">Translate</TabsTrigger>
+                <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
+            </TabsList>
 
                   <TabsContent value="overview" className="space-y-6 -mt-px">
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -103,16 +108,26 @@ export function AllRequestsPage() {
                       </Card>
                   </TabsContent>
 
-                  <TabsContent value="transport" className="-mt-px">
-                      <Card className="rounded-lg overflow-hidden bg-primary">
-                          <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
-                              <CardTitle>Transport Requests</CardTitle>
-                          </CardHeader>
-                          <CardContent className="px-6 pb-6 bg-white">
-                              <PatientTransportPage />
-                          </CardContent>
-                      </Card>
-                  </TabsContent>
+            <TabsContent value="transport" className="-mt-px">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
+                  <CardTitle>Transport Requests</CardTitle>
+                </CardHeader>
+                <CardContent className="px-6 pb-6 bg-white">
+                  <TransportRequestPage />
+                </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="translation" className="-mt-px">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
+                  <CardTitle>Translation Requests</CardTitle>
+                </CardHeader>
+                <CardContent className="px-6 pb-6 bg-white">
+                  <TranslateRequestPage />
+                </CardContent>
+              </Card>
+            </TabsContent>
 
                   <TabsContent value="sanitation" className="-mt-px">
                       <Card className="rounded-lg overflow-hidden bg-primary">
