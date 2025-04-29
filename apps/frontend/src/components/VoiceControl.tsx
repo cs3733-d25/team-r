@@ -4,6 +4,13 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { useMapData } from '@/features/MapView/mapService.ts';
 import {node} from "prop-types";
 
+/**
+ * VoiceControlProps
+ * selectedBuilding - the building to get the parking lots and departments from
+ * onParkingLotSelected - callback function to be called when a parking lot is selected
+ * onDepartmentSelected - callback function to be called when a department is selected
+ * onSelectionComplete - callback function to be called when both selections are made
+ */
 interface VoiceControlProps {
     selectedBuilding: string;
     onParkingLotSelected?: (lotId: string) => void;
@@ -11,6 +18,14 @@ interface VoiceControlProps {
     onSelectionComplete?: (parkingLotId: string, departmentId: string) => void;
 }
 
+/**
+ * VoiceControl component - handles the voice control functionality
+ * @param selectedBuilding - the current building the user is at
+ * @param onParkingLotSelected - callback function to be called when a parking lot is selected
+ * @param onDepartmentSelected - callback function to be called when a department is selected
+ * @param onSelectionComplete - callback function to be called when both selections are made
+ * @constructor
+ */
 export function VoiceControl({
                                  selectedBuilding,
                                  onParkingLotSelected,

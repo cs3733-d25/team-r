@@ -378,7 +378,7 @@ async function main() {
                 "floor": 1,
                 "xcoord": 498.67,
                 "ycoord": 296,
-                "longName": "",
+                "longName": "Handicap Parking",
                 "shortName": "Handicap Parking"
             },
             {
@@ -398,7 +398,7 @@ async function main() {
                 "floor": 1,
                 "xcoord": 9.67,
                 "ycoord": 165,
-                "longName": "",
+                "longName": "Patient Parking",
                 "shortName": "Patient Parking"
             },
             {

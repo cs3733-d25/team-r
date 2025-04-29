@@ -305,6 +305,7 @@ export function MapPage() {
                                 onSelectionComplete={(lotId, deptId) => {
                                     setSelectedParkinglot(lotId);
                                     setSelectedDepartment(deptId);
+                                    handleGetDirections();
                                 }}
                             />
                         </div>
