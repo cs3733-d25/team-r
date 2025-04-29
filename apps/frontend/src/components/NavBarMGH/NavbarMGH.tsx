@@ -102,7 +102,9 @@ export function NavbarMGH(props: NavBarProps) {
                     <HoverPopoverNavLink
                         label={'About'}
                         href={'/about'}
-                        items={[{ label: 'Credits', href: '/credits' }]}
+                        items={[
+                            { label: 'Credits', href: '/credits' },
+                            { label: 'About Us', href: '/about' },]}
                     />
                 </nav>
 

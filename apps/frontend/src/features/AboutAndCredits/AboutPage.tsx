@@ -1,11 +1,13 @@
 import React from 'react';
 
 const AboutPage = () => {
+    const root = './ProfilePics/'; //image link comes after this
+
     const lead = [
         {
             name: 'Sarayu Vijayanagaram',
             role: 'Lead Software Engineer',
-            photoURL: '/public/sarayu.png',
+            photoURL: root + '/sarayu.png',
         },
     ];
 
@@ -13,12 +15,12 @@ const AboutPage = () => {
         {
             name: 'Nora Cleary',
             role: 'Assistant Software Engineer / Back-End Developer',
-            photoURL: '/public/nora.png',
+            photoURL: root + '/nora.png',
         },
         {
             name: 'Akaash Walker',
             role: 'Assistant Software Engineer / Front-End Developer',
-            photoURL: '/public/akaash.png',
+            photoURL: root + '/akaash.png',
         },
     ];
 
@@ -26,12 +28,12 @@ const AboutPage = () => {
         {
             name: 'Brian Grande',
             role: 'Project Manager / Back-End Developer',
-            photoURL: '/public/brian.png',
+            photoURL: root + '/brian.png',
         },
         {
             name: 'Alex Lowczyk',
             role: 'Front-End Developer / Product Owner',
-            photoURL: '/public/alex.png',
+            photoURL: root + '/alex.png',
         },
     ];
 
@@ -39,19 +41,19 @@ const AboutPage = () => {
         {
             name: 'Keagan Hitt',
             role: 'Scrum Master / Front-End Developer',
-            photoURL: '/public/keagan.jpg',
+            photoURL: root + '/keagan.jpg',
         },
         {
             name: 'Owen Miller',
             role: 'Documentation Analyst / Back-End Developer',
-            photoURL: '/public/owen.png',
+            photoURL: root + '/owen.png',
         },
     ];
 
     const developers = [
-        { name: 'Daksh Gajaria', role: 'Back-End Developer', photoURL: '/public/daksh.png' },
-        { name: 'Joshua Gifford', role: 'Front-End Developer', photoURL: '/public/joshua.png' },
-        { name: 'Riley Meyers', role: 'Front-End Developer', photoURL: '/public/riley.png' },
+        { name: 'Daksh Gajaria', role: 'Back-End Developer', photoURL: root + '/daksh.png' },
+        { name: 'Joshua Gifford', role: 'Front-End Developer', photoURL: root + '/joshua.jpg' },
+        { name: 'Riley Meyers', role: 'Front-End Developer', photoURL: root + '/riley.png' },
     ];
 
     const Card = ({ name, role, photoURL }: { name: string; role: string; photoURL: string }) => (
