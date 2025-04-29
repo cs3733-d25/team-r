@@ -96,6 +96,26 @@ async function main() {
             onShift: true,
         }
     });
+    //akaash admin
+    await client.user.create({
+        data: {
+            id: 'AkaashAdmin',
+            email: 'akaash@redroc.com',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'AkaashAdmin',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            departmentId: 'Radiology CH-1',
+            role: 'Doctor',
+            onShift: true,
+        }
+    });
 
     await client.user.create({
         data: {
@@ -106,6 +126,7 @@ async function main() {
             userType: 'Employee',
         }
     });
+
     await client.employee.create({
         data: {
             id: 'Sarayu',
@@ -113,6 +134,28 @@ async function main() {
             lastName: 'Vijayanagaram',
             departmentId: 'Vein Care Services PP22-3',
             role: 'Doctor',
+            onShift: true,
+        }
+    });
+
+    //sarayu admin
+    await client.user.create({
+        data: {
+            id: 'SarayuAdmin',
+            email: 'sarayu@redroc.com',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            userType: 'Admin',
+        }
+    });
+
+    await client.employee.create({
+        data: {
+            id: 'SarayuAdmin',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -133,6 +176,27 @@ async function main() {
             lastName: 'Miller',
             departmentId: 'Vein Care Services PP22-3',
             role: 'Doctor',
+            onShift: true,
+        }
+    });
+
+    //owen admin
+    await client.user.create({
+        data: {
+            id: 'OwenAdmin',
+            email: 'owen@redroc.com',
+            firstName: 'O-bot',
+            lastName: 'Miller',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'OwenAdmin',
+            firstName: 'Owen',
+            lastName: 'Miller',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -158,6 +222,27 @@ async function main() {
         }
     });
 
+    //brian - admin
+    await client.user.create({
+        data: {
+            id: 'BrianAdmin',
+            email: 'brian@redroc.com',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'BrianAdmin',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            departmentId: 'Primary Care PP22-4',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Riley',
@@ -178,10 +263,31 @@ async function main() {
         }
     });
 
+    //riley admin
+    await client.user.create({
+        data: {
+            id: 'RileyAdmin',
+            email: 'riley@redroc.com',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'RileyAdmin',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Daksh',
-            email: 'dgajaria@gmail.com',
+            email: 'dgajaria@wpi.edu',
             firstName: 'Daksh',
             lastName: 'Gajaria',
             userType: 'Employee',
@@ -198,11 +304,11 @@ async function main() {
         }
     });
 
-    //Daksh - admin
+    //daksh admin
     await client.user.create({
         data: {
-            id: 'DakshAdmin',
-            email: 'dgajaria@wpi.edu',
+            id: 'Daksh',
+            email: 'daksh@redroc.com',
             firstName: 'Daksh',
             lastName: 'Gajaria',
             userType: 'Admin',
@@ -210,11 +316,11 @@ async function main() {
     });
     await client.employee.create({
         data: {
-            id: 'DakshAdmin',
+            id: 'Daksh',
             firstName: 'Daksh',
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
-            role: 'Admin',
+            role: 'Nurse',
             onShift: false,
         }
     });
@@ -281,6 +387,7 @@ async function main() {
             assignedDoctorId: 'Owen'
         }
     });
+
 
     //Requests
     await client.deviceRequest.create({
