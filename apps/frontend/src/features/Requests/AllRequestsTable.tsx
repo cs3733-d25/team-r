@@ -58,15 +58,15 @@ export function AllRequestsTable() {
 
     const getDepartmentsForBuilding = (building: string) => {
         switch(building) {
-            case "Faulkner":
+            case "Faulkner Hospital":
                 return values.departmentsFAll;
-            case "Brigham and Women's Hospital":
+            case "Main Campus Hospital (75 Francis St.)":
                 return values.departmentsWAll;
-            case "Chestnut Hill":
+            case "Healthcare Center (Chestnut Hill)":
                 return values.departmentsCH;
-            case "Patriot Place 20":
+            case "Healthcare Center (20 Patriot Pl.)":
                 return values.departmentsPP20;
-            case "Patriot Place 22":
+            case "Healthcare Center (22 Patriot Pl.)":
                 return values.departmentsPP22;
             default:
                 return [
