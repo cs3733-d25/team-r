@@ -10,7 +10,6 @@ model SanitationRequest {
   status         String
   employeeID     String
   employeeName   Employee @relation(fields: [employeeID], references: [id])
-  location       String
   // assignedEmployeeID String
   // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
@@ -63,7 +62,6 @@ model PatientRequest {
   priority         String
   building         String
   department       String
-  location         String
   status           String
   requestTime      DateTime @default(now())
   request          String
@@ -86,7 +84,6 @@ model TransportRequest {
   desiredBuilding    String
 
   priority    String
-  building    String
   department  String
   comments    String
   status      String
@@ -107,5 +104,4 @@ model TranslateRequest {
   comments           String
   priority           String
   department         String
-  location           String
 }
