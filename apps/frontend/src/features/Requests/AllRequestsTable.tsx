@@ -4,6 +4,7 @@ import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/c
 import {RequestInfoButton} from "@/components/ServiceRequests/RequestInfoButton.tsx";
 import {Button} from "@/components/ui/button.tsx"
 import {Input} from "@/components/ui/input"
+import {Label} from "@/components/ui/label"
 
 interface BaseRequest {
     department: string | null;
@@ -42,9 +43,11 @@ export function AllRequestsTable() {
     //array of all requests
     const [requests, setRequests] = useState([{type: null, department: null, employeeID: null, status: null, priority: null, id: null}]);
 
-    // filter status
+    // filters
     const [filterByEmployee, setFilterByEmployee] = useState(false);
     const [employeeID, setEmployeeID] = useState("");
+    const [filterByStatus, setFilterByStatus] = useState(false);
+    const [selectedStatus, setSelectedStatus] = useState("");
 
     useEffect(() => {
         retrieveFromDatabase()
@@ -92,10 +95,17 @@ export function AllRequestsTable() {
         }
     }
 
-    // filter requests by employee ID
-    const filteredRequests = filterByEmployee && employeeID
-        ? requests.filter(req => req.employeeID && String(req.employeeID) === employeeID)
-        : requests;
+    // filtering logic
+    const filteredRequests = requests.filter(req => {
+        // Only keep requests that pass all active filters
+        if (filterByEmployee && employeeID && (!req.employeeID || String(req.employeeID) !== employeeID)) {
+            return false;
+        }
+        if (filterByStatus && selectedStatus && (!req.status || req.status !== selectedStatus)) {
+            return false;
+        }
+        return true;
+    });
 
     return(
         <>
@@ -116,6 +126,30 @@ export function AllRequestsTable() {
                         className="mt-2 md:mt-0"
                     >
                         {filterByEmployee ? "Filtering by Employee" : "Filter by Employee"}
+                    </Button>
+
+                    {/*status filter*/}
+                    <div className="flex flex-col gap-1.5">
+                        <Label htmlFor="status">Status</Label>
+                        <select
+                            id="status"
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            className="rounded-md border h-10 px-3 py-2 w-48"
+                        >
+                            <option value="">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Canceled">Canceled</option>
+                        </select>
+                    </div>
+                    <Button
+                        variant={filterByStatus ? "default" : "outline"}
+                        onClick={() => setFilterByStatus(!filterByStatus)}
+                        className="mt-2 md:mt-0"
+                    >
+                        {filterByStatus ? "Filtering by Status" : "Filter by Status"}
                     </Button>
                 </div>
                 <Button
