@@ -16,8 +16,6 @@ import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapVi
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
-
-
 import {
     Dialog,
     DialogContent,
@@ -27,6 +25,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TOUR_STEP_IDS } from '@/lib/tour-constants.ts';
 
 interface EditMapProps {
     status?: string;
@@ -71,6 +71,15 @@ export function EditMap({ status }: EditMapProps) {
     const { departments } = useMapData(building);
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
+
+    const steps = [
+        { content: <div>The first step to creating a node is selecting where you want to put it. Once you click on the map, the coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
+        { content: <div>Every node should have a name so that it can be tracked. Names can be typed here.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },
+        { content: <div>Then, select what the type of the node.</div>, selectorId: TOUR_STEP_IDS.NODE_TYPE, position: "right" },
+        { content: <div>A node, specifically a reception node, can serve as the reception desk for zero, one, or many different departments.</div>, selectorId: TOUR_STEP_IDS.DEPARTMENTS, position: "right" },
+        { content: <div>When done, you can save the node. The node should pop up on the map!</div>, selectorId: TOUR_STEP_IDS.SAVE_NODE, position: "right" },
+        // Add more steps here
+    ];
 
     async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
         try {
@@ -160,7 +169,7 @@ export function EditMap({ status }: EditMapProps) {
         });
         setCurrentBuilding(building);
     };
-    console.log("nodeType:", nodeType);
+    // console.log("nodeType:", nodeType);
     // useEffect(() => {
 
 
@@ -370,8 +379,20 @@ export function EditMap({ status }: EditMapProps) {
         }
     };
 
-    console.log('edit Coordinates', editcoordinates);
-    console.log(' Coordinates', coordinates);
+    // console.log('edit Coordinates', editcoordinates);
+    // console.log(' Coordinates', coordinates);
+
+    const { setSteps } = useTour();
+    const [openTour, setOpenTour] = useState(false);
+
+    useEffect(() => {
+        setSteps(steps);
+        const timer = setTimeout(() => {
+            setOpenTour(true);
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, [setSteps]);
 
     return (
         <div className="flex flex-col h-screen">
@@ -407,7 +428,7 @@ export function EditMap({ status }: EditMapProps) {
                                 </TabsList>
                                 <div className={'w-80 flex flex-col'}>
                                     <TabsContent value="place-node" className="space-y-4">
-                                        <div className="bg-gray-100 p-3 rounded-md">
+                                        <div className="bg-gray-100 p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
                                             <Label>Click on map to select node location</Label>
                                             {coordinates && (
                                                 <div className="mt-2 text-sm">
@@ -420,7 +441,7 @@ export function EditMap({ status }: EditMapProps) {
                                         </div>
 
                                         <div className="space-y-3">
-                                            <div>
+                                            <div id={TOUR_STEP_IDS.NODE_NAME}>
                                                 <Label>Node Name (Optional)</Label>
                                                 <Input
                                                     value={nodeName}
@@ -429,7 +450,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 />
                                             </div>
 
-                                            <div>
+                                            <div id={TOUR_STEP_IDS.NODE_TYPE}>
                                                 <Label>Node Type</Label>
                                                 <Select
                                                     onValueChange={setNodeType}
@@ -453,7 +474,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 </Select>
                                             </div>
 
-                                            <div>
+                                            <div id={TOUR_STEP_IDS.DEPARTMENTS}>
                                                 <Label>Associated Departments</Label>
                                                 <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
                                                     {availableDepartments.length > 0 ? (
@@ -494,6 +515,7 @@ export function EditMap({ status }: EditMapProps) {
                                             onClick={saveNode}
                                             disabled={!coordinates || !nodeType}
                                             className={'w-full'}
+                                            id={TOUR_STEP_IDS.SAVE_NODE}
                                         >
                                             Save Node
                                         </Button>
@@ -673,33 +695,27 @@ export function EditMap({ status }: EditMapProps) {
                                         Reset Map to Default
                                     </Button>
 
-                                    <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
-                                        <DialogContent className="sm:max-w-[425px]">
-                                            <DialogHeader>
-                                                <DialogTitle>Edit profile</DialogTitle>
-                                                <DialogDescription>
-                                                    Make changes to your profile here. Click save when you're done.
-                                                </DialogDescription>
-                                            </DialogHeader>
-                                            <div className="grid gap-4 py-4">
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="name" className="text-right">
-                                                        Name
-                                                    </Label>
-                                                    <Input id="name" value="Pedro Duarte" className="col-span-3" />
-                                                </div>
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                    <Label htmlFor="username" className="text-right">
-                                                        Username
-                                                    </Label>
-                                                    <Input id="username" value="@peduarte" className="col-span-3" />
-                                                </div>
-                                            </div>
-                                            <DialogFooter>
-                                                <Button type="submit">Save changes</Button>
-                                            </DialogFooter>
-                                        </DialogContent>
-                                    </Dialog>
+                                    {/*<Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>*/}
+                                    {/*    <DialogContent className="sm:max-w-[425px] ">*/}
+                                    {/*        <DialogHeader>*/}
+                                    {/*            <DialogTitle>Edit profile</DialogTitle>*/}
+                                    {/*            <DialogDescription>*/}
+                                    {/*                Make changes to your profile here. Click save when you're done.*/}
+                                    {/*            </DialogDescription>*/}
+                                    {/*        </DialogHeader>*/}
+                                    {/*        <div className="grid gap-4 py-4">*/}
+                                    {/*            <div className="grid grid-cols-4 items-center gap-4">*/}
+                                    {/*                <Label htmlFor="name" className="text-right">*/}
+                                    {/*                    Name*/}
+                                    {/*                </Label>*/}
+                                    {/*                <Input id="name" value="Pedro Duarte" className="col-span-3" />*/}
+                                    {/*            </div>*/}
+                                    {/*        </div>*/}
+                                    {/*        <DialogFooter>*/}
+                                    {/*            <Button type="submit">Save changes</Button>*/}
+                                    {/*        </DialogFooter>*/}
+                                    {/*    </DialogContent>*/}
+                                    {/*</Dialog>*/}
                                 </div>
                             </Tabs>
                         </div>
@@ -707,6 +723,8 @@ export function EditMap({ status }: EditMapProps) {
 
 
                 </div>
+                {/*<div id={TOUR_STEP_IDS.WELCOME}>Welcome Section</div>*/}
+                <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
             </div>
         </div>
     );

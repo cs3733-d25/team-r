@@ -24,6 +24,7 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 import {navigate} from "next/dist/client/components/segment-cache-impl/navigation";
+import { TourProvider } from '@/components/tour.tsx';
 
 function App() {
     const {isAuthenticated, user, isLoading } = useAuth0();
@@ -82,7 +83,7 @@ function App() {
                 { path: 'directory', element: <Directory /> },
                 { path: 'about', element: <AboutPage /> },
                 { path: 'external-map', element: <ExternalMap /> },
-                { path: 'edit-map', element: <EditMap /> },
+                { path: 'edit-map', element: <><TourProvider><EditMap /></TourProvider></> },
                 { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
                 { path: 'csv', element: <CSVTabPage /> },
