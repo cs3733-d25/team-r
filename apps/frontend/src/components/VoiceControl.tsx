@@ -1,49 +1,143 @@
-import {Mic} from "react-bootstrap-icons";
-import {useState} from "react";
+import { Mic } from 'react-bootstrap-icons';
+import { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { useMapData } from '@/features/MapView/mapService.ts';
+import {node} from "prop-types";
 
+interface VoiceControlProps {
+    selectedBuilding: string;
+    onParkingLotSelected?: (lotId: string) => void;
+    onDepartmentSelected?: (deptId: string) => void;
+    onSelectionComplete?: (parkingLotId: string, departmentId: string) => void;
+}
 
-export function VoiceControl() {
-    const [speaking, setSpeaking] = useState<boolean>(false);
+export function VoiceControl({
+                                 selectedBuilding,
+                                 onParkingLotSelected,
+                                 onDepartmentSelected,
+                                 onSelectionComplete,
+                             }: VoiceControlProps) {
+    // gets the current building object, which provides access to the parking lots and departments
+    const building = useMapData(selectedBuilding);
+    const [parkingLot, setParkingLot] = useState<string>('');
+    const [department, setDepartment] = useState<string>('');
+
+    /**
+     * commands is an array of objects that define the commands for the speech recognition
+     * command - the command to be recognized
+     * callback - function to be called when the command is recognized
+     */
+    const commands = [
+        {
+            command: 'stop listening',
+            callback: () => {
+                SpeechRecognition.stopListening();
+                console.log('Stopped listening');
+            },
+        },
+        {
+            command: 'reset',
+            callback: () => {
+                resetTranscript();
+                console.log('Reset transcript');
+            },
+        },
+    ];
+
+    /**
+     * useSpeechRecognition is a hook that provides the speech recognition functionality
+     */
     const {
         transcript,
-        listening,
+        interimTranscript,
+        finalTranscript,
         resetTranscript,
         browserSupportsSpeechRecognition,
-    } = useSpeechRecognition();
+        listening,
+    } = useSpeechRecognition({ commands });
 
-    const commands = [
-        {command: 'end transmission',
-            callback: () => {
-                alert(transcript)
-            }}
-    ]
+    /**
+     * useEffect that handles action when the final transcript is received
+     */
+    useEffect(() => {
+        console.log("Selected building:", selectedBuilding);
+        console.log("Building departments:", building.departments);
 
+        if (!finalTranscript) return;
+        // Handle the final transcript here
+        console.log('Transcript:', finalTranscript);
+
+        // checking for parking lot matches in the transcript
+        for (const lot of building.parkingLots) {
+            if (finalTranscript.toLowerCase().includes(lot.shortName.toLowerCase())) {
+                console.log(`Found parking lot: ${lot.longName} at ${selectedBuilding}`);
+                setParkingLot(lot.nodeID);
+                if (onParkingLotSelected) onParkingLotSelected(lot.nodeID);
+                break;
+            }
+        }
+
+        console.log("Building departments:", building.departments);
+
+        // Check for department matches in the transcript
+        for (const dept of building.departments) {
+            if (finalTranscript.toLowerCase().includes(dept.name.toLowerCase())) {
+                console.log(`Found department: ${dept.name}`);
+                setDepartment(dept.id);
+                if (onDepartmentSelected) onDepartmentSelected(dept.id);
+                break;
+            }
+        }
+    }, [
+        finalTranscript,
+        building.parkingLots,
+        building.departments,
+        onParkingLotSelected,
+        onDepartmentSelected,
+    ]);
+
+    useEffect(() => {
+        // If we have both a parking lot and department selected via voice
+        if (parkingLot && department && onSelectionComplete) {
+            // Notify the parent component that both selections are made
+            onSelectionComplete(parkingLot, department);
+
+            // Reset local state
+            setParkingLot('');
+            setDepartment('');
+            resetTranscript();
+        }
+    }, [parkingLot, department, onSelectionComplete]);
+
+    /**
+     * handleVoiceControl is the main body of the voice control functionality
+     * it starts and stops the speech recognition
+     */
     const handleVoiceControl = () => {
-        if (!browserSupportsSpeechRecognition) {
+        if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
             alert('Your browser does not support speech recognition');
         } else {
-            resetTranscript();
-            if (!speaking) {
+            if (!listening) {
                 // Start listening
-                SpeechRecognition.startListening();
-                setSpeaking(true);
+                SpeechRecognition.startListening({ continuous: true, language: 'en' });
+                console.log('Listening...');
+                // might be nice to add a sound to indicate that the mic is on...
             } else {
                 // Stop listening
                 SpeechRecognition.stopListening();
-                setSpeaking(false);
+                console.log('Stopped listening');
+                resetTranscript();
             }
         }
-        console.log(`Transcript: ${transcript}`);
     };
 
     return (
         <button>
             <Mic
-                className={`text-3xl ${speaking ? 'text-red-500' : 'text-gray-500'}`}
+                className={`text-3xl ${listening ? 'text-red-500' : 'text-gray-500'}`}
                 onClick={handleVoiceControl}
-                title={speaking ? "Stop Listening" : "Start Listening"}
+                title={listening ? 'Stop Listening' : 'Start Listening'}
             />
         </button>
-    )
+    );
 }
