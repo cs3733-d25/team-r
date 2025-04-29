@@ -25,7 +25,7 @@ router.post("/", async function (req: Request, res: Response) {
     status,
     department,
     notes,
-    location,
+    building,
     language,
     roomNumber,
     employeeName,
@@ -36,7 +36,7 @@ router.post("/", async function (req: Request, res: Response) {
       data: {
         priority,
         department,
-        location,
+        building,
         status,
         roomNumber: parseInt(roomNumber, 10),
         employeeName: {
