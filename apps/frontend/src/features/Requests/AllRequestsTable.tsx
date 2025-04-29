@@ -256,6 +256,7 @@ export function AllRequestsTable() {
                                     <option value="In Progress">In Progress</option>
                                     <option value="Completed">Completed</option>
                                     <option value="Canceled">Canceled</option>
+                                    <option value="Accepted">Accepted</option>
                                 </select>
                                 <Button
                                     variant={filterByStatus ? "default" : "outline"}
