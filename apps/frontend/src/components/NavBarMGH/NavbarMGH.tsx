@@ -90,7 +90,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 { label: 'Translator Request', href: '/translation' },
                                 { label: 'View All Requests', href: '/requests' },
                             ]}
-                        />)}
+                        />
 
                         {(props.userType === 'Admin' || props.userType === 'Employee') && (
                             <HoverPopoverNavLink
