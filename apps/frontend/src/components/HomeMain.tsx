@@ -24,9 +24,9 @@ export function HomeMain(props: HomeMainProps) {
 
 
     return (
-        <div className={"bg-primary h-screen"}>
+        <div className={"bg-primary h-[calc(100vh-65px)]"}>
             {/* Hero page image is a photo taken by our incredible scrum master */}
-            <div className={"flex-col bg-[url(/hero-page-3.jpeg)] bg-no-repeat bg-cover h-6/7 content-center"}>
+            <div className={"flex-col bg-[url(/hero-page-3.jpeg)] bg-no-repeat bg-cover h-11/12 content-center"}>
                 <div className={"text-center w-3/8 content-center h-full bg-ring/50 backdrop-blur-sm"}>
                     <div className={"bg-background/80"}>
                         <br />
