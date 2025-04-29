@@ -3,13 +3,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-
-import { DeviceReqPage } from './MedDeviceRequest/DeviceReqPage';
-import { PrescriptionPage } from './PrescriptionForm/PrescriptionPage';
-import SanitationRequestPage from './SanitationForm/SanitationRequestPage';
-import PatientRequestPage from './PatientRequest/PatientRequestPage';
-import PatientTransportPage from './PatientTransport/PatientTransportPage';
-import AllRequestsTable from '@/features/Requests/AllRequestsTable.tsx';
+import { AllRequestsTable} from './AllRequestsTable.tsx';
+import { DeviceReqTable } from './MedDeviceRequest/DeviceReqTable.tsx';
+import { PrescriptionTable } from './PrescriptionForm/PrescriptionTable.tsx';
+import { PatientRequestTable } from './PatientRequest/PatientRequestTable.tsx';
+import { SanitationTable } from './SanitationForm/SanitationTable.tsx';
+import { PatientTransportTable } from './PatientTransport/PatientTransportTable.tsx';
 
 export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -77,7 +76,7 @@ export function AllRequestsPage() {
                               <CardTitle>Medical Device Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <DeviceReqPage />
+                              <DeviceReqTable />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -88,7 +87,7 @@ export function AllRequestsPage() {
                               <CardTitle>Prescription Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PrescriptionPage />
+                              <PrescriptionTable />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -99,7 +98,7 @@ export function AllRequestsPage() {
                               <CardTitle>Patient Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <AllRequestsTable />
+                              <PatientRequestTable />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -110,7 +109,7 @@ export function AllRequestsPage() {
                               <CardTitle>Transport Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PatientTransportPage />
+                              <PatientTransportTable />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -121,7 +120,7 @@ export function AllRequestsPage() {
                               <CardTitle>Sanitation Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <SanitationRequestPage />
+                              <SanitationTable />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -132,7 +131,7 @@ export function AllRequestsPage() {
                               <CardTitle>All Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PatientRequestPage />
+                              <AllRequestsTable />
                           </CardContent>
                       </Card>
                   </TabsContent>
