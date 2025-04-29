@@ -25,6 +25,10 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 import {navigate} from "next/dist/client/components/segment-cache-impl/navigation";
+import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
+import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
+import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
+
 
 function App() {
     const {isAuthenticated, user, isLoading } = useAuth0();
@@ -97,6 +101,7 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransportPage /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'translation', element: <Translate /> },
                 { path: 'requests', element: <RequestPage /> }
             ],
         },
