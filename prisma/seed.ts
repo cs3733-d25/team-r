@@ -478,6 +478,7 @@ async function main() {
         data: {
             deviceType: 'X-Ray',
             priority: 'High',
+            building: 'Healthcare Center (Chestnut Hill)',
             room: '111',
             department: "Endoscopy Center",
             //requestTime:
@@ -491,6 +492,7 @@ async function main() {
         data: {
             deviceType: 'Syringe',
             priority: 'Medium',
+            building: 'Faulkner Hospital',
             room: '121',
             department: "Blood Drawing Lab",
             //requestTime:
@@ -504,6 +506,7 @@ async function main() {
         data: {
             deviceType: 'EKG Machine',
             priority: 'High',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             room: '125',
             department: "Urgent Care Center",
             //requestTime:
@@ -520,6 +523,7 @@ async function main() {
             employeeID: 'Nora',
             /*employeeName: */
             priority: 'Medium',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             department: "Allergy",
             patientID: 'Josh',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -541,6 +545,7 @@ async function main() {
             employeeID: 'Brian',
             /*employeeName: */
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: "Cardiac Rehab",
             patientID: 'Keagan',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -562,6 +567,7 @@ async function main() {
             employeeID: 'Sarayu',
             /*employeeName: */
             priority: 'High',
+            building: 'Faulkner Hospital',
             department: "Foot and Ankle Center",
             patientID: 'Alex',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -584,8 +590,8 @@ async function main() {
         data: {
             patientID: 'Alex',
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: 'Blood Drawing Lab',
-            location: 'Faulkner Hospital',
             status: 'Completed',
             employeeID: 'Akaash',
             /*employeeName: */
@@ -599,7 +605,7 @@ async function main() {
             patientID: 'Josh',
             priority: 'Medium',
             department: 'ENT',
-            location: 'Healthcare Center (20 Patriot Pl.)',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             status: 'Pending',
             employeeID: 'Riley',
             /*employeeName: */
@@ -613,7 +619,7 @@ async function main() {
             patientID: 'Keagan',
             priority: 'Low',
             department: 'Community Room',
-            location: 'Healthcare Center (22 Patriot Pl.)',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             status: 'Canceled',
             employeeID: 'Daksh',
             /*employeeName: */
@@ -679,7 +685,7 @@ async function main() {
             sanitationType: 'Spill cleanup',
             priority: 'Low',
             department: 'Physiatry',
-            location: 'Healthcare Center (20 Patriot Pl.)',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             roomNumber: '143',
             comments: 'Milk Spill',
             status: 'Canceled',
@@ -691,7 +697,7 @@ async function main() {
             sanitationType: 'Biohazard',
             priority: 'Urgent',
             department: 'Center for Pain Medicine',
-            location: 'Healthcare Center (Chestnut Hill)',
+            building: 'Healthcare Center (Chestnut Hill)',
             roomNumber: '130',
             comments: 'Mix of spilled medicines',
             status: 'Completed',
@@ -703,7 +709,7 @@ async function main() {
             sanitationType: 'General cleaning',
             priority: 'Medium',
             department: 'Neurosurgery',
-            location: 'Healthcare Center (22 Patriot Pl.)',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             roomNumber: '143',
             comments: 'Clean the bathroom',
             status: 'Accepted',

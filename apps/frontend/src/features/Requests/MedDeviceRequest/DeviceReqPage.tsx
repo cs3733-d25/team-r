@@ -11,6 +11,7 @@ interface DeviceRequest extends BaseRequest {
     deviceID: string | null;
     deviceType: string | null;
     priority: string | null;
+    building: string | null;
     room: string | null;
     department: string | null;
     comments: string | null;
@@ -25,6 +26,7 @@ export function DeviceReqPage() {
         deviceID: null,
         deviceType: null,
         priority: null,
+        building: null,
         room: null,
         department: null,
         comments: null,
@@ -50,6 +52,7 @@ export function DeviceReqPage() {
     const columns = [
         {field: 'deviceType', header: 'Device Type', sortable: true},
         // {field: 'deviceID', header: 'Device ID', sortable: true},
+        {field: 'building', header: 'Building', sortable: true},
         {field: 'department', header: 'Department', sortable: true},
         {field: 'room', header: 'Room', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
