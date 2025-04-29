@@ -49,7 +49,7 @@ export function DeviceReqPage() {
 
     const columns = [
         {field: 'deviceType', header: 'Device Type', sortable: true},
-        {field: 'deviceID', header: 'Device ID', sortable: true},
+        // {field: 'deviceID', header: 'Device ID', sortable: true},
         {field: 'department', header: 'Department', sortable: true},
         {field: 'room', header: 'Room', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
