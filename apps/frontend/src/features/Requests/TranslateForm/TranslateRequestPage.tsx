@@ -21,7 +21,6 @@ export function TranslateRequestPage() {
     async function retrieveFromDatabase() {
         try {
             const response = await axios.get("/api/translate/");
-            console.log("response from /translate/ get", response.data);
             setTranslations(response.data);
         } catch (error) {
             console.error("Error in retrieve:", error);

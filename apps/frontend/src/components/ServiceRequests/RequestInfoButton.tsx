@@ -146,7 +146,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
     async function retrieveTranslate() {
         const request = await axios.post('api/translate/single-request', {id: props.id});
         console.log('response from /single-request', request.data);
-        setTransport(request.data);
+        setTranslate(request.data);
     }
 
     //gets and returns element displaying info about request
