@@ -1,4 +1,4 @@
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, } from '@/components/ui/table';
+import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from '@/components/ui/table';
 
 interface SortableColumn {
     field: string;
