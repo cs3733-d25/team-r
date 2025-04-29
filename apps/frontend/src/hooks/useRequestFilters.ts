@@ -1,7 +1,17 @@
 import {useState, useMemo} from 'react';
 import values from '@/constant-values';
 
-export function useRequestFiltering(data: any[]) {
+// define this interface to prevent errors
+export interface BaseRequest {
+    employeeID?: string | null;
+    status?: string | null;
+    priority?: string | null;
+    department?: string | null;
+    building?: string | null;
+    [key: string]: unknown;
+}
+
+export function useRequestFilters<T extends BaseRequest>(data: T[]) {
    // filtering
     const [filterOptions, setFilterOptions] = useState({
         employeeID: '',
@@ -34,7 +44,6 @@ export function useRequestFiltering(data: any[]) {
         switch (building) {
             case 'Faulkner Hospital':
                 return values.departmentsFAll.includes(department);
-            // Other cases
             default:
                 return true;
         }
