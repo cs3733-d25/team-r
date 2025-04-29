@@ -103,3 +103,16 @@ model TransportRequest {
   // assignedEmployeeID String
   // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
 }
+
+model TranslateRequest {
+  translateRequestID Int      @id @default(autoincrement())
+  employeeID  String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  language  String
+  roomNumber  Int
+  status  String
+  comments String
+  priority  String
+  department  String
+  location  String
+}
