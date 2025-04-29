@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, } from '@/components/ui/table';
+import {
+    Table,
+    TableHeader,
+    TableBody,
+    TableHead,
+    TableRow,
+    TableCell,
+} from '@/components/ui/table';
 import { RequestInfoButton } from '@/components/ServiceRequests/RequestInfoButton.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
@@ -65,6 +72,8 @@ export function AllRequestsTable() {
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [sortField, setSortField] = useState<string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+    const [itemsPerPage, setItemsPerPage] = useState(10); // Default 10 items per page
+    const [currentPage, setCurrentPage] = useState(1);
 
     const getDepartmentsForBuilding = (building: string) => {
         switch (building) {
@@ -116,8 +125,12 @@ export function AllRequestsTable() {
                 return sortDirection === 'asc' ? rankA - rankB : rankB - rankA;
             }
 
-            const valueA = String((sortField && sortField in a) ? a[sortField as keyof TypedRequest] : '');
-            const valueB = String((sortField && sortField in b) ? b[sortField as keyof TypedRequest] : '');
+            const valueA = String(
+                sortField && sortField in a ? a[sortField as keyof TypedRequest] : ''
+            );
+            const valueB = String(
+                sortField && sortField in b ? b[sortField as keyof TypedRequest] : ''
+            );
             return sortDirection === 'asc'
                 ? valueA.localeCompare(valueB)
                 : valueB.localeCompare(valueA);
@@ -134,6 +147,13 @@ export function AllRequestsTable() {
     };
 
     const availableDepartments = getDepartmentsForBuilding(selectedBuilding);
+
+    // pagination logic
+    const paginatedRequests = (requests: TypedRequest[]) => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return requests.slice(startIndex, endIndex);
+    };
 
     useEffect(() => {
         retrieveFromDatabase();
@@ -240,6 +260,9 @@ export function AllRequestsTable() {
         }
         return true;
     });
+
+    // calculate total pages
+    const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
 
     const FilterPill = ({
         label,
@@ -536,22 +559,75 @@ export function AllRequestsTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody className="text-center">
-                    {sortRequests(filteredRequests).map((row, index) => {
+                    {paginatedRequests(sortRequests(filteredRequests)).map((row, index) => {
                         return (
-                            <TableRow key={index} className='border-t'>
+                            <TableRow key={index} className="border-t">
                                 <TableCell>{row.type}</TableCell>
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.employeeID}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>
-                                    <RequestInfoButton type={row.type} id={typeof row.id === 'string' ? Number(row.id) : row.id} />
+                                    <RequestInfoButton
+                                        type={row.type}
+                                        id={typeof row.id === 'string' ? Number(row.id) : row.id}
+                                    />
                                 </TableCell>
                             </TableRow>
                         );
                     })}
                 </TableBody>
             </Table>
+
+            <div className="flex items-center justify-between mt-4">
+                <div className="text-sm text-muted-foreground">
+                    Showing {filteredRequests.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}{' '}
+                    to {Math.min(currentPage * itemsPerPage, filteredRequests.length)} of{' '}
+                    {filteredRequests.length} results
+                </div>
+
+                {/*items per page controls*/}
+                <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-2">
+                        <span className="text-sm">Results per page:</span>
+                        <select
+                            value={itemsPerPage}
+                            onChange={(e) => {
+                                setItemsPerPage(Number(e.target.value));
+                                setCurrentPage(1); // Reset to first page when changing items per page
+                            }}
+                            className="h-8 w-16 rounded-md border px-2"
+                        >
+                            <option value={5}>5</option>
+                            <option value={10}>10</option>
+                            <option value={25}>25</option>
+                            <option value={50}>50</option>
+                        </select>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </Button>
+                        <span className="text-sm">
+                            Page {currentPage} of {totalPages || 1}
+                        </span>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                            disabled={currentPage >= totalPages}
+                        >
+                            Next
+                        </Button>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
