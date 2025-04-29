@@ -4,7 +4,6 @@ import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/c
 import {RequestInfoButton} from "@/components/ServiceRequests/RequestInfoButton.tsx";
 import {Button} from "@/components/ui/button.tsx"
 import {Input} from "@/components/ui/input"
-import {Label} from "@/components/ui/label"
 
 interface BaseRequest {
     department: string | null;
