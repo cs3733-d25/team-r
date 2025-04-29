@@ -76,7 +76,7 @@ export function AllRequestsPage() {
                               <CardTitle>Medical Device Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <DeviceReqTable />
+                              <DeviceReqTable device={[]} />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -87,7 +87,7 @@ export function AllRequestsPage() {
                               <CardTitle>Prescription Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PrescriptionTable />
+                              <PrescriptionTable prescription={[]} />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -98,7 +98,7 @@ export function AllRequestsPage() {
                               <CardTitle>Patient Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PatientRequestTable />
+                              <PatientRequestTable patientRequest={[]} />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -109,7 +109,7 @@ export function AllRequestsPage() {
                               <CardTitle>Transport Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PatientTransportTable />
+                              <PatientTransportTable transport={[]} />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -120,7 +120,7 @@ export function AllRequestsPage() {
                               <CardTitle>Sanitation Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <SanitationTable />
+                              <SanitationTable sanitation={[]} />
                           </CardContent>
                       </Card>
                   </TabsContent>
