@@ -148,6 +148,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
+    const lastLoadedLocation = useRef({building:'', floor:-1});
     // TODO: needs to match with all the other layer stuff, look at onLocationChange. Just use old one
     // const activeLayerInfo = useRef<{building: string, floor: number}>({
     //     building: 'Patriot Place 20',
@@ -268,28 +269,39 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     }
     // get all nodes for the current floor and create markers for them as well
     const loadAllNodes = async () => {
-        try {
-            // const data = await fetchAll();
-            // gets all type of nodes for the floor
-            console.log("Loading nodes");
-            const nodes = (await fetchNodes(location)).data;
-            console.log("recieved nodes");
-            console.log(nodes);
+        if(location.building === lastLoadedLocation.current.building && location.floor === lastLoadedLocation.current.floor)
+        {
+            return;
+        }
+        else {
+            try {
+                // const data = await fetchAll();
+                // gets all type of nodes for the floor
+                console.log("Loading nodes");
+                const nodes = (await fetchNodes(location)).data;
+                console.log("recieved nodes");
+                console.log(nodes);
 
-            // create fullNodes that have the data of the node and a marker object
-            const fullNodes = nodes.map((node:Node) => {
-                const marker = L.marker([node.xcoord, node.ycoord], { icon: getIcon(node.nodeType), draggable: true });
-                marker.on('click', () => clickMarker(node, marker));
-                marker.on('drag', (e) => dragMarker(node, marker, e));
-                return {nodeData: node, marker: marker}
-            })
+                // create fullNodes that have the data of the node and a marker object
+                const fullNodes = nodes.map((node: Node) => {
+                    const marker = L.marker([node.xcoord, node.ycoord], {
+                        icon: getIcon(node.nodeType),
+                        draggable: true
+                    });
+                    marker.on('click', () => clickMarker(node, marker));
+                    marker.on('drag', (e) => dragMarker(node, marker, e));
+                    return {nodeData: node, marker: marker}
+                })
 
-            // setAllMarkers(response.data);
-            // console.log(data);
+                // setAllMarkers(response.data);
+                // console.log(data);
 
-            setNodesOnActiveFloor(fullNodes);
-        } catch (err) {
-            console.error('Error fetching parking lots:', err);
+                setNodesOnActiveFloor(fullNodes);
+                lastLoadedLocation.current.floor = fullNodes.floor;
+                lastLoadedLocation.current.building = fullNodes.building;
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+            }
         }
     }
     // const loadEdges = async () => {
@@ -558,15 +570,16 @@ filtered.map((node)=>{
     // load all the nodes and edges when the page first loads
     useEffect(() => {
         console.log("-> About to load things");
-        loadAll();
+       loadAll();
     }, []);
 
 
     // load all the nodes and edges when the location changes (location change causes a rerender of the whole component?)
     useEffect(() => {
+        loadAllNodes()
         console.log("-> new location and or floor");
         console.log(location.building + " "+location.floor);
-    }, [location]);
+    }, [location.building,location.floor]);
 
     // reload the leaflet elements when something changes
     useEffect(() => {
