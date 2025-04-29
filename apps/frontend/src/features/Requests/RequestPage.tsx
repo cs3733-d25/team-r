@@ -41,7 +41,7 @@ export function AllRequestsPage() {
               <TabsTrigger value="prescription">Prescription</TabsTrigger>
               <TabsTrigger value="patient">Patient</TabsTrigger>
               <TabsTrigger value="transport">Transport</TabsTrigger>
-                <TabsTrigger value="translation">Translator</TabsTrigger>
+                <TabsTrigger value="translation">Translate</TabsTrigger>
                 <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
             </TabsList>
 
@@ -114,6 +114,16 @@ export function AllRequestsPage() {
                 </CardHeader>
                 <CardContent className="px-6 pb-6 bg-white">
                   <TransportRequestPage />
+                </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="translation" className="-mt-px">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
+                  <CardTitle>Translation Requests</CardTitle>
+                </CardHeader>
+                <CardContent className="px-6 pb-6 bg-white">
+                  <TranslateRequestPage />
                 </CardContent>
               </Card>
             </TabsContent>
