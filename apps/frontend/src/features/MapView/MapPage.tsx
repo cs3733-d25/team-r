@@ -81,7 +81,8 @@ export function MapPage() {
                 'Patriot Place 20': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
-                Faulkner: ['FAULKNER', 'Faulkner'],
+                'Faulkner': ['FAULKNER', 'Faulkner'],
+                // TODO: add women's hospital parking lots
             };
 
             return buildingMap[selectedBuilding]?.some((buildingName) =>
@@ -93,11 +94,13 @@ export function MapPage() {
 
     //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
-            console.log('parking lot: ', selectedParkinglot);
-            console.log('department lot: ', selectedDepartment);
-        } catch {}
+            console.log("parking lot: ", selectedParkinglot);
+            console.log("department lot: ", selectedDepartment);
+        } catch {
+
+        }
     };
 
     /**
@@ -109,10 +112,10 @@ export function MapPage() {
         console.log('nodeIDs before get: ', nodeIDs);
         try {
             const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
-            console.log('node coords after get: ', resp.data);
+            console.log("node coords after get: ", resp.data);
             return resp.data;
         } catch (e) {
-            console.error('Error converting node ID to name: ', e);
+            console.error("Error converting node ID to name: ", e);
             return []; // Return empty array on error
         }
     };
@@ -141,14 +144,18 @@ export function MapPage() {
             console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
-            const nodeIDs = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
+            const nodeIDs = await fetchPath(
+                selectedParkinglot,
+                receptionNodeID,
+                algorithm
+            );
             console.log('got nodeIDs:', nodeIDs);
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
             console.log('nodeIDs from getNodeObjs: ', nodes);
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
-            nodes.forEach((node) => {
+            nodes.forEach(node => {
                 if (!pathByFloor[node.floor]) {
                     pathByFloor[node.floor] = [];
                 }
@@ -230,12 +237,12 @@ export function MapPage() {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
-            dy: current.ycoord - prev.ycoord,
+            dy: current.ycoord - prev.ycoord
         };
 
         const currentVector = {
             dx: next.xcoord - current.xcoord,
-            dy: next.ycoord - current.ycoord,
+            dy: next.ycoord - current.ycoord
         };
 
         // Calculate angle between vectors using atan2
@@ -243,7 +250,7 @@ export function MapPage() {
         const angle2 = Math.atan2(currentVector.dy, currentVector.dx);
 
         // Calculate angle difference in degrees
-        let angleDiff = ((angle2 - angle1) * 180) / Math.PI;
+        let angleDiff = (angle2 - angle1) * 180 / Math.PI;
 
         // Normalize to -180 to 180 range
         if (angleDiff > 180) angleDiff -= 360;
@@ -251,11 +258,11 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return 'Turn right';
+            return "Turn right";
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return 'Turn left';
+            return "Turn left";
         } else {
-            return 'Continue straight';
+            return "Continue straight";
         }
     };
 
@@ -283,7 +290,7 @@ export function MapPage() {
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
+        <div className="flex flex-col h-[calc(100vh-65px)] overflow-hidden">
             <div className="flex-1 w-full relative">
                 {/* Internal map with the computed path overlaid */}
                 <InternalMap
@@ -316,7 +323,10 @@ export function MapPage() {
 
                     <div className="space-y-4">
                         {/* Parking lot picker */}
-                        <Select value={selectedParkinglot} onValueChange={setSelectedParkinglot}>
+                        <Select
+                            value={selectedParkinglot}
+                            onValueChange={setSelectedParkinglot}
+                        >
                             <SelectTrigger>
                                 <SelectValue placeholder="Parking Lot" />
                             </SelectTrigger>
@@ -332,7 +342,10 @@ export function MapPage() {
                         </Select>
 
                         {/* Department picker */}
-                        <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+                        <Select
+                            value={selectedDepartment}
+                            onValueChange={setSelectedDepartment}
+                        >
                             <SelectTrigger>
                                 <SelectValue placeholder="Department" />
                             </SelectTrigger>
@@ -377,7 +390,9 @@ export function MapPage() {
                 </div>
                 {showDirections && (
                     <div>
-                        <TextDirections steps={directionStrings} />
+                        <TextDirections
+                            steps={directionStrings}
+                        />
                     </div>
                 )}
             </div>

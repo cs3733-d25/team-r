@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from "express";
-import client from "../bin/prisma-client.ts";
+import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
@@ -72,6 +72,22 @@ router.post("/", async function (req: Request, res: Response) {
     } else {
       console.error("Error entering pharmacy request data:", error);
     }
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/single-request", async function (req: Request, res: Response) {
+  const id = req.body.id;
+  try {
+    const request = await client.pharmacyRequest.findMany({
+      where: {
+        prescriptionID: id,
+      },
+    });
+    console.log("Got request ", request);
+    res.status(200).json(request);
+  } catch (error) {
+    console.error("Error fetching pharmacy request data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

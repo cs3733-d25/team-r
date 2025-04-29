@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from "express";
-import { findPath } from "./algoSelection";
-import client from "../bin/prisma-client";
+import { findPath } from "./algoSelection.ts";
+import client from "../../bin/prisma-client.ts";
 
 const router: Router = express.Router();
 

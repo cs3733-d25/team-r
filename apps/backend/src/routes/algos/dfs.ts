@@ -1,6 +1,6 @@
-import prismaClient from "../bin/prisma-client";
-import { Stack } from "./dataStructures.ts"; // update path if yours differs
-import { Graph } from "./Graph";
+import prismaClient from "../../bin/prisma-client.ts";
+import { Stack } from "../datastructures/dataStructures.ts"; // update path if yours differs
+import { Graph } from "../maps/Graph.ts";
 import { PathfindingAlgorithm } from "./algoSelection.ts";
 
 export default class DFS implements PathfindingAlgorithm {
