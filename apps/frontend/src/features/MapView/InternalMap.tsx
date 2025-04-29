@@ -354,7 +354,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             case 'Faulkner':
                 out = floorLayerFaulkner;
                 break;
-            case 'Main Campus Hospital':
+            case 'Womens':
                 out = floorLayerWomens;
                 break;
             default:
