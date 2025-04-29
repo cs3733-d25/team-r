@@ -66,18 +66,6 @@ export function NavbarMGH(props: NavBarProps) {
                         />
 
                         {(props.userType === 'Admin' || props.userType === 'Employee') && (
-                            <HoverPopoverNavLink
-                                label={'Request a Service'}
-                                href={'/requests'}
-                                items={[
-                                    { label: 'Sanitation', href: '/sanitation' },
-                                    { label: 'Medical Device', href: '/devicerequest' },
-                                    { label: 'Patient Request', href: '/patientrequestpage' },
-                                    { label: 'Patient Transport', href: '/transport' },
-                                    { label: 'Prescription', href: '/prescription' },
-                                    { label: 'View All Requests', href: '/requests' },
-                                ]}
-                            />)}
                         <HoverPopoverNavLink
                             label={'Request a Service'}
                             href={'/requests'}
@@ -90,7 +78,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 { label: 'Translator Request', href: '/translation' },
                                 { label: 'View All Requests', href: '/requests' },
                             ]}
-                        />
+                        />)}
 
                         {(props.userType === 'Admin' || props.userType === 'Employee') && (
                             <HoverPopoverNavLink
