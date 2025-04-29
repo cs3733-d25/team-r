@@ -237,4 +237,4 @@ export function NavbarMGH(props: NavBarProps) {
             </div>
         </header>
     );
-}
+};
