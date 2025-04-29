@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { DeviceReqPage } from './MedDeviceRequest/DeviceReqPage';
 import { PrescriptionPage } from './PrescriptionForm/PrescriptionPage';
-import TransportRequestPage from './PatientTransport/PatientTransport';
 import SanitationRequestPage from './SanitationForm/SanitationRequestPage';
 import PatientRequestPage from './PatientRequest/PatientRequestPage';
+import PatientTransportPage from './PatientTransport/PatientTransportPage';
 
 export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -109,7 +109,7 @@ export function AllRequestsPage() {
                               <CardTitle>Transport Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <TransportRequestPage />
+                              <PatientTransportPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
