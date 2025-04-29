@@ -77,6 +77,27 @@ async function main() {
         }
     });
 
+    //nora admin
+    await client.user.create({
+        data: {
+            id: 'NoraAdmin',
+            email: 'nora@redroc.com',
+            userType: 'Admin',
+            firstName: 'Nora',
+            lastName: 'Cleary',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'NoraAdmin',
+            firstName: 'Nora',
+            lastName: 'Cleary',
+            departmentId: 'Pharmacy PP20-1',
+            role: 'Admin',
+            onShift: true,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Akaash',
@@ -307,7 +328,7 @@ async function main() {
     //daksh admin
     await client.user.create({
         data: {
-            id: 'Daksh',
+            id: 'DakshAdmin',
             email: 'daksh@redroc.com',
             firstName: 'Daksh',
             lastName: 'Gajaria',
@@ -316,7 +337,7 @@ async function main() {
     });
     await client.employee.create({
         data: {
-            id: 'Daksh',
+            id: 'DakshAdmin',
             firstName: 'Daksh',
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
@@ -348,6 +369,27 @@ async function main() {
         }
     });
 
+    //josh admin
+    await client.user.create({
+        data: {
+            id: 'JoshAdmin',
+            email: 'josh@redroc.com',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'JoshAdmin',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Alex',
@@ -368,6 +410,27 @@ async function main() {
         }
     });
 
+    //alex admin
+    await client.user.create({
+        data: {
+            id: 'AlexAdmin',
+            email: 'alex@redroc.com',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'AlexAdmin',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Keagan',
@@ -385,6 +448,27 @@ async function main() {
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
             assignedDoctorId: 'Owen'
+        }
+    });
+
+    //keagan admin
+    await client.user.create({
+        data: {
+            id: 'KeaganAdmin',
+            email: 'keagan@redroc.com',
+            firstName: 'Roboto',
+            lastName: 'Hitt',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'KeaganAdmin',
+            firstName: 'Keagan',
+            lastName: 'Hitt',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
         }
     });
 
