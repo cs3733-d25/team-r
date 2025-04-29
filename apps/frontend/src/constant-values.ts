@@ -1,6 +1,6 @@
 /* this file replaces the need for enums
     to use:
-    - import values form '.....constant-values.ts'
+    - import values from '.....constant-values.ts'
     - const statusOptions = values.status;
  */
 
