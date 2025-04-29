@@ -40,10 +40,19 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
     // other helper functions
     const isDepartmentInBuilding = (department: string | null, building: string): boolean => {
         if (!department) return false;
+        if (!building) return true;
 
         switch (building) {
+            case 'Healthcare Center (20 Patriot Pl.)':
+                return values.departmentsPP20.includes(department);
+            case 'Healthcare Center (22 Patriot Pl.)':
+                return values.departmentsPP22.includes(department);
+            case 'Healthcare Center (Chestnut Hill)':
+                return values.departmentsCH.includes(department);
             case 'Faulkner Hospital':
                 return values.departmentsFAll.includes(department);
+            case 'Main Campus Hospital (75 Francis St.)':
+                return values.departmentsWAll.includes(department);
             default:
                 return true;
         }
@@ -90,10 +99,18 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
                 }
             }
 
-            // department filter
+            // department filter to check if department exists and belongs to the selected building
             if (filterState.filterByDepartment && filterOptions.department) {
-                if (!item.department || item.department !== filterOptions.department) {
-                    return false;
+                if (filterState.filterByBuilding && filterOptions.building) {
+                    if (!item.department ||
+                        item.department !== filterOptions.department ||
+                        !isDepartmentInBuilding(item.department, filterOptions.building)) {
+                        return false;
+                    }
+                } else {
+                    if (!item.department || item.department !== filterOptions.department) {
+                        return false;
+                    }
                 }
             }
 
