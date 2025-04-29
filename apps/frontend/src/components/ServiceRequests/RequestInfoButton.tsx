@@ -7,6 +7,7 @@ import {DeviceReqTable} from "@/features/Requests/MedDeviceRequest/DeviceReqTabl
 import {SanitationTable} from "@/features/Requests/SanitationForm/SanitationTable.tsx";
 import {PatientRequestTable} from "@/features/Requests/PatientRequest/PatientRequestTable.tsx";
 import {PatientTransportTable} from "@/features/Requests/PatientTransport/PatientTransportTable.tsx";
+import {TranslateTable} from "@/features/Requests/TranslateForm/TranslateTable.tsx";
 
 interface RequestInfoButtonProps {
     id: number | null;
@@ -131,6 +132,23 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         setTransport(request.data);
     }
 
+    //translte request
+    const [translate, setTranslate] = useState([{employeeName: null,
+        language: null,
+        priority: null,
+        department: null,
+        location: null,
+        roomNumber: null,
+        notes: null,
+        timestamp: null,
+        status: null}]);
+    //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
+    async function retrieveTranslate() {
+        const request = await axios.post('api/translate/single-request', {id: props.id});
+        console.log('response from /single-request', request.data);
+        setTransport(request.data);
+    }
+
     //gets and returns element displaying info about request
     function RequestInfo() {
         if (props.id && props.type) {
@@ -149,6 +167,9 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
                 }
                 case 'Transport': {
                     return <PatientTransportTable transport={transport} />;
+                }
+                case 'Translate': {
+                    return <TranslateTable translate={translate} />;
                 }
             }
         }

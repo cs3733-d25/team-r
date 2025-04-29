@@ -61,21 +61,21 @@ router.post("/", async function (req: Request, res: Response) {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
-//
-// router.post("/single-request", async function (req: Request, res: Response) {
-//     const id = req.body.id;
-//     try {
-//         const request = await client.translateRequest.findMany({
-//             where: {
-//                 patientRequestID: id,
-//             },
-//         });
-//         console.log("Got request ", request);
-//         res.status(200).json(request);
-//     } catch (error) {
-//         console.error("Error fetching pharmacy request data:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
+
+router.post("/single-request", async function (req: Request, res: Response) {
+    const id = req.body.id;
+    try {
+        const request = await client.translateRequest.findMany({
+            where: {
+                translateRequestID: id,
+            },
+        });
+        console.log("Got request ", request);
+        res.status(200).json(request);
+    } catch (error) {
+        console.error("Error fetching pharmacy request data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 export default router;

@@ -47,7 +47,7 @@ interface TransportRequest extends BaseRequest {
 }
 
 interface TranslateRequest extends BaseRequest {
-    employeeRequestID: string | number;
+    translateRequestID: string | number;
 }
 
 export function AllRequestsTable() {
@@ -196,10 +196,11 @@ export function AllRequestsTable() {
                 type: 'Transport',
                 id: req.employeeRequestID,
             }));
-            const translateRes = await axios.get("/api/translate/");
+            const translateRes = await axios.get('/api/translate/');
             const translateReqWType = translateRes.data.map((req: TranslateRequest) => ({
                 ...req,
-                type: 'Translator',
+                type: 'Translate',
+                id: req.translateRequestID,
             }));
 
             //set all requests to be added to the table
