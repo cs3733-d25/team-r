@@ -395,7 +395,7 @@ export function EditMap({ status }: EditMapProps) {
     }, [setSteps]);
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col h-[calc(100vh-65px)]">
             <div className="flex-1 relative cursor-pointer">
                 <InternalMap
                     location={selectedLocation}

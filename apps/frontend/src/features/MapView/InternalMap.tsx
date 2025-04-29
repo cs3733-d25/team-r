@@ -83,7 +83,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
     const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
     const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
-    const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
+    //const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -240,8 +240,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             const dataChestnut = await fetchEdgesChestnut();
             setEdgesChestnut(dataChestnut);
             setEdgesFaulkner(await fetchEdgesFaulkner());
-            const dataWomens = await fetchEdgesWomensHospital();
-            setEdgesWomens(dataWomens);
+            //const dataWomens = await fetchEdgesWomensHospital();
+            //setEdgesWomens(dataWomens);
             setError(null);
         } catch (err) {
             console.error('Error fetching edges:', err);
