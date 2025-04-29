@@ -3,12 +3,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { AllRequestsTable} from './AllRequestsTable.tsx';
-import { DeviceReqTable } from './MedDeviceRequest/DeviceReqTable.tsx';
-import { PrescriptionTable } from './PrescriptionForm/PrescriptionTable.tsx';
-import { PatientRequestTable } from './PatientRequest/PatientRequestTable.tsx';
-import { SanitationTable } from './SanitationForm/SanitationTable.tsx';
-import { PatientTransportTable } from './PatientTransport/PatientTransportTable.tsx';
+import {AllRequestsTable} from './AllRequestsTable.tsx';
+import DeviceReqPage from './MedDeviceRequest/DeviceReqPage.tsx';
+import PrescriptionPage from '@/features/Requests/PrescriptionForm/PrescriptionPage.tsx';
+import PatientRequestPage from '@/features/Requests/PatientRequest/PatientRequestPage.tsx';
+import SanitationRequestPage from '@/features/Requests/SanitationForm/SanitationRequestPage.tsx';
+import PatientTransportPage from '@/features/Requests/PatientTransport/PatientTransportPage.tsx';
 
 export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -76,7 +76,7 @@ export function AllRequestsPage() {
                               <CardTitle>Medical Device Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <DeviceReqTable device={[]} />
+                              <DeviceReqPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -87,7 +87,7 @@ export function AllRequestsPage() {
                               <CardTitle>Prescription Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PrescriptionTable prescription={[]} />
+                              <PrescriptionPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -98,7 +98,7 @@ export function AllRequestsPage() {
                               <CardTitle>Patient Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PatientRequestTable patientRequest={[]} />
+                              <PatientRequestPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -109,7 +109,7 @@ export function AllRequestsPage() {
                               <CardTitle>Transport Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <PatientTransportTable transport={[]} />
+                              <PatientTransportPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
@@ -120,7 +120,7 @@ export function AllRequestsPage() {
                               <CardTitle>Sanitation Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <SanitationTable sanitation={[]} />
+                              <SanitationRequestPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
