@@ -42,7 +42,7 @@ const AboutPage = () => {
 
     return (
         <div className="flex flex-col items-center p-6 space-y-12">
-            {/* About Header */}
+            {/* AboutAndCredits Header */}
             <div className="text-center space-y-1">
                 <h1 className="text-4xl font-bold">About Us</h1>
                 <h2 className="text-xl font-bold font-trade">WPI Computer Science Department</h2>
