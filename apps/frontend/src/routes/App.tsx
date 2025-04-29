@@ -10,7 +10,7 @@ import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
-import PatientRequest from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
+import PatientRequest, {AllPatientRequests} from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "../features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "../features/MapView/ExternalMap.tsx";
@@ -98,7 +98,7 @@ function App() {
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
                 { path: 'prescription', element: <Prescription /> },
-                { path: 'patientrequestpage', element: <PatientRequestPage /> },
+                { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport',element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
