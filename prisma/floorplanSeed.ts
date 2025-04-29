@@ -8,7 +8,7 @@ async function main() {
             {
                 'nodeID': 'Entrance-1745475279866',
                 'nodeType': 'Entrance',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 528.89,
                 'ycoord': 323.08,
@@ -18,7 +18,7 @@ async function main() {
             {
                 'nodeID': 'Entrance-1745475321572',
                 'nodeType': 'Entrance',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 241.77,
                 'ycoord': 506.1,
@@ -28,7 +28,7 @@ async function main() {
             {
                 'nodeID': 'Reception-1745475750292',
                 'nodeType': 'Reception',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 465.11,
                 'ycoord': 394.09,
@@ -38,7 +38,7 @@ async function main() {
             {
                 'nodeID': 'Reception-1745475823905',
                 'nodeType': 'Reception',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 364.14,
                 'ycoord': 660.12,
@@ -48,7 +48,7 @@ async function main() {
             {
                 'nodeID': 'Parking-1745476124817',
                 'nodeType': 'Parking',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 533.09,
                 'ycoord': 213.06,
@@ -58,7 +58,7 @@ async function main() {
             {
                 'nodeID': 'Parking-1745476137948',
                 'nodeType': 'Parking',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 151.2,
                 'ycoord': 675.12,
@@ -68,7 +68,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476252825',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 379.12,
                 'ycoord': 614.09,
@@ -78,7 +78,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476261869',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 377.14,
                 'ycoord': 715.13,
@@ -88,7 +88,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476274839',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 315.15,
                 'ycoord': 714.13,
@@ -98,7 +98,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476286280',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 317.15,
                 'ycoord': 804.14,
@@ -108,7 +108,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476316023',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 590.07,
                 'ycoord': 861.15,
@@ -118,7 +118,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476325501',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 381.13,
                 'ycoord': 956.16,
@@ -128,7 +128,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476336196',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 425.12,
                 'ycoord': 956.16,
@@ -138,7 +138,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476355584',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 377.14,
                 'ycoord': 801.14,
@@ -148,7 +148,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476377768',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 385.13,
                 'ycoord': 871.15,
@@ -158,7 +158,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476392418',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 591.07,
                 'ycoord': 921.16,
@@ -168,7 +168,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476405531',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 436.12,
                 'ycoord': 928.16,
@@ -178,7 +178,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476418680',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 705.04,
                 'ycoord': 922.16,
@@ -188,7 +188,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476440148',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 710.04,
                 'ycoord': 685.12,
@@ -198,7 +198,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476454878',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 770.07,
                 'ycoord': 683.1,
@@ -208,7 +208,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476466618',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 771.02,
                 'ycoord': 412.09,
@@ -218,7 +218,7 @@ async function main() {
             {
                 'nodeID': 'Hallway-1745476477762',
                 'nodeType': 'Hallway',
-                'building': 'Chestnut Hill',
+                'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
                 'xcoord': 591.07,
                 'ycoord': 411.09,
@@ -234,7 +234,7 @@ async function main() {
             {
                 "nodeID": "Entrance-1745538360518",
                 "nodeType": "Entrance",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 211.67,
                 "ycoord": 386,
@@ -244,7 +244,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538370323",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 216.67,
                 "ycoord": 475,
@@ -254,7 +254,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538375613",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 314.83,
                 "ycoord": 470,
@@ -264,7 +264,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538396035",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 197.67,
                 "ycoord": 761,
@@ -274,7 +274,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538418396",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 289.83,
                 "ycoord": 760,
@@ -284,7 +284,7 @@ async function main() {
             {
                 "nodeID": "Specialty Clinic",
                 "nodeType": "Reception",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 289.83,
                 "ycoord": 738,
@@ -294,7 +294,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538474179",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 502.83,
                 "ycoord": 470,
@@ -304,7 +304,7 @@ async function main() {
             {
                 "nodeID": "Imaging Suite",
                 "nodeType": "Reception",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 504.83,
                 "ycoord": 437,
@@ -314,7 +314,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538516214",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 315.92,
                 "ycoord": 760,
@@ -324,7 +324,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538522550",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 317.92,
                 "ycoord": 632.5,
@@ -334,7 +334,7 @@ async function main() {
             {
                 "nodeID": "Ambulatory/Urgent Care",
                 "nodeType": "Reception",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 342.83,
                 "ycoord": 631,
@@ -344,7 +344,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538550406",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 314.83,
                 "ycoord": 527,
@@ -354,7 +354,7 @@ async function main() {
             {
                 "nodeID": "Phlebotomy",
                 "nodeType": "Reception",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 336.92,
                 "ycoord": 528.5,
@@ -364,7 +364,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745538612201",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 225.67,
                 "ycoord": 273,
@@ -374,7 +374,7 @@ async function main() {
             {
                 "nodeID": "Handicap Parking",
                 "nodeType": "Parking",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 498.67,
                 "ycoord": 296,
@@ -384,7 +384,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745539562747",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 74.67,
                 "ycoord": 103,
@@ -394,7 +394,7 @@ async function main() {
             {
                 "nodeID": "Patient Parking",
                 "nodeType": "Parking",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 9.67,
                 "ycoord": 165,
@@ -404,7 +404,7 @@ async function main() {
             {
                 "nodeID": "Stairs 20 1",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 188,
                 "ycoord": 1039.1,
@@ -414,7 +414,7 @@ async function main() {
             {
                 "nodeID": "Stairs 20 2",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 244,
                 "ycoord": 600,
@@ -424,7 +424,7 @@ async function main() {
             {
                 "nodeID": "Stairs 20 3",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 771.4,
                 "ycoord": 454,
@@ -434,7 +434,7 @@ async function main() {
             {
                 "nodeID": "Elevator 20",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 256,
                 "ycoord": 992,
@@ -444,7 +444,7 @@ async function main() {
             {
                 "nodeID": "hallway20stairs1",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 199,
                 "ycoord": 992.2,
@@ -454,7 +454,7 @@ async function main() {
             {
                 "nodeID": "hallway20stairs2",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 211,
                 "ycoord": 587,
@@ -464,7 +464,7 @@ async function main() {
             {
                 "nodeID": "hallwayaroundthatcorner20",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 541.7,
                 "ycoord": 489.8,
@@ -474,7 +474,7 @@ async function main() {
             {
                 "nodeID": "hallway20stairs3",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 20",
+                "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 767,
                 "ycoord": 482,
@@ -490,7 +490,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468089659",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 582.42,
                 "ycoord": 620.75,
@@ -500,7 +500,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468105189",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 581.83,
                 "ycoord": 668,
@@ -510,7 +510,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468111109",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 582.83,
                 "ycoord": 578,
@@ -520,7 +520,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468120025",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 559.42,
                 "ycoord": 576,
@@ -530,7 +530,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468125283",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 510.42,
                 "ycoord": 670.5,
@@ -540,7 +540,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468129629",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 480.17,
                 "ycoord": 621.5,
@@ -550,7 +550,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468133623",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 478.83,
                 "ycoord": 669,
@@ -560,7 +560,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468140562",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 480.42,
                 "ycoord": 515.5,
@@ -570,7 +570,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468181591",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 561.42,
                 "ycoord": 591,
@@ -580,7 +580,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468203626",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 561.71,
                 "ycoord": 553,
@@ -590,7 +590,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468225241",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 568.92,
                 "ycoord": 631.75,
@@ -600,7 +600,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468241433",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 596.92,
                 "ycoord": 668,
@@ -610,7 +610,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468256681",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 581.92,
                 "ycoord": 721,
@@ -620,7 +620,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468279713",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 481.42,
                 "ycoord": 498,
@@ -630,7 +630,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468288835",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 451.33,
                 "ycoord": 514.75,
@@ -640,7 +640,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468299003",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 466.08,
                 "ycoord": 629.5,
@@ -650,7 +650,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468308859",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 449.21,
                 "ycoord": 630.75,
@@ -660,7 +660,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468326007",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 383.42,
                 "ycoord": 669.5,
@@ -670,7 +670,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468331257",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 385.58,
                 "ycoord": 789.25,
@@ -680,7 +680,7 @@ async function main() {
             {
                 "nodeID": "Reception-1745468408887",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 495,
                 "ycoord": 807.5,
@@ -690,7 +690,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745468416845",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 511.5,
                 "ycoord": 807.25,
@@ -700,17 +700,17 @@ async function main() {
             {
                 "nodeID": "Parking-1745468723599",
                 "nodeType": "Parking",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 719.67,
                 "ycoord": 313,
-                "longName": "THE Faulkner Parking Lot",
-                "shortName": "Faulkner Parking Lot"
+                "longName": "THE Faulkner Hospital Parking Lot",
+                "shortName": "Faulkner Hospital Parking Lot"
             },
             {
                 "nodeID": "Hallway-1745469182158",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 450.42,
                 "ycoord": 668.5,
@@ -718,19 +718,19 @@ async function main() {
                 "shortName": "West Central Hallway"
             },
             {
-                "nodeID": "Faulkner Entrance",
+                "nodeID": "Faulkner Hospital Entrance",
                 "nodeType": "Entrance",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 722.0,
                 "ycoord": 622.0,
-                "longName": "Faulkner front entrance",
+                "longName": "Faulkner Hospital front entrance",
                 "shortName": "Front Entrance"
             },
             {
-                "nodeID": "a faulkner hallway",
+                "nodeID": "a Faulkner Hospital hallway",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 630.5,
                 "ycoord": 620.5,
@@ -740,7 +740,7 @@ async function main() {
             {
                 "nodeID": "Dialysis Entrance",
                 "nodeType": "Entrance",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 795,
                 "ycoord": 316,
@@ -750,7 +750,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745546310011",
                 "nodeType": "Hallway",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 750,
                 "ycoord": 364,
@@ -760,7 +760,7 @@ async function main() {
             {
                 "nodeID": "Dialysis Reception",
                 "nodeType": "Reception",
-                "building": "Faulkner",
+                "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 823,
                 "ycoord": 291,
@@ -778,7 +778,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548970535",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 706.84,
                 "ycoord": 243.07,
@@ -788,7 +788,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548978154",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 704.84,
                 "ycoord": 347.08,
@@ -798,7 +798,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548984596",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 541.89,
                 "ycoord": 240.07,
@@ -808,7 +808,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548991063",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 362.94,
                 "ycoord": 244.07,
@@ -818,7 +818,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548997460",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 364.94,
                 "ycoord": 348.08,
@@ -828,7 +828,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549004162",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 538.89,
                 "ycoord": 348.08,
@@ -838,7 +838,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549017987",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 553.88,
                 "ycoord": 424.09,
@@ -848,7 +848,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549029846",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 542.89,
                 "ycoord": 452.09,
@@ -858,7 +858,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549037167",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 504.9,
                 "ycoord": 455.09,
@@ -868,7 +868,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745549050767",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 515.9,
                 "ycoord": 430.09,
@@ -878,7 +878,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549056484",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 703.84,
                 "ycoord": 448.09,
@@ -888,7 +888,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549062268",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 709.84,
                 "ycoord": 567.11,
@@ -898,7 +898,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549068752",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 544.89,
                 "ycoord": 570.11,
@@ -908,7 +908,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549077216",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 398.93,
                 "ycoord": 453.09,
@@ -918,7 +918,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549084403",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 400.93,
                 "ycoord": 544.11,
@@ -928,7 +928,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549091013",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 545.89,
                 "ycoord": 668.12,
@@ -938,7 +938,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549099183",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 544.89,
                 "ycoord": 770.14,
@@ -948,7 +948,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549107928",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 546.89,
                 "ycoord": 875.15,
@@ -958,7 +958,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549114718",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 710.84,
                 "ycoord": 672.12,
@@ -968,7 +968,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549121974",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 709.84,
                 "ycoord": 768.14,
@@ -978,7 +978,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549128133",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 706.84,
                 "ycoord": 868.15,
@@ -988,7 +988,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549138964",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 703.84,
                 "ycoord": 996.17,
@@ -998,7 +998,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549145776",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 599.87,
                 "ycoord": 871.15,
@@ -1008,7 +1008,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549154027",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 598.87,
                 "ycoord": 934.16,
@@ -1018,7 +1018,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549160169",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 674.85,
                 "ycoord": 993.16,
@@ -1028,7 +1028,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549171203",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 456.91,
                 "ycoord": 777.14,
@@ -1038,7 +1038,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745549178298",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 679.85,
                 "ycoord": 1028.17,
@@ -1048,7 +1048,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745549196973",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 408.93,
                 "ycoord": 573.11,
@@ -1058,7 +1058,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745549209837",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 405.93,
                 "ycoord": 697.13,
@@ -1068,7 +1068,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549215833",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 364.94,
                 "ycoord": 704.13,
@@ -1078,7 +1078,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745549231579",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 337.95,
                 "ycoord": 496.1,
@@ -1088,7 +1088,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745549317519",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 401.93,
                 "ycoord": 496.1,
@@ -1099,7 +1099,7 @@ async function main() {
             {
                 "nodeID": "Extended Patient Parking",
                 "nodeType": "Parking",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 15.83,
                 "ycoord": 10,
@@ -1109,7 +1109,7 @@ async function main() {
             {
                 "nodeID": "Valet Parking",
                 "nodeType": "Parking",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 1.67,
                 "ycoord": 707,
@@ -1119,7 +1119,7 @@ async function main() {
             {
                 "nodeID": "Valet Parking Lot",
                 "nodeType": "Parking",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 424.67,
                 "ycoord": 923,
@@ -1129,7 +1129,7 @@ async function main() {
             {
                 "nodeID": "Sidewalk-1745515004862",
                 "nodeType": "Sidewalk",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 119.67,
                 "ycoord": 690,
@@ -1139,7 +1139,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745515017629",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 130.67,
                 "ycoord": 691,
@@ -1149,7 +1149,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745515041197",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 258.67,
                 "ycoord": 792,
@@ -1159,7 +1159,7 @@ async function main() {
             {
                 "nodeID": "Entrance-1745515055030",
                 "nodeType": "Entrance",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 357.67,
                 "ycoord": 746,
@@ -1169,7 +1169,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745515093551",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 412.67,
                 "ycoord": 682,
@@ -1186,7 +1186,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745530797419",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 441.67,
                 "ycoord": 694,
@@ -1196,7 +1196,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530802852",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 396.83,
                 "ycoord": 697.5,
@@ -1206,7 +1206,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530806495",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 401.67,
                 "ycoord": 778,
@@ -1216,7 +1216,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530812008",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 557.67,
                 "ycoord": 772,
@@ -1226,7 +1226,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530816898",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 567.67,
                 "ycoord": 672,
@@ -1236,7 +1236,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530821770",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 569.67,
                 "ycoord": 868,
@@ -1246,7 +1246,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530827906",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 725.67,
                 "ycoord": 772,
@@ -1256,7 +1256,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530836846",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 727.67,
                 "ycoord": 670,
@@ -1266,7 +1266,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530842426",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 725.67,
                 "ycoord": 872,
@@ -1276,7 +1276,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530850336",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 397.67,
                 "ycoord": 548,
@@ -1286,7 +1286,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530855313",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 425.67,
                 "ycoord": 522,
@@ -1296,7 +1296,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530859661",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 429.67,
                 "ycoord": 464,
@@ -1306,7 +1306,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530864206",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 563.67,
                 "ycoord": 462,
@@ -1316,7 +1316,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530869011",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 571.67,
                 "ycoord": 572,
@@ -1326,7 +1326,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530885789",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 566.67,
                 "ycoord": 352,
@@ -1336,7 +1336,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530891145",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 560.67,
                 "ycoord": 248,
@@ -1346,7 +1346,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530895797",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 720.67,
                 "ycoord": 352,
@@ -1356,7 +1356,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745530900471",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 722.67,
                 "ycoord": 248,
@@ -1366,7 +1366,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531120923",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 384.67,
                 "ycoord": 248,
@@ -1376,7 +1376,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531125317",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 388.67,
                 "ycoord": 356,
@@ -1386,7 +1386,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531142253",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 722.67,
                 "ycoord": 458,
@@ -1396,7 +1396,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531147438",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 726.67,
                 "ycoord": 570,
@@ -1406,7 +1406,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531167025",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 694.67,
                 "ycoord": 990,
@@ -1416,7 +1416,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531176179",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 727.83,
                 "ycoord": 988,
@@ -1426,7 +1426,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531180756",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 616.67,
                 "ycoord": 934,
@@ -1436,7 +1436,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745531232798",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 617.42,
                 "ycoord": 876,
@@ -1446,7 +1446,7 @@ async function main() {
             {
                 "nodeID": "all-patriot-22-3-departments",
                 "nodeType": "Reception",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 591.42,
                 "ycoord": 587.5,
@@ -1457,7 +1457,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548453562",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 429.92,
                 "ycoord": 576.11,
@@ -1467,7 +1467,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548471290",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 373.94,
                 "ycoord": 492.1,
@@ -1477,7 +1477,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548477950",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 426.92,
                 "ycoord": 491.1,
@@ -1487,7 +1487,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548528982",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 535.89,
                 "ycoord": 434.09,
@@ -1497,7 +1497,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548551707",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 692.84,
                 "ycoord": 1028.17,
@@ -1507,7 +1507,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548601064",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
                 "xcoord": 537.89,
                 "ycoord": 461.09,
@@ -1525,7 +1525,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548135350",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 367.94,
                 "ycoord": 546.11,
@@ -1535,7 +1535,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548156316",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 639.86,
                 "ycoord": 1072.18,
@@ -1545,7 +1545,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745548183505",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 285.96,
                 "ycoord": 498.1,
@@ -1555,7 +1555,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548192350",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 337.95,
                 "ycoord": 552.11,
@@ -1565,7 +1565,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548206618",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 705.84,
                 "ycoord": 1056.17,
@@ -1575,7 +1575,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548218279",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 666.85,
                 "ycoord": 1053.17,
@@ -1585,7 +1585,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745548270903",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 581.88,
                 "ycoord": 946.16,
@@ -1597,7 +1597,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745547664565",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 645.86,
                 "ycoord": 572.11,
@@ -1607,7 +1607,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745547680792",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 654.86,
                 "ycoord": 786.14,
@@ -1617,7 +1617,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745547819933",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 649.86,
                 "ycoord": 592.11,
@@ -1627,7 +1627,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745547827857",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 655.86,
                 "ycoord": 810.14,
@@ -1638,7 +1638,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532856923",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 555.67,
                 "ycoord": 808,
@@ -1648,7 +1648,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532862197",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 557.67,
                 "ycoord": 698,
@@ -1658,7 +1658,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532884703",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 707.67,
                 "ycoord": 694,
@@ -1668,7 +1668,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532889474",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 709.67,
                 "ycoord": 808,
@@ -1678,7 +1678,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532895073",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 707.67,
                 "ycoord": 922,
@@ -1688,7 +1688,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532907419",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 709.67,
                 "ycoord": 590,
@@ -1698,7 +1698,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532911792",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 705.67,
                 "ycoord": 462,
@@ -1708,7 +1708,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532916746",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 709.67,
                 "ycoord": 350,
@@ -1718,7 +1718,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532920640",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 707.67,
                 "ycoord": 234,
@@ -1728,7 +1728,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532926189",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 551.67,
                 "ycoord": 232,
@@ -1738,7 +1738,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532934749",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 555.67,
                 "ycoord": 350,
@@ -1748,7 +1748,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532940204",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 321.67,
                 "ycoord": 232,
@@ -1758,7 +1758,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532945413",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 323.67,
                 "ycoord": 352,
@@ -1768,7 +1768,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532949809",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 555.67,
                 "ycoord": 460,
@@ -1778,7 +1778,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532954933",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 557.67,
                 "ycoord": 592,
@@ -1788,7 +1788,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532960565",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 551.67,
                 "ycoord": 506,
@@ -1798,7 +1798,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532969426",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 511.67,
                 "ycoord": 508,
@@ -1808,7 +1808,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532974069",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 341.67,
                 "ycoord": 506,
@@ -1818,7 +1818,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532978783",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 339.67,
                 "ycoord": 716,
@@ -1828,7 +1828,7 @@ async function main() {
             {
                 "nodeID": "Elevator-1745532984035",
                 "nodeType": "Elevator",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 370.83,
                 "ycoord": 719,
@@ -1838,7 +1838,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532989467",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 339.83,
                 "ycoord": 819,
@@ -1848,7 +1848,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745532994775",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 556.83,
                 "ycoord": 924,
@@ -1858,7 +1858,7 @@ async function main() {
             {
                 "nodeID": "Hallway-1745533011435",
                 "nodeType": "Hallway",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 552.83,
                 "ycoord": 869,
@@ -1868,7 +1868,7 @@ async function main() {
             {
                 "nodeID": "Primary Care",
                 "nodeType": "Reception",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 586.83,
                 "ycoord": 870,
@@ -1878,7 +1878,7 @@ async function main() {
             {
                 "nodeID": "Community Room",
                 "nodeType": "Reception",
-                "building": "Patriot Place 22",
+                "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 298.83,
                 "ycoord": 232,
@@ -3017,11 +3017,11 @@ async function main() {
     await PrismaClient.edge.createMany({
         data: [
             {
-                "fromID": "Faulkner Entrance",
-                "toID": "a faulkner hallway"
+                "fromID": "Faulkner Hospital Entrance",
+                "toID": "a Faulkner Hospital hallway"
             },
             {
-                "fromID": "a faulkner hallway",
+                "fromID": "a Faulkner Hospital hallway",
                 "toID": "Hallway-1745468089659"
             },
             {
@@ -3074,7 +3074,7 @@ async function main() {
             },
             {
                 "fromID": "Parking-1745468723599",
-                "toID": "Faulkner Entrance"
+                "toID": "Faulkner Hospital Entrance"
             },
             {
                 "fromID": "Hallway-1745468125283",
@@ -3123,7 +3123,7 @@ async function main() {
             },
             {
                 "fromID": "Hallway-1745546310011",
-                "toID": "Faulkner Entrance",
+                "toID": "Faulkner Hospital Entrance",
             },
             {
                 "fromID": "Dialysis Reception",
