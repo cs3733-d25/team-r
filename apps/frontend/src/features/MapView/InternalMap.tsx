@@ -7,6 +7,7 @@ import patriot22Floor3 from '../../../public/22patriot3.svg';
 import patriot22Floor4 from '../../../public/22patriot4.svg';
 import chestnutHill from '../../../public/chestnutHill1.svg';
 import faulkner from '../../../public/faulkner1.svg';
+import womens from '../../../public/womens2.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
 import {
@@ -17,14 +18,15 @@ import {
     fetchEdges22_3,
     fetchEdges22_4,
     fetchEdgesChestnut,
+    fetchEdgesWomensHospital,
     fetchEntrances,
     fetchParkingLots,
     fetchEdgesFaulkner,
     fetchHallways,
     fetchOther,
-    fetchAll
+    fetchNodes
 } from "@/features/MapView/mapService.ts";
-import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
+import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group.tsx";
 
@@ -98,6 +100,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
     const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
     const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
+    //const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
     const [hallwayFiltered, setHallwayFiltered] = useState(false);
@@ -226,6 +229,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             const dataChestnut = await fetchEdgesChestnut();
             setEdgesChestnut(dataChestnut);
             setEdgesFaulkner(await fetchEdgesFaulkner());
+            //const dataWomens = await fetchEdgesWomensHospital();
+            //setEdgesWomens(dataWomens);
             setError(null);
         } catch (err) {
             console.error('Error fetching edges:', err);
@@ -297,11 +302,12 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const floorLayer22_4 = L.layerGroup();
     const floorLayerChestnutHill = L.layerGroup();
     const floorLayerFaulkner = L.layerGroup();
+    const floorLayerWomens = L.layerGroup();
 
     function getLayer (building:string, floor: number){
         let out = null;
         switch (building) {
-            case 'Patriot Place 20':
+            case 'Healthcare Center (20 Patriot Pl.)':
                 switch (floor) {
                     case 1:
                         out = floorLayer20_1;
@@ -311,7 +317,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Patriot Place 22':
+            case 'Healthcare Center (22 Patriot Pl.)':
                 switch (floor) {
                     case 1:
                         out = floorLayer22_1;
@@ -327,11 +333,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Chestnut Hill':
+            case 'Healthcare Center (Chestnut Hill)':
                 out = floorLayerChestnutHill;
                 break;
-            case 'Faulkner':
+            case 'Faulkner Hospital':
                 out = floorLayerFaulkner;
+                break;
+            case 'Main Campus Hospital (75 Francis St.)':
+                out = floorLayerWomens;
                 break;
             default:
                 console.log("a node had an invalid building");
@@ -492,6 +501,11 @@ filtered.map((node)=>{
                 [1000, 2250],
             ];
 
+            const boundsWomens: L.LatLngBoundsLiteral = [
+                [-80, -35],
+                [900, 1300],
+            ];
+
             // Add floorplan overlays
             L.imageOverlay(patriot20Floor1, bounds20_1).addTo(floorLayer20_1);
             L.imageOverlay(patriot22Floor1, bounds22_1).addTo(floorLayer22_1);
@@ -499,6 +513,7 @@ filtered.map((node)=>{
             L.imageOverlay(patriot22Floor4, bounds22_4).addTo(floorLayer22_4);
             L.imageOverlay(chestnutHill, boundsChestnutHill).addTo(floorLayerChestnutHill);
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
+            L.imageOverlay(womens, boundsWomens).addTo(floorLayerWomens);
 
             // layer controls
             L.control.layers({
@@ -506,8 +521,9 @@ filtered.map((node)=>{
                 '22 Patriot Place - Floor 1': floorLayer22_1,
                 '22 Patriot Place - Floor 3': floorLayer22_3,
                 '22 Patriot Place - Floor 4': floorLayer22_4,
-                'Chestnut Hill': floorLayerChestnutHill,
-                'Faulkner': floorLayerFaulkner,
+                'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
+                'Faulkner Hospital': floorLayerFaulkner,
+                'Main Campus Hospital': floorLayerWomens,
             }, {}).addTo(map);
 
             // tracking layer changes
@@ -517,16 +533,18 @@ filtered.map((node)=>{
                 let building = '';
                 let floor = 1;
 
-                if (layerName.includes('20 Patriot Place')) {
+                if (layerName.includes('Healthcare Center (20 Patriot Pl.)')) {
                     building = 'Patriot Place 20';
                     floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('22 Patriot Place')) {
+                } else if (layerName.includes('Healthcare Center (22 Patriot Pl.)')) {
                     building = 'Patriot Place 22';
                     floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('Chestnut Hill')) {
+                } else if (layerName.includes('Healthcare Center (Chestnut Hill)')) {
                     building = 'Chestnut Hill';
-                } else if (layerName.includes('Faulkner')) {
+                } else if (layerName.includes('Faulkner Hospital')) {
                     building = 'Faulkner';
+                } else if (layerName.includes('Main Campus Hospital (75 Francis St.)')) {
+                    building = 'Womens';
                 }
 
                 activeLayerInfo.current = {building, floor};
@@ -539,19 +557,22 @@ filtered.map((node)=>{
 
             // initialize starting layer
             if (location.includes('20 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Patriot Place 20', floor: 1 };
+                activeLayerInfo.current = { building: 'Healthcare Center (20 Patriot Pl.)', floor: 1 };
                 floorLayer20_1.addTo(map);
             } else if (location.includes('22 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Patriot Place 22', floor };
+                activeLayerInfo.current = { building: 'Healthcare Center (22 Patriot Pl.)', floor };
                 if(floor == 1) floorLayer22_1.addTo(map);
                 else if(floor == 3) floorLayer22_3.addTo(map);
                 else if(floor == 4) floorLayer22_4.addTo(map);
             } else if (location.includes('Chestnut Hill')) {
-                activeLayerInfo.current = { building: 'Chestnut Hill', floor: 1 };
+                activeLayerInfo.current = { building: 'Healthcare Center (Chestnut Hill)', floor: 1 };
                 floorLayerChestnutHill.addTo(map);
             } else if (location.includes('Faulkner')) {
-                activeLayerInfo.current = { building: 'Faulkner', floor: 1 };
+                activeLayerInfo.current = { building: 'Faulkner Hospital', floor: 1 };
                 floorLayerFaulkner.addTo(map);
+            } else if (location.includes('Francis St') || location.includes('Womens')) {
+                activeLayerInfo.current = { building: 'Main Campus Hospital (75 Francis St.)', floor: 1 };
+                floorLayerWomens.addTo(map);
             }
 
             if(showEdges) {
@@ -566,7 +587,7 @@ filtered.map((node)=>{
                 });
 
                 // draw edges
-                console.log(edges22_1);
+                // console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
@@ -601,7 +622,7 @@ filtered.map((node)=>{
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
-                    console.log("got here",edge.fromNode.xcoord)
+                    // console.log("got here",edge.fromNode.xcoord)
                     clickEdge(edge, line);
                 });
                 edgesFaulkner.map((edge) => {
@@ -664,6 +685,7 @@ filtered.map((node)=>{
                     floorLayer22_4,
                     floorLayerChestnutHill,
                     floorLayerFaulkner,
+                    floorLayerWomens,
                     building
                 );
             };
@@ -748,10 +770,8 @@ filtered.map((node)=>{
 
     return (
         <div>
-
             <div
                 ref={mapRef}
-
                 style={{
                     height: '100vh',
                     width: '100%',

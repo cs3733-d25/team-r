@@ -1,18 +1,26 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     floorConfig,
     getBuildingConstant,
     getBuildingFromLocation,
-    getShortLocationName
+    getShortLocationName,
 } from '@/features/MapView/mapUtils';
-import TextDirections from "@/components/TextDirections.tsx";
-import axios from "axios";
+import TextDirections from '@/components/TextDirections.tsx';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
+import { VoiceControl } from '@/components/VoiceControl.tsx';
 
 declare global {
     interface Window {
@@ -21,17 +29,19 @@ declare global {
 }
 
 const blankNode = {
-    nodeID: "",
-    nodeType: "",
-    building: "",
+    nodeID: '',
+    nodeType: '',
+    building: '',
     floor: 0,
     xcoord: 0,
     ycoord: 0,
-    longName: "",
-    shortName: "",
-}
+    longName: '',
+    shortName: '',
+};
 
-
+/**
+ * Interface representing a node in the map
+ */
 interface MapNode {
     nodeID: string;
     nodeType: string;
@@ -72,9 +82,10 @@ export function MapPage() {
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner': ['FAULKNER', 'Faulkner'],
+                // TODO: add women's hospital parking lots
             };
 
-            return buildingMap[selectedBuilding]?.some(buildingName =>
+            return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
         });
@@ -94,7 +105,7 @@ export function MapPage() {
 
     /**
      * Given an array of node IDs, this function will convert them to their corresponding node objects
-     * @param nodeIDArray
+     * @param nodeIDs - the string array of node IDs to convert
      */
     // Helper: convert node IDs → full node objects
     const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
@@ -115,7 +126,7 @@ export function MapPage() {
             alert('Please select both a parking lot and a department.');
             return;
         }
-        //get the algortihm set by the admin - stored in database
+        //get the algorithm set by the admin - stored in database
         const response = await axios.get('/api/algo');
         const algorithm = response.data.algo;
 
@@ -149,12 +160,12 @@ export function MapPage() {
                     pathByFloor[node.floor] = [];
                 }
                 pathByFloor[node.floor].push([node.xcoord, node.ycoord]);
-            })
+            });
 
             // set both full path and floor segments
             const coords = nodes.map((n) => [n.xcoord, n.ycoord] as [number, number]);
             const reversedCoords = [];
-            for (let i=coords.length-1; i>=0; i--) {
+            for (let i = coords.length - 1; i >= 0; i--) {
                 reversedCoords.push(coords[i]);
             }
             console.log('computed pathCoordinates:', coords);
@@ -165,7 +176,7 @@ export function MapPage() {
             // give the node ID's to the calculateTextDirections function to turn into text directions
             calculateTextDirections(nodeIDs);
             // set the floors that need to flash
-            floorsTraveled(nodeIDs)
+            floorsTraveled(nodeIDs);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -209,12 +220,12 @@ export function MapPage() {
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].shortName}`);
-            console.log("enhanced Directions: ", enhancedDirections);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length - 1].shortName}`);
+            console.log('enhanced Directions: ', enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
         } catch (error) {
-            console.error("Error processing directions:", error);
+            console.error('Error processing directions:', error);
             setDirectionStrings([]);
         }
     };
@@ -273,12 +284,13 @@ export function MapPage() {
         setFlashingFloors(floorsExcluding1);
     };
 
+    /**
+     * Returns an array of available floors for the selected building
+     */
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
-
-
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
+        <div className="flex flex-col h-[calc(100vh-65px)] overflow-hidden">
             <div className="flex-1 w-full relative">
                 {/* Internal map with the computed path overlaid */}
                 <InternalMap
@@ -291,8 +303,22 @@ export function MapPage() {
                 {/* Sidebar controls */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
-                        <Label className="font-bold text-xl">Selected Location</Label>
-                        <div className={"font-bold text-secondary text-lg"}>{getShortLocationName(selectedLocation)}</div>
+                        <div className="flex items-center justify-between mb-2">
+                            <Label className="font-bold text-xl">Selected Location</Label>
+                            <VoiceControl
+                                selectedBuilding={buildingIdentifier}
+                                onParkingLotSelected={setSelectedParkinglot}
+                                onDepartmentSelected={setSelectedDepartment}
+                                onSelectionComplete={(lotId, deptId) => {
+                                    setSelectedParkinglot(lotId);
+                                    setSelectedDepartment(deptId);
+                                    handleGetDirections();
+                                }}
+                            />
+                        </div>
+                        <div className={'font-bold text-secondary text-lg'}>
+                            {getShortLocationName(selectedLocation)}
+                        </div>
                     </div>
 
                     <div className="space-y-4">
@@ -334,8 +360,6 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
-
-
                         {/* Trigger pathfinding */}
                         <Button className="w-full" onClick={handleGetDirections}>
                             Get Directions
@@ -348,7 +372,7 @@ export function MapPage() {
                         {availableFloors.map((floor) => (
                             <Button
                                 key={floor}
-                                variant={currentFloor === floor ? 'default' : 'secondary'}
+                                variant={currentFloor === floor ? 'secondary' : 'unselected'}
                                 // TODO: add a for loop to check all indices in flashingFloors
                                 className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {

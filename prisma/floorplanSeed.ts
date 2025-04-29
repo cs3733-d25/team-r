@@ -378,7 +378,7 @@ async function main() {
                 "floor": 1,
                 "xcoord": 498.67,
                 "ycoord": 296,
-                "longName": "",
+                "longName": "Handicap Parking",
                 "shortName": "Handicap Parking"
             },
             {
@@ -398,7 +398,7 @@ async function main() {
                 "floor": 1,
                 "xcoord": 9.67,
                 "ycoord": 165,
-                "longName": "",
+                "longName": "Patient Parking",
                 "shortName": "Patient Parking"
             },
             {
@@ -705,7 +705,7 @@ async function main() {
                 "xcoord": 719.67,
                 "ycoord": 313,
                 "longName": "THE Faulkner Parking Lot",
-                "shortName": "Parking Lot"
+                "shortName": "Faulkner Parking Lot"
             },
             {
                 "nodeID": "Hallway-1745469182158",
@@ -1123,7 +1123,7 @@ async function main() {
                 "floor": 1,
                 "xcoord": 424.67,
                 "ycoord": 923,
-                "longName": "",
+                "longName": "Valet Parking Lot",
                 "shortName": "Valet Parking Lot"
             },
             {

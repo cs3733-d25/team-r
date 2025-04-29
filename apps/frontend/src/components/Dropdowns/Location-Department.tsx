@@ -1,6 +1,6 @@
 import values, {valueKey} from "@/constant-values.ts";
 import {Label} from "@/components/ui/label.tsx";
-import Dropdown from './Department.tsx'
+import Dropdown from './Dropdown.tsx'
 import {useState} from "react";
 
 interface DropdownLocationProps {
@@ -45,15 +45,17 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
                                         </span>
                     </Label>
                     {/*handle departments for location*/}
-                    {selectedLocation === "Patriot Place 22" ? (
+                    {selectedLocation === "Healthcare Center (22 Patriot Pl.)" ? (
                         <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
-                    ) : selectedLocation === "Patriot Place 20" ? (
+                    ) : selectedLocation === "Healthcare Center (20 Patriot Pl.)" ? (
                         <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : selectedLocation === "Chestnut Hill" ? (
+                    ) : selectedLocation === "Healthcare Center (Chestnut Hill)" ? (
                         <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : selectedLocation === "Faulkner" ? (
+                    ) : selectedLocation === "Faulkner Hospital" ? (
                         <Dropdown tableName={"departmentsFAll"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : null}
+                    ) : selectedLocation === "Main Campus Hospital (75 Francis St.)" ? (
+                        <Dropdown tableName={"departmentsWAll"} fieldName={'department'} onChange={handleDepartmentChange} />
+                     ) : null}
                 </>
             )}
         </div>

@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import Navbar from '../../../components/Navbar.tsx';
-import { Link } from 'react-router-dom';
-import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import Dropdown from "@/components/Dropdowns/Department.tsx";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
+import {useAuth0} from "@auth0/auth0-react";
 
 // Simple interface for submitted request
 interface SubmittedRequest {
-  //employeeName: string;
+  employeeName: string;
   sanitationType: string;
   priority: string;
   department: string;
@@ -26,7 +25,7 @@ interface SubmittedRequest {
 
 const SanitationRequestForm = () => {
   const [formData, setFormData] = useState({
-    //employeeName: '',
+    employeeName: '',
     sanitationType: '',
     priority: '',
     department: '',
@@ -36,12 +35,37 @@ const SanitationRequestForm = () => {
     location:'',
 
   });
+  //use auth0 to get the current user data
+  const [userName, setUserName] = useState('');
+  const {user} = useAuth0();
+
+  //get the username from the database
+  useEffect(() => {
+    async function getEmployeeName(){
+      const userName = await axios.post('/api/login/userInfo',
+          {email: user!.email});
+      setUserName(userName.data.firstName);
+    }
+    getEmployeeName();
+  }, [user]);
+
+  //set the form data with the username from the database
+  useEffect(() => {
+    if (userName) {
+      setFormData(prev => ({
+        ...prev,
+        employeeName: userName
+      }));
+    }
+  }, [userName]);
+
   const handleDropdownChange = (name:string, value:string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
+
   const [submitStatus, setSubmitStatus] = useState<{
     message: string;
     isError: boolean;
@@ -79,7 +103,7 @@ const SanitationRequestForm = () => {
 
         // Reset form
         setFormData({
-          //employeeName: '',
+          employeeName: '',
           sanitationType: '',
           priority: '',
           department: '',
@@ -129,23 +153,6 @@ const SanitationRequestForm = () => {
           <div className="p-5">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/*/!* Employee Name *!/*/}
-                {/*<div>*/}
-                {/*  <Label className="block text-sm font-semibold text-foreground mb-2">*/}
-                {/*    Employee Name*/}
-                {/*    <span className="text-accent">*</span>*/}
-                {/*  </Label>*/}
-                {/*  <Input*/}
-                {/*      type="text"*/}
-                {/*      name="employeeName"*/}
-                {/*      value={formData.employeeName}*/}
-                {/*      onChange={handleChange}*/}
-                {/*      placeholder="Enter your name"*/}
-                {/*      className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
-                {/*      required*/}
-                {/*  />*/}
-                {/*</div>*/}
-                {/* Sanitation Type */}
                 <div>
                   <Label className= "block text-sm font-semibold text-foreground mb-2">
                     Sanitation Type
@@ -170,15 +177,6 @@ const SanitationRequestForm = () => {
                   <Label className="block text-sm font-semibold text-foreground mb-2">
                     Priority Level
                     <span className="text-accent">*</span>
-                    {/*<span className="text-xs text-secondary-foreground block">*/}
-                    {/*  URGENT: Immediate attention required*/}
-                    {/*  <br />*/}
-                    {/*  HIGH: Within 1 hour*/}
-                    {/*  <br />*/}
-                    {/*  MEDIUM: Within 4 hours*/}
-                    {/*  <br />*/}
-                    {/*  LOW: Within 24 hours*/}
-                    {/*</span>*/}
                   </Label>
                   <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
@@ -247,11 +245,7 @@ const SanitationRequestForm = () => {
         </div>
         {/* Status Message */}
         {submitStatus && submitStatus.isError && (
-            <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-              <AlertDescription className={'text-foreground'}>
-                {submitStatus.message}
-              </AlertDescription>
-            </Alert>
+            <ErrorCard message={submitStatus.message} />
         )}
 
         {/* Confirmation Card */}
@@ -267,7 +261,7 @@ const SanitationRequestForm = () => {
                 <h3 className="text-lg font-semibold mb-2">Your sanitation request has been submitted</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                   <div>
-                    <span className="font-semibold">Employee Name:</span> {username}
+                    <span className="font-semibold">Employee Name:</span> {submittedRequest.employeeName}
                   </div>
                   <div>
                     <span className="font-semibold">Sanitation Type:</span> {submittedRequest.sanitationType}

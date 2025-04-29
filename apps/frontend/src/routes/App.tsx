@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, useNavigate} from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
-import AboutPage from '../features/About/AboutPage.tsx';
+import AboutPage from '../features/AboutAndCredits/AboutPage.tsx';
+import CreditsPage from '../features/AboutAndCredits/CreditsPage.tsx';
 import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
@@ -22,29 +23,51 @@ import {EditMap} from "../features/MapView/EditMap.tsx";
 import RequestPage  from "../features/Requests/RequestPage.tsx";
 import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
+import {useAuth0} from "@auth0/auth0-react";
+import {navigate} from "next/dist/client/components/segment-cache-impl/navigation";
 
 function App() {
+    const {isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState("Guest");
-    const [session, setSession] = useState(null);
-    const [username, setUsername] = useState("");
+    const [userFirstName, setUserFirstName] = useState("");
+    console.log('APP IS RENDERED');
 
-    async function getSession() {
-        try {
-            const response = await axios.get('api/login/session');
-            const userType = response.data.userType;
-            setUserType(userType);
-            console.log(response.data);
-            console.log("User type:", userType, "- Keagan");
-            setSession(response.data.username);
-            setUsername(response.data.username);
-        } catch (error) {
-            console.log('error in retrieve:', error);
-        }
-    }
-
+    //get the usertype from the database after the user has logged in
     useEffect(() => {
-        getSession();
-    }, []);
+        if(user){
+            console.log('user exists', user);
+        } else{
+            console.log('No user found: ', user);
+        }
+        console.log('isLoading', isLoading);
+        console.log('userType', userType);
+        console.log('user', user);
+        console.log('isAuthenticated', isAuthenticated);
+        if (isAuthenticated && !isLoading && user) {
+            console.log("in if statement");
+            //navigate to neck page
+            async function getUserType() {
+                try {
+                    const response = await axios.post(
+                        '/api/login/userInfo',
+                        {email: user?.email},
+                        { withCredentials: true }
+                    );
+                    console.log("firstName: ", response.data.firstName);
+                    const userType = response.data.userType;
+                    const firstName = response.data.firstName;
+                    setUserType(userType);
+                    setUserFirstName(firstName);
+                    console.log('userType', userType);
+                } catch (error) {
+                    //if no user found set to guest
+                    //setUserType("Guest");
+                    console.log(error);
+                }
+            }
+            getUserType();
+        }
+    }, [isAuthenticated, user, isLoading]);
 
 
     const router = createBrowserRouter([
@@ -57,9 +80,10 @@ function App() {
             children: [
                 { index: true, element: <HomeMain userType={userType} /> },
                 { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
-                { path: 'login', element: <Login onLogin={getSession} /> },
+                { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'about', element: <AboutPage /> },
+                { path: 'credits', element: <CreditsPage />},
                 { path: 'external-map', element: <ExternalMap /> },
                 { path: 'edit-map', element: <EditMap /> },
                 { path: 'internal-map', element: <MapPage /> },
@@ -80,7 +104,7 @@ function App() {
 
     return (
         <div>
-            <NavbarMGH userType={userType}/>
+            <NavbarMGH userType={userType} userName={userFirstName}/>
             <RouterProvider router={router} />
         </div>
     );
