@@ -6,7 +6,6 @@ import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
-
   try {
     const requests = await client.deviceRequest.findMany({
       orderBy: { priority: "asc" },
@@ -31,7 +30,7 @@ router.post("/", async function (req: Request, res: Response) {
     request,
     device,
     room,
-    employeeName
+    employeeName,
   } = req.body;
 
   try {

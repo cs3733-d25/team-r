@@ -30,7 +30,6 @@ router.post("/", async function (req: Request, res: Response) {
     employeeName,
   } = req.body;
 
-
   try {
     console.log(request);
     const createRequest = await client.patientRequest.create({

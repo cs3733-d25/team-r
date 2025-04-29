@@ -44,7 +44,7 @@ const AboutPage = () => {
         <div className="flex flex-col items-center p-6 space-y-12">
             {/* AboutAndCredits Header */}
             <div className="text-center space-y-1">
-                <h1 className="text-4xl font-bold">About Us</h1>
+                <h1 className="p-4 text-4xl font-bold">About Us</h1>
                 <h2 className="text-xl font-bold font-trade">WPI Computer Science Department</h2>
                 <h2 className="text-xl font-bold font-trade">CS3733-D25 Software Engineering</h2>
                 <h2 className="text-xl font-bold font-trade">Professor: Wilson Wong</h2>
