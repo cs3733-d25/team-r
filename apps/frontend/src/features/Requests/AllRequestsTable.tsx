@@ -112,7 +112,7 @@ export function AllRequestsTable() {
         return true;
     });
 
-    const FilterPill = ({ label, value, onRemove }) => (
+    const FilterPill = ({ label, value, onRemove }: { label: string, value: string, onRemove: () => void }) => (
         <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
             <span className="mr-1 font-medium">{label}:</span> {value}
             <button onClick={onRemove} className="ml-2 hover:text-gray-200">
