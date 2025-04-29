@@ -4,6 +4,7 @@ import Navbar from "../../../components/Navbar.tsx";
 import {Link} from "react-router-dom";
 import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
 import {SanitationTable} from "@/features/Requests/SanitationForm/SanitationTable.tsx";
+
 export function SanitationRequestPage() {
     const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
     function displayTable() {
