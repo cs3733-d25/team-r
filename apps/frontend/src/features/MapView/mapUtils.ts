@@ -18,15 +18,15 @@ export const getShortLocationName = (location: string) => {
 
 export const getBuildingConstant = (buildingName: string) => {
     switch (buildingName) {
-        case 'Patriot Place 20':
+        case 'Healthcare Center (20 Patriot Pl.)':
             return 'PATRIOT_PLACE_20';
-        case 'Patriot Place 22':
+        case 'Healthcare Center (22 Patriot Pl.)':
             return 'PATRIOT_PLACE_22';
-        case 'Chestnut Hill':
+        case 'Healthcare Center (Chestnut Hill)':
             return 'CHESTNUT_HILL';
-        case 'Faulkner':
+        case 'Faulkner Hospital':
             return 'FAULKNER';
-        case 'Womens':
+        case 'Main Campus Hospital (75 Francis St.)':
             return 'WOMENS';
         default:
             return buildingName;
@@ -35,9 +35,9 @@ export const getBuildingConstant = (buildingName: string) => {
 
 
 export const floorConfig = {
-    'Patriot Place 20': [1,],
-    'Patriot Place 22': [1, 3, 4],
-    'Chestnut Hill': [1],
-    'Faulkner': [1],
-    'Womens': [1]
+    'Healthcare Center (20 Patriot Pl.)': [1,],
+    'Healthcare Center (22 Patriot Pl.)': [1, 3, 4],
+    'Healthcare Center (Chestnut Hill)': [1],
+    'Faulkner Hospital': [1],
+    'Main Campus Hospital (75 Francis St.)': [1]
 };
