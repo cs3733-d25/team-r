@@ -50,6 +50,8 @@ export function AllRequestsTable() {
     const [selectedStatus, setSelectedStatus] = useState("");
     const [filterByPriority, setFilterByPriority] = useState(false);
     const [selectedPriority, setSelectedPriority] = useState("");
+    const [filterByDepartment, setFilterByDepartment] = useState(false);
+    const [selectedDepartment, setSelectedDepartment] = useState("");
 
     useEffect(() => {
         retrieveFromDatabase()
@@ -99,7 +101,6 @@ export function AllRequestsTable() {
 
     // filtering logic
     const filteredRequests = requests.filter(req => {
-        // Only keep requests that pass all active filters
         if (filterByEmployee && employeeID && (!req.employeeID || String(req.employeeID) !== employeeID)) {
             return false;
         }
@@ -107,6 +108,9 @@ export function AllRequestsTable() {
             return false;
         }
         if (filterByPriority && selectedPriority && (!req.priority || req.priority !== selectedPriority)) {
+            return false;
+        }
+        if (filterByDepartment && selectedDepartment && (!req.department || req.department !== selectedDepartment)) {
             return false;
         }
         return true;
@@ -163,9 +167,21 @@ export function AllRequestsTable() {
         });
     }
 
+    if (filterByDepartment && selectedDepartment) {
+        activeFilters.push({
+            type: 'department',
+            label: 'Department',
+            value: selectedDepartment,
+            onRemove: () => {
+                setFilterByDepartment(false);
+                setSelectedDepartment("");
+            }
+        });
+    }
+
     return(
         <>
-            {/* Filter controls and active filters */}
+            {/*filter controls and active filters*/}
             <div className="mb-6 pt-4 space-y-4">
                 {/* Active filters as pills */}
                 {activeFilters.length > 0 && (
@@ -190,6 +206,8 @@ export function AllRequestsTable() {
                                     setSelectedStatus("");
                                     setFilterByPriority(false);
                                     setSelectedPriority("");
+                                    setFilterByDepartment(false);
+                                    setSelectedDepartment("");
                                 }}
                                 className="ml-2 text-sm"
                             >
@@ -199,10 +217,10 @@ export function AllRequestsTable() {
                     </div>
                 )}
 
-                {/* Filter controls in a card */}
+                {/*filter controls in card*/}
                 <div className="bg-muted/40 rounded-lg p-4">
                     <div className="flex flex-wrap gap-4">
-                        {/* Employee filter */}
+                        {/*employee filter*/}
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="employeeID">Employee ID</Label>
                             <div className="flex space-x-2">
@@ -223,7 +241,7 @@ export function AllRequestsTable() {
                             </div>
                         </div>
 
-                        {/* Status filter */}
+                        {/*status filter*/}
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="status">Status</Label>
                             <div className="flex space-x-2">
@@ -249,7 +267,7 @@ export function AllRequestsTable() {
                             </div>
                         </div>
 
-                        {/* Priority filter */}
+                        {/*priority filter*/}
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="priority">Priority</Label>
                             <div className="flex space-x-2">
@@ -283,9 +301,39 @@ export function AllRequestsTable() {
                                 Refresh Data
                             </Button>
                         </div>
+
+                        {/*department filter*/}
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="department">Department</Label>
+                            <div className="flex space-x-2">
+                                <select
+                                    id="department"
+                                    value={selectedDepartment}
+                                    onChange={(e) => setSelectedDepartment(e.target.value)}
+                                    className="rounded-md border h-10 px-3 py-2 w-40"
+                                >
+                                    <option value="">All Departments</option>
+                                    <option value="Radiology">Radiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="ICU">ICU</option>
+                                    <option value="Pharmacy">Pharmacy</option>
+                                </select>
+                                <Button
+                                    variant={filterByDepartment ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setFilterByDepartment(!filterByDepartment)}
+                                >
+                                    {filterByDepartment ? "Applied" : "Apply"}
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
 
             <Table>
                 <TableHeader >
