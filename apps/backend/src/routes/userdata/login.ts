@@ -30,7 +30,7 @@ router.post("/userInfo", async (req, res ) => {
   } else{
     console.log("User from database: ", user);
     console.log("firstName: ", user.firstName);
-    res.status(200).json({ userType: user.userType, firstName: user.firstName});
+    res.status(200).json({ userType: user.userType, firstName: user.firstName, id: user.id});
   }
 });
 
