@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { DeviceReqPage } from './MedDeviceRequest/DeviceReqPage';
 import { PrescriptionPage } from './PrescriptionForm/PrescriptionPage';
-import { AllPatientRequests } from './PatientRequest/AllPatientRequests';
 import TransportRequestPage from './PatientTransport/PatientTransport';
 import SanitationRequestPage from './SanitationForm/SanitationRequestPage';
 import PatientRequestPage from './PatientRequest/PatientRequestPage';
@@ -99,7 +98,7 @@ export function AllRequestsPage() {
                               <CardTitle>Patient Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <AllPatientRequests />
+                              <PatientRequestPage />
                           </CardContent>
                       </Card>
                   </TabsContent>
