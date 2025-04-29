@@ -30,18 +30,13 @@ const router: Router = express.Router();
 // get nodes
 router.post("/nodes", async (req, res) => {
   try {
-    let data;
-    if (req.body.nodeType) {
-      // if a type was specified, filter for those
-      console.log("Looking for nodes of type " + req.body.nodeType);
-      data = await PrismaClient.node.findMany({
-        where: { nodeType: req.body.nodeType },
-      });
-    } else {
-      // get all the nodes
-      data = await PrismaClient.node.findMany({});
-    }
-    console.log("found " + data.length + " " + req.body.nodeType + " nodes");
+    const fields = req.body.fields;
+    console.log(fields);
+    // console.log("Looking for nodes of type " + fields.nodeType);
+    const data = await PrismaClient.node.findMany({
+      where: fields,
+    });
+    console.log("found " + data.length + " nodes that follow the above");
     res.json(data);
   } catch (err) {
     console.error(err);
