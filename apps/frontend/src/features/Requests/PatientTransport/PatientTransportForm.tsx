@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Textarea} from "@/components/ui/textarea";
 import {Input} from "@/components/ui/input.tsx";
-import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
-import Dropdown from "@/components/Dropdowns/Department.tsx";
-import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
-
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
+import {useAuth0} from "@auth0/auth0-react";
 
 // Simple interface for submitted request
 interface SubmittedTransport {
     patientID: string;  //PK
-    //employeeID: string;
     employeeName: string;
     currentBuilding : string;  //FK
     desiredBuilding : string;
@@ -24,14 +21,12 @@ interface SubmittedTransport {
     department: string;
     comments: string;
     timestamp: string;
-
 }
 
 
 const TransportationRequestForm = () => {
     const [formData, setFormData] = useState({
         patientID: '',
-        //employeeID: '',
         employeeName: '',
         currentBuilding :'',
         desiredBuilding : '',
@@ -39,8 +34,30 @@ const TransportationRequestForm = () => {
         department: '',
         comments: '',
         transportationType:'',
-
     });
+    const [userName, setUserName] = useState('');
+    const {user} = useAuth0();
+
+    //get the username from the database
+    useEffect(() => {
+        async function getEmployeeName(){
+            const userName = await axios.post('/api/login/userInfo',
+                {email: user!.email});
+            setUserName(userName.data.firstName);
+        }
+        getEmployeeName();
+    }, [user]);
+
+    //set the form data with the username from the database
+    useEffect(() => {
+        if (userName) {
+            setFormData(prev => ({
+                ...prev,
+                employeeName: userName
+            }));
+        }
+    }, [userName]);
+
 
     const [submitStatus, setSubmitStatus] = useState<{
         message: string;
@@ -48,13 +65,47 @@ const TransportationRequestForm = () => {
     } | null>(null);
 
     //put this in Dropdown element and it will reset on submit
-    const [resetDropdowns, setResetDropdowns] = useState(false);
+    const [resetDropdowns, setResetDropdowns] = useState(false); //swaps value to trigger
+    const [resetDept, setResetDept] = useState(false); //swaps value for resetting dept
+    const [resetDesiredBuilding, setResetDesiredBuilding] = useState(false); //swaps value for desired building
+
+
+    useEffect(() => {
+        console.log("RESET is changed to: ", resetDropdowns)
+    }, [resetDropdowns])
+
+    useEffect(() => {
+        console.log("RESET Department changed to: ", resetDept)
+    }, [resetDept])
+
+    useEffect(() => {
+        console.log("RESET Desired Building changed to: ", resetDesiredBuilding)
+    }, [resetDesiredBuilding])
+
 
     const handleDropdownChange = (name:string, value:string) => {
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
+    };
+
+    //helper function for dept
+    const renderDepartmentDropdown = () => {
+        switch (selectedLocation) {
+            case "Patriot Place 22":
+                return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} reset={resetDept} />;
+            case "Patriot Place 20":
+                return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Chestnut Hill":
+                return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Faulkner":
+                return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            case "Brigham and Women\'s Hospital":
+                return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+            default:
+                return null;
+        }
     };
 
     // Add state for the confirmation card
@@ -81,13 +132,14 @@ const TransportationRequestForm = () => {
                     isError: false
                 });
 
-                setResetDropdowns(!resetDropdowns);
+                setResetDropdowns(!resetDropdowns); //swap state to reset
+                setResetDept(!resetDept); //swap state to reset
+                setResetDesiredBuilding(!resetDesiredBuilding); //swap state to reset
 
                 // Reset form
                 setFormData({
                     patientID: '',
                     employeeName:'',
-                    //employeeID: '',
                     currentBuilding :'',
                     desiredBuilding : '',
                     comments: '',
@@ -114,18 +166,39 @@ const TransportationRequestForm = () => {
         }));
     };
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-    //put this in Dropdown element and it will reset on submit
-    //const [resetDropdowns, setResetDropdowns] = useState(false);
+    const [selectedDesiredBuilding, setDesiredBuilding] = useState<string | null>(null);
+    const [selectedDept, setDept] = useState<string | null>(null);
 
 
+    //used by location dropdown so next dropdown can appear
     const handleLocationChange = (name: string, value: string) => {
         setSelectedLocation(value);
         handleDropdownChange(name, value); // update formData in parent
+        console.log("LOCATION change function with name '" + name + "' and value '" + value + "'")
     };
 
+    useEffect(() => { //WHEN location changes...
+        console.log("Use Effect detected LOCATION change")
+        setResetDept(!resetDept); //swap state to reset
+        handleDepartmentChange('department', null);
 
-    const handleDepartmentChange = (name: string, value: string) => {
-        handleDropdownChange(name, value);// update formData in parent
+        if (selectedDesiredBuilding === selectedLocation) {
+            setResetDesiredBuilding(!resetDesiredBuilding);
+            handleDesiredBuildingChange('department', null);
+
+            console.log("Conflict in LOCATION change, DESIRED BUILDING is reset")
+        }
+    }, [selectedLocation]);
+
+    const handleDesiredBuildingChange = (name: string, value: string | null) => {
+        setDesiredBuilding(value);
+        handleDropdownChange(name, value!); // update formData in parent
+        console.log("DESIRED BUILDING change function with name '" + name + "' and value '" + value + "'")
+    };
+
+    const handleDepartmentChange = (name: string, value: string | null) => {
+        setDept(value)
+        handleDropdownChange(name, value!);// update formData in parent
     };
 
     return (
@@ -135,21 +208,6 @@ const TransportationRequestForm = () => {
                     <div className="p-5">
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/*<div >*/}
-                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
-                                {/*        Employee Name*/}
-                                {/*        <span className="text-accent">*</span>*/}
-                                {/*    </Label>*/}
-                                {/*    <Input*/}
-                                {/*        type="text"*/}
-                                {/*        name="employeeName"*/}
-                                {/*        value={formData.employeeName}*/}
-                                {/*        onChange={handleChange}*/}
-                                {/*        placeholder="Enter your name"*/}
-                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
-                                {/*        required*/}
-                                {/*    />*/}
-                                {/*</div>*/}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Patient ID
@@ -197,15 +255,6 @@ const TransportationRequestForm = () => {
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Priority Level
                                         <span className="text-accent">*</span>
-                                        {/*<span className="text-xs text-secondary-foreground block">*/}
-                                        {/*    URGENT: Immediate attention required*/}
-                                        {/*    <br />*/}
-                                        {/*    HIGH: Within 1 hour*/}
-                                        {/*    <br />*/}
-                                        {/*    MEDIUM: Within 4 hours*/}
-                                        {/*    <br />*/}
-                                        {/*    LOW: Within 24 hours*/}
-                                        {/*</span>*/}
                                     </Label>
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
@@ -219,7 +268,8 @@ const TransportationRequestForm = () => {
                                         Select the building making the patient request.
                                     </span>
                                     </Label>
-                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} onChange={handleLocationChange} />
+                                    <Dropdown tableName={"building"} fieldName={'currentBuilding'} alternateFieldName={'building'} onChange={handleLocationChange} reset={resetDropdowns}/>
+
                                     {/*select department based on location*/}
                                     {selectedLocation && (
                                         <>
@@ -227,54 +277,41 @@ const TransportationRequestForm = () => {
                                                 Department
                                                 <span className="text-accent">*</span>
                                                 <span className="text-xs text-secondary-foreground block">
-                                            Select a department
-                                        </span>
+                                                Select a department
+                                            </span>
                                             </Label>
-                                            {/*handle departments for location*/}
-                                            {selectedLocation === "Patriot Place 22" ? (
-                                                <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
-                                            ) : selectedLocation === "Patriot Place 20" ? (
-                                                <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                            ) : selectedLocation === "Chestnut Hill" ? (
-                                                <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                                            ) : null}
                                         </>
-                                    )}
+                                        )}
+                                    {selectedLocation && renderDepartmentDropdown()}
+                                    {/*//returns dept dropdown*/}
+
+                                    {/*handle departments if given the location*/}
                                 </div>
 
                                     {/* Current Building */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/*<div >*/}
-                                    {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
-                                    {/*        Current Building*/}
-                                    {/*        <span className="text-accent">*</span>*/}
-                                    {/*    </Label>*/}
-                                    {/*    <Dropdown tableName={"building"} fieldName={"currentBuilding"} onChange={handleDropdownChange}></Dropdown>*/}
-                                    {/*</div>*/}
-                                    {/*<div>*/}
-                                    {/*    <Label className="block text-sm font-semibold text-gray-700 mb-2">*/}
-                                    {/*        Department*/}
-                                    {/*        <span className="text-accent">*</span>*/}
-                                    {/*        <span className="text-xs text-gray-500 block">*/}
-                                    {/*        Select the department requiring transportation*/}
-                                    {/*    </span>*/}
 
-                                    {/*    </Label>*/}
-                                    {/*    <Dropdown tableName={"department"} fieldName={"department"} onChange={handleDropdownChange}></Dropdown>*/}
-                                    {/*</div>*/}
-                                    {/*<LocationDepartmentDropdown onChange={handleCurrentDropdownChange} ></LocationDepartmentDropdown>*/}
 
                                     <div>
-                                        <Label className="block text-sm font-semibold text-foreground mb-2">
-                                            Desired Building
-                                            <span className="text-accent">*</span>
-                                        </Label>
-                                         <Dropdown tableName={"building"} fieldName={"desiredBuilding"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
-
-
+                                        {selectedLocation && (  //location selected?
+                                            <>
+                                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                                    Desired Building
+                                                    <span className="text-accent">*</span>
+                                                    <span className="text-xs text-secondary-foreground block">
+                                                    Select a destination
+                                                </span>
+                                                </Label>
+                                                <Dropdown tableName={"building"} fieldName={"desiredBuilding"} alternateFieldName={"building"} onChange={handleDesiredBuildingChange} reset={resetDesiredBuilding} mutuallyExclusiveOption={selectedLocation} ></Dropdown>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>
+                            {/*<p> Selected Location: '{selectedLocation}' </p>*/}
+                            {/*<p> Selected Desired Building:  '{selectedDesiredBuilding}'</p>*/}
+                            {/*<p> Selected Dept.:  '{selectedDept}'</p>*/}
+
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status
@@ -301,8 +338,6 @@ const TransportationRequestForm = () => {
                                 />
                             </div>
 
-
-
                             {/* Submit Button */}
                             <div className="flex justify-end">
                                 <Button
@@ -318,11 +353,7 @@ const TransportationRequestForm = () => {
                 </div>
                 {/* Status Message */}
                 {submitStatus && submitStatus.isError && (
-                    <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-                        <AlertDescription className={'text-foreground'}>
-                            {submitStatus.message}
-                        </AlertDescription>
-                    </Alert>
+                    <ErrorCard message={submitStatus.message} />
                 )}
 
                 {/* Confirmation Card */}

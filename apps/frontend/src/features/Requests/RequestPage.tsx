@@ -16,13 +16,16 @@ export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
 
+
   const requestTypes = [
-    { name: 'Medical Device', description: 'Requests for medical devices', path: '/devicerequest' },
-    { name: 'Prescription',   description: 'Medication prescriptions for patients', path: '/prescription' },
-    { name: 'Patient',        description: 'Non-emergency patient service requests', path: '/patientrequestpage' },
-    { name: 'Transport',      description: 'Patient transportation between facilities', path: '/transport' },
-    { name: 'Sanitation',     description: 'Cleaning and sanitation service requests', path: '/sanitation' },
-    { name: 'Translator',    description: 'Language translator service requests', path: '/translation' }, // ✅ NEW CARD
+
+    { name: 'Medical Device', description: 'Requests for medical devices', path: '/devicerequest', tab: 'medical-device' },
+    { name: 'Prescription',   description: 'Medication prescriptions for patients', path: '/prescription', tab: 'prescription' },
+    { name: 'Patient',        description: 'Non-emergency patient service requests', path: '/patientrequestpage', tab: 'patient' },
+    { name: 'Transport',      description: 'Patient transportation between facilities', path: '/transport', tab: 'transport' },
+    { name: 'Sanitation',     description: 'Cleaning and sanitation service requests', path: '/sanitation', tab: 'sanitation' },
+      { name: 'Translator',    description: 'Language translator service requests', path: '/translation', tab: 'translator' },
+
   ];
 
   return (
@@ -33,13 +36,13 @@ export function AllRequestsPage() {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="mb-0 border-b-0 shadow-none">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="all-requests">All Requests</TabsTrigger>
               <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
               <TabsTrigger value="prescription">Prescription</TabsTrigger>
               <TabsTrigger value="patient">Patient</TabsTrigger>
               <TabsTrigger value="transport">Transport</TabsTrigger>
-              <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
-              <TabsTrigger value="translation">Translator</TabsTrigger> {/* ✅ NEW TAB */}
-              <TabsTrigger value="all-requests">All Requests</TabsTrigger>
+                <TabsTrigger value="translation">Translator</TabsTrigger>
+                <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6 -mt-px">
@@ -47,17 +50,17 @@ export function AllRequestsPage() {
                 {requestTypes.map((type) => (
                     <Card
                         key={type.name}
-                        className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                        className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary"
                     >
-                      <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+                      <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                         <CardTitle>{type.name} Requests</CardTitle>
                       </CardHeader>
-                      <CardContent className="pt-6 px-6 pb-6">
+                      <CardContent className="pt-6 px-6 pb-6 bg-white h-full">
                         <p className="text-muted-foreground mb-4">{type.description}</p>
                         <div className="flex flex-col space-y-2">
                           <Button
                               variant="secondary"
-                              onClick={() => setActiveTab(type.name.toLowerCase())}
+                              onClick={() => setActiveTab(type.tab)}
                           >
                             View {type.name} Requests
                           </Button>
@@ -72,77 +75,66 @@ export function AllRequestsPage() {
             </TabsContent>
 
             <TabsContent value="medical-device" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                   <CardTitle>Medical Device Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
+                <CardContent className="px-6 pb-6 bg-white">
                   <DeviceReqPage />
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="prescription" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                   <CardTitle>Prescription Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
+                <CardContent className="px-6 pb-6 bg-white">
                   <PrescriptionPage />
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="patient" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                   <CardTitle>Patient Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
+                <CardContent className="px-6 pb-6 bg-white">
                   <AllPatientRequests />
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="transport" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                   <CardTitle>Transport Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
+                <CardContent className="px-6 pb-6 bg-white">
                   <TransportRequestPage />
                 </CardContent>
               </Card>
             </TabsContent>
 
             <TabsContent value="sanitation" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                   <CardTitle>Sanitation Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
+                <CardContent className="px-6 pb-6 bg-white">
                   <SanitationRequestPage />
                 </CardContent>
               </Card>
             </TabsContent>
 
-            <TabsContent value="translation" className="-mt-px"> {/* ✅ NEW TAB CONTENT */}
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
-                  <CardTitle>Translation Requests</CardTitle>
-                </CardHeader>
-                <CardContent className="px-6 pb-6">
-                  <TranslateRequestPage />
-                </CardContent>
-              </Card>
-            </TabsContent>
-
             <TabsContent value="all-requests" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg py-4 px-6">
+              <Card className="rounded-lg overflow-hidden bg-primary">
+                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                   <CardTitle>All Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6">
+                <CardContent className="px-6 pb-6 bg-white">
                   <AllRequestsTable />
                 </CardContent>
               </Card>

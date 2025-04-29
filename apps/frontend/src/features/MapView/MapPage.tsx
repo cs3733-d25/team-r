@@ -1,21 +1,26 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     floorConfig,
     getBuildingConstant,
     getBuildingFromLocation,
-    getShortLocationName
+    getShortLocationName,
 } from '@/features/MapView/mapUtils';
-import TextDirections from "@/components/TextDirections.tsx";
-import axios from "axios";
+import TextDirections from '@/components/TextDirections.tsx';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import {fetchPath, useMapData} from '@/features/MapView/mapService';
-import {Node} from "../../../../backend/src/routes/mapData.ts";
-import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { InternalMapControls } from '@/components/InternalMapControls.tsx';
+import { fetchPath, useMapData } from '@/features/MapView/mapService';
+import { VoiceControl } from '@/components/VoiceControl.tsx';
 
 declare global {
     interface Window {
@@ -23,18 +28,20 @@ declare global {
     }
 }
 
-const blankNode:Node = {
-    nodeID: "",
-    nodeType: "",
-    building: "",
+const blankNode = {
+    nodeID: '',
+    nodeType: '',
+    building: '',
     floor: 0,
     xcoord: 0,
     ycoord: 0,
-    longName: "",
-    shortName: "",
-}
+    longName: '',
+    shortName: '',
+};
 
-
+/**
+ * Interface representing a node in the map
+ */
 interface MapNode {
     nodeID: string;
     nodeType: string;
@@ -50,8 +57,6 @@ export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
     const buildingIdentifier = location.state?.buildingIdentifier;
-
-    // --- Component state ---
     const [selectedParkinglot, setSelectedParkinglot] = useState<string>('');
     const [filterParkingLots, setFilterParkingLots] = useState<
         { building: string; nodeID: string; shortName: string }[]
@@ -62,14 +67,13 @@ export function MapPage() {
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
-    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('dfs');
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
-
-    const {parkingLots, departments} = useMapData(selectedBuilding);
+    const { parkingLots, departments } = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     console.log('departments: ', departments);
-
     const [showDirections, setShowDirections] = useState(false);
+    const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
+    const [pathByFloor, setPathByFloor] = useState<Record<number, [number, number][]>>({});
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -78,9 +82,10 @@ export function MapPage() {
                 'Patriot Place 22': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Chestnut Hill': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner': ['FAULKNER', 'Faulkner'],
+                // TODO: add women's hospital parking lots
             };
 
-            return buildingMap[selectedBuilding]?.some(buildingName =>
+            return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
         });
@@ -100,7 +105,7 @@ export function MapPage() {
 
     /**
      * Given an array of node IDs, this function will convert them to their corresponding node objects
-     * @param nodeIDArray
+     * @param nodeIDs - the string array of node IDs to convert
      */
     // Helper: convert node IDs → full node objects
     const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
@@ -115,19 +120,16 @@ export function MapPage() {
         }
     };
 
-    /*
-    const response = await axios.post('/api/transportreq/', {
-                ...formData,
-                priority: formData.priority.toString()
-            });
-            console.log('message is here')
-     */
     // Main “Get Directions” handler
     const handleGetDirections = async () => {
         if (!selectedParkinglot || !selectedDepartment) {
             alert('Please select both a parking lot and a department.');
             return;
         }
+        //get the algorithm set by the admin - stored in database
+        const response = await axios.get('/api/algo');
+        const algorithm = response.data.algo;
+
         try {
             console.log('selected location sending to router: ', selectedLocation);
             console.log('selected department sending to router: ', selectedDepartment);
@@ -151,18 +153,30 @@ export function MapPage() {
             // 2) fetch their full data, reverse to start→end
             const nodes = await getNodeObjs(nodeIDs);
             console.log('nodeIDs from getNodeObjs: ', nodes);
+            // group coordinates by floor
+            const pathByFloor: Record<number, [number, number][]> = {};
+            nodes.forEach(node => {
+                if (!pathByFloor[node.floor]) {
+                    pathByFloor[node.floor] = [];
+                }
+                pathByFloor[node.floor].push([node.xcoord, node.ycoord]);
+            });
+
+            // set both full path and floor segments
             const coords = nodes.map((n) => [n.xcoord, n.ycoord] as [number, number]);
             const reversedCoords = [];
-            for (let i=coords.length-1; i>=0; i--) {
+            for (let i = coords.length - 1; i >= 0; i--) {
                 reversedCoords.push(coords[i]);
             }
             console.log('computed pathCoordinates:', coords);
             // const OwenCoords = [[711, 314], [702, 630]];
             // 3) update map
             setPathCoordinates(coords);
+            setPathByFloor(pathByFloor);
             // give the node ID's to the calculateTextDirections function to turn into text directions
-            calculateTextDirections(nodeIDs)
-
+            calculateTextDirections(nodeIDs);
+            // set the floors that need to flash
+            floorsTraveled(nodeIDs);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -188,11 +202,11 @@ export function MapPage() {
             const enhancedDirections: string[] = [];
 
             // First node is starting point
-            enhancedDirections.push(`Start at ${nodes[0].longName}`);
+            enhancedDirections.push(`Start at ${nodes[0].shortName}`);
 
             // For the first segment, just head toward without turn instruction
             if (nodes.length > 1) {
-                enhancedDirections.push(`Head toward ${nodes[1].longName}`);
+                enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
             }
 
             // Process middle segments to determine turns
@@ -202,16 +216,16 @@ export function MapPage() {
                 const nextNode = nodes[i + 1];
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`${directionChange} toward ${nextNode.longName}`);
+                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
             }
 
             // Final arrival
-            enhancedDirections.push(`Arrive at ${nodes[nodes.length-1].longName}`);
-            console.log("enhanced Directions: ", enhancedDirections);
+            enhancedDirections.push(`Arrive at ${nodes[nodes.length - 1].shortName}`);
+            console.log('enhanced Directions: ', enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
         } catch (error) {
-            console.error("Error processing directions:", error);
+            console.error('Error processing directions:', error);
             setDirectionStrings([]);
         }
     };
@@ -250,26 +264,61 @@ export function MapPage() {
         } else {
             return "Continue straight";
         }
-    }
+    };
 
+    /**
+     * Given a string array of nodeIDs, this function determines the floors the user will travel
+     * Note: Excludes floor 1 since user is already on that floor
+     * @param directions - the string array of nodeIDs
+     */
+    const floorsTraveled = async (directions: string[]) => {
+        const nodeObjs = await getNodeObjs(directions);
+
+        // get the floors of the nodes
+        const floors = nodeObjs.map((node) => node.floor);
+        // remove floor 1 (user is already on that floor)
+        // TODO: find out the floor the user is on rather than assuming floor 1
+        const floorsExcluding1 = floors.filter((floor) => floor !== 1);
+
+        console.log(`floors traveled: ${floorsExcluding1}`);
+        setFlashingFloors(floorsExcluding1);
+    };
+
+    /**
+     * Returns an array of available floors for the selected building
+     */
     const availableFloors = floorConfig[selectedBuilding as keyof typeof floorConfig] || [1];
 
-
-
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
+        <div className="flex flex-col h-[calc(100vh-65px)] overflow-hidden">
             <div className="flex-1 w-full relative">
                 {/* Internal map with the computed path overlaid */}
                 <InternalMap
                     location={selectedLocation}
                     pathCoordinates={pathCoordinates}
+                    pathByFloor={pathByFloor}
+                    currentFloor={currentFloor}
                 />
 
                 {/* Sidebar controls */}
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
-                        <Label className="font-bold text-xl">Selected Location</Label>
-                        <div>{getShortLocationName(selectedLocation)}</div>
+                        <div className="flex items-center justify-between mb-2">
+                            <Label className="font-bold text-xl">Selected Location</Label>
+                            <VoiceControl
+                                selectedBuilding={buildingIdentifier}
+                                onParkingLotSelected={setSelectedParkinglot}
+                                onDepartmentSelected={setSelectedDepartment}
+                                onSelectionComplete={(lotId, deptId) => {
+                                    setSelectedParkinglot(lotId);
+                                    setSelectedDepartment(deptId);
+                                    handleGetDirections();
+                                }}
+                            />
+                        </div>
+                        <div className={'font-bold text-secondary text-lg'}>
+                            {getShortLocationName(selectedLocation)}
+                        </div>
                     </div>
 
                     <div className="space-y-4">
@@ -311,26 +360,6 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
-                        {/* Algorithm selector */}
-                        <div className="flex flex-col space-y-2">
-                            <Label>Algorithm</Label>
-                            <Select
-                                value={algorithm}
-                                onValueChange={(value: string) => setAlgorithm(value as "dfs" | "bfs" | "aStar")}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select algorithm" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="dfs">DFS</SelectItem>
-                                        <SelectItem value="bfs">BFS</SelectItem>
-                                        <SelectItem value="aStar">A* Search</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
                         {/* Trigger pathfinding */}
                         <Button className="w-full" onClick={handleGetDirections}>
                             Get Directions
@@ -343,8 +372,9 @@ export function MapPage() {
                         {availableFloors.map((floor) => (
                             <Button
                                 key={floor}
-                                variant={currentFloor === floor ? 'default' : 'secondary'}
-                                className="w-full mb-1"
+                                variant={currentFloor === floor ? 'secondary' : 'unselected'}
+                                // TODO: add a for loop to check all indices in flashingFloors
+                                className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {
                                     setCurrentFloor(floor);
                                     window.goToFloor?.(
@@ -363,7 +393,6 @@ export function MapPage() {
                         <TextDirections
                             steps={directionStrings}
                         />
-                        <InternalMapControls/>
                     </div>
                 )}
             </div>

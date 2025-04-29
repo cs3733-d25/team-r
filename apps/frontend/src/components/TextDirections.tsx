@@ -1,6 +1,7 @@
 import { Label } from '@/components/ui/label.tsx';
 import {VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
+import Speech from 'react-speech';
 
 interface TextDirectionsProps {
     steps: string[];
@@ -17,10 +18,9 @@ interface TextDirectionsProps {
  */
 function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
     const [speaking, setSpeaking] = useState<boolean>(false);
-
     /**
      * handleTTS - handles the text-to-speech functionality
-     * only accepts external maps for now
+     * does both internal and external maps
      */
     const handleTTS = () => {
         if (!speaking) {

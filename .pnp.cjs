@@ -80,6 +80,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["express-session", "npm:1.17.0"],\
           ["husky", "npm:9.1.7"],\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["multer", "npm:1.4.5-lts.2"],\
           ["postcss", "npm:8.5.3"],\
           ["prettier", "npm:3.5.3"],\
@@ -88,6 +89,9 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:19.1.0"],\
           ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
           ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"],\
+          ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
+          ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
+          ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
           ["tailwindcss", "npm:4.1.3"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
           ["ts-node", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:9.1.1"],\
@@ -1414,6 +1418,13 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
+      ["npm:6.6.0", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-6591eb6722/node_modules/@prisma/client/",\
+        "packageDependencies": [\
+          ["@prisma/client", "npm:6.6.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
       ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:6.5.0", {\
         "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-3e6d59e2d4/node_modules/@prisma/client/",\
         "packageDependencies": [\
@@ -1421,6 +1432,23 @@ const RAW_RUNTIME_STATE =
           ["@types/prisma", null],\
           ["@types/typescript", null],\
           ["prisma", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:6.5.0"],\
+          ["typescript", "patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=5786d5"]\
+        ],\
+        "packagePeers": [\
+          "@types/prisma",\
+          "@types/typescript",\
+          "prisma",\
+          "typescript"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:9a28949798a912c67218bf8cea1001b3cae21be82aaad0589210650a91ed87ad2b921ce3379d36f5723672b5e5a668da59a3e262568425b08570aa654e7b0112#npm:6.6.0", {\
+        "packageLocation": "./.yarn/unplugged/@prisma-client-virtual-6591eb6722/node_modules/@prisma/client/",\
+        "packageDependencies": [\
+          ["@prisma/client", "virtual:9a28949798a912c67218bf8cea1001b3cae21be82aaad0589210650a91ed87ad2b921ce3379d36f5723672b5e5a668da59a3e262568425b08570aa654e7b0112#npm:6.6.0"],\
+          ["@types/prisma", null],\
+          ["@types/typescript", null],\
+          ["prisma", null],\
           ["typescript", "patch:typescript@npm%3A5.8.2#optional!builtin<compat/typescript>::version=5.8.2&hash=5786d5"]\
         ],\
         "packagePeers": [\
@@ -5128,6 +5156,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./apps/backend/",\
         "packageDependencies": [\
           ["backend", "workspace:apps/backend"],\
+          ["@prisma/client", "virtual:9a28949798a912c67218bf8cea1001b3cae21be82aaad0589210650a91ed87ad2b921ce3379d36f5723672b5e5a668da59a3e262568425b08570aa654e7b0112#npm:6.6.0"],\
           ["@swc/core", "virtual:9a28949798a912c67218bf8cea1001b3cae21be82aaad0589210650a91ed87ad2b921ce3379d36f5723672b5e5a668da59a3e262568425b08570aa654e7b0112#npm:1.11.13"],\
           ["@swc/helpers", "npm:0.5.15"],\
           ["@types/cookie-parser", "virtual:9a28949798a912c67218bf8cea1001b3cae21be82aaad0589210650a91ed87ad2b921ce3379d36f5723672b5e5a668da59a3e262568425b08570aa654e7b0112#npm:1.4.8"],\
@@ -7332,6 +7361,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.4.19"],\
           ["input-otp", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.4.2"],\
           ["leaflet", "npm:1.9.4"],\
+          ["leaflet-ant-path", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
           ["localforage", "npm:1.10.0"],\
           ["lucide-react", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.487.0"],\
           ["match-sorter", "npm:6.3.4"],\
@@ -7347,6 +7377,8 @@ const RAW_RUNTIME_STATE =
           ["react-resizable-panels", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:2.1.7"],\
           ["react-router-bootstrap", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.26.3"],\
           ["react-router-dom", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.30.0"],\
+          ["react-speech", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.0.2"],\
+          ["react-speech-recognition", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.0"],\
           ["recharts", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:2.15.2"],\
           ["serve", "npm:14.2.4"],\
           ["sonner", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:2.0.3"],\
@@ -7787,6 +7819,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["immutability-helper", [\
+      ["npm:3.1.1", {\
+        "packageLocation": "./.yarn/cache/immutability-helper-npm-3.1.1-482f1f8f58-daf4f3a696.zip/node_modules/immutability-helper/",\
+        "packageDependencies": [\
+          ["immutability-helper", "npm:3.1.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["import-fresh", [\
       ["npm:3.3.1", {\
         "packageLocation": "./.yarn/cache/import-fresh-npm-3.3.1-1916794950-bf8cc49487.zip/node_modules/import-fresh/",\
@@ -8145,6 +8186,41 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/leaflet-npm-1.9.4-8d372b0fe6-f639441dbb.zip/node_modules/leaflet/",\
         "packageDependencies": [\
           ["leaflet", "npm:1.9.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["leaflet-ant-path", [\
+      ["npm:1.3.0", {\
+        "packageLocation": "./.yarn/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
+        "packageDependencies": [\
+          ["leaflet-ant-path", "npm:1.3.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0", {\
+        "packageLocation": "./.yarn/__virtual__/leaflet-ant-path-virtual-b4125fad15/0/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
+        "packageDependencies": [\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
+          ["@types/leaflet", null],\
+          ["leaflet", null]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet",\
+          "leaflet"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0", {\
+        "packageLocation": "./.yarn/__virtual__/leaflet-ant-path-virtual-413a392f0e/0/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
+        "packageDependencies": [\
+          ["leaflet-ant-path", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
+          ["@types/leaflet", "npm:1.9.17"],\
+          ["leaflet", "npm:1.9.4"]\
+        ],\
+        "packagePeers": [\
+          "@types/leaflet",\
+          "leaflet"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -10127,6 +10203,78 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-speech", [\
+      ["npm:1.0.2", {\
+        "packageLocation": "./.yarn/cache/react-speech-npm-1.0.2-0fd1a1175f-368ee86261.zip/node_modules/react-speech/",\
+        "packageDependencies": [\
+          ["react-speech", "npm:1.0.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2", {\
+        "packageLocation": "./.yarn/__virtual__/react-speech-virtual-c182f94063/0/cache/react-speech-npm-1.0.2-0fd1a1175f-368ee86261.zip/node_modules/react-speech/",\
+        "packageDependencies": [\
+          ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
+          ["@types/react", "npm:19.1.0"],\
+          ["immutability-helper", "npm:3.1.1"],\
+          ["react", "npm:19.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.0.2", {\
+        "packageLocation": "./.yarn/__virtual__/react-speech-virtual-db0fc77767/0/cache/react-speech-npm-1.0.2-0fd1a1175f-368ee86261.zip/node_modules/react-speech/",\
+        "packageDependencies": [\
+          ["react-speech", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.0.2"],\
+          ["@types/react", "npm:18.3.20"],\
+          ["immutability-helper", "npm:3.1.1"],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-speech-recognition", [\
+      ["npm:4.0.0", {\
+        "packageLocation": "./.yarn/cache/react-speech-recognition-npm-4.0.0-10f8dad342-2526104466.zip/node_modules/react-speech-recognition/",\
+        "packageDependencies": [\
+          ["react-speech-recognition", "npm:4.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-speech-recognition-virtual-6828807cb7/0/cache/react-speech-recognition-npm-4.0.0-10f8dad342-2526104466.zip/node_modules/react-speech-recognition/",\
+        "packageDependencies": [\
+          ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
+          ["@types/react", "npm:19.1.0"],\
+          ["react", "npm:19.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-speech-recognition-virtual-83e22ab05f/0/cache/react-speech-recognition-npm-4.0.0-10f8dad342-2526104466.zip/node_modules/react-speech-recognition/",\
+        "packageDependencies": [\
+          ["react-speech-recognition", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.0"],\
+          ["@types/react", "npm:18.3.20"],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-style-singleton", [\
       ["npm:2.2.3", {\
         "packageLocation": "./.yarn/cache/react-style-singleton-npm-2.2.3-18f32c05f7-841938ff16.zip/node_modules/react-style-singleton/",\
@@ -10146,6 +10294,32 @@ const RAW_RUNTIME_STATE =
         ],\
         "packagePeers": [\
           "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-text-to-speech", [\
+      ["npm:2.0.2", {\
+        "packageLocation": "./.yarn/cache/react-text-to-speech-npm-2.0.2-d757f6c359-03bbca55bf.zip/node_modules/react-text-to-speech/",\
+        "packageDependencies": [\
+          ["react-text-to-speech", "npm:2.0.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2", {\
+        "packageLocation": "./.yarn/__virtual__/react-text-to-speech-virtual-708c733424/0/cache/react-text-to-speech-npm-2.0.2-d757f6c359-03bbca55bf.zip/node_modules/react-text-to-speech/",\
+        "packageDependencies": [\
+          ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
+          ["@types/react", "npm:19.1.0"],\
+          ["@types/react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.1"],\
+          ["react", "npm:19.1.0"],\
+          ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
           "react"\
         ],\
         "linkType": "HARD"\
@@ -10801,6 +10975,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-custom", "workspace:configs/eslint-config-custom"],\
           ["express-session", "npm:1.17.0"],\
           ["husky", "npm:9.1.7"],\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["multer", "npm:1.4.5-lts.2"],\
           ["postcss", "npm:8.5.3"],\
           ["prettier", "npm:3.5.3"],\
@@ -10809,6 +10984,9 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:19.1.0"],\
           ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
           ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"],\
+          ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
+          ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
+          ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
           ["tailwindcss", "npm:4.1.3"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
           ["ts-node", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:9.1.1"],\
