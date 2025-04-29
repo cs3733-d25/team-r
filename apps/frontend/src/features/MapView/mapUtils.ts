@@ -4,7 +4,7 @@ export const getBuildingFromLocation = (location: string) => {
     if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
     if (location.includes('Faulkner')) return 'Faulkner';
     if (location.includes('Womens')) return 'Womens';
-    return 'PATRIOT_PLACE_22';
+    return 'LOCATION NOT FOUND';
 };
 
 export const getShortLocationName = (location: string) => {

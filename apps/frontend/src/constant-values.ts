@@ -1,6 +1,6 @@
 /* this file replaces the need for enums
     to use:
-    - import values form '.....constant-values.ts'
+    - import values from '.....constant-values.ts'
     - const statusOptions = values.status;
  */
 
@@ -38,7 +38,7 @@ WAll.sort();
 const values = {
     status: ['Accepted', 'Canceled', 'In Progress', 'Pending', 'Completed'],
     priority: ['Urgent', 'High', 'Medium', 'Low'],
-    building: ['Chestnut Hill', 'Patriot Place 20', 'Patriot Place 22', 'Faulkner', 'Brigham and Women\'s Hospital'],
+    building: ['Healthcare Center (Chestnut Hill)', 'Healthcare Center (20 Patriot Pl.)', 'Healthcare Center (22 Patriot Pl.)', 'Faulkner Hospital', 'Main Campus Hospital (75 Francis St.)'],
     employeeRole: ['Doctor', 'Nurse', 'IT Support', 'Maintenance', 'Administrator'],
     blank: [''],  //for dropdowns requiring another dropdown to be completed first
 
