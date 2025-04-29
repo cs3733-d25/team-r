@@ -93,15 +93,15 @@ const TransportationRequestForm = () => {
     //helper function for dept
     const renderDepartmentDropdown = () => {
         switch (selectedLocation) {
-            case "Patriot Place 22":
+            case "Healthcare Center (22 Patriot Pl.)":
                 return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} reset={resetDept} />;
-            case "Patriot Place 20":
+            case "Healthcare Center (20 Patriot Pl.)":
                 return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            case "Chestnut Hill":
+            case "Healthcare Center (Chestnut Hill)":
                 return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            case "Faulkner":
+            case "Faulkner Hospital":
                 return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            case "Brigham and Women\'s Hospital":
+            case "Main Campus Hospital (75 Francis St.)":
                 return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
             default:
                 return null;
