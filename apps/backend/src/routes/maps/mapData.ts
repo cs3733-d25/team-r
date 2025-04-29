@@ -303,28 +303,28 @@ router.get("/edges-faulkner", async (req, res) => {
   }
 });
 
-router.get("/edges-womens", async (req, res) => {
-  try {
-    const request = await PrismaClient.edge.findMany({
-      where: {
-        fromNode: {
-          building: "Womens",
-        },
-        toNode: {
-          building: "Womens",
-        },
-      },
-      include: {
-        fromNode: true,
-        toNode: true,
-      },
-    });
-    res.json(request);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Server error");
-  }
-});
+// router.get("/edges-womens", async (req, res) => {
+//   try {
+//     const request = await PrismaClient.edge.findMany({
+//       where: {
+//         fromNode: {
+//           building: "Womens",
+//         },
+//         toNode: {
+//           building: "Womens",
+//         },
+//       },
+//       include: {
+//         fromNode: true,
+//         toNode: true,
+//       },
+//     });
+//     res.json(request);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Server error");
+//   }
+// });
 
 router.post("/internal", async (req, res) => {
   try {

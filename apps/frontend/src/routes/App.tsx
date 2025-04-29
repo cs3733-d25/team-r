@@ -57,6 +57,7 @@ function App() {
                     const firstName = response.data.firstName;
                     setUserType(userType);
                     setUserFirstName(firstName);
+                    console.log('userType', userType);
                 } catch (error) {
                     //if no user found set to guest
                     //setUserType("Guest");
