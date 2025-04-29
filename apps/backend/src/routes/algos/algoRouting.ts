@@ -66,7 +66,7 @@ router.post("/fetchPath", async function (req: Request, res: Response) {
   try {
     const path = await findPath(
       startingPoint,
-      endingPoint.toString(),
+      endingPoint,
       algorithm,
     );
     console.log("path in algoRouting.ts", path);
