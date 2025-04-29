@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import L, {LeafletEvent, DragEndEvent, LatLng} from 'leaflet';
+import L, {LeafletEvent} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20patriot1.svg';
 import patriot22Floor1 from '../../../public/22patriot1.svg';
@@ -9,9 +9,24 @@ import chestnutHill from '../../../public/chestnutHill1.svg';
 import faulkner from '../../../public/faulkner1.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
+import {
+    fetchCheckIn,
+    fetchEdges20_1,
+    fetchElevators,
+    fetchEdges22_1,
+    fetchEdges22_3,
+    fetchEdges22_4,
+    fetchEdgesChestnut,
+    fetchEntrances,
+    fetchParkingLots,
+    fetchEdgesFaulkner,
+    fetchHallways,
+    fetchOther,
+    fetchAll
+} from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/mapData.ts';
 import 'leaflet-ant-path';
+import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group.tsx";
 
 declare module 'leaflet' {
     interface Map {
@@ -70,6 +85,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
         building: '20 Patriot Place',
         floor: 1
     });
+    const [allMarkers, setAllMarkers] = useState<Node[]>([]);
     const [checkIn, setCheckIn] = useState<Node[]>([]);
     const [other, setOther] = useState<Node[]>([]);
     const [entrances, setEntrances] = useState<Node[]>([]);
@@ -111,7 +127,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const getActiveLayerInfo = () => {
         return activeLayerInfo.current;
     };
-
     // callback function for clicking on nodes
     function clickMarker(data:Node, marker:L.Marker):void{
         marker.on('click',()=> {
@@ -162,6 +177,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
 
     }
+    function makeMarkerDisappear(marker:L.Marker){
+        marker.setIcon(blackIcon)
+    }
 
 
 
@@ -173,52 +191,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
         })
     }
-
-    const loadCheckIn = async () => {
+    const loadAlls = async () => {
         try {
-            const data = await fetchCheckIn();
-            setCheckIn(data);
-        } catch (err) {
-            console.error('Error fetching parking lots:', err);
-        }
-    };
-    const loadEntrances = async () => {
-        try {
-            const data = await fetchEntrances();
-            setEntrances(data);
-        } catch (err) {
-            console.error('Error fetching parking lots:', err);
-        }
-    };
-    const loadElevators = async () => {
-        try {
-            const data = await fetchElevators();
-            setElevators(data);
-        } catch (err) {
-            console.error('Error fetching parking lots:', err);
-        }
-    };
-    const loadLots = async () => {
-        try {
-            const data = await fetchParkingLots();
-            setLots(data);
-        } catch (err) {
-            console.error('Error fetching parking lots:', err);
-        }
-    };
-    const loadHallways = async () => {
-        try {
-            const data = await fetchHallways();
-            console.log(data);
-            setHallways(data);
-        } catch (err) {
-            console.error('Error fetching hallways lots:', err);
-        }
-    }
-    const loadOther = async () => {
-        try {
-            const data = await fetchOther();
-            setOther(data);
+            const data = await fetchAll();
+            setAllMarkers(data);
             console.log("data:", data);
         } catch (err) {
             console.error('Error fetching parking lots:', err);
@@ -248,12 +224,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     };
     console.log("hallways: ",hallways)
     async function loadAll() {
-        await loadCheckIn();
-        await loadEntrances();
-        await loadElevators();
-        await loadLots();
-        await loadHallways();
-        await loadOther();
+       await loadAlls()
         await loadEdges();
     }
     useEffect(() => {
@@ -275,6 +246,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
     });
+
     const blackIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -355,6 +327,114 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
         }
         return out;
     }
+    function allNodes (nodeType:string, node:Node, layer:L.LayerGroup){
+        switch (nodeType) {
+            case 'Reception':
+                const reception = L.marker([node.xcoord, node.ycoord],{icon:violetIcon, draggable:true}).addTo(layer);
+                reception.on('click', () => clickMarker(node, reception));
+                reception.on('drag', (e) => dragMarker(node, reception, e));
+                break;
+
+            case 'Elevator':
+                const elevator = L.marker([node.xcoord, node.ycoord],{ draggable:true}).addTo(layer);
+                elevator.on('click', () => clickMarker(node, elevator));
+                elevator.on('drag', (e) => dragMarker(node, elevator, e));
+                break;
+            case 'Entrance':
+                const enter = L.marker([node.xcoord, node.ycoord],{icon:greenIcon, draggable:true}).addTo(layer);
+                enter.on('click', () => clickMarker(node, enter));
+                enter.on('drag', (e) => dragMarker(node, enter, e));
+                break;
+            case 'Hallway':
+                const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                place.on('click', () => clickMarker(node, place));
+                place.on('drag', (e) => dragMarker(node, place, e));
+                break;
+            case 'Parking':
+                const park = L.marker([node.xcoord, node.ycoord],{icon:yellowIcon, draggable:true}).addTo(layer);
+                park.on('click', () => clickMarker(node, park));
+                park.on('drag', (e) => dragMarker(node, park, e));
+                break;
+            default:
+                console.log("a node had an invalid building");
+                break;
+        }
+    }
+
+    function filterNodes (nodeType:string):void{
+        const layer = floorLayerFaulkner
+        const builds = allMarkers.filter((node)=>node.building.includes(activeLayerInfo.current.building));
+        const floors = builds.filter((node)=>node.floor===(activeLayerInfo.current.floor));
+        switch (nodeType) {
+            case 'Reception':
+                const fil= floors.filter((node)=>{
+                    return node.nodeType.includes('Reception');
+
+
+                })
+                fil.map((node)=>{
+                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                    makeMarkerDisappear(place);
+                })
+
+                break;
+            case 'Parking':
+                const fi= floors.filter((node)=>{
+                    return node.nodeType.includes('Parking');
+
+
+                })
+                fi.map((node)=>{
+                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                    makeMarkerDisappear(place);
+                })
+                console.log("floors",fi)
+                break;
+            case 'Elevator':
+                const filt= floors.filter((node)=>{
+                    return node.nodeType.includes('Elevator');
+
+
+                })
+                filt.map((node)=>{
+                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                    makeMarkerDisappear(place);
+                })
+                console.log("floors",filt)
+                break;
+            case 'Entrance':
+                const filtere= floors.filter((node)=>{
+                    return node.nodeType.includes('Entrance');
+
+
+                })
+                filtere.map((node)=>{
+                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+                    makeMarkerDisappear(place);
+                })
+                console.log("floors",filtere)
+                break;
+            case 'Hallway':
+                console.log("Nodes: ", floors)
+
+               const filtered= floors.filter((node)=>{
+                    return node.nodeType.includes('Hall');
+
+
+                })
+filtered.map((node)=>{
+    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
+    makeMarkerDisappear(place);
+})
+                console.log("floors",filtered)
+                break;
+
+            default:
+                console.log("a node had an invalid building");
+                break;
+        }
+    }
+
 
     // Initialize map once
     useEffect(() => {
@@ -457,74 +537,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
 
             if(showEdges) {
-                // draw nodes
-                if(hallways.length > 0) {
-                    console.log("HALLWAYS!");
-                    hallways.map((node) => {
-                        // put it on the correct floor
-                        const layer = getLayer(node.building, node.floor);
-                        // only place it if the floor is valid
-                        if (layer) {
-                            const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                            place.on('click', () => clickMarker(node,place));
-                            place.on('drag', (e) => dragMarker(node,place,e));
-
-                        }
-                    });
-                }
-                checkIn.map((node) => {
+                allMarkers.map((node) => {
                     // put it on the correct floor
                     const layer = getLayer(node.building, node.floor);
                     // only place it if the floor is valid
                     if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:violetIcon, draggable:true}).addTo(layer);
-                        place.on('click', () => clickMarker(node,place));
-                        place.on('drag', (e) => dragMarker(node,place,e));
+                         allNodes(node.nodeType,node,layer)
 
-                    }
-                });
-                other.map((node) => {
-                    // put it on the correct floor
-                    const layer = getLayer(node.building, node.floor);
-                    // only place it if the floor is valid
-                    if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:blackIcon, draggable:true}).addTo(layer);
-                        place.on('click', () => clickMarker(node,place));
-                        place.on('drag', (e) => dragMarker(node,place,e));
-
-                    }
-                });
-                entrances.map((node) => {
-                    // put it on the correct floor
-                    const layer = getLayer(node.building, node.floor);
-                    // only place it if the floor is valid
-                    if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:greenIcon, draggable:true}).addTo(layer);
-                        place.on('click', () => clickMarker(node,place));
-                        place.on('drag', (e) => dragMarker(node,place,e));
-
-                    }
-                });
-                lots.map((node) => {
-                    // put it on the correct floor
-                    const layer = getLayer(node.building, node.floor);
-                    // only place it if the floor is valid
-                    if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{icon:yellowIcon, draggable:true}).addTo(layer);
-                        place.on('click', () => clickMarker(node,place));
-                        place.on('drag', (e) => dragMarker(node,place,e));
-
-
-                    }
-                });
-                elevators.map((node) => {
-                    // put it on the correct floor
-                    const layer = getLayer(node.building, node.floor);
-                    // only place it if the floor is valid
-                    if (layer) {
-                        const place = L.marker([node.xcoord, node.ycoord],{draggable:true}).addTo(layer);
-                        place.on('click', () => clickMarker(node,place));
-                        place.on('drag', (e) => dragMarker(node,place,e));
                     }
                 });
 
@@ -711,8 +730,10 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
     return (
         <div>
+
             <div
                 ref={mapRef}
+
                 style={{
                     height: '100vh',
                     width: '100%',
@@ -721,6 +742,18 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                     zIndex: 0,
                 }}
             />
+            <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:1}}>
+                <ToggleGroup type={"multiple"} >
+                    <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
+                    <ToggleGroupItem value={"Hallways"} onClick={()=>filterNodes("Hallway")}>H</ToggleGroupItem>
+                    <ToggleGroupItem value={"Entrances"} onClick={()=>filterNodes("Entrance")}>EN</ToggleGroupItem>
+                    <ToggleGroupItem value={"Parking Lots"} onClick={()=>filterNodes("Parking")}>PL</ToggleGroupItem>
+                    <ToggleGroupItem value={"Reception"} onClick={()=>filterNodes("Reception")}>R</ToggleGroupItem>
+                    <ToggleGroupItem value={"Elevator"} onClick={()=>filterNodes("Elevator")}>EL</ToggleGroupItem>
+                    <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
+                </ToggleGroup>
+            </div>
+
         </div>
     );
 };

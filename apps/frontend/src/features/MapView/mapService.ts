@@ -96,6 +96,10 @@ export const fetchOther = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/other');
     return res.data;
 }
+export const fetchAll = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/all');
+    return res.data;
+}
 
 
 export function useMapData(selectedBuilding: string) {

@@ -40,6 +40,17 @@ router.get("/parking-lots", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+// get parking lots
+router.get("/all", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({});
+    console.log("found " + request.length + " parking lots");
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
 
 router.get("/departments", async (req, res) => {
   try {
