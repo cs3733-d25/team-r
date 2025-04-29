@@ -1,18 +1,18 @@
 export const getBuildingFromLocation = (location: string) => {
-    if (location.includes('20 Patriot Pl')) return 'Patriot Place 20';
-    if (location.includes('22 Patriot Pl')) return 'Patriot Place 22';
-    if (location.includes('Chestnut Hill')) return 'Chestnut Hill';
-    if (location.includes('Faulkner')) return 'Faulkner';
-    if (location.includes('Womens')) return 'Womens';
+    if (location.includes('Healthcare Center (20 Patriot Pl.)')) return 'Healthcare Center (20 Patriot Pl.)';
+    if (location.includes('Healthcare Center (22 Patriot Pl.)')) return 'Healthcare Center (22 Patriot Pl.)';
+    if (location.includes('Healthcare Center (Chestnut Hill)')) return 'Healthcare Center (Chestnut Hill)';
+    if (location.includes('Faulkner Hospital')) return 'Faulkner Hospital';
+    if (location.includes('Main Campus Hospital (75 Francis St.)')) return 'Main Campus Hospital (75 Francis St.)';
     return 'LOCATION NOT FOUND';
 };
 
 export const getShortLocationName = (location: string) => {
-    if (location.includes('20 Patriot Pl')) return 'Healthcare Center (20 Patriot Pl.)';
-    if (location.includes('22 Patriot Pl')) return 'Healthcare Center (22 Patriot Pl.)';
-    if (location.includes('Chestnut Hill')) return 'Healthcare Center (Chestnut Hill)';
-    if (location.includes('Faulkner')) return 'Faulkner Hospital';
-    if (location.includes('Francis St')) return 'Main Campus Hospital (75 Francis St.)';
+    if (location.includes('Healthcare Center (20 Patriot Pl.)')) return 'Healthcare Center (20 Patriot Pl.)';
+    if (location.includes('Healthcare Center (22 Patriot Pl.)')) return 'Healthcare Center (22 Patriot Pl.)';
+    if (location.includes('Healthcare Center (Chestnut Hill)')) return 'Healthcare Center (Chestnut Hill)';
+    if (location.includes('Faulkner Hospital')) return 'Faulkner Hospital';
+    if (location.includes('Main Campus Hospital (75 Francis St.)')) return 'Main Campus Hospital (75 Francis St.)';
     return location;
 };
 
