@@ -118,6 +118,7 @@ export function AllRequestsPage() {
                 </CardContent>
               </Card>
             </TabsContent>
+
             <TabsContent value="translation" className="-mt-px">
               <Card className="rounded-lg overflow-hidden bg-primary">
                 <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
