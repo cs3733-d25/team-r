@@ -21,6 +21,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
+import { Node } from '../../../../backend/src/routes/maps/mapData.ts'
 
 declare global {
     interface Window {
@@ -38,20 +39,6 @@ const blankNode = {
     longName: '',
     shortName: '',
 };
-
-/**
- * Interface representing a node in the map
- */
-interface MapNode {
-    nodeID: string;
-    nodeType: string;
-    building: string;
-    floor: number;
-    xcoord: number;
-    ycoord: number;
-    longName: string;
-    shortName: string;
-}
 
 export function MapPage() {
     const location = useLocation();
@@ -104,23 +91,6 @@ export function MapPage() {
         }
     };
 
-    /**
-     * Given an array of node IDs, this function will convert them to their corresponding node objects
-     * @param nodeIDs - the string array of node IDs to convert
-     */
-    // Helper: convert node IDs → full node objects
-    const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
-        console.log('nodeIDs before get: ', nodeIDs);
-        try {
-            const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
-            console.log("node coords after get: ", resp.data);
-            return resp.data;
-        } catch (e) {
-            console.error("Error converting node ID to name: ", e);
-            return []; // Return empty array on error
-        }
-    };
-
     // Main “Get Directions” handler
     const handleGetDirections = async () => {
         if (!selectedParkinglot || !selectedDepartment) {
@@ -145,15 +115,12 @@ export function MapPage() {
             console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
-            const nodeIDs = await fetchPath(
+            const nodes = await fetchPath(
                 selectedParkinglot,
                 receptionNodeID,
                 algorithm
             );
-            console.log('got nodeIDs:', nodeIDs);
             // 2) fetch their full data, reverse to start→end
-            const nodes = await getNodeObjs(nodeIDs);
-            console.log('nodeIDs from getNodeObjs: ', nodes);
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
             nodes.forEach(node => {
@@ -175,9 +142,9 @@ export function MapPage() {
             setPathCoordinates(coords);
             setPathByFloor(pathByFloor);
             // give the node ID's to the calculateTextDirections function to turn into text directions
-            calculateTextDirections(nodeIDs);
+            calculateTextDirections(nodes);
             // set the floors that need to flash
-            floorsTraveled(nodeIDs);
+            floorsTraveled(nodes);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -185,11 +152,10 @@ export function MapPage() {
 
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
-     * @param directions - the string array of nodeIDs
+     * @param nodes - an array of nodes (path)
      */
-    const calculateTextDirections = async (directions: string[]) => {
+    const calculateTextDirections = async (nodes: Node[]) => {
         try {
-            const nodes = await getNodeObjs(directions);
             if (nodes.length < 2) {
                 setDirectionStrings([]);
                 return;
@@ -234,7 +200,7 @@ export function MapPage() {
     /**
      * Calculates the relative direction change between path segments
      */
-    const calculateDirectionChange = (prev: MapNode, current: MapNode, next: MapNode): string => {
+    const calculateDirectionChange = (prev: Node, current: Node, next: Node): string => {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
@@ -270,13 +236,12 @@ export function MapPage() {
     /**
      * Given a string array of nodeIDs, this function determines the floors the user will travel
      * Note: Excludes floor 1 since user is already on that floor
-     * @param directions - the string array of nodeIDs
+     * @param nodes - the string of node objects (path)
      */
-    const floorsTraveled = async (directions: string[]) => {
-        const nodeObjs = await getNodeObjs(directions);
+    const floorsTraveled = async (nodes: Node[]) => {
 
         // get the floors of the nodes
-        const floors = nodeObjs.map((node) => node.floor);
+        const floors = nodes.map((node) => node.floor);
         // remove floor 1 (user is already on that floor)
         // TODO: find out the floor the user is on rather than assuming floor 1
         const floorsExcluding1 = floors.filter((floor) => floor !== 1);
