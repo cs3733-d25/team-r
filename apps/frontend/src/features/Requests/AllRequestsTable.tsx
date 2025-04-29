@@ -48,6 +48,8 @@ export function AllRequestsTable() {
     const [employeeID, setEmployeeID] = useState("");
     const [filterByStatus, setFilterByStatus] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("");
+    const [filterByPriority, setFilterByPriority] = useState(false);
+    const [selectedPriority, setSelectedPriority] = useState("");
 
     useEffect(() => {
         retrieveFromDatabase()
@@ -104,60 +106,185 @@ export function AllRequestsTable() {
         if (filterByStatus && selectedStatus && (!req.status || req.status !== selectedStatus)) {
             return false;
         }
+        if (filterByPriority && selectedPriority && (!req.priority || req.priority !== selectedPriority)) {
+            return false;
+        }
         return true;
     });
 
+    const FilterPill = ({ label, value, onRemove }) => (
+        <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
+            <span className="mr-1 font-medium">{label}:</span> {value}
+            <button onClick={onRemove} className="ml-2 hover:text-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    );
+
+    const activeFilters = [];
+
+    if (filterByEmployee && employeeID) {
+        activeFilters.push({
+            type: 'employee',
+            label: 'Employee',
+            value: employeeID,
+            onRemove: () => {
+                setFilterByEmployee(false);
+                setEmployeeID("");
+            }
+        });
+    }
+
+    if (filterByStatus && selectedStatus) {
+        activeFilters.push({
+            type: 'status',
+            label: 'Status',
+            value: selectedStatus,
+            onRemove: () => {
+                setFilterByStatus(false);
+                setSelectedStatus("");
+            }
+        });
+    }
+
+    if (filterByPriority && selectedPriority) {
+        activeFilters.push({
+            type: 'priority',
+            label: 'Priority',
+            value: selectedPriority,
+            onRemove: () => {
+                setFilterByPriority(false);
+                setSelectedPriority("");
+            }
+        });
+    }
+
     return(
         <>
-            <div className="mb-6 pt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                <div className="flex flex-col gap-2 md:flex-row md:items-end">
-                    <div className="flex flex-col gap-1.5">
-                        <Input
-                            id="employeeID"
-                            value={employeeID}
-                            onChange={(e) => setEmployeeID(e.target.value)}
-                            placeholder="Enter employee ID"
-                            className="w-48"
-                        />
+            {/* Filter controls and active filters */}
+            <div className="mb-6 pt-4 space-y-4">
+                {/* Active filters as pills */}
+                {activeFilters.length > 0 && (
+                    <div className="mb-4">
+                        <div className="flex flex-wrap items-center">
+                            <span className="mr-2 text-sm font-medium">Active Filters:</span>
+                            {activeFilters.map((filter, index) => (
+                                <FilterPill
+                                    key={`${filter.type}-${index}`}
+                                    label={filter.label}
+                                    value={filter.value}
+                                    onRemove={filter.onRemove}
+                                />
+                            ))}
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                    setFilterByEmployee(false);
+                                    setEmployeeID("");
+                                    setFilterByStatus(false);
+                                    setSelectedStatus("");
+                                    setFilterByPriority(false);
+                                    setSelectedPriority("");
+                                }}
+                                className="ml-2 text-sm"
+                            >
+                                Clear All
+                            </Button>
+                        </div>
                     </div>
-                    <Button
-                        variant={filterByEmployee ? "default" : "outline"}
-                        onClick={() => setFilterByEmployee(!filterByEmployee)}
-                        className="mt-2 md:mt-0"
-                    >
-                        {filterByEmployee ? "Filtering by Employee" : "Filter by Employee"}
-                    </Button>
+                )}
 
-                    {/*status filter*/}
-                    <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="status">Status</Label>
-                        <select
-                            id="status"
-                            value={selectedStatus}
-                            onChange={(e) => setSelectedStatus(e.target.value)}
-                            className="rounded-md border h-10 px-3 py-2 w-48"
-                        >
-                            <option value="">All Statuses</option>
-                            <option value="Pending">Pending</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Canceled">Canceled</option>
-                        </select>
+                {/* Filter controls in a card */}
+                <div className="bg-muted/40 rounded-lg p-4">
+                    <div className="flex flex-wrap gap-4">
+                        {/* Employee filter */}
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="employeeID">Employee ID</Label>
+                            <div className="flex space-x-2">
+                                <Input
+                                    id="employeeID"
+                                    value={employeeID}
+                                    onChange={(e) => setEmployeeID(e.target.value)}
+                                    placeholder="Enter ID"
+                                    className="w-40"
+                                />
+                                <Button
+                                    variant={filterByEmployee ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setFilterByEmployee(!filterByEmployee)}
+                                >
+                                    {filterByEmployee ? "Applied" : "Apply"}
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Status filter */}
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="status">Status</Label>
+                            <div className="flex space-x-2">
+                                <select
+                                    id="status"
+                                    value={selectedStatus}
+                                    onChange={(e) => setSelectedStatus(e.target.value)}
+                                    className="rounded-md border h-10 px-3 py-2 w-40"
+                                >
+                                    <option value="">All Statuses</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Canceled">Canceled</option>
+                                </select>
+                                <Button
+                                    variant={filterByStatus ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setFilterByStatus(!filterByStatus)}
+                                >
+                                    {filterByStatus ? "Applied" : "Apply"}
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* Priority filter */}
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="priority">Priority</Label>
+                            <div className="flex space-x-2">
+                                <select
+                                    id="priority"
+                                    value={selectedPriority}
+                                    onChange={(e) => setSelectedPriority(e.target.value)}
+                                    className="rounded-md border h-10 px-3 py-2 w-40"
+                                >
+                                    <option value="">All Priorities</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                    <option value="Urgent">Urgent</option>
+                                </select>
+                                <Button
+                                    variant={filterByPriority ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setFilterByPriority(!filterByPriority)}
+                                >
+                                    {filterByPriority ? "Applied" : "Apply"}
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="flex items-end">
+                            <Button
+                                variant="secondary"
+                                onClick={retrieveFromDatabase}
+                            >
+                                Refresh Data
+                            </Button>
+                        </div>
                     </div>
-                    <Button
-                        variant={filterByStatus ? "default" : "outline"}
-                        onClick={() => setFilterByStatus(!filterByStatus)}
-                        className="mt-2 md:mt-0"
-                    >
-                        {filterByStatus ? "Filtering by Status" : "Filter by Status"}
-                    </Button>
                 </div>
-                <Button
-                    variant="secondary"
-                    onClick={retrieveFromDatabase}
-                >
-                    Refresh Data
-                </Button>
             </div>
 
             <Table>
