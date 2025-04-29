@@ -1,0 +1,241 @@
+model Directory {
+  id              Int     @id @default(autoincrement())
+  name            String
+  floorNumber     Int
+  building        String
+  receptionNodeID String?
+  receptionNode   Node?   @relation(fields: [receptionNodeID], references: [nodeID])
+}
+
+model CSVDatabase {
+  id          Int    @id @default(autoincrement())
+  name        String
+  floorNumber Int
+  building    String
+}
+
+model Node {
+  nodeID    String @id
+  nodeType  String
+  building  String
+  floor     Int
+  xcoord    Float
+  ycoord    Float
+  longName  String
+  shortName String
+
+  departments   Directory[]
+  departmentBoo Department[]
+  edgesFrom     Edge[]       @relation("fromNode")
+  edgesTo       Edge[]       @relation("toNode")
+}
+
+model Edge {
+  edgeID   String @id @default(uuid())
+  fromID   String
+  toID     String
+  fromX    Float?
+  fromY    Float?
+  toX      Float?
+  toY      Float?
+  weight   Int?
+  fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID], onDelete: Cascade)
+  toNode   Node   @relation("toNode", fields: [toID], references: [nodeID], onDelete: Cascade)
+}
+
+model Department {
+  id              String @id @default(uuid())
+  name            String
+  receptionNodeID String
+  receptionNode   Node   @relation(fields: [receptionNodeID], references: [nodeID])
+  // employee        Employee[]
+}
+
+model Algorithm {
+  id   Int    @id @default(autoincrement())
+  algo String @default("bfs")
+}
+
+model SanitationRequest {
+  requestId      Int      @id @default(autoincrement())
+  sanitationType String
+  priority       String
+  building       String
+  department     String?
+  roomNumber     String
+  requestTime    DateTime @default(now())
+  comments       String?
+  status         String
+  employeeID     String
+  employeeName   Employee @relation(fields: [employeeID], references: [id])
+  location       String
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model DeviceRequest {
+  requestId    Int      @id @default(autoincrement())
+  deviceType   String
+  priority     String
+  building     String
+  room         String
+  department   String
+  requestTime  DateTime @default(now())
+  comments     String?
+  employeeID   String
+  employeeName Employee @relation(fields: [employeeID], references: [id])
+  status       String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model PharmacyRequest {
+  prescriptionID         Int      @id @default(autoincrement())
+  employeeID             String
+  employeeName           Employee @relation(fields: [employeeID], references: [id])
+  priority               String
+  building               String
+  department             String
+  patientID              String
+  // patient                Patient         @relation("Prescriptions", fields: [patientID], references: [id])
+  drugName               String
+  morningPillCount       Int
+  middayPillCount        Int
+  eveningPillCount       Int
+  nightPillCount         Int
+  days                   Int
+  numberOfPills          Int
+  refills                Int
+  additionalInstructions String
+  status                 String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model PatientRequest {
+  patientRequestID Int      @id @default(autoincrement())
+  patientID        String
+  patient          Patient  @relation(fields: [patientID], references: [id])
+  priority         String
+  building         String
+  department       String
+  location         String
+  status           String
+  requestTime      DateTime @default(now())
+  request          String
+  employeeID       String
+  employeeName     Employee @relation(fields: [employeeID], references: [id])
+  comment          String
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model TransportRequest {
+  employeeRequestID  Int      @id @default(autoincrement())
+  patientID          String
+  patient            Patient  @relation(fields: [patientID], references: [id])
+  employeeID         String
+  employeeName       Employee @relation(fields: [employeeID], references: [id])
+  transportationType String
+  currentBuilding    String
+  desiredBuilding    String
+
+  priority    String
+  department  String
+  comments    String
+  status      String
+  requestTime DateTime @default(now())
+
+  // assignedEmployeeID String
+  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+}
+
+model TranslateRequest {
+  translateRequestID Int      @id @default(autoincrement())
+  employeeID         String
+  employeeName       Employee @relation(fields: [employeeID], references: [id])
+  language           String
+  building           String
+  roomNumber         Int
+  status             String
+  comments           String
+  priority           String
+  department         String
+  location           String
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../.prisma/client"
+  engineType      = "binary"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model User {
+  id        String  @id @default(uuid())
+  //username   String   @unique
+  //password   String
+  email     String  @unique
+  userType  String
+  firstName String?
+  lastName  String?
+  // userTypeID String
+  // userType   UserType @relation(fields: [userTypeID], references: [id])
+  // updatedAt  DateTime @default(now())
+
+  employee Employee?
+  patient  Patient?
+}
+
+model UserType {
+  id   String @id @default(uuid())
+  name String
+
+  // users User[]
+}
+
+model Employee {
+  id           String  @id @default(uuid())
+  firstName    String
+  lastName     String
+  departmentId String?
+  // no longer link departments bceause reception nodes that dont exist were linked to departments
+  // department     Department?    @relation(fields: [departmentId], references: [id])
+  //department  String
+
+  roleId String?
+  role   String
+
+  onShift Boolean @default(false)
+  user    User    @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  assignedPatients      Patient[]
+  medicalDeviceRequests MedicalDeviceRequest[]
+  sanitationRequests    SanitationRequest[]
+  deviceRequests        DeviceRequest[]
+  pharmacyRequests      PharmacyRequest[]
+  patientRequests       PatientRequest[]
+  transportRequests     TransportRequest[]
+  tranlateRequests      TranslateRequest[]
+}
+
+model Patient {
+  id               String             @id @default(uuid())
+  firstName        String
+  lastName         String
+  dateOfBirth      DateTime
+  phone            String?
+  assignedDoctor   Employee           @relation(fields: [assignedDoctorId], references: [id])
+  assignedDoctorId String
+  user             User               @relation(fields: [id], references: [id], onDelete: Cascade)
+  transportRequest TransportRequest[]
+  patientRequest   PatientRequest[]
+}
