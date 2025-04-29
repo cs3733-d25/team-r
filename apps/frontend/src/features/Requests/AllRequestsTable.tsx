@@ -398,137 +398,154 @@ export function AllRequestsTable() {
 
                 {/*filter controls in card*/}
                 <div className="bg-muted/40 rounded-lg p-4">
-                    <div className="flex flex-wrap gap-4">
-                        {/*employee filter*/}
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="employeeID">Employee ID</Label>
-                            <div className="flex space-x-2">
-                                <Input
-                                    id="employeeID"
-                                    value={employeeID}
-                                    onChange={(e) => setEmployeeID(e.target.value)}
-                                    placeholder="Enter ID"
-                                    className="w-40"
-                                />
-                                <Button
-                                    variant={filterByEmployee ? 'default' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setFilterByEmployee(!filterByEmployee)}
-                                >
-                                    {filterByEmployee ? 'Applied' : 'Apply'}
-                                </Button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {/* location filters group */}
+                        <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
+                            <h3 className="text-sm font-medium">Location Filters</h3>
+                            <div className="space-y-3">
+                                {/* building filter */}
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="building">Building</Label>
+                                    <div className="flex space-x-2">
+                                        <select
+                                            id="building"
+                                            value={selectedBuilding}
+                                            onChange={(e) => {
+                                                const newBuilding = e.target.value;
+                                                setSelectedBuilding(newBuilding);
+                                                setSelectedDepartment('');
+                                            }}
+                                            className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        >
+                                            <option value="">All Buildings</option>
+                                            {values.building.map((building) => (
+                                                <option key={building} value={building}>
+                                                    {building}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <Button
+                                            variant={filterByBuilding ? 'default' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilterByBuilding(!filterByBuilding)}
+                                        >
+                                            {filterByBuilding ? 'Applied' : 'Apply'}
+                                        </Button>
+                                    </div>
+                                </div>
+
+                                {/* department filter */}
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="department">Department</Label>
+                                    <div className="flex space-x-2">
+                                        <select
+                                            id="department"
+                                            value={selectedDepartment}
+                                            onChange={(e) => setSelectedDepartment(e.target.value)}
+                                            className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        >
+                                            <option value="">All Departments</option>
+                                            {availableDepartments.map((dept) => (
+                                                <option key={dept} value={dept}>
+                                                    {dept}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <Button
+                                            variant={filterByDepartment ? 'default' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilterByDepartment(!filterByDepartment)}
+                                        >
+                                            {filterByDepartment ? 'Applied' : 'Apply'}
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/*status filter*/}
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="status">Status</Label>
-                            <div className="flex space-x-2">
-                                <select
-                                    id="status"
-                                    value={selectedStatus}
-                                    onChange={(e) => setSelectedStatus(e.target.value)}
-                                    className="rounded-md border h-10 px-3 py-2 w-40"
-                                >
-                                    <option value="">All Statuses</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Completed">Completed</option>
-                                    <option value="Canceled">Canceled</option>
-                                    <option value="Accepted">Accepted</option>
-                                </select>
-                                <Button
-                                    variant={filterByStatus ? 'default' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setFilterByStatus(!filterByStatus)}
-                                >
-                                    {filterByStatus ? 'Applied' : 'Apply'}
-                                </Button>
+                        {/* status filters group */}
+                        <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
+                            <h3 className="text-sm font-medium">Request Status</h3>
+                            <div className="space-y-3">
+                                {/* status filter */}
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="status">Status</Label>
+                                    <div className="flex space-x-2">
+                                        <select
+                                            id="status"
+                                            value={selectedStatus}
+                                            onChange={(e) => setSelectedStatus(e.target.value)}
+                                            className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        >
+                                            <option value="">All Statuses</option>
+                                            <option value="Pending">Pending</option>
+                                            <option value="In Progress">In Progress</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="Canceled">Canceled</option>
+                                            <option value="Accepted">Accepted</option>
+                                        </select>
+                                        <Button
+                                            variant={filterByStatus ? 'default' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilterByStatus(!filterByStatus)}
+                                        >
+                                            {filterByStatus ? 'Applied' : 'Apply'}
+                                        </Button>
+                                    </div>
+                                </div>
+
+                                {/* priority filter */}
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="priority">Priority</Label>
+                                    <div className="flex space-x-2">
+                                        <select
+                                            id="priority"
+                                            value={selectedPriority}
+                                            onChange={(e) => setSelectedPriority(e.target.value)}
+                                            className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        >
+                                            <option value="">All Priorities</option>
+                                            <option value="Low">Low</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="High">High</option>
+                                            <option value="Urgent">Urgent</option>
+                                        </select>
+                                        <Button
+                                            variant={filterByPriority ? 'default' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilterByPriority(!filterByPriority)}
+                                        >
+                                            {filterByPriority ? 'Applied' : 'Apply'}
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/*priority filter*/}
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="priority">Priority</Label>
-                            <div className="flex space-x-2">
-                                <select
-                                    id="priority"
-                                    value={selectedPriority}
-                                    onChange={(e) => setSelectedPriority(e.target.value)}
-                                    className="rounded-md border h-10 px-3 py-2 w-40"
-                                >
-                                    <option value="">All Priorities</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                    <option value="Urgent">Urgent</option>
-                                </select>
-                                <Button
-                                    variant={filterByPriority ? 'default' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setFilterByPriority(!filterByPriority)}
-                                >
-                                    {filterByPriority ? 'Applied' : 'Apply'}
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/*building filter*/}
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="building">Building</Label>
-                            <div className="flex space-x-2">
-                                <select
-                                    id="building"
-                                    value={selectedBuilding}
-                                    onChange={(e) => {
-                                        const newBuilding = e.target.value;
-                                        setSelectedBuilding(newBuilding);
-                                        // Reset department when building changes
-                                        setSelectedDepartment('');
-                                    }}
-                                    className="rounded-md border h-10 px-3 py-2 w-40"
-                                >
-                                    <option value="">All Buildings</option>
-                                    {values.building.map((building) => (
-                                        <option key={building} value={building}>
-                                            {building}
-                                        </option>
-                                    ))}
-                                </select>
-                                <Button
-                                    variant={filterByBuilding ? 'default' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setFilterByBuilding(!filterByBuilding)}
-                                >
-                                    {filterByBuilding ? 'Applied' : 'Apply'}
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/*department filter*/}
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="department">Department</Label>
-                            <div className="flex space-x-2">
-                                <select
-                                    id="department"
-                                    value={selectedDepartment}
-                                    onChange={(e) => setSelectedDepartment(e.target.value)}
-                                    className="rounded-md border h-10 px-3 py-2 w-40"
-                                >
-                                    <option value="">All Departments</option>
-                                    {availableDepartments.map((dept) => (
-                                        <option key={dept} value={dept}>
-                                            {dept}
-                                        </option>
-                                    ))}
-                                </select>
-                                <Button
-                                    variant={filterByDepartment ? 'default' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setFilterByDepartment(!filterByDepartment)}
-                                >
-                                    {filterByDepartment ? 'Applied' : 'Apply'}
-                                </Button>
+                        {/* personnel filters */}
+                        <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
+                            <h3 className="text-sm font-medium">Personnel</h3>
+                            <div className="space-y-3">
+                                {/* employee filter */}
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="employeeID">Employee ID</Label>
+                                    <div className="flex space-x-2">
+                                        <Input
+                                            id="employeeID"
+                                            value={employeeID}
+                                            onChange={(e) => setEmployeeID(e.target.value)}
+                                            placeholder="Enter ID"
+                                            className="flex-1 min-w-0"
+                                        />
+                                        <Button
+                                            variant={filterByEmployee ? 'default' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilterByEmployee(!filterByEmployee)}
+                                        >
+                                            {filterByEmployee ? 'Applied' : 'Apply'}
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
