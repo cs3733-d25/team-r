@@ -29,7 +29,7 @@ router.post("/", async function (req: Request, res: Response) {
     patient,
     location,
     request,
-    //employee,
+    employeeName,
     patientID,
     drugName,
     morningPillCount,
@@ -41,12 +41,14 @@ router.post("/", async function (req: Request, res: Response) {
     refills,
     additionalInstructions,
   } = req.body;
-  const employeeName = req.session?.username;
-  // console.log(request);
   try {
     await client.pharmacyRequest.create({
       data: {
-        employeeID: employeeName,
+        employeeName: {
+          connect: {
+            id: employeeName,
+          },
+        },
         priority,
         department,
         patientID,

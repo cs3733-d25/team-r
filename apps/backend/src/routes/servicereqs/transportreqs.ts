@@ -26,19 +26,19 @@ router.post("/", async function (req: Request, res: Response) {
     patientID,
     department,
     roomNumber,
-    //employeeName,
+    employeeName,
     comments,
     transportationType,
     currentBuilding,
     desiredBuilding,
   } = req.body;
-  const employeeID = req.session?.username;
+
   try {
     const createRequest = await client.transportRequest.create({
       data: {
         employeeName: {
           connect: {
-            id: employeeID,
+            id: employeeName,
           },
         },
         //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
