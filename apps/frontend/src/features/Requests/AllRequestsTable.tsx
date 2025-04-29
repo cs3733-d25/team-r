@@ -3,17 +3,12 @@ import axios from 'axios';
 import {RequestFilters} from '@/components/RequestFilters.tsx';
 import {SortableTable} from '@/components/SortableTable.tsx';
 import {PaginationControls} from '@/components/PaginationControls.tsx';
-import {useRequestFilters} from '@/hooks/useRequestFilters.ts';
+import {useRequestFilters, BaseRequest} from '@/hooks/useRequestFilters.ts';
 import {RequestInfoButton} from '@/components/ServiceRequests/RequestInfoButton.tsx';
-import values from '@/constant-values.ts';
 
-interface TypedRequest {
+interface TypedRequest extends BaseRequest {
     type: string | null;
     id: string | number | null;
-    department: string | null;
-    employeeID: string | number | null;
-    status: string | null;
-    priority: string | null;
     [key: string]: unknown;
 }
 
@@ -65,6 +60,7 @@ export function AllRequestsTable() {
                 ...req,
                 type: 'Sanitation',
                 id: req.requestId,
+                employeeID: typeof req.employeeID === 'number' ? String(req.employeeID) : req.employeeID
             }));
 
             const prescriptionRes = await axios.get('/api/pharmacy/all-requests');
@@ -72,6 +68,7 @@ export function AllRequestsTable() {
                 ...req,
                 type: 'Prescription',
                 id: req.prescriptionID,
+                employeeID: typeof req.employeeID === 'number' ? String(req.employeeID) : req.employeeID
             }));
 
             const deviceRes = await axios.get('/api/devicereq/');
@@ -79,6 +76,7 @@ export function AllRequestsTable() {
                 ...req,
                 type: 'Medical Device',
                 id: req.requestId,
+                employeeID: typeof req.employeeID === 'number' ? String(req.employeeID) : req.employeeID
             }));
 
             const patientRes = await axios.get('/api/patientreq/');
@@ -86,6 +84,7 @@ export function AllRequestsTable() {
                 ...req,
                 type: 'Patient Request',
                 id: req.patientRequestID,
+                employeeID: typeof req.employeeID === 'number' ? String(req.employeeID) : req.employeeID
             }));
 
             const transportRes = await axios.get('/api/transportreq/');
@@ -93,6 +92,7 @@ export function AllRequestsTable() {
                 ...req,
                 type: 'Transport',
                 id: req.employeeRequestID,
+                employeeID: typeof req.employeeID === 'number' ? String(req.employeeID) : req.employeeID
             }));
 
             // combine all requests
