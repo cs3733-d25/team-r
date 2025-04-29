@@ -9,7 +9,7 @@ import { PrescriptionPage } from './PrescriptionForm/PrescriptionPage';
 import { AllPatientRequests } from './PatientRequest/AllPatientRequests';
 import TransportRequestPage from './PatientTransport/PatientTransport';
 import SanitationRequestPage from './SanitationForm/SanitationRequestPage';
-import AllRequestsTable from "@/features/Requests/AllRequestsTable.tsx";
+import PatientRequestPage from './PatientRequest/PatientRequestPage';
 
 export function AllRequestsPage() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -132,7 +132,7 @@ export function AllRequestsPage() {
                               <CardTitle>All Requests</CardTitle>
                           </CardHeader>
                           <CardContent className="px-6 pb-6 bg-white">
-                              <AllRequestsTable />
+                              <PatientRequestPage />
                           </CardContent>
                       </Card>
                   </TabsContent>

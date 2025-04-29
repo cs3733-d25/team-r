@@ -5,10 +5,7 @@ import {SortableTable} from '@/components/SortableTable.tsx';
 import {PaginationControls} from '@/components/PaginationControls.tsx';
 import {useRequestFilters, BaseRequest} from '@/hooks/useRequestFilters.ts';
 import {RequestInfoButton} from '@/components/ServiceRequests/RequestInfoButton.tsx';
-import {Tabs, TabsList, TabsTrigger, TabsContent} from '@/components/ui/tabs';
-import {PatientRequestForm} from './PatientRequestForm';
 
-// Define the patient request interface
 interface PatientRequest extends BaseRequest {
     patientRequestID: string | number | null;
     employeeID: string | null;
@@ -19,10 +16,10 @@ interface PatientRequest extends BaseRequest {
     requestType: string | null;
     notes: string | null;
     status: string | null;
-    [key: string]: unknown; // Index signature to match BaseRequest
+    [key: string]: unknown;
 }
 
-function AllPatientRequests() {
+function PatientRequestPage() {
     const [patientRequests, setPatientRequests] = useState<PatientRequest[]>([{
         patientRequestID: null,
         employeeID: null,
@@ -94,29 +91,6 @@ function AllPatientRequests() {
             />
         </>
     );
-}
-
-export function PatientRequestPage() {
-    return(
-        <>
-            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Nonemergent Patient Request System</h1>
-            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Nora Cleary & Daksh Gajaria</h2>
-            <Tabs defaultValue="patientRequest">
-                <TabsList>
-                    <TabsTrigger value="patientRequest">
-                        Nonemergent Patient Request</TabsTrigger>
-                    <TabsTrigger value="allPatientRequests">
-                        View All Requests</TabsTrigger>
-                </TabsList>
-                <TabsContent value="patientRequest">
-                    <PatientRequestForm/>
-                </TabsContent>
-                <TabsContent value="allPatientRequests">
-                    <AllPatientRequests />
-                </TabsContent>
-            </Tabs>
-        </>
-    )
 }
 
 export default PatientRequestPage;
