@@ -100,7 +100,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
-
+    const [hallwayFiltered, setHallwayFiltered] = useState(false);
+    const [receptionFiltered, setReceptionFiltered] = useState(false);
+    const [entranceFiltered, setEntranceFiltered] = useState(false);
+    const [elevatorFiltered, setElevatorFiltered] = useState(false);
+    const [parkingLotFiltered, setParkingLotFiltered] = useState(false);
 
     useEffect(() => {
         if(promiseNodeCreate) {
@@ -179,6 +183,14 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     }
     function makeMarkerDisappear(marker:L.Marker){
         marker.setIcon(blackIcon)
+    }
+    function makeMarkerReappear(marker:L.Marker, nodeType:string){
+        switch (nodeType){
+            case "Reception":
+                marker.setIcon(violetIcon)
+                break;
+
+        }
     }
 
 
@@ -374,7 +386,18 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 })
                 fil.map((node)=>{
                     const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                    makeMarkerDisappear(place);
+                    if(!receptionFiltered) {
+                        console.log("CHANGE TO BLACK:", place.getIcon());
+
+                        setReceptionFiltered(true);
+                        makeMarkerReappear(place,"Reception");
+                    }
+                    else{
+                        console.log("CHANGE TO VIOLET:", place.getIcon());
+
+                        setReceptionFiltered(false);
+                        makeMarkerDisappear(place);
+                    }
                 })
 
                 break;
