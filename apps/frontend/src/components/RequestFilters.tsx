@@ -1,7 +1,5 @@
 import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button.tsx";
-import {Input} from "@/components/ui/input.tsx";
-import {Label} from "@/components/ui/label.tsx";
 import values from '@/constant-values';
 
 export interface FilterOptions {
@@ -31,8 +29,6 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
     const [localOptions, setLocalOptions] = useState<FilterOptions>(options);
     const [localState, setLocalState] = useState<FilterState>(filterState);
 
-    const availableDepartments = getDepartmentsForBuilding(localOptions.building);
-
     const getDepartmentsForBuilding = (building: string) => {
         switch (building) {
             case 'Faulkner Hospital':
@@ -51,6 +47,8 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                 ].sort();
         }
     };
+
+    const availableDepartments = getDepartmentsForBuilding(localOptions.building);
 
     // update parent component when local state changes
     useEffect(() => {
