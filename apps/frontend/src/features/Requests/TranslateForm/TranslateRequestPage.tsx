@@ -6,11 +6,11 @@ export function TranslateRequestPage() {
     const [translations, setTranslations] = useState([{
         employeeID: null,
         language: null,
-        urgency: null,
+        priority: null,
         department: null,
         location: null,
         roomNumber: null,
-        description: null,
+        comments: null,
         status: null
     }]);
 
@@ -36,11 +36,11 @@ export function TranslateRequestPage() {
                         <TableRow>
                             <TableHead className="text-center">Employee Name</TableHead>
                             <TableHead className="text-center">Language</TableHead>
-                            <TableHead className="text-center">Urgency</TableHead>
+                            <TableHead className="text-center">Priority</TableHead>
                             <TableHead className="text-center">Department</TableHead>
                             <TableHead className="text-center">Location</TableHead>
                             <TableHead className="text-center">Room Number</TableHead>
-                            <TableHead className="text-center">Description</TableHead>
+                            <TableHead className="text-center">Comments</TableHead>
                             <TableHead className="text-center">Status</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -49,11 +49,11 @@ export function TranslateRequestPage() {
                             <TableRow key={index} className="border-t">
                                 <TableCell>{row.employeeID}</TableCell>
                                 <TableCell>{row.language}</TableCell>
-                                <TableCell>{row.urgency}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.location}</TableCell>
                                 <TableCell>{row.roomNumber}</TableCell>
-                                <TableCell>{row.description}</TableCell>
+                                <TableCell>{row.comments}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                             </TableRow>
                         ))}

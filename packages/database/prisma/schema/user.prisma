@@ -43,6 +43,7 @@ model Employee {
   pharmacyRequests      PharmacyRequest[]
   patientRequests       PatientRequest[]
   transportRequests     TransportRequest[]
+  tranlateRequests  TranslateRequest[]
 }
 
 model Patient {

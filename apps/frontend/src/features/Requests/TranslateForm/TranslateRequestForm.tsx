@@ -5,11 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import Dropdown from '@/components/Dropdowns/Department';
 import LocationDepartmentDropdown from '@/components/Dropdowns/Location-Department';
+import {useAuth0} from "@auth0/auth0-react";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 
 interface SubmittedRequest {
-    requestorName: string;
+    employeeName: string;
     language: string;
     priority: string;
     department: string;
@@ -22,7 +23,7 @@ interface SubmittedRequest {
 
 const TranslateRequestForm = () => {
     const [formData, setFormData] = useState({
-        requestorName: '',
+        employeeName: '',
         language: '',
         priority: '',
         department: '',
@@ -31,6 +32,29 @@ const TranslateRequestForm = () => {
         notes: '',
         status: ''
     });
+    //use auth0 to get the current user data
+    const [userName, setUserName] = useState('');
+    const {user} = useAuth0();
+
+    //get the username from the database
+    useEffect(() => {
+        async function getEmployeeName(){
+            const userName = await axios.post('/api/login/userInfo',
+                {email: user!.email});
+            setUserName(userName.data.firstName);
+        }
+        getEmployeeName();
+    }, [user]);
+
+    //set the form data with the username from the database
+    useEffect(() => {
+        if (userName) {
+            setFormData(prev => ({
+                ...prev,
+                employeeName: userName
+            }));
+        }
+    }, [userName]);
 
     const [submitStatus, setSubmitStatus] = useState<{ message: string; isError: boolean } | null>(null);
     const [resetDropdowns, setResetDropdowns] = useState(false);
@@ -50,7 +74,7 @@ const TranslateRequestForm = () => {
         setSubmitStatus(null);
 
         try {
-            const response = await axios.post('/api/translate', {
+            const response = await axios.post('/api/translate/', {
                 ...formData,
                 priority: formData.priority.toString()
             });
@@ -61,7 +85,7 @@ const TranslateRequestForm = () => {
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
-                    requestorName: '',
+                    employeeName: '',
                     language: '',
                     priority: '',
                     department: '',
@@ -101,20 +125,20 @@ const TranslateRequestForm = () => {
                 <div className="p-5">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Patient ID<span className="text-accent">*</span>
-                                </Label>
-                                <Input
-                                    type="text"
-                                    name="requestorName"
-                                    value={formData.requestorName}
-                                    onChange={handleChange}
-                                    placeholder="Enter patient ID"
-                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                    required
-                                />
-                            </div>
+                            {/*<div>*/}
+                            {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                            {/*        Patient ID<span className="text-accent">*</span>*/}
+                            {/*    </Label>*/}
+                            {/*    <Input*/}
+                            {/*        type="text"*/}
+                            {/*        name="requestorName"*/}
+                            {/*        value={formData.requestorName}*/}
+                            {/*        onChange={handleChange}*/}
+                            {/*        placeholder="Enter patient ID"*/}
+                            {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
+                            {/*        required*/}
+                            {/*    />*/}
+                            {/*</div>*/}
 
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -204,34 +228,34 @@ const TranslateRequestForm = () => {
                         <h3 className="text-lg font-semibold mb-2">Your translator request has been submitted</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name:</span>
-                                {username}
+                                <span className="font-semibold">Employee Name: </span>
+                                {submittedRequest.employeeName}
                             </div>
                             <div>
-                                <span className="font-semibold">Language:</span>
+                                <span className="font-semibold">Language: </span>
                                 {submittedRequest.language}
                             </div>
                             <div>
-                                <span className="font-semibold">Priority:</span>
+                                <span className="font-semibold">Priority: </span>
                                 {submittedRequest.priority}</div>
                             <div>
-                                <span className="font-semibold">Department:</span>
+                                <span className="font-semibold">Department: </span>
                                 {submittedRequest.department}
                             </div>
                             <div>
-                                <span className="font-semibold">Location:</span>
+                                <span className="font-semibold">Location: </span>
                                 {submittedRequest.location}
                             </div>
                             <div>
-                                <span className="font-semibold">Room:</span>
+                                <span className="font-semibold">Room: </span>
                                 {submittedRequest.roomNumber}
                             </div>
                             <div>\
-                                <span className="font-semibold">Status:</span>
+                                <span className="font-semibold">Status: </span>
                                 {submittedRequest.status}
                             </div>
                             <div>
-                                <span className="font-semibold">Notes:</span>
+                                <span className="font-semibold">Notes: </span>
                                 {submittedRequest.notes || "None provided"}
                             </div>
                         </div>
