@@ -35,7 +35,10 @@ export function NavbarMGH(props: NavBarProps) {
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
                 <div className="flex items-center gap-2">
-                    <a href={!props.userType && props.userType !== "Guest" ? '/' : '/home'} className="flex items-center">
+                    <a
+                        href={!props.userType && props.userType !== 'Guest' ? '/' : '/home'}
+                        className="flex items-center"
+                    >
                         <img
                             src="/mgb_white.png"
                             alt="Logo"
@@ -48,52 +51,68 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - Non-Guests */}
-                {props.userType && props.userType !== "Guest" && (
-                    <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
-                        <Button variant="ghost" asChild>
-                            <a href="/directory">Directories</a>
-                        </Button>
+                <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                    <Button variant="ghost" asChild>
+                        <a href="/directory">Directories</a>
+                    </Button>
 
-                        <HoverPopoverNavLink
-                            label={'Navigate'}
-                            href={'/external-map'}
-                            items={props.userType === 'Admin' ? [
-                                { label: 'Find a Location', href: '/external-map' },
-                                { label: 'Edit Map', href: '/edit-map' },
-                            ] : [
-                                { label: 'Find a Location', href: '/external-map' },
-                            ]}
-                        />
+                    <HoverPopoverNavLink
+                        label={'Navigate'}
+                        href={'/external-map'}
+                        items={
+                            props.userType === 'Admin'
+                                ? [
+                                    { label: 'Find a Location', href: '/external-map' },
+                                    { label: 'Edit Map', href: '/edit-map' },
+                                ]
+                                : [{ label: 'Find a Location', href: '/external-map' }]
+                        }
+                    />
 
-                        {(props.userType === 'Admin' || props.userType === 'Employee') && (
-                        <HoverPopoverNavLink
-                            label={'Request a Service'}
-                            href={'/requests'}
-                            items={[
-                                { label: 'Sanitation', href: '/sanitation' },
-                                { label: 'Medical Device', href: '/devicerequest' },
-                                { label: 'Patient Request', href: '/patientrequestpage' },
-                                { label: 'Patient Transport', href: '/transport' },
-                                { label: 'Prescription', href: '/prescription' },
-                                { label: 'Translator Request', href: '/translation' },
-                                { label: 'View All Requests', href: '/requests' },
-                            ]}
-                        />)}
+                    {props.userType && props.userType !== 'Guest' && (
+                        <>
+                            {(props.userType === 'Admin' || props.userType === 'Employee') && (
+                                <HoverPopoverNavLink
+                                    label={'Request a Service'}
+                                    href={'/requests'}
+                                    items={[
+                                        { label: 'Sanitation', href: '/sanitation' },
+                                        { label: 'Medical Device', href: '/devicerequest' },
+                                        { label: 'Patient Request', href: '/patientrequestpage' },
+                                        { label: 'Patient Transport', href: '/transport' },
+                                        { label: 'Prescription', href: '/prescription' },
+                                        { label: 'Translator Request', href: '/translation' },
+                                        { label: 'View All Requests', href: '/requests' },
+                                    ]}
+                                />
+                            )}
 
-                        {(props.userType === 'Admin' || props.userType === 'Employee') && (
-                            <HoverPopoverNavLink
-                                label={'Database'}
-                                href={'/csv'}
-                                items={[
-                                    { label: 'Import a CSV', href: '/csv' },
-                                    { label: 'Export CSV', href: '/csv' },
-                                ]}
-                            />)}
-                    </nav>
-                )}
+                            {(props.userType === 'Admin' || props.userType === 'Employee') && (
+                                <HoverPopoverNavLink
+                                    label={'Database'}
+                                    href={'/csv'}
+                                    items={[
+                                        { label: 'Import a CSV', href: '/csv' },
+                                        { label: 'Export CSV', href: '/csv' },
+                                    ]}
+                                />
+                            )}
+                        </>
+                    )}
+                    {/*About and Credits Page*/}
+                    <HoverPopoverNavLink
+                        label={'About'}
+                        href={'/about'}
+                        items={[
+                            { label: 'Credits', href: '/credits' },
+                            { label: 'About Us', href: '/about' },]}
+                    />
+                </nav>
+
+
 
                 {/* Icons on right */}
-                {props.userType && props.userType != "Guest" && (
+                {props.userType && props.userType != 'Guest' && (
                     <div className="ml-auto flex items-center gap-2">
                         {/* Bell currently non-functional*/}
                         <Button
@@ -154,9 +173,11 @@ export function NavbarMGH(props: NavBarProps) {
                     </div>
                 )}
                 {/* Only display login button in logged-out home page */}
-                {(!isAuthenticated) && (
+                {!isAuthenticated && (
                     <div className="ml-auto flex items-center gap-2">
-                        <Button variant="ghost" onClick={() => loginWithRedirect()}>Login</Button>
+                        <Button variant="ghost" onClick={() => loginWithRedirect()}>
+                            Login
+                        </Button>
                     </div>
                 )}
             </div>
@@ -183,31 +204,35 @@ export function NavbarMGH(props: NavBarProps) {
                     </Button>
                 </div>
                 <nav className="flex flex-col gap-4 p-4">
-                    {props.userType && props.userType != "Guest" && (
-                        <Button variant="ghost" asChild>
-                            <a href="/directory">Directories</a>
-                        </Button>
-                    )}
-                    {props.userType && props.userType != "Guest" && (
-                        <Button variant="ghost" asChild>
-                            <a href="/external-map">Navigate</a>
-                        </Button>
-                    )}
-                    {props.userType === "Admin" && (
+                    <Button variant="ghost" asChild>
+                        <a href="/directory">Directories</a>
+                    </Button>
+
+                    <Button variant="ghost" asChild>
+                        <a href="/external-map">Navigate</a>
+                    </Button>
+
+                    {props.userType === 'Admin' && (
                         <Button variant="ghost" asChild>
                             <a href="/edit-map">Edit Map</a>
                         </Button>
                     )}
-                    {(props.userType === "Employee" || props.userType === "Admin") && (
+                    {(props.userType === 'Employee' || props.userType === 'Admin') && (
                         <Button variant="ghost" asChild>
                             <a href="/requests">Request a Service</a>
                         </Button>
                     )}
-                    {(props.userType === "Employee" || props.userType === "Admin") && (
+                    {(props.userType === 'Employee' || props.userType === 'Admin') && (
                         <Button variant="ghost" asChild>
                             <a href="/csv">Database</a>
                         </Button>
                     )}
+                    <Button variant="ghost" asChild>
+                        <a href="/about">About</a>
+                    </Button>
+                    <Button variant="ghost" asChild>
+                        <a href="/credits">Credits</a>
+                    </Button>
                 </nav>
             </div>
         </header>

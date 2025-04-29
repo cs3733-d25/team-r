@@ -322,7 +322,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     function getLayer (building:string, floor: number){
         let out = null;
         switch (building) {
-            case 'Healthcare Center (20 Patriot Pl.)':
+            case 'Patriot Place 20':
                 switch (floor) {
                     case 1:
                         out = floorLayer20_1;
@@ -332,7 +332,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Healthcare Center (22 Patriot Pl.)':
+            case 'Patriot Place 22':
                 switch (floor) {
                     case 1:
                         out = floorLayer22_1;
@@ -348,13 +348,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Healthcare Center (Chestnut Hill)':
+            case 'Chestnut Hill':
                 out = floorLayerChestnutHill;
                 break;
-            case 'Faulkner Hospital':
+            case 'Faulkner':
                 out = floorLayerFaulkner;
                 break;
-            case 'Main Campus Hospital (75 Francis St.)':
+            case 'Womens':
                 out = floorLayerWomens;
                 break;
             default:

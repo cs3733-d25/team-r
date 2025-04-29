@@ -5,7 +5,6 @@ import PrismaClient from "../../bin/prisma-client.ts";
 
 const router: Router = express.Router();
 
-
 // router.post("/signup", async function (req: Request, res: Response) {
 //   const { userType, email, id } = req.body;
 //   console.log("inside /signup: ", userType);
@@ -18,8 +17,7 @@ const router: Router = express.Router();
 //   });
 // });
 
-
-router.post("/userInfo", async (req, res ) => {
+router.post("/userInfo", async (req, res) => {
   console.log("IN USERTYPE");
   const user = await PrismaClient.user.findUnique({
     where: { email: req.body.email },
@@ -27,10 +25,14 @@ router.post("/userInfo", async (req, res ) => {
   if (!user) {
     console.error("User not found for email:", req.body.email);
     res.status(404).json({ error: "User not found" });
-  } else{
+  } else {
     console.log("User from database: ", user);
     console.log("firstName: ", user.firstName);
-    res.status(200).json({ userType: user.userType, firstName: user.firstName, id: user.id});
+    res.status(200).json({
+      userType: user.userType,
+      firstName: user.firstName,
+      id: user.id,
+    });
   }
 });
 

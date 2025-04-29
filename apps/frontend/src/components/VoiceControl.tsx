@@ -36,6 +36,29 @@ export function VoiceControl({
     const building = useMapData(selectedBuilding);
     const [parkingLot, setParkingLot] = useState<string>('');
     const [department, setDepartment] = useState<string>('');
+    //some names aren't recognized by voice recognition, so replaces it with what the user would likely try to pronounce it as
+    const altNames = new Map<string, string>([
+        ["Blood Draw/Phlebotomy", "blood draw / phlebotomy"],
+        ["Orthopaedics", "orthopedics"],
+        ["Speech - Language", "speech language"],
+        ["Surgi-Care", "surgicare"],
+        ["MassGeneral Hospital for Children", "mass general hospital for children"],
+        ["Spaulding Outpatient Care for Children", "spalding outpatient care for children"],
+        ["Multi Specialty Clinic", "multi-specialty clinic"],
+        ["Kidney (Renal) Medicine", "kidney renal medicine"],
+        ["Radiology (MRI/CT Scan)", "radiology mri ct scan"],
+        ["Brigham Dermatology Associates (BDA)", "brigham dermatology associates"],
+        ["Brigham Physicians Group (BPG)", "brigham physicians group"],
+        ["Gretchen S. and Edward A. Fish Center for Women's Health", "gretchen s and edward a fish center for women's health"],
+        ["Brigham Obstetrics and Gynecology Group (BOGG)", "brigham obstetrics and gynecology group"],
+        ["Taiclet Family Center", "takelet family center"],
+        ["Psychiatric/Addiction Recovery", "psychiatric / addiction recovery"],
+        ["Gynecology & Oncology", "gynecology and oncology"],
+        ["Huvos Auditorium", "juvos auditorium"],
+        ["Sadowsky Conference Room", "sadowski conference room"],
+        ["Endocrinology/Diabetes/Hemotology", "endocrinology/diabetes/hematology"],
+        ["Orthopaedic Associates", "orthopedic associates"],
+    ])
 
     /**
      * commands is an array of objects that define the commands for the speech recognition
@@ -92,6 +115,12 @@ export function VoiceControl({
             }
         }
 
+        for (const dept of building.departments) {
+            const altName = altNames.get(dept.name);
+            if (typeof altName === 'string') {
+                dept.name = altName;
+            }
+        }
         console.log("Building departments:", building.departments);
 
         // Check for department matches in the transcript
