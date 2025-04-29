@@ -39,7 +39,7 @@ const AboutPage = () => {
         {
             name: 'Keagan Hitt',
             role: 'Scrum Master / Front-End Developer',
-            photoURL: '/public/keagan.png',
+            photoURL: '/public/keagan.jpg',
         },
         {
             name: 'Owen Miller',
