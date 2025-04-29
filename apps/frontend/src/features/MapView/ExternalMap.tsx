@@ -288,7 +288,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== mainCampus  ? 'selected' : 'secondary'
+                                        selectedLocation !== mainCampus  ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(mainCampus)}
                                 >

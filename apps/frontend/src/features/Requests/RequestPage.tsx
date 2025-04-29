@@ -70,11 +70,11 @@ export function AllRequestsPage() {
             </TabsContent>
 
             <TabsContent value="medical-device" className="-mt-px">
-              <Card className="rounded-lg overflow-hidden bg-primary">
-                <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
+              <Card>
+                <CardHeader>
                   <CardTitle>Medical Device Requests</CardTitle>
                 </CardHeader>
-                <CardContent className="px-6 pb-6 bg-white">
+                <CardContent>
                   <DeviceReqPage />
                 </CardContent>
               </Card>

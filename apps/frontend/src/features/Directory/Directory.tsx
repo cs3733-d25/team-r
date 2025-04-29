@@ -64,8 +64,9 @@ export function Directory() {
                             <Button
                                 key={buildingInfo.buildingValue}
                                 onClick={() => setSelectedBuilding(buildingInfo.buildingValue)}
-                                variant={selectedBuilding === buildingInfo.buildingValue ? 'default' : 'secondary'}
-                                className="whitespace-normal text-left h-auto justify-start py-3 w-full">
+                                variant={selectedBuilding === buildingInfo.buildingValue ? 'secondary' : 'unselected'}
+
+                            >
                                 {buildingInfo.building}
                             </Button>
                         ))}

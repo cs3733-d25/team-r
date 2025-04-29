@@ -2,35 +2,67 @@ import React from 'react';
 
 const AboutPage = () => {
     const lead = [
-        { name: 'Sarayu Vijayanagaram', role: 'Lead Software Engineer' },
+        {
+            name: 'Sarayu Vijayanagaram',
+            role: 'Lead Software Engineer',
+            photoURL: '/public/sarayu.png',
+        },
     ];
 
     const assistantLeads = [
-        { name: 'Nora Cleary', role: 'Assistant Software Engineer / Back-End Developer' },
-        { name: 'Akaash Walker', role: 'Assistant Software Engineer / Front-End Developer' },
+        {
+            name: 'Nora Cleary',
+            role: 'Assistant Software Engineer / Back-End Developer',
+            photoURL: '/public/nora.png',
+        },
+        {
+            name: 'Akaash Walker',
+            role: 'Assistant Software Engineer / Front-End Developer',
+            photoURL: '/public/akaash.png',
+        },
     ];
 
     const managementTop = [
-        { name: 'Brian Grande', role: 'Project Manager / Back-End Developer' },
-        { name: 'Alex Lowczyk', role: 'Front-End Developer / Product Owner' },
+        {
+            name: 'Brian Grande',
+            role: 'Project Manager / Back-End Developer',
+            photoURL: '/public/brian.png',
+        },
+        {
+            name: 'Alex Lowczyk',
+            role: 'Front-End Developer / Product Owner',
+            photoURL: '/public/alex.png',
+        },
     ];
 
     const managementBottom = [
-        { name: 'Keagan Hitt', role: 'Scrum Master / Front-End Developer' },
-        { name: 'Owen Miller', role: 'Documentation Analyst / Back-End Developer' },
+        {
+            name: 'Keagan Hitt',
+            role: 'Scrum Master / Front-End Developer',
+            photoURL: '/public/keagan.png',
+        },
+        {
+            name: 'Owen Miller',
+            role: 'Documentation Analyst / Back-End Developer',
+            photoURL: '/public/owen.png',
+        },
     ];
 
     const developers = [
-        { name: 'Daksh Gajaria', role: 'Back-End Developer' },
-        { name: 'Joshua Gifford', role: 'Front-End Developer' },
-        { name: 'Riley Meyers', role: 'Front-End Developer' },
+        { name: 'Daksh Gajaria', role: 'Back-End Developer', photoURL: '/public/daksh.png' },
+        { name: 'Joshua Gifford', role: 'Front-End Developer', photoURL: '/public/joshua.png' },
+        { name: 'Riley Meyers', role: 'Front-End Developer', photoURL: '/public/riley.png' },
     ];
 
-    const Card = ({ name, role }: { name: string; role: string }) => (
+    const Card = ({ name, role, photoURL }: { name: string; role: string; photoURL: string }) => (
         <div className="bg-white shadow-md rounded-2xl p-4 flex flex-row items-center w-96 h-48 space-x-4 hover:shadow-lg transition-shadow">
             <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-lg bg-gray-300 flex items-center justify-center text-xs">
-                    Photo
+                <div className="w-24 h-24 rounded-2xl overflow-hidden">
+                    <img
+                        src={photoURL}
+                        alt={name}
+                        className="w-full h-full rounded-lg object-cover"
+                    />
                 </div>
             </div>
             <div className="flex flex-col justify-center text-left">
@@ -53,13 +85,17 @@ const AboutPage = () => {
 
             {/* Team Sections */}
             <div className="flex flex-col w-full max-w-[1400px] space-y-16">
-
                 {/* Lead */}
                 <div className="flex flex-col items-center space-y-6">
                     <h2 className="text-2xl font-bold text-center">Lead Software Engineer</h2>
                     <div className="flex justify-center flex-wrap gap-8">
                         {lead.map((member, idx) => (
-                            <Card key={idx} name={member.name} role={member.role} />
+                            <Card
+                                key={idx}
+                                name={member.name}
+                                role={member.role}
+                                photoURL={member.photoURL}
+                            />
                         ))}
                     </div>
                 </div>
@@ -69,7 +105,12 @@ const AboutPage = () => {
                     <h2 className="text-2xl font-bold text-center">Assistant Software Engineers</h2>
                     <div className="flex justify-center flex-wrap gap-8">
                         {assistantLeads.map((member, idx) => (
-                            <Card key={idx} name={member.name} role={member.role} />
+                            <Card
+                                key={idx}
+                                name={member.name}
+                                role={member.role}
+                                photoURL={member.photoURL}
+                            />
                         ))}
                     </div>
                 </div>
@@ -81,14 +122,24 @@ const AboutPage = () => {
                     {/* Top Management Row -> Product Owner/Project Manager*/}
                     <div className="flex justify-center gap-8">
                         {managementTop.map((member, idx) => (
-                            <Card key={idx} name={member.name} role={member.role} />
+                            <Card
+                                key={idx}
+                                name={member.name}
+                                role={member.role}
+                                photoURL={member.photoURL}
+                            />
                         ))}
                     </div>
 
                     {/* Bottom Management Row ->Documentation/Scrum Master*/}
                     <div className="flex justify-center gap-8">
                         {managementBottom.map((member, idx) => (
-                            <Card key={idx} name={member.name} role={member.role} />
+                            <Card
+                                key={idx}
+                                name={member.name}
+                                role={member.role}
+                                photoURL={member.photoURL}
+                            />
                         ))}
                     </div>
                 </div>
@@ -98,11 +149,15 @@ const AboutPage = () => {
                     <h2 className="text-2xl font-bold text-center">Developers</h2>
                     <div className="flex justify-center flex-wrap gap-8">
                         {developers.map((member, idx) => (
-                            <Card key={idx} name={member.name} role={member.role} />
+                            <Card
+                                key={idx}
+                                name={member.name}
+                                role={member.role}
+                                photoURL={member.photoURL}
+                            />
                         ))}
                     </div>
                 </div>
-
             </div>
 
             {/* Footer */}
@@ -111,7 +166,8 @@ const AboutPage = () => {
                     Special Thanks to Brigham and Women’s Hospital and Andrew Shinn
                 </p>
                 <p className="text-sm text-gray-500">
-                    The Brigham & Women’s Hospital maps and data used in this application are copyrighted and provided for the sole use of educational purposes.
+                    The Brigham & Women’s Hospital maps and data used in this application are
+                    copyrighted and provided for the sole use of educational purposes.
                 </p>
             </div>
         </div>
