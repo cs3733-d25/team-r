@@ -492,6 +492,7 @@ async function main() {
         data: {
             deviceType: 'Syringe',
             priority: 'Medium',
+            building: 'Faulkner Hospital',
             room: '121',
             department: "Blood Drawing Lab",
             //requestTime:
@@ -505,6 +506,7 @@ async function main() {
         data: {
             deviceType: 'EKG Machine',
             priority: 'High',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             room: '125',
             department: "Urgent Care Center",
             //requestTime:
@@ -521,6 +523,7 @@ async function main() {
             employeeID: 'Nora',
             /*employeeName: */
             priority: 'Medium',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             department: "Allergy",
             patientID: 'Josh',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -542,6 +545,7 @@ async function main() {
             employeeID: 'Brian',
             /*employeeName: */
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: "Cardiac Rehab",
             patientID: 'Keagan',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -563,6 +567,7 @@ async function main() {
             employeeID: 'Sarayu',
             /*employeeName: */
             priority: 'High',
+            building: 'Faulkner Hospital',
             department: "Foot and Ankle Center",
             patientID: 'Alex',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -585,8 +590,8 @@ async function main() {
         data: {
             patientID: 'Alex',
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: 'Blood Drawing Lab',
-            location: 'Faulkner Hospital',
             status: 'Completed',
             employeeID: 'Akaash',
             /*employeeName: */
@@ -600,7 +605,7 @@ async function main() {
             patientID: 'Josh',
             priority: 'Medium',
             department: 'ENT',
-            location: 'Healthcare Center (20 Patriot Pl.)',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             status: 'Pending',
             employeeID: 'Riley',
             /*employeeName: */
@@ -614,7 +619,7 @@ async function main() {
             patientID: 'Keagan',
             priority: 'Low',
             department: 'Community Room',
-            location: 'Healthcare Center (22 Patriot Pl.)',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             status: 'Canceled',
             employeeID: 'Daksh',
             /*employeeName: */

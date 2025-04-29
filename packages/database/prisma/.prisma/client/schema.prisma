@@ -144,6 +144,7 @@ model TransportRequest {
   desiredBuilding    String
 
   priority    String
+  building    String
   department  String
   comments    String
   status      String
