@@ -3,13 +3,39 @@ import axios from 'axios'
 import {RequestFilters} from '@/components/RequestFilters.tsx';
 import {SortableTable} from '@/components/SortableTable.tsx';
 import {PaginationControls} from '@/components/PaginationControls.tsx';
-import {useRequestFiltering} from '@/hooks/useRequestFilters.ts';
+import {useRequestFilters, BaseRequest} from '@/hooks/useRequestFilters.ts';
 import {RequestInfoButton} from '@/components/ServiceRequests/RequestInfoButton.tsx';
 
-export function SanitationRequestPage() {
-    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
+// define this interface to prevent errors
+interface SanitationRequest extends BaseRequest{
+    employeeID: string | null;
+    sanitationType: string | null;
+    priority: string | null;
+    department: string | null;
+    location: string | null;
+    roomNumber: string | null;
+    requestTime: string | null;
+    comments: string | null;
+    status: string | null;
+    requestId: string | null;
+    [key: string]: unknown; // added this index signature to match BaseRequest
+}
 
-    const filtering = useRequestFiltering(sanitation);
+export function SanitationRequestPage() {
+    const [sanitation, setSanitation] = useState<SanitationRequest[]>([{
+        employeeID: null,
+        sanitationType: null,
+        priority: null,
+        department: null,
+        location: null,
+        roomNumber: null,
+        requestTime: null,
+        comments: null,
+        status: null,
+        requestId: null
+    }]);
+
+    const filtering = useRequestFilters(sanitation);
 
     useEffect(() => {
         retrieveFromDatabase();
@@ -33,12 +59,8 @@ export function SanitationRequestPage() {
         {field: 'employeeID', header: 'Employee', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
-        {field: 'actions', header: 'Details', cellRenderer: (item: any) => (
-            <RequestInfoButton type="Sanitation" id={item.requestId} />
-            )
-        }
+        {field: 'actions', header: 'Details', cellRenderer: (item: SanitationRequest) => (<RequestInfoButton type="Sanitation" id={item.requestId} />) }
     ];
-
 
     return(
         <>
