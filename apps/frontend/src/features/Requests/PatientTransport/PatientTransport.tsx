@@ -1,31 +1,30 @@
-import {useState, useEffect} from 'react'
-import axios from 'axios'
-import {Link} from "react-router-dom";
-import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/components/ui/table"
-import {PatientTransportTable} from "@/features/Requests/PatientTransport/PatientTransportTable.tsx";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import PatientTransportForm from "@/features/Requests/PatientTransport/PatientTransportForm.tsx";
+import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
 
 export function TransportRequestPage() {
-    const [transport, setTransport] = useState([{employeeID:null, patientID:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
-    function displayTable() {
-        useEffect(() => {
-            retrieveFromDatabase()
-        }, []);
-    }
-    displayTable();
-    async function retrieveFromDatabase() {
-        try{
-            const response = await axios.get("/api/transportreq/")
-            console.log("response from / get", response.data)
-            setTransport(response.data);
-            console.log(response.data);
-        }
-        catch(error){
-            console.log("error in retrieve:", error);
-        }
-    }
     return(
         <>
-            <PatientTransportTable transport={transport} />
+            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Patient Transport Request</h1>
+            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Alex Lowczyk and Joshua Gifford</h2>
+            <Tabs defaultValue="patientTransportForm">
+                <TabsList>
+                    <TabsTrigger value="patientTransportForm">
+                        Patient Transport Request</TabsTrigger>
+                    <TabsTrigger value="patientTransportTable"
+                    >
+                        View All Requests</TabsTrigger>
+                </TabsList>
+                <div>
+                    <TabsContent value="patientTransportForm">
+                        <PatientTransportForm />
+                    </TabsContent>
+                    <TabsContent value="patientTransportTable">
+                        <PatientTransportPage />
+                    </TabsContent>
+                </div>
+            </Tabs>
+
         </>
     )
 }
