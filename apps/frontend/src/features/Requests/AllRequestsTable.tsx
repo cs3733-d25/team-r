@@ -130,6 +130,25 @@ export function AllRequestsTable() {
         }
     }
 
+    const isDepartmentInBuilding = (department: string | null, building: string): boolean => {
+        if (!department) return false;
+
+        switch(building) {
+            case "Faulkner Hospital":
+                return values.departmentsFAll.includes(department);
+            case "Main Campus Hospital (75 Francis St.)":
+                return values.departmentsWAll.includes(department);
+            case "Healthcare Center (Chestnut Hill)":
+                return values.departmentsCH.includes(department);
+            case "Healthcare Center (20 Patriot Pl.)":
+                return values.departmentsPP20.includes(department);
+            case "Healthcare Center (22 Patriot Pl.)":
+                return values.departmentsPP22.includes(department);
+            default:
+                return true;
+        }
+    };
+
     // filtering logic
     const filteredRequests = requests.filter(req => {
         if (filterByEmployee && employeeID && (!req.employeeID || String(req.employeeID) !== employeeID)) {
@@ -139,6 +158,9 @@ export function AllRequestsTable() {
             return false;
         }
         if (filterByPriority && selectedPriority && (!req.priority || req.priority !== selectedPriority)) {
+            return false;
+        }
+        if (filterByBuilding && selectedBuilding && !isDepartmentInBuilding(req.department, selectedBuilding)) {
             return false;
         }
         if (filterByDepartment && selectedDepartment && (!req.department || req.department !== selectedDepartment)) {
