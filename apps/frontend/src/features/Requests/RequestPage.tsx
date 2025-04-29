@@ -114,7 +114,7 @@ export function AllRequestsPage() {
                   <CardTitle>Transport Requests</CardTitle>
                 </CardHeader>
                 <CardContent className="px-6 pb-6 bg-white">
-                  <TransportRequestPage />
+                  <PatientTransportPage />
                 </CardContent>
               </Card>
             </TabsContent>
