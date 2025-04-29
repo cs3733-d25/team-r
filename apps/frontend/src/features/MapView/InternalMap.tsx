@@ -322,7 +322,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     function getLayer (building:string, floor: number){
         let out = null;
         switch (building) {
-            case 'Patriot Place 20':
+            case 'Healthcare Center (20 Patriot Pl.)':
                 switch (floor) {
                     case 1:
                         out = floorLayer20_1;
@@ -332,7 +332,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Patriot Place 22':
+            case 'Healthcare Center (22 Patriot Pl.)':
                 switch (floor) {
                     case 1:
                         out = floorLayer22_1;
@@ -348,13 +348,13 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         break;
                 }
                 break;
-            case 'Chestnut Hill':
+            case 'Healthcare Center (Chestnut Hill)':
                 out = floorLayerChestnutHill;
                 break;
-            case 'Faulkner':
+            case 'Faulkner Hospital':
                 out = floorLayerFaulkner;
                 break;
-            case 'Womens':
+            case 'Main Campus Hospital (75 Francis St.)':
                 out = floorLayerWomens;
                 break;
             default:
@@ -429,24 +429,24 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
             // tracking layer changes
             map.on('baselayerchange', function(e) {
-                // extract info from layer name
-                const layerName = e.name;
-                let building = '';
-                let floor = 1;
+                    // extract info from layer name
+                    const layerName = e.name;
+                    let building = '';
+                    let floor = 1;
 
-                if (layerName.includes('Healthcare Center (20 Patriot Pl.)')) {
-                    building = 'Patriot Place 20';
-                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('Healthcare Center (22 Patriot Pl.)')) {
-                    building = 'Patriot Place 22';
-                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('Healthcare Center (Chestnut Hill)')) {
-                    building = 'Chestnut Hill';
-                } else if (layerName.includes('Faulkner Hospital')) {
-                    building = 'Faulkner';
-                } else if (layerName.includes('Main Campus Hospital (75 Francis St.)')) {
-                    building = 'Womens';
-                }
+                    if (layerName.includes('20 Patriot Place')) {
+                        building = 'Healthcare Center (20 Patriot Pl.)';
+                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                    } else if (layerName.includes('22 Patriot Place')) {
+                        building = 'Healthcare Center (22 Patriot Pl.)';
+                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                    } else if (layerName.includes('Chestnut Hill')) {
+                        building = 'Healthcare Center (Chestnut Hill)';
+                    } else if (layerName.includes('Faulkner Hospital')) {
+                        building = 'Faulkner Hospital';
+                    } else if (layerName.includes('Main Campus Hospital')) {
+                        building = 'Main Campus Hospital (75 Francis St.)';
+                    }
 
                 activeLayerInfo.current = {building, floor};
                 console.log("Layer changed to:", building, floor);
