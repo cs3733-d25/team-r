@@ -288,10 +288,11 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         return {nodeData: node, marker: marker}
                     }
                     else{
+                        console.log("It's a red marker!!!")
                         const marker = L.marker([node.xcoord, node.ycoord], {
                             icon: getIcon(node.nodeType),
-                            draggable: true
                         });
+
                         return {nodeData: node, marker: marker}
                     }
                 })
