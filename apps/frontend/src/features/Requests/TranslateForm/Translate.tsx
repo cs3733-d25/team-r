@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tabs.tsx';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
 import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
 import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 
