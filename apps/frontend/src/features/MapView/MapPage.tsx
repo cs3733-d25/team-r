@@ -66,7 +66,7 @@ export function MapPage() {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
                 'Healthcare Center (20 Patriot Pl.)': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'Heathcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Healthcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
                 // TODO: add women's hospital parking lots
