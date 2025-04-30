@@ -18,8 +18,9 @@ router.post(
         locationFormat = "Healthcare Center (22 Patriot Pl.)";
       } else if (location.includes("Faulkner")) {
         locationFormat = "Faulkner Hospital";
+      } else if (location.includes("75 Francis St")) {
+        locationFormat = "Main Campus Hospital (75 Francis St.)";
       }
-      // TODO: add main campus location
       if (!department || !location) {
         res.status(400).json({ error: "Missing required fields" });
         return;
