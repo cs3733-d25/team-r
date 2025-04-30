@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
@@ -25,31 +24,30 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { TourProvider } from '@/components/tour.tsx';
-import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
-import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
-import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
+import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx";
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState("Guest");
     const [userFirstName, setUserFirstName] = useState("");
-    console.log('APP IS RENDERED');
 
-    // Get the user type from the database after the user has logged in
+    // 🟢 Apply stored theme on first render
     useEffect(() => {
-        if (user) {
-            console.log('user exists', user);
+        const storedTheme = localStorage.getItem('theme');
+        const root = document.documentElement;
+        root.classList.remove('light', 'dark', 'theme-sepia');
+        if (storedTheme === 'dark' || storedTheme === 'theme-sepia' || storedTheme === 'light') {
+            root.classList.add(storedTheme);
         } else {
-            console.log('No user found: ', user);
+            root.classList.add('light'); // fallback
         }
-        console.log('isLoading', isLoading);
-        console.log('userType', userType);
-        console.log('user', user);
-        console.log('isAuthenticated', isAuthenticated);
+    }, []);
+
+    // Fetch user type on login
+    useEffect(() => {
         if (isAuthenticated && !isLoading && user) {
-            console.log("in if statement");
             async function getUserType() {
                 try {
                     const response = await axios.post(
@@ -57,12 +55,8 @@ function App() {
                         { email: user?.email },
                         { withCredentials: true }
                     );
-                    console.log("firstName: ", response.data.firstName);
-                    const userType = response.data.userType;
-                    const firstName = response.data.firstName;
-                    setUserType(userType);
-                    setUserFirstName(firstName);
-                    console.log('userType', userType);
+                    setUserType(response.data.userType);
+                    setUserFirstName(response.data.firstName);
                 } catch (error) {
                     console.log(error);
                 }
@@ -74,13 +68,14 @@ function App() {
     const router = createBrowserRouter([
         {
             path: '/',
-            errorElement:
-                <div className={"bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover"}>
-                    <p className={'font-trade'}>Page not found</p>
-                </div>,
+            errorElement: (
+                <div className="bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover">
+                    <p className="font-trade">Page not found</p>
+                </div>
+            ),
             children: [
                 { index: true, element: <HomeMain userType={userType} /> },
-                { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
+                { path: 'home', element: <HomeMain userType={userType} status="logged-in" /> },
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'about', element: <AboutPage /> },
@@ -93,14 +88,14 @@ function App() {
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
-                { path: 'settings', element: <SettingsPage /> }, // ✅ Added route
+                { path: 'settings', element: <SettingsPage /> }, // ✅ Theme settings
                 { path: 'prescription', element: <Prescription /> },
                 { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
                 { path: 'translation', element: <Translate /> },
-                { path: 'requests', element: <RequestPage /> }
+                { path: 'requests', element: <RequestPage /> },
             ],
         },
     ]);
