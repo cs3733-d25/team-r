@@ -234,7 +234,7 @@ export function EditMap({ status }: EditMapProps) {
 
         // use currentBuilding and currentFloor from state (automatically updated when layer changes)
         const nodeData = {
-            nodeID: nodeName || `${nodeType}-${Date.now()}`,
+            nodeID: `${nodeType}-${Date.now()}`,
             nodeType: nodeType,
             building: selectedLocation.building,
             floor: selectedLocation.floor,

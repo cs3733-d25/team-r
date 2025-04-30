@@ -56,7 +56,7 @@ router.post("/edges", async (req, res) => {
     });
     console.log("found " + data.length + " nodes that follow the above");
     res.json(data);
-    console.log(data);
+    // console.log(data);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
