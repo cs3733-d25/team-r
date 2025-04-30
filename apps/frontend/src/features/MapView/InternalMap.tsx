@@ -231,21 +231,9 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
 
     }
-    function makeMarkerDisappear(marker:L.Marker){
-        marker.setIcon(blackIcon)
-    }
-    function makeMarkerReappear(marker:L.Marker, nodeType:string){
-        switch (nodeType){
-            case "Reception":
-                marker.setIcon(violetIcon)
-                break;
-        }
-    }
 
     console.log("App Update");
     console.log(location.building + ' ' + location.floor);
-
-    // console.log(activeLayerInfo.current);
 
     function clickEdge(edge:Edge, pLine:L.Polyline){
         pLine.on('contextmenu', () => {
@@ -266,7 +254,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 // const data = await fetchAll();
                 // gets all type of nodes for the floor
                 console.log("Loading nodes");
-                const nodes = (await fetchNodes(location)).data;
+                const nodes = (await fetchNodes({building: location.building, floor: location.floor})).data;
                 console.log("recieved nodes");
                 console.log(nodes);
 
@@ -294,15 +282,17 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
         }
     }
     const loadAllEdges = async () => {
-        if(location.building === lastLoadedLocation.current.building && location.floor === lastLoadedLocation.current.floor)
-        {
+        if (
+            location.building === lastLoadedLocation.current.building &&
+            location.floor === lastLoadedLocation.current.floor
+        ) {
             return;
         }
             try {
                 // const data = await fetchAll();
 
                 console.log("Loading nodes");
-                const edges = (await fetchEdges(location)).data;
+                const edges = (await fetchEdges({building: location.building, floor: location.floor})).data;
               console.log("edges:",edges)
 
                 const fullEdges = edges.map((edge: Edge) => {
@@ -312,8 +302,8 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ])
+                    console.log("we reached here");
                     return {edgeData: edge, polyLine:line }
-                    console.log("we reached here")
                 })
 setEdgesOnActiveFloor(fullEdges)
                 lastLoadedLocation.current.floor = fullEdges.floor;
@@ -381,14 +371,7 @@ setEdgesOnActiveFloor(fullEdges)
         // console.log("Building:  " + building + ", floor:  " + floor);
         switch (building) {
             case 'Healthcare Center (20 Patriot Pl.)':
-                switch (floor) {
-                    case 1:
-                        out = floorLayer20_1;
-                        break;
-                    default:
-                        console.log("a node had an invalid floor number");
-                        break;
-                }
+                out = floorLayer20_1;
                 break;
             case 'Healthcare Center (22 Patriot Pl.)':
                 switch (floor) {
@@ -477,7 +460,7 @@ setEdgesOnActiveFloor(fullEdges)
                     edgesOnActiveFloor.map((fullEdge) => {
                         // check if we want to display that type
                         // console.log("attemption to add to layer");
-                        console.log("layers:",layer)
+                        //console.log("layers:",layer)
                         fullEdge.polyLine.addTo(layer);
 
 
