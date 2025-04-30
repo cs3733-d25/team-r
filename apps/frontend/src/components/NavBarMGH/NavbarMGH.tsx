@@ -228,10 +228,10 @@ export function NavbarMGH(props: NavBarProps) {
                         </Button>
                     )}
                     <Button variant="ghost" asChild>
-                        <a href="/about">About</a>
+                        <a href="/credits">Credits</a>
                     </Button>
                     <Button variant="ghost" asChild>
-                        <a href="/credits">Credits</a>
+                        <a href="/about">Our Team</a>
                     </Button>
                 </nav>
             </div>
