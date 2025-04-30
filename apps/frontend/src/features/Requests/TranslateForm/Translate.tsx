@@ -6,7 +6,6 @@ function TranslateRequestTabs() {
     return (
         <>
             <h1 className="text-2xl font-trade font-bold mb-0 place-self-center">Translator Request System</h1>
-            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Riley Meyers</h2>
             <Tabs defaultValue="translateRequestForm">
                 <TabsList>
                     <TabsTrigger value="translateRequestForm">
