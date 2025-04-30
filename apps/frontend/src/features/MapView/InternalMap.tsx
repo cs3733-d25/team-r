@@ -24,7 +24,7 @@ import {
     fetchEdgesFaulkner,
     fetchHallways,
     fetchOther,
-    fetchNodes, fetchAll,
+    fetchNodes, fetchAll, fetchEdges,
 } from '@/features/MapView/mapService.ts';
 import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
@@ -157,6 +157,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     // store the node data and the marker objects for each node
     // in this way, we can filter markers using node data
     const [nodesOnActiveFloor, setNodesOnActiveFloor] = useState<{nodeData:Node, marker:L.Marker}[]>([]);
+    const [edgesOnActiveFloor, setEdgesOnActiveFloor] = useState<{edgeData:Edge, polyLine:L.Polyline}[]>([]);
     // const [allMarkers, setAllMarkers] = useState<L.Marker[]>([]);
     // const [checkIn, setCheckIn] = useState<Node[]>([]); // ? what does this do?
     // const [other, setOther] = useState<Node[]>([]); // this one is unused
@@ -304,6 +305,38 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
         }
     }
+    const loadAllEdges = async () => {
+        if(location.building === lastLoadedLocation.current.building && location.floor === lastLoadedLocation.current.floor)
+        {
+            return;
+        }
+        else {
+            try {
+                // const data = await fetchAll();
+
+                console.log("Loading nodes");
+                const edges = (await fetchEdges(location)).data;
+
+
+                const fullEdges = edges.map((edge: Edge) => {
+                   const line = L.polyline([
+                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
+                        [edge.toNode.xcoord, edge.toNode.ycoord],
+                    ])
+                    return {edgeData: edge, polyLine: line}
+                })
+
+                // setAllMarkers(response.data);
+                // console.log(data);
+
+                setEdgesOnActiveFloor(fullEdges);
+                lastLoadedLocation.current.floor = fullEdges.floor;
+                lastLoadedLocation.current.building = fullEdges.building;
+            } catch (err) {
+                console.error('Error fetching parking lots:', err);
+            }
+        }
+    }
     // const loadEdges = async () => {
     //     try {
     //         setIsLoading(true);
@@ -332,6 +365,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
     async function loadAll() {
         await loadAllNodes()
+        await loadAllEdges()
         console.log("Loading nodes");
         // await loadEdges();
     }
@@ -577,6 +611,7 @@ filtered.map((node)=>{
     // load all the nodes and edges when the location changes (location change causes a rerender of the whole component?)
     useEffect(() => {
         loadAllNodes()
+        loadAllEdges()
         console.log("-> new location and or floor");
         console.log(location.building + " "+location.floor);
     }, [location.building,location.floor]);

@@ -40,6 +40,9 @@ export const postEdgeDeletion  = async (edgeID: string): Promise<AxiosResponse> 
 export const fetchNodes = async (fields:{nodeType?: string, building?: string, floor?:number}): Promise<AxiosResponse> => {
     return await axios.post(`/api/map/nodes`, {fields});
 }
+export const fetchEdges = async (fields:{ fromID?: string, toID?: string, building?: string, floor?:number}): Promise<AxiosResponse> => {
+    return await axios.post(`/api/map/edges`, {fields});
+}
 
 export const fetchCheckIn = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/check-in');
