@@ -24,6 +24,7 @@ interface PrescriptionRequest extends BaseRequest {
     refills: number | null;
     additionalInstructions: string | null;
     status: string | null;
+    building: string | null;
     [key: string]: unknown; // added this index signature to match BaseRequest
 }
 
@@ -46,6 +47,7 @@ export function PrescriptionPage() {
             refills: null,
             additionalInstructions: null,
             status: null,
+            building: null,
         }]);
 
     const filtering = useRequestFilters(prescription);
@@ -66,10 +68,11 @@ export function PrescriptionPage() {
     }
 
     const columns = [
-        {field: 'drugName', header: 'Medication', sortable: true},
-        {field: 'patientID', header: 'Patient ID', sortable: true},
-        {field: 'department', header: 'Department', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'drugName', header: 'Medication', sortable: true},
+        {field: 'building', header: 'Location', sortable: true},
+        {field: 'department', header: 'Department', sortable: true},
+        {field: 'patientID', header: 'Patient', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: PrescriptionRequest) => (<RequestInfoButton type="Prescription" id={item.prescriptionID ? Number(item.prescriptionID) : null} />)}

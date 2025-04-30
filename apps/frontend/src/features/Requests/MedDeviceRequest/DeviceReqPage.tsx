@@ -50,12 +50,11 @@ export function DeviceReqPage() {
     }
 
     const columns = [
-        {field: 'deviceType', header: 'Device Type', sortable: true},
-        // {field: 'deviceID', header: 'Device ID', sortable: true},
-        {field: 'building', header: 'Building', sortable: true},
+        {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'deviceType', header: 'Device', sortable: true},
+        {field: 'building', header: 'Location', sortable: true},
         {field: 'department', header: 'Department', sortable: true},
         {field: 'room', header: 'Room', sortable: true},
-        {field: 'employeeID', header: 'Employee', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: DeviceRequest) => (<RequestInfoButton type="Medical Device" id={item.requestId ? Number(item.requestId) : null} />) }

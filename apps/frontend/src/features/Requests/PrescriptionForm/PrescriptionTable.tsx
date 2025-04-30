@@ -10,6 +10,7 @@ import {
 interface PrescriptionTableProps {
     prescription: {
         prescriptionID: number | null,
+        building: number | null,
         employeeID: string | null,
         priority: string | null,
         department: string | null,
@@ -32,11 +33,12 @@ export function PrescriptionTable(props: PrescriptionTableProps) {
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead className={'text-center'}>Employee Name</TableHead>
-                    <TableHead className={'text-center'}>Prescription Name</TableHead>
-                    <TableHead className={'text-center'}>Priority</TableHead>
+                    <TableHead className={'text-center'}>Employee</TableHead>
+                    <TableHead className={'text-center'}>Medication</TableHead>
+                    <TableHead className={'text-center'}>Location</TableHead>
                     <TableHead className={'text-center'}>Department</TableHead>
-                    <TableHead className={'text-center'}>Patient ID</TableHead>
+                    <TableHead className={'text-center'}>Patient</TableHead>
+                    <TableHead className={'text-center'}>Priority</TableHead>
                     <TableHead className={'text-center'}>Morning Pill Count</TableHead>
                     <TableHead className={'text-center'}>Midday Pill Count</TableHead>
                     <TableHead className={'text-center'}>Evening Pill Count</TableHead>
@@ -55,9 +57,10 @@ export function PrescriptionTable(props: PrescriptionTableProps) {
                             <TableRow key={index} className={'border-t'}>
                                 <TableCell>{row.employeeID}</TableCell>
                                 <TableCell>{row.drugName}</TableCell>
-                                <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.building}</TableCell>
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.patientID}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.morningPillCount}</TableCell>
                                 <TableCell>{row.middayPillCount}</TableCell>
                                 <TableCell>{row.eveningPillCount}</TableCell>

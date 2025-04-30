@@ -250,7 +250,7 @@ const TranslateRequestForm = () => {
                                 <span className="font-semibold">Room: </span>
                                 {submittedRequest.roomNumber}
                             </div>
-                            <div>\
+                            <div>
                                 <span className="font-semibold">Status: </span>
                                 {submittedRequest.status}
                             </div>

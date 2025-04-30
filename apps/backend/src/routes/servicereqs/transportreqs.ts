@@ -10,7 +10,7 @@ router.get("/", async function (req: Request, res: Response) {
     const requests = await client.transportRequest.findMany({
       orderBy: { priority: "asc" },
     });
-    console.log(requests);
+    console.log("TRANSPORTATION: ", requests);
     res.status(200).json(requests); // Send transportation data as JSON
   } catch (error) {
     console.error("Error fetching transportation request data:", error);
