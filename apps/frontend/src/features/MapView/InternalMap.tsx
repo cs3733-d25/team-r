@@ -287,30 +287,37 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 setNodesOnActiveFloor(fullNodes);
                 lastLoadedLocation.current.floor = fullNodes.floor;
                 lastLoadedLocation.current.building = fullNodes.building;
+
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
             }
         }
     }
     const loadAllEdges = async () => {
+        if(location.building === lastLoadedLocation.current.building && location.floor === lastLoadedLocation.current.floor)
+        {
+            return;
+        }
             try {
                 // const data = await fetchAll();
 
                 console.log("Loading nodes");
-                const edges = (await fetchEdges()).data;
+                const edges = (await fetchEdges(location)).data;
               console.log("edges:",edges)
 
-                edges.map((edge: Edge) => {
-                    console.log("edge ",edge.fromNode.xcoord);
+                const fullEdges = edges.map((edge: Edge) => {
+
 
                  const line =  L.polyline([
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ])
-                    return {edgeData: edge, polyline:line }
+                    return {edgeData: edge, polyLine:line }
                     console.log("we reached here")
                 })
-setEdgesOnActiveFloor(edges)
+setEdgesOnActiveFloor(fullEdges)
+                lastLoadedLocation.current.floor = fullEdges.floor;
+                lastLoadedLocation.current.building = fullEdges.building;
 
                 // setAllMarkers(response.data);
                 // console.log(data);
@@ -319,11 +326,11 @@ setEdgesOnActiveFloor(edges)
                 console.error('Error fetching parking lots:', err);
             }
 
+
     }
 
-    async function loadAll() {
-        await loadAllNodes()
-        await loadAllEdges()
+    function loadAll() {
+        Promise.all([loadAllEdges(),loadAllNodes()]);
         console.log("Loading nodes");
         // await loadEdges();
     }
@@ -451,8 +458,7 @@ setEdgesOnActiveFloor(edges)
 
     // load all the nodes and edges when the location changes (location change causes a rerender of the whole component?)
     useEffect(() => {
-        loadAllNodes()
-        loadAllEdges()
+        loadAll()
         console.log("-> new location and or floor");
         console.log(location.building + " "+location.floor);
     }, [location.building,location.floor]);
@@ -461,13 +467,21 @@ setEdgesOnActiveFloor(edges)
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
             // when the nodes and markers are loaded, display them
-            if(nodesOnActiveFloor) {
+            if(nodesOnActiveFloor && edgesOnActiveFloor) {
                 console.log(nodesOnActiveFloor.length+" full nodes exist now in this state!");
                 // check if the layer exists for the building and floor we are in
                 const layer = getLayer(location.building, location.floor);
                 // console.log(activeLayerInfo.current);
                 console.log("layer:", layer);
                 if(layer) {
+                    edgesOnActiveFloor.map((fullEdge) => {
+                        // check if we want to display that type
+                        // console.log("attemption to add to layer");
+                        console.log("layers:",layer)
+                        fullEdge.polyLine.addTo(layer);
+
+
+                    })
                     nodesOnActiveFloor.map((fullNode) => {
                         // check if we want to display that type
                         if(isFiltered(fullNode.nodeData.nodeType)){
@@ -478,6 +492,9 @@ setEdgesOnActiveFloor(edges)
                             fullNode.marker.remove();
                         }
                     })
+                    console.log("reached here")
+                    console.log("Edges given", edgesOnActiveFloor)
+
 
                 }
             }
