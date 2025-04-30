@@ -57,7 +57,7 @@ const AboutPage = () => {
     ];
 
     const Card = ({ name, role, photoURL }: { name: string; role: string; photoURL: string }) => (
-        <div className="bg-white shadow-md rounded-2xl p-4 flex flex-row items-center w-96 h-48 space-x-4 hover:shadow-lg transition-shadow">
+        <div className="bg-white dark:bg-card shadow-md rounded-2xl p-4 flex flex-row items-center w-96 h-48 space-x-4 hover:shadow-lg transition-shadow">
             <div className="flex-shrink-0">
                 <div className="w-24 h-24 rounded-2xl overflow-hidden">
                     <img
@@ -69,7 +69,7 @@ const AboutPage = () => {
             </div>
             <div className="flex flex-col justify-center text-left">
                 <h3 className="text-xl font-bold">{name}</h3>
-                <p className="text-gray-600 text-sm">{role}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{role}</p>
             </div>
         </div>
     );
@@ -133,7 +133,7 @@ const AboutPage = () => {
                         ))}
                     </div>
 
-                    {/* Bottom Management Row ->Documentation/Scrum Master*/}
+                    {/* Bottom Management Row -> Documentation/Scrum Master */}
                     <div className="flex justify-center gap-8">
                         {managementBottom.map((member, idx) => (
                             <Card
@@ -167,7 +167,7 @@ const AboutPage = () => {
                 <p className="text-lg font-semibold">
                     Special Thanks to Brigham and Women’s Hospital and Andrew Shinn
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                     The Brigham & Women’s Hospital maps and data used in this application are
                     copyrighted and provided for the sole use of educational purposes.
                 </p>
