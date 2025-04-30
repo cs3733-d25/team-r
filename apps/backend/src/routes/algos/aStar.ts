@@ -29,7 +29,7 @@ export class AStar implements PathfindingAlgorithm {
       */
   private async euclideanDistance(a: string, b: string): Promise<number> {
         const [nA, nB] = await this.getNodePair(a, b);
-        return Math.hypot(nA.x - nB.x, nA.y - nB.y);
+        return Math.hypot(nA.xcoord - nB.xcoord, nA.ycoord - nB.ycoord);
       }
 
   /**
