@@ -157,7 +157,7 @@
     --primary: #304269;
     --primary-foreground: #FFFFFF;
     --secondary: #6C8EB1;
-    /*--secondary: #6b86c2;*/
+    --inside-boxes: #dbdbdbd;
     --secondary-foreground: #304269;
     --muted: #6C8EB1;
     --muted-foreground: oklch(0.556 0 0);
@@ -231,6 +231,11 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    .dark body {
+        @apply bg-background text-foreground;
+    }
+
 }
 
 /* fonts! */
@@ -253,7 +258,20 @@
         50% { opacity: 0; }
         100% { opacity: 1; }
     }
+    @keyframes fade-in {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
     .animate-flash {
         animation: flash 1s linear infinite;
+    }
+    .animate-fade-in {
+        animation: fade-in 0.8s ease-in-out;
+    }
+    .animate-fade-in-delay-1 {
+        animation: fade-in 0.8s ease-in-out;
+        animation-delay: 1s;
+        opacity: 0;
+        animation-fill-mode: forwards;
     }
 }

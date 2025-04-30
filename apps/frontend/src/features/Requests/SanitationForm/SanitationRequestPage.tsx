@@ -32,7 +32,8 @@ export function SanitationRequestPage() {
         requestTime: null,
         comments: null,
         status: null,
-        requestId: null
+        requestId: null,
+        assignedEmployeeID: null,
     }]);
 
     const filtering = useRequestFilters(sanitation);
@@ -54,10 +55,13 @@ export function SanitationRequestPage() {
     }
 
     const columns = [
-        {field: 'sanitationType', header: 'Type', sortable: true},
-        {field: 'department', header: 'Department', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'building', header: 'Building', sortable: true},
+        {field: 'department', header: 'Department', sortable: true},
+        {field: 'roomNumber', header: 'Room', sortable: true},
+        {field: 'sanitationType', header: 'Type', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: SanitationRequest) => (<RequestInfoButton type="Sanitation" id={item.requestId ? Number(item.requestId) : null} />) }
     ];

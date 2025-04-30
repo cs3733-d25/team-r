@@ -10,7 +10,7 @@ router.get("/", async function (req: Request, res: Response) {
     const requests = await client.transportRequest.findMany({
       orderBy: { priority: "asc" },
     });
-    console.log(requests);
+    console.log("TRANSPORTATION: ", requests);
     res.status(200).json(requests); // Send transportation data as JSON
   } catch (error) {
     console.error("Error fetching transportation request data:", error);
@@ -31,6 +31,7 @@ router.post("/", async function (req: Request, res: Response) {
     transportationType,
     currentBuilding,
     desiredBuilding,
+      assignedEmployee
   } = req.body;
 
   try {
@@ -51,9 +52,11 @@ router.post("/", async function (req: Request, res: Response) {
         priority,
         department,
         comments,
-        status,
-        //assignedEmployee: employeeName //connect later
-        //user: { connect: { id: request.userID } }, // connect to whatever user has that ID number
+        status,assignedEmployee: {
+          connect: {
+            id: assignedEmployee,
+          },
+        },
       },
     });
 

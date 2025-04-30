@@ -17,6 +17,7 @@ interface DeviceRequest extends BaseRequest {
     comments: string | null;
     employeeID: string | null;
     status: string | null;
+    assignedEmployeeID: string | null;
     [key: string]: unknown;
 }
 
@@ -31,7 +32,8 @@ export function DeviceReqPage() {
         department: null,
         comments: null,
         employeeID: null,
-        status: null
+        status: null,
+        assignedEmployeeID: null,
     }]);
 
     const filtering = useRequestFilters(device);
@@ -50,13 +52,13 @@ export function DeviceReqPage() {
     }
 
     const columns = [
-        {field: 'deviceType', header: 'Device Type', sortable: true},
-        // {field: 'deviceID', header: 'Device ID', sortable: true},
-        {field: 'building', header: 'Building', sortable: true},
+        {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'deviceType', header: 'Device', sortable: true},
+        {field: 'building', header: 'Location', sortable: true},
         {field: 'department', header: 'Department', sortable: true},
         {field: 'room', header: 'Room', sortable: true},
-        {field: 'employeeID', header: 'Employee', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: DeviceRequest) => (<RequestInfoButton type="Medical Device" id={item.requestId ? Number(item.requestId) : null} />) }
     ];
@@ -71,6 +73,9 @@ export function DeviceReqPage() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

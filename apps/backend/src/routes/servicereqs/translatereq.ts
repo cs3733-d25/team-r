@@ -25,10 +25,11 @@ router.post("/", async function (req: Request, res: Response) {
     status,
     department,
     notes,
-    building,
+    location,
     language,
     roomNumber,
     employeeName,
+      assignedEmployee,
   } = req.body;
 
   try {
@@ -36,7 +37,7 @@ router.post("/", async function (req: Request, res: Response) {
       data: {
         priority,
         department,
-        building,
+        building: location,
         status,
         roomNumber: parseInt(roomNumber, 10),
         employeeName: {
@@ -46,7 +47,11 @@ router.post("/", async function (req: Request, res: Response) {
         },
         language,
         comments: notes,
-        //assignedEmployee: employeeName //fix this to connect correctly
+        assignedEmployee: {
+          connect: {
+            id: assignedEmployee,
+          },
+        },
       },
     });
     // console.log(createRequest);

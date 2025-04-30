@@ -17,6 +17,7 @@ interface DeviceReqTableProps {
         comments: string | null;
         employeeID: string | null;
         status: string | null;
+        building: string | null;
     }[];
 }
 
@@ -25,11 +26,12 @@ export function DeviceReqTable(props: DeviceReqTableProps) {
         <Table>
             <TableHeader>
                 <TableRow>
+                    <TableHead className={'text-center'}>Employee</TableHead>
                     <TableHead className={'text-center'}>Device</TableHead>
-                    <TableHead className={'text-center'}>Priority</TableHead>
-                    <TableHead className={'text-center'}>Room</TableHead>
+                    <TableHead className={'text-center'}>Location</TableHead>
                     <TableHead className={'text-center'}>Department</TableHead>
-                    <TableHead className={'text-center'}>Employee Name</TableHead>
+                    <TableHead className={'text-center'}>Room</TableHead>
+                    <TableHead className={'text-center'}>Priority</TableHead>
                     <TableHead className={'text-center'}>Status</TableHead>
                     <TableHead className={'text-center'}>Comments</TableHead>
                 </TableRow>
@@ -39,11 +41,12 @@ export function DeviceReqTable(props: DeviceReqTableProps) {
                     return (
                         <>
                             <TableRow key={index} className={'border-t'}>
-                                <TableCell>{row.deviceType}</TableCell>
-                                <TableCell>{row.priority}</TableCell>
-                                <TableCell>{row.room}</TableCell>
-                                <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.employeeID}</TableCell>
+                                <TableCell>{row.deviceType}</TableCell>
+                                <TableCell>{row.building}</TableCell>
+                                <TableCell>{row.department}</TableCell>
+                                <TableCell>{row.room}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>{row.comments}</TableCell>
                             </TableRow>

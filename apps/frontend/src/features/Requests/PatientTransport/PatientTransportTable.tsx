@@ -13,6 +13,7 @@ interface PatientTransportTableProps {
         requestTime:string | null,
         comments:string | null,
         status:string | null,
+        assignedEmployeeID:string | null,
         userId:string | null}[]
 }
 
@@ -21,15 +22,17 @@ export function PatientTransportTable(props: PatientTransportTableProps) {
         <Table>
             <TableHeader >
                 <TableRow>
-                    <TableHead className={"text-center"}>Employee Name</TableHead>
-                    <TableHead className={"text-center"}>Patient</TableHead>
-                    <TableHead className={"text-center"}>Transportation Type</TableHead>
-                    <TableHead className={"text-center"}>Priority</TableHead>
-                    <TableHead className={"text-center"}>Department</TableHead>
+                    <TableHead className={"text-center"}>Employee</TableHead>
                     <TableHead className={"text-center"}>Current Building</TableHead>
+                    <TableHead className={"text-center"}>Department</TableHead>
                     <TableHead className={"text-center"}>Desired Building</TableHead>
-                    <TableHead className={"text-center"}>Comments</TableHead>
+                    <TableHead className={"text-center"}>Transportation Type</TableHead>
+                    <TableHead className={"text-center"}>Patient</TableHead>
+                    <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={"text-center"}>Status</TableHead>
+                    <TableHead className={"text-center"}>Comments</TableHead>
+
                 </TableRow>
             </TableHeader>
             <TableBody className="text-center">
@@ -39,14 +42,15 @@ export function PatientTransportTable(props: PatientTransportTableProps) {
                         <>
                             <TableRow key = {index} className={"border-t"} >
                                 <TableCell>{row.employeeID}</TableCell>
-                                <TableCell>{row.patientID}</TableCell>
-                                <TableCell >{row.transportationType}</TableCell>
-                                <TableCell>{row.priority}</TableCell>
-                                <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.currentBuilding}</TableCell>
+                                <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.desiredBuilding}</TableCell>
-                                <TableCell>{row.comments}</TableCell>
+                                <TableCell >{row.transportationType}</TableCell>
+                                <TableCell>{row.patientID}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
+                                <TableCell>{row.comments}</TableCell>
 
                             </TableRow>
 

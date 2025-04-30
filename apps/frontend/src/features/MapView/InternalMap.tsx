@@ -84,6 +84,8 @@ interface InternalMapProps {
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
+    onToggle?:(bool:boolean) => void;
+    selectedEdgeNodes?: string[];
 }
 
 // persistent leaflet elements
@@ -162,7 +164,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -179,6 +181,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+    const highlightedNodeLayers = useRef<L.Circle[]>([]);
+
+    const selectedNodeStyle = {
+        color: '#2563eb',
+        fillColor: '#3b82f6',
+        fillOpacity: 0.8,
+        radius: 10,
+        weight: 3
+    };
 
     const [hallwayFiltered, setHallwayFiltered] = useState(false);  // whether to show that type of node or not. False means the node type should be shown
     const [receptionFiltered, setReceptionFiltered] = useState(false);
@@ -394,12 +405,16 @@ setEdgesOnActiveFloor(fullEdges)
     function isFiltered (nodeType:string) {
         switch (nodeType) {
             case "Entrance":
-                setEntranceFiltered(!entranceFiltered);
                 loadAll()
+                setEntranceFiltered(!entranceFiltered);
+                loadAll();
+
                 break;
             case "Parking":
-                setParkingLotFiltered(!parkingLotFiltered);
                 loadAll()
+                setParkingLotFiltered(!parkingLotFiltered);
+                loadAll();
+
                 break;
             case "Reception":
                 setReceptionFiltered(!receptionFiltered);
@@ -490,11 +505,7 @@ setEdgesOnActiveFloor(fullEdges)
         }
     }, [promiseEdgeCreate]);
 
-    // load all the nodes and edges when the page first loads
-    useEffect(() => {
-        console.log("-> About to load things");
-       loadAll();
-    }, []);
+
 
     // load all the nodes and edges when the location changes (location change causes a rerender of the whole component?)
     useEffect(() => {
@@ -502,6 +513,11 @@ setEdgesOnActiveFloor(fullEdges)
         console.log("-> new location and or floor");
         console.log(location.building + " "+location.floor);
     }, [location.building,location.floor]);
+    useEffect(() => {
+        loadAll()
+        console.log("-> new location and or floor");
+        console.log(location.building + " "+location.floor);
+    }, [hallwayFiltered, entranceFiltered, sidewalkingFiltered, elevatorFiltered, receptionFiltered, parkingLotFiltered]);
 
     // reload the leaflet elements when something changes
     useEffect(() => {
@@ -593,41 +609,14 @@ setEdgesOnActiveFloor(fullEdges)
             }, {}).addTo(map);
 
             // tracking layer changes
-            map.on('baselayerchange', function(e) {
-                    // extract info from layer name
-                    const layerName = e.name;
-                    let building = '';
-                    let floor = 1;
-
-                    if (layerName.includes('20 Patriot Place')) {
-                        building = 'Healthcare Center (20 Patriot Pl.)';
-                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                    } else if (layerName.includes('22 Patriot Place')) {
-                        building = 'Healthcare Center (22 Patriot Pl.)';
-                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                    } else if (layerName.includes('Chestnut Hill')) {
-                        building = 'Healthcare Center (Chestnut Hill)';
-                    } else if (layerName.includes('Faulkner Hospital')) {
-                        building = 'Faulkner Hospital';
-                    } else if (layerName.includes('Main Campus Hospital')) {
-                        building = 'Main Campus Hospital (75 Francis St.)';
-                    }
-
-                // activeLayerInfo.current = {building, floor};
-                console.log("Layer changed to:" + building + floor);
-
-                if (onLocationChange) {
-                    onLocationChange(building, floor);
-                }
-            });
 
 
 
             // add a default layer
             if (typeof location.building === "string") {
-                if (location.building.includes('Patriot Place 20')) {
+                if (location.building.includes('20')) {
                     floorLayer20_1.addTo(map);
-                } else if (location.building.includes('Patriot Place 22')) {
+                } else if (location.building.includes('22')) {
                     if(location.floor == 1) {
                         floorLayer22_1.addTo(map);
                     }else if(location.floor == 3) {
@@ -640,7 +629,39 @@ setEdgesOnActiveFloor(fullEdges)
                 } else if (location.building.includes('Faulkner')) {
                     floorLayerFaulkner.addTo(map);
                 }
+                else if (location.building.includes('Main')) {
+                    floorLayerWomens.addTo(map);
+                }
             }
+            map.on('baselayerchange', function(e) {
+                // extract info from layer name
+                const layerName = e.name;
+                let building = '';
+                let floor = 1;
+
+                if (layerName.includes('20')||layerName.includes('20 Patriot')) {
+                    building = 'Healthcare Center (20 Patriot Pl.)';
+                } else if (layerName.includes('22' ) || layerName.includes('22 Patriot')) {
+                    building = 'Healthcare Center (22 Patriot Pl.)';
+                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                } else if (layerName.includes('Chestnut Hill')) {
+                    building = 'Healthcare Center (Chestnut Hill)';
+                } else if (layerName.includes('Faulkner Hospital')) {
+                    building = 'Faulkner Hospital';
+                } else if (layerName.includes('Main')) {
+                    building = 'Main Campus Hospital (75 Francis St.)';
+                }
+
+                // activeLayerInfo.current = {building, floor};
+                console.log("Layer changed to:" + building + floor);
+                location.building = building;
+                location.floor = floor;
+
+                if (onLocationChange) {
+                    onLocationChange(building, floor);
+                }
+            });
+
 
             map.on('click', function (e) {
                 // parse the new coordinates
@@ -760,6 +781,32 @@ setEdgesOnActiveFloor(fullEdges)
         }
     }, [pathCoordinates, pathByFloor]); // also on location ?
 
+    // function to update highlighted nodes
+    const updateHighlightedNodes = () => {
+        // clear previous highlights
+        highlightedNodeLayers.current.forEach(layer => layer.remove());
+        highlightedNodeLayers.current = [];
+
+        if (!mapInstance.current || !selectedEdgeNodes?.length) return;
+
+
+        // highlight selected nodes
+        selectedEdgeNodes.forEach(nodeId => {
+            const node = nodesOnActiveFloor.find(n => n.nodeData.nodeID === nodeId);
+            if (node) {
+                const highlight = L.circle(
+                    [node.nodeData.xcoord, node.nodeData.ycoord],
+                    selectedNodeStyle
+                ).addTo(mapInstance.current!);
+                highlightedNodeLayers.current.push(highlight);
+            }
+        });
+    };
+
+    useEffect(() => {
+        updateHighlightedNodes();
+    }, [selectedEdgeNodes, nodesOnActiveFloor]);
+
     // ******** ACTUAL HTML *********
     return (
         <div>
@@ -773,7 +820,8 @@ setEdgesOnActiveFloor(fullEdges)
                     zIndex: 0,
                 }}
             />
-            <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:1}}>
+            {onToggle?
+            <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:0}}>
                 <ToggleGroup type={"multiple"} >
                     <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
                     <ToggleGroupItem value={"Hallways"} onClick={()=>isFiltered("Hallway")}>H</ToggleGroupItem>
@@ -783,7 +831,7 @@ setEdgesOnActiveFloor(fullEdges)
                     <ToggleGroupItem value={"Elevator"} onClick={()=>isFiltered("Elevator")}>EL</ToggleGroupItem>
                     <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
                 </ToggleGroup>
-            </div>
+            </div>:null}
 
         </div>
     );
