@@ -45,12 +45,17 @@ router.post("/nodes", async (req, res) => {
 });
 router.post("/edges", async (req, res) => {
   try {
-    const fields = req.body;
+    const fields = req.body.fields;
     console.log(fields);
     // console.log("Looking for nodes of type " + fields.nodeType);
     const data = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: fields,
+        toNode: fields,
+      },
       include: {
         fromNode: true,
+
         toNode: true,
       },
     });
