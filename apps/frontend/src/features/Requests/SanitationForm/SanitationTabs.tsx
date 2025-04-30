@@ -5,7 +5,7 @@ import SanitationRequestPage from "@/features/Requests/SanitationForm/Sanitation
 function SanitationRequestTabs() {
     return(
         <>
-            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Sanitation Request</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center pt-12">Sanitation Request</h1>
             <Tabs defaultValue="sanitationRequestForm" >
                 <TabsList>
                     <TabsTrigger value="sanitationRequestForm">
