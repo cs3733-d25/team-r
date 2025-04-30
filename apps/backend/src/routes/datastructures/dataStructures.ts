@@ -118,18 +118,34 @@ export class PriorityQueue<T> {
     this.heap = [];
   }
 }
-  export class Astart implements PathfindingAlgorithm {
+  export class aStar implements aStar {
     /**
      * helper: given 2 node, grab their Node objects and return as a tuple
      */
+    private getNodePair(a: string, b: string): [Node, Node] {
+      const [nodeA, nodeB] = getNodeObjects([a, b]);
+      return [nodeA, nodeB];
+    }
 
     /**
      * Helper: Euclidean distance between 2 nodes
      */
+    private euclideanDistance(a: string, b: string): number {
+      const [nodeA, nodeB] = this.getNodePair(a, b);
+      const dx = nodeA.x - nodeB.x;
+      const dy = nodeA.y - nodeB.y;
+      return Math.hypot(dx, dy);
+    }
+
 
     /**
      * Helper: scale straigth-line distance by the true edge
      */
+    private heuristic (a: string, b: string): number {
+      const d = this.euclideanDistance(a, b);
+      const w = this.graph.getEdgeWeight(a, b);
+      return d * w;
+    }
 
 
 

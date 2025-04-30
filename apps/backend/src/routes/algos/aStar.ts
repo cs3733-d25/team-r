@@ -1,14 +1,5 @@
 
 
-<<<<<<< HEAD
-import prismaClient from "../../bin/prisma-client";
-import { PriorityQueue }    from "../datastructures/dataStructures";
-import router                from "../maps/mapData";
-import { Graph }             from "../maps/Graph";
-import { PathfindingAlgorithm } from "./algoSelection";;
-=======
->>>>>>> 3aa0362f265e4440949723e5a1ee020e9af4f98f
-
 import prismaClient from "../../bin/prisma-client.ts";
 import { PriorityQueue } from "../datastructures/dataStructures.ts";
 import router, { Node } from "../maps/mapData.ts";
