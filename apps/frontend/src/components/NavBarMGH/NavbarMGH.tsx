@@ -81,6 +81,7 @@ export function NavbarMGH(props: NavBarProps) {
                                         { label: 'Patient Request', href: '/patientrequestpage' },
                                         { label: 'Patient Transport', href: '/transport' },
                                         { label: 'Prescription', href: '/prescription' },
+                                        { label: 'Translator Request', href: '/translation' },
                                         { label: 'View All Requests', href: '/requests' },
                                     ]}
                                 />
@@ -102,7 +103,9 @@ export function NavbarMGH(props: NavBarProps) {
                     <HoverPopoverNavLink
                         label={'About'}
                         href={'/about'}
-                        items={[{ label: 'Credits', href: '/credits' }]}
+                        items={[
+                            { label: 'Credits', href: '/credits' },
+                            { label: 'About Us', href: '/about' },]}
                     />
                 </nav>
 
@@ -234,4 +237,4 @@ export function NavbarMGH(props: NavBarProps) {
             </div>
         </header>
     );
-}
+};

@@ -69,6 +69,7 @@ interface InternalMapProps {
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
+    selectedEdgeNodes?: string[];
 }
 
 const nodePlaceholderOptions = {
@@ -78,7 +79,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag, onNodeEdit, selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -101,6 +102,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     //const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+    const highlightedNodeLayers = useRef<L.Circle[]>([]);
+
+    const selectedNodeStyle = {
+        color: '#2563eb',
+        fillColor: '#3b82f6',
+        fillOpacity: 0.8,
+        radius: 10,
+        weight: 3
+    };
 
 
     useEffect(() => {
@@ -444,24 +454,24 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
             // tracking layer changes
             map.on('baselayerchange', function(e) {
-                // extract info from layer name
-                const layerName = e.name;
-                let building = '';
-                let floor = 1;
+                    // extract info from layer name
+                    const layerName = e.name;
+                    let building = '';
+                    let floor = 1;
 
-                if (layerName.includes('Healthcare Center (20 Patriot Pl.)')) {
-                    building = 'Patriot Place 20';
-                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('Healthcare Center (22 Patriot Pl.)')) {
-                    building = 'Patriot Place 22';
-                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                } else if (layerName.includes('Healthcare Center (Chestnut Hill)')) {
-                    building = 'Chestnut Hill';
-                } else if (layerName.includes('Faulkner Hospital')) {
-                    building = 'Faulkner';
-                } else if (layerName.includes('Main Campus Hospital (75 Francis St.)')) {
-                    building = 'Womens';
-                }
+                    if (layerName.includes('20 Patriot Place')) {
+                        building = 'Healthcare Center (20 Patriot Pl.)';
+                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                    } else if (layerName.includes('22 Patriot Place')) {
+                        building = 'Healthcare Center (22 Patriot Pl.)';
+                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                    } else if (layerName.includes('Chestnut Hill')) {
+                        building = 'Healthcare Center (Chestnut Hill)';
+                    } else if (layerName.includes('Faulkner Hospital')) {
+                        building = 'Faulkner Hospital';
+                    } else if (layerName.includes('Main Campus Hospital')) {
+                        building = 'Main Campus Hospital (75 Francis St.)';
+                    }
 
                 activeLayerInfo.current = {building, floor};
                 console.log("Layer changed to:", building, floor);
@@ -744,6 +754,34 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
         }
     }, [pathCoordinates, pathByFloor, currentFloor]);
+
+    // function to update highlighted nodes
+    const updateHighlightedNodes = () => {
+        // clear previous highlights
+        highlightedNodeLayers.current.forEach(layer => layer.remove());
+        highlightedNodeLayers.current = [];
+
+        if (!mapInstance.current || !selectedEdgeNodes?.length) return;
+
+        // find all nodes
+        const allNodes = [...checkIn, ...entrances, ...elevators, ...lots, ...hallways, ...other];
+
+        // highlight selected nodes
+        selectedEdgeNodes.forEach(nodeId => {
+            const node = allNodes.find(n => n.nodeID === nodeId);
+            if (node) {
+                const highlight = L.circle(
+                    [node.xcoord, node.ycoord],
+                    selectedNodeStyle
+                ).addTo(mapInstance.current!);
+                highlightedNodeLayers.current.push(highlight);
+            }
+        });
+    };
+
+    useEffect(() => {
+        updateHighlightedNodes();
+    }, [selectedEdgeNodes, checkIn, entrances, elevators, lots, hallways, other]);
 
     return (
         <div>
