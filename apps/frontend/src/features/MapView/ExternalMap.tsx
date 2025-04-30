@@ -192,8 +192,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         fullscreenControl={false}
                         mapTypeControl={false}
                     />
-                    {/* on the fritz, will flash screen with zoomed in locations before displaying
-                    Temporarily disabled for now, in Jira as a bug fix*/}
+                    {/* on the fritz, will flash screen with zoomed in locations before displaying */}
+                    {/* Temporarily disabled for now, in Jira as a bug fix*/}
                     {/*<MapController selectedLocation={selectedLocation} />*/}
                     <ReverseGeocoder coordinates={currentCoordinates} onAddressFound={setDisplayAddress} />
                     <Directions
@@ -206,12 +206,12 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         travelMode={travelMode}
                     />
                     <div className={'absolute top-138 right-3'}>
-                    <MapController selectedLocation={selectedLocation} />
+                        <MapController selectedLocation={selectedLocation} />
                     </div>
                 </APIProvider>
 
                 {/* Overlay sidebar */}
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
+                <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <HeadingLabel>Directions</HeadingLabel>
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">
@@ -225,7 +225,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     setDisplayAddress('');
                                 }}
                             />
-                            <div className={"flex items-center justify-center"}>
+                            <div className={'flex items-center justify-center'}>
                                 <Label>Or</Label>
                             </div>
                             <Button onClick={getLocation}>Use my Location</Button>
@@ -237,9 +237,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     <SelectGroup>
                                         <SelectLabel>Travel Mode</SelectLabel>
                                         <SelectItem value={'DRIVING'}>Car</SelectItem>
-                                        <SelectItem value={'TRANSIT'}>
-                                            Public Transportation
-                                        </SelectItem>
+                                        <SelectItem value={'TRANSIT'}>Public Transportation</SelectItem>
                                         <SelectItem value={'BICYCLING'}>Bicycle</SelectItem>
                                         <SelectItem value={'WALKING'}>Walk</SelectItem>
                                     </SelectGroup>
@@ -249,47 +247,32 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         <div className="flex flex-col space-y-2">
                             <Label className={'px-2 mb-3'}>Destination</Label>
                             <div className="flex flex-col space-y-2">
-                                {/* variant: if not the current button selected, set to light blue (selected). Dark blue (secondary) if clicked on */}
                                 <Button
-                                    variant={
-                                        selectedLocation !== patriotPlace20
-                                            ? 'unselected'
-                                            : 'secondary'
-                                    }
+                                    variant={selectedLocation !== patriotPlace20 ? 'unselected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace20)}
                                 >
                                     Healthcare Center (20 Patriot Place)
                                 </Button>
                                 <Button
-                                    variant={
-                                        selectedLocation !== patriotPlace22
-                                            ? 'unselected'
-                                            : 'secondary'
-                                    }
+                                    variant={selectedLocation !== patriotPlace22 ? 'unselected' : 'secondary'}
                                     onClick={() => setSelectedLocation(patriotPlace22)}
                                 >
                                     Healthcare Center (22 Patriot Place)
                                 </Button>
                                 <Button
-                                    variant={
-                                        selectedLocation !== chestnutHill ? 'unselected' : 'secondary'
-                                    }
+                                    variant={selectedLocation !== chestnutHill ? 'unselected' : 'secondary'}
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
                                     Healthcare Center (Chestnut Hill)
                                 </Button>
                                 <Button
-                                    variant={
-                                        selectedLocation !== faulkner ? 'unselected' : 'secondary'
-                                    }
+                                    variant={selectedLocation !== faulkner ? 'unselected' : 'secondary'}
                                     onClick={() => setSelectedLocation(faulkner)}
                                 >
                                     Faulkner Hospital
                                 </Button>
                                 <Button
-                                    variant={
-                                        selectedLocation !== mainCampus  ? 'unselected' : 'secondary'
-                                    }
+                                    variant={selectedLocation !== mainCampus ? 'unselected' : 'secondary'}
                                     onClick={() => setSelectedLocation(mainCampus)}
                                 >
                                     Main Campus Hospital
