@@ -184,7 +184,7 @@ const SanitationRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                   </Label>
-                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                 </div>
 
                 {/* Priority */}
@@ -197,7 +197,7 @@ const SanitationRequestForm = () => {
                 </div>
 
                 {/* Location and Department */}
-                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
                 {/* Status */}
 
                 <div>
@@ -205,7 +205,7 @@ const SanitationRequestForm = () => {
                     Request Status
                     <span className="text-accent">*</span>
                   </Label>
-                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
                 {/* Room Number */}
                 <div>

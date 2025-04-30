@@ -151,7 +151,7 @@ const TranslateRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                 </Label>
-                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={"employee to assign"} reset={resetDropdowns}></Dropdown>
                             </div>
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -160,13 +160,13 @@ const TranslateRequestForm = () => {
                                 <Dropdown tableName="priority" fieldName="priority" onChange={handleDropdownChange} reset={resetDropdowns} />
                             </div>
 
-                            <LocationDepartmentDropdown onChange={handleDropdownChange} />
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}/>
 
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status<span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName="status" fieldName="status" onChange={handleDropdownChange} />
+                                <Dropdown tableName="status" fieldName="status" onChange={handleDropdownChange} reset={resetDropdowns}/>
                             </div>
 
                             <div>

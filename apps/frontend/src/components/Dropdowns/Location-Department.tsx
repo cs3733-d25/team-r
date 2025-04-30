@@ -1,18 +1,22 @@
-import values, {valueKey} from "@/constant-values.ts";
 import {Label} from "@/components/ui/label.tsx";
 import Dropdown from './Dropdown.tsx'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 interface DropdownLocationProps {
     onChange: (name:string, value: string) => void;
+    reset?: boolean;
 }
 
 
-const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange }) => {
+const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange, reset}) => {
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
     //put this in Dropdown element and it will reset on submit
-    //const [resetDropdowns, setResetDropdowns] = useState(false);
-
+    // const [resetDropdowns, setResetDropdowns] = useState(false);
+    useEffect(() => {
+        if (reset) {
+            setSelectedLocation("");
+        }
+    }, [reset]);
     const handleLocationChange = (name: string, value: string) => {
         setSelectedLocation(value);
         onChange(name, value); // update formData in parent
@@ -33,7 +37,7 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange 
                     Select the building making the patient request.
                 </span>
             </Label>
-            <Dropdown tableName={"building"} fieldName={'building'} onChange={handleLocationChange} />
+            <Dropdown tableName={"building"} fieldName={'building'} onChange={handleLocationChange} reset={reset}/>
             {/*select department based on location*/}
             {selectedLocation && (
                 <>
