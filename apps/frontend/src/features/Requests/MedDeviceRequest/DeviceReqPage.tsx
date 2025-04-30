@@ -17,6 +17,7 @@ interface DeviceRequest extends BaseRequest {
     comments: string | null;
     employeeID: string | null;
     status: string | null;
+    assignedEmployeeID: string | null;
     [key: string]: unknown;
 }
 
@@ -31,7 +32,8 @@ export function DeviceReqPage() {
         department: null,
         comments: null,
         employeeID: null,
-        status: null
+        status: null,
+        assignedEmployeeID: null,
     }]);
 
     const filtering = useRequestFilters(device);
@@ -56,6 +58,7 @@ export function DeviceReqPage() {
         {field: 'department', header: 'Department', sortable: true},
         {field: 'room', header: 'Room', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: DeviceRequest) => (<RequestInfoButton type="Medical Device" id={item.requestId ? Number(item.requestId) : null} />) }
     ];

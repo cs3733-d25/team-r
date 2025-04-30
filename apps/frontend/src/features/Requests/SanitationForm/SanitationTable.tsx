@@ -11,6 +11,7 @@ interface SanitationTableProps {
         roomNumber:string | null,
         requestTime:string | null,
         comments:string | null,
+        assignedEmployeeID:string | null,
         status:string | null}[]
 }
 
@@ -25,6 +26,7 @@ export function SanitationTable(props: SanitationTableProps) {
                     <TableHead className={"text-center"}>Department</TableHead>
                     <TableHead className={"text-center"}>Room</TableHead>
                     <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={"text-center"}>Status</TableHead>
                     <TableHead className={"text-center"}>Comments</TableHead>
 
@@ -42,6 +44,7 @@ export function SanitationTable(props: SanitationTableProps) {
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.roomNumber}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>{row.comments}</TableCell>
 

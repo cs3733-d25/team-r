@@ -18,6 +18,7 @@ interface TranslateTableProps {
         comments: string | null;
         timestamp: string | null;
         status: string | null;
+        assignedEmployeeID: string | null;
     }[]
 }
 
@@ -32,6 +33,7 @@ export function TranslateTable(props: TranslateTableProps) {
                     <TableHead className={'text-center'}>Department</TableHead>
                     <TableHead className={'text-center'}>Room Number</TableHead>
                     <TableHead className={'text-center'}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={'text-center'}>Status</TableHead>
                     <TableHead className={'text-center'}>Comments</TableHead>
                 </TableRow>
@@ -47,6 +49,7 @@ export function TranslateTable(props: TranslateTableProps) {
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.roomNumber}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>{row.comments}</TableCell>
 

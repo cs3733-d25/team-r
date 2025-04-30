@@ -133,7 +133,7 @@ async function main() {
             firstName: 'Akaash',
             lastName: 'Walker',
             departmentId: 'Radiology CH-1',
-            role: 'Doctor',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -341,7 +341,7 @@ async function main() {
             firstName: 'Daksh',
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
-            role: 'Nurse',
+            role: 'Admin',
             onShift: false,
         }
     });
@@ -486,6 +486,8 @@ async function main() {
             employeeID: 'Riley',
             /*employeeName: */
             status: 'Accepted',
+            assignedEmployeeID: 'Owen',
+
         }
     });
     await client.deviceRequest.create({
@@ -500,6 +502,7 @@ async function main() {
             employeeID: 'Daksh',
             /*employeeName: */
             status: 'In Progress',
+            assignedEmployeeID: 'Brian',
         }
     });
     await client.deviceRequest.create({
@@ -514,6 +517,8 @@ async function main() {
             employeeID: 'Akaash',
             /*employeeName: */
             status: 'Accepted',
+            assignedEmployeeID: 'Owen',
+
         }
     });
 
@@ -537,7 +542,7 @@ async function main() {
             refills: 2,
             additionalInstructions: 'Take by mouth',
             status: 'In Progress',
-            //assigned employee...
+            assignedEmployeeID: 'Brian'
         },
     });
     await client.pharmacyRequest.create({
@@ -559,7 +564,7 @@ async function main() {
             refills: 0,
             additionalInstructions: 'Take by mouth',
             status: 'Complete',
-            //assigned employee...
+            assignedEmployeeID: 'Sarayu'
         },
     });
     await client.pharmacyRequest.create({
@@ -581,7 +586,7 @@ async function main() {
             refills: 1,
             additionalInstructions: 'Take by mouth',
             status: 'In Progress',
-            //assigned employee...
+            assignedEmployeeID: 'Daksh'
         },
     });
 
@@ -596,8 +601,8 @@ async function main() {
             employeeID: 'Akaash',
             /*employeeName: */
             request: 'Speak to a doctor',
-            comment: 'I would like to donate blood'
-            //assignedEmployee: employeeName //fix this to connect correctly
+            comment: 'I would like to donate blood',
+            assignedEmployeeID: 'Riley',
         },
     });
     await client.patientRequest.create({
@@ -610,8 +615,8 @@ async function main() {
             employeeID: 'Riley',
             /*employeeName: */
             request: 'Room Maintenance',
-            comment: 'I want a clean room'
-            //assignedEmployee: employeeName //fix this to connect correctly
+            comment: 'I want a clean room',
+            assignedEmployeeID: 'Akaash',
         },
     });
     await client.patientRequest.create({
@@ -624,8 +629,9 @@ async function main() {
             employeeID: 'Daksh',
             /*employeeName: */
             request: 'Food',
-            comment: 'Hungry patient'
-            //assignedEmployee: employeeName //fix this to connect correctly
+            comment: 'Hungry patient',
+            assignedEmployeeID: 'Nora',
+
         },
     });
 
@@ -642,7 +648,7 @@ async function main() {
             department: 'Primary Care',
             comments: 'Patient needs quick ride',
             status: 'Pending',
-            //assignedEmployee: employeeName //connect later
+            assignedEmployeeID: 'Owen',
             //user: { connect: { id: request.userID } }, // connect to whatever
         },
     });
@@ -658,7 +664,7 @@ async function main() {
             department: 'Radiology',
             comments: 'Patient needs ride soon',
             status: 'Accepted',
-            //assignedEmployee: employeeName //connect later
+            assignedEmployeeID: 'Daksh',
             //user: { connect: { id: request.userID } }, // connect to whatever
         },
     });
@@ -674,7 +680,7 @@ async function main() {
             department: 'Plastic Surgery',
             comments: 'Important transport required',
             status: 'Pending',
-            //assignedEmployee: employeeName //connect later
+            assignedEmployeeID: 'Owen',
             //user: { connect: { id: request.userID } }, // connect to whatever
         },
     });
@@ -689,6 +695,7 @@ async function main() {
             roomNumber: '143',
             comments: 'Milk Spill',
             status: 'Canceled',
+            assignedEmployeeID: 'Nora',
         },
     });
     await client.sanitationRequest.create({
@@ -701,6 +708,7 @@ async function main() {
             roomNumber: '130',
             comments: 'Mix of spilled medicines',
             status: 'Completed',
+            assignedEmployeeID: 'Owen',
         },
     });
     await client.sanitationRequest.create({
@@ -713,6 +721,7 @@ async function main() {
             roomNumber: '143',
             comments: 'Clean the bathroom',
             status: 'Accepted',
+            assignedEmployeeID: 'Akaash',
         },
     });
 
