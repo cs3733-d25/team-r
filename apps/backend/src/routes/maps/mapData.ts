@@ -30,19 +30,38 @@ const router: Router = express.Router();
 // get nodes
 router.post("/nodes", async (req, res) => {
   try {
-    let data;
-    if (req.body.nodeType) {
-      // if a type was specified, filter for those
-      console.log("Looking for nodes of type " + req.body.nodeType);
-      data = await PrismaClient.node.findMany({
-        where: { nodeType: req.body.nodeType },
-      });
-    } else {
-      // get all the nodes
-      data = await PrismaClient.node.findMany({});
-    }
-    console.log("found " + data.length + " " + req.body.nodeType + " nodes");
+    const fields = req.body.fields;
+    console.log(fields);
+    // console.log("Looking for nodes of type " + fields.nodeType);
+    const data = await PrismaClient.node.findMany({
+      where: fields,
+    });
+    console.log("found " + data.length + " nodes that follow the above");
     res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+router.post("/edges", async (req, res) => {
+  try {
+    const fields = req.body.fields;
+    console.log(fields);
+    // console.log("Looking for nodes of type " + fields.nodeType);
+    const data = await PrismaClient.edge.findMany({
+      where: {
+        fromNode: fields,
+        toNode: fields,
+      },
+      include: {
+        fromNode: true,
+
+        toNode: true,
+      },
+    });
+    console.log("found " + data.length + " nodes that follow the above");
+    res.json(data);
+    // console.log(data);
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -55,6 +74,17 @@ router.get("/parking-lots", async (req, res) => {
     const request = await PrismaClient.node.findMany({
       where: { nodeType: "Parking" },
     });
+    console.log("found " + request.length + " parking lots");
+    res.json(request);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+// get parking lots
+router.get("/all", async (req, res) => {
+  try {
+    const request = await PrismaClient.node.findMany({});
     console.log("found " + request.length + " parking lots");
     res.json(request);
   } catch (err) {
