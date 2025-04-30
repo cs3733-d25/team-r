@@ -308,8 +308,9 @@ export function MapPage() {
                             {getShortLocationName(selectedLocation)}
                         </div>
                     </div>
-
                     <div className="space-y-4">
+                        <Label className='mb-2 text-sm'>Select a parking lot and department to get directions to the appropriate check-in.</Label>
+
                         {/* Parking lot picker */}
                         <Select
                             value={selectedParkinglot}
