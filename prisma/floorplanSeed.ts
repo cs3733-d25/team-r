@@ -30,8 +30,8 @@ async function main() {
                 'nodeType': 'Reception',
                 'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
-                'xcoord': 465.11,
-                'ycoord': 394.09,
+                'xcoord': 505.99,
+                'ycoord': 391.5,
                 'longName': 'Reception',
                 'shortName': 'Reception',
             },
@@ -40,8 +40,8 @@ async function main() {
                 'nodeType': 'Reception',
                 'building': 'Healthcare Center (Chestnut Hill)',
                 'floor': 1,
-                'xcoord': 364.14,
-                'ycoord': 660.12,
+                'xcoord': 363.25,
+                'ycoord': 625.24,
                 'longName': 'Reception',
                 'shortName': 'Reception',
             },
@@ -224,6 +224,56 @@ async function main() {
                 'ycoord': 411.09,
                 'longName': 'North Wing East Hallway',
                 'shortName': 'North Wing East Hallway',
+            },
+            {
+                'nodeID': 'East Elevator Hallway CH',
+                'nodeType': 'Hallway',
+                'building': 'Healthcare Center (Chestnut Hill)',
+                'floor': 1,
+                'xcoord': 528.02,
+                'ycoord': 411,
+                'longName': 'East Elevator Hallway',
+                'shortName': 'East Elevator Hallway',
+            },
+            {
+                'nodeID': 'East Courtyard Hallway CH',
+                'nodeType': 'Hallway',
+                'building': 'Healthcare Center (Chestnut Hill)',
+                'floor': 1,
+                'xcoord': 531.15,
+                'ycoord': 517.07,
+                'longName': 'East Courtyard Hallway',
+                'shortName': 'East Courtyard Hallway',
+            },
+            {
+                'nodeID': 'North Entrance Hallway CH',
+                'nodeType': 'Hallway',
+                'building': 'Healthcare Center (Chestnut Hill)',
+                'floor': 1,
+                'xcoord': 328.18,
+                'ycoord': 510.05,
+                'longName': 'North Entrance Hallway',
+                'shortName': 'North Entrance Hallway',
+            },
+            {
+                'nodeID': 'North Reception Area CH',
+                'nodeType': 'Hallway',
+                'building': 'Healthcare Center (Chestnut Hill)',
+                'floor': 1,
+                'xcoord': 333,
+                'ycoord': 624.04,
+                'longName': 'North Reception Area',
+                'shortName': 'North Reception Area',
+            },
+            {
+                'nodeID': 'Northwest Corridor Entrance CH',
+                'nodeType': 'Hallway',
+                'building': 'Healthcare Center (Chestnut Hill)',
+                'floor': 1,
+                'xcoord': 356.18,
+                'ycoord': 714.07,
+                'longName': 'Northwest Corridor Entrance',
+                'shortName': 'Northwest Corridor Entrance',
             },
         ],
         skipDuplicates: true
@@ -2374,15 +2424,6 @@ async function main() {
                     },
                     {
 
-                        "fromID": "Hallway-1745476274839",
-                        "toID": "Hallway-1745476261869",
-                        "fromX": null,
-                        "fromY": null,
-                        "toX": null,
-                        "toY": null
-                    },
-                    {
-
                         "fromID": "Hallway-1745476261869",
                         "toID": "Hallway-1745476252825",
                         "fromX": null,
@@ -2394,24 +2435,6 @@ async function main() {
 
                         "fromID": "Parking-1745476137948",
                         "toID": "Entrance-1745475321572",
-                        "fromX": null,
-                        "fromY": null,
-                        "toX": null,
-                        "toY": null
-                    },
-                    {
-
-                        "fromID": "Entrance-1745475321572",
-                        "toID": "Hallway-1745476252825",
-                        "fromX": null,
-                        "fromY": null,
-                        "toX": null,
-                        "toY": null
-                    },
-                    {
-
-                        "fromID": "Entrance-1745475321572",
-                        "toID": "Reception-1745475823905",
                         "fromX": null,
                         "fromY": null,
                         "toX": null,
@@ -2434,7 +2457,79 @@ async function main() {
                         "fromY": null,
                         "toX": null,
                         "toY": null
-                    }
+                    },
+            {
+
+                "fromID": "Entrance-1745475321572",
+                "toID": "North Entrance Hallway CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "North Reception Area CH",
+                "toID": "North Entrance Hallway CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "North Reception Area CH",
+                "toID": "Northwest Corridor Entrance CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "North Reception Area CH",
+                "toID": "Reception-1745475823905",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "Hallway-1745476274839",
+                "toID": "Northwest Corridor Entrance CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "Reception-1745475750292",
+                "toID": "East Elevator Hallway CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "East Courtyard Hallway CH",
+                "toID": "East Elevator Hallway CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            },
+            {
+
+                "fromID": "East Courtyard Hallway CH",
+                "toID": "North Entrance Hallway CH",
+                "fromX": null,
+                "fromY": null,
+                "toX": null,
+                "toY": null
+            }
 
         ]
     })
