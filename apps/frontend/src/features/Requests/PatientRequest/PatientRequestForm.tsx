@@ -12,7 +12,6 @@ import {useAuth0} from "@auth0/auth0-react";
 
 interface SubmittedPatientRequest{
     patientID: string;
-    assignedEmpID:string;
     priority: string;
     department: string;
     building: string;
@@ -28,7 +27,6 @@ export const PatientRequestForm = () => {
     const [formData, setFormData] = useState({
 
         patientID: "",
-        assignedEmpID:"",
         priority: "",
         department: "",
         building: "",
@@ -99,7 +97,6 @@ export const PatientRequestForm = () => {
                 setFormData({
 
                     patientID: "",
-                    assignedEmpID:"",
                     priority: "",
                     department: "",
                     building: "",

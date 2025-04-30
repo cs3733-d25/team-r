@@ -72,6 +72,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
             refills: null,
             additionalInstructions: null,
             status: null,
+            assignedEmployeeID: null,
         },
     ]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
@@ -82,7 +83,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
     }
 
     //sanitation request
-    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,building:null,roomNumber:null,requestTime:null,status:null, comments:null,}]);
+    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,building:null,roomNumber:null,requestTime:null,status:null, comments:null, assignedEmployeeID:null}]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrieveSanitation() {
         const request = await axios.post('api/sanitation/single-request', {id: props.id});
@@ -100,7 +101,8 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         department: null,
         comments: null,
         employeeID: null,
-        status: null
+        status: null,
+        assignedEmployeeID: null,
     }]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrieveDevice() {
@@ -113,7 +115,6 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
     const [patientRequest, setPatientRequest] = useState([{
         patientRequestID:null,
         patientID:null,
-        assignedEmpID:null,
         priority:null,
         department:null,
         building:null,
@@ -121,6 +122,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         time:null,
         status:null,
         employeeID:null,
+        assignedEmployeeID:null,
         request: null}]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrievePatientRequest() {
@@ -130,7 +132,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
     }
 
     //patient transport request
-    const [transport, setTransport] = useState([{employeeID:null, patientID:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null}]);
+    const [transport, setTransport] = useState([{employeeID:null, patientID:null,transportationType:null,priority:null,department:null,currentBuilding:null,desiredBuilding:null,requestTime:null,comments:null,status:null,userId:null,assignedEmployeeID:null}]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrieveTransport() {
         const request = await axios.post('api/transportreq/single-request', {id: props.id});
@@ -138,7 +140,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         setTransport(request.data);
     }
 
-    //translte request
+    //translate request
     const [translate, setTranslate] = useState([{
         employeeID: null,
         language: null,
@@ -148,7 +150,9 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         roomNumber: null,
         comments: null,
         timestamp: null,
-        status: null}]);
+        status: null,
+        assignedEmployeeID: null
+    }]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrieveTranslate() {
         const request = await axios.post('api/translate/single-request', {id: props.id});
