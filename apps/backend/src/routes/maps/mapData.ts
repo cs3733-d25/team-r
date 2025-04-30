@@ -500,59 +500,21 @@ router.post("/reset", async (req: Request, res: Response) => {
   try {
     console.log("Resetting map to default state");
     await PrismaClient.$transaction(async (prisma) => {
+      // delete existing data
       await prisma.edge.deleteMany({});
       await prisma.node.deleteMany({});
 
-      // import default map data from JSON
-      const defaultMapData = await import(
-        "../../../../../API-testing/defaultMapData.json"
-      );
-
-      const { nodes, edges } = defaultMapData.default;
-
       // insert nodes
-      for (const node of nodes) {
-        const typedNode = node as Node;
-
-        // extract base fields without departments
-        const baseNodeData = {
-          nodeID: typedNode.nodeID,
-          nodeType: typedNode.nodeType,
-          building: typedNode.building,
-          floor: typedNode.floor,
-          xcoord: typedNode.xcoord,
-          ycoord: typedNode.ycoord,
-          longName: typedNode.longName,
-          shortName: typedNode.shortName,
-        };
-
-        // add departments connection only if needed
-        const createData =
-          typedNode.departments && typedNode.departments.length > 0
-            ? {
-                ...baseNodeData,
-                departments: {
-                  connect: typedNode.departments.map((id: string) => ({
-                    id: Number(id),
-                  })),
-                },
-              }
-            : baseNodeData;
-
-        await prisma.node.create({
-          data: createData,
-        });
-      }
+      await prisma.node.createMany({
+        data: [],
+        skipDuplicates: true,
+      });
 
       // insert edges
-      for (const edge of edges) {
-        await prisma.edge.create({
-          data: {
-            fromNode: { connect: { nodeID: edge.fromID } },
-            toNode: { connect: { nodeID: edge.toID } },
-          },
-        });
-      }
+      await prisma.edge.createMany({
+        data: [],
+        skipDuplicates: true,
+      });
     });
 
     res.status(200).json({ message: "Map reset successfully" });
