@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
@@ -32,7 +31,6 @@ import PatientTransport from "@/features/Requests/PatientTransport/PatientTransp
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
 
-
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState("Guest");
@@ -41,7 +39,7 @@ function App() {
 
     console.log('APP IS RENDERED');
 
-    // Get the user type from the database after the user has logged in
+    // Existing auth effect remains unchanged
     useEffect(() => {
         if (user) {
             console.log('user exists', user);
@@ -54,7 +52,6 @@ function App() {
         console.log('isAuthenticated', isAuthenticated);
         if (isAuthenticated && !isLoading && user) {
             console.log("in if statement");
-            //navigate to neck page
             async function getUserType() {
                 try {
                     const response = await axios.post(
@@ -98,14 +95,29 @@ function App() {
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
-                { path: 'settings', element: <SettingsPage /> }, // ✅ Added route
+                { path: 'settings', element: <SettingsPage /> },
+
+                // Updated service request routes
+                {
+                    path: 'requests',
+                    element: <><TourProvider><RequestPage /></TourProvider></>,
+                    children: [
+                        { path: 'medical-device', element: <DeviceReq /> },
+                        { path: 'prescription', element: <Prescription /> },
+                        { path: 'patient', element: <PatientRequest /> },
+                        { path: 'transport', element: <PatientTransport /> },
+                        { path: 'sanitation', element: <SanitationRequestTabs /> },
+                        { path: 'translation', element: <Translate /> }
+                    ]
+                },
+
+                // Legacy routes kept for backward compatibility
                 { path: 'prescription', element: <Prescription /> },
                 { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
-                { path: 'translation', element: <Translate /> },
-                { path: 'requests', element: <RequestPage /> }
+                { path: 'translation', element: <Translate /> }
             ],
         },
     ]);

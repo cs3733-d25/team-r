@@ -15,3 +15,14 @@ export const TOUR_STEPS_IDS_CSV = {
     EXPORT: "export",
     VIEW_DB_TABLE: "view database table",
 };
+
+export const TOUR_STEPS_IDS_SERVICE_REQUEST = [
+    {
+        target: '[data-tour-id="service-tabs"]',
+        content: 'Use these tabs to navigate between different service request types.',
+    },
+    {
+        target: '[data-tour-id="service-table-card"]',
+        content: 'This card displays all service requests from all departments. You can sort, filter, and view details.',
+    },
+];
