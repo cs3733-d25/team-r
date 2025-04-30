@@ -4,17 +4,11 @@ import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import AboutPage from '../features/AboutAndCredits/AboutPage.tsx';
 import CreditsPage from '../features/AboutAndCredits/CreditsPage.tsx';
-import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
-import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
-import PatientRequest, { AllPatientRequests } from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
-import { PatientRequestForm } from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
-import PatientRequestPage from "../features/Requests/PatientRequest/PatientRequestPage.tsx";
 import { ExternalMap } from "../features/MapView/ExternalMap.tsx";
 import { MapPage } from "../features/MapView/MapPage.tsx";
-import PatientTransportPage from "../features/Requests/PatientTransport/PatientTransportPage.tsx";
 import Prescription from "../features/Requests/PrescriptionForm/Prescription.tsx";
 import SanitationRequestTabs from "../features/Requests/SanitationForm/SanitationTabs.tsx";
 import { DeviceReq } from "../features/Requests/MedDeviceRequest/DeviceReq.tsx";
@@ -24,12 +18,12 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { TourProvider } from '@/components/tour.tsx';
-import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
-import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
+import PatientRequest from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
+import AllRequestsTable from "../features/Requests/AllRequestsTable.tsx";
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -37,21 +31,8 @@ function App() {
     const [userFirstName, setUserFirstName] = useState("");
     const { theme } = useTheme();
 
-    console.log('APP IS RENDERED');
-
-    // Existing auth effect remains unchanged
     useEffect(() => {
-        if (user) {
-            console.log('user exists', user);
-        } else {
-            console.log('No user found: ', user);
-        }
-        console.log('isLoading', isLoading);
-        console.log('userType', userType);
-        console.log('user', user);
-        console.log('isAuthenticated', isAuthenticated);
         if (isAuthenticated && !isLoading && user) {
-            console.log("in if statement");
             async function getUserType() {
                 try {
                     const response = await axios.post(
@@ -59,14 +40,12 @@ function App() {
                         { email: user?.email },
                         { withCredentials: true }
                     );
-                    console.log("firstName: ", response.data.firstName);
                     const userType = response.data.userType;
                     const firstName = response.data.firstName;
                     setUserType(userType);
                     setUserFirstName(firstName);
-                    console.log('userType', userType);
                 } catch (error) {
-                    console.log(error);
+                    console.error("Error fetching user info:", error);
                 }
             }
             getUserType();
@@ -88,20 +67,19 @@ function App() {
                 { path: 'about', element: <AboutPage /> },
                 { path: 'credits', element: <CreditsPage /> },
                 { path: 'external-map', element: <ExternalMap /> },
-                { path: 'edit-map', element: <><TourProvider><EditMap /></TourProvider></> },
+                { path: 'edit-map', element: <TourProvider><EditMap /></TourProvider> },
                 { path: 'internal-map', element: <MapPage /> },
-                { path: 'sanitation', element: <SanitationRequestTabs/> },
-                { path: 'csv', element: <><TourProvider><CSVTabPage /></TourProvider></> },
-                { path: 'sanitationpage', element: <SanitationRequestPage /> },
+                { path: 'csv', element: <TourProvider><CSVTabPage /></TourProvider> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
                 { path: 'settings', element: <SettingsPage /> },
 
-                // Updated service request routes
                 {
                     path: 'requests',
-                    element: <><TourProvider><RequestPage /></TourProvider></>,
+                    element: <TourProvider><RequestPage /></TourProvider>,
                     children: [
+                        { index: true, element: null },
+                        { path: 'all-requests', element: <AllRequestsTable /> },
                         { path: 'medical-device', element: <DeviceReq /> },
                         { path: 'prescription', element: <Prescription /> },
                         { path: 'patient', element: <PatientRequest /> },
@@ -110,14 +88,6 @@ function App() {
                         { path: 'translation', element: <Translate /> }
                     ]
                 },
-
-                // Legacy routes kept for backward compatibility
-                { path: 'prescription', element: <Prescription /> },
-                { path: 'patientrequestpage', element: <AllPatientRequests /> },
-                { path: 'patientrequest', element: <PatientRequest /> },
-                { path: 'transport', element: <PatientTransport /> },
-                { path: 'devicerequest', element: <DeviceReq /> },
-                { path: 'translation', element: <Translate /> }
             ],
         },
     ]);

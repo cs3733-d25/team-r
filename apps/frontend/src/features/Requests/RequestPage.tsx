@@ -2,22 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { AllRequestsTable } from './AllRequestsTable.tsx';
-import DeviceReqPage from './MedDeviceRequest/DeviceReqPage.tsx';
-import PrescriptionPage from '@/features/Requests/PrescriptionForm/PrescriptionPage.tsx';
-import PatientRequestPage from '@/features/Requests/PatientRequest/PatientRequestPage.tsx';
-import SanitationRequestPage from '@/features/Requests/SanitationForm/SanitationRequestPage.tsx';
-import PatientTransportPage from '@/features/Requests/PatientTransport/PatientTransportPage.tsx';
-import TranslateRequestPage from './TranslateForm/TranslateRequestPage';
 import { TourAlertDialog, useTour } from '@/components/tour';
 import { TOUR_STEPS_IDS_SERVICE_REQUEST } from '@/lib/tour-constants.ts';
 
 export function AllRequestsPage() {
     const [activeTab, setActiveTab] = useState('overview');
     const navigate = useNavigate();
+    const location = useLocation();
     const { currentStep, setSteps } = useTour();
     const [openTour, setOpenTour] = useState(false);
+
+    // Sync tab state with URL
+    useEffect(() => {
+        const pathParts = location.pathname.split('/');
+        if (pathParts.length > 2) {
+            setActiveTab(pathParts[2]);
+        }
+    }, [location]);
 
     const steps = [
         {
@@ -39,16 +42,16 @@ export function AllRequestsPage() {
     }, [setSteps]);
 
     useEffect(() => {
-        if (currentStep === 1) setActiveTab('all-requests');
-    }, [currentStep]);
+        if (currentStep === 1) navigate('/requests/all-requests');
+    }, [currentStep, navigate]);
 
     const requestTypes = [
-        { name: 'Medical Device', description: 'Requests for medical devices', path: '/devicerequest', tab: 'medical-device' },
-        { name: 'Prescription', description: 'Medication prescriptions for patients', path: '/prescription', tab: 'prescription' },
-        { name: 'Patient', description: 'Non-emergency patient service requests', path: '/patientrequestpage', tab: 'patient' },
-        { name: 'Transport', description: 'Patient transportation between facilities', path: '/transport', tab: 'transport' },
-        { name: 'Sanitation', description: 'Cleaning and sanitation service requests', path: '/sanitation', tab: 'sanitation' },
-        { name: 'Translator', description: 'Language translator service requests', path: '/translation', tab: 'translator' },
+        { name: 'Medical Device', description: 'Requests for medical devices', path: '/requests/medical-device', tab: 'medical-device' },
+        { name: 'Prescription', description: 'Medication prescriptions for patients', path: '/requests/prescription', tab: 'prescription' },
+        { name: 'Patient', description: 'Non-emergency patient service requests', path: '/requests/patient', tab: 'patient' },
+        { name: 'Transport', description: 'Patient transportation between facilities', path: '/requests/transport', tab: 'transport' },
+        { name: 'Sanitation', description: 'Cleaning and sanitation service requests', path: '/requests/sanitation', tab: 'sanitation' },
+        { name: 'Translator', description: 'Language translator service requests', path: '/requests/translation', tab: 'translation' },
     ];
 
     return (
@@ -57,11 +60,7 @@ export function AllRequestsPage() {
                 <h1 className="text-3xl font-bold mb-6 text-center">Service Request Dashboard</h1>
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList
-                        className="mb-0 border-b-0 shadow-none"
-                        data-tour-id="service-tabs"
-                        id="service-tabs"
-                    >
+                    <TabsList className="mb-0 border-b-0 shadow-none" id="service-tabs">
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="all-requests">All Requests</TabsTrigger>
                         <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
@@ -75,10 +74,7 @@ export function AllRequestsPage() {
                     <TabsContent value="overview" className="space-y-6 -mt-px">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {requestTypes.map((type) => (
-                                <Card
-                                    key={type.name}
-                                    className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary"
-                                >
+                                <Card key={type.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">
                                     <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                                         <CardTitle>{type.name} Requests</CardTitle>
                                     </CardHeader>
@@ -89,7 +85,7 @@ export function AllRequestsPage() {
                                         <div className="flex flex-col space-y-2 mt-auto">
                                             <Button
                                                 variant="secondary"
-                                                onClick={() => setActiveTab(type.tab)}
+                                                onClick={() => navigate(type.path)}
                                             >
                                                 View {type.name} Requests
                                             </Button>
@@ -103,14 +99,8 @@ export function AllRequestsPage() {
                         </div>
                     </TabsContent>
 
-                    {/* Other TabsContent sections remain unchanged */}
-
                     <TabsContent value="all-requests" className="-mt-px">
-                        <Card
-                            id="service-table-card"
-                            data-tour-id="service-table-card"
-                            className="rounded-lg overflow-hidden bg-primary"
-                        >
+                        <Card id="service-table-card" className="rounded-lg overflow-hidden bg-primary">
                             <CardHeader className="bg-primary text-primary-foreground rounded-t-lg px-6">
                                 <CardTitle>All Requests</CardTitle>
                             </CardHeader>
@@ -119,6 +109,14 @@ export function AllRequestsPage() {
                             </CardContent>
                         </Card>
                     </TabsContent>
+
+                    {/* Nested route outlets */}
+                    <TabsContent value="medical-device" className="-mt-px"><Outlet /></TabsContent>
+                    <TabsContent value="prescription" className="-mt-px"><Outlet /></TabsContent>
+                    <TabsContent value="patient" className="-mt-px"><Outlet /></TabsContent>
+                    <TabsContent value="transport" className="-mt-px"><Outlet /></TabsContent>
+                    <TabsContent value="translation" className="-mt-px"><Outlet /></TabsContent>
+                    <TabsContent value="sanitation" className="-mt-px"><Outlet /></TabsContent>
                 </Tabs>
                 <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
             </div>
