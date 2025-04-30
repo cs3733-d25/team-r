@@ -149,10 +149,9 @@ export function AllRequestsTable() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
                 sortDirection={filtering.sortDirection}
-                resetSort={() => {
-                    filtering.toggleSort('');
-                }}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

@@ -70,6 +70,9 @@ export function DeviceReqPage() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable
