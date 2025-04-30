@@ -69,10 +69,10 @@ export function MapPage() {
                 'Heathcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
-                // TODO: add women's hospital parking lots
-                'Main Campus Hospital (75 Francis St.)': ['WOMENS'],
+                'Main Campus Hospital (75 Francis St.)': ['WOMENS', 'Main Campus Hospital (75 Francis St.)'],
             };
 
+            // keep the parking lot if its name matches the one of the selected building
             return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
@@ -263,7 +263,6 @@ export function MapPage() {
                     location={selectedLocation}
                     pathCoordinates={pathCoordinates}
                     pathByFloor={pathByFloor}
-                    currentFloor={currentFloor}
                 />
 
                 {/* Sidebar controls */}
