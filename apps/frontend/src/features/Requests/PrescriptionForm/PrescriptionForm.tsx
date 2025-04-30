@@ -27,6 +27,7 @@ interface SubmittedPrescription {
     drugName: string;
     status: string;
     timestamp: string;
+    assignedEmployee: string;
 }
 
 export const PrescriptionForm = () => {
@@ -45,7 +46,8 @@ export const PrescriptionForm = () => {
         days: 0,
         additionalInstructions: '',
         drugName: '',
-        status: ''
+        status: '',
+        assignedEmployee: '',
     });
 //use auth0 to get the current user data
     const [userName, setUserName] = useState('');
@@ -134,7 +136,8 @@ export const PrescriptionForm = () => {
                     days: 0,
                     additionalInstructions: '',
                     drugName: '',
-                    status: ''
+                    status: '',
+                    assignedEmployee: '',
                 });
             }
         } catch (error) {
@@ -195,6 +198,17 @@ export const PrescriptionForm = () => {
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                         required
                                     />
+                                </div>
+                                {/*assignEmployee*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Assigned Employee
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                    </Label>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
                                 </div>
 
                                 {/* Priority */}

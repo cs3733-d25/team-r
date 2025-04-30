@@ -23,9 +23,12 @@ interface FilterProps {
     filterState: FilterState;
     onFilterChange: (options: FilterOptions, state: FilterState) => void;
     onClearFilters: () => void;
+    sortField?: string | null;
+    sortDirection: 'asc' | 'desc';
+    resetSort: () => void;
 }
 
-export function RequestFilters({options, filterState, onFilterChange, onClearFilters}: FilterProps) {
+export function RequestFilters({options, filterState, onFilterChange, onClearFilters, sortField, sortDirection, resetSort}: FilterProps) {
     const [localOptions, setLocalOptions] = useState<FilterOptions>(options);
     const [localState, setLocalState] = useState<FilterState>(filterState);
 
@@ -130,8 +133,8 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
     return (
         <div className="mb-6 pt-4 space-y-4">
-            {/* Active filters as pills */}
-            {activeFilters.length > 0 && (
+            {/* active filters and sorting pills */}
+            {(activeFilters.length > 0 || sortField) && (
                 <div className="mb-4">
                     <div className="flex flex-wrap items-center">
                         <span className="mr-2 text-sm font-medium">Active Filters:</span>
@@ -143,10 +146,22 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                 onRemove={filter.onRemove}
                             />
                         ))}
+
+                        {sortField && (
+                            <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
+                                <span className="mr-1 font-medium">Sort:</span>
+                                {sortField} ({sortDirection === 'asc' ? '↑' : '↓'})
+                                <button onClick={resetSort} className="ml-2 hover:text-gray-200">×</button>
+                            </div>
+                        )}
+
                         <Button
                             variant="ghost"
                             size="sm"
-                            onClick={onClearFilters}
+                            onClick={() => {
+                                onClearFilters();
+                                resetSort();
+                            }}
                             className="ml-2 text-sm"
                         >
                             Clear All

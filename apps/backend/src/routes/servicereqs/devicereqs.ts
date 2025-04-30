@@ -31,6 +31,7 @@ router.post("/", async function (req: Request, res: Response) {
     device,
     room,
     employeeName,
+      assignedEmployee,
   } = req.body;
 
   try {
@@ -48,6 +49,11 @@ router.post("/", async function (req: Request, res: Response) {
         employeeName: {
           connect: {
             id: employeeName,
+          },
+        },
+        assignedEmployee: {
+          connect: {
+            id: assignedEmployee,
           },
         },
       },
