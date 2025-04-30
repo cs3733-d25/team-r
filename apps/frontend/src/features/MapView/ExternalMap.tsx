@@ -15,7 +15,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import {HeadingLabel} from '@/components/ui/heading-label';
-import { ZoomIn} from 'lucide-react';
+import { ZoomIn } from 'lucide-react';
 /**
  * ExternalMapProps
  * passed in from parent (navbar) to pre-select a location

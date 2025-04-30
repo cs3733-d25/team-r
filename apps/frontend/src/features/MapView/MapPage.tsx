@@ -17,7 +17,7 @@ import {
 } from '@/features/MapView/mapUtils';
 import TextDirections from '@/components/TextDirections.tsx';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
 import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
@@ -61,6 +61,7 @@ export function MapPage() {
     const [showDirections, setShowDirections] = useState(false);
     const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
     const [pathByFloor, setPathByFloor] = useState<Record<number, [number, number][]>>({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -318,6 +319,14 @@ export function MapPage() {
                                         : 'unselected'
                                 }
                                 className={'w-35 m-1'}
+                                onClick={() =>
+                                    navigate('/internal-map', {
+                                        state: {
+                                            selectedLocation,
+                                            buildingIdentifier: 'Healthcare Center (20 Patriot Pl.)',
+                                        },
+                                    })
+                                }
                             >
                                 20 Patriot Place
                             </Button>
@@ -329,6 +338,14 @@ export function MapPage() {
                                         : 'unselected'
                                 }
                                 className={'w-35 m-1'}
+                                onClick={() =>
+                                    navigate('/internal-map', {
+                                        state: {
+                                            selectedLocation,
+                                            buildingIdentifier: 'Healthcare Center (22 Patriot Pl.)',
+                                        },
+                                    })
+                                }
                             >
                                 22 Patriot Place
                             </Button>
