@@ -207,6 +207,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localState,
                                             filterByBuilding: !localState.filterByBuilding
                                         })}
+                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByBuilding ? 'Applied' : 'Apply'}
                                     </Button>
@@ -240,6 +241,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localState,
                                             filterByDepartment: !localState.filterByDepartment
                                         })}
+                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByDepartment ? 'Applied' : 'Apply'}
                                     </Button>
@@ -279,6 +281,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localState,
                                             filterByStatus: !localState.filterByStatus
                                         })}
+                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByStatus ? 'Applied' : 'Apply'}
                                     </Button>
@@ -311,6 +314,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localState,
                                             filterByPriority: !localState.filterByPriority
                                         })}
+                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByPriority ? 'Applied' : 'Apply'}
                                     </Button>
@@ -344,6 +348,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localState,
                                             filterByEmployee: !localState.filterByEmployee
                                         })}
+                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByEmployee ? 'Applied' : 'Apply'}
                                     </Button>
