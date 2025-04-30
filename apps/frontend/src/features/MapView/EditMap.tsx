@@ -374,6 +374,7 @@ export function EditMap({ status }: EditMapProps) {
                     onCoordSelect={handleMapClick}
                     onNodeDrag={handleNodeDrag}
                     onNodeEdit={editNode}
+                    selectedEdgeNodes={edgeNodes}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
