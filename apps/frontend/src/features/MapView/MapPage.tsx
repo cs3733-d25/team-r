@@ -370,6 +370,9 @@ export function MapPage() {
                                 className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {
                                     setCurrentFloor(floor);
+                                    if (flashingFloors?.includes(floor)) {
+                                        setFlashingFloors(flashingFloors.filter(f => f !== floor));
+                                    }
                                     window.goToFloor?.(
                                         floor,
                                         getBuildingConstant(selectedBuilding)
