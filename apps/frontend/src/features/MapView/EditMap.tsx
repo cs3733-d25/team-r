@@ -71,7 +71,7 @@ export function EditMap({ status }: EditMapProps) {
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
-    const building = getBuildingFromLocation(selectedLocation);
+    const building = getBuildingFromLocation(selectedLocation.building);
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -208,7 +208,7 @@ export function EditMap({ status }: EditMapProps) {
         // };
     // }, [building]);
         // setCurrentBuilding(building);
-    };
+
 
     // TODO: make this an array of strings not objects
     const nodeTypes = [

@@ -164,7 +164,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -789,15 +789,13 @@ setEdgesOnActiveFloor(fullEdges)
 
         if (!mapInstance.current || !selectedEdgeNodes?.length) return;
 
-        // find all nodes
-        const allNodes = [...checkIn, ...entrances, ...elevators, ...lots, ...hallways, ...other];
 
         // highlight selected nodes
         selectedEdgeNodes.forEach(nodeId => {
-            const node = allNodes.find(n => n.nodeID === nodeId);
+            const node = nodesOnActiveFloor.find(n => n.nodeData.nodeID === nodeId);
             if (node) {
                 const highlight = L.circle(
-                    [node.xcoord, node.ycoord],
+                    [node.nodeData.xcoord, node.nodeData.ycoord],
                     selectedNodeStyle
                 ).addTo(mapInstance.current!);
                 highlightedNodeLayers.current.push(highlight);
@@ -807,7 +805,7 @@ setEdgesOnActiveFloor(fullEdges)
 
     useEffect(() => {
         updateHighlightedNodes();
-    }, [selectedEdgeNodes, checkIn, entrances, elevators, lots, hallways, other]);
+    }, [selectedEdgeNodes, nodesOnActiveFloor]);
 
     // ******** ACTUAL HTML *********
     return (
