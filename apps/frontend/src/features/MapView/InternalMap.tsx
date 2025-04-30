@@ -275,7 +275,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             setIsLoading(false);
         }
     };
-    console.log("hallways: ",hallways)
+    // console.log("hallways: ",hallways)
     async function loadAll() {
         await loadCheckIn();
         await loadEntrances();

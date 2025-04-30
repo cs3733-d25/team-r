@@ -25,6 +25,7 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 import {navigate} from "next/dist/client/components/segment-cache-impl/navigation";
+import { TourProvider } from '@/components/tour.tsx';
 import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
 import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
@@ -90,7 +91,7 @@ function App() {
                 { path: 'about', element: <AboutPage /> },
                 { path: 'credits', element: <CreditsPage />},
                 { path: 'external-map', element: <ExternalMap /> },
-                { path: 'edit-map', element: <EditMap /> },
+                { path: 'edit-map', element: <><TourProvider><EditMap /></TourProvider></> },
                 { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
                 { path: 'csv', element: <CSVTabPage /> },
