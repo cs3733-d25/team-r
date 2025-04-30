@@ -70,7 +70,7 @@ export function MapPage() {
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
                 // TODO: add women's hospital parking lots
-                'Main Campus Hospital (75 Francis St.)': ['WOMENS'],
+                'Main Campus Hospital (75 Francis St.)': ['WOMENS', 'Main Campus Hospital (75 Francis St.)'],
             };
 
             return buildingMap[selectedBuilding]?.some((buildingName) =>
