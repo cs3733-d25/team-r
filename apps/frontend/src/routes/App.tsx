@@ -27,6 +27,7 @@ import { TourProvider } from '@/components/tour.tsx';
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx";
+import Footer from "../components/Footer.tsx"
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -104,6 +105,7 @@ function App() {
         <div>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
+            <Footer />
         </div>
     );
 }
