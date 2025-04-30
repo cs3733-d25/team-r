@@ -14,7 +14,7 @@ interface SubmittedRequest {
     language: string;
     priority: string;
     department: string;
-    location: string;
+    building: string;
     roomNumber: string;
     notes: string;
     timestamp: string;
@@ -28,7 +28,7 @@ const TranslateRequestForm = () => {
         language: '',
         priority: '',
         department: '',
-        location: '',
+        building: '',
         roomNumber: '',
         notes: '',
         status: '',
@@ -91,7 +91,7 @@ const TranslateRequestForm = () => {
                     language: '',
                     priority: '',
                     department: '',
-                    location: '',
+                    building: '',
                     roomNumber: '',
                     notes: '',
                     status: '',
@@ -246,7 +246,7 @@ const TranslateRequestForm = () => {
                             </div>
                             <div>
                                 <span className="font-semibold">Location: </span>
-                                {submittedRequest.location}
+                                {submittedRequest.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Room: </span>

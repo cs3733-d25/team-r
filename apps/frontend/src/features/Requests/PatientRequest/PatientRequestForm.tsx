@@ -15,7 +15,7 @@ interface SubmittedPatientRequest{
     assignedEmpID:string;
     priority: string;
     department: string;
-    location: string;
+    building: string;
     comment: string;
     time: string;
     status: string;
@@ -31,7 +31,7 @@ export const PatientRequestForm = () => {
         assignedEmpID:"",
         priority: "",
         department: "",
-        location: "",
+        building: "",
         comment: "",
         time: new Date().toString(),
         status: '',
@@ -102,7 +102,7 @@ export const PatientRequestForm = () => {
                     assignedEmpID:"",
                     priority: "",
                     department: "",
-                    location: "",
+                    building: "",
                     comment: "",
                     time: new Date().toLocaleString(),
                     status: '',
@@ -281,7 +281,7 @@ export const PatientRequestForm = () => {
                                 <span className="font-semibold">Non Emergent Request:</span> {submittedPatientRequest.request}
                             </div>
                             <div>
-                                <span className="font-semibold">Location:</span> {submittedPatientRequest.location}
+                                <span className="font-semibold">Location:</span> {submittedPatientRequest.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Status:</span> {submittedPatientRequest.status}
