@@ -253,7 +253,20 @@
         50% { opacity: 0; }
         100% { opacity: 1; }
     }
+    @keyframes fade-in {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
     .animate-flash {
         animation: flash 1s linear infinite;
+    }
+    .animate-fade-in {
+        animation: fade-in 0.8s ease-in-out;
+    }
+    .animate-fade-in-delay-1 {
+        animation: fade-in 0.8s ease-in-out;
+        animation-delay: 1s;
+        opacity: 0;
+        animation-fill-mode: forwards;
     }
 }
