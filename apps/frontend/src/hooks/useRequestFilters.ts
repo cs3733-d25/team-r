@@ -100,12 +100,12 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
             // building filter
             if (filterState.filterByBuilding && filterOptions.building) {
                 // for transport requests, check currentBuilding
-                if (item.type === 'Transport') {
+                if ('currentBuilding' in item || item.type === 'Transport') {
                     if (!item.currentBuilding || item.currentBuilding !== filterOptions.building) {
                         return false;
                     }
                 }
-                else { // other service requests
+                else {
                     if (!item.building || item.building !== filterOptions.building) {
                         return false;
                     }
