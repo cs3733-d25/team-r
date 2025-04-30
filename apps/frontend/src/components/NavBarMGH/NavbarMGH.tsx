@@ -1,3 +1,4 @@
+// Full file with Settings link fixed and everything else untouched
 
 import React, { useEffect, useState} from 'react';
 import { Button } from '@/components/ui/button.tsx';
@@ -78,10 +79,10 @@ export function NavbarMGH(props: NavBarProps) {
                                     items={[
                                         { label: 'Sanitation', href: '/sanitation' },
                                         { label: 'Medical Device', href: '/devicerequest' },
-                                        { label: 'Patient Request', href: '/patientrequestpage' },
+                                        { label: 'Nonemergent Patient', href: '/patientrequestpage' },
                                         { label: 'Patient Transport', href: '/transport' },
-                                        { label: 'Prescription', href: '/prescription' },
-                                        { label: 'Translator Request', href: '/translation' },
+                                        { label: 'Pharmacy', href: '/prescription' },
+                                        { label: 'Translation', href: '/translation' },
                                         { label: 'View All Requests', href: '/requests' },
                                     ]}
                                 />
@@ -105,7 +106,7 @@ export function NavbarMGH(props: NavBarProps) {
                         href={'/about'}
                         items={[
                             { label: 'Credits', href: '/credits' },
-                            { label: 'About Us', href: '/about' },]}
+                            { label: 'Our Team', href: '/about' },]}
                     />
                 </nav>
 
@@ -143,13 +144,12 @@ export function NavbarMGH(props: NavBarProps) {
                                     >
                                         Profile
                                     </Button>
+                                    {/* ✅ Updated Settings link */}
                                     <Button
                                         variant={'ghostPopover'}
-                                        onClick={() =>
-                                            alert("This button doesn't work yet! - Akaash")
-                                        }
+                                        asChild
                                     >
-                                        Settings
+                                        <a href="/settings">Settings</a>
                                     </Button>
                                     <div className="border-t"></div>
                                     <Button variant={'ghostDestructive'} asChild>
@@ -228,10 +228,10 @@ export function NavbarMGH(props: NavBarProps) {
                         </Button>
                     )}
                     <Button variant="ghost" asChild>
-                        <a href="/about">About</a>
+                        <a href="/credits">Credits</a>
                     </Button>
                     <Button variant="ghost" asChild>
-                        <a href="/credits">Credits</a>
+                        <a href="/about">Our Team</a>
                     </Button>
                 </nav>
             </div>

@@ -7,12 +7,13 @@ interface PatientRequestTableProps {
         assignedEmpID: string | null,
         priority: string | null,
         department: string | null,
-        location: string | null,
+        building: string | null,
         comment: string | null,
         time: string | null,
         status: string | null,
         employeeID: string | null,
-        request: string | null
+        request: string | null,
+        assignedEmployeeID: string | null,
     }[]
 }
 
@@ -22,11 +23,12 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
             <TableHeader >
                 <TableRow >
                     <TableHead className={"text-center"}>Employee</TableHead>
-                    <TableHead className={"text-center"}>Patient ID</TableHead>
                     <TableHead className={"text-center"}>Request</TableHead>
-                    <TableHead className={"text-center"}>Priority</TableHead>
-                    <TableHead className={"text-center"}>Department</TableHead>
                     <TableHead className={"text-center"}>Location</TableHead>
+                    <TableHead className={"text-center"}>Department</TableHead>
+                    <TableHead className={"text-center"}>Patient</TableHead>
+                    <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={"text-center"}>Status</TableHead>
                     <TableHead className={"text-center"}>Comments</TableHead>
                 </TableRow>
@@ -38,11 +40,12 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
                         <>
                             <TableRow key = {index} className = { "border-t"}>
                                 <TableCell>{row.employeeID}</TableCell>
-                                <TableCell>{row.patientID}</TableCell>
                                 <TableCell>{row.request}</TableCell>
-                                <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.building}</TableCell>
                                 <TableCell>{row.department}</TableCell>
-                                <TableCell>{row.location}</TableCell>
+                                <TableCell>{row.patientID}</TableCell>
+                                <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>{row.comment}</TableCell>
                             </TableRow>

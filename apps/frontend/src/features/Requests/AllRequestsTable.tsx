@@ -122,9 +122,9 @@ export function AllRequestsTable() {
 
     // define table columns
     const columns = [
+        {field: 'employeeID', header: 'Employee', sortable: true},
         {field: 'type', header: 'Request Type', sortable: true},
         {field: 'department', header: 'Department', sortable: true},
-        {field: 'employeeID', header: 'Employee', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {
@@ -149,6 +149,9 @@ export function AllRequestsTable() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

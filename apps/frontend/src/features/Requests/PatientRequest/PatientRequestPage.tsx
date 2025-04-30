@@ -12,10 +12,12 @@ interface PatientRequest extends BaseRequest {
     priority: string | null;
     department: string | null;
     patientName: string | null;
+    building: string | null;
     patientID: string | null;
-    requestType: string | null;
+    request: string | null;
     notes: string | null;
     status: string | null;
+    assignedEmployee: string | null;
     [key: string]: unknown;
 }
 
@@ -25,11 +27,13 @@ function PatientRequestPage() {
         employeeID: null,
         priority: null,
         department: null,
+        building: null,
         patientName: null,
         patientID: null,
-        requestType: null,
+        request: null,
         notes: null,
-        status: null
+        status: null,
+        assignedEmployee: null
     }]);
 
     const filtering = useRequestFilters(patientRequests);
@@ -48,12 +52,13 @@ function PatientRequestPage() {
     }
 
     const columns = [
-        {field: 'requestType', header: 'Request Type', sortable: true},
-        {field: 'patientID', header: 'Patient ID', sortable: true},
-        {field: 'patientName', header: 'Patient Name', sortable: true},
-        {field: 'department', header: 'Department', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'request', header: 'Request', sortable: true},
+        {field: 'building', header: 'Location', sortable: true},
+        {field: 'department', header: 'Department', sortable: true},
+        {field: 'patientID', header: 'Patient', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: PatientRequest) => (<RequestInfoButton type="Patient Request" id={item.patientRequestID ? Number(item.patientRequestID) : null} />) }
     ];

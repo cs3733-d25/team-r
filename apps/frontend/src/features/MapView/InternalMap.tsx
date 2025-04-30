@@ -85,6 +85,7 @@ interface InternalMapProps {
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
     onToggle?:(bool:boolean) => void;
+    selectedEdgeNodes?: string[];
 }
 
 // persistent leaflet elements
@@ -180,6 +181,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+    const highlightedNodeLayers = useRef<L.Circle[]>([]);
+
+    const selectedNodeStyle = {
+        color: '#2563eb',
+        fillColor: '#3b82f6',
+        fillOpacity: 0.8,
+        radius: 10,
+        weight: 3
+    };
 
     const [hallwayFiltered, setHallwayFiltered] = useState(false);  // whether to show that type of node or not. False means the node type should be shown
     const [receptionFiltered, setReceptionFiltered] = useState(false);
@@ -770,6 +780,34 @@ setEdgesOnActiveFloor(fullEdges)
             }
         }
     }, [pathCoordinates, pathByFloor]); // also on location ?
+
+    // function to update highlighted nodes
+    const updateHighlightedNodes = () => {
+        // clear previous highlights
+        highlightedNodeLayers.current.forEach(layer => layer.remove());
+        highlightedNodeLayers.current = [];
+
+        if (!mapInstance.current || !selectedEdgeNodes?.length) return;
+
+        // find all nodes
+        const allNodes = [...checkIn, ...entrances, ...elevators, ...lots, ...hallways, ...other];
+
+        // highlight selected nodes
+        selectedEdgeNodes.forEach(nodeId => {
+            const node = allNodes.find(n => n.nodeID === nodeId);
+            if (node) {
+                const highlight = L.circle(
+                    [node.xcoord, node.ycoord],
+                    selectedNodeStyle
+                ).addTo(mapInstance.current!);
+                highlightedNodeLayers.current.push(highlight);
+            }
+        });
+    };
+
+    useEffect(() => {
+        updateHighlightedNodes();
+    }, [selectedEdgeNodes, checkIn, entrances, elevators, lots, hallways, other]);
 
     // ******** ACTUAL HTML *********
     return (

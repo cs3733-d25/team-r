@@ -289,7 +289,7 @@ async function main() {
                 "xcoord": 289.83,
                 "ycoord": 738,
                 "longName": "",
-                "shortName": "Specialty Clinic"
+                "shortName": "Right Reception"
             },
             {
                 "nodeID": "Hallway-1745538474179",
@@ -309,7 +309,7 @@ async function main() {
                 "xcoord": 504.83,
                 "ycoord": 437,
                 "longName": "",
-                "shortName": "Imaging Suite"
+                "shortName": "Left Reception"
             },
             {
                 "nodeID": "Hallway-1745538516214",
@@ -339,7 +339,7 @@ async function main() {
                 "xcoord": 342.83,
                 "ycoord": 631,
                 "longName": "",
-                "shortName": "Ambulatory/Urgent Care"
+                "shortName": "Central Reception"
             },
             {
                 "nodeID": "Hallway-1745538550406",
@@ -359,7 +359,7 @@ async function main() {
                 "xcoord": 336.92,
                 "ycoord": 528.5,
                 "longName": "",
-                "shortName": "Phlebotomy"
+                "shortName": "Main Reception"
             },
             {
                 "nodeID": "Hallway-1745538612201",
@@ -3475,8 +3475,11 @@ async function main() {
             {
                 "fromID": "Dialysis Reception",
                 "toID": "Dialysis Entrance",
+            },
+            {
+                "fromID": "Hallway-1745546310011",
+                "toID": "Parking-1745468723599"
             }
-
         ]
     });
 
