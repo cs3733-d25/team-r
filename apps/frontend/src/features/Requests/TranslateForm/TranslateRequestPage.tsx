@@ -18,6 +18,7 @@ interface TranslateRequest extends BaseRequest {
         notes: string | null;
         timestamp: string | null;
         status: string | null;
+        assignedEmployeeID: string | null;
         [key: string]: unknown;
 }
 
@@ -33,7 +34,8 @@ export function TranslateRequestPage() {
             roomNumber: null,
             notes: null,
             timestamp: null,
-            status: null
+            status: null,
+            assignedEmployeeID: null,
         }
     ]);
 
@@ -61,6 +63,7 @@ export function TranslateRequestPage() {
         {field: 'department', header: 'Department', sortable: true},
         {field: 'roomNumber', header: 'Room', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedemployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: TranslateRequest) => (<RequestInfoButton type="Translate" id={item.translateRequestID ? Number(item.translateRequestID) : null} />)}
     ];

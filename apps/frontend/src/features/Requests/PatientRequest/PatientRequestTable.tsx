@@ -12,7 +12,8 @@ interface PatientRequestTableProps {
         time: string | null,
         status: string | null,
         employeeID: string | null,
-        request: string | null
+        request: string | null,
+        assignedEmployeeID: string | null,
     }[]
 }
 
@@ -27,6 +28,7 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
                     <TableHead className={"text-center"}>Department</TableHead>
                     <TableHead className={"text-center"}>Patient</TableHead>
                     <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={"text-center"}>Status</TableHead>
                     <TableHead className={"text-center"}>Comments</TableHead>
                 </TableRow>
@@ -43,6 +45,7 @@ export function PatientRequestTable(props: PatientRequestTableProps) {
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.patientID}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>{row.comment}</TableCell>
                             </TableRow>

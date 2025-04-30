@@ -17,6 +17,7 @@ interface PatientRequest extends BaseRequest {
     request: string | null;
     notes: string | null;
     status: string | null;
+    assignedEmployee: string | null;
     [key: string]: unknown;
 }
 
@@ -31,7 +32,8 @@ function PatientRequestPage() {
         patientID: null,
         request: null,
         notes: null,
-        status: null
+        status: null,
+        assignedEmployee: null
     }]);
 
     const filtering = useRequestFilters(patientRequests);
@@ -56,6 +58,7 @@ function PatientRequestPage() {
         {field: 'department', header: 'Department', sortable: true},
         {field: 'patientID', header: 'Patient', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: PatientRequest) => (<RequestInfoButton type="Patient Request" id={item.patientRequestID ? Number(item.patientRequestID) : null} />) }
     ];
