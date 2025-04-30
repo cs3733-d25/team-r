@@ -32,6 +32,10 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
     // sorting
     const [sortField, setSortField] = useState<string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+    const resetSort = () => {
+        setSortField(null);
+        setSortDirection('desc');
+    };
 
     // pagination states
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -73,7 +77,8 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
         return data.filter((item) => {
             // employee filter
             if (filterState.filterByEmployee && filterOptions.employeeID) {
-                if (!item.employeeID || !item.employeeID.includes(filterOptions.employeeID)) {
+                if (!item.employeeID ||
+                    !item.employeeID.toLowerCase().includes(filterOptions.employeeID.toLowerCase())) {
                     return false;
                 }
             }
@@ -191,6 +196,7 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
         filterState,
         sortField,
         sortDirection,
+        resetSort,
         currentPage,
         itemsPerPage,
         totalPages,
