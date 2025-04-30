@@ -209,7 +209,7 @@ export const PrescriptionForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                     </Label>
-                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Priority */}
@@ -222,7 +222,7 @@ export const PrescriptionForm = () => {
                                 </div>
 
                                 {/* Location and Department */}
-                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
