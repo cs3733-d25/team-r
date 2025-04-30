@@ -3128,8 +3128,11 @@ async function main() {
             {
                 "fromID": "Dialysis Reception",
                 "toID": "Dialysis Entrance",
+            },
+            {
+                "fromID": "Hallway-1745546310011",
+                "toID": "Parking-1745468723599"
             }
-
         ]
     });
 
