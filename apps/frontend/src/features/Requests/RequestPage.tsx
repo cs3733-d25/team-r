@@ -38,9 +38,9 @@ export function AllRequestsPage() {
               <TabsTrigger value="all-requests">All Requests</TabsTrigger>
               <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
               <TabsTrigger value="prescription">Prescription</TabsTrigger>
-              <TabsTrigger value="patient">Patient</TabsTrigger>
+              <TabsTrigger value="patient">Patient Request</TabsTrigger>
               <TabsTrigger value="transport">Transport</TabsTrigger>
-                <TabsTrigger value="translation">Translate</TabsTrigger>
+                <TabsTrigger value="translation">Translator</TabsTrigger>
                 <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
             </TabsList>
 
