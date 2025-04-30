@@ -312,6 +312,9 @@ export function MapPage() {
                     </div>
 
                     <div className="space-y-4">
+                        <Label>
+                            Select a parking lot and department to get directions to the appropriate check-in desk.
+                        </Label>
                         {/* Parking lot picker */}
                         <Select
                             value={selectedParkinglot}

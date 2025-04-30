@@ -96,7 +96,7 @@ const RAW_RUNTIME_STATE =
           ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
           ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
           ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
-          ["tailwindcss", "npm:4.1.3"],\
+          ["tailwindcss", "npm:4.1.5"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
           ["ts-node", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:9.1.1"],\
           ["turbo", "npm:2.4.4"],\
@@ -11732,7 +11732,7 @@ const RAW_RUNTIME_STATE =
           ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
           ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
           ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
-          ["tailwindcss", "npm:4.1.3"],\
+          ["tailwindcss", "npm:4.1.5"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
           ["ts-node", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:9.1.1"],\
           ["turbo", "npm:2.4.4"],\
@@ -12050,6 +12050,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/tailwindcss-npm-4.1.3-6f4452dedf-e1a57c6fa8.zip/node_modules/tailwindcss/",\
         "packageDependencies": [\
           ["tailwindcss", "npm:4.1.3"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:4.1.5", {\
+        "packageLocation": "./.yarn/cache/tailwindcss-npm-4.1.5-153d00b11d-19fd0709f8.zip/node_modules/tailwindcss/",\
+        "packageDependencies": [\
+          ["tailwindcss", "npm:4.1.5"]\
         ],\
         "linkType": "HARD"\
       }]\
