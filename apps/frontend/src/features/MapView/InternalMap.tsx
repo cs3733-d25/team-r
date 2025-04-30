@@ -158,20 +158,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     // in this way, we can filter markers using node data
     const [nodesOnActiveFloor, setNodesOnActiveFloor] = useState<{nodeData:Node, marker:L.Marker}[]>([]);
     const [edgesOnActiveFloor, setEdgesOnActiveFloor] = useState<{edgeData:Edge, polyLine:L.Polyline}[]>([]);
-    // const [allMarkers, setAllMarkers] = useState<L.Marker[]>([]);
-    // const [checkIn, setCheckIn] = useState<Node[]>([]); // ? what does this do?
-    // const [other, setOther] = useState<Node[]>([]); // this one is unused
-    // const [entrances, setEntrances] = useState<Node[]>([]); // what
-    // const [elevators, setElevators] = useState<Node[]>([]); // huh
-    // const [lots, setLots] = useState<Node[]>([]); // oh
-    // const [hallways, setHallways] = useState<Node[]>([]); // starting to get it
-    // const [edges20_1, setEdges20_1] = useState<Edge[]>([]);
-    // const [edges22_1, setEdges22_1] = useState<Edge[]>([]);
-    // const [edges22_3, setEdges22_3] = useState<Edge[]>([]);
-    // const [edges22_4, setEdges22_4] = useState<Edge[]>([]);
-    // const [edgesChestnut, setEdgesChestnut] = useState<Edge[]>([]);
-    // const [edgesFaulkner, setEdgesFaulkner] = useState<Edge[]>([]);
-    //const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -306,62 +293,33 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
         }
     }
     const loadAllEdges = async () => {
-        if(location.building === lastLoadedLocation.current.building && location.floor === lastLoadedLocation.current.floor)
-        {
-            return;
-        }
-        else {
             try {
                 // const data = await fetchAll();
 
                 console.log("Loading nodes");
-                const edges = (await fetchEdges(location)).data;
+                const edges = (await fetchEdges()).data;
+              console.log("edges:",edges)
 
+                edges.map((edge: Edge) => {
+                    console.log("edge ",edge.fromNode.xcoord);
 
-                const fullEdges = edges.map((edge: Edge) => {
-                   const line = L.polyline([
+                 const line =  L.polyline([
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ])
-                    return {edgeData: edge, polyLine: line}
+                    return {edgeData: edge, polyline:line }
+                    console.log("we reached here")
                 })
+setEdgesOnActiveFloor(edges)
 
                 // setAllMarkers(response.data);
                 // console.log(data);
 
-                setEdgesOnActiveFloor(fullEdges);
-                lastLoadedLocation.current.floor = fullEdges.floor;
-                lastLoadedLocation.current.building = fullEdges.building;
             } catch (err) {
                 console.error('Error fetching parking lots:', err);
             }
-        }
+
     }
-    // const loadEdges = async () => {
-    //     try {
-    //         setIsLoading(true);
-    //         const data201 = await fetchEdges20_1();
-    //         setEdges20_1(data201);
-    //         const data221 = await fetchEdges22_1();
-    //         setEdges22_1(data221);
-    //         const data223 = await fetchEdges22_3();
-    //         setEdges22_3(data223);
-    //         const data224 = await fetchEdges22_4();
-    //         setEdges22_4(data224);
-    //         const dataChestnut = await fetchEdgesChestnut();
-    //         setEdgesChestnut(dataChestnut);
-    //         setEdgesFaulkner(await fetchEdgesFaulkner());
-    //         //const dataWomens = await fetchEdgesWomensHospital();
-    //         //setEdgesWomens(dataWomens);
-    //         setError(null);
-    //     } catch (err) {
-    //         console.error('Error fetching edges:', err);
-    //         setError(err instanceof Error ? err : new Error(String(err)));
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // };
-    // console.log("hallways: ",nodesOnActiveFloor)
 
     async function loadAll() {
         await loadAllNodes()
@@ -458,123 +416,6 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     }
 
     // every node that we want to display gets created as a marker with the node's coordinates, icon, and options, and then is added to the layer
-    /*
-    function allNodes (nodeType:string, node:Node, layer:L.LayerGroup){
-        switch (nodeType) {
-            case 'Reception':
-                if (receptionFiltered) {
-                    const reception = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                    setReceptionFiltered(!receptionFiltered);
-                }
-                else {
-                    const reception = L.marker([node.xcoord, node.ycoord],{icon:violetIcon, draggable:true}).addTo(layer);
-                    layer.removeLayer(reception);
-                    reception.on('click', () => clickMarker(node, reception));
-                    reception.on('drag', (e) => dragMarker(node, reception, e));
-                    setReceptionFiltered(receptionFiltered);
-                }
-                break;
-
-            case 'Elevator':
-                const elevator = L.marker([node.xcoord, node.ycoord],{ draggable:true}).addTo(layer);
-                elevator.on('click', () => clickMarker(node, elevator));
-                elevator.on('drag', (e) => dragMarker(node, elevator, e));
-                break;
-            case 'Entrance':
-                const enter = L.marker([node.xcoord, node.ycoord],{icon:greenIcon, draggable:true}).addTo(layer);
-                enter.on('click', () => clickMarker(node, enter));
-                enter.on('drag', (e) => dragMarker(node, enter, e));
-                break;
-            case 'Hallway':
-                const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                place.on('click', () => clickMarker(node, place));
-                place.on('drag', (e) => dragMarker(node, place, e));
-                break;
-            case 'Parking':
-                const park = L.marker([node.xcoord, node.ycoord],{icon:yellowIcon, draggable:true}).addTo(layer);
-                park.on('click', () => clickMarker(node, park));
-                park.on('drag', (e) => dragMarker(node, park, e));
-                break;
-            default:
-                console.log("a node had an invalid building");
-                break;
-        }
-    }
-    */
-
-
-    /*function filterNodes (nodeType:string):void{
-        const layer = floorLayerFaulkner
-        const builds = allMarkers.filter((node)=>node.building.includes(activeLayerInfo.current.building));
-        const floors = builds.filter((node)=>node.floor===(activeLayerInfo.current.floor));
-        switch (nodeType) {
-            case 'Reception':
-                const fil= floors.filter((node)=>{
-                    return node.nodeType.includes('Reception');
-
-
-                })
-                fil.map((node)=>{
-                    allNodes("Reception",node,layer)
-                })
-
-                break;
-            case 'Parking':
-                const fi= floors.filter((node)=>{
-                    return node.nodeType.includes('Parking');
-
-
-                })
-                fi.map((node)=>{
-                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                    makeMarkerDisappear(place);
-                })
-                console.log("floors",fi)
-                break;
-            case 'Elevator':
-                const filt= floors.filter((node)=>{
-                    return node.nodeType.includes('Elevator');
-
-
-                })
-                filt.map((node)=>{
-                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                    makeMarkerDisappear(place);
-                })
-                console.log("floors",filt)
-                break;
-            case 'Entrance':
-                const filtere= floors.filter((node)=>{
-                    return node.nodeType.includes('Entrance');
-
-
-                })
-                filtere.map((node)=>{
-                    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-                    makeMarkerDisappear(place);
-                })
-                console.log("floors",filtere)
-                break;
-            case 'Hallway':
-                console.log("Nodes: ", floors)
-
-               const filtered= floors.filter((node)=>{
-                    return node.nodeType.includes('Hall');
-
-
-                })
-filtered.map((node)=>{
-    const place = L.marker([node.xcoord, node.ycoord],{icon:greyIcon, draggable:true}).addTo(layer);
-    makeMarkerDisappear(place);
-})
-                console.log("floors",filtered)
-                break;
-
-            default:
-                console.log("a node had an invalid building");
-                break;
-        }
-    }*/
 
     // ****** USE EFFECTS *********
 
@@ -632,10 +473,12 @@ filtered.map((node)=>{
                         if(isFiltered(fullNode.nodeData.nodeType)){
                             // console.log("attemption to add to layer");
                             fullNode.marker.addTo(layer);
+
                         }else{
                             fullNode.marker.remove();
                         }
                     })
+
                 }
             }
             const map = L.map(mapRef.current, {
@@ -727,88 +570,7 @@ filtered.map((node)=>{
                 }
             });
 
-            // initialize starting layer
-            /*
-            if (location.includes('20 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Healthcare Center (20 Patriot Pl.)', floor: 1 };
-                floorLayer20_1.addTo(map);
-            } else if (location.includes('22 Patriot Pl')) {
-                activeLayerInfo.current = { building: 'Healthcare Center (22 Patriot Pl.)', floor };
-                if(floor == 1) floorLayer22_1.addTo(map);
-                else if(floor == 3) floorLayer22_3.addTo(map);
-                else if(floor == 4) floorLayer22_4.addTo(map);
-            } else if (location.includes('Chestnut Hill')) {
-                activeLayerInfo.current = { building: 'Healthcare Center (Chestnut Hill)', floor: 1 };
-                floorLayerChestnutHill.addTo(map);
-            } else if (location.includes('Faulkner')) {
-                activeLayerInfo.current = { building: 'Faulkner Hospital', floor: 1 };
-                floorLayerFaulkner.addTo(map);
-            } else if (location.includes('Francis St') || location.includes('Womens')) {
-                activeLayerInfo.current = { building: 'Main Campus Hospital (75 Francis St.)', floor: 1 };
-                floorLayerWomens.addTo(map);
-            }*/
 
-            if(showEdges) {
-                // create node objects
-                // allMarkers is the list of all nodes
-                // allMarkers.map((node) => {
-                //     // put it on the correct floor
-                //     const layer = getLayer(node.building, node.floor);
-                //     // only place it if the floor is valid
-                //     if (layer) {
-                //          allNodes(node.nodeType,node,layer)
-                //
-                //     }
-                // });
-
-                // draw edges
-                // console.log(edges22_1);
-                /*
-                edges20_1.map((edge) => {
-                    L.polyline([
-                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
-                        [edge.toNode.xcoord, edge.toNode.ycoord],
-                    ]).addTo(floorLayer20_1);
-
-                });
-                if(edges22_1) {
-                    edges22_1.map((edge) => {
-                        const line = L.polyline([
-                            [edge.fromNode.xcoord, edge.fromNode.ycoord],
-                            [edge.toNode.xcoord, edge.toNode.ycoord],
-                        ]).addTo(floorLayer22_1);
-                        clickEdge(edge, line);
-                    });
-                }
-                edges22_3.map((edge) => {
-                    L.polyline([
-                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
-                        [edge.toNode.xcoord, edge.toNode.ycoord],
-                    ]).addTo(floorLayer22_3);
-                });
-                edges22_4.map((edge) => {
-                    L.polyline([
-                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
-                        [edge.toNode.xcoord, edge.toNode.ycoord],
-                    ]).addTo(floorLayer22_4);
-                });
-
-                edgesChestnut.map((edge) => {
-                    const line = L.polyline([
-                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
-                        [edge.toNode.xcoord, edge.toNode.ycoord],
-                    ]).addTo(floorLayerChestnutHill);
-                    // console.log("got here",edge.fromNode.xcoord)
-                    clickEdge(edge, line);
-                });
-                edgesFaulkner.map((edge) => {
-                    const line = L.polyline([
-                        [edge.fromNode.xcoord, edge.fromNode.ycoord],
-                        [edge.toNode.xcoord, edge.toNode.ycoord],
-                    ]).addTo(floorLayerFaulkner);
-                    clickEdge(edge, line);
-                });*/
-            }
 
             // add a default layer
             if (location.building.includes('Patriot Place 20')) {
