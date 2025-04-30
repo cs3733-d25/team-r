@@ -10,6 +10,12 @@ import values, {valueKey} from "@/constant-values.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
 
+//more specific typing for mapping onto options dropdown
+interface Employee {
+    id: string;
+    name: string;
+}
+
 interface DropdownProps {
     tableName?: valueKey; //make optional so dropdown can be used for db
     fieldName: string;
@@ -43,8 +49,8 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName
         const getOptions = async () => {
             if (customOptions === 'employees') {
                 try {
-                    const response = await axios.get('/api/employee/assigned');
-                    const names = response.data.map((emp: any) => `${emp.id}`);
+                    const response = await axios.get<Employee[]>('/api/employee/assigned');
+                    const names = response.data.map((emp) => `${emp.id}`);
                     setOptions(names);
                 } catch (error) {
                     console.error("Error loading employee options:", error);

@@ -4,12 +4,13 @@ import App from './routes/App.tsx';
 import './styles.css';
 import { Auth0Provider } from '@auth0/auth0-react';
 import {BrowserRouter} from "react-router-dom";
+import { AppState } from '@auth0/auth0-react';
 
 //use import.meta.env not process.env when in frontend
 const domain = import.meta.env.VITE_AUTH_DOMAIN;
 const clientID = import.meta.env.VITE_AUTH_CLIENT_ID
 
-const onRedirectCallback = (appState: any) => {
+const onRedirectCallback = (appState: AppState | undefined) => {
     window.history.replaceState(
         {},
         document.title,
@@ -19,7 +20,6 @@ const onRedirectCallback = (appState: any) => {
 
 // Entry point where root component is rendered into the DOM
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <BrowserRouter>
         <Auth0Provider
             domain={domain}
             clientId={clientID}
@@ -32,6 +32,4 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         >
             <App />
         </Auth0Provider>
-    </BrowserRouter>
-
 );
