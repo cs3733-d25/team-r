@@ -6,7 +6,6 @@ export function Prescription() {
     return(
         <>
             <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Prescription Request System</h1>
-            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Owen Miller & Keagan Hitt</h2>
             <Tabs defaultValue="prescriptionForm">
                 <TabsList>
                     <TabsTrigger value="prescriptionForm"

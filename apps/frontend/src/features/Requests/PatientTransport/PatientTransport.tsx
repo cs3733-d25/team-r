@@ -6,7 +6,6 @@ export function TransportRequestPage() {
     return(
         <>
             <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Patient Transport Request</h1>
-            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Alex Lowczyk and Joshua Gifford</h2>
             <Tabs defaultValue="patientTransportForm">
                 <TabsList>
                     <TabsTrigger value="patientTransportForm">

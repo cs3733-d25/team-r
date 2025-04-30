@@ -12,7 +12,6 @@ export function AllPatientRequests() {
     return(
         <>
             <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Non Emergent Patient Request Form</h1>
-            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Nora Cleary & Daksh Gajaria</h2>
             <Tabs defaultValue="patientForm">
                 <TabsList>
                     <TabsTrigger value="patientForm">
