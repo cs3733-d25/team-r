@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input.tsx"
 import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
-import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TourAlertDialog, useTour, TourStep } from '@/components/tour';
 import { TOUR_STEPS_IDS_CSV } from '@/lib/tour-constants.ts';
 
 export function CSVPage() {
@@ -111,7 +111,7 @@ export function CSVPage() {
         }
     }
 
-    const steps = [
+    const steps: TourStep[] = [
         { content: <div>On this page you can change the hospital directories for the website.</div>, selectorId: TOUR_STEPS_IDS_CSV.CLICK_START, position: "bottom" },
         { content: <div>First, upload your csv file here. </div>, selectorId: TOUR_STEPS_IDS_CSV.CHOOSE_FILE, position: "bottom" },
         { content: <div>Next, save it.</div>, selectorId: TOUR_STEPS_IDS_CSV.SAVE_FILE, position: "right" },
