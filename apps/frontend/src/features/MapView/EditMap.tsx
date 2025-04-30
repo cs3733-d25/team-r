@@ -73,12 +73,13 @@ export function EditMap({ status }: EditMapProps) {
     const [isDialogOpen, setDialogOpen] = useState(false);
 
     const steps = [
-        { content: <div>The first step to creating a node is selecting where you want to put it. Once you click on the map, the coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
-        { content: <div>Every node should have a name so that it can be tracked. Names can be typed here.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },
-        { content: <div>Then, select what the type of the node.</div>, selectorId: TOUR_STEP_IDS.NODE_TYPE, position: "right" },
-        { content: <div>A node, specifically a reception node, can serve as the reception desk for zero, one, or many different departments.</div>, selectorId: TOUR_STEP_IDS.DEPARTMENTS, position: "right" },
-        { content: <div>When done, you can save the node. The node should pop up on the map!</div>, selectorId: TOUR_STEP_IDS.SAVE_NODE, position: "right" },
-        { content: <div>To connect nodes, select two nodes and then hit save here</div>, selectorId: TOUR_STEP_IDS.SAVE_EDGE, position: "right" },
+        { content: <div>On this page you can add, edit, and delete map nodes for pathfinding.</div>, selectorId: TOUR_STEP_IDS.CLICK_START, position: "right" },
+        { content: <div>First, select the node's location by clicking on the map. The coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
+        { content: <div>Enter the name of the node here. Each node should be given a name so it can be tracked.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },
+        { content: <div>Next, select the node type.</div>, selectorId: TOUR_STEP_IDS.NODE_TYPE, position: "right" },
+        { content: <div>If the node is a reception node, it can serve as the reception desk for any number of departments. Select them here.</div>, selectorId: TOUR_STEP_IDS.DEPARTMENTS, position: "right" },
+        { content: <div>When finished, save the node, and it should pop up on the map!</div>, selectorId: TOUR_STEP_IDS.SAVE_NODE, position: "left" },
+        { content: <div>To add an edge between nodes, select the two nodes you want to connect, and click save here.</div>, selectorId: TOUR_STEP_IDS.SAVE_EDGE, position: "right" },
         // Add more steps here
     ];
 
@@ -416,7 +417,7 @@ export function EditMap({ status }: EditMapProps) {
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
-                        <Label className="font-bold text-2xl pt-4 pl-4 pb-4">Edit Map</Label>
+                        <Label className="font-bold text-2xl pt-4 pl-4 pb-4" id={TOUR_STEP_IDS.CLICK_START}>Edit Map</Label>
                         <div className="flex flex-col items-center justify-center text-left overflow-y-auto pl-1">
                             <Tabs
                                 defaultValue="place-node"

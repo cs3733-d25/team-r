@@ -94,7 +94,7 @@ function App() {
                 { path: 'edit-map', element: <><TourProvider><EditMap /></TourProvider></> },
                 { path: 'internal-map', element: <MapPage /> },
                 { path: 'sanitation', element: <SanitationRequestTabs/> },
-                { path: 'csv', element: <CSVTabPage /> },
+                { path: 'csv', element: <><TourProvider><CSVTabPage /></TourProvider></> },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
