@@ -57,19 +57,19 @@ model Algorithm {
 }
 
 model SanitationRequest {
-  requestId      Int      @id @default(autoincrement())
-  sanitationType String
-  priority       String
-  building       String
-  department     String?
-  roomNumber     String
-  requestTime    DateTime @default(now())
-  comments       String?
-  status         String
-  employeeID     String
-  employeeName   Employee @relation(fields: [employeeID], references: [id])
-  // assignedEmployeeID String
-  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  requestId          Int      @id @default(autoincrement())
+  sanitationType     String
+  priority           String
+  building           String
+  department         String?
+  roomNumber         String
+  requestTime        DateTime @default(now())
+  comments           String?
+  status             String
+  employeeID         String
+  employeeName       Employee @relation(fields: [employeeID], references: [id])
+  assignedEmployeeID String
+  assignedEmployee   Employee @relation("sanitationRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model DeviceRequest {
@@ -221,6 +221,8 @@ model Employee {
   patientRequests    PatientRequest[]
   transportRequests  TransportRequest[]
   tranlateRequests   TranslateRequest[]
+
+  sanitationAssigned SanitationRequest[] @relation("sanitationRequestAssigned")
 }
 
 model Patient {

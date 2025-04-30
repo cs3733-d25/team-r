@@ -133,7 +133,7 @@ async function main() {
             firstName: 'Akaash',
             lastName: 'Walker',
             departmentId: 'Radiology CH-1',
-            role: 'Doctor',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -341,7 +341,7 @@ async function main() {
             firstName: 'Daksh',
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
-            role: 'Nurse',
+            role: 'Admin',
             onShift: false,
         }
     });
@@ -689,6 +689,7 @@ async function main() {
             roomNumber: '143',
             comments: 'Milk Spill',
             status: 'Canceled',
+            assignedEmployeeID: 'Nora',
         },
     });
     await client.sanitationRequest.create({
@@ -701,6 +702,7 @@ async function main() {
             roomNumber: '130',
             comments: 'Mix of spilled medicines',
             status: 'Completed',
+            assignedEmployeeID: 'Owen',
         },
     });
     await client.sanitationRequest.create({
@@ -713,6 +715,7 @@ async function main() {
             roomNumber: '143',
             comments: 'Clean the bathroom',
             status: 'Accepted',
+            assignedEmployeeID: 'Akaash',
         },
     });
 
