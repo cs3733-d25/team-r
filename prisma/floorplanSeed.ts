@@ -2221,6 +2221,16 @@ async function main() {
                 "ycoord": 959.69,
                 "longName": "",
                 "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745980436047",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 627.92,
+                "ycoord": 832.96,
+                "longName": "",
+                "shortName": ""
             }
         ]
     })
@@ -3469,6 +3479,148 @@ async function main() {
 
         ]
     });
+
+    // create Main Campus edges
+    await PrismaClient.edge.createMany({
+        data: [
+            {
+                "fromID": "Entrance-1745978697506",
+                "toID": "Parking-1745977271629"
+            },
+            {
+                "fromID": "Hallway-1745978726808",
+                "toID": "Entrance-1745978697506"
+            },
+            {
+                "fromID": "Elevator-1745978735954",
+                "toID": "Hallway-1745978726808"
+            },
+            {
+                "fromID": "Hallway-1745978877180",
+                "toID": "Hallway-1745978726808"
+            },
+            {
+                "fromID": "Hallway-1745978885516",
+                "toID": "Hallway-1745978877180"
+            },
+            {
+                "fromID": "Hallway-1745978979376",
+                "toID": "Hallway-1745978885516"
+            },
+            {
+                "fromID": "Hallway-1745978885516",
+                "toID": "Hallway-1745978900809"
+            },
+            {
+                "fromID": "Hallway-1745978900809",
+                "toID": "Reception-1745978920070"
+            },
+            {
+                "fromID": "Hallway-1745978979376",
+                "toID": "Hallway-1745978988044"
+            },
+            {
+                "fromID": "Hallway-1745978988044",
+                "toID": "Hallway-1745978998036"
+            },
+            {
+                "fromID": "Hallway-1745978998036",
+                "toID": "Reception-1745979021528"
+            },
+            {
+                "fromID": "Hallway-1745978998036",
+                "toID": "Hallway-1745979028694"
+            },
+            {
+                "fromID": "Hallway-1745979028694",
+                "toID": "Hallway-1745979034269"
+            },
+            {
+                "fromID": "Hallway-1745979034269",
+                "toID": "Hallway-1745979044044"
+            },
+            {
+                "fromID": "Hallway-1745979044044",
+                "toID": "Reception-1745979064138"
+            },
+            {
+                "fromID": "Hallway-1745979074658",
+                "toID": "Hallway-1745979034269"
+            },
+            {
+                "fromID": "Hallway-1745979074658",
+                "toID": "Reception-1745979105794"
+            },
+            {
+                "fromID": "Hallway-1745979074658",
+                "toID": "Hallway-1745979113844"
+            },
+            {
+                "fromID": "Hallway-1745979113844",
+                "toID": "Hallway-1745979120586"
+            },
+            {
+                "fromID": "Hallway-1745979120586",
+                "toID": "Reception-1745979160598"
+            },
+            {
+                "fromID": "Hallway-1745979113844",
+                "toID": "Hallway-1745979131954"
+            },
+            {
+                "fromID": "Hallway-1745979131954",
+                "toID": "Hallway-1745979171184"
+            },
+            {
+                "fromID": "Hallway-1745979171184",
+                "toID": "Hallway-1745979183112"
+            },
+            {
+                "fromID": "Hallway-1745979183112",
+                "toID": "Hallway-1745979190434"
+            },
+            {
+                "fromID": "Hallway-1745979190434",
+                "toID": "Reception-1745979202834"
+            },
+            {
+                "fromID": "Parking-1745977271629",
+                "toID": "Sidewalk-1745979230530"
+            },
+            {
+                "fromID": "Sidewalk-1745979230530",
+                "toID": "Sidewalk-1745979242998"
+            },
+            {
+                "fromID": "Sidewalk-1745979242998",
+                "toID": "Sidewalk-1745979249708"
+            },
+            {
+                "fromID": "Sidewalk-1745979258676",
+                "toID": "Sidewalk-1745979249708"
+            },
+            {
+                "fromID": "Entrance-1745979219810",
+                "toID": "Sidewalk-1745979258676"
+            },
+            {
+                "fromID": "Hallway-1745979293578",
+                "toID": "Entrance-1745979219810"
+            },
+            {
+                "fromID": "Hallway-1745978900809",
+                "toID": "Hallway-1745980436047"
+            },
+            {
+                "fromID": "Reception-1745978956684",
+                "toID": "Hallway-1745980436047"
+            },
+            {
+                "fromID": "Hallway-1745979293578",
+                "toID": "Hallway-1745980436047"
+            }
+        ]
+    })
 
     console.log('Floorplan seeded successfully!');
 }
