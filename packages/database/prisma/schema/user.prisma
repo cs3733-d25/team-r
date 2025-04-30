@@ -43,6 +43,8 @@ model Employee {
   patientRequests    PatientRequest[]
   transportRequests  TransportRequest[]
   tranlateRequests   TranslateRequest[]
+
+  sanitationAssigned  SanitationRequest[] @relation("sanitationRequestAssigned")
 }
 
 model Patient {

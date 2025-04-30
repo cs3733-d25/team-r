@@ -184,7 +184,7 @@ const SanitationRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                   </Label>
-                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'employee'}></Dropdown>
+                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
                 </div>
 
                 {/* Priority */}
@@ -295,6 +295,9 @@ const SanitationRequestForm = () => {
                   </div>
                   <div>
                     <span className="font-semibold">Status:</span> {submittedRequest.status}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Assigned Employee:</span> {submittedRequest.assignedEmployee}
                   </div>
                   <div>
                     <span className="font-semibold">Comments:</span> {submittedRequest.comments || "None provided"}

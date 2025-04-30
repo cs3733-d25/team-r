@@ -44,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName
             if (customOptions === 'employees') {
                 try {
                     const response = await axios.get('/api/employee/assigned');
-                    const names = response.data.map((emp: any) => `${emp.id} `);
+                    const names = response.data.map((emp: any) => `${emp.id}`);
                     setOptions(names);
                 } catch (error) {
                     console.error("Error loading employee options:", error);

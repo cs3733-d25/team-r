@@ -10,8 +10,8 @@ model SanitationRequest {
   status         String
   employeeID     String
   employeeName   Employee @relation(fields: [employeeID], references: [id])
-  // assignedEmployeeID String
-  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  assignedEmployeeID String
+  assignedEmployee Employee @relation("sanitationRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model DeviceRequest {
