@@ -3,7 +3,6 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
-import cors from "cors";
 import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
 import employeeRouter from "./routes/userdata/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
@@ -56,14 +55,6 @@ if (secret) {
     }),
   );
 }
-
-//use cors to allow credentials
-app.use(
-    cors({
-        origin: 'http://localhost:3000',
-        credentials: true,
-    })
-);
 
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup

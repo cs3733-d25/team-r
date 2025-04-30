@@ -175,7 +175,7 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Only display login button in logged-out home page */}
                 {!isAuthenticated && (
                     <div className="ml-auto flex items-center gap-2">
-                        <Button variant="ghost" onClick={() => loginWithRedirect()}>
+                        <Button variant="ghost" onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}>
                             Login
                         </Button>
                     </div>
