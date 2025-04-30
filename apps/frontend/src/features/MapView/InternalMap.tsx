@@ -54,6 +54,7 @@ interface InternalMapProps {
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
+    selectedEdgeNodes?: string[];
 }
 
 const nodePlaceholderOptions = {
@@ -63,7 +64,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag, onNodeEdit, selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -86,6 +87,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     //const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+    const highlightedNodeLayers = useRef<L.Circle[]>([]);
+
+    const selectedNodeStyle = {
+        color: '#2563eb',
+        fillColor: '#3b82f6',
+        fillOpacity: 0.8,
+        radius: 10,
+        weight: 3
+    };
 
 
     useEffect(() => {
@@ -729,6 +739,34 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
         }
     }, [pathCoordinates, pathByFloor, currentFloor]);
+
+    // function to update highlighted nodes
+    const updateHighlightedNodes = () => {
+        // clear previous highlights
+        highlightedNodeLayers.current.forEach(layer => layer.remove());
+        highlightedNodeLayers.current = [];
+
+        if (!mapInstance.current || !selectedEdgeNodes?.length) return;
+
+        // find all nodes
+        const allNodes = [...checkIn, ...entrances, ...elevators, ...lots, ...hallways, ...other];
+
+        // highlight selected nodes
+        selectedEdgeNodes.forEach(nodeId => {
+            const node = allNodes.find(n => n.nodeID === nodeId);
+            if (node) {
+                const highlight = L.circle(
+                    [node.xcoord, node.ycoord],
+                    selectedNodeStyle
+                ).addTo(mapInstance.current!);
+                highlightedNodeLayers.current.push(highlight);
+            }
+        });
+    };
+
+    useEffect(() => {
+        updateHighlightedNodes();
+    }, [selectedEdgeNodes, checkIn, entrances, elevators, lots, hallways, other]);
 
     return (
         <div>
