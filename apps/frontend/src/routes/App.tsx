@@ -30,11 +30,15 @@ import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateReq
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
+import { useTheme } from '../hooks/useTheme';
+
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState("Guest");
     const [userFirstName, setUserFirstName] = useState("");
+    const { theme } = useTheme();
+
     console.log('APP IS RENDERED');
 
     // Get the user type from the database after the user has logged in
@@ -107,7 +111,7 @@ function App() {
     ]);
 
     return (
-        <div>
+        <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
         </div>
