@@ -98,7 +98,7 @@ function App() {
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
-                { path: 'settings', element: <SettingsPage /> }, // ✅ Added route
+                { path: 'settings', element: <SettingsPage /> },
                 { path: 'prescription', element: <Prescription /> },
                 { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
