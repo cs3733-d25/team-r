@@ -54,11 +54,11 @@ export function AllRequestsPage() {
                                   <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                                       <CardTitle>{type.name} Requests</CardTitle>
                                   </CardHeader>
-                                  <CardContent className="pt-6 px-6 pb-6 bg-white h-full">
-                                      <p className="text-muted-foreground mb-4">
+                                  <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                      <p className="text-muted-foreground mb-4 min-h-[3rem]">
                                           {type.description}
                                       </p>
-                                      <div className="flex flex-col space-y-2">
+                                      <div className="flex flex-col space-y-2 mt-auto">
                                           <Button
                                               variant="secondary"
                                               onClick={() => setActiveTab(type.tab)}
