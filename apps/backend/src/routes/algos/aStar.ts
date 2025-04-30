@@ -15,28 +15,38 @@ export class AStar implements PathfindingAlgorithm {
     this.graph = graph;
   }
 
+  /**
+      * Fetch the two Node objects from the DB by ID,
+      * then return them as a tuple.
+      */
+  private async getNodePair(a: string, b: string): Promise<[Node,Node]> {
+        const nodes = await getNodeObjects([a, b]);
+        return [nodes[0], nodes[1]];
+      }
 
-  // Now scales straight‐line distance by the true edge weight
-  private heuristic(a: string, b: string): number  {
-    // get node coordinates
-    const pa = this.graph.getNodePosition(a);
-    const pb = this.graph.getNodePosition(b);
-    const dx = pa.x - pb.x;
-    const dy = pa.y - pb.y;
-    const euclid = Math.hypot(dx, dy);
+  /**
+      * Compute straight-line distance by unpacking the Node coords.
+      */
+  private async euclideanDistance(a: string, b: string): Promise<number> {
+        const [nA, nB] = await this.getNodePair(a, b);
+        return Math.hypot(nA.x - nB.x, nA.y - nB.y);
+      }
 
-    // put the 2 string, feed into nodeobjs, then when they return we will get an array of nodes...then unpack the starting and ending nodes. then node.x coord and node.ycoord to get the distance (pythagran thm)
-
-    // get the actual weight for edge a→b
-    const w = this.graph.getEdgeWeight(a, b);
-
-    // return weighted heuristic
-    return w * euclid;
-  }
-
+  /**
+      * Now async: weight × straight-line distance.
+      */
+  private async heuristic(a: string, b: string): Promise<number> {
+        const d = await this.euclideanDistance(a, b);
+        const w = this.graph.getEdgeWeight(a, b);
+        return w * d;
+      }
 
 
-  public findPath(start: string, end: string): Promise<Node[]> {
+
+
+
+
+  public async findPath(start: string, end: string): Promise<Node[]> {
     //const openSet = new PriorityQueue<string>();
 
     this.openSet = new PriorityQueue<string>();
@@ -47,7 +57,7 @@ export class AStar implements PathfindingAlgorithm {
     gScore.set(start, 0);
 
     const fScore = new Map<string, number>();
-    fScore.set(start, this.heuristic(start, end));
+    fScore.set(start, await this.heuristic(start, end));
 
     while (!this.openSet.isEmpty()) {
       const current = this.openSet.dequeue()!;
@@ -72,7 +82,7 @@ export class AStar implements PathfindingAlgorithm {
           cameFrom.set(neighbor, current);
           gScore.set(neighbor, tentativeG);
 
-          const f = tentativeG + this.heuristic(neighbor, end);
+          const f = tentativeG + await this.heuristic(neighbor, end);
           fScore.set(neighbor, f);
           this.openSet.enqueue(neighbor, f);
         }
