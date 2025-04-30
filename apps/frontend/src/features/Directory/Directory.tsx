@@ -47,6 +47,7 @@ const groupDirectoryData = (data: RawDirectoryItem[]): HospitalDirectoryData => 
 
 export function Directory() {
     const hospitalData = groupDirectoryData(rawDirectoryItems);
+
     const [selectedBuilding, setSelectedBuilding] = useState(
         hospitalData.length > 0 ? hospitalData[0].buildingValue : ''
     );
