@@ -24,22 +24,25 @@ router.post("/", async function (req: Request, res: Response) {
     priority,
     status,
     department,
-    location,
+    building,
     roomNumber,
-    //employeeName,
+    employeeName,
     comments,
     sanitationType,
   } = req.body;
-  const employeeName = req.session?.username;
 
   try {
     const createRequest = await client.sanitationRequest.create({
       data: {
-        employeeID: employeeName,
+        employeeName: {
+          connect: {
+            id: employeeName,
+          },
+        },
         sanitationType,
         priority,
         department,
-        location,
+        building,
         roomNumber,
         comments,
         status,

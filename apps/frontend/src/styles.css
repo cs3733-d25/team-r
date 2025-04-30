@@ -157,6 +157,7 @@
     --primary: #304269;
     --primary-foreground: #FFFFFF;
     --secondary: #6C8EB1;
+    /*--secondary: #6b86c2;*/
     --secondary-foreground: #304269;
     --muted: #6C8EB1;
     --muted-foreground: oklch(0.556 0 0);

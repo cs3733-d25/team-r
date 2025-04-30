@@ -1,11 +1,11 @@
 
 
-import prismaClient from "../../bin/prisma-client";
-import { PriorityQueue }    from "../datastructures/dataStructures";
-import router                from "../maps/mapData";
-import { Graph }             from "../maps/Graph";
-import { PathfindingAlgorithm } from "./algoSelection";
 
+import prismaClient from "../../bin/prisma-client.ts";
+import { PriorityQueue } from "../datastructures/dataStructures.ts";
+import router, { Node } from "../maps/mapData.ts";
+import { Graph } from "../maps/Graph.ts";
+import { getNodeObjects, PathfindingAlgorithm } from "./algoSelection.ts";
 
 
 export class AStar implements PathfindingAlgorithm {
@@ -16,7 +16,7 @@ export class AStar implements PathfindingAlgorithm {
     this.graph = graph;
   }
 
-  // ——— MINIMAL CHANGE HERE ———
+
   // Now scales straight‐line distance by the true edge weight
   private heuristic(a: string, b: string): number {
     // get node coordinates
@@ -33,7 +33,11 @@ export class AStar implements PathfindingAlgorithm {
     return w * euclid;
   }
 
-  public findPath(start: string, end: string): string[] {
+
+
+  public findPath(start: string, end: string): Promise<Node[]> {
+    //const openSet = new PriorityQueue<string>();
+
     this.openSet = new PriorityQueue<string>();
     this.openSet.enqueue(start, 0);
 
@@ -53,11 +57,12 @@ export class AStar implements PathfindingAlgorithm {
           path.push(node);
           node = cameFrom.get(node);
         }
-        return path.reverse();
+
+        return getNodeObjects(path.reverse());
       }
 
       for (const neighbor of this.graph.getNeighbors(current)) {
-        // ——— MINIMAL CHANGE HERE ———
+    
         // use the true edge weight instead of +1
         const w = this.graph.getEdgeWeight(current, neighbor);
         const tentativeG = (gScore.get(current) ?? Infinity) + w;
@@ -73,7 +78,34 @@ export class AStar implements PathfindingAlgorithm {
       }
     }
 
-    return [];
+    return {
+      then: function <TResult1 = Node[], TResult2 = never>(
+        onfulfilled?:
+          | ((value: Node[]) => TResult1 | PromiseLike<TResult1>)
+          | null
+          | undefined,
+        onrejected?:
+          | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+          | null
+          | undefined,
+      ): Promise<TResult1 | TResult2> {
+        throw new Error("Function not implemented.");
+      },
+      catch: function <TResult = never>(
+        onrejected?:
+          | ((reason: any) => TResult | PromiseLike<TResult>)
+          | null
+          | undefined,
+      ): Promise<Node[] | TResult> {
+        throw new Error("Function not implemented.");
+      },
+      finally: function (
+        onfinally?: (() => void) | null | undefined,
+      ): Promise<Node[]> {
+        throw new Error("Function not implemented.");
+      },
+      [Symbol.toStringTag]: "",
+    };
   }
 }
 

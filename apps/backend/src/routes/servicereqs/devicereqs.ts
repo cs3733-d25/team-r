@@ -6,8 +6,6 @@ import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 const router: Router = express.Router();
 
 router.get("/", async function (req: Request, res: Response) {
-  console.log("hello requests");
-
   try {
     const requests = await client.deviceRequest.findMany({
       orderBy: { priority: "asc" },
@@ -28,12 +26,12 @@ router.post("/", async function (req: Request, res: Response) {
     department,
     comment,
     patient,
-    location,
+    building,
     request,
     device,
     room,
+    employeeName,
   } = req.body;
-  const employeeID = req.session?.username;
 
   try {
     console.log("deviceType: ", device);
@@ -43,14 +41,17 @@ router.post("/", async function (req: Request, res: Response) {
         comments: comment,
         //patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority,
+        building,
         department,
         status,
         room,
-        employeeID, //
-        //assignedEmployee: employeeName //connect later
+        employeeName: {
+          connect: {
+            id: employeeName,
+          },
+        },
       },
     });
-    // console.log(createRequest);
     res.status(200).json({ message: "Successfully entered patient request" });
   } catch (error) {
     if (error instanceof PrismaClientValidationError) {

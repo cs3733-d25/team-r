@@ -60,7 +60,7 @@ const MapController=({ selectedLocation }: { selectedLocation: string })=> {
 
     return ( <div className="mt-4 pt-2">
         <Button
-            variant = "selected"
+            variant = "unselected"
             disabled={selectedLocation === ''}
             className={'rounded-full'}
             onClick={zoomIn
@@ -134,11 +134,11 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
      * @param location
      */
     const getBuildingIdentifier = (location: string) => {
-        if (location === patriotPlace20) return 'Patriot Place 20';
-        if (location === patriotPlace22) return 'Patriot Place 22';
-        if (location === chestnutHill) return 'Chestnut Hill';
-        if (location === faulkner) return 'Faulkner';
-        if (location === mainCampus) return 'Womens';
+        if (location === patriotPlace20) return 'Healthcare Center (20 Patriot Pl.)';
+        if (location === patriotPlace22) return 'Healthcare Center (22 Patriot Pl.)';
+        if (location === chestnutHill) return 'Healthcare Center (Chestnut Hill)';
+        if (location === faulkner) return 'Faulkner Hospital';
+        if (location === mainCampus) return 'Main Campus Hospital (75 Francis St.)';
         return '';
     };
 
@@ -182,7 +182,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
 
 
     return (
-        <div className={'flex flex-col h-screen overflow-hidden'}>
+        <div className={'flex flex-col h-[calc(100vh-65px)] overflow-hidden'}>
             <div className={'flex-1 w-full relative'}>
                 <APIProvider apiKey={apiKey} libraries={['places']}>
                     <Map
@@ -253,7 +253,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 <Button
                                     variant={
                                         selectedLocation !== patriotPlace20
-                                            ? 'selected'
+                                            ? 'unselected'
                                             : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(patriotPlace20)}
@@ -263,7 +263,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 <Button
                                     variant={
                                         selectedLocation !== patriotPlace22
-                                            ? 'selected'
+                                            ? 'unselected'
                                             : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(patriotPlace22)}
@@ -272,7 +272,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== chestnutHill ? 'selected' : 'secondary'
+                                        selectedLocation !== chestnutHill ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(chestnutHill)}
                                 >
@@ -280,7 +280,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== faulkner ? 'selected' : 'secondary'
+                                        selectedLocation !== faulkner ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(faulkner)}
                                 >
@@ -288,7 +288,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== mainCampus  ? 'selected' : 'secondary'
+                                        selectedLocation !== mainCampus  ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(mainCampus)}
                                 >

@@ -18,7 +18,7 @@ async function main() {
                 email: 'softengd25r@gmail.com',
                 firstName: 'Wilson',
                 lastName: 'Wong',
-                userType: 'Employee'
+                userType: 'Admin'
             }
         });
 
@@ -77,6 +77,27 @@ async function main() {
         }
     });
 
+    //nora admin
+    await client.user.create({
+        data: {
+            id: 'NoraAdmin',
+            email: 'nora@redroc.com',
+            userType: 'Admin',
+            firstName: 'Nora',
+            lastName: 'Cleary',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'NoraAdmin',
+            firstName: 'Nora',
+            lastName: 'Cleary',
+            departmentId: 'Pharmacy PP20-1',
+            role: 'Admin',
+            onShift: true,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Akaash',
@@ -96,6 +117,26 @@ async function main() {
             onShift: true,
         }
     });
+    //akaash admin
+    await client.user.create({
+        data: {
+            id: 'AkaashAdmin',
+            email: 'akaash@redroc.com',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'AkaashAdmin',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            departmentId: 'Radiology CH-1',
+            role: 'Doctor',
+            onShift: true,
+        }
+    });
 
     await client.user.create({
         data: {
@@ -106,6 +147,7 @@ async function main() {
             userType: 'Employee',
         }
     });
+
     await client.employee.create({
         data: {
             id: 'Sarayu',
@@ -113,6 +155,28 @@ async function main() {
             lastName: 'Vijayanagaram',
             departmentId: 'Vein Care Services PP22-3',
             role: 'Doctor',
+            onShift: true,
+        }
+    });
+
+    //sarayu admin
+    await client.user.create({
+        data: {
+            id: 'SarayuAdmin',
+            email: 'sarayu@redroc.com',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            userType: 'Admin',
+        }
+    });
+
+    await client.employee.create({
+        data: {
+            id: 'SarayuAdmin',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -133,6 +197,27 @@ async function main() {
             lastName: 'Miller',
             departmentId: 'Vein Care Services PP22-3',
             role: 'Doctor',
+            onShift: true,
+        }
+    });
+
+    //owen admin
+    await client.user.create({
+        data: {
+            id: 'OwenAdmin',
+            email: 'owen@redroc.com',
+            firstName: 'O-bot',
+            lastName: 'Miller',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'OwenAdmin',
+            firstName: 'Owen',
+            lastName: 'Miller',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -158,6 +243,27 @@ async function main() {
         }
     });
 
+    //brian - admin
+    await client.user.create({
+        data: {
+            id: 'BrianAdmin',
+            email: 'brian@redroc.com',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'BrianAdmin',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            departmentId: 'Primary Care PP22-4',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Riley',
@@ -178,6 +284,27 @@ async function main() {
         }
     });
 
+    //riley admin
+    await client.user.create({
+        data: {
+            id: 'RileyAdmin',
+            email: 'riley@redroc.com',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'RileyAdmin',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Daksh',
@@ -190,6 +317,27 @@ async function main() {
     await client.employee.create({
         data: {
             id: 'Daksh',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Nurse',
+            onShift: false,
+        }
+    });
+
+    //daksh admin
+    await client.user.create({
+        data: {
+            id: 'DakshAdmin',
+            email: 'daksh@redroc.com',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'DakshAdmin',
             firstName: 'Daksh',
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
@@ -221,6 +369,27 @@ async function main() {
         }
     });
 
+    //josh admin
+    await client.user.create({
+        data: {
+            id: 'JoshAdmin',
+            email: 'josh@redroc.com',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'JoshAdmin',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Alex',
@@ -238,6 +407,27 @@ async function main() {
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
             assignedDoctorId: 'Akaash'
+        }
+    });
+
+    //alex admin
+    await client.user.create({
+        data: {
+            id: 'AlexAdmin',
+            email: 'alex@redroc.com',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'AlexAdmin',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
         }
     });
 
@@ -261,11 +451,34 @@ async function main() {
         }
     });
 
+    //keagan admin
+    await client.user.create({
+        data: {
+            id: 'KeaganAdmin',
+            email: 'keagan@redroc.com',
+            firstName: 'Roboto',
+            lastName: 'Hitt',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'KeaganAdmin',
+            firstName: 'Keagan',
+            lastName: 'Hitt',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
+
     //Requests
     await client.deviceRequest.create({
         data: {
             deviceType: 'X-Ray',
             priority: 'High',
+            building: 'Healthcare Center (Chestnut Hill)',
             room: '111',
             department: "Endoscopy Center",
             //requestTime:
@@ -279,6 +492,7 @@ async function main() {
         data: {
             deviceType: 'Syringe',
             priority: 'Medium',
+            building: 'Faulkner Hospital',
             room: '121',
             department: "Blood Drawing Lab",
             //requestTime:
@@ -292,6 +506,7 @@ async function main() {
         data: {
             deviceType: 'EKG Machine',
             priority: 'High',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             room: '125',
             department: "Urgent Care Center",
             //requestTime:
@@ -308,6 +523,7 @@ async function main() {
             employeeID: 'Nora',
             /*employeeName: */
             priority: 'Medium',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             department: "Allergy",
             patientID: 'Josh',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -329,6 +545,7 @@ async function main() {
             employeeID: 'Brian',
             /*employeeName: */
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: "Cardiac Rehab",
             patientID: 'Keagan',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -350,6 +567,7 @@ async function main() {
             employeeID: 'Sarayu',
             /*employeeName: */
             priority: 'High',
+            building: 'Faulkner Hospital',
             department: "Foot and Ankle Center",
             patientID: 'Alex',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -372,8 +590,8 @@ async function main() {
         data: {
             patientID: 'Alex',
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: 'Blood Drawing Lab',
-            location: 'Faulkner',
             status: 'Completed',
             employeeID: 'Akaash',
             /*employeeName: */
@@ -387,7 +605,7 @@ async function main() {
             patientID: 'Josh',
             priority: 'Medium',
             department: 'ENT',
-            location: 'Patriot Place 20',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             status: 'Pending',
             employeeID: 'Riley',
             /*employeeName: */
@@ -401,7 +619,7 @@ async function main() {
             patientID: 'Keagan',
             priority: 'Low',
             department: 'Community Room',
-            location: 'Patriot Place 22',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             status: 'Canceled',
             employeeID: 'Daksh',
             /*employeeName: */
@@ -418,8 +636,8 @@ async function main() {
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
             patientID: 'Keagan',
             transportationType: 'Helicopter',
-            currentBuilding: 'Patriot Place 22',
-            desiredBuilding: 'Chestnut Hill',
+            currentBuilding: 'Healthcare Center (22 Patriot Pl.)',
+            desiredBuilding: 'Healthcare Center (Chestnut Hill)',
             priority: 'High',
             department: 'Primary Care',
             comments: 'Patient needs quick ride',
@@ -434,8 +652,8 @@ async function main() {
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
             patientID: 'Josh',
             transportationType: 'Non-Emergency Ambulance',
-            currentBuilding: 'Patriot Place 20',
-            desiredBuilding: 'Faulkner',
+            currentBuilding: 'Healthcare Center (20 Patriot Pl.)',
+            desiredBuilding: 'Faulkner Hospital',
             priority: 'Low',
             department: 'Radiology',
             comments: 'Patient needs ride soon',
@@ -450,8 +668,8 @@ async function main() {
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
             patientID: 'Alex',
             transportationType: 'Emergency Ambulance',
-            currentBuilding: 'Faulkner',
-            desiredBuilding: 'Chestnut Hill',
+            currentBuilding: 'Faulkner Hospital',
+            desiredBuilding: 'Healthcare Center (Chestnut Hill)',
             priority: 'High',
             department: 'Plastic Surgery',
             comments: 'Important transport required',
@@ -467,7 +685,7 @@ async function main() {
             sanitationType: 'Spill cleanup',
             priority: 'Low',
             department: 'Physiatry',
-            location: 'Patriot Place 20',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             roomNumber: '143',
             comments: 'Milk Spill',
             status: 'Canceled',
@@ -479,7 +697,7 @@ async function main() {
             sanitationType: 'Biohazard',
             priority: 'Urgent',
             department: 'Center for Pain Medicine',
-            location: 'Chestnut Hill',
+            building: 'Healthcare Center (Chestnut Hill)',
             roomNumber: '130',
             comments: 'Mix of spilled medicines',
             status: 'Completed',
@@ -491,7 +709,7 @@ async function main() {
             sanitationType: 'General cleaning',
             priority: 'Medium',
             department: 'Neurosurgery',
-            location: 'Patriot Place 22',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             roomNumber: '143',
             comments: 'Clean the bathroom',
             status: 'Accepted',
