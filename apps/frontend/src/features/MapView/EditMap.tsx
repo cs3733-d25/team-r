@@ -302,6 +302,9 @@ export function EditMap({ status }: EditMapProps) {
             alert('An error occurred while saving the edge.');
         }
     };
+    function setToggle(){
+        return true;
+    }
 
     const resetMap = async () => {
         if (confirm('Are you sure you want to reset the map?')) {
@@ -348,6 +351,7 @@ export function EditMap({ status }: EditMapProps) {
                     onCoordSelect={handleMapClick}
                     onNodeDrag={handleNodeDrag}
                     onNodeEdit={editNode}
+                    onToggle={setToggle}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">

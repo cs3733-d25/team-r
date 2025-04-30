@@ -84,6 +84,7 @@ interface InternalMapProps {
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
+    onToggle?:(bool:boolean) => void;
 }
 
 // persistent leaflet elements
@@ -162,7 +163,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -773,7 +774,8 @@ setEdgesOnActiveFloor(fullEdges)
                     zIndex: 0,
                 }}
             />
-            <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:1}}>
+            {onToggle?
+            <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:0}}>
                 <ToggleGroup type={"multiple"} >
                     <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
                     <ToggleGroupItem value={"Hallways"} onClick={()=>isFiltered("Hallway")}>H</ToggleGroupItem>
@@ -783,7 +785,7 @@ setEdgesOnActiveFloor(fullEdges)
                     <ToggleGroupItem value={"Elevator"} onClick={()=>isFiltered("Elevator")}>EL</ToggleGroupItem>
                     <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
                 </ToggleGroup>
-            </div>
+            </div>:null}
 
         </div>
     );
