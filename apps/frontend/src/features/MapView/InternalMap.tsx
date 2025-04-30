@@ -135,6 +135,24 @@ const greyIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
+const blueIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
 
 
 const nodePlaceholderOptions = {
@@ -260,13 +278,22 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
 
                 // create fullNodes that have the data of the node and a marker object
                 const fullNodes = nodes.map((node: Node) => {
-                    const marker = L.marker([node.xcoord, node.ycoord], {
-                        icon: getIcon(node.nodeType),
-                        draggable: true
-                    });
-                    marker.on('click', () => clickMarker(node, marker));
-                    marker.on('drag', (e) => dragMarker(node, marker, e));
-                    return {nodeData: node, marker: marker}
+                    if(getIcon(node.nodeType)!=redIcon) {
+                        const marker = L.marker([node.xcoord, node.ycoord], {
+                            icon: getIcon(node.nodeType),
+                            draggable: true
+                        });
+                        marker.on('click', () => clickMarker(node, marker));
+                        marker.on('drag', (e) => dragMarker(node, marker, e));
+                        return {nodeData: node, marker: marker}
+                    }
+                    else{
+                        const marker = L.marker([node.xcoord, node.ycoord], {
+                            icon: getIcon(node.nodeType),
+                            draggable: true
+                        });
+                        return {nodeData: node, marker: marker}
+                    }
                 })
 
                 // setAllMarkers(response.data);
@@ -328,47 +355,77 @@ setEdgesOnActiveFloor(fullEdges)
     function getIcon (nodeType:string) {
         switch (nodeType) {
             case "Entrance":
-                return greenIcon
+                if (!entranceFiltered) {
+                    return greenIcon;
+                }
+                return redIcon;
             case "Parking":
-                return yellowIcon
+                if (!parkingLotFiltered) {
+                    return yellowIcon;
+                }
+                return redIcon;
             case "Reception":
-                return orangeIcon
+                if (!receptionFiltered) {
+                    return violetIcon;
+                }
+                return redIcon;
             case "Hallway":
-                return violetIcon
+                if (!hallwayFiltered) {
+                    return greyIcon;
+                }
+                return redIcon;
             case "Sidewalk":
-                return greyIcon
+                if (!sidewalkingFiltered) {
+                    return blackIcon;
+                }
+                return redIcon;
             case "Elevator":
-                return blackIcon
+                if (!elevatorFiltered) {
+                    return blueIcon;
+                }
+                return redIcon;
             default:
                 return undefined
         }
     }
 
     // return whether or not that marker type should be displayed or not (using Icon
-    function isFiltered (nodeType:string):boolean {
+    function isFiltered (nodeType:string) {
         switch (nodeType) {
             case "Entrance":
-                return !entranceFiltered;
+                setEntranceFiltered(!entranceFiltered);
+                loadAll()
+                break;
             case "Parking":
-                return !parkingLotFiltered;
+                setParkingLotFiltered(!parkingLotFiltered);
+                loadAll()
+                break;
             case "Reception":
-                return !receptionFiltered;
+                setReceptionFiltered(!receptionFiltered);
+                loadAll()
+                break;
             case "Hallway":
-                return !hallwayFiltered;
+                setHallwayFiltered(!hallwayFiltered);
+                loadAll()
+                break;
             // do we even have sidewalks?, apparently
             case "Sidewalk":
-                return !sidewalkingFiltered;
+                setSidewalkingFiltered(!sidewalkingFiltered);
+                loadAll()
+                break;
             case "Elevator":
-                return !elevatorFiltered;
+                setElevatorFiltered(!elevatorFiltered);
+                loadAll()
+                break;
             default:
                 console.error("Invalid nodeType: "+nodeType);
                 return true
         }
+
     }
 
     function getLayer (building:string, floor: number){
         let out = null;
-        // console.log("Building:  " + building + ", floor:  " + floor);
         switch (building) {
             case 'Healthcare Center (20 Patriot Pl.)':
                 out = floorLayer20_1;
@@ -438,7 +495,6 @@ setEdgesOnActiveFloor(fullEdges)
        loadAll();
     }, []);
 
-
     // load all the nodes and edges when the location changes (location change causes a rerender of the whole component?)
     useEffect(() => {
         loadAll()
@@ -467,13 +523,7 @@ setEdgesOnActiveFloor(fullEdges)
                     })
                     nodesOnActiveFloor.map((fullNode) => {
                         // check if we want to display that type
-                        if(isFiltered(fullNode.nodeData.nodeType)){
-                            // console.log("attemption to add to layer");
                             fullNode.marker.addTo(layer);
-
-                        }else{
-                            fullNode.marker.remove();
-                        }
                     })
                     console.log("reached here")
                     console.log("Edges given", edgesOnActiveFloor)
@@ -723,15 +773,15 @@ setEdgesOnActiveFloor(fullEdges)
                 }}
             />
             <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:1}}>
-                {/*<ToggleGroup type={"multiple"} >*/}
-                {/*    <ToggleGroupItem value={"None"}>None</ToggleGroupItem>*/}
-                {/*    <ToggleGroupItem value={"Hallways"} onClick={()=>filterNodes("Hallway")}>H</ToggleGroupItem>*/}
-                {/*    <ToggleGroupItem value={"Entrances"} onClick={()=>filterNodes("Entrance")}>EN</ToggleGroupItem>*/}
-                {/*    <ToggleGroupItem value={"Parking Lots"} onClick={()=>filterNodes("Parking")}>PL</ToggleGroupItem>*/}
-                {/*    <ToggleGroupItem value={"Reception"} onClick={()=>filterNodes("Reception")}>R</ToggleGroupItem>*/}
-                {/*    <ToggleGroupItem value={"Elevator"} onClick={()=>filterNodes("Elevator")}>EL</ToggleGroupItem>*/}
-                {/*    <ToggleGroupItem value={"All"}>All</ToggleGroupItem>*/}
-                {/*</ToggleGroup>*/}
+                <ToggleGroup type={"multiple"} >
+                    <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
+                    <ToggleGroupItem value={"Hallways"} onClick={()=>isFiltered("Hallway")}>H</ToggleGroupItem>
+                    <ToggleGroupItem value={"Entrances"} onClick={()=>isFiltered("Entrance")}>EN</ToggleGroupItem>
+                    <ToggleGroupItem value={"Parking Lots"} onClick={()=>isFiltered("Parking")}>PL</ToggleGroupItem>
+                    <ToggleGroupItem value={"Reception"} onClick={()=>isFiltered("Reception")}>R</ToggleGroupItem>
+                    <ToggleGroupItem value={"Elevator"} onClick={()=>isFiltered("Elevator")}>EL</ToggleGroupItem>
+                    <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
+                </ToggleGroup>
             </div>
 
         </div>
