@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import {AllRequestsTable} from './AllRequestsTable.tsx';
+import { AllRequestsTable } from './AllRequestsTable.tsx';
 import DeviceReqPage from './MedDeviceRequest/DeviceReqPage.tsx';
 import PrescriptionPage from '@/features/Requests/PrescriptionForm/PrescriptionPage.tsx';
 import PatientRequestPage from '@/features/Requests/PatientRequest/PatientRequestPage.tsx';
