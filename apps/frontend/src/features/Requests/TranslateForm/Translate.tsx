@@ -5,7 +5,7 @@ import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateReq
 function TranslateRequestTabs() {
     return (
         <>
-            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Translator Request</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center pt-12">Translator Request</h1>
             <Tabs defaultValue="translateRequestForm">
                 <TabsList>
                     <TabsTrigger value="translateRequestForm">

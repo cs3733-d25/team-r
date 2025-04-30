@@ -5,7 +5,7 @@ import {DeviceReqPage} from "./DeviceReqPage";
 export function DeviceReq() {
     return(
         <>
-            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Medical Device Request</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center pt-12">Medical Device Request</h1>
             <Tabs defaultValue="deviceForm">
                 <TabsList>
                     <TabsTrigger value="deviceForm">

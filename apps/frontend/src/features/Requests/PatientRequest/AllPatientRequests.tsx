@@ -6,7 +6,7 @@ import PatientRequestPage from "@/features/Requests/PatientRequest/PatientReques
 export function AllPatientRequests() {
     return(
         <>
-            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Non-Emergent Patient Request</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center pt-12">Non-Emergent Patient Request</h1>
             <Tabs defaultValue="patientForm">
                 <TabsList>
                     <TabsTrigger value="patientForm">
