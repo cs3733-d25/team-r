@@ -1,12 +1,11 @@
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import {PrescriptionForm} from "./PrescriptionForm";
 import {PrescriptionPage} from "./PrescriptionPage";
 
 export function Prescription() {
     return(
         <>
-            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Prescription Request System</h1>
-            <h2 className="text-xl font-bold font-trade mb-6 place-self-center">Owen Miller & Keagan Hitt</h2>
+            <h1 className="text-3xl font-bold mb-6 text-center pt-12">Prescription Request</h1>
             <Tabs defaultValue="prescriptionForm">
                 <TabsList>
                     <TabsTrigger value="prescriptionForm"

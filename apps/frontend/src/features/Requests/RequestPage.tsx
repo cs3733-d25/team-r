@@ -33,15 +33,15 @@ export function AllRequestsPage() {
               <h1 className="text-3xl font-bold mb-6 text-center">Service Request Dashboard</h1>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="mb-0 border-b-0 shadow-none">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="all-requests">All Requests</TabsTrigger>
-              <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
-              <TabsTrigger value="prescription">Prescription</TabsTrigger>
-              <TabsTrigger value="patient">Patient Request</TabsTrigger>
-              <TabsTrigger value="transport">Transport</TabsTrigger>
-                <TabsTrigger value="translation">Translator</TabsTrigger>
-                <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
+            <TabsList className="mb-0 border-b border-gray-200 shadow-none">
+              <TabsTrigger value="overview" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Overview</TabsTrigger>
+              <TabsTrigger value="all-requests" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">All Requests</TabsTrigger>
+              <TabsTrigger value="medical-device" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Med Device</TabsTrigger>
+              <TabsTrigger value="prescription" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Prescription</TabsTrigger>
+              <TabsTrigger value="patient" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Patient Request</TabsTrigger>
+              <TabsTrigger value="transport" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Transport</TabsTrigger>
+                <TabsTrigger value="translation" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Translator</TabsTrigger>
+                <TabsTrigger value="sanitation" className="border-x border-t rounded-t-md data-[state=active]:border-b-0 data-[state=active]:bg-white data-[state=inactive]:bg-gray-300 data-[state=inactive]:border-b">Sanitation</TabsTrigger>
             </TabsList>
 
                   <TabsContent value="overview" className="space-y-6 -mt-px">

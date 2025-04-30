@@ -1,6 +1,5 @@
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.tsx";
 
-
 interface SanitationTableProps {
     sanitation: {
         employeeID:string | null,
