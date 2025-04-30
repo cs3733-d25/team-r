@@ -573,20 +573,22 @@ setEdgesOnActiveFloor(fullEdges)
 
 
             // add a default layer
-            if (location.building.includes('Patriot Place 20')) {
-                floorLayer20_1.addTo(map);
-            } else if (location.building.includes('Patriot Place 22')) {
-                if(location.floor == 1) {
-                    floorLayer22_1.addTo(map);
-                }else if(location.floor == 3) {
-                    floorLayer22_3.addTo(map);
-                }else if(location.floor == 4) {
-                    floorLayer22_4.addTo(map);
+            if (typeof location.building === "string") {
+                if (location.building.includes('Patriot Place 20')) {
+                    floorLayer20_1.addTo(map);
+                } else if (location.building.includes('Patriot Place 22')) {
+                    if(location.floor == 1) {
+                        floorLayer22_1.addTo(map);
+                    }else if(location.floor == 3) {
+                        floorLayer22_3.addTo(map);
+                    }else if(location.floor == 4) {
+                        floorLayer22_4.addTo(map);
+                    }
+                } else if (location.building.includes('Chestnut Hill')) {
+                    floorLayerChestnutHill.addTo(map);
+                } else if (location.building.includes('Faulkner')) {
+                    floorLayerFaulkner.addTo(map);
                 }
-            } else if (location.building.includes('Chestnut Hill')) {
-                floorLayerChestnutHill.addTo(map);
-            } else if (location.building.includes('Faulkner')) {
-                floorLayerFaulkner.addTo(map);
             }
 
             map.on('click', function (e) {
