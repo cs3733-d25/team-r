@@ -185,7 +185,7 @@ async function main() {
         data: {
             id: 'Owen',
             email: 'ormiller@wpi.edu',
-            firstName: 'O-bot',
+            firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Employee',
         }
@@ -206,7 +206,7 @@ async function main() {
         data: {
             id: 'OwenAdmin',
             email: 'owen@redroc.com',
-            firstName: 'O-bot',
+            firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Admin',
         }
