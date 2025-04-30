@@ -7,7 +7,11 @@ import prismaClient from "../../bin/prisma-client.ts";
 
 export interface PathfindingAlgorithm {
   graph: Graph;
-  findPath(startingPoint: string, endingPoint: string, algorithm: string): Promise<Node[]>;
+  findPath(
+    startingPoint: string,
+    endingPoint: string,
+    algorithm: string,
+  ): Promise<Node[]>;
 }
 
 /**

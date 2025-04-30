@@ -34,7 +34,7 @@ router.post(
       });
 
       //find the algorithm in the database
-      let algorithm = "";
+      let algorithm: string;
       const algorithmDB = await client.algorithm.findFirst();
       if (!algorithmDB) {
         algorithm = "bfs";
@@ -64,11 +64,7 @@ router.post("/fetchPath", async function (req: Request, res: Response) {
   console.log(" algorithm in algoRouting", algorithm);
 
   try {
-    const path = await findPath(
-      startingPoint,
-      endingPoint,
-      algorithm,
-    );
+    const path = await findPath(startingPoint, endingPoint, algorithm);
     console.log("path in algoRouting.ts", path);
 
     res.status(200).json(path);
