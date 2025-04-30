@@ -133,8 +133,8 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
     return (
         <div className="mb-6 pt-4 space-y-4">
-            {/* Active filters as pills */}
-            {activeFilters.length > 0 && (
+            {/* active filters and sorting pills */}
+            {(activeFilters.length > 0 || sortField) && (
                 <div className="mb-4">
                     <div className="flex flex-wrap items-center">
                         <span className="mr-2 text-sm font-medium">Active Filters:</span>
