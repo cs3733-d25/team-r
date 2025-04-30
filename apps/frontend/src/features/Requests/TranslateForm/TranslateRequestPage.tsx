@@ -13,11 +13,12 @@ interface TranslateRequest extends BaseRequest {
         language: string | null;
         priority: string | null;
         department: string | null;
-        location: string | null;
+        building: string | null;
         roomNumber: string | null;
         notes: string | null;
         timestamp: string | null;
         status: string | null;
+        assignedEmployeeID: string | null;
         [key: string]: unknown;
 }
 
@@ -29,11 +30,12 @@ export function TranslateRequestPage() {
             language: null,
             priority: null,
             department: null,
-            location: null,
+            building: null,
             roomNumber: null,
             notes: null,
             timestamp: null,
-            status: null
+            status: null,
+            assignedEmployeeID: null,
         }
     ]);
 
@@ -55,17 +57,28 @@ export function TranslateRequestPage() {
     }
 
     const columns = [
-        {field: 'language', header: 'Language', sortable: true},
-        {field: 'location', header: 'Building', sortable: true},
-        {field: 'department', header: 'Department', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'language', header: 'Language', sortable: true},
+        {field: 'building', header: 'Building', sortable: true},
+        {field: 'department', header: 'Department', sortable: true},
+        {field: 'roomNumber', header: 'Room', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: TranslateRequest) => (<RequestInfoButton type="Translate" id={item.translateRequestID ? Number(item.translateRequestID) : null} />)}
     ];
 
     return (
         <>
+            {/*<RequestFilters*/}
+            {/*    options={filtering.filterOptions}*/}
+            {/*    filterState={filtering.filterState}*/}
+            {/*    onFilterChange={(options, state) => {*/}
+            {/*        filtering.setFilterOptions(options);*/}
+            {/*        filtering.setFilterState(state);*/}
+            {/*    }}*/}
+            {/*    onClearFilters={filtering.clearFilters}*/}
+            {/*/>*/}
             <RequestFilters
                 options={filtering.filterOptions}
                 filterState={filtering.filterState}
@@ -74,6 +87,9 @@ export function TranslateRequestPage() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

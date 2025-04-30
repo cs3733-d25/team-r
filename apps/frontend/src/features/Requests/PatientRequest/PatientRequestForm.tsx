@@ -15,12 +15,13 @@ interface SubmittedPatientRequest{
     assignedEmpID:string;
     priority: string;
     department: string;
-    location: string;
+    building: string;
     comment: string;
     time: string;
     status: string;
     request: string;
     employeeName: string;
+    assignedEmployee: string;
 }
 
 export const PatientRequestForm = () => {
@@ -30,12 +31,13 @@ export const PatientRequestForm = () => {
         assignedEmpID:"",
         priority: "",
         department: "",
-        location: "",
+        building: "",
         comment: "",
         time: new Date().toString(),
         status: '',
         request: ' ',
         employeeName: '',
+        assignedEmployee: '',
 
     })
     //use auth0 to get the current user data
@@ -100,12 +102,13 @@ export const PatientRequestForm = () => {
                     assignedEmpID:"",
                     priority: "",
                     department: "",
-                    location: "",
+                    building: "",
                     comment: "",
                     time: new Date().toLocaleString(),
                     status: '',
                     request: ' ',
-                    employeeName: ''
+                    employeeName: '',
+                    assignedEmployee: ''
 
                 });
             }
@@ -181,7 +184,18 @@ export const PatientRequestForm = () => {
                                     <span className="text-accent">*</span>
                                 </Label>
 
-                                <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                            </div>
+                            {/*assignEmployee*/}
+                            <div>
+                                <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                    Assigned Employee
+                                    <span className="text-accent">*</span>
+                                    <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                </Label>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                             </div>
 
                             {/* Priority */}
@@ -190,16 +204,16 @@ export const PatientRequestForm = () => {
                                     Priority Level
                                     <span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                             {/* Location and Department */}
-                            <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
                             <div>
                                 <label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status
                                     <span className="text-accent">*</span>
                                 </label>
-                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                         </div>
                         {/* Additional Instructions */}
@@ -267,7 +281,7 @@ export const PatientRequestForm = () => {
                                 <span className="font-semibold">Non Emergent Request:</span> {submittedPatientRequest.request}
                             </div>
                             <div>
-                                <span className="font-semibold">Location:</span> {submittedPatientRequest.location}
+                                <span className="font-semibold">Location:</span> {submittedPatientRequest.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Status:</span> {submittedPatientRequest.status}

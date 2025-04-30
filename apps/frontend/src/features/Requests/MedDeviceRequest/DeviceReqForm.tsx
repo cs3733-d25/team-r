@@ -15,11 +15,11 @@ interface SubmittedDevice {
     room: string;
     priority: string;
     department: string;
+    building: string;
     comment: string;
     employeeName: string;
     //employeeID: string;
     status: string;
-
     timestamp: string;
 }
 
@@ -29,6 +29,7 @@ export const DeviceReqForm = () => {
         priority: '',
         room: '',
         department: '',
+        building: '',
         comment: '',
         employeeName: '',
         //employeeID: '',
@@ -99,7 +100,8 @@ export const DeviceReqForm = () => {
                     comment: '',
                     employeeName: '',
                     //employeeID: '',
-                    status: ''
+                    status: '',
+                    building: ''
                 });
             }
         } catch (error) {
@@ -165,7 +167,18 @@ export const DeviceReqForm = () => {
                                         <span className="text-accent">*</span>
                                     </Label>
 
-                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                </div>
+                                {/*assignEmployee*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Assigned Employee
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                    </Label>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                                 </div>
                                 {/* Priority */}
                                 <div>
@@ -176,8 +189,9 @@ export const DeviceReqForm = () => {
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
+
                                 {/* Location and Department */}
-                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
@@ -185,7 +199,7 @@ export const DeviceReqForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </Label>
-                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}
@@ -287,6 +301,10 @@ export const DeviceReqForm = () => {
                             <div>
                                 <span className="font-semibold">Priority:</span>{' '}
                                 {submittedDevice.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Building:</span>{' '}
+                                {submittedDevice.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Department:</span>{' '}

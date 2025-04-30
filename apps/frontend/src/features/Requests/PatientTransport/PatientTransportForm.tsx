@@ -21,6 +21,7 @@ interface SubmittedTransport {
     department: string;
     comments: string;
     timestamp: string;
+    assignedEmployee: string;
 }
 
 
@@ -34,6 +35,7 @@ const TransportationRequestForm = () => {
         department: '',
         comments: '',
         transportationType:'',
+        assignedEmployee:'',
     });
     const [userName, setUserName] = useState('');
     const {user} = useAuth0();
@@ -146,6 +148,7 @@ const TransportationRequestForm = () => {
                     priority: '',
                     department: '',
                     transportationType:'',
+                    assignedEmployee: ''
                 });
 
             }
@@ -225,6 +228,17 @@ const TransportationRequestForm = () => {
                                         required
                                     />
                                 </div>
+                                {/*assignEmployee*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Assigned Employee
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                    </Label>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to Assign'} reset={resetDropdowns}></Dropdown>
+                                </div>
                             </div>
                             {/* Transportation Type */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -258,6 +272,7 @@ const TransportationRequestForm = () => {
                                     </Label>
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
+
                                 {/* Current Location and Department */}
                                 <div>
                                     {/* Location dropdown */}

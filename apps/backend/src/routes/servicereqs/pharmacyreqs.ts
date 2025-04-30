@@ -27,7 +27,7 @@ router.post("/", async function (req: Request, res: Response) {
     department,
     comment,
     patient,
-    location,
+    building,
     request,
     employeeName,
     patientID,
@@ -40,6 +40,7 @@ router.post("/", async function (req: Request, res: Response) {
     numberOfPills,
     refills,
     additionalInstructions,
+    assignedEmployee,
   } = req.body;
   try {
     await client.pharmacyRequest.create({
@@ -49,6 +50,7 @@ router.post("/", async function (req: Request, res: Response) {
             id: employeeName,
           },
         },
+        building,
         priority,
         department,
         patientID,
@@ -63,7 +65,11 @@ router.post("/", async function (req: Request, res: Response) {
         refills: parseInt(refills),
         additionalInstructions,
         status,
-        //assignedEmployee: employeeName //connect later
+        assignedEmployee: {
+          connect: {
+            id: assignedEmployee,
+          },
+        },
       },
     });
     res.status(200).json({ message: "Successfully entered pharmacy request" });

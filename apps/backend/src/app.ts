@@ -16,7 +16,7 @@ import pharmacyRouter from "./routes/servicereqs/pharmacyreqs.ts";
 import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
 import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
-import translateRouter from "./routes/servicereqs/translatereq.ts"
+import translateRouter from "./routes/servicereqs/translatereq.ts";
 
 import { API_ROUTES } from "common/src/constants";
 

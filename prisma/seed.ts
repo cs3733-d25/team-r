@@ -133,7 +133,7 @@ async function main() {
             firstName: 'Akaash',
             lastName: 'Walker',
             departmentId: 'Radiology CH-1',
-            role: 'Doctor',
+            role: 'Admin',
             onShift: true,
         }
     });
@@ -185,7 +185,7 @@ async function main() {
         data: {
             id: 'Owen',
             email: 'ormiller@wpi.edu',
-            firstName: 'O-bot',
+            firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Employee',
         }
@@ -206,7 +206,7 @@ async function main() {
         data: {
             id: 'OwenAdmin',
             email: 'owen@redroc.com',
-            firstName: 'O-bot',
+            firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Admin',
         }
@@ -341,7 +341,7 @@ async function main() {
             firstName: 'Daksh',
             lastName: 'Gajaria',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
-            role: 'Nurse',
+            role: 'Admin',
             onShift: false,
         }
     });
@@ -478,6 +478,7 @@ async function main() {
         data: {
             deviceType: 'X-Ray',
             priority: 'High',
+            building: 'Healthcare Center (Chestnut Hill)',
             room: '111',
             department: "Endoscopy Center",
             //requestTime:
@@ -485,12 +486,15 @@ async function main() {
             employeeID: 'Riley',
             /*employeeName: */
             status: 'Accepted',
+            assignedEmployeeID: 'Owen',
+
         }
     });
     await client.deviceRequest.create({
         data: {
             deviceType: 'Syringe',
             priority: 'Medium',
+            building: 'Faulkner Hospital',
             room: '121',
             department: "Blood Drawing Lab",
             //requestTime:
@@ -498,12 +502,14 @@ async function main() {
             employeeID: 'Daksh',
             /*employeeName: */
             status: 'In Progress',
+            assignedEmployeeID: 'Brian',
         }
     });
     await client.deviceRequest.create({
         data: {
             deviceType: 'EKG Machine',
             priority: 'High',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             room: '125',
             department: "Urgent Care Center",
             //requestTime:
@@ -511,6 +517,8 @@ async function main() {
             employeeID: 'Akaash',
             /*employeeName: */
             status: 'Accepted',
+            assignedEmployeeID: 'Owen',
+
         }
     });
 
@@ -520,6 +528,7 @@ async function main() {
             employeeID: 'Nora',
             /*employeeName: */
             priority: 'Medium',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             department: "Allergy",
             patientID: 'Josh',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -533,7 +542,7 @@ async function main() {
             refills: 2,
             additionalInstructions: 'Take by mouth',
             status: 'In Progress',
-            //assigned employee...
+            assignedEmployeeID: 'Brian'
         },
     });
     await client.pharmacyRequest.create({
@@ -541,6 +550,7 @@ async function main() {
             employeeID: 'Brian',
             /*employeeName: */
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: "Cardiac Rehab",
             patientID: 'Keagan',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -554,7 +564,7 @@ async function main() {
             refills: 0,
             additionalInstructions: 'Take by mouth',
             status: 'Complete',
-            //assigned employee...
+            assignedEmployeeID: 'Sarayu'
         },
     });
     await client.pharmacyRequest.create({
@@ -562,6 +572,7 @@ async function main() {
             employeeID: 'Sarayu',
             /*employeeName: */
             priority: 'High',
+            building: 'Faulkner Hospital',
             department: "Foot and Ankle Center",
             patientID: 'Alex',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
@@ -575,7 +586,7 @@ async function main() {
             refills: 1,
             additionalInstructions: 'Take by mouth',
             status: 'In Progress',
-            //assigned employee...
+            assignedEmployeeID: 'Daksh'
         },
     });
 
@@ -584,14 +595,14 @@ async function main() {
         data: {
             patientID: 'Alex',
             priority: 'Low',
+            building: 'Faulkner Hospital',
             department: 'Blood Drawing Lab',
-            location: 'Faulkner Hospital',
             status: 'Completed',
             employeeID: 'Akaash',
             /*employeeName: */
             request: 'Speak to a doctor',
-            comment: 'I would like to donate blood'
-            //assignedEmployee: employeeName //fix this to connect correctly
+            comment: 'I would like to donate blood',
+            assignedEmployeeID: 'Riley',
         },
     });
     await client.patientRequest.create({
@@ -599,13 +610,13 @@ async function main() {
             patientID: 'Josh',
             priority: 'Medium',
             department: 'ENT',
-            location: 'Healthcare Center (20 Patriot Pl.)',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             status: 'Pending',
             employeeID: 'Riley',
             /*employeeName: */
             request: 'Room Maintenance',
-            comment: 'I want a clean room'
-            //assignedEmployee: employeeName //fix this to connect correctly
+            comment: 'I want a clean room',
+            assignedEmployeeID: 'Akaash',
         },
     });
     await client.patientRequest.create({
@@ -613,13 +624,14 @@ async function main() {
             patientID: 'Keagan',
             priority: 'Low',
             department: 'Community Room',
-            location: 'Healthcare Center (22 Patriot Pl.)',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             status: 'Canceled',
             employeeID: 'Daksh',
             /*employeeName: */
             request: 'Food',
-            comment: 'Hungry patient'
-            //assignedEmployee: employeeName //fix this to connect correctly
+            comment: 'Hungry patient',
+            assignedEmployeeID: 'Nora',
+
         },
     });
 
@@ -636,7 +648,7 @@ async function main() {
             department: 'Primary Care',
             comments: 'Patient needs quick ride',
             status: 'Pending',
-            //assignedEmployee: employeeName //connect later
+            assignedEmployeeID: 'Owen',
             //user: { connect: { id: request.userID } }, // connect to whatever
         },
     });
@@ -652,7 +664,7 @@ async function main() {
             department: 'Radiology',
             comments: 'Patient needs ride soon',
             status: 'Accepted',
-            //assignedEmployee: employeeName //connect later
+            assignedEmployeeID: 'Daksh',
             //user: { connect: { id: request.userID } }, // connect to whatever
         },
     });
@@ -668,7 +680,7 @@ async function main() {
             department: 'Plastic Surgery',
             comments: 'Important transport required',
             status: 'Pending',
-            //assignedEmployee: employeeName //connect later
+            assignedEmployeeID: 'Owen',
             //user: { connect: { id: request.userID } }, // connect to whatever
         },
     });
@@ -679,10 +691,11 @@ async function main() {
             sanitationType: 'Spill cleanup',
             priority: 'Low',
             department: 'Physiatry',
-            location: 'Healthcare Center (20 Patriot Pl.)',
+            building: 'Healthcare Center (20 Patriot Pl.)',
             roomNumber: '143',
             comments: 'Milk Spill',
             status: 'Canceled',
+            assignedEmployeeID: 'Nora',
         },
     });
     await client.sanitationRequest.create({
@@ -691,10 +704,11 @@ async function main() {
             sanitationType: 'Biohazard',
             priority: 'Urgent',
             department: 'Center for Pain Medicine',
-            location: 'Healthcare Center (Chestnut Hill)',
+            building: 'Healthcare Center (Chestnut Hill)',
             roomNumber: '130',
             comments: 'Mix of spilled medicines',
             status: 'Completed',
+            assignedEmployeeID: 'Owen',
         },
     });
     await client.sanitationRequest.create({
@@ -703,10 +717,11 @@ async function main() {
             sanitationType: 'General cleaning',
             priority: 'Medium',
             department: 'Neurosurgery',
-            location: 'Healthcare Center (22 Patriot Pl.)',
+            building: 'Healthcare Center (22 Patriot Pl.)',
             roomNumber: '143',
             comments: 'Clean the bathroom',
             status: 'Accepted',
+            assignedEmployeeID: 'Akaash',
         },
     });
 

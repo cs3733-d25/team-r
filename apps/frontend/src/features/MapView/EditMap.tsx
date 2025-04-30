@@ -16,6 +16,18 @@ import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapVi
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TOUR_STEP_IDS } from '@/lib/tour-constants.ts';
+import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group.tsx'
 
 interface EditMapProps {
     status?: string;
@@ -30,18 +42,16 @@ interface InternalMapProps {
     onLocationChange?: (building: string, floor: number) => void;
 }
 
-declare global {
-    interface Window {
-        lastClickCoordinates?: { lat: number; lng: number };
-    }
-}
 
 export function EditMap({ status }: EditMapProps) {
-    const [selectedLocation, setSelectedLocation] = useState<string>(
-        "Faulkner 1st Floor"
-        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+    const [selectedLocation, setSelectedLocation] = useState<{building: string, floor:number}>(
+        {building: 'Patriot Place 22', floor: 1}
     );
-    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
+        // "Faulkner 1st Floor"
+        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+    // );
+    // const [building, setBuilding] = useState<string>('Faulkner');
+    // const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);          // coordinates that were last clicked
     const [editcoordinates, setEditCoordinates] = useState<{ x: string; y: string } | null>({x:"", y:""});  // coordinates that are entered into the textbox (also get updated when map is clicked)
@@ -54,15 +64,28 @@ export function EditMap({ status }: EditMapProps) {
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
     const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
-    const [currentBuilding, setCurrentBuilding] = useState<string>('');
+    // const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
-    const building = getBuildingFromLocation(selectedLocation);
-    const { departments } = useMapData(building);
+    const building = getBuildingFromLocation(selectedLocation.building);
+    // for map editing instructions
+    const [isDialogOpen, setDialogOpen] = useState(false);
+
+    const steps = [
+        { content: <div>On this page you can add, edit, and delete map nodes for pathfinding.</div>, selectorId: TOUR_STEP_IDS.CLICK_START, position: "right" },
+        { content: <div>First, select the node's location by clicking on the map. The coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
+        { content: <div>Enter the name of the node here. Each node should be given a name so it can be tracked.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },
+        { content: <div>Next, select the node type.</div>, selectorId: TOUR_STEP_IDS.NODE_TYPE, position: "right" },
+        { content: <div>If the node is a reception node, it can serve as the reception desk for any number of departments. Select them here.</div>, selectorId: TOUR_STEP_IDS.DEPARTMENTS, position: "right" },
+        { content: <div>When finished, save the node, and it should pop up on the map!</div>, selectorId: TOUR_STEP_IDS.SAVE_NODE, position: "left" },
+        { content: <div>To add an edge between nodes, select the two nodes you want to connect, and click save here.</div>, selectorId: TOUR_STEP_IDS.SAVE_EDGE, position: "right" },
+        // Add more steps here
+    ];
+    const { departments } = useMapData(selectedLocation.building);
 
     async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
         try {
@@ -78,8 +101,9 @@ export function EditMap({ status }: EditMapProps) {
 
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
-        setCurrentBuilding(building);
-        setCurrentFloor(floor);
+        setSelectedLocation({building:building, floor:floor});
+        // setCurrentBuilding(building);
+        // setCurrentFloor(floor);
     }
 
     // set available departments when departments data loads
@@ -93,6 +117,13 @@ export function EditMap({ status }: EditMapProps) {
             setEditAvailableDepartments(departments);
         }
     }, [departments]);
+
+    // check if the instructions should be opened
+    useEffect(() => {
+        if(true){
+            setDialogOpen(true);
+        }
+    }, []);
 
     // function from mapService that makes axios request
     async function deleteNode(nodeID: string) {
@@ -133,7 +164,7 @@ export function EditMap({ status }: EditMapProps) {
             x: lat.toString(),
             y: lng.toString(),
         });
-        setCurrentBuilding(building);
+        // setCurrentBuilding(building);
     };
     const handleNodeDrag = (lat: number, lng: number, nodeID:string, nodeTypes:string) => {
         setNodeID(nodeID)
@@ -143,9 +174,9 @@ export function EditMap({ status }: EditMapProps) {
             x: lat.toString(),
             y: lng.toString(),
         });
-        setCurrentBuilding(building);
+        //setCurrentBuilding(building);
     };
-    console.log("nodeType:", nodeType);
+    // console.log("nodeType:", nodeType);
     // useEffect(() => {
 
 
@@ -176,6 +207,8 @@ export function EditMap({ status }: EditMapProps) {
         //     console.log = originalConsoleLog;
         // };
     // }, [building]);
+        // setCurrentBuilding(building);
+
 
     // TODO: make this an array of strings not objects
     const nodeTypes = [
@@ -217,8 +250,8 @@ export function EditMap({ status }: EditMapProps) {
         const nodeData = {
             nodeID: nodeID,
             nodeType: editnodeType,
-            building: currentBuilding,
-            floor: currentFloor,
+            building: selectedLocation.building,
+            floor: selectedLocation.floor,
             xcoord: parseFloat(editcoordinates.x),
             ycoord: parseFloat(editcoordinates.y),
             longName: '',
@@ -257,14 +290,14 @@ export function EditMap({ status }: EditMapProps) {
             return;
         }
 
-        console.log(currentFloor);
+        console.log(selectedLocation.floor);
 
         // use currentBuilding and currentFloor from state (automatically updated when layer changes)
         const nodeData = {
-            nodeID: nodeName || `${nodeType}-${Date.now()}`,
+            nodeID: `${nodeType}-${Date.now()}`,
             nodeType: nodeType,
-            building: currentBuilding,
-            floor: currentFloor,
+            building: selectedLocation.building,
+            floor: selectedLocation.floor,
             xcoord: coordinates.x,
             ycoord: coordinates.y,
             longName: '',
@@ -329,6 +362,9 @@ export function EditMap({ status }: EditMapProps) {
             alert('An error occurred while saving the edge.');
         }
     };
+    function setToggle(){
+        return true;
+    }
 
     const resetMap = async () => {
         if (confirm('Are you sure you want to reset the map?')) {
@@ -355,15 +391,30 @@ export function EditMap({ status }: EditMapProps) {
         }
     };
 
-    console.log('edit Coordinates', editcoordinates);
-    console.log(' Coordinates', coordinates);
+    // console.log('edit Coordinates', editcoordinates);
+    // console.log(' Coordinates', coordinates);
+    // console.log('edit Coordinates', editcoordinates);
+    // console.log(' Coordinates', coordinates);
+
+    const { setSteps } = useTour();
+    const [openTour, setOpenTour] = useState(false);
+
+    useEffect(() => {
+        setSteps(steps);
+        const timer = setTimeout(() => {
+            setOpenTour(true);
+        }, 100);
+
+        return () => clearTimeout(timer);
+    }, [setSteps]);
 
     return (
         <div className="flex flex-col h-[calc(100vh-65px)]">
             <div className="flex-1 relative cursor-pointer">
+                {/*Internal Map will reload when building is remade (which is when)?*/}
                 <InternalMap
                     location={selectedLocation}
-                    floor={currentFloor}
+                    // floor={currentFloor}
                     onNodeDelete={deleteNode}
                     promiseNodeCreate={requestPromise}
                     promiseEdgeCreate={edgeCreatePromise}
@@ -374,11 +425,15 @@ export function EditMap({ status }: EditMapProps) {
                     onCoordSelect={handleMapClick}
                     onNodeDrag={handleNodeDrag}
                     onNodeEdit={editNode}
+                    onToggle={setToggle}
+                    selectedEdgeNodes={edgeNodes}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
-                        <Label className="font-bold text-2xl pt-4 pl-4 pb-4">Edit Map</Label>
+                        <Label className="font-bold text-2xl pt-4 pl-4 pb-4" id={TOUR_STEP_IDS.CLICK_START}>Edit Map</Label>
+
+
                         <div className="flex flex-col items-center justify-center text-left overflow-y-auto pl-1">
                             <Tabs
                                 defaultValue="place-node"
@@ -392,20 +447,20 @@ export function EditMap({ status }: EditMapProps) {
                                 </TabsList>
                                 <div className={'w-80 flex flex-col'}>
                                     <TabsContent value="place-node" className="space-y-4">
-                                        <div className="bg-gray-100 p-3 rounded-md">
+                                        <div className="bg-gray-100 p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
                                             <Label>Click on map to select node location</Label>
                                             {coordinates && (
                                                 <div className="mt-2 text-sm">
                                                     <p>X: {coordinates.x.toFixed(2)}</p>
                                                     <p>Y: {coordinates.y.toFixed(2)}</p>
-                                                    <p>Building: {currentBuilding}</p>
-                                                    <p>Floor: {currentFloor}</p>
+                                                    <p>Building: {selectedLocation.building}</p>
+                                                    <p>Floor: {selectedLocation.floor}</p>
                                                 </div>
                                             )}
                                         </div>
 
                                         <div className="space-y-3">
-                                            <div>
+                                            <div id={TOUR_STEP_IDS.NODE_NAME}>
                                                 <Label>Node Name (Optional)</Label>
                                                 <Input
                                                     value={nodeName}
@@ -414,7 +469,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 />
                                             </div>
 
-                                            <div>
+                                            <div id={TOUR_STEP_IDS.NODE_TYPE}>
                                                 <Label>Node Type</Label>
                                                 <Select
                                                     onValueChange={setNodeType}
@@ -438,7 +493,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 </Select>
                                             </div>
 
-                                            <div>
+                                            <div id={TOUR_STEP_IDS.DEPARTMENTS}>
                                                 <Label>Associated Departments</Label>
                                                 <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
                                                     {availableDepartments.length > 0 ? (
@@ -479,11 +534,12 @@ export function EditMap({ status }: EditMapProps) {
                                             onClick={saveNode}
                                             disabled={!coordinates || !nodeType}
                                             className={'w-full'}
+                                            id={TOUR_STEP_IDS.SAVE_NODE}
                                         >
                                             Save Node
                                         </Button>
 
-                                        <div className="mt-1 pt-4 border-t border-gray-200">
+                                        <div className="mt-1 pt-4 border-t border-gray-200" id={TOUR_STEP_IDS.SAVE_EDGE}>
                                             <div className="bg-gray-100 p-3 rounded-md">
                                                 <Label>Click on two nodes to create an edge</Label>
                                                 {edgeNodes.length > 0 ? (
@@ -657,6 +713,28 @@ export function EditMap({ status }: EditMapProps) {
                                     >
                                         Reset Map to Default
                                     </Button>
+
+                                    {/*<Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>*/}
+                                    {/*    <DialogContent className="sm:max-w-[425px] ">*/}
+                                    {/*        <DialogHeader>*/}
+                                    {/*            <DialogTitle>Edit profile</DialogTitle>*/}
+                                    {/*            <DialogDescription>*/}
+                                    {/*                Make changes to your profile here. Click save when you're done.*/}
+                                    {/*            </DialogDescription>*/}
+                                    {/*        </DialogHeader>*/}
+                                    {/*        <div className="grid gap-4 py-4">*/}
+                                    {/*            <div className="grid grid-cols-4 items-center gap-4">*/}
+                                    {/*                <Label htmlFor="name" className="text-right">*/}
+                                    {/*                    Name*/}
+                                    {/*                </Label>*/}
+                                    {/*                <Input id="name" value="Pedro Duarte" className="col-span-3" />*/}
+                                    {/*            </div>*/}
+                                    {/*        </div>*/}
+                                    {/*        <DialogFooter>*/}
+                                    {/*            <Button type="submit">Save changes</Button>*/}
+                                    {/*        </DialogFooter>*/}
+                                    {/*    </DialogContent>*/}
+                                    {/*</Dialog>*/}
                                 </div>
                             </Tabs>
                         </div>
@@ -664,6 +742,8 @@ export function EditMap({ status }: EditMapProps) {
 
 
                 </div>
+                {/*<div id={TOUR_STEP_IDS.WELCOME}>Welcome Section</div>*/}
+                <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
             </div>
         </div>
     );

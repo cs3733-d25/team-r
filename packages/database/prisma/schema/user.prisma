@@ -1,11 +1,11 @@
 model User {
-  id         String   @id @default(uuid())
+  id        String  @id @default(uuid())
   //username   String   @unique
   //password   String
-  email String  @unique
-  userType String
+  email     String  @unique
+  userType  String
   firstName String?
-  lastName String?
+  lastName  String?
   // userTypeID String
   // userType   UserType @relation(fields: [userTypeID], references: [id])
   // updatedAt  DateTime @default(now())
@@ -18,7 +18,7 @@ model UserType {
   id   String @id @default(uuid())
   name String
 
- // users User[]
+  // users User[]
 }
 
 model Employee {
@@ -36,14 +36,22 @@ model Employee {
   onShift Boolean @default(false)
   user    User    @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  assignedPatients      Patient[]
-  medicalDeviceRequests MedicalDeviceRequest[]
-  sanitationRequests    SanitationRequest[]
-  deviceRequests        DeviceRequest[]
-  pharmacyRequests      PharmacyRequest[]
-  patientRequests       PatientRequest[]
-  transportRequests     TransportRequest[]
-  tranlateRequests  TranslateRequest[]
+  assignedPatients   Patient[]
+  sanitationRequests SanitationRequest[]
+  deviceRequests     DeviceRequest[]
+  pharmacyRequests   PharmacyRequest[]
+  patientRequests    PatientRequest[]
+  transportRequests  TransportRequest[]
+  tranlateRequests   TranslateRequest[]
+
+  sanitationAssigned  SanitationRequest[] @relation("sanitationRequestAssigned")
+  pharmacyAssigned  PharmacyRequest[] @relation("PharmacyRequestAssigned")
+  patientRequestAssigned PatientRequest[] @relation("patientRequestAssigned")
+  transportAssigned TransportRequest[] @relation("transportRequestAssigned")
+  translateAssigned TranslateRequest[] @relation("translateRequestAssigned")
+  deviceAssigned DeviceRequest[] @relation("deviceRequestAssigned")
+
+
 }
 
 model Patient {

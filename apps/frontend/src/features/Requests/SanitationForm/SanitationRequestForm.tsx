@@ -15,11 +15,12 @@ interface SubmittedRequest {
   sanitationType: string;
   priority: string;
   department: string;
-  location: string;
+  building: string;
   roomNumber: string;
   comments: string;
   timestamp: string;
   status:string;
+  assignedEmployee: string;
 }
 
 
@@ -32,7 +33,8 @@ const SanitationRequestForm = () => {
     roomNumber: '',
     comments: '',
     status:'',
-    location:'',
+    building:'',
+    assignedEmployee:'',
 
   });
   //use auth0 to get the current user data
@@ -110,7 +112,8 @@ const SanitationRequestForm = () => {
           roomNumber: '',
           comments: '',
           status: '',
-          location: '',
+          building: '',
+          assignedEmployee: '',
 
         });
       }
@@ -172,6 +175,18 @@ const SanitationRequestForm = () => {
                   />
                 </div>
 
+                {/*assignEmployee*/}
+                <div>
+                  <Label className= "block text-sm font-semibold text-foreground mb-2">
+                    Assigned Employee
+                    <span className="text-accent">*</span>
+                    <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                  </Label>
+                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
+                </div>
+
                 {/* Priority */}
                 <div>
                   <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -182,7 +197,7 @@ const SanitationRequestForm = () => {
                 </div>
 
                 {/* Location and Department */}
-                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
                 {/* Status */}
 
                 <div>
@@ -190,7 +205,7 @@ const SanitationRequestForm = () => {
                     Request Status
                     <span className="text-accent">*</span>
                   </Label>
-                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
                 {/* Room Number */}
                 <div>
@@ -273,13 +288,16 @@ const SanitationRequestForm = () => {
                     <span className="font-semibold">Department:</span> {submittedRequest.department}
                   </div>
                   <div>
-                    <span className="font-semibold">Location:</span> {submittedRequest.location}
+                    <span className="font-semibold">Location:</span> {submittedRequest.building}
                   </div>
                   <div>
                     <span className="font-semibold">Room:</span> {submittedRequest.roomNumber}
                   </div>
                   <div>
                     <span className="font-semibold">Status:</span> {submittedRequest.status}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Assigned Employee:</span> {submittedRequest.assignedEmployee}
                   </div>
                   <div>
                     <span className="font-semibold">Comments:</span> {submittedRequest.comments || "None provided"}

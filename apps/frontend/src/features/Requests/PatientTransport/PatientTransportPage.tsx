@@ -13,12 +13,13 @@ interface TransportRequest extends BaseRequest {
     department: string | null;
     patientID: string | null;
     patientName: string | null;
-    currentLocation: string | null;
-    destination: string | null;
-    transportType: string | null;
+    currentBuilding: string | null;
+    desiredBuilding: string | null;
+    transportationType: string | null;
     requestTime: string | null;
     notes: string | null;
     status: string | null;
+    assignedEmployeeID: string | null;
     [key: string]: unknown;
 }
 
@@ -30,12 +31,13 @@ export function PatientTransportPage() {
         department: null,
         patientID: null,
         patientName: null,
-        currentLocation: null,
-        destination: null,
-        transportType: null,
+        currentBuilding: null,
+        desiredBuilding: null,
+        transportationType: null,
         requestTime: null,
         notes: null,
-        status: null
+        status: null,
+        assignedEmployeeID: null,
     }]);
 
     const filtering = useRequestFilters(transport);
@@ -55,11 +57,14 @@ export function PatientTransportPage() {
     }
 
     const columns = [
-        {field: 'transportType', header: 'Transport Type', sortable: true},
-        {field: 'patientID', header: 'Patient ID', sortable: true},
-        {field: 'department', header: 'Department', sortable: true},
         {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'currentBuilding', header: 'Current Location', sortable: true},
+        {field: 'department', header: 'Department', sortable: true},
+        {field: 'desiredBuilding', header: 'Destination', sortable: true},
+        {field: 'transportationType', header: 'Transport Type', sortable: true},
+        {field: 'patientID', header: 'Patient', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {
             field: 'actions',
@@ -75,6 +80,15 @@ export function PatientTransportPage() {
 
     return(
         <>
+            {/*<RequestFilters*/}
+            {/*    options={filtering.filterOptions}*/}
+            {/*    filterState={filtering.filterState}*/}
+            {/*    onFilterChange={(options, state) => {*/}
+            {/*        filtering.setFilterOptions(options);*/}
+            {/*        filtering.setFilterState(state);*/}
+            {/*    }}*/}
+            {/*    onClearFilters={filtering.clearFilters}*/}
+            {/*/>*/}
             <RequestFilters
                 options={filtering.filterOptions}
                 filterState={filtering.filterState}
@@ -83,6 +97,9 @@ export function PatientTransportPage() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

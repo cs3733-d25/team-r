@@ -3,7 +3,8 @@
 // const router: Router = express.Router();
 import { Graph } from "../maps/Graph.ts";
 import { Queue, Stack } from "../datastructures/dataStructures.ts";
-import { PathfindingAlgorithm } from "./algoSelection.ts";
+import { getNodeObjects, PathfindingAlgorithm } from "./algoSelection.ts";
+import { Node } from "../maps/mapData.ts";
 
 export class BFS implements PathfindingAlgorithm {
   graph: Graph;
@@ -13,7 +14,7 @@ export class BFS implements PathfindingAlgorithm {
     this.graph = graph;
   }
 
-  public findPath(start: string, end: string): string[] {
+  public findPath(start: string, end: string): Promise<Node[]> {
     console.log("in bfs.pathFind()");
     console.log(" startingPoint inf BFS pathfind: ", start);
     console.log(" endingPoint in BFS pathfind: ", end);
@@ -32,7 +33,7 @@ export class BFS implements PathfindingAlgorithm {
       const path = this.queue.dequeue()!;
       const currentID = path[path.length - 1];
       if (!path) continue;
-      if (currentID === end) return path;
+      if (currentID === end) return getNodeObjects(path);
 
       if (!visited.has(currentID)) {
         visited.add(currentID);
@@ -47,7 +48,34 @@ export class BFS implements PathfindingAlgorithm {
       }
     }
 
-    return []; // No path found
+    return {
+      then: function <TResult1 = Node[], TResult2 = never>(
+        onfulfilled?:
+          | ((value: Node[]) => TResult1 | PromiseLike<TResult1>)
+          | null
+          | undefined,
+        onrejected?:
+          | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+          | null
+          | undefined,
+      ): Promise<TResult1 | TResult2> {
+        throw new Error("Function not implemented.");
+      },
+      catch: function <TResult = never>(
+        onrejected?:
+          | ((reason: any) => TResult | PromiseLike<TResult>)
+          | null
+          | undefined,
+      ): Promise<Node[] | TResult> {
+        throw new Error("Function not implemented.");
+      },
+      finally: function (
+        onfinally?: (() => void) | null | undefined,
+      ): Promise<Node[]> {
+        throw new Error("Function not implemented.");
+      },
+      [Symbol.toStringTag]: "",
+    }; // No path found
   }
 }
 /*

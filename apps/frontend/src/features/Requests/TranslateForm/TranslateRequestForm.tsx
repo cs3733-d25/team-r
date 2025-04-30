@@ -14,11 +14,12 @@ interface SubmittedRequest {
     language: string;
     priority: string;
     department: string;
-    location: string;
+    building: string;
     roomNumber: string;
     notes: string;
     timestamp: string;
     status: string;
+    assignedEmployee: string;
 }
 
 const TranslateRequestForm = () => {
@@ -27,10 +28,11 @@ const TranslateRequestForm = () => {
         language: '',
         priority: '',
         department: '',
-        location: '',
+        building: '',
         roomNumber: '',
         notes: '',
-        status: ''
+        status: '',
+        assignedEmployee: '',
     });
     //use auth0 to get the current user data
     const [userName, setUserName] = useState('');
@@ -89,10 +91,11 @@ const TranslateRequestForm = () => {
                     language: '',
                     priority: '',
                     department: '',
-                    location: '',
+                    building: '',
                     roomNumber: '',
                     notes: '',
-                    status: ''
+                    status: '',
+                    assignedEmployee: ''
                 });
             }
         } catch (error) {
@@ -125,21 +128,6 @@ const TranslateRequestForm = () => {
                 <div className="p-5">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/*<div>*/}
-                            {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
-                            {/*        Patient ID<span className="text-accent">*</span>*/}
-                            {/*    </Label>*/}
-                            {/*    <Input*/}
-                            {/*        type="text"*/}
-                            {/*        name="requestorName"*/}
-                            {/*        value={formData.requestorName}*/}
-                            {/*        onChange={handleChange}*/}
-                            {/*        placeholder="Enter patient ID"*/}
-                            {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
-                            {/*        required*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Language Needed<span className="text-accent">*</span>
@@ -154,7 +142,17 @@ const TranslateRequestForm = () => {
                                     required
                                 />
                             </div>
-
+                            {/*assignEmployee*/}
+                            <div>
+                                <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                    Assigned Employee
+                                    <span className="text-accent">*</span>
+                                    <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                </Label>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={"employee to assign"} reset={resetDropdowns}></Dropdown>
+                            </div>
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Priority Level<span className="text-accent">*</span>
@@ -162,13 +160,13 @@ const TranslateRequestForm = () => {
                                 <Dropdown tableName="priority" fieldName="priority" onChange={handleDropdownChange} reset={resetDropdowns} />
                             </div>
 
-                            <LocationDepartmentDropdown onChange={handleDropdownChange} />
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}/>
 
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status<span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName="status" fieldName="status" onChange={handleDropdownChange} />
+                                <Dropdown tableName="status" fieldName="status" onChange={handleDropdownChange} reset={resetDropdowns}/>
                             </div>
 
                             <div>
@@ -236,6 +234,10 @@ const TranslateRequestForm = () => {
                                 {submittedRequest.language}
                             </div>
                             <div>
+                                <span className="font-semibold">Assigned Employee: </span>
+                                {submittedRequest.assignedEmployee}
+                            </div>
+                            <div>
                                 <span className="font-semibold">Priority: </span>
                                 {submittedRequest.priority}</div>
                             <div>
@@ -244,13 +246,13 @@ const TranslateRequestForm = () => {
                             </div>
                             <div>
                                 <span className="font-semibold">Location: </span>
-                                {submittedRequest.location}
+                                {submittedRequest.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Room: </span>
                                 {submittedRequest.roomNumber}
                             </div>
-                            <div>\
+                            <div>
                                 <span className="font-semibold">Status: </span>
                                 {submittedRequest.status}
                             </div>

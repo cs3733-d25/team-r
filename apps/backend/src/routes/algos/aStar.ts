@@ -1,8 +1,11 @@
+
+
 import prismaClient from "../../bin/prisma-client.ts";
 import { PriorityQueue } from "../datastructures/dataStructures.ts";
-import router from "../maps/mapData.ts";
+import router, { Node } from "../maps/mapData.ts";
 import { Graph } from "../maps/Graph.ts";
-import { PathfindingAlgorithm } from "./algoSelection.ts";
+import { getNodeObjects, PathfindingAlgorithm } from "./algoSelection.ts";
+
 
 export class AStar implements PathfindingAlgorithm {
   graph: Graph;
@@ -12,51 +15,81 @@ export class AStar implements PathfindingAlgorithm {
     this.graph = graph;
   }
 
-  private heuristic(a: string, b: string): number {
-    // Placeholder: returns zero (Dijkstra). Replace if you have coords.
-    // I was thinking we either use the distance between the nodes or the number of edges between them.
-    // we can also use E-disance, Minkowski, or chebyshev distance.
-    return 0;
-  }
+  /**
+      * Fetch the two Node objects from the DB by ID,
+      * then return them as a tuple.
+      */
+  private async getNodePair(a: string, b: string): Promise<[Node,Node]> {
+        const nodes = await getNodeObjects([a, b]);
+        return [nodes[0], nodes[1]];
+      }
 
-  public findPath(start: string, end: string): string[] {
-    //const openSet = new PriorityQueue<string>();
+  /**
+      * Compute straight-line distance by unpacking the Node coords.
+      */
+  private async euclideanDistance(a: string, b: string): Promise<number> {
+        const [nA, nB] = await this.getNodePair(a, b);
+        return Math.hypot(nA.xcoord - nB.xcoord, nA.ycoord - nB.ycoord);
+      }
+
+  /**
+      * Now async: weight × straight-line distance.
+      */
+  private async heuristic(a: string, b: string): Promise<number> {
+        const d = await this.euclideanDistance(a, b);
+        const w = this.graph.getEdgeWeight(a, b);
+        return w * d;
+      }
+
+
+
+
+
+
+  public async findPath(start: string, end: string): Promise<Node[]> {
     this.openSet = new PriorityQueue<string>();
     this.openSet.enqueue(start, 0);
 
     const cameFrom = new Map<string, string>();
-    const gScore = new Map<string, number>();
-    gScore.set(start, 0);
-
-    const fScore = new Map<string, number>();
-    fScore.set(start, this.heuristic(start, end));
+    const gScore   = new Map<string, number>([[start, 0]]);
+    const fScore   = new Map<string, number>([
+      [start, await this.heuristic(start, end)]
+    ]);
 
     while (!this.openSet.isEmpty()) {
       const current = this.openSet.dequeue()!;
       if (current === end) {
+        // reconstruct the ID path
         const path: string[] = [];
-        let node: string | undefined = end;
-        while (node) {
-          path.push(node);
-          node = cameFrom.get(node);
+        let cursor: string | undefined = end;
+        while (cursor) {
+          path.push(cursor);
+          cursor = cameFrom.get(cursor);
         }
-        return path.reverse();
+        path.reverse();
+        // fetch full Node[] and return
+        return getNodeObjects(path);
       }
 
       for (const neighbor of this.graph.getNeighbors(current)) {
-        const tentativeG = (gScore.get(current) ?? Infinity) + 1; // assume unweighted
-        if (tentativeG < (gScore.get(neighbor) ?? Infinity)) {
+        const w         = this.graph.getEdgeWeight(current, neighbor);
+        const tentative = (gScore.get(current) ?? Infinity) + w;
+
+        if (tentative < (gScore.get(neighbor) ?? Infinity)) {
           cameFrom.set(neighbor, current);
-          gScore.set(neighbor, tentativeG);
-          const f = tentativeG + this.heuristic(neighbor, end);
+          gScore.set(neighbor, tentative);
+
+          // invoke your async heuristic here
+          const f = tentative + await this.heuristic(neighbor, end);
           fScore.set(neighbor, f);
           this.openSet.enqueue(neighbor, f);
         }
       }
     }
 
-    return [];
+    return Promise.reject(new Error("No path found"));
   }
 }
 
 export default router;
+

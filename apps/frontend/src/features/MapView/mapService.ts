@@ -7,7 +7,7 @@ type NodeIDsResponse = { nodeIDs: string[] };
 
 export const fetchParkingLots = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/parking-lots');
-    console.log('res.data: ', res.data);
+    // console.log('res.data: ', res.data);
     return res.data;
 };
 
@@ -17,7 +17,7 @@ export const fetchDepartments = async (
     try {
         console.log('Fetching departments with building:', building);
         const response = await axios.get(`/api/map/departments?building=${building}`);
-        console.log('Response data:', response.data);
+        // console.log('Response data:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching departments:', error);
@@ -36,6 +36,13 @@ export const postNodeDeletion  = async (nodeID: string): Promise<AxiosResponse> 
 export const postEdgeDeletion  = async (edgeID: string): Promise<AxiosResponse> => {
     return await axios.post('/api/map/delete-edge', {edgeID: edgeID});
 };
+
+export const fetchNodes = async (fields:{nodeType?: string, building?: string, floor?:number}): Promise<AxiosResponse> => {
+    return await axios.post(`/api/map/nodes`, {fields});
+}
+export const fetchEdges = async (fields:{ building?: string, floor?:number}): Promise<AxiosResponse> => {
+    return await axios.post(`/api/map/edges`, {fields});
+}
 
 export const fetchCheckIn = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/check-in');
@@ -101,6 +108,10 @@ export const fetchOther = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/other');
     return res.data;
 }
+export const fetchAll = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/all');
+    return res.data;
+}
 
 
 export function useMapData(selectedBuilding: string) {
@@ -147,15 +158,15 @@ export const fetchPath = async (
     startingPoint: string,
     endingPoint: string,
     algorithm: string
-): Promise<string[]> => {
+): Promise<Node[]> => {
     const resp = await axios.post<PathResponse>('/api/algo/fetchPath', {
         startingPoint,
         endingPoint,
         algorithm,
     });
 
-    console.log("startingPoint in fetchPath", resp.data.startingPoint);
-    console.log("endingPoint in fetchPath", resp.data.endingPoint);
+    // console.log("startingPoint in fetchPath", resp.data.startingPoint);
+    // console.log("endingPoint in fetchPath", resp.data.endingPoint);
 
 
     console.log('fetchPath raw response (should be string[]):', resp.data);

@@ -26,13 +26,14 @@ router.post("/", async function (req: Request, res: Response) {
     department,
     comment,
     patient,
-    location,
+    building,
     request,
     device,
     room,
     employeeName,
+    assignedEmployee,
   } = req.body;
-
+console.log("HERE BUILDING: ", req.body.building);
   try {
     console.log("deviceType: ", device);
     const createRequest = await client.deviceRequest.create({
@@ -41,12 +42,18 @@ router.post("/", async function (req: Request, res: Response) {
         comments: comment,
         //patient: { connect: { id: parseInt(request.patientID, 10) } },
         priority,
+        building,
         department,
         status,
         room,
         employeeName: {
           connect: {
             id: employeeName,
+          },
+        },
+        assignedEmployee: {
+          connect: {
+            id: assignedEmployee,
           },
         },
       },

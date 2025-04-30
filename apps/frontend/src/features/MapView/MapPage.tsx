@@ -21,6 +21,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
+import { Node } from '../../../../backend/src/routes/maps/mapData.ts'
 
 declare global {
     interface Window {
@@ -38,20 +39,6 @@ const blankNode = {
     longName: '',
     shortName: '',
 };
-
-/**
- * Interface representing a node in the map
- */
-interface MapNode {
-    nodeID: string;
-    nodeType: string;
-    building: string;
-    floor: number;
-    xcoord: number;
-    ycoord: number;
-    longName: string;
-    shortName: string;
-}
 
 export function MapPage() {
     const location = useLocation();
@@ -79,13 +66,13 @@ export function MapPage() {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
                 'Healthcare Center (20 Patriot Pl.)': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'Heathcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Healthcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
-                // TODO: add women's hospital parking lots
-                'Main Campus Hospital (75 Francis St.)': ['WOMENS'],
+                'Main Campus Hospital (75 Francis St.)': ['WOMENS', 'Main Campus Hospital (75 Francis St.)'],
             };
 
+            // keep the parking lot if its name matches the one of the selected building
             return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
@@ -101,23 +88,6 @@ export function MapPage() {
             console.log("department lot: ", selectedDepartment);
         } catch {
 
-        }
-    };
-
-    /**
-     * Given an array of node IDs, this function will convert them to their corresponding node objects
-     * @param nodeIDs - the string array of node IDs to convert
-     */
-    // Helper: convert node IDs → full node objects
-    const getNodeObjs = async (nodeIDs: string[]): Promise<MapNode[]> => {
-        console.log('nodeIDs before get: ', nodeIDs);
-        try {
-            const resp = await axios.get('/api/map/getNodeObjs', { params: { nodeIDs } });
-            console.log("node coords after get: ", resp.data);
-            return resp.data;
-        } catch (e) {
-            console.error("Error converting node ID to name: ", e);
-            return []; // Return empty array on error
         }
     };
 
@@ -145,15 +115,12 @@ export function MapPage() {
             console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
-            const nodeIDs = await fetchPath(
+            const nodes = await fetchPath(
                 selectedParkinglot,
                 receptionNodeID,
                 algorithm
             );
-            console.log('got nodeIDs:', nodeIDs);
             // 2) fetch their full data, reverse to start→end
-            const nodes = await getNodeObjs(nodeIDs);
-            console.log('nodeIDs from getNodeObjs: ', nodes);
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
             nodes.forEach(node => {
@@ -175,9 +142,9 @@ export function MapPage() {
             setPathCoordinates(coords);
             setPathByFloor(pathByFloor);
             // give the node ID's to the calculateTextDirections function to turn into text directions
-            calculateTextDirections(nodeIDs);
+            calculateTextDirections(nodes);
             // set the floors that need to flash
-            floorsTraveled(nodeIDs);
+            floorsTraveled(nodes);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -185,11 +152,31 @@ export function MapPage() {
 
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
-     * @param directions - the string array of nodeIDs
+     * @param nodes - an array of nodes (path)
      */
-    const calculateTextDirections = async (directions: string[]) => {
+    const calculateTextDirections = async (nodes: Node[]) => {
+        /**
+         * Calculates the distance between two nodes in units (raw coordinates)
+         * @param node1 - the first node
+         * @param node2 - the second node
+         */
+        const calculateDistanceUnits = (node1: Node, node2: Node) => {
+            const dx = node2.xcoord - node1.xcoord;
+            const dy = node2.ycoord - node1.ycoord;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        /**
+         * Converts a distance in units (coordinates) to feet
+         * @param distance - the distance in units
+         */
+        const convertDistanceToFeet = (distance: number) => {
+            // conversion factor for units to feet
+            // calculated by using the distance from the faulkner parking lot to entrance (309 units = 231 feet)
+            return distance * 0.7475
+        }
+
         try {
-            const nodes = await getNodeObjs(directions);
             if (nodes.length < 2) {
                 setDirectionStrings([]);
                 return;
@@ -197,15 +184,12 @@ export function MapPage() {
             // be sure to show the directions since we have a valid path
             setShowDirections(true);
 
-            // reverse the order of the nodes to get the correct path
-            // nodes.reverse();
-
             const enhancedDirections: string[] = [];
 
             // First node is starting point
             enhancedDirections.push(`Start at ${nodes[0].shortName}`);
 
-            // For the first segment, just head toward without turn instruction
+            // For the first segment, just head toward without turn instructions since we don't have an initial direction
             if (nodes.length > 1) {
                 enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
             }
@@ -215,14 +199,14 @@ export function MapPage() {
                 const prevNode = nodes[i - 1];
                 const currentNode = nodes[i];
                 const nextNode = nodes[i + 1];
+                const distance = Math.round(convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode)));
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
+                enhancedDirections.push(`In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`);
             }
 
             // Final arrival
             enhancedDirections.push(`Arrive at ${nodes[nodes.length - 1].shortName}`);
-            console.log('enhanced Directions: ', enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
         } catch (error) {
@@ -233,8 +217,12 @@ export function MapPage() {
 
     /**
      * Calculates the relative direction change between path segments
+     * @param prev - previous node
+     * @param current - current node
+     * @param next - next node
+     * @return - string indicating the direction change
      */
-    const calculateDirectionChange = (prev: MapNode, current: MapNode, next: MapNode): string => {
+    const calculateDirectionChange = (prev: Node, current: Node, next: Node): string => {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
@@ -259,24 +247,23 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return "Turn right";
+            return "turn right";
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return "Turn left";
+            return "turn left";
         } else {
-            return "Continue straight";
+            return "continue straight";
         }
     };
 
     /**
      * Given a string array of nodeIDs, this function determines the floors the user will travel
      * Note: Excludes floor 1 since user is already on that floor
-     * @param directions - the string array of nodeIDs
+     * @param nodes - the string of node objects (path)
      */
-    const floorsTraveled = async (directions: string[]) => {
-        const nodeObjs = await getNodeObjs(directions);
+    const floorsTraveled = async (nodes: Node[]) => {
 
         // get the floors of the nodes
-        const floors = nodeObjs.map((node) => node.floor);
+        const floors = nodes.map((node) => node.floor);
         // remove floor 1 (user is already on that floor)
         // TODO: find out the floor the user is on rather than assuming floor 1
         const floorsExcluding1 = floors.filter((floor) => floor !== 1);
@@ -298,7 +285,9 @@ export function MapPage() {
                     location={selectedLocation}
                     pathCoordinates={pathCoordinates}
                     pathByFloor={pathByFloor}
-                    currentFloor={currentFloor}
+                    // commented out because InternalMap.tsx no longer has this prop
+                    // Alex and Owen seem to indicate this is not needed? - Akaash
+                    // currentFloor={currentFloor}
                 />
 
                 {/* Sidebar controls */}

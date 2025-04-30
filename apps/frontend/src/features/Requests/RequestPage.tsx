@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import {AllRequestsTable} from './AllRequestsTable.tsx';
+import { AllRequestsTable } from './AllRequestsTable.tsx';
 import DeviceReqPage from './MedDeviceRequest/DeviceReqPage.tsx';
 import PrescriptionPage from '@/features/Requests/PrescriptionForm/PrescriptionPage.tsx';
 import PatientRequestPage from '@/features/Requests/PatientRequest/PatientRequestPage.tsx';
@@ -38,9 +38,9 @@ export function AllRequestsPage() {
               <TabsTrigger value="all-requests">All Requests</TabsTrigger>
               <TabsTrigger value="medical-device">Medical Device</TabsTrigger>
               <TabsTrigger value="prescription">Prescription</TabsTrigger>
-              <TabsTrigger value="patient">Patient</TabsTrigger>
+              <TabsTrigger value="patient">Patient Request</TabsTrigger>
               <TabsTrigger value="transport">Transport</TabsTrigger>
-                <TabsTrigger value="translation">Translate</TabsTrigger>
+                <TabsTrigger value="translation">Translator</TabsTrigger>
                 <TabsTrigger value="sanitation">Sanitation</TabsTrigger>
             </TabsList>
 
@@ -54,11 +54,11 @@ export function AllRequestsPage() {
                                   <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                                       <CardTitle>{type.name} Requests</CardTitle>
                                   </CardHeader>
-                                  <CardContent className="pt-6 px-6 pb-6 bg-white h-full">
-                                      <p className="text-muted-foreground mb-4">
+                                  <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                      <p className="text-muted-foreground mb-4 min-h-[3rem]">
                                           {type.description}
                                       </p>
-                                      <div className="flex flex-col space-y-2">
+                                      <div className="flex flex-col space-y-2 mt-auto">
                                           <Button
                                               variant="secondary"
                                               onClick={() => setActiveTab(type.tab)}

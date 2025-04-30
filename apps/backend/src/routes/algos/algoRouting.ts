@@ -18,8 +18,9 @@ router.post(
         locationFormat = "Healthcare Center (22 Patriot Pl.)";
       } else if (location.includes("Faulkner")) {
         locationFormat = "Faulkner Hospital";
+      } else if (location.includes("75 Francis St")) {
+        locationFormat = "Main Campus Hospital (75 Francis St.)";
       }
-      // TODO: add main campus location
       if (!department || !location) {
         res.status(400).json({ error: "Missing required fields" });
         return;
@@ -34,7 +35,7 @@ router.post(
       });
 
       //find the algorithm in the database
-      let algorithm = "";
+      let algorithm: string;
       const algorithmDB = await client.algorithm.findFirst();
       if (!algorithmDB) {
         algorithm = "bfs";
@@ -64,11 +65,7 @@ router.post("/fetchPath", async function (req: Request, res: Response) {
   console.log(" algorithm in algoRouting", algorithm);
 
   try {
-    const path = await findPath(
-      startingPoint,
-      endingPoint.toString(),
-      algorithm,
-    );
+    const path = await findPath(startingPoint, endingPoint, algorithm);
     console.log("path in algoRouting.ts", path);
 
     res.status(200).json(path);
