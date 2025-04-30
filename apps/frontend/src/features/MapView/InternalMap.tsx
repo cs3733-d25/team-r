@@ -395,12 +395,16 @@ setEdgesOnActiveFloor(fullEdges)
     function isFiltered (nodeType:string) {
         switch (nodeType) {
             case "Entrance":
-                setEntranceFiltered(!entranceFiltered);
                 loadAll()
+                setEntranceFiltered(!entranceFiltered);
+                loadAll();
+
                 break;
             case "Parking":
-                setParkingLotFiltered(!parkingLotFiltered);
                 loadAll()
+                setParkingLotFiltered(!parkingLotFiltered);
+                loadAll();
+
                 break;
             case "Reception":
                 setReceptionFiltered(!receptionFiltered);
@@ -499,6 +503,11 @@ setEdgesOnActiveFloor(fullEdges)
         console.log("-> new location and or floor");
         console.log(location.building + " "+location.floor);
     }, [location.building,location.floor]);
+    useEffect(() => {
+        loadAll()
+        console.log("-> new location and or floor");
+        console.log(location.building + " "+location.floor);
+    }, [hallwayFiltered, entranceFiltered, sidewalkingFiltered, elevatorFiltered, receptionFiltered, parkingLotFiltered]);
 
     // reload the leaflet elements when something changes
     useEffect(() => {
@@ -639,7 +648,7 @@ setEdgesOnActiveFloor(fullEdges)
                 location.floor = floor;
 
                 if (onLocationChange) {
-                    onLocationChange(location.building, location.floor);
+                    onLocationChange(building, floor);
                 }
             });
 
