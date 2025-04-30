@@ -1,11 +1,11 @@
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 import SanitationRequestPage from "@/features/Requests/SanitationForm/SanitationRequestPage.tsx";
 
 function SanitationRequestTabs() {
     return(
         <>
-            <h1 className="text-2xl font-trade font-bold mb-0 place-self-center">Sanitation Request System</h1>
+            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Sanitation Request</h1>
             <Tabs defaultValue="sanitationRequestForm" >
                 <TabsList>
                     <TabsTrigger value="sanitationRequestForm">
