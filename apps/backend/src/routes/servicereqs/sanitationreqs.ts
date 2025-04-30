@@ -24,7 +24,7 @@ router.post("/", async function (req: Request, res: Response) {
     priority,
     status,
     department,
-    building,
+    location,
     roomNumber,
     employeeName,
     comments,
@@ -42,7 +42,7 @@ router.post("/", async function (req: Request, res: Response) {
         sanitationType,
         priority,
         department,
-        building,
+        building: location,
         roomNumber,
         comments,
         status,
@@ -71,7 +71,7 @@ router.post("/single-request", async function (req: Request, res: Response) {
         requestId: id,
       },
     });
-    console.log("Got request ", request);
+    console.log("Got request SANITATION", request);
     res.status(200).json(request);
   } catch (error) {
     console.error("Error fetching pharmacy request data:", error);

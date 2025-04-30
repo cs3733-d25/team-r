@@ -39,6 +39,10 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
                     retrieveTransport();
                     break;
                 }
+                case 'Translate': {
+                    retrieveTranslate();
+                    break;
+                }
             }
         } catch (error) {
             console.error('Error getting request: ', error);
@@ -77,7 +81,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
     }
 
     //sanitation request
-    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,location:null,roomNumber:null,requestTime:null,comments:null,status:null}]);
+    const [sanitation, setSanitation] = useState([{employeeID:null,sanitationType:null,priority:null,department:null,building:null,roomNumber:null,requestTime:null,status:null, comments:null,}]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
     async function retrieveSanitation() {
         const request = await axios.post('api/sanitation/single-request', {id: props.id});
@@ -133,11 +137,12 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
     }
 
     //translte request
-    const [translate, setTranslate] = useState([{employeeName: null,
+    const [translate, setTranslate] = useState([{
+        employeeName: null,
         language: null,
         priority: null,
         department: null,
-        location: null,
+        building: null,
         roomNumber: null,
         notes: null,
         timestamp: null,
