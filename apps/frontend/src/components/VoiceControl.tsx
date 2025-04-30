@@ -100,13 +100,15 @@ export function VoiceControl({
     useEffect(() => {
         console.log("Selected building:", selectedBuilding);
         console.log("Building departments:", building.departments);
+        const parkingLots = building.parkingLots.filter((parkingLot) => parkingLot.building === selectedBuilding);
+        console.log("Parking lots:", parkingLots);
 
         if (!finalTranscript) return;
         // Handle the final transcript here
         console.log('Transcript:', finalTranscript);
 
         // checking for parking lot matches in the transcript
-        for (const lot of building.parkingLots) {
+        for (const lot of parkingLots) {
             if (finalTranscript.toLowerCase().includes(lot.shortName.toLowerCase())) {
                 console.log(`Found parking lot: ${lot.longName} at ${selectedBuilding}`);
                 setParkingLot(lot.nodeID);
@@ -121,7 +123,6 @@ export function VoiceControl({
                 dept.name = altName;
             }
         }
-        console.log("Building departments:", building.departments);
 
         // Check for department matches in the transcript
         for (const dept of building.departments) {

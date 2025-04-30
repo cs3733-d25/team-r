@@ -10,7 +10,22 @@ import faulkner from '../../../public/faulkner1.svg';
 import womens from '../../../public/womens2.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEdgesWomensHospital, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
+import {
+    fetchCheckIn,
+    fetchEdges20_1,
+    fetchElevators,
+    fetchEdges22_1,
+    fetchEdges22_3,
+    fetchEdges22_4,
+    fetchEdgesChestnut,
+    fetchEdgesWomensHospital,
+    fetchEntrances,
+    fetchParkingLots,
+    fetchEdgesFaulkner,
+    fetchHallways,
+    fetchOther,
+    fetchNodes
+} from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
 
@@ -54,6 +69,7 @@ interface InternalMapProps {
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
+    selectedEdgeNodes?: string[];
 }
 
 const nodePlaceholderOptions = {
@@ -63,7 +79,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, currentFloor = 1, location, floor = 1, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag, onNodeEdit, selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -86,6 +102,15 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     //const [edgesWomens, setEdgesWomens] = useState<Edge[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
+    const highlightedNodeLayers = useRef<L.Circle[]>([]);
+
+    const selectedNodeStyle = {
+        color: '#2563eb',
+        fillColor: '#3b82f6',
+        fillOpacity: 0.8,
+        radius: 10,
+        weight: 3
+    };
 
 
     useEffect(() => {
@@ -210,7 +235,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     };
     const loadHallways = async () => {
         try {
-            const data = await fetchHallways();
+            const data = await fetchNodes("Hallway");
             console.log(data);
             setHallways(data);
         } catch (err) {
@@ -250,7 +275,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             setIsLoading(false);
         }
     };
-    console.log("hallways: ",hallways)
+    // console.log("hallways: ",hallways)
     async function loadAll() {
         await loadCheckIn();
         await loadEntrances();
@@ -549,7 +574,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 });
 
                 // draw edges
-                console.log(edges22_1);
+                // console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
@@ -584,7 +609,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
-                    console.log("got here",edge.fromNode.xcoord)
+                    // console.log("got here",edge.fromNode.xcoord)
                     clickEdge(edge, line);
                 });
                 edgesFaulkner.map((edge) => {
@@ -729,6 +754,34 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             }
         }
     }, [pathCoordinates, pathByFloor, currentFloor]);
+
+    // function to update highlighted nodes
+    const updateHighlightedNodes = () => {
+        // clear previous highlights
+        highlightedNodeLayers.current.forEach(layer => layer.remove());
+        highlightedNodeLayers.current = [];
+
+        if (!mapInstance.current || !selectedEdgeNodes?.length) return;
+
+        // find all nodes
+        const allNodes = [...checkIn, ...entrances, ...elevators, ...lots, ...hallways, ...other];
+
+        // highlight selected nodes
+        selectedEdgeNodes.forEach(nodeId => {
+            const node = allNodes.find(n => n.nodeID === nodeId);
+            if (node) {
+                const highlight = L.circle(
+                    [node.xcoord, node.ycoord],
+                    selectedNodeStyle
+                ).addTo(mapInstance.current!);
+                highlightedNodeLayers.current.push(highlight);
+            }
+        });
+    };
+
+    useEffect(() => {
+        updateHighlightedNodes();
+    }, [selectedEdgeNodes, checkIn, entrances, elevators, lots, hallways, other]);
 
     return (
         <div>

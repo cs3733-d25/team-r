@@ -4,8 +4,6 @@ import {useLocation} from 'react-router-dom';
 import {getBuildingFromLocation} from '@/features/MapView/mapUtils.ts';
 import {fetchPath} from './mapService';
 import {Button} from '@/components/ui/button.tsx';
-import { node } from 'prop-types';
-import * as process from 'node:process';
 
 interface DisplayPathProps {
     startNodeID: string;
@@ -52,14 +50,14 @@ const DisplayPath: React.FC<DisplayPathProps> = ({
         const getPath = async () => {
             try {
                 setError(null);
-                const pathNodeIDs = await fetchPath(startNodeID, endNodeID, algorithm);
-                setPath(pathNodeIDs);
+                const pathNodeObjects = await fetchPath(startNodeID, endNodeID, algorithm);
 
-                // get full node objects using each ID in path
-                const nodes = await getNodeObjects(pathNodeIDs);
-                setPathNodes(nodes);
+                const nodeIDs = pathNodeObjects.map(node => node.nodeID);
+                setPath(nodeIDs);
 
-                const coords = nodes.map(node => [node.xcoord, node.ycoord] as [number, number]);
+                setPathNodes(pathNodeObjects);
+
+                const coords = pathNodeObjects.map(node => [node.xcoord, node.ycoord] as [number, number]);
                 setPathCoordinates(coords);
 
                 if (onPathChange) {
@@ -67,7 +65,7 @@ const DisplayPath: React.FC<DisplayPathProps> = ({
                 }
 
                 if (onDirectionsChange) {
-                    processDirections(nodes);
+                    processDirections(pathNodeObjects);
                 }
             } catch (err) {
                 console.error('Error fetching path:', err);
@@ -76,7 +74,7 @@ const DisplayPath: React.FC<DisplayPathProps> = ({
         };
 
         getPath();
-    }, [startNodeID, endNodeID, algorithm]);
+    }, [startNodeID, endNodeID, algorithm, onPathChange, onDirectionsChange]);
 
     const getNodeObjects = async (nodeIDArray: string[]): Promise<MapNode[]> => {
         try {
