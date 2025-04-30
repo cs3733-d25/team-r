@@ -47,77 +47,49 @@ export class AStar implements PathfindingAlgorithm {
 
 
   public async findPath(start: string, end: string): Promise<Node[]> {
-    //const openSet = new PriorityQueue<string>();
-
     this.openSet = new PriorityQueue<string>();
     this.openSet.enqueue(start, 0);
 
     const cameFrom = new Map<string, string>();
-    const gScore = new Map<string, number>();
-    gScore.set(start, 0);
-
-    const fScore = new Map<string, number>();
-    fScore.set(start, await this.heuristic(start, end));
+    const gScore   = new Map<string, number>([[start, 0]]);
+    const fScore   = new Map<string, number>([
+      [start, await this.heuristic(start, end)]
+    ]);
 
     while (!this.openSet.isEmpty()) {
       const current = this.openSet.dequeue()!;
       if (current === end) {
+        // reconstruct the ID path
         const path: string[] = [];
-        let node: string | undefined = end;
-        while (node) {
-          path.push(node);
-          node = cameFrom.get(node);
+        let cursor: string | undefined = end;
+        while (cursor) {
+          path.push(cursor);
+          cursor = cameFrom.get(cursor);
         }
-
-        return getNodeObjects(path.reverse());
+        path.reverse();
+        // fetch full Node[] and return
+        return getNodeObjects(path);
       }
 
       for (const neighbor of this.graph.getNeighbors(current)) {
-    
-        // use the true edge weight instead of +1
-        const w = this.graph.getEdgeWeight(current, neighbor);
-        const tentativeG = (gScore.get(current) ?? Infinity) + w;
+        const w         = this.graph.getEdgeWeight(current, neighbor);
+        const tentative = (gScore.get(current) ?? Infinity) + w;
 
-        if (tentativeG < (gScore.get(neighbor) ?? Infinity)) {
+        if (tentative < (gScore.get(neighbor) ?? Infinity)) {
           cameFrom.set(neighbor, current);
-          gScore.set(neighbor, tentativeG);
+          gScore.set(neighbor, tentative);
 
-          const f = tentativeG + await this.heuristic(neighbor, end);
+          // invoke your async heuristic here
+          const f = tentative + await this.heuristic(neighbor, end);
           fScore.set(neighbor, f);
           this.openSet.enqueue(neighbor, f);
         }
       }
     }
 
-    return {
-      then: function <TResult1 = Node[], TResult2 = never>(
-        onfulfilled?:
-          | ((value: Node[]) => TResult1 | PromiseLike<TResult1>)
-          | null
-          | undefined,
-        onrejected?:
-          | ((reason: any) => TResult2 | PromiseLike<TResult2>)
-          | null
-          | undefined,
-      ): Promise<TResult1 | TResult2> {
-        throw new Error("Function not implemented.");
-      },
-      catch: function <TResult = never>(
-        onrejected?:
-          | ((reason: any) => TResult | PromiseLike<TResult>)
-          | null
-          | undefined,
-      ): Promise<Node[] | TResult> {
-        throw new Error("Function not implemented.");
-      },
-      finally: function (
-        onfinally?: (() => void) | null | undefined,
-      ): Promise<Node[]> {
-        throw new Error("Function not implemented.");
-      },
-      [Symbol.toStringTag]: "",
-    };
+    return Promise.reject(new Error("No path found"));
   }
 }
 
 export default router;
+
