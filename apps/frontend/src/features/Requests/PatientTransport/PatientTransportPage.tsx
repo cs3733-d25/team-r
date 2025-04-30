@@ -19,6 +19,7 @@ interface TransportRequest extends BaseRequest {
     requestTime: string | null;
     notes: string | null;
     status: string | null;
+    assignedEmployeeID: string | null;
     [key: string]: unknown;
 }
 
@@ -35,7 +36,8 @@ export function PatientTransportPage() {
         transportationType: null,
         requestTime: null,
         notes: null,
-        status: null
+        status: null,
+        assignedEmployeeID: null,
     }]);
 
     const filtering = useRequestFilters(transport);
@@ -62,6 +64,7 @@ export function PatientTransportPage() {
         {field: 'transportationType', header: 'Transport Type', sortable: true},
         {field: 'patientID', header: 'Patient', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {
             field: 'actions',

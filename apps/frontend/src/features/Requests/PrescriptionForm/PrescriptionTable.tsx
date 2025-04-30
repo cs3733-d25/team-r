@@ -25,6 +25,7 @@ interface PrescriptionTableProps {
         refills: number | null,
         additionalInstructions: string | null,
         status: string | null,
+        assignedEmployeeID: string | null,
     }[]
 }
 
@@ -38,6 +39,7 @@ export function PrescriptionTable(props: PrescriptionTableProps) {
                     <TableHead className={'text-center'}>Location</TableHead>
                     <TableHead className={'text-center'}>Department</TableHead>
                     <TableHead className={'text-center'}>Patient</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={'text-center'}>Priority</TableHead>
                     <TableHead className={'text-center'}>Morning Pill Count</TableHead>
                     <TableHead className={'text-center'}>Midday Pill Count</TableHead>
@@ -60,6 +62,7 @@ export function PrescriptionTable(props: PrescriptionTableProps) {
                                 <TableCell>{row.building}</TableCell>
                                 <TableCell>{row.department}</TableCell>
                                 <TableCell>{row.patientID}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
                                 <TableCell>{row.morningPillCount}</TableCell>
                                 <TableCell>{row.middayPillCount}</TableCell>

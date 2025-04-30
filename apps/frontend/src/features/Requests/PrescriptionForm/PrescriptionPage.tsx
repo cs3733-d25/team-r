@@ -25,6 +25,7 @@ interface PrescriptionRequest extends BaseRequest {
     additionalInstructions: string | null;
     status: string | null;
     building: string | null;
+    assignedEmployeeID: string | null;
     [key: string]: unknown; // added this index signature to match BaseRequest
 }
 
@@ -48,6 +49,7 @@ export function PrescriptionPage() {
             additionalInstructions: null,
             status: null,
             building: null,
+            assignedEmployeeID: null,
         }]);
 
     const filtering = useRequestFilters(prescription);
@@ -73,6 +75,7 @@ export function PrescriptionPage() {
         {field: 'building', header: 'Location', sortable: true},
         {field: 'department', header: 'Department', sortable: true},
         {field: 'patientID', header: 'Patient', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: PrescriptionRequest) => (<RequestInfoButton type="Prescription" id={item.prescriptionID ? Number(item.prescriptionID) : null} />)}

@@ -85,8 +85,8 @@ model DeviceRequest {
   employeeName Employee @relation(fields: [employeeID], references: [id])
   status       String
 
-  // assignedEmployeeID String
-  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  assignedEmployeeID String
+  assignedEmployee   Employee @relation("deviceRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model PharmacyRequest {
@@ -109,8 +109,8 @@ model PharmacyRequest {
   additionalInstructions String
   status                 String
 
-  // assignedEmployeeID String
-  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  assignedEmployeeID String
+  assignedEmployee   Employee @relation("PharmacyRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model PatientRequest {
@@ -127,8 +127,8 @@ model PatientRequest {
   employeeName     Employee @relation(fields: [employeeID], references: [id])
   comment          String
 
-  // assignedEmployeeID String
-  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  assignedEmployeeID String
+  assignedEmployee   Employee @relation("patientRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model TransportRequest {
@@ -147,8 +147,8 @@ model TransportRequest {
   status      String
   requestTime DateTime @default(now())
 
-  // assignedEmployeeID String
-  // assignedEmployee Employee @relation(fields: [assignedEmployeeID], references: [id])
+  assignedEmployeeID String
+  assignedEmployee   Employee @relation("transportRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model TranslateRequest {
@@ -162,6 +162,8 @@ model TranslateRequest {
   comments           String
   priority           String
   department         String
+  assignedEmployeeID String
+  assignedEmployee   Employee @relation("translateRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 generator client {
@@ -222,7 +224,12 @@ model Employee {
   transportRequests  TransportRequest[]
   tranlateRequests   TranslateRequest[]
 
-  sanitationAssigned SanitationRequest[] @relation("sanitationRequestAssigned")
+  sanitationAssigned     SanitationRequest[] @relation("sanitationRequestAssigned")
+  pharmacyAssigned       PharmacyRequest[]   @relation("PharmacyRequestAssigned")
+  patientRequestAssigned PatientRequest[]    @relation("patientRequestAssigned")
+  transportAssigned      TransportRequest[]  @relation("transportRequestAssigned")
+  translateAssigned      TranslateRequest[]  @relation("translateRequestAssigned")
+  deviceAssigned         DeviceRequest[]     @relation("deviceRequestAssigned")
 }
 
 model Patient {

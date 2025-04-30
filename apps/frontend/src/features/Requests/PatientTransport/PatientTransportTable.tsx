@@ -13,6 +13,7 @@ interface PatientTransportTableProps {
         requestTime:string | null,
         comments:string | null,
         status:string | null,
+        assignedEmployeeID:string | null,
         userId:string | null}[]
 }
 
@@ -28,6 +29,7 @@ export function PatientTransportTable(props: PatientTransportTableProps) {
                     <TableHead className={"text-center"}>Transportation Type</TableHead>
                     <TableHead className={"text-center"}>Patient</TableHead>
                     <TableHead className={"text-center"}>Priority</TableHead>
+                    <TableHead className={"text-center"}>Assigned Employee</TableHead>
                     <TableHead className={"text-center"}>Status</TableHead>
                     <TableHead className={"text-center"}>Comments</TableHead>
 
@@ -46,9 +48,9 @@ export function PatientTransportTable(props: PatientTransportTableProps) {
                                 <TableCell >{row.transportationType}</TableCell>
                                 <TableCell>{row.patientID}</TableCell>
                                 <TableCell>{row.priority}</TableCell>
+                                <TableCell>{row.assignedEmployeeID}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>{row.comments}</TableCell>
-
 
                             </TableRow>
 
