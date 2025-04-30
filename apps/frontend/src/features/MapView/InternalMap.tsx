@@ -491,11 +491,7 @@ setEdgesOnActiveFloor(fullEdges)
         }
     }, [promiseEdgeCreate]);
 
-    // load all the nodes and edges when the page first loads
-    useEffect(() => {
-        console.log("-> About to load things");
-       loadAll();
-    }, []);
+
 
     // load all the nodes and edges when the location changes (location change causes a rerender of the whole component?)
     useEffect(() => {
@@ -594,41 +590,14 @@ setEdgesOnActiveFloor(fullEdges)
             }, {}).addTo(map);
 
             // tracking layer changes
-            map.on('baselayerchange', function(e) {
-                    // extract info from layer name
-                    const layerName = e.name;
-                    let building = '';
-                    let floor = 1;
-
-                    if (layerName.includes('20 Patriot Place')) {
-                        building = 'Healthcare Center (20 Patriot Pl.)';
-                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                    } else if (layerName.includes('22 Patriot Place')) {
-                        building = 'Healthcare Center (22 Patriot Pl.)';
-                        floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
-                    } else if (layerName.includes('Chestnut Hill')) {
-                        building = 'Healthcare Center (Chestnut Hill)';
-                    } else if (layerName.includes('Faulkner Hospital')) {
-                        building = 'Faulkner Hospital';
-                    } else if (layerName.includes('Main Campus Hospital')) {
-                        building = 'Main Campus Hospital (75 Francis St.)';
-                    }
-
-                // activeLayerInfo.current = {building, floor};
-                console.log("Layer changed to:" + building + floor);
-
-                if (onLocationChange) {
-                    onLocationChange(building, floor);
-                }
-            });
 
 
 
             // add a default layer
             if (typeof location.building === "string") {
-                if (location.building.includes('Patriot Place 20')) {
+                if (location.building.includes('20')) {
                     floorLayer20_1.addTo(map);
-                } else if (location.building.includes('Patriot Place 22')) {
+                } else if (location.building.includes('22')) {
                     if(location.floor == 1) {
                         floorLayer22_1.addTo(map);
                     }else if(location.floor == 3) {
@@ -641,7 +610,39 @@ setEdgesOnActiveFloor(fullEdges)
                 } else if (location.building.includes('Faulkner')) {
                     floorLayerFaulkner.addTo(map);
                 }
+                else if (location.building.includes('Main')) {
+                    floorLayerWomens.addTo(map);
+                }
             }
+            map.on('baselayerchange', function(e) {
+                // extract info from layer name
+                const layerName = e.name;
+                let building = '';
+                let floor = 1;
+
+                if (layerName.includes('20')||layerName.includes('20 Patriot')) {
+                    building = 'Healthcare Center (20 Patriot Pl.)';
+                } else if (layerName.includes('22' ) || layerName.includes('22 Patriot')) {
+                    building = 'Healthcare Center (22 Patriot Pl.)';
+                    floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
+                } else if (layerName.includes('Chestnut Hill')) {
+                    building = 'Healthcare Center (Chestnut Hill)';
+                } else if (layerName.includes('Faulkner Hospital')) {
+                    building = 'Faulkner Hospital';
+                } else if (layerName.includes('Main')) {
+                    building = 'Main Campus Hospital (75 Francis St.)';
+                }
+
+                // activeLayerInfo.current = {building, floor};
+                console.log("Layer changed to:" + building + floor);
+                location.building = building;
+                location.floor = floor;
+
+                if (onLocationChange) {
+                    onLocationChange(location.building, location.floor);
+                }
+            });
+
 
             map.on('click', function (e) {
                 // parse the new coordinates
