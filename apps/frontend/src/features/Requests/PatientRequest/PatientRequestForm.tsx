@@ -21,6 +21,7 @@ interface SubmittedPatientRequest{
     status: string;
     request: string;
     employeeName: string;
+    assignedEmployee: string;
 }
 
 export const PatientRequestForm = () => {
@@ -36,6 +37,7 @@ export const PatientRequestForm = () => {
         status: '',
         request: ' ',
         employeeName: '',
+        assignedEmployee: '',
 
     })
     //use auth0 to get the current user data
@@ -105,7 +107,8 @@ export const PatientRequestForm = () => {
                     time: new Date().toLocaleString(),
                     status: '',
                     request: ' ',
-                    employeeName: ''
+                    employeeName: '',
+                    assignedEmployee: ''
 
                 });
             }
@@ -182,6 +185,17 @@ export const PatientRequestForm = () => {
                                 </Label>
 
                                 <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
+                            </div>
+                            {/*assignEmployee*/}
+                            <div>
+                                <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                    Assigned Employee
+                                    <span className="text-accent">*</span>
+                                    <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                </Label>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
                             </div>
 
                             {/* Priority */}

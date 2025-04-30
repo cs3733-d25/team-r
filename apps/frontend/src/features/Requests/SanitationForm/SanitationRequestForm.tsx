@@ -20,6 +20,7 @@ interface SubmittedRequest {
   comments: string;
   timestamp: string;
   status:string;
+  assignedEmployee: string;
 }
 
 
@@ -33,6 +34,7 @@ const SanitationRequestForm = () => {
     comments: '',
     status:'',
     location:'',
+    assignedEmployee:'',
 
   });
   //use auth0 to get the current user data
@@ -111,6 +113,7 @@ const SanitationRequestForm = () => {
           comments: '',
           status: '',
           location: '',
+          assignedEmployee: '',
 
         });
       }
@@ -170,6 +173,18 @@ const SanitationRequestForm = () => {
                     className="w-full px-4 py-2 rounded-md border border-border bg-input"
                     required
                   />
+                </div>
+
+                {/*assignEmployee*/}
+                <div>
+                  <Label className= "block text-sm font-semibold text-foreground mb-2">
+                    Assigned Employee
+                    <span className="text-accent">*</span>
+                    <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                  </Label>
+                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
                 </div>
 
                 {/* Priority */}
@@ -280,6 +295,9 @@ const SanitationRequestForm = () => {
                   </div>
                   <div>
                     <span className="font-semibold">Status:</span> {submittedRequest.status}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Assigned Employee:</span> {submittedRequest.assignedEmployee}
                   </div>
                   <div>
                     <span className="font-semibold">Comments:</span> {submittedRequest.comments || "None provided"}
