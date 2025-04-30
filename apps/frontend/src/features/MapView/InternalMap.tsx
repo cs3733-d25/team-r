@@ -651,7 +651,7 @@ setEdgesOnActiveFloor(fullEdges)
                 mapInstance.current = null;
             }
         };
-    }, [nodesOnActiveFloor]); //entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner
+    }, [nodesOnActiveFloor, edgesOnActiveFloor]); //entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner
 
     // Redraw route whenever pathCoordinates change
     useEffect(() => {
