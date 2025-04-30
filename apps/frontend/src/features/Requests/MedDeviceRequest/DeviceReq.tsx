@@ -1,11 +1,11 @@
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '../../../components/ui/tabs.tsx';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import {DeviceReqForm} from "./DeviceReqForm";
 import {DeviceReqPage} from "./DeviceReqPage";
 
 export function DeviceReq() {
     return(
         <>
-            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Medical Device Request System</h1>
+            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Medical Device Request System</h1>
             <Tabs defaultValue="deviceForm">
                 <TabsList>
                     <TabsTrigger value="deviceForm">

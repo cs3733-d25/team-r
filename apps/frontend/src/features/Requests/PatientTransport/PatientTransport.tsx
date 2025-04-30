@@ -5,7 +5,7 @@ import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTr
 export function TransportRequestPage() {
     return(
         <>
-            <h1 className="text-2xl font-bold font-trade mb-0 place-self-center">Patient Transport Request</h1>
+            <h1 className="text-3xl font-bold font-trade text-black py-2 pt-6 mb-4 text-center">Patient Transport Request</h1>
             <Tabs defaultValue="patientTransportForm">
                 <TabsList>
                     <TabsTrigger value="patientTransportForm">
