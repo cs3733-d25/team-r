@@ -408,15 +408,14 @@ export function TourAlertDialog({
 						Welcome to the Tour
 					</AlertDialogTitle>
 					<AlertDialogDescription className="text-muted-foreground mt-2 text-center text-sm">
-						Take a quick tour to learn about the key features and functionality
-						of the map editor.
+						Learn about the key features and functionality of this page
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<div className="mt-6 space-y-3">
 					<Button onClick={startTour} className="w-full">
 						Start Tour
 					</Button>
-					<Button onClick={handleSkip} variant="ghost" className="w-full">
+					<Button onClick={handleSkip} variant="secondary" className="w-full">
 						Skip Tour
 					</Button>
 				</div>

@@ -43,6 +43,15 @@ model Employee {
   patientRequests    PatientRequest[]
   transportRequests  TransportRequest[]
   tranlateRequests   TranslateRequest[]
+
+  sanitationAssigned  SanitationRequest[] @relation("sanitationRequestAssigned")
+  pharmacyAssigned  PharmacyRequest[] @relation("PharmacyRequestAssigned")
+  patientRequestAssigned PatientRequest[] @relation("patientRequestAssigned")
+  transportAssigned TransportRequest[] @relation("transportRequestAssigned")
+  translateAssigned TranslateRequest[] @relation("translateRequestAssigned")
+  deviceAssigned DeviceRequest[] @relation("deviceRequestAssigned")
+
+
 }
 
 model Patient {

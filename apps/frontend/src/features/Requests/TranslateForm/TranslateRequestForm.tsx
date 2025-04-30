@@ -19,6 +19,7 @@ interface SubmittedRequest {
     notes: string;
     timestamp: string;
     status: string;
+    assignedEmployee: string;
 }
 
 const TranslateRequestForm = () => {
@@ -30,7 +31,8 @@ const TranslateRequestForm = () => {
         location: '',
         roomNumber: '',
         notes: '',
-        status: ''
+        status: '',
+        assignedEmployee: '',
     });
     //use auth0 to get the current user data
     const [userName, setUserName] = useState('');
@@ -92,7 +94,8 @@ const TranslateRequestForm = () => {
                     location: '',
                     roomNumber: '',
                     notes: '',
-                    status: ''
+                    status: '',
+                    assignedEmployee: ''
                 });
             }
         } catch (error) {
@@ -125,21 +128,6 @@ const TranslateRequestForm = () => {
                 <div className="p-5">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/*<div>*/}
-                            {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
-                            {/*        Patient ID<span className="text-accent">*</span>*/}
-                            {/*    </Label>*/}
-                            {/*    <Input*/}
-                            {/*        type="text"*/}
-                            {/*        name="requestorName"*/}
-                            {/*        value={formData.requestorName}*/}
-                            {/*        onChange={handleChange}*/}
-                            {/*        placeholder="Enter patient ID"*/}
-                            {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
-                            {/*        required*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Language Needed<span className="text-accent">*</span>
@@ -154,7 +142,17 @@ const TranslateRequestForm = () => {
                                     required
                                 />
                             </div>
-
+                            {/*assignEmployee*/}
+                            <div>
+                                <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                    Assigned Employee
+                                    <span className="text-accent">*</span>
+                                    <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                </Label>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                            </div>
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Priority Level<span className="text-accent">*</span>
@@ -234,6 +232,10 @@ const TranslateRequestForm = () => {
                             <div>
                                 <span className="font-semibold">Language: </span>
                                 {submittedRequest.language}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Assigned Employee: </span>
+                                {submittedRequest.assignedEmployee}
                             </div>
                             <div>
                                 <span className="font-semibold">Priority: </span>

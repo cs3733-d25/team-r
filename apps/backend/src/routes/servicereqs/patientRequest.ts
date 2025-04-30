@@ -28,6 +28,7 @@ router.post("/", async function (req: Request, res: Response) {
     building,
     request,
     employeeName,
+      assignedEmployee,
   } = req.body;
 
   try {
@@ -48,7 +49,11 @@ router.post("/", async function (req: Request, res: Response) {
         },
         request,
         comment,
-        //assignedEmployee: employeeName //fix this to connect correctly
+        assignedEmployee: {
+          connect: {
+            id: assignedEmployee,
+          },
+        },
       },
     });
     // console.log(createRequest);

@@ -1,6 +1,8 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import CSVPage from "@/features/CSVFiles/CSVPage.tsx";
 import CSVTablePage from "@/features/CSVFiles/CSVTable.tsx";
+import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TOUR_STEPS_IDS_CSV } from '@/lib/tour-constants.ts';
 
 function CSVTabPage() {
     return(
@@ -11,6 +13,7 @@ function CSVTabPage() {
                                  >
                         Import/Export CSV</TabsTrigger>
                     <TabsTrigger value="CSVTable"
+                                 id={TOUR_STEPS_IDS_CSV.VIEW_DB_TABLE}
                                  >
                         View DB Table</TabsTrigger>
                 </TabsList>
