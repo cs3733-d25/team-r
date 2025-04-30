@@ -1889,6 +1889,353 @@ async function main() {
         skipDuplicates: true
     });
 
+    // create Main Campus Hospital (75 Francis St.) nodes
+    await PrismaClient.node.createMany({
+        data: [
+            {
+                "nodeID": "Parking-1745977271629",
+                "nodeType": "Parking",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 505.92,
+                "ycoord": 668.45,
+                "longName": "",
+                "shortName": "Valet Parking"
+            },
+            {
+                "nodeID": "Entrance-1745978697506",
+                "nodeType": "Entrance",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 555.42,
+                "ycoord": 664.95,
+                "longName": "",
+                "shortName": "Entrance"
+            },
+            {
+                "nodeID": "Hallway-1745978726808",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 577.67,
+                "ycoord": 665.7,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Elevator-1745978735954",
+                "nodeType": "Elevator",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 590.17,
+                "ycoord": 668.93,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745978877180",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 583.42,
+                "ycoord": 721.69,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745978885516",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 604.96,
+                "ycoord": 721.98,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745978900809",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 617.67,
+                "ycoord": 792.44,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745978920070",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 609.58,
+                "ycoord": 796.35,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745978956684",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 637.33,
+                "ycoord": 827.92,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745978979376",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 600.46,
+                "ycoord": 684.46,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745978988044",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 598.46,
+                "ycoord": 630.23,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745978998036",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 599.46,
+                "ycoord": 522.99,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745979021528",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 587.67,
+                "ycoord": 523.2,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979028694",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 599.42,
+                "ycoord": 465.97,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979034269",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 506.17,
+                "ycoord": 466.96,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979044044",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 504.67,
+                "ycoord": 500.96,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745979064138",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 493.92,
+                "ycoord": 501.46,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979074658",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 505.92,
+                "ycoord": 343.49,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745979105794",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 508.92,
+                "ycoord": 317.48,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979113844",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 378.83,
+                "ycoord": 336.93,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979120586",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 380.83,
+                "ycoord": 248.95,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979131954",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 204.83,
+                "ycoord": 331.93,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745979160598",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 355.42,
+                "ycoord": 248.71,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979171184",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 192.42,
+                "ycoord": 307.98,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979183112",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 150.42,
+                "ycoord": 304.97,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979190434",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 148.42,
+                "ycoord": 258.97,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Reception-1745979202834",
+                "nodeType": "Reception",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 152.42,
+                "ycoord": 240.47,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Entrance-1745979219810",
+                "nodeType": "Entrance",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 636.83,
+                "ycoord": 968.89,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Sidewalk-1745979230530",
+                "nodeType": "Sidewalk",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 509.92,
+                "ycoord": 742.46,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Sidewalk-1745979242998",
+                "nodeType": "Sidewalk",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 434.42,
+                "ycoord": 742.95,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Sidewalk-1745979249708",
+                "nodeType": "Sidewalk",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 435.83,
+                "ycoord": 992.85,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Sidewalk-1745979258676",
+                "nodeType": "Sidewalk",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 611.92,
+                "ycoord": 955.44,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745979293578",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 660.67,
+                "ycoord": 959.69,
+                "longName": "",
+                "shortName": ""
+            },
+            {
+                "nodeID": "Hallway-1745980436047",
+                "nodeType": "Hallway",
+                "building": "Main Campus Hospital (75 Francis St.)",
+                "floor": 1,
+                "xcoord": 627.92,
+                "ycoord": 832.96,
+                "longName": "",
+                "shortName": ""
+            }
+        ]
+    })
+
+
     await PrismaClient.edge.createMany({
         data:[
                 {
@@ -3132,6 +3479,148 @@ async function main() {
 
         ]
     });
+
+    // create Main Campus edges
+    await PrismaClient.edge.createMany({
+        data: [
+            {
+                "fromID": "Entrance-1745978697506",
+                "toID": "Parking-1745977271629"
+            },
+            {
+                "fromID": "Hallway-1745978726808",
+                "toID": "Entrance-1745978697506"
+            },
+            {
+                "fromID": "Elevator-1745978735954",
+                "toID": "Hallway-1745978726808"
+            },
+            {
+                "fromID": "Hallway-1745978877180",
+                "toID": "Hallway-1745978726808"
+            },
+            {
+                "fromID": "Hallway-1745978885516",
+                "toID": "Hallway-1745978877180"
+            },
+            {
+                "fromID": "Hallway-1745978979376",
+                "toID": "Hallway-1745978885516"
+            },
+            {
+                "fromID": "Hallway-1745978885516",
+                "toID": "Hallway-1745978900809"
+            },
+            {
+                "fromID": "Hallway-1745978900809",
+                "toID": "Reception-1745978920070"
+            },
+            {
+                "fromID": "Hallway-1745978979376",
+                "toID": "Hallway-1745978988044"
+            },
+            {
+                "fromID": "Hallway-1745978988044",
+                "toID": "Hallway-1745978998036"
+            },
+            {
+                "fromID": "Hallway-1745978998036",
+                "toID": "Reception-1745979021528"
+            },
+            {
+                "fromID": "Hallway-1745978998036",
+                "toID": "Hallway-1745979028694"
+            },
+            {
+                "fromID": "Hallway-1745979028694",
+                "toID": "Hallway-1745979034269"
+            },
+            {
+                "fromID": "Hallway-1745979034269",
+                "toID": "Hallway-1745979044044"
+            },
+            {
+                "fromID": "Hallway-1745979044044",
+                "toID": "Reception-1745979064138"
+            },
+            {
+                "fromID": "Hallway-1745979074658",
+                "toID": "Hallway-1745979034269"
+            },
+            {
+                "fromID": "Hallway-1745979074658",
+                "toID": "Reception-1745979105794"
+            },
+            {
+                "fromID": "Hallway-1745979074658",
+                "toID": "Hallway-1745979113844"
+            },
+            {
+                "fromID": "Hallway-1745979113844",
+                "toID": "Hallway-1745979120586"
+            },
+            {
+                "fromID": "Hallway-1745979120586",
+                "toID": "Reception-1745979160598"
+            },
+            {
+                "fromID": "Hallway-1745979113844",
+                "toID": "Hallway-1745979131954"
+            },
+            {
+                "fromID": "Hallway-1745979131954",
+                "toID": "Hallway-1745979171184"
+            },
+            {
+                "fromID": "Hallway-1745979171184",
+                "toID": "Hallway-1745979183112"
+            },
+            {
+                "fromID": "Hallway-1745979183112",
+                "toID": "Hallway-1745979190434"
+            },
+            {
+                "fromID": "Hallway-1745979190434",
+                "toID": "Reception-1745979202834"
+            },
+            {
+                "fromID": "Parking-1745977271629",
+                "toID": "Sidewalk-1745979230530"
+            },
+            {
+                "fromID": "Sidewalk-1745979230530",
+                "toID": "Sidewalk-1745979242998"
+            },
+            {
+                "fromID": "Sidewalk-1745979242998",
+                "toID": "Sidewalk-1745979249708"
+            },
+            {
+                "fromID": "Sidewalk-1745979258676",
+                "toID": "Sidewalk-1745979249708"
+            },
+            {
+                "fromID": "Entrance-1745979219810",
+                "toID": "Sidewalk-1745979258676"
+            },
+            {
+                "fromID": "Hallway-1745979293578",
+                "toID": "Entrance-1745979219810"
+            },
+            {
+                "fromID": "Hallway-1745978900809",
+                "toID": "Hallway-1745980436047"
+            },
+            {
+                "fromID": "Reception-1745978956684",
+                "toID": "Hallway-1745980436047"
+            },
+            {
+                "fromID": "Hallway-1745979293578",
+                "toID": "Hallway-1745980436047"
+            }
+        ]
+    })
 
     console.log('Floorplan seeded successfully!');
 }
