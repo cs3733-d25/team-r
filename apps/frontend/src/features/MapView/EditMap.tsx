@@ -78,6 +78,7 @@ export function EditMap({ status }: EditMapProps) {
         { content: <div>Then, select what the type of the node.</div>, selectorId: TOUR_STEP_IDS.NODE_TYPE, position: "right" },
         { content: <div>A node, specifically a reception node, can serve as the reception desk for zero, one, or many different departments.</div>, selectorId: TOUR_STEP_IDS.DEPARTMENTS, position: "right" },
         { content: <div>When done, you can save the node. The node should pop up on the map!</div>, selectorId: TOUR_STEP_IDS.SAVE_NODE, position: "right" },
+        { content: <div>To connect nodes, select two nodes and then hit save here</div>, selectorId: TOUR_STEP_IDS.SAVE_EDGE, position: "right" },
         // Add more steps here
     ];
 
@@ -520,7 +521,7 @@ export function EditMap({ status }: EditMapProps) {
                                             Save Node
                                         </Button>
 
-                                        <div className="mt-1 pt-4 border-t border-gray-200">
+                                        <div className="mt-1 pt-4 border-t border-gray-200" id={TOUR_STEP_IDS.SAVE_EDGE}>
                                             <div className="bg-gray-100 p-3 rounded-md">
                                                 <Label>Click on two nodes to create an edge</Label>
                                                 {edgeNodes.length > 0 ? (
