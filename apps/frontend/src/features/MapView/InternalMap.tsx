@@ -10,7 +10,22 @@ import faulkner from '../../../public/faulkner1.svg';
 import womens from '../../../public/womens2.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import { fetchCheckIn, fetchEdges20_1, fetchElevators, fetchEdges22_1, fetchEdges22_3, fetchEdges22_4, fetchEdgesChestnut, fetchEdgesWomensHospital, fetchEntrances, fetchParkingLots, fetchEdgesFaulkner, fetchHallways, fetchOther } from "@/features/MapView/mapService.ts";
+import {
+    fetchCheckIn,
+    fetchEdges20_1,
+    fetchElevators,
+    fetchEdges22_1,
+    fetchEdges22_3,
+    fetchEdges22_4,
+    fetchEdgesChestnut,
+    fetchEdgesWomensHospital,
+    fetchEntrances,
+    fetchParkingLots,
+    fetchEdgesFaulkner,
+    fetchHallways,
+    fetchOther,
+    fetchNodes
+} from "@/features/MapView/mapService.ts";
 import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
 
@@ -220,7 +235,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     };
     const loadHallways = async () => {
         try {
-            const data = await fetchHallways();
+            const data = await fetchNodes("Hallway");
             console.log(data);
             setHallways(data);
         } catch (err) {
@@ -260,7 +275,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
             setIsLoading(false);
         }
     };
-    console.log("hallways: ",hallways)
+    // console.log("hallways: ",hallways)
     async function loadAll() {
         await loadCheckIn();
         await loadEntrances();
@@ -559,7 +574,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                 });
 
                 // draw edges
-                console.log(edges22_1);
+                // console.log(edges22_1);
                 edges20_1.map((edge) => {
                     L.polyline([
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
@@ -594,7 +609,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
                         [edge.fromNode.xcoord, edge.fromNode.ycoord],
                         [edge.toNode.xcoord, edge.toNode.ycoord],
                     ]).addTo(floorLayerChestnutHill);
-                    console.log("got here",edge.fromNode.xcoord)
+                    // console.log("got here",edge.fromNode.xcoord)
                     clickEdge(edge, line);
                 });
                 edgesFaulkner.map((edge) => {

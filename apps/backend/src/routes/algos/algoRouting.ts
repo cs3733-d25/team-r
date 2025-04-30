@@ -34,7 +34,7 @@ router.post(
       });
 
       //find the algorithm in the database
-      let algorithm = "";
+      let algorithm: string;
       const algorithmDB = await client.algorithm.findFirst();
       if (!algorithmDB) {
         algorithm = "bfs";

@@ -155,6 +155,27 @@ export function MapPage() {
      * @param nodes - an array of nodes (path)
      */
     const calculateTextDirections = async (nodes: Node[]) => {
+        /**
+         * Calculates the distance between two nodes in units (raw coordinates)
+         * @param node1 - the first node
+         * @param node2 - the second node
+         */
+        const calculateDistanceUnits = (node1: Node, node2: Node) => {
+            const dx = node2.xcoord - node1.xcoord;
+            const dy = node2.ycoord - node1.ycoord;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        /**
+         * Converts a distance in units (coordinates) to feet
+         * @param distance - the distance in units
+         */
+        const convertDistanceToFeet = (distance: number) => {
+            // conversion factor for units to feet
+            // calculated by using the distance from the faulkner parking lot to entrance (309 units = 231 feet)
+            return distance * 0.7475
+        }
+
         try {
             if (nodes.length < 2) {
                 setDirectionStrings([]);
@@ -163,15 +184,12 @@ export function MapPage() {
             // be sure to show the directions since we have a valid path
             setShowDirections(true);
 
-            // reverse the order of the nodes to get the correct path
-            // nodes.reverse();
-
             const enhancedDirections: string[] = [];
 
             // First node is starting point
             enhancedDirections.push(`Start at ${nodes[0].shortName}`);
 
-            // For the first segment, just head toward without turn instruction
+            // For the first segment, just head toward without turn instructions since we don't have an initial direction
             if (nodes.length > 1) {
                 enhancedDirections.push(`Head toward ${nodes[1].shortName}`);
             }
@@ -181,14 +199,14 @@ export function MapPage() {
                 const prevNode = nodes[i - 1];
                 const currentNode = nodes[i];
                 const nextNode = nodes[i + 1];
+                const distance = Math.round(convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode)));
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`${directionChange} toward ${nextNode.shortName}`);
+                enhancedDirections.push(`In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`);
             }
 
             // Final arrival
             enhancedDirections.push(`Arrive at ${nodes[nodes.length - 1].shortName}`);
-            console.log('enhanced Directions: ', enhancedDirections);
 
             setDirectionStrings(enhancedDirections);
         } catch (error) {
@@ -199,6 +217,10 @@ export function MapPage() {
 
     /**
      * Calculates the relative direction change between path segments
+     * @param prev - previous node
+     * @param current - current node
+     * @param next - next node
+     * @return - string indicating the direction change
      */
     const calculateDirectionChange = (prev: Node, current: Node, next: Node): string => {
         // Calculate vectors for previous and current segments
@@ -225,11 +247,11 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return "Turn right";
+            return "turn right";
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return "Turn left";
+            return "turn left";
         } else {
-            return "Continue straight";
+            return "continue straight";
         }
     };
 

@@ -27,6 +27,28 @@ export interface Edge {
 
 const router: Router = express.Router();
 
+// get nodes
+router.post("/nodes", async (req, res) => {
+  try {
+    let data;
+    if (req.body.nodeType) {
+      // if a type was specified, filter for those
+      console.log("Looking for nodes of type " + req.body.nodeType);
+      data = await PrismaClient.node.findMany({
+        where: { nodeType: req.body.nodeType },
+      });
+    } else {
+      // get all the nodes
+      data = await PrismaClient.node.findMany({});
+    }
+    console.log("found " + data.length + " " + req.body.nodeType + " nodes");
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
 // get parking lots
 router.get("/parking-lots", async (req, res) => {
   try {
