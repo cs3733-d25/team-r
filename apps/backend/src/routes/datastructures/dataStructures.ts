@@ -1,7 +1,5 @@
-import { getNodeObjects, PathfinderAlgoritm } from ".algoSelection.ts";
-import { Node } from "../map/mapData.ts"
-
-
+import { getNodeObjects, PathfindingAlgorithm } from "../algos/algoSelection";
+import { Node } from "../maps/mapData";
 
 
 export class Stack<T> {
