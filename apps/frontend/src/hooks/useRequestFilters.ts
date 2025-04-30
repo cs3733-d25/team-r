@@ -73,7 +73,8 @@ export function useRequestFilters<T extends BaseRequest>(data: T[]) {
         return data.filter((item) => {
             // employee filter
             if (filterState.filterByEmployee && filterOptions.employeeID) {
-                if (!item.employeeID || !item.employeeID.includes(filterOptions.employeeID)) {
+                if (!item.employeeID ||
+                    !item.employeeID.toLowerCase().includes(filterOptions.employeeID.toLowerCase())) {
                     return false;
                 }
             }
