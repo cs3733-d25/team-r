@@ -1,3 +1,9 @@
+import { getNodeObjects, PathfinderAlgoritm } from ".algoSelection.ts";
+import { Node } from "../map/mapData.ts"
+
+
+
+
 export class Stack<T> {
   private items: T[] = [];
   push(item: T): void {
@@ -47,11 +53,13 @@ export class PriorityQueue<T> {
   isEmpty(): boolean {
     return this.heap.length === 0;
   }
+
   enqueue(value: T, priority: number): void {
-    const node: HeapNode<T> = { value, priority };
+    const node: HeapNode<T> = {value, priority};
     this.heap.push(node);
     this.bubbleUp();
   }
+
   dequeue(): T | undefined {
     if (this.isEmpty()) return undefined;
     const root = this.heap[0].value;
@@ -62,6 +70,7 @@ export class PriorityQueue<T> {
     }
     return root;
   }
+
   private bubbleUp(): void {
     let idx = this.heap.length - 1;
     const node = this.heap[idx];
@@ -74,6 +83,7 @@ export class PriorityQueue<T> {
       idx = parentIdx;
     }
   }
+
   private sinkDown(): void {
     let idx = 0;
     const length = this.heap.length;
@@ -90,9 +100,9 @@ export class PriorityQueue<T> {
       }
       if (rightIdx < length) {
         const shouldSwapRight =
-          (swapIdx === null && this.heap[rightIdx].priority < node.priority) ||
-          (swapIdx !== null &&
-            this.heap[rightIdx].priority < this.heap[leftIdx].priority);
+            (swapIdx === null && this.heap[rightIdx].priority < node.priority) ||
+            (swapIdx !== null &&
+                this.heap[rightIdx].priority < this.heap[leftIdx].priority);
         if (shouldSwapRight) {
           swapIdx = rightIdx;
         }
@@ -103,7 +113,25 @@ export class PriorityQueue<T> {
       idx = swapIdx;
     }
   }
+
   clear(): void {
     this.heap = [];
   }
 }
+  export class Astart implements PathfindingAlgorithm {
+    /**
+     * helper: given 2 node, grab their Node objects and return as a tuple
+     */
+
+    /**
+     * Helper: Euclidean distance between 2 nodes
+     */
+
+    /**
+     * Helper: scale straigth-line distance by the true edge
+     */
+
+
+
+
+  }

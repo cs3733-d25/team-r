@@ -4,7 +4,7 @@ import prismaClient from "../../bin/prisma-client";
 import { PriorityQueue }    from "../datastructures/dataStructures";
 import router                from "../maps/mapData";
 import { Graph }             from "../maps/Graph";
-import { PathfindingAlgorithm } from "./algoSelection";
+import { PathfindingAlgorithm } from "./algoSelection";;
 
 
 
@@ -16,15 +16,17 @@ export class AStar implements PathfindingAlgorithm {
     this.graph = graph;
   }
 
-  // ——— MINIMAL CHANGE HERE ———
+
   // Now scales straight‐line distance by the true edge weight
-  private heuristic(a: string, b: string): number {
+  private heuristic(a: string, b: string): number  {
     // get node coordinates
     const pa = this.graph.getNodePosition(a);
     const pb = this.graph.getNodePosition(b);
     const dx = pa.x - pb.x;
     const dy = pa.y - pb.y;
     const euclid = Math.hypot(dx, dy);
+
+    // put the 2 string, feed into nodeobjs, then when they return we will get an array of nodes...then unpack the starting and ending nodes. then node.x coord and node.ycoord to get the distance (pythagran thm)
 
     // get the actual weight for edge a→b
     const w = this.graph.getEdgeWeight(a, b);
