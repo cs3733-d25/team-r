@@ -120,11 +120,10 @@ export class PriorityQueue<T> {
     /**
      * helper: given 2 node, grab their Node objects and return as a tuple
      */
-    private getNodePair(a: string, b: string): [Node, Node] {
-      const [nodeA, nodeB] = getNodeObjects([a, b]);
-      return [nodeA, nodeB];
+    private async getNodePair(a: string, b: string): Promise<[Node,Node]> {
+      const nodes = await getNodeObjects([a, b]);
+      return [nodes[0], nodes[1]];
     }
-
     /**
      * Helper: Euclidean distance between 2 nodes
      */
