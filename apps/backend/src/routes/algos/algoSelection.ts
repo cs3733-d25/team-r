@@ -2,6 +2,8 @@ import { Graph } from "../maps/Graph.ts";
 import DFS from "./dfs.ts";
 import { BFS } from "./bfs.ts";
 import { AStar } from "./aStar.ts";
+import { Node } from "../maps/mapData.ts";
+import prismaClient from "../../bin/prisma-client.ts";
 
 export interface PathfindingAlgorithm {
   graph: Graph;
@@ -9,7 +11,27 @@ export interface PathfindingAlgorithm {
     startingPoint: string,
     endingPoint: string,
     algorithm: string,
-  ): string[];
+  ): Promise<Node[]>;
+}
+
+/**
+ * Fetches node objects from the database based on the provided node IDs.
+ * @param nodeIDs - a string array of node IDs to fetch.
+ */
+export async function getNodeObjects(nodeIDs: string[]): Promise<Node[]> {
+  const nodes = await prismaClient.node.findMany({
+    where: {
+      nodeID: { in: nodeIDs },
+    },
+  });
+
+  // Create a map for quick lookups
+  const nodeMap = new Map(nodes.map((node) => [node.nodeID, node]));
+
+  // Return nodes in the same order as the input nodeIDs array
+  return nodeIDs
+    .map((id) => nodeMap.get(id))
+    .filter((node) => node !== undefined) as Node[];
 }
 
 const graph = new Graph();
@@ -18,8 +40,7 @@ export async function findPath(
   startingPoint: string,
   endingPoint: string,
   algorithm: string,
-) {
-  console.log("IN FIND PATH HELLO");
+): Promise<Node[]> {
   await graph.loadGraph(); // Load graph once
 
   if (algorithm === "dfs") {

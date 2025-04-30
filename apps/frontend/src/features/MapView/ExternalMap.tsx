@@ -134,11 +134,11 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
      * @param location
      */
     const getBuildingIdentifier = (location: string) => {
-        if (location === patriotPlace20) return 'Patriot Place 20';
-        if (location === patriotPlace22) return 'Patriot Place 22';
-        if (location === chestnutHill) return 'Chestnut Hill';
-        if (location === faulkner) return 'Faulkner';
-        if (location === mainCampus) return 'Womens';
+        if (location === patriotPlace20) return 'Healthcare Center (20 Patriot Pl.)';
+        if (location === patriotPlace22) return 'Healthcare Center (22 Patriot Pl.)';
+        if (location === chestnutHill) return 'Healthcare Center (Chestnut Hill)';
+        if (location === faulkner) return 'Faulkner Hospital';
+        if (location === mainCampus) return 'Main Campus Hospital (75 Francis St.)';
         return '';
     };
 
@@ -288,7 +288,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                 </Button>
                                 <Button
                                     variant={
-                                        selectedLocation !== mainCampus  ? 'selected' : 'secondary'
+                                        selectedLocation !== mainCampus  ? 'unselected' : 'secondary'
                                     }
                                     onClick={() => setSelectedLocation(mainCampus)}
                                 >

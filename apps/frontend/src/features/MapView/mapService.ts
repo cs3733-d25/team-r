@@ -158,7 +158,7 @@ export const fetchPath = async (
     startingPoint: string,
     endingPoint: string,
     algorithm: string
-): Promise<string[]> => {
+): Promise<Node[]> => {
     const resp = await axios.post<PathResponse>('/api/algo/fetchPath', {
         startingPoint,
         endingPoint,

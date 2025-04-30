@@ -10,7 +10,7 @@ import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
-import PatientRequest from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
+import PatientRequest, {AllPatientRequests} from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
 import {PatientRequestForm} from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "../features/Requests/PatientRequest/PatientRequestPage.tsx";
 import {ExternalMap} from "../features/MapView/ExternalMap.tsx";
@@ -25,6 +25,11 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 import {navigate} from "next/dist/client/components/segment-cache-impl/navigation";
+import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
+import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
+import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
+import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
+
 
 function App() {
     const {isAuthenticated, user, isLoading } = useAuth0();
@@ -93,10 +98,11 @@ function App() {
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
                 { path: 'prescription', element: <Prescription /> },
-                { path: 'patientrequestpage', element: <PatientRequestPage /> },
+                { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
-                { path: 'transport',element: <PatientTransportPage /> },
+                { path: 'transport',element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'translation', element: <Translate /> },
                 { path: 'requests', element: <RequestPage /> }
             ],
         },
