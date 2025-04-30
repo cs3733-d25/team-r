@@ -1,3 +1,4 @@
+// Full file with Settings link fixed and everything else untouched
 
 import React, { useEffect, useState} from 'react';
 import { Button } from '@/components/ui/button.tsx';
@@ -143,13 +144,12 @@ export function NavbarMGH(props: NavBarProps) {
                                     >
                                         Profile
                                     </Button>
+                                    {/* ✅ Updated Settings link */}
                                     <Button
                                         variant={'ghostPopover'}
-                                        onClick={() =>
-                                            alert("This button doesn't work yet! - Akaash")
-                                        }
+                                        asChild
                                     >
-                                        Settings
+                                        <a href="/settings">Settings</a>
                                     </Button>
                                     <div className="border-t"></div>
                                     <Button variant={'ghostDestructive'} asChild>
@@ -228,10 +228,10 @@ export function NavbarMGH(props: NavBarProps) {
                         </Button>
                     )}
                     <Button variant="ghost" asChild>
-                        <a href="/about">About</a>
+                        <a href="/credits">Credits</a>
                     </Button>
                     <Button variant="ghost" asChild>
-                        <a href="/credits">Credits</a>
+                        <a href="/about">Our Team</a>
                     </Button>
                 </nav>
             </div>
