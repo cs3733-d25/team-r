@@ -1889,6 +1889,123 @@ async function main() {
         skipDuplicates: true
     });
 
+    // Main Campus Hospital
+    await PrismaClient.node.createMany({
+        data: [
+
+                {
+                    "nodeID": "A",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 726,
+                    "ycoord": 1030,
+                    "longName": "",
+                    "shortName": "A"
+                },
+                {
+                    "nodeID": "B",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 654,
+                    "ycoord": 934,
+                    "longName": "",
+                    "shortName": "B"
+                },
+                {
+                    "nodeID": "C",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 604.5,
+                    "ycoord": 889,
+                    "longName": "",
+                    "shortName": "C"
+                },
+                {
+                    "nodeID": "D",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 625,
+                    "ycoord": 766,
+                    "longName": "",
+                    "shortName": "D"
+                },
+                {
+                    "nodeID": "E",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 602.5,
+                    "ycoord": 708,
+                    "longName": "",
+                    "shortName": "E"
+                },
+
+
+                {
+                    "nodeID": "S",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 137.25,
+                    "ycoord": 306.25,
+                    "longName": "",
+                    "shortName": "S"
+                },
+
+                {
+                    "nodeID": "R",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 148.5,
+                    "ycoord": 290.5,
+                    "longName": "",
+                    "shortName": "R"
+                },
+                {
+                    "nodeID": "Q",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 306.5,
+                    "ycoord": 317,
+                    "longName": "",
+                    "shortName": "Q"
+                },
+                {
+                    "nodeID": "N",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 346.5,
+                    "ycoord": 320.5,
+                    "longName": "",
+                    "shortName": "N"
+                },
+                {
+                    "nodeID": "M",
+                    "nodeType": "Check-In",
+                    "building": "Main Campus Hospital (75 Francis St.)",
+                    "floor": 1,
+                    "xcoord": 504.5,
+                    "ycoord": 363,
+                    "longName": "",
+                    "shortName": "M"
+                }
+
+
+
+
+
+        ],
+
+        skipDuplicates: true
+    });
+
     await PrismaClient.edge.createMany({
         data:[
                 {

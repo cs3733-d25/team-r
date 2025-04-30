@@ -215,6 +215,67 @@ async function main() {
 
     });
 
+    /*
+    //Main Campus Hospital (75 Francis St.)
+    await client.directory.createMany({
+        data: [
+            {name: "Ambulatory Radiology (X-ray & CT scan)", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "C"},
+            {name: "Breast Imaging, Lee Bell Center ", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "J"},
+            {name: "Cardiovascular Imaging Center", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "Q"},
+            {name: "Endoscopy ", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "M"},
+            {name: "Mammography", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "J"},
+            {name: "Phlebotomy, Outpatient", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Radiation Oncology", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "J"},
+            {name: "Radiology (MRI and CT Scan)", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "S"},
+
+
+            {name: "Shapiro Procedural Check-in", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "N"},
+            {name: "Brigham Circle Medical Associates (BCMA)", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "S"},
+            {name: "Brigham Medical Specialties / Schuster Transplant", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Center for Weight Management & Metabolic Surgery", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Endocrine – Diabetes", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Gastroenterology & Hepatology", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Genetics & Genomics Medicine", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Kidney / Pancreas Transplant ", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+
+            {name: "Nutrition", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Chest Diseases, Center for", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "B"},
+            {name: "Comprehensive Breast Health Center", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "K"},
+            {name: "Dental Group / Oral Medicine", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "K"},
+            {name: "Ear, Nose and Throat (ENT)", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+
+
+            {name: "Echocardiography Lab (ECHO)", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "N"},
+            {name: "Electrophysiology", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "Q"},
+            {name: "International Patient Center / Executive Health ", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "C"},
+
+            {name: "Jen Center for Primary Care", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "J"},
+            {name: "Lung Center", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "A"},
+            {name: "Orthopedics", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "S"},
+
+            {name: "Plastic & Reconstructive Surgery", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Podiatry", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "S"},
+            {name: "Rheumatology", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "S"},
+
+            {name: "Thoracic Surgery Clinic", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "B"},
+            {name: "2 Watkins Cardiovascular Clinic", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "Q"},
+            {name: "Weiner Center for Pre-Op Evaluation ", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "E"},
+
+            {name: "Bornstein Amphitheater", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "G"},
+            {name: "Boston Children's Hospital, Bridge to", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "J"},
+            {name: "Cafeteria ", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "L"},
+            {name: "Carrie Hall Conference Room", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "A"},
+            {name: "Patient Financial Registration", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "H"},
+            {name: "Pharmacy", floorNumber: 2, building:"Main Campus Hospital (75 Francis St.)", receptionNodeID: "F"},
+            {name: "Radiation Procedural Check-in", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "N"},
+            {name: "Shapiro Family Center", floorNumber: 2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "N"},
+
+        ]
+    });
+
+
+     */
+
 
     console.log('Directory seeded successfully!');
 }

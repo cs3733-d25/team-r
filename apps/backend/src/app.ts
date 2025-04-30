@@ -17,6 +17,7 @@ import pharmacyRouter from "./routes/servicereqs/pharmacyreqs.ts";
 import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
 import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
+//import translateRouter from "./routes/servicereqs/translatereq.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -79,6 +80,7 @@ app.use(API_ROUTES.PHARMACY, pharmacyRouter);
 app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
+app.use(API_ROUTES.TRANSLATE, translateRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
