@@ -94,6 +94,7 @@ const RAW_RUNTIME_STATE =
           ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
           ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"],\
           ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
+          ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
           ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
           ["tailwindcss", "npm:4.1.3"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\
@@ -5241,7 +5242,17 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/axios-npm-1.8.4-8cf735eb2b-450993c2ba.zip/node_modules/axios/",\
         "packageDependencies": [\
           ["axios", "npm:1.8.4"],\
-          ["follow-redirects", "virtual:8cf735eb2b9f70962d771e00a864e9e0536f45b1a3899af224ac07f4fa06f6303e4a41f37b803333808763ece4c23df875efb5ad0daa70f6856aaaee39943a11#npm:1.15.9"],\
+          ["follow-redirects", "virtual:007b36cf567c5c0b0b89b54b5fd89ec08f3a2a884d74d5c6d450b18bf5cf65f53734a0c801662b1c2259c9afe08585fed46b3182771fef81b1aa08fab6405199#npm:1.15.9"],\
+          ["form-data", "npm:4.0.2"],\
+          ["proxy-from-env", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:1.9.0", {\
+        "packageLocation": "./.yarn/cache/axios-npm-1.9.0-007b36cf56-9371a56886.zip/node_modules/axios/",\
+        "packageDependencies": [\
+          ["axios", "npm:1.9.0"],\
+          ["follow-redirects", "virtual:007b36cf567c5c0b0b89b54b5fd89ec08f3a2a884d74d5c6d450b18bf5cf65f53734a0c801662b1c2259c9afe08585fed46b3182771fef81b1aa08fab6405199#npm:1.15.9"],\
           ["form-data", "npm:4.0.2"],\
           ["proxy-from-env", "npm:1.1.0"]\
         ],\
@@ -5265,6 +5276,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:22.13.13"],\
           ["@types/pg", "npm:8.11.11"],\
           ["@types/supertest", "npm:6.0.3"],\
+          ["axios", "npm:1.9.0"],\
           ["common", "workspace:packages/common"],\
           ["cookie-parser", "npm:1.4.7"],\
           ["database", "workspace:packages/database"],\
@@ -7459,10 +7471,10 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:8cf735eb2b9f70962d771e00a864e9e0536f45b1a3899af224ac07f4fa06f6303e4a41f37b803333808763ece4c23df875efb5ad0daa70f6856aaaee39943a11#npm:1.15.9", {\
-        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-4727e0af6f/0/cache/follow-redirects-npm-1.15.9-539785d34c-5829165bd1.zip/node_modules/follow-redirects/",\
+      ["virtual:007b36cf567c5c0b0b89b54b5fd89ec08f3a2a884d74d5c6d450b18bf5cf65f53734a0c801662b1c2259c9afe08585fed46b3182771fef81b1aa08fab6405199#npm:1.15.9", {\
+        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-a2918e5d77/0/cache/follow-redirects-npm-1.15.9-539785d34c-5829165bd1.zip/node_modules/follow-redirects/",\
         "packageDependencies": [\
-          ["follow-redirects", "virtual:8cf735eb2b9f70962d771e00a864e9e0536f45b1a3899af224ac07f4fa06f6303e4a41f37b803333808763ece4c23df875efb5ad0daa70f6856aaaee39943a11#npm:1.15.9"],\
+          ["follow-redirects", "virtual:007b36cf567c5c0b0b89b54b5fd89ec08f3a2a884d74d5c6d450b18bf5cf65f53734a0c801662b1c2259c9afe08585fed46b3182771fef81b1aa08fab6405199#npm:1.15.9"],\
           ["@types/debug", null],\
           ["debug", null]\
         ],\
@@ -7620,6 +7632,7 @@ const RAW_RUNTIME_STATE =
           ["react-router-bootstrap", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.26.3"],\
           ["react-router-dom", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:6.30.0"],\
           ["react-speech", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.0.2"],\
+          ["react-speech-recognition", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.0"],\
           ["recharts", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:2.15.2"],\
           ["serve", "npm:14.2.4"],\
           ["sonner", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:2.0.3"],\
@@ -10624,6 +10637,41 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-speech-recognition", [\
+      ["npm:4.0.0", {\
+        "packageLocation": "./.yarn/cache/react-speech-recognition-npm-4.0.0-10f8dad342-2526104466.zip/node_modules/react-speech-recognition/",\
+        "packageDependencies": [\
+          ["react-speech-recognition", "npm:4.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-speech-recognition-virtual-6828807cb7/0/cache/react-speech-recognition-npm-4.0.0-10f8dad342-2526104466.zip/node_modules/react-speech-recognition/",\
+        "packageDependencies": [\
+          ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
+          ["@types/react", "npm:19.1.0"],\
+          ["react", "npm:19.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-speech-recognition-virtual-83e22ab05f/0/cache/react-speech-recognition-npm-4.0.0-10f8dad342-2526104466.zip/node_modules/react-speech-recognition/",\
+        "packageDependencies": [\
+          ["react-speech-recognition", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:4.0.0"],\
+          ["@types/react", "npm:18.3.20"],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-style-singleton", [\
       ["npm:2.2.3", {\
         "packageLocation": "./.yarn/cache/react-style-singleton-npm-2.2.3-18f32c05f7-841938ff16.zip/node_modules/react-style-singleton/",\
@@ -11381,6 +11429,7 @@ const RAW_RUNTIME_STATE =
           ["react-bootstrap-icons", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.11.5"],\
           ["react-dom", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:19.1.0"],\
           ["react-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.0.2"],\
+          ["react-speech-recognition", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:4.0.0"],\
           ["react-text-to-speech", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.0.2"],\
           ["tailwindcss", "npm:4.1.3"],\
           ["ts-config-custom", "workspace:configs/ts-config-custom"],\

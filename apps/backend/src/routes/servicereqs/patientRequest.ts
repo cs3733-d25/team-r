@@ -25,12 +25,10 @@ router.post("/", async function (req: Request, res: Response) {
     status,
     department,
     comment,
-    location,
+    building,
     request,
-    //employeeName,
+    employeeName,
   } = req.body;
-
-  const employeeID = req.session?.username;
 
   try {
     console.log(request);
@@ -41,11 +39,11 @@ router.post("/", async function (req: Request, res: Response) {
         },
         priority,
         department,
-        location,
+        building,
         status,
         employeeName: {
           connect: {
-            id: employeeID,
+            id: employeeName,
           },
         },
         request,
