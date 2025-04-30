@@ -59,6 +59,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
             employeeID: null,
             employeeName: null,
             priority: null,
+            building: null,
             department: null,
             patientID: null,
             drugName: null,
@@ -94,6 +95,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         deviceID: null,
         deviceType: null,
         priority: null,
+        building: null,
         room: null,
         department: null,
         comments: null,
@@ -114,7 +116,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         assignedEmpID:null,
         priority:null,
         department:null,
-        location:null,
+        building:null,
         comment:null,
         time:null,
         status:null,
@@ -138,13 +140,13 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
 
     //translte request
     const [translate, setTranslate] = useState([{
-        employeeName: null,
+        employeeID: null,
         language: null,
         priority: null,
         department: null,
         building: null,
         roomNumber: null,
-        notes: null,
+        comments: null,
         timestamp: null,
         status: null}]);
     //there should really be a try/catch here, but since it's only being called inside of a try/catch anyways i'll leave it
