@@ -15,7 +15,7 @@ interface SubmittedRequest {
   sanitationType: string;
   priority: string;
   department: string;
-  location: string;
+  building: string;
   roomNumber: string;
   comments: string;
   timestamp: string;
@@ -33,7 +33,7 @@ const SanitationRequestForm = () => {
     roomNumber: '',
     comments: '',
     status:'',
-    location:'',
+    building:'',
     assignedEmployee:'',
 
   });
@@ -112,7 +112,7 @@ const SanitationRequestForm = () => {
           roomNumber: '',
           comments: '',
           status: '',
-          location: '',
+          building: '',
           assignedEmployee: '',
 
         });
@@ -288,7 +288,7 @@ const SanitationRequestForm = () => {
                     <span className="font-semibold">Department:</span> {submittedRequest.department}
                   </div>
                   <div>
-                    <span className="font-semibold">Location:</span> {submittedRequest.location}
+                    <span className="font-semibold">Location:</span> {submittedRequest.building}
                   </div>
                   <div>
                     <span className="font-semibold">Room:</span> {submittedRequest.roomNumber}
