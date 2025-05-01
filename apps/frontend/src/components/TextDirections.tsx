@@ -3,6 +3,7 @@ import {VolumeMute, VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
 import { Arrow90degLeft, Arrow90degRight, ArrowUp } from 'react-bootstrap-icons';
 import Speech from 'react-speech';
+import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
 interface TextDirectionsProps {
     steps: string[];
@@ -75,6 +76,9 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                 ) : (
                     <VolumeMute className={'text-3xl text-left'} onClick={handleTTS} />
                 )}
+                {displayInfo(
+                <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />,
+                "Click on this button for text-to-speech directions.")}
             </div>
             <ol className="list-decimal list-inside space-y-2">
                 {steps.map((step, index) => {
