@@ -435,7 +435,7 @@ async function main() {
         data: {
             id: 'Keagan',
             email: 'kjhitt@wpi.edu',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Patient',
         }
@@ -456,7 +456,7 @@ async function main() {
         data: {
             id: 'KeaganAdmin',
             email: 'keagan@redroc.com',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Admin',
         }
