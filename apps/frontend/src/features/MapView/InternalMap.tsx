@@ -30,6 +30,10 @@ import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group.tsx";
 import { getFilter } from 'next/dist/build/webpack/loaders/css-loader/src/utils';
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Accordion, AccordionTrigger, AccordionContent, AccordionItem} from "@/components/ui/accordion.tsx";
+import {Label} from "@/components/ui/label.tsx";
+
 
 /*
 * Plan for Nodes
@@ -182,6 +186,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
     const highlightedNodeLayers = useRef<L.Circle[]>([]);
+    const [open, setOpen] = useState(false);
 
     const selectedNodeStyle = {
         color: '#2563eb',
@@ -822,14 +827,52 @@ setEdgesOnActiveFloor(fullEdges)
             />
             {onToggle?
             <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:0}}>
+                <Accordion type ="single" collapsible={true} className={"w-50"}>
+                    <AccordionItem value={"legend"} >
+                <Card className="p-0">
+                    <CardContent className="p-0">
+                    <AccordionTrigger className = {"mr-10"}>
+
+                            <div className={"flex flex-col w-30 text-center"}>Node Types</div>
+
+
+                    </AccordionTrigger>
+                    <AccordionContent>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png' alt = "hallwayNode" width = "10%" height={"10%"}></img>
+                        <Label>Hallway</Label>
+                    </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png' alt = "entranceNode" width = "10%" height={"10%"}></img>
+                            <Label>Entrance</Label>
+                        </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png' alt = "elevatorNode" width = "10%" height={"10%"}></img>
+                            <Label>Elevator</Label>
+                        </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png' alt = "lotNode" width = "10%" height={"10%"}></img>
+                            <Label>Parking Lot</Label>
+                        </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png' alt = "receptionNode" width = "10%" height={"10%"}></img>
+                            <Label>Reception</Label>
+                        </div>
+                        <div className={"flex space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png' alt = "sideNode" width = "10%" height={"10%"}></img>
+                            <Label>Sidewalk</Label>
+                        </div>
+                    </AccordionContent>
+                    </CardContent>
+                </Card>
+                    </AccordionItem>
+                </Accordion>
                 <ToggleGroup type={"multiple"} >
-                    <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
                     <ToggleGroupItem value={"Hallways"} onClick={()=>isFiltered("Hallway")}>H</ToggleGroupItem>
                     <ToggleGroupItem value={"Entrances"} onClick={()=>isFiltered("Entrance")}>EN</ToggleGroupItem>
                     <ToggleGroupItem value={"Parking Lots"} onClick={()=>isFiltered("Parking")}>PL</ToggleGroupItem>
                     <ToggleGroupItem value={"Reception"} onClick={()=>isFiltered("Reception")}>R</ToggleGroupItem>
                     <ToggleGroupItem value={"Elevator"} onClick={()=>isFiltered("Elevator")}>EL</ToggleGroupItem>
-                    <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
                 </ToggleGroup>
             </div>:null}
 
