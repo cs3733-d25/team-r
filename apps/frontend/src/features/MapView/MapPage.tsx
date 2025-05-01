@@ -23,7 +23,6 @@ import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
 import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
-import { displayInfo } from '@/features/MapView/DisplayInformation.tsx';
 
 declare global {
     interface Window {
@@ -123,12 +122,23 @@ export function MapPage() {
             console.log('in handle get directions receptionNodeID: ', receptionNodeID);
             console.log('ALGO IN HANDLE: ', algorithm);
 
-            // 1) get the sequence of node IDs
-            const nodes = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
-            // 2) fetch their full data, reverse to start→end
+            // get the sequence of node IDs - use accessible route if selected
+            let nodes;
+            if (accessibleRoute) {
+                const routeResponse = await axios.post('/api/algo/accessible-route', {
+                    startingPoint: selectedParkinglot,
+                    endingPoint: receptionNodeID,
+                    algorithm: algorithm,
+                });
+                nodes = routeResponse.data;
+            } else {
+                nodes = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
+            }
+
+            // fetch their full data, reverse to start→end
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
-            nodes.forEach((node) => {
+            nodes.forEach((node: Node) => {
                 if (!pathByFloor[node.floor]) {
                     pathByFloor[node.floor] = [];
                 }
@@ -136,7 +146,7 @@ export function MapPage() {
             });
 
             // set both full path and floor segments
-            const coords = nodes.map((n) => [n.xcoord, n.ycoord] as [number, number]);
+            const coords = nodes.map((n: Node) => [n.xcoord, n.ycoord] as [number, number]);
             const reversedCoords = [];
             for (let i = coords.length - 1; i >= 0; i--) {
                 reversedCoords.push(coords[i]);
