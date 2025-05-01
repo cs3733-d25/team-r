@@ -1,9 +1,36 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Table, TableHeader, TableRow, TableHead, TableCell, TableBody} from '@/components/ui/table.tsx';
+import {RequestFilters} from '@/components/RequestFilters.tsx';
+import {SortableTable} from '@/components/SortableTable.tsx';
+import {PaginationControls} from '@/components/PaginationControls.tsx';
+import {useRequestFilters, BaseRequest} from '@/hooks/useRequestFilters.ts';
+import {RequestInfoButton} from '@/components/ServiceRequests/RequestInfoButton.tsx';
+
+// define this interface to prevent errors
+interface PrescriptionRequest extends BaseRequest {
+    prescriptionID: string | number | null;
+    employeeID: string | null;
+    employeeName: string | null;
+    priority: string | null;
+    department: string | null;
+    patientID: string | null;
+    drugName: string | null;
+    morningPillCount: number | null;
+    middayPillCount: number | null;
+    eveningPillCount: number | null;
+    nightPillCount: number | null;
+    days: number | null;
+    numberOfPills: number | null;
+    refills: number | null;
+    additionalInstructions: string | null;
+    status: string | null;
+    building: string | null;
+    assignedEmployeeID: string | null;
+    [key: string]: unknown; // added this index signature to match BaseRequest
+}
 
 export function PrescriptionPage() {
-    const [prescription, setPrescription] = useState([
+    const [prescription, setPrescription] = useState<PrescriptionRequest[]>([
         {
             prescriptionID: null,
             employeeID: null,
@@ -21,16 +48,15 @@ export function PrescriptionPage() {
             refills: null,
             additionalInstructions: null,
             status: null,
-        },
-    ]);
+            building: null,
+            assignedEmployeeID: null,
+        }]);
 
-    function displayTable() {
-        useEffect(() => {
-            retrieveFromDatabase();
-        }, []);
-    }
+    const filtering = useRequestFilters(prescription);
 
-    displayTable();
+    useEffect(() => {
+        retrieveFromDatabase();
+    }, []);
 
     async function retrieveFromDatabase() {
         try {
@@ -43,81 +69,63 @@ export function PrescriptionPage() {
         }
     }
 
-    return (
-        <div>
+    const columns = [
+        {field: 'employeeID', header: 'Employee', sortable: true},
+        {field: 'drugName', header: 'Medication', sortable: true},
+        {field: 'building', header: 'Location', sortable: true},
+        {field: 'department', header: 'Department', sortable: true},
+        {field: 'patientID', header: 'Patient', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
+        {field: 'priority', header: 'Priority', sortable: true},
+        {field: 'status', header: 'Status', sortable: true},
+        {field: 'actions', header: 'Details', cellRenderer: (item: PrescriptionRequest) => (<RequestInfoButton type="Prescription" id={item.prescriptionID ? Number(item.prescriptionID) : null} />)}
+    ];
 
-            <Table >
-                <TableHeader >
-                    <TableRow >
-                        <TableHead className={"text-center"}>Employee Name</TableHead>
-                        <TableHead className={"text-center"}>Prescription Name</TableHead>
-                        <TableHead className={"text-center"}>Priority</TableHead>
-                        <TableHead className={"text-center"}>Department</TableHead>
-                        <TableHead className={"text-center"}>Patient ID</TableHead>
-                        <TableHead className={"text-center"}>Morning Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Midday Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Evening Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Bedtime Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Days Per Week</TableHead>
-                        <TableHead className={"text-center"}>Pill Count</TableHead>
-                        <TableHead className={"text-center"}>Refills</TableHead>
-                        <TableHead className={"text-center"}>Additional Instructions</TableHead>
-                        <TableHead className={"text-center"}>Status</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody className={'text-center'}>
-                    {prescription.map((row, index) => {
-                        return (
-                            <>
-                                <TableRow key={index} className={'border-t'}>
-                                    <TableCell >
-                                        {row.employeeID}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.drugName}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.priority}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.department}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.patientID}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.morningPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.middayPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.eveningPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.nightPillCount}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.days}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.numberOfPills}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.refills}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.additionalInstructions}
-                                    </TableCell>
-                                    <TableCell >
-                                        {row.status}
-                                    </TableCell>
-                                </TableRow>
-                            </>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </div>
+    return (
+        <>
+            {/*<RequestFilters*/}
+            {/*    options={filtering.filterOptions}*/}
+            {/*    filterState={filtering.filterState}*/}
+            {/*    onFilterChange={(options, state) => {*/}
+            {/*        filtering.setFilterOptions(options);*/}
+            {/*        filtering.setFilterState(state);*/}
+            {/*    }}*/}
+            {/*    onClearFilters={filtering.clearFilters}*/}
+            {/*/>*/}
+            <RequestFilters
+                options={filtering.filterOptions}
+                filterState={filtering.filterState}
+                onFilterChange={(options, state) => {
+                    filtering.setFilterOptions(options);
+                    filtering.setFilterState(state);
+                }}
+                onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
+            />
+
+            <SortableTable
+                columns={columns}
+                data={filtering.paginatedData}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                onSort={filtering.toggleSort}
+            />
+
+            <PaginationControls
+                currentPage={filtering.currentPage}
+                totalPages={filtering.totalPages}
+                itemsPerPage={filtering.itemsPerPage}
+                totalItems={filtering.filteredData.length}
+                onPageChange={(page) => filtering.setCurrentPage(page)}
+                onItemsPerPageChange={(count) => {
+                    filtering.setItemsPerPage(count);
+                    filtering.setCurrentPage(1);
+                }}
+            />
+        </>
     );
 }
+
+export default PrescriptionPage;

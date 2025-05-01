@@ -7,6 +7,13 @@ model Directory {
   receptionNode   Node?   @relation(fields: [receptionNodeID], references: [nodeID])
 }
 
+model CSVDatabase {
+  id          Int    @id @default(autoincrement())
+  name        String
+  floorNumber Int
+  building    String
+}
+
 model Node {
   nodeID    String @id
   nodeType  String
@@ -31,6 +38,7 @@ model Edge {
   fromY    Float?
   toX      Float?
   toY      Float?
+  weight   Int?
   fromNode Node   @relation("fromNode", fields: [fromID], references: [nodeID], onDelete: Cascade)
   toNode   Node   @relation("toNode", fields: [toID], references: [nodeID], onDelete: Cascade)
 }
@@ -45,5 +53,5 @@ model Department {
 
 model Algorithm {
   id   Int    @id @default(autoincrement())
-  algo String
+  algo String @default("bfs")
 }

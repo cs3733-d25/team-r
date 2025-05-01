@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Button } from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input.tsx"
 import {Alert, AlertDescription} from "@/components/ui/alert.tsx";
+import { TourAlertDialog, useTour, TourStep } from '@/components/tour';
+import { TOUR_STEPS_IDS_CSV } from '@/lib/tour-constants.ts';
 
 export function CSVPage() {
     const [csvfile, setFile] = useState<File | null>(null);
@@ -109,9 +111,37 @@ export function CSVPage() {
         }
     }
 
+    const steps: TourStep[] = [
+        { content: <div>On this page you can change the hospital directories for the website.</div>, selectorId: TOUR_STEPS_IDS_CSV.CLICK_START, position: "bottom" },
+        { content: <div>First, upload your csv file here. </div>, selectorId: TOUR_STEPS_IDS_CSV.CHOOSE_FILE, position: "bottom" },
+        { content: <div>Next, save it.</div>, selectorId: TOUR_STEPS_IDS_CSV.SAVE_FILE, position: "right" },
+        { content: <div>Finally, view the database to see the newly uploaded directory!</div>, selectorId: TOUR_STEPS_IDS_CSV.VIEW_DB_TABLE, position: "right" },
+        { content: <div>You can also download the current directory here.</div>, selectorId: TOUR_STEPS_IDS_CSV.EXPORT, position: "left" },
+        // Add more steps here
+    ];
+    const { setSteps } = useTour();
+    const [openTour, setOpenTour] = useState(false);
+
+    useEffect(() => {
+        setSteps(steps);
+
+        // check if user has already seen the tour
+        const hasSeenTour = localStorage.getItem('hasSeenCSVTour') === 'true';
+
+        if (!hasSeenTour) {
+            const timer = setTimeout(() => {
+                setOpenTour(true);
+                // mark that user has seen the tour
+                localStorage.setItem('hasSeenCSVTour', 'true');
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, [setSteps]);
+
     return (
         <div>
-            <h1 className={'bold text-3xl text-center'}>Import/Export CSV Files</h1>
+            <h1 className={'bold text-3xl text-center'} id={TOUR_STEPS_IDS_CSV.CLICK_START}>Import/Export CSV Files</h1>
             <br />
             <div>
                 <Label htmlFor="ImportCSV" className={"mb-1"}>Import CSV File: </Label>
@@ -121,26 +151,36 @@ export function CSVPage() {
                     accept=".csv"
                     onChange={handleFileChange}
                     className={"mb-2"}
+                    id={TOUR_STEPS_IDS_CSV.CHOOSE_FILE}
                 ></Input>
             </div>
             <div className={'float-right'}>
-                <Button variant="default" id="ExportCSV" name="ExportCSV" onClick={handleExport}>
+                <Button
+                    variant="default"
+                    // id="ExportCSV"
+                    name="ExportCSV"
+                    onClick={handleExport}
+                    id={TOUR_STEPS_IDS_CSV.EXPORT}
+                >
                     Export
                 </Button>
             </div>
             <div className={"mb-6"}>
                 <Button
                     variant="default"
-                    id="SaveCSV"
+                    //id="SaveCSV"
                     name="SaveCSV"
                     onClick={handleSave}
                     disabled={loading}
+                    id={TOUR_STEPS_IDS_CSV.SAVE_FILE}
                 >
                     {loading ? 'Saving...' : 'Save'}
                 </Button>
             </div>
             {feedback === 'success' && handleConfirmation()}
             {(feedback != 'success' && feedback != '') && handleError()}
+
+            <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
         </div>
     );
 }

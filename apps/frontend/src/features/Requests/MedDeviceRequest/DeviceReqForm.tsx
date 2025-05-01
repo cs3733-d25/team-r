@@ -4,20 +4,22 @@ import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import Dropdown from "@/components/Dropdowns/Department.tsx";
+import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import LocationDepartmentDropdown from "@/components/Dropdowns/Location-Department.tsx";
+import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
+import {useAuth0} from "@auth0/auth0-react";
 
 interface SubmittedDevice {
     device: string;
     room: string;
     priority: string;
     department: string;
+    building: string;
     comment: string;
-    //employeeName: string;
+    employeeName: string;
     //employeeID: string;
     status: string;
-
     timestamp: string;
 }
 
@@ -27,12 +29,35 @@ export const DeviceReqForm = () => {
         priority: '',
         room: '',
         department: '',
+        building: '',
         comment: '',
-        //employeeName: '',
+        employeeName: '',
         //employeeID: '',
         status: ''
     });
+    //use auth0 to get the current user data
+    const [userName, setUserName] = useState('');
+    const {user} = useAuth0();
 
+    //get the username from the database
+    useEffect(() => {
+        async function getEmployeeName(){
+            const userName = await axios.post('/api/login/userInfo',
+                {email: user!.email});
+            setUserName(userName.data.firstName);
+        }
+        getEmployeeName();
+    }, [user]);
+
+    //set the form data with the username from the database
+    useEffect(() => {
+        if (userName) {
+            setFormData(prev => ({
+                ...prev,
+                employeeName: userName
+            }));
+        }
+    }, [userName]);
     const [submitStatus, setSubmitStatus] = useState<{
         message: string;
         isError: boolean;
@@ -73,9 +98,10 @@ export const DeviceReqForm = () => {
                     room: '',
                     department: '',
                     comment: '',
-                    //employeeName: '',
+                    employeeName: '',
                     //employeeID: '',
-                    status: ''
+                    status: '',
+                    building: ''
                 });
             }
         } catch (error) {
@@ -103,9 +129,6 @@ export const DeviceReqForm = () => {
         }));
     };
 
-    // const handleChange3 = (value:string) => {
-    //     handleDropdownChange("device", value);
-    // }
 
     const handleDropdownChange = (name:string, value:string) => {
         setFormData(prev => ({
@@ -144,65 +167,31 @@ export const DeviceReqForm = () => {
                                         <span className="text-accent">*</span>
                                     </Label>
 
-                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
-
-                                {/* Employee Name */}
-                                {/*<div>*/}
-                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
-                                {/*        Employee Name*/}
-                                {/*        <span className="text-accent">*</span>*/}
-                                {/*    </Label>*/}
-                                {/*    <Input*/}
-                                {/*        type="text"*/}
-                                {/*        name="employeeName"*/}
-                                {/*        value={formData.employeeName}*/}
-                                {/*        onChange={handleChange}*/}
-                                {/*        placeholder="Enter your name"*/}
-                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
-                                {/*        required*/}
-                                {/*    />*/}
-                                {/*</div>*/}
-
-                                {/* Employee ID */}
-                                {/*<div>*/}
-                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
-                                {/*        Employee ID*/}
-                                {/*        <span className="text-accent">*</span>*/}
-                                {/*        <span className="text-xs text-secondary-foreground block">*/}
-                                {/*            ID must be a number.</span>*/}
-                                {/*    </Label>*/}
-                                {/*    <Input*/}
-                                {/*        type="text"*/}
-                                {/*        name="employeeID"*/}
-                                {/*        value={formData.employeeID}*/}
-                                {/*        onChange={handleChange}*/}
-                                {/*        placeholder="Enter employee ID"*/}
-                                {/*        className="w-full px-4 py-2 rounded-md border border-border bg-input"*/}
-                                {/*        required*/}
-                                {/*    />*/}
-                                {/*</div>*/}
-
+                                {/*assignEmployee*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Assigned Employee
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                    </Label>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
+                                </div>
                                 {/* Priority */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
                                         Priority Level
                                         <span className="text-accent">*</span>
-                                        {/*<span className="text-xs text-secondary-foreground block">*/}
-                                        {/*    EMERGENCY: Immediate attention required*/}
-                                        {/*    <br />*/}
-                                        {/*    HIGH: Within 1 hour*/}
-                                        {/*    <br />*/}
-                                        {/*    MEDIUM: Within 4 hours*/}
-                                        {/*    <br />*/}
-                                        {/*    LOW: Within 24 hours*/}
-                                        {/*</span>*/}
                                     </Label>
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
+
                                 {/* Location and Department */}
-                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
@@ -210,7 +199,7 @@ export const DeviceReqForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </Label>
-                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}
@@ -233,12 +222,13 @@ export const DeviceReqForm = () => {
                                     />
                                 </div>
                                 <br />
+                            </div>
 
-                                {/* Comments */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Comments
-                                        <span className="text-xs text-secondary-foreground block">
+                            {/* Comments */}
+                            <div>
+                                <Label className="block text-sm font-semibold text-foreground mb-2">
+                                    Comments
+                                    <span className="text-xs text-secondary-foreground block">
                                         Enter any additional comments.
                                     </span>
                                     </Label>
@@ -246,11 +236,10 @@ export const DeviceReqForm = () => {
                                         name="comment"
                                         value={formData.comment}
                                         onChange={handleChange2}
-                                        placeholder="Enter any additional comments."
+                                        placeholder="Include any additional comments or instructions."
                                         rows={4}
-                                        className="w-250 px-4 py-2 rounded-md border border-border bg-input"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                     />
-                                </div>
                             </div>
 
                             {/* Submit Button */}
@@ -269,11 +258,7 @@ export const DeviceReqForm = () => {
 
             </div>
             {submitStatus && submitStatus.isError && (
-                <Alert className="mb-4 p-4 rounded-md bg-destructive/40 border border-accent-foreground">
-                    <AlertDescription className={'text-foreground'}>
-                        {submitStatus.message}
-                    </AlertDescription>
-                </Alert>
+                <ErrorCard message={submitStatus.message} />
             )}
 
             {/* Confirmation Card */}
@@ -303,12 +288,8 @@ export const DeviceReqForm = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
                                 <span className="font-semibold">Employee Name:</span>{' '}
-                                {username}
+                                {submittedDevice.employeeName}
                             </div>
-                            {/*<div>*/}
-                            {/*    <span className="font-semibold">Employee ID:</span>{' '}*/}
-                            {/*    {submittedDevice.employeeID}*/}
-                            {/*</div>*/}
                             <div>
                                 <span className="font-semibold">Device:</span>{' '}
                                 {submittedDevice.device}
@@ -320,6 +301,10 @@ export const DeviceReqForm = () => {
                             <div>
                                 <span className="font-semibold">Priority:</span>{' '}
                                 {submittedDevice.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Building:</span>{' '}
+                                {submittedDevice.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Department:</span>{' '}

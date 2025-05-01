@@ -14,21 +14,22 @@ async function main() {
         // 3. Create user
         await client.user.create({
             data: {
-                id: 'John',
-                username: 'employee1@example.com',
-                password: 'password123',
-                userTypeID: 'Employee'
+                id: 'admin',
+                email: 'softengd25r@gmail.com',
+                firstName: 'admin',
+                lastName: 'adminlast',
+                userType: 'Admin'
             }
         });
 
         // 4. Create employee (after department is available)
         await client.employee.create({
             data: {
-                id: 'John',
-                firstName: 'John',
-                lastName: 'Doe',
+                id: 'admin',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 departmentId: 'Urology PP20-1',
-                role: 'Doctor',
+                role: 'Admin',
                 onShift: true,
             }
 
@@ -37,17 +38,18 @@ async function main() {
         //admin
         await client.user.create({
             data: {
-                id: 'admin',
-                username: 'admin',
-                password: 'admin',
-                userTypeID: 'Admin',
+                id: 'Staff',
+                email: 'staffd25r@gmail.com',
+                firstName: 'Staff',
+                lastName: 'Staff',
+                userType: 'Admin',
             }
         });
     await client.employee.create({
         data: {
-            id: 'admin',
-            firstName: 'admin',
-            lastName: 'Wong',
+            id: 'Staff',
+            firstName: 'Staff',
+            lastName: 'Staff',
             departmentId: 'Blood Draw/Phlebotomy PP20-1',
             role: 'Administrator',
             onShift: true,
@@ -58,9 +60,10 @@ async function main() {
     await client.user.create({
         data: {
             id: 'Nora',
-            username: 'Nora',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'noracleary@gmail.com',
+            userType: 'Employee',
+            firstName: 'Nora',
+            lastName: 'Cleary',
         }
     });
     await client.employee.create({
@@ -74,12 +77,34 @@ async function main() {
         }
     });
 
+    //nora admin
+    await client.user.create({
+        data: {
+            id: 'NoraAdmin',
+            email: 'nora@redroc.com',
+            userType: 'Admin',
+            firstName: 'Nora',
+            lastName: 'Cleary',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'NoraAdmin',
+            firstName: 'Nora',
+            lastName: 'Cleary',
+            departmentId: 'Pharmacy PP20-1',
+            role: 'Admin',
+            onShift: true,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Akaash',
-            username: 'Akaash',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'ajwalker@wpi.edu',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            userType: 'Employee',
         }
     });
     await client.employee.create({
@@ -92,15 +117,37 @@ async function main() {
             onShift: true,
         }
     });
+    //akaash admin
+    await client.user.create({
+        data: {
+            id: 'AkaashAdmin',
+            email: 'akaash@redroc.com',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'AkaashAdmin',
+            firstName: 'Akaash',
+            lastName: 'Walker',
+            departmentId: 'Radiology CH-1',
+            role: 'Admin',
+            onShift: true,
+        }
+    });
 
     await client.user.create({
         data: {
             id: 'Sarayu',
-            username: 'Sarayu',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'svijayanagaram@wpi.edu',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            userType: 'Employee',
         }
     });
+
     await client.employee.create({
         data: {
             id: 'Sarayu',
@@ -112,12 +159,35 @@ async function main() {
         }
     });
 
+    //sarayu admin
+    await client.user.create({
+        data: {
+            id: 'SarayuAdmin',
+            email: 'sarayu@redroc.com',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            userType: 'Admin',
+        }
+    });
+
+    await client.employee.create({
+        data: {
+            id: 'SarayuAdmin',
+            firstName: 'Sarayu',
+            lastName: 'Vijayanagaram',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Admin',
+            onShift: true,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Owen',
-            username: 'Owen',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'ormiller@wpi.edu',
+            firstName: 'Owen',
+            lastName: 'Miller',
+            userType: 'Employee',
         }
     });
     await client.employee.create({
@@ -131,13 +201,35 @@ async function main() {
         }
     });
 
+    //owen admin
+    await client.user.create({
+        data: {
+            id: 'OwenAdmin',
+            email: 'owen@redroc.com',
+            firstName: 'Owen',
+            lastName: 'Miller',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'OwenAdmin',
+            firstName: 'Owen',
+            lastName: 'Miller',
+            departmentId: 'Vein Care Services PP22-3',
+            role: 'Admin',
+            onShift: true,
+        }
+    });
+
     //Eployee not on shift - Brian, Riley, Daksh
     await client.user.create({
         data: {
             id: 'Brian',
-            username: 'Brian',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'brian@wpi.edu',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            userType: 'Employee',
         }
     });
     await client.employee.create({
@@ -151,12 +243,34 @@ async function main() {
         }
     });
 
+    //brian - admin
+    await client.user.create({
+        data: {
+            id: 'BrianAdmin',
+            email: 'brian@redroc.com',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'BrianAdmin',
+            firstName: 'Brian',
+            lastName: 'Grande',
+            departmentId: 'Primary Care PP22-4',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Riley',
-            username: 'Riley',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'rmeyers@wpi.edu',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            userType: 'Employee',
         }
     });
     await client.employee.create({
@@ -170,12 +284,34 @@ async function main() {
         }
     });
 
+    //riley admin
+    await client.user.create({
+        data: {
+            id: 'RileyAdmin',
+            email: 'riley@redroc.com',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'RileyAdmin',
+            firstName: 'Riley',
+            lastName: 'Meyers',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
     await client.user.create({
         data: {
             id: 'Daksh',
-            username: 'Daksh',
-            password: '1',
-            userTypeID: 'Employee',
+            email: 'dgajaria@wpi.edu',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            userType: 'Employee',
         }
     });
     await client.employee.create({
@@ -189,15 +325,37 @@ async function main() {
         }
     });
 
+    //daksh admin
+    await client.user.create({
+        data: {
+            id: 'DakshAdmin',
+            email: 'daksh@redroc.com',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'DakshAdmin',
+            firstName: 'Daksh',
+            lastName: 'Gajaria',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
+        }
+    });
+
 
 
     //Patient
     await client.user.create({
         data: {
             id: 'Josh',
-            username: 'Josh',
-            password: '1',
-            userTypeID: 'Patient',
+            email: 'jmgifford@wpi.edu',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            userType: 'Patient',
         }
     });
     await client.patient.create({
@@ -207,16 +365,38 @@ async function main() {
             lastName: 'Gifford',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'John'
+            assignedDoctorId: 'Akaash'
+        }
+    });
+
+    //josh admin
+    await client.user.create({
+        data: {
+            id: 'JoshAdmin',
+            email: 'josh@redroc.com',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'JoshAdmin',
+            firstName: 'Josh',
+            lastName: 'Gifford',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
         }
     });
 
     await client.user.create({
         data: {
             id: 'Alex',
-            username: 'Alex',
-            password: '1',
-            userTypeID: 'Patient',
+            email: 'amlowczyk@wpi.edu',
+            firstName: 'Alex',
+            lastName: 'lowczyk',
+            userType: 'Patient',
         }
     });
     await client.patient.create({
@@ -226,16 +406,38 @@ async function main() {
             lastName: 'Lowczyk',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'John'
+            assignedDoctorId: 'Akaash'
+        }
+    });
+
+    //alex admin
+    await client.user.create({
+        data: {
+            id: 'AlexAdmin',
+            email: 'alex@redroc.com',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'AlexAdmin',
+            firstName: 'Alex',
+            lastName: 'Lowczyk',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
         }
     });
 
     await client.user.create({
         data: {
             id: 'Keagan',
-            username: 'Keagan',
-            password: '1',
-            userTypeID: 'Patient',
+            email: 'kjhitt@wpi.edu',
+            firstName: 'Keagan',
+            lastName: 'Hitt',
+            userType: 'Patient',
         }
     });
     await client.patient.create({
@@ -245,12 +447,332 @@ async function main() {
             lastName: 'Hitt',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'John'
+            assignedDoctorId: 'Owen'
+        }
+    });
+
+    //keagan admin
+    await client.user.create({
+        data: {
+            id: 'KeaganAdmin',
+            email: 'keagan@redroc.com',
+            firstName: 'Keagan',
+            lastName: 'Hitt',
+            userType: 'Admin',
+        }
+    });
+    await client.employee.create({
+        data: {
+            id: 'KeaganAdmin',
+            firstName: 'Keagan',
+            lastName: 'Hitt',
+            departmentId: 'Kidney (Renal) Medicine PP22-3',
+            role: 'Admin',
+            onShift: false,
         }
     });
 
 
-    console.log('Database seeded successfully!');
+    //Requests
+    await client.deviceRequest.create({
+        data: {
+            deviceType: 'X-Ray',
+            priority: 'High',
+            building: 'Healthcare Center (Chestnut Hill)',
+            room: '111',
+            department: "Endoscopy Center",
+            //requestTime:
+            comments: "Please hurry",
+            employeeID: 'Riley',
+            /*employeeName: */
+            status: 'Accepted',
+            assignedEmployeeID: 'Owen',
+
+        }
+    });
+    await client.deviceRequest.create({
+        data: {
+            deviceType: 'Syringe',
+            priority: 'Medium',
+            building: 'Faulkner Hospital',
+            room: '121',
+            department: "Blood Drawing Lab",
+            //requestTime:
+            comments: "Need it promptly",
+            employeeID: 'Daksh',
+            /*employeeName: */
+            status: 'In Progress',
+            assignedEmployeeID: 'Brian',
+        }
+    });
+    await client.deviceRequest.create({
+        data: {
+            deviceType: 'EKG Machine',
+            priority: 'High',
+            building: 'Healthcare Center (20 Patriot Pl.)',
+            room: '125',
+            department: "Urgent Care Center",
+            //requestTime:
+            comments: "Don't waste time on this",
+            employeeID: 'Akaash',
+            /*employeeName: */
+            status: 'Accepted',
+            assignedEmployeeID: 'Owen',
+
+        }
+    });
+
+
+    await client.pharmacyRequest.create({
+        data: {
+            employeeID: 'Nora',
+            /*employeeName: */
+            priority: 'Medium',
+            building: 'Healthcare Center (22 Patriot Pl.)',
+            department: "Allergy",
+            patientID: 'Josh',
+            // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
+            drugName: 'Zantac',
+            morningPillCount: 1,
+            middayPillCount: 0,
+            eveningPillCount: 0,
+            nightPillCount: 0,
+            days: 7,
+            numberOfPills: 1,
+            refills: 2,
+            additionalInstructions: 'Take by mouth',
+            status: 'In Progress',
+            assignedEmployeeID: 'Brian'
+        },
+    });
+    await client.pharmacyRequest.create({
+        data: {
+            employeeID: 'Brian',
+            /*employeeName: */
+            priority: 'Low',
+            building: 'Faulkner Hospital',
+            department: "Cardiac Rehab",
+            patientID: 'Keagan',
+            // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
+            drugName: 'Tylenol',
+            morningPillCount: 0,
+            middayPillCount: 0,
+            eveningPillCount: 1,
+            nightPillCount: 0,
+            days: 3,
+            numberOfPills: 3,
+            refills: 0,
+            additionalInstructions: 'Take by mouth',
+            status: 'Complete',
+            assignedEmployeeID: 'Sarayu'
+        },
+    });
+    await client.pharmacyRequest.create({
+        data: {
+            employeeID: 'Sarayu',
+            /*employeeName: */
+            priority: 'High',
+            building: 'Faulkner Hospital',
+            department: "Foot and Ankle Center",
+            patientID: 'Alex',
+            // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
+            drugName: 'Acetaminophen',
+            morningPillCount: 1,
+            middayPillCount: 0,
+            eveningPillCount: 1,
+            nightPillCount: 0,
+            days: 4,
+            numberOfPills: 5,
+            refills: 1,
+            additionalInstructions: 'Take by mouth',
+            status: 'In Progress',
+            assignedEmployeeID: 'Daksh'
+        },
+    });
+
+
+    await client.patientRequest.create({
+        data: {
+            patientID: 'Alex',
+            priority: 'Low',
+            building: 'Faulkner Hospital',
+            department: 'Blood Drawing Lab',
+            status: 'Completed',
+            employeeID: 'Akaash',
+            /*employeeName: */
+            request: 'Speak to a doctor',
+            comment: 'I would like to donate blood',
+            assignedEmployeeID: 'Riley',
+        },
+    });
+    await client.patientRequest.create({
+        data: {
+            patientID: 'Josh',
+            priority: 'Medium',
+            department: 'ENT',
+            building: 'Healthcare Center (20 Patriot Pl.)',
+            status: 'Pending',
+            employeeID: 'Riley',
+            /*employeeName: */
+            request: 'Room Maintenance',
+            comment: 'I want a clean room',
+            assignedEmployeeID: 'Akaash',
+        },
+    });
+    await client.patientRequest.create({
+        data: {
+            patientID: 'Keagan',
+            priority: 'Low',
+            department: 'Community Room',
+            building: 'Healthcare Center (22 Patriot Pl.)',
+            status: 'Canceled',
+            employeeID: 'Daksh',
+            /*employeeName: */
+            request: 'Food',
+            comment: 'Hungry patient',
+            assignedEmployeeID: 'Nora',
+
+        },
+    });
+
+
+    await client.transportRequest.create({
+        data: {
+            employeeID: 'Nora',
+            /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
+            patientID: 'Keagan',
+            transportationType: 'Helicopter',
+            currentBuilding: 'Healthcare Center (22 Patriot Pl.)',
+            desiredBuilding: 'Healthcare Center (Chestnut Hill)',
+            priority: 'High',
+            department: 'Primary Care',
+            comments: 'Patient needs quick ride',
+            status: 'Pending',
+            assignedEmployeeID: 'Owen',
+            //user: { connect: { id: request.userID } }, // connect to whatever
+        },
+    });
+    await client.transportRequest.create({
+        data: {
+            employeeID: 'Sarayu',
+            /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
+            patientID: 'Josh',
+            transportationType: 'Non-Emergency Ambulance',
+            currentBuilding: 'Healthcare Center (20 Patriot Pl.)',
+            desiredBuilding: 'Faulkner Hospital',
+            priority: 'Low',
+            department: 'Radiology',
+            comments: 'Patient needs ride soon',
+            status: 'Accepted',
+            assignedEmployeeID: 'Daksh',
+            //user: { connect: { id: request.userID } }, // connect to whatever
+        },
+    });
+    await client.transportRequest.create({
+        data: {
+            employeeID: 'Brian',
+            /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
+            patientID: 'Alex',
+            transportationType: 'Emergency Ambulance',
+            currentBuilding: 'Faulkner Hospital',
+            desiredBuilding: 'Healthcare Center (Chestnut Hill)',
+            priority: 'High',
+            department: 'Plastic Surgery',
+            comments: 'Important transport required',
+            status: 'Pending',
+            assignedEmployeeID: 'Owen',
+            //user: { connect: { id: request.userID } }, // connect to whatever
+        },
+    });
+
+    await client.sanitationRequest.create({
+        data: {
+            employeeID: 'Owen',
+            sanitationType: 'Spill cleanup',
+            priority: 'Low',
+            department: 'Physiatry',
+            building: 'Healthcare Center (20 Patriot Pl.)',
+            roomNumber: '143',
+            comments: 'Milk Spill',
+            status: 'Canceled',
+            assignedEmployeeID: 'Nora',
+        },
+    });
+    await client.sanitationRequest.create({
+        data: {
+            employeeID: 'Sarayu',
+            sanitationType: 'Biohazard',
+            priority: 'Urgent',
+            department: 'Center for Pain Medicine',
+            building: 'Healthcare Center (Chestnut Hill)',
+            roomNumber: '130',
+            comments: 'Mix of spilled medicines',
+            status: 'Completed',
+            assignedEmployeeID: 'Owen',
+        },
+    });
+    await client.sanitationRequest.create({
+        data: {
+            employeeID: 'Owen',
+            sanitationType: 'General cleaning',
+            priority: 'Medium',
+            department: 'Neurosurgery',
+            building: 'Healthcare Center (22 Patriot Pl.)',
+            roomNumber: '143',
+            comments: 'Clean the bathroom',
+            status: 'Accepted',
+            assignedEmployeeID: 'Akaash',
+        },
+    });
+
+    //translation request
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Brian',
+            language: 'American Sign Language',
+            building: 'Healthcare Center (22 Patriot Pl.)',
+            department: 'Primary Care',
+            roomNumber: 130,
+            status: 'Pending',
+            priority: 'Medium',
+            comments: 'N/A',
+            assignedEmployeeID: 'Nora'
+        }
+    });
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Daksh',
+            language: 'Mandarin',
+            building: 'Healthcare Center (Chestnut Hill)',
+            department:  "Endoscopy Center",
+            roomNumber: 20,
+            status: 'Canceled',
+            priority: 'High',
+            comments: 'Patient needs written instructions in mandarin.',
+            assignedEmployeeID: 'Riley',
+        }
+    });
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Riley',
+            language: 'Polish',
+            building: 'Healthcare Center (Chestnut Hill)',
+            department:  "Endoscopy Center",
+            roomNumber: 120,
+            status: 'Accepted',
+            priority: 'Low',
+            comments: 'N/A',
+            assignedEmployeeID: 'Sarayu',
+        }
+    });
+
+    console.log('Users and Requests seeded successfully!');
+
+    await client.algorithm.create({
+        data: {
+            algo: 'bfs',
+        }
+    })
 }
 
 main()

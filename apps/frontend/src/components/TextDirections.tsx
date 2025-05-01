@@ -1,7 +1,8 @@
 import { Label } from '@/components/ui/label.tsx';
-import {VolumeUp} from 'react-bootstrap-icons';
+import {VolumeMute, VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
-import Speech from 'react-speech';
+import { Arrow90degLeft, Arrow90degRight, ArrowUp, ArrowDownUp } from 'react-bootstrap-icons';
+import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
 interface TextDirectionsProps {
     steps: string[];
@@ -42,6 +43,26 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
         }
     };
 
+    const getDirectionIcon = (text:string)=>{
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes('left')) {
+            return <Arrow90degLeft className="w-5 h-5" />;
+        }
+        if (lowerText.includes('right')) {
+            return <Arrow90degRight className="w-5 h-5" />;
+        }
+        if (lowerText.includes('straight')) {
+            return <ArrowUp className="w-5 h-5" />;
+        }
+        if (lowerText.includes('up') || lowerText.includes('down')) {
+            return <ArrowDownUp className="w-5 h-5" />;
+        }
+        else{
+            return null;
+        }
+    };
+
+
     return (
         steps.length > 0 && (
         <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
@@ -52,16 +73,29 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                             : "Read directions aloud:"
                         }
                     </Label>
-                <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
+                {displayInfo(
+                    speaking ? (
+                        <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
+                    ) : (
+                        <VolumeMute className={'text-3xl text-left'} onClick={handleTTS} />
+                    ),
+                    "Click on this button to toggle text-to-speech directions."
+                )}
             </div>
             <ol className="list-decimal list-inside space-y-2">
-                {steps.map((step, index) => (
-                    <li
-                        key={index}
-                        className="text-sm font-trade border-b border-gray-100 pb-2 last:border-0"
-                        dangerouslySetInnerHTML={{ __html: step }}
-                    />
-                ))}
+                {steps.map((step, index) => {
+                    const icon = getDirectionIcon(step.replace(/<[^>]+>/g, ''));
+
+                    return (
+                        <li
+                            key={index}
+                            className="flex items-center gap-2 text-sm font-trade border-b border-gray-100 pb-2 last:border-0"
+                        >
+                            {icon && <span className="flex-shrink-0">{icon}</span>}
+                            <span dangerouslySetInnerHTML={{ __html: step }} />
+                        </li>
+                    );
+                })}
             </ol>
         </div>)
     );

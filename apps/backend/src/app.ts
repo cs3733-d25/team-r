@@ -3,20 +3,20 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
-
-import healthcheckRouter from "./routes/healthcheck";
-import employeeRouter from "./routes/employee.ts";
+import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
+import employeeRouter from "./routes/userdata/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
-import assignedRouter from "./routes/assigned.ts";
-import csvRouter from "./routes/csv.ts";
-import loginRouter from "./routes/login.ts";
-import sanitationRouter from "./routes/sanitationreqs.ts";
-import algoRouter from "./routes/algoRouting.ts";
-import patientRequestRouter from "./routes/patientRequest.ts";
-import pharmacyRouter from "./routes/pharmacyreqs.ts";
-import transportRequestRouter from "./routes/transportreqs.ts";
-import deviceRequestRouter from "./routes/devicereqs.ts";
-import mapRouter from "./routes/mapData.ts";
+import assignedRouter from "./routes/uselessroutes/assigned.ts";
+import csvRouter from "./routes/csv/csv.ts";
+import loginRouter from "./routes/userdata/login.ts";
+import sanitationRouter from "./routes/servicereqs/sanitationreqs.ts";
+import algoRouter from "./routes/algos/algoRouting.ts";
+import patientRequestRouter from "./routes/servicereqs/patientRequest.ts";
+import pharmacyRouter from "./routes/servicereqs/pharmacyreqs.ts";
+import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
+import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
+import mapRouter from "./routes/maps/mapData.ts";
+import translateRouter from "./routes/servicereqs/translatereq.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -48,11 +48,14 @@ if (secret) {
       resave: false,
       saveUninitialized: false,
       cookie: {
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production',
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
     }),
   );
 }
+
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
 // TODO: refactor to put all of the requests in a single router
@@ -69,6 +72,7 @@ app.use(API_ROUTES.PHARMACY, pharmacyRouter);
 app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
+app.use(API_ROUTES.TRANSLATE, translateRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
