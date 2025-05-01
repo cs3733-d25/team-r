@@ -1,4 +1,3 @@
-import prismaClient from "../../bin/prisma-client.ts";
 import { PriorityQueue } from "../datastructures/dataStructures.ts";
 import router, { Node } from "../maps/mapData.ts";
 import { Graph } from "../maps/Graph.ts";
