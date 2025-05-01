@@ -57,6 +57,18 @@ export function VoiceControl({
         ["Sadowsky Conference Room", "sadowski conference room"],
         ["Endocrinology/Diabetes/Hemotology", "endocrinology/diabetes/hematology"],
         ["Orthopaedic Associates", "orthopedic associates"],
+        ["Ambulatory Radiology (X-ray & CT scan)", "ambulatory radiology x-ray and ct scan"],
+        ["Breast Imaging, Lee Bell Center", "breast imaging lee bell center"],
+        ["Brigham Circle Medical Associates (BCMA)", "brigham circle medical associates"],
+        ["Center for Weight Management & Metabolic Surgery", "center for weight management and metabolic surgery"],
+        ["Endocrine – Diabetes", "endocrine diabetes"],
+        ["Gastroenterology & Hepatology", "gastroenterology and hepatology"],
+        ["Genetics & Genomics Medicine", "genetics and genomics medicine"],
+        ["Chest Diseases, Center for", "chest diseases center for"],
+        ["Ear, Nose and Throat (ENT)", "ear nose and throat"],
+        ["Echocardiography Lab (ECHO)", "echocardiography lab"],
+        ["Plastic & Reconstructive Surgery", "plastic and reconstructive surgery"],
+        ["Weiner Center for Pre-Op Evaluation", "wiener center for pre-op evaluation"],
     ])
 
     /**
