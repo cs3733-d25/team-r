@@ -433,7 +433,7 @@ async function main() {
 
     await client.user.create({
         data: {
-            id: 'Keagan',
+            id: 'Roboto',
             email: 'kjhitt@wpi.edu',
             firstName: 'Keagan',
             lastName: 'Hitt',
@@ -442,7 +442,7 @@ async function main() {
     });
     await client.patient.create({
         data: {
-            id: 'Keagan',
+            id: 'Roboto',
             firstName: 'Keagan',
             lastName: 'Hitt',
             dateOfBirth: new Date('1990-05-15'),
@@ -456,14 +456,14 @@ async function main() {
         data: {
             id: 'KeaganAdmin',
             email: 'keagan@redroc.com',
-            firstName: 'Keagan',
+            firstName: 'Roboto',
             lastName: 'Hitt',
             userType: 'Admin',
         }
     });
     await client.employee.create({
         data: {
-            id: 'KeaganAdmin',
+            id: 'Roboto',
             firstName: 'Keagan',
             lastName: 'Hitt',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
@@ -552,7 +552,7 @@ async function main() {
             priority: 'Low',
             building: 'Faulkner Hospital',
             department: "Cardiac Rehab",
-            patientID: 'Keagan',
+            patientID: 'Roboto',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
             drugName: 'Tylenol',
             morningPillCount: 0,
@@ -621,7 +621,7 @@ async function main() {
     });
     await client.patientRequest.create({
         data: {
-            patientID: 'Keagan',
+            patientID: 'Roboto',
             priority: 'Low',
             department: 'Community Room',
             building: 'Healthcare Center (22 Patriot Pl.)',
@@ -640,7 +640,7 @@ async function main() {
         data: {
             employeeID: 'Nora',
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
-            patientID: 'Keagan',
+            patientID: 'Roboto',
             transportationType: 'Helicopter',
             currentBuilding: 'Healthcare Center (22 Patriot Pl.)',
             desiredBuilding: 'Healthcare Center (Chestnut Hill)',
