@@ -375,6 +375,17 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id="accessibleRoute"
+                                checked={accessibleRoute}
+                                onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
+                            />
+                            <Label htmlFor="accessibleRoute" className="text-sm font-medium">
+                                Show Accessible Route
+                            </Label>
+                        </div>
+
                         {/* Trigger pathfinding */}
                         <Button className="w-full" onClick={handleGetDirections}>
                             Get Directions
