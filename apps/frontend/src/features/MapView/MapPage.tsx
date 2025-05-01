@@ -21,7 +21,8 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
-import { Node } from '../../../../backend/src/routes/maps/mapData.ts'
+import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
+import { displayInfo } from '@/features/MapView/DisplayInformation.tsx';
 
 declare global {
     interface Window {
@@ -65,11 +66,22 @@ export function MapPage() {
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
-                'Healthcare Center (20 Patriot Pl.)': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'Healthcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Healthcare Center (20 Patriot Pl.)': [
+                    'PATRIOT_PLACE_20',
+                    'Patriot Place 20',
+                    '20 Patriot',
+                ],
+                'Healthcare Center (22 Patriot Pl.)': [
+                    'PATRIOT_PLACE_22',
+                    'Patriot Place 22',
+                    '22 Patriot',
+                ],
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
-                'Main Campus Hospital (75 Francis St.)': ['WOMENS', 'Main Campus Hospital (75 Francis St.)'],
+                'Main Campus Hospital (75 Francis St.)': [
+                    'WOMENS',
+                    'Main Campus Hospital (75 Francis St.)',
+                ],
             };
 
             // keep the parking lot if its name matches the one of the selected building
@@ -82,13 +94,11 @@ export function MapPage() {
 
     //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log("parking lot: ", selectedParkinglot);
-            console.log("department lot: ", selectedDepartment);
-        } catch {
-
-        }
+            console.log('parking lot: ', selectedParkinglot);
+            console.log('department lot: ', selectedDepartment);
+        } catch {}
     };
 
     // Main “Get Directions” handler
@@ -115,15 +125,11 @@ export function MapPage() {
             console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
-            const nodes = await fetchPath(
-                selectedParkinglot,
-                receptionNodeID,
-                algorithm
-            );
+            const nodes = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
             // 2) fetch their full data, reverse to start→end
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
-            nodes.forEach(node => {
+            nodes.forEach((node) => {
                 if (!pathByFloor[node.floor]) {
                     pathByFloor[node.floor] = [];
                 }
@@ -164,7 +170,7 @@ export function MapPage() {
             const dx = node2.xcoord - node1.xcoord;
             const dy = node2.ycoord - node1.ycoord;
             return Math.sqrt(dx * dx + dy * dy);
-        }
+        };
 
         /**
          * Converts a distance in units (coordinates) to feet
@@ -173,8 +179,8 @@ export function MapPage() {
         const convertDistanceToFeet = (distance: number) => {
             // conversion factor for units to feet
             // calculated by using the distance from the faulkner parking lot to entrance (309 units = 231 feet)
-            return distance * 0.7475
-        }
+            return distance * 0.7475;
+        };
 
         try {
             if (nodes.length < 2) {
@@ -199,10 +205,14 @@ export function MapPage() {
                 const prevNode = nodes[i - 1];
                 const currentNode = nodes[i];
                 const nextNode = nodes[i + 1];
-                const distance = Math.round(convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode)));
+                const distance = Math.round(
+                    convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode))
+                );
 
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`);
+                enhancedDirections.push(
+                    `In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`
+                );
             }
 
             // Final arrival
@@ -226,12 +236,12 @@ export function MapPage() {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
-            dy: current.ycoord - prev.ycoord
+            dy: current.ycoord - prev.ycoord,
         };
 
         const currentVector = {
             dx: next.xcoord - current.xcoord,
-            dy: next.ycoord - current.ycoord
+            dy: next.ycoord - current.ycoord,
         };
 
         // Calculate angle between vectors using atan2
@@ -239,7 +249,7 @@ export function MapPage() {
         const angle2 = Math.atan2(currentVector.dy, currentVector.dx);
 
         // Calculate angle difference in degrees
-        let angleDiff = (angle2 - angle1) * 180 / Math.PI;
+        let angleDiff = ((angle2 - angle1) * 180) / Math.PI;
 
         // Normalize to -180 to 180 range
         if (angleDiff > 180) angleDiff -= 360;
@@ -247,11 +257,11 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return "turn right";
+            return 'turn right';
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return "turn left";
+            return 'turn left';
         } else {
-            return "continue straight";
+            return 'continue straight';
         }
     };
 
@@ -261,7 +271,6 @@ export function MapPage() {
      * @param nodes - the string of node objects (path)
      */
     const floorsTraveled = async (nodes: Node[]) => {
-
         // get the floors of the nodes
         const floors = nodes.map((node) => node.floor);
         // remove floor 1 (user is already on that floor)
@@ -295,16 +304,19 @@ export function MapPage() {
                     <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="font-bold text-xl">Selected Location</Label>
-                            <VoiceControl
-                                selectedBuilding={buildingIdentifier}
-                                onParkingLotSelected={setSelectedParkinglot}
-                                onDepartmentSelected={setSelectedDepartment}
-                                onSelectionComplete={(lotId, deptId) => {
-                                    setSelectedParkinglot(lotId);
-                                    setSelectedDepartment(deptId);
-                                    handleGetDirections();
-                                }}
-                            />
+                            {displayInfo(
+                                <VoiceControl
+                                    selectedBuilding={buildingIdentifier}
+                                    onParkingLotSelected={setSelectedParkinglot}
+                                    onDepartmentSelected={setSelectedDepartment}
+                                    onSelectionComplete={(lotId, deptId) => {
+                                        setSelectedParkinglot(lotId);
+                                        setSelectedDepartment(deptId);
+                                        handleGetDirections();
+                                    }}
+                                />,
+                                'Click on this icon to use voice control to find a department. Say something with the format: "Take me from (Parking Lot Name) to (Department Name)".'
+                            )}
                         </div>
                         <div className={'font-bold text-secondary text-lg'}>
                             {getShortLocationName(selectedLocation)}
@@ -313,56 +325,73 @@ export function MapPage() {
 
                     <div className="space-y-4">
                         <Label>
-                            Select a parking lot and department to get directions to the appropriate check-in desk.
+                            Select a parking lot and department to get directions to the appropriate
+                            check-in desk.
                         </Label>
                         {/* Parking lot picker */}
-                        <Select
-                            value={selectedParkinglot}
-                            onValueChange={setSelectedParkinglot}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Parking Lot" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {filterParkingLots.map((lot) => (
-                                        <SelectItem key={lot.nodeID} value={lot.nodeID}>
-                                            {lot.shortName}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                        <div>
+                        {displayInfo(
+                            <Select
+                                value={selectedParkinglot}
+                                onValueChange={setSelectedParkinglot}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Parking Lot" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {filterParkingLots.map((lot) => (
+                                            <SelectItem key={lot.nodeID} value={lot.nodeID}>
+                                                {lot.shortName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>,
+                            'Select a parking lot as a starting point.'
+                        )}
+                        </div>
 
                         {/* Department picker */}
-                        <Select
-                            value={selectedDepartment}
-                            onValueChange={setSelectedDepartment}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Department" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {departments.map((dept) => (
-                                        <SelectItem key={dept.id} value={dept.id}>
-                                            {dept.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                        <div>
+                        {displayInfo(
+                            <Select
+                                value={selectedDepartment}
+                                onValueChange={setSelectedDepartment}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Department" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {departments.map((dept) => (
+                                            <SelectItem key={dept.id} value={dept.id}>
+                                                {dept.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>,
+                            'Select a department as a destination.'
+                        )}
+                        </div>
 
                         {/* Trigger pathfinding */}
-                        <Button className="w-full" onClick={handleGetDirections}>
-                            Get Directions
-                        </Button>
+                        <div>
+                            {displayInfo(
+                                <Button className="w-full" onClick={handleGetDirections}>
+                                    Get Directions
+                                </Button>,
+                                "Click this button to get directions."
+                            )}
+                        </div>
                     </div>
 
                     {/* Floor navigation */}
                     <div className="mt-4 pt-4 border-t">
                         <Label className="font-bold mb-2">Floors</Label>
                         {availableFloors.map((floor) => (
+                            displayInfo(
                             <Button
                                 key={floor}
                                 variant={currentFloor === floor || flashingFloors?.includes(floor) ? 'secondary' : 'unselected'}
@@ -380,15 +409,14 @@ export function MapPage() {
                                 }}
                             >
                                 Floor {floor}
-                            </Button>
+                            </Button>,
+                            `Click on this button to view Floor ${floor}.`)
                         ))}
                     </div>
                 </div>
                 {showDirections && (
                     <div>
-                        <TextDirections
-                            steps={directionStrings}
-                        />
+                        <TextDirections steps={directionStrings} />
                     </div>
                 )}
             </div>
