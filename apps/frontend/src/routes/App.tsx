@@ -105,7 +105,7 @@ function App() {
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
                 { path: 'translation', element: <Translate /> },
-                { path: 'requests', element: <RequestPage /> }
+                { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> }
             ],
         },
     ]);
