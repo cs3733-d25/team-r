@@ -40,7 +40,7 @@ router.post("/", async function (req: Request, res: Response) {
     numberOfPills,
     refills,
     additionalInstructions,
-      assignedEmployee
+    assignedEmployee,
   } = req.body;
   try {
     await client.pharmacyRequest.create({

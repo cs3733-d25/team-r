@@ -29,7 +29,7 @@ router.post("/", async function (req: Request, res: Response) {
     language,
     roomNumber,
     employeeName,
-      assignedEmployee,
+    assignedEmployee,
   } = req.body;
 
   try {

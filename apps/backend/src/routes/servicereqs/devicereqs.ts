@@ -31,7 +31,7 @@ router.post("/", async function (req: Request, res: Response) {
     device,
     room,
     employeeName,
-      assignedEmployee,
+    assignedEmployee,
   } = req.body;
 
   try {
