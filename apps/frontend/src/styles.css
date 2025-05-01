@@ -197,19 +197,19 @@
     --popover: #1e293b;
     --popover-foreground: #f1f5f9;
 
-    --primary: #3b82f6; /* a nice vivid blue */
+    --primary: #6C8EB1;
     --primary-foreground: #ffffff;
 
-    --secondary: #64748b; /* muted slate */
+    --secondary: #64748b;
     --secondary-foreground: #f1f5f9;
 
     --muted: #475569;
     --muted-foreground: #cbd5e1;
 
-    --accent: #2563eb; /* deeper blue accent */
+    --accent: #30426A;
     --accent-foreground: #ffffff;
 
-    --destructive: #ef4444; /* red for errors */
+    --destructive: #ef4444;
     --border: #334155;
     --input: #334155;
     --ring: #3b82f6;
