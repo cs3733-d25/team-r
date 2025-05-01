@@ -207,8 +207,8 @@ async function main() {
             {name: 'Outpatient Infusion Center', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: 'Primary Care Physicians', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: 'Surgical Specialties', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
-            {name: 'X-Ray', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: 'X-Ray Waiting Room', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
+            {name: 'X-Ray', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
         ]
 
 
