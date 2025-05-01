@@ -14,7 +14,7 @@ import { TourAlertDialog, useTour, TourStep } from '@/components/tour';
 import { TOUR_STEPS_IDS_SERVICE_REQS } from '@/lib/tour-constants.ts';
 
 export function RequestPage() {
-    const [activeTab, setActiveTab] = useState('overview');
+    const [activeTab, setActiveTab] = useState('overview'); // Default to Overview
     const navigate = useNavigate();
     const { setSteps } = useTour();
     const [openTour, setOpenTour] = useState(false);
@@ -73,6 +73,7 @@ export function RequestPage() {
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="mb-0 border-b border-gray-200 shadow-none" id={TOUR_STEPS_IDS_SERVICE_REQS.FILTER_REQUEST}>
                         <TabsTrigger value="overview">Overview</TabsTrigger>
+                        <TabsTrigger value="all">All Requests</TabsTrigger>
                         {requestTypes.map((type) => (
                             <TabsTrigger key={type.tab} value={type.tab}>
                                 {type.name}
@@ -80,6 +81,7 @@ export function RequestPage() {
                         ))}
                     </TabsList>
 
+                    {/* Overview Tab Content - Default View */}
                     <TabsContent value="overview" className="space-y-6 -mt-px">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id={TOUR_STEPS_IDS_SERVICE_REQS.DASHBOARD}>
                             {requestTypes.map((type, index) => (
@@ -106,7 +108,12 @@ export function RequestPage() {
                         </div>
                     </TabsContent>
 
-                    {/* Request Type Tabs Content */}
+                    {/* All Requests Table */}
+                    <TabsContent value="all">
+                        <AllRequestsTable />
+                    </TabsContent>
+
+                    {/* Individual Service Tabs */}
                     <TabsContent value="medical-device">
                         <DeviceReqPage />
                     </TabsContent>
