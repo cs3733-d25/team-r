@@ -124,11 +124,19 @@ export function CSVPage() {
 
     useEffect(() => {
         setSteps(steps);
-        const timer = setTimeout(() => {
-            setOpenTour(true);
-        }, 100);
 
-        return () => clearTimeout(timer);
+        // check if user has already seen the tour
+        const hasSeenTour = localStorage.getItem('hasSeenCSVTour') === 'true';
+
+        if (!hasSeenTour) {
+            const timer = setTimeout(() => {
+                setOpenTour(true);
+                // mark that user has seen the tour
+                localStorage.setItem('hasSeenCSVTour', 'true');
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
     }, [setSteps]);
 
     return (
