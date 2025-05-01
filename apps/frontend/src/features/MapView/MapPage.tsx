@@ -294,9 +294,6 @@ export function MapPage() {
                     location={selectedLocation}
                     pathCoordinates={pathCoordinates}
                     pathByFloor={pathByFloor}
-                    // commented out because InternalMap.tsx no longer has this prop
-                    // Alex and Owen seem to indicate this is not needed? - Akaash
-                    // currentFloor={currentFloor}
                 />
 
                 {/* Sidebar controls */}
