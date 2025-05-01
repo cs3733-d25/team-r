@@ -725,6 +725,47 @@ async function main() {
         },
     });
 
+    //translation request
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Brian',
+            language: 'American Sign Language',
+            building: 'Healthcare Center (22 Patriot Pl.)',
+            department: 'Primary Care',
+            roomNumber: 130,
+            status: 'Pending',
+            priority: 'Medium',
+            comments: 'N/A',
+            assignedEmployeeID: 'Nora'
+        }
+    });
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Daksh',
+            language: 'Mandarin',
+            building: 'Healthcare Center (Chestnut Hill)',
+            department:  "Endoscopy Center",
+            roomNumber: 20,
+            status: 'Canceled',
+            priority: 'High',
+            comments: 'Patient needs written instructions in mandarin.',
+            assignedEmployeeID: 'Riley',
+        }
+    });
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Riley',
+            language: 'Polish',
+            building: 'Healthcare Center (Chestnut Hill)',
+            department:  "Endoscopy Center",
+            roomNumber: 120,
+            status: 'Accepted',
+            priority: 'Low',
+            comments: 'N/A',
+            assignedEmployeeID: 'Sarayu',
+        }
+    });
+
     console.log('Users and Requests seeded successfully!');
 
     await client.algorithm.create({

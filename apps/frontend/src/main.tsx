@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './routes/App.tsx';
 import './styles.css';
 import { Auth0Provider } from '@auth0/auth0-react';
-import {BrowserRouter} from "react-router-dom";
 import { AppState } from '@auth0/auth0-react';
 
 //use import.meta.env not process.env when in frontend

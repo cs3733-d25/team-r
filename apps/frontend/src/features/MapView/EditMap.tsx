@@ -16,18 +16,8 @@ import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapVi
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TourAlertDialog, TourStep, useTour } from '@/components/tour';
 import { TOUR_STEP_IDS } from '@/lib/tour-constants.ts';
-import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group.tsx'
 
 interface EditMapProps {
     status?: string;
@@ -75,7 +65,7 @@ export function EditMap({ status }: EditMapProps) {
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
 
-    const steps = [
+    const steps: TourStep[] = [
         { content: <div>On this page you can add, edit, and delete map nodes for pathfinding.</div>, selectorId: TOUR_STEP_IDS.CLICK_START, position: "right" },
         { content: <div>First, select the node's location by clicking on the map. The coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
         { content: <div>Enter the name of the node here. Each node should be given a name so it can be tracked.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },

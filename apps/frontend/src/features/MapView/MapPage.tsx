@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Select,
     SelectContent,
@@ -21,7 +22,8 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
-import { Node } from '../../../../backend/src/routes/maps/mapData.ts'
+import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
+import { displayInfo } from '@/features/MapView/DisplayInformation.tsx';
 
 declare global {
     interface Window {
@@ -201,6 +203,17 @@ export function MapPage() {
                 const nextNode = nodes[i + 1];
                 const distance = Math.round(convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode)));
 
+                if (currentNode.floor !== prevNode.floor) {
+                    const goingUp = currentNode.floor > prevNode.floor;
+                    const direction = goingUp ? 'up' : 'down';
+
+                    if (currentNode.nodeType.toLowerCase().includes('stairs')) {
+                        enhancedDirections.push(`In ${distance} feet, go ${direction} the stairs to floor ${currentNode.floor}`);
+                    } else {
+                        enhancedDirections.push(`In ${distance} feet, go ${direction} to floor ${currentNode.floor}`);
+                    }
+                    continue;
+                }
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
                 enhancedDirections.push(`In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`);
             }
