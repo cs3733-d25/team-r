@@ -1,13 +1,12 @@
 // Full file with Settings link fixed and everything else untouched
 
-import React, { useEffect, useState} from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
-import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 
 interface NavBarProps {
