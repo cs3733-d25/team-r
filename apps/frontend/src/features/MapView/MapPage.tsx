@@ -385,7 +385,7 @@ export function MapPage() {
                                         //onCheckedChange={setAccessibleRoute}
                                     />
                                     <Label htmlFor="accessibleRoute" className="text-sm font-medium">
-                                        Accessible Route
+                                        Show Accessible Route
                                     </Label>
                                 </div>,
                                 "Enable this option to get routes that avoid stairs and are wheelchair accessible."
