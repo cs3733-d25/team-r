@@ -1,0 +1,21 @@
+meta {
+  name: Get Nodes by Field
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/api/map/nodes
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "fields":{
+      "nodeType": "Hallway",
+      "building": "Chestnut Hill",
+      "floor": 1
+    }
+  }
+}
