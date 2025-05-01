@@ -50,6 +50,7 @@ export function MapPage() {
     >([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1);
+    // the building name (e.g. "Healthcare Cetner (20 Patriot Pl.)")
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );

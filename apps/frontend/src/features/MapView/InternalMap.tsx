@@ -528,8 +528,6 @@ setEdgesOnActiveFloor(fullEdges)
                 console.log(nodesOnActiveFloor.length+" full nodes exist now in this state!");
                 // check if the layer exists for the building and floor we are in
                 const layer = getLayer(location.building, location.floor);
-                // console.log(activeLayerInfo.current);
-                console.log("layer:", layer);
                 if(layer) {
                     // adds edges to the layer
                     edgesOnActiveFloor.map((fullEdge) => {
