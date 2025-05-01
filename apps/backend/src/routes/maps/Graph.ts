@@ -64,4 +64,27 @@ export class Graph {
   public getNodePosition(id: string): { x: number; y: number } {
     return this.positions.get(id) ?? { x: 0, y: 0 };
   }
+
+  async filterAccessibleNodes(): Promise<void> {
+    const stairNodes = await client.node.findMany({
+      where: {
+        nodeType: {
+          contains: "STAIR",
+          mode: "insensitive",
+        },
+      },
+      select: {
+        nodeID: true,
+      },
+    });
+
+    const stairNodeIDs = stairNodes.map((node) => node.nodeID);
+
+    for (const stairId of stairNodeIDs) {
+      const neighbors = this.getNeighbors(stairId);
+      for (const neighbor of neighbors) {
+        this.setEdgeWeight(stairId, neighbor, 1000);
+      }
+    }
+  }
 }
