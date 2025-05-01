@@ -1,6 +1,9 @@
 import express, { Router, Request, Response } from "express";
 import { findPath } from "./algoSelection.ts";
 import client from "../../bin/prisma-client.ts";
+import { Graph } from "../maps/Graph.ts";
+import { BFS } from "./bfs.ts";
+import DFS from "./dfs.ts";
 import { AStar } from "./aStar.ts";
 
 const router: Router = express.Router();
@@ -99,7 +102,7 @@ router.post("/accessible-route", async function (req: Request, res: Response) {
     const graph = new Graph();
     await graph.loadGraph();
 
-    await graph.filterAccessibleEdges();
+    await graph.filterAccessibleNodes();
 
     let path;
     switch (algorithm) {
