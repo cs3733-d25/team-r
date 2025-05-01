@@ -16,8 +16,8 @@ async function main() {
             data: {
                 id: 'admin',
                 email: 'softengd25r@gmail.com',
-                firstName: 'Wilson',
-                lastName: 'Wong',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 userType: 'Admin'
             }
         });
@@ -26,8 +26,8 @@ async function main() {
         await client.employee.create({
             data: {
                 id: 'admin',
-                firstName: 'Wilson',
-                lastName: 'Wong',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 departmentId: 'Urology PP20-1',
                 role: 'Admin',
                 onShift: true,
@@ -435,7 +435,7 @@ async function main() {
         data: {
             id: 'Keagan',
             email: 'kjhitt@wpi.edu',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Patient',
         }
@@ -456,7 +456,7 @@ async function main() {
         data: {
             id: 'KeaganAdmin',
             email: 'keagan@redroc.com',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Admin',
         }

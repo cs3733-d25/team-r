@@ -24,19 +24,21 @@ export class Graph {
       const { fromID, toID } = edge;
 
       // initialize adjacency
-      if (!this.adjacencyList.has(fromID)) this.adjacencyList.set(fromID, new Set());
-      if (!this.adjacencyList.has(toID)) this.adjacencyList.set(toID,   new Set());
+      if (!this.adjacencyList.has(fromID))
+        this.adjacencyList.set(fromID, new Set());
+      if (!this.adjacencyList.has(toID))
+        this.adjacencyList.set(toID, new Set());
       this.adjacencyList.get(fromID)!.add(toID);
       this.adjacencyList.get(toID)!.add(fromID);
 
       // initialize weight maps
       if (!this.weightMap.has(fromID)) this.weightMap.set(fromID, new Map());
-      if (!this.weightMap.has(toID))   this.weightMap.set(toID,   new Map());
+      if (!this.weightMap.has(toID)) this.weightMap.set(toID, new Map());
 
       // compute Euclidean weight from stored positions
       const p1 = this.positions.get(fromID)!;
       const p2 = this.positions.get(toID)!;
-      const w  = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+      const w = Math.hypot(p1.x - p2.x, p1.y - p2.y);
 
       this.weightMap.get(fromID)!.set(toID, w);
       this.weightMap.get(toID)!.set(fromID, w);

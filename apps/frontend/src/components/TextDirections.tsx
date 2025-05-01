@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label.tsx';
 import {VolumeMute, VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
-import { Arrow90degLeft, Arrow90degRight, ArrowUp } from 'react-bootstrap-icons';
+import { Arrow90degLeft, Arrow90degRight, ArrowUp, ArrowDownUp } from 'react-bootstrap-icons';
 import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
 interface TextDirectionsProps {
@@ -53,6 +53,9 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
         }
         if (lowerText.includes('straight')) {
             return <ArrowUp className="w-5 h-5" />;
+        }
+        if (lowerText.includes('up') || lowerText.includes('down')) {
+            return <ArrowDownUp className="w-5 h-5" />;
         }
         else{
             return null;
