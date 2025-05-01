@@ -157,6 +157,7 @@ export function EditMap({ status }: EditMapProps) {
         // setCurrentBuilding(building);
     };
     const handleNodeDrag = (lat: number, lng: number, nodeID:string, nodeTypes:string) => {
+        setActiveTab("edit-node")
         setNodeID(nodeID)
         setEditNodeType(nodeTypes)
         console.log("Setting coordinates: x = ", lat, " y = ", lng);
