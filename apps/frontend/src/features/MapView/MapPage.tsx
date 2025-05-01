@@ -55,7 +55,7 @@ export function MapPage() {
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
-    const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
+    //const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
     const { parkingLots, departments } = useMapData(selectedBuilding);
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
