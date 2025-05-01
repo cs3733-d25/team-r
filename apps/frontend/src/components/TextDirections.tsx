@@ -2,7 +2,6 @@ import { Label } from '@/components/ui/label.tsx';
 import {VolumeMute, VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
 import { Arrow90degLeft, Arrow90degRight, ArrowUp } from 'react-bootstrap-icons';
-import Speech from 'react-speech';
 import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
 interface TextDirectionsProps {
@@ -71,14 +70,14 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                             : "Read directions aloud:"
                         }
                     </Label>
-                {speaking ? (
-                    <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
-                ) : (
-                    <VolumeMute className={'text-3xl text-left'} onClick={handleTTS} />
-                )}
                 {displayInfo(
-                <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />,
-                "Click on this button for text-to-speech directions.")}
+                    speaking ? (
+                        <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
+                    ) : (
+                        <VolumeMute className={'text-3xl text-left'} onClick={handleTTS} />
+                    ),
+                    "Click on this button to toggle text-to-speech directions."
+                )}
             </div>
             <ol className="list-decimal list-inside space-y-2">
                 {steps.map((step, index) => {
