@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Select,
     SelectContent,
@@ -371,6 +372,24 @@ export function MapPage() {
                             </Select>,
                             'Select a department as a destination.'
                         )}
+                        </div>
+
+                        {/* Accessible route option */}
+                        <div className="flex items-center gap-2 mb-4">
+                            {displayInfo(
+                                <div className="flex items-center space-x-2">
+                                    <Checkbox
+                                        id="accessibleRoute"
+                                        // not implemented in pathfinding yet
+                                        //checked={accessibleRoute}
+                                        //onCheckedChange={setAccessibleRoute}
+                                    />
+                                    <Label htmlFor="accessibleRoute" className="text-sm font-medium">
+                                        Accessible Route
+                                    </Label>
+                                </div>,
+                                "Enable this option to get routes that avoid stairs and are wheelchair accessible."
+                            )}
                         </div>
 
                         {/* Trigger pathfinding */}
