@@ -31,6 +31,7 @@ import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
+import Footer from "../components/Footer";
 
 
 function App() {
@@ -114,6 +115,7 @@ function App() {
         <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
+            <Footer />
         </div>
     );
 }
