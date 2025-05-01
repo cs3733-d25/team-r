@@ -143,7 +143,7 @@ export function NavbarMGH(props: NavBarProps) {
                                     >
                                         Profile
                                     </Button>
-                                    {/* ✅ Updated Settings link */}
+
                                     <Button
                                         variant={'ghostPopover'}
                                         asChild
