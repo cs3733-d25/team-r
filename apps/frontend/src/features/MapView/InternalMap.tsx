@@ -827,17 +827,17 @@ setEdgesOnActiveFloor(fullEdges)
             />
             {onToggle?
             <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:0}}>
-                <Accordion type ="single" collapsible={true} className={"w-50"}>
+                <Accordion type ="single" collapsible={true} className={"w-40"}>
                     <AccordionItem value={"legend"} >
                 <Card className="p-0">
                     <CardContent className="p-0">
                     <AccordionTrigger className = {"mr-10"}>
 
-                            <div className={"flex flex-col w-30 text-center"}>Node Types</div>
+                            <div className={"flex flex-col w-30 text-center text-lg"}>Node Types</div>
 
 
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className={"pl-5"}>
                         <div className={"flex pb-1 space-x-2"}>
                             <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png' alt = "hallwayNode" width = "10%" height={"10%"}></img>
                         <Label>Hallway</Label>
