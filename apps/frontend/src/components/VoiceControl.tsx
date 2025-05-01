@@ -2,7 +2,6 @@ import { Mic } from 'react-bootstrap-icons';
 import { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { useMapData } from '@/features/MapView/mapService.ts';
-import {node} from "prop-types";
 
 /**
  * VoiceControlProps
