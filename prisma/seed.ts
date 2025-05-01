@@ -16,8 +16,8 @@ async function main() {
             data: {
                 id: 'admin',
                 email: 'softengd25r@gmail.com',
-                firstName: 'Wilson',
-                lastName: 'Wong',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 userType: 'Admin'
             }
         });
@@ -26,8 +26,8 @@ async function main() {
         await client.employee.create({
             data: {
                 id: 'admin',
-                firstName: 'Wilson',
-                lastName: 'Wong',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 departmentId: 'Urology PP20-1',
                 role: 'Admin',
                 onShift: true,
@@ -433,7 +433,7 @@ async function main() {
 
     await client.user.create({
         data: {
-            id: 'Roboto',
+            id: 'Keagan',
             email: 'kjhitt@wpi.edu',
             firstName: 'Keagan',
             lastName: 'Hitt',
@@ -442,7 +442,7 @@ async function main() {
     });
     await client.patient.create({
         data: {
-            id: 'Roboto',
+            id: 'Keagan',
             firstName: 'Keagan',
             lastName: 'Hitt',
             dateOfBirth: new Date('1990-05-15'),
@@ -456,14 +456,14 @@ async function main() {
         data: {
             id: 'KeaganAdmin',
             email: 'keagan@redroc.com',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Admin',
         }
     });
     await client.employee.create({
         data: {
-            id: 'Roboto',
+            id: 'KeaganAdmin',
             firstName: 'Keagan',
             lastName: 'Hitt',
             departmentId: 'Kidney (Renal) Medicine PP22-3',
@@ -552,7 +552,7 @@ async function main() {
             priority: 'Low',
             building: 'Faulkner Hospital',
             department: "Cardiac Rehab",
-            patientID: 'Roboto',
+            patientID: 'Keagan',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
             drugName: 'Tylenol',
             morningPillCount: 0,
@@ -621,7 +621,7 @@ async function main() {
     });
     await client.patientRequest.create({
         data: {
-            patientID: 'Roboto',
+            patientID: 'Keagan',
             priority: 'Low',
             department: 'Community Room',
             building: 'Healthcare Center (22 Patriot Pl.)',
@@ -640,7 +640,7 @@ async function main() {
         data: {
             employeeID: 'Nora',
             /*employeeName: */ //employee: { connect: { id: parseInt(request.employeeID, 10) } }, //connect here
-            patientID: 'Roboto',
+            patientID: 'Keagan',
             transportationType: 'Helicopter',
             currentBuilding: 'Healthcare Center (22 Patriot Pl.)',
             desiredBuilding: 'Healthcare Center (Chestnut Hill)',
