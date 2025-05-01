@@ -85,6 +85,7 @@ interface InternalMapProps {
     promiseEdgeCreate?: Promise<void>;
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
+    showNodes?: boolean;
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
@@ -168,7 +169,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, showNodes, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -532,20 +533,19 @@ setEdgesOnActiveFloor(fullEdges)
                 console.log(nodesOnActiveFloor.length+" full nodes exist now in this state!");
                 // check if the layer exists for the building and floor we are in
                 const layer = getLayer(location.building, location.floor);
-                // console.log(activeLayerInfo.current);
-                console.log("layer:", layer);
                 if(layer) {
+                    // adds edges to the layer
                     edgesOnActiveFloor.map((fullEdge) => {
                         // check if we want to display that type
                         // console.log("attemption to add to layer");
                         //console.log("layers:",layer)
-                        fullEdge.polyLine.addTo(layer);
+                        if (showEdges) fullEdge.polyLine.addTo(layer);
 
 
                     })
                     nodesOnActiveFloor.map((fullNode) => {
                         // check if we want to display that type
-                            fullNode.marker.addTo(layer);
+                            if (showNodes) fullNode.marker.addTo(layer);
                     })
                     console.log("reached here")
                     console.log("Edges given", edgesOnActiveFloor)

@@ -35,7 +35,7 @@ interface InternalMapProps {
 
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<{building: string, floor:number}>(
-        {building: 'Patriot Place 22', floor: 1}
+        {building: 'Healthcare Center (20 Patriot Pl.)', floor: 1}
     );
         // "Faulkner 1st Floor"
         //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
@@ -92,8 +92,7 @@ export function EditMap({ status }: EditMapProps) {
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
         setSelectedLocation({building:building, floor:floor});
-        // setCurrentBuilding(building);
-        // setCurrentFloor(floor);
+
     }
 
     // set available departments when departments data loads
@@ -404,12 +403,16 @@ export function EditMap({ status }: EditMapProps) {
             <div className="flex-1 relative cursor-pointer">
                 {/*Internal Map will reload when building is remade (which is when)?*/}
                 <InternalMap
-                    location={selectedLocation}
+                    location={{
+                        building: selectedLocation.building,
+                        floor: selectedLocation.floor,
+                    }}
                     // floor={currentFloor}
                     onNodeDelete={deleteNode}
                     promiseNodeCreate={requestPromise}
                     promiseEdgeCreate={edgeCreatePromise}
                     showEdges={true}
+                    showNodes={true}
                     onEdgeDelete={deleteEdge}
                     onNodeSelect={onNodeClick}
                     onLocationChange={setLocation}

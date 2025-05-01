@@ -52,6 +52,7 @@ export function MapPage() {
     >([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1);
+    // the building name (e.g. "Healthcare Cetner (20 Patriot Pl.)")
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
@@ -67,8 +68,16 @@ export function MapPage() {
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
-                'Healthcare Center (20 Patriot Pl.)': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'Healthcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Healthcare Center (20 Patriot Pl.)': [
+                    'PATRIOT_PLACE_20',
+                    'Patriot Place 20',
+                    '20 Patriot',
+                ],
+                'Healthcare Center (22 Patriot Pl.)': [
+                    'PATRIOT_PLACE_22',
+                    'Patriot Place 22',
+                    '22 Patriot',
+                ],
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
                 'Main Campus Hospital (75 Francis St.)': ['WOMENS', 'Main Campus Hospital (75 Francis St.)'],
@@ -84,13 +93,11 @@ export function MapPage() {
 
     //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log("parking lot: ", selectedParkinglot);
-            console.log("department lot: ", selectedDepartment);
-        } catch {
-
-        }
+            console.log('parking lot: ', selectedParkinglot);
+            console.log('department lot: ', selectedDepartment);
+        } catch {}
     };
 
     // Main “Get Directions” handler
@@ -117,15 +124,11 @@ export function MapPage() {
             console.log('ALGO IN HANDLE: ', algorithm);
 
             // 1) get the sequence of node IDs
-            const nodes = await fetchPath(
-                selectedParkinglot,
-                receptionNodeID,
-                algorithm
-            );
+            const nodes = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
             // 2) fetch their full data, reverse to start→end
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
-            nodes.forEach(node => {
+            nodes.forEach((node) => {
                 if (!pathByFloor[node.floor]) {
                     pathByFloor[node.floor] = [];
                 }
@@ -166,7 +169,7 @@ export function MapPage() {
             const dx = node2.xcoord - node1.xcoord;
             const dy = node2.ycoord - node1.ycoord;
             return Math.sqrt(dx * dx + dy * dy);
-        }
+        };
 
         /**
          * Converts a distance in units (coordinates) to feet
@@ -175,8 +178,8 @@ export function MapPage() {
         const convertDistanceToFeet = (distance: number) => {
             // conversion factor for units to feet
             // calculated by using the distance from the faulkner parking lot to entrance (309 units = 231 feet)
-            return distance * 0.7475
-        }
+            return distance * 0.7475;
+        };
 
         try {
             if (nodes.length < 2) {
@@ -201,7 +204,9 @@ export function MapPage() {
                 const prevNode = nodes[i - 1];
                 const currentNode = nodes[i];
                 const nextNode = nodes[i + 1];
-                const distance = Math.round(convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode)));
+                const distance = Math.round(
+                    convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode))
+                );
 
                 if (currentNode.floor !== prevNode.floor) {
                     const goingUp = currentNode.floor > prevNode.floor;
@@ -215,7 +220,9 @@ export function MapPage() {
                     continue;
                 }
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`);
+                enhancedDirections.push(
+                    `In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`
+                );
             }
 
             // Final arrival
@@ -295,12 +302,14 @@ export function MapPage() {
             <div className="flex-1 w-full relative">
                 {/* Internal map with the computed path overlaid */}
                 <InternalMap
-                    location={selectedLocation}
+                    location={{
+                        building: selectedBuilding,
+                        floor: currentFloor,
+                    }}
                     pathCoordinates={pathCoordinates}
                     pathByFloor={pathByFloor}
-                    // commented out because InternalMap.tsx no longer has this prop
-                    // Alex and Owen seem to indicate this is not needed? - Akaash
-                    // currentFloor={currentFloor}
+                    showEdges={false}
+                    showNodes={false}
                 />
 
                 {/* Sidebar controls */}
