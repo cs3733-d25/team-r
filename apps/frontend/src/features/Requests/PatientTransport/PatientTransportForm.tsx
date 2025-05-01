@@ -8,6 +8,7 @@ import {Input} from "@/components/ui/input.tsx";
 import Dropdown from "@/components/Dropdowns/Dropdown.tsx";
 import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 import {useAuth0} from "@auth0/auth0-react";
+import {DeptDropdown} from "@/features/Requests/RequestConstants.tsx";
 
 // Simple interface for submitted request
 interface SubmittedTransport {
@@ -93,22 +94,22 @@ const TransportationRequestForm = () => {
     };
 
     //helper function for dept
-    const renderDepartmentDropdown = () => {
-        switch (selectedLocation) {
-            case "Healthcare Center (22 Patriot Pl.)":
-                return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} reset={resetDept} />;
-            case "Healthcare Center (20 Patriot Pl.)":
-                return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            case "Healthcare Center (Chestnut Hill)":
-                return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            case "Faulkner Hospital":
-                return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            case "Main Campus Hospital (75 Francis St.)":
-                return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
-            default:
-                return null;
-        }
-    };
+    // const renderDepartmentDropdown = () => {
+    //     switch (selectedLocation) {
+    //         case "Healthcare Center (22 Patriot Pl.)":
+    //             return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} reset={resetDept} />;
+    //         case "Healthcare Center (20 Patriot Pl.)":
+    //             return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+    //         case "Healthcare Center (Chestnut Hill)":
+    //             return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+    //         case "Faulkner Hospital":
+    //             return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+    //         case "Main Campus Hospital (75 Francis St.)":
+    //             return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={resetDept}/>;
+    //         default:
+    //             return null;
+    //     }
+    // };
 
     // Add state for the confirmation card
     const [submittedTransport, setSubmittedTransport] = useState<SubmittedTransport | null>(null);
@@ -297,8 +298,11 @@ const TransportationRequestForm = () => {
                                             </Label>
                                         </>
                                         )}
-                                    {selectedLocation && renderDepartmentDropdown()}
+
                                     {/*//returns dept dropdown*/}
+                                    {selectedLocation && (
+                                        <DeptDropdown selectedLocation={selectedLocation} onChange={handleDepartmentChange} reset={resetDept}/>
+                                    )}
 
                                     {/*handle departments if given the location*/}
                                 </div>
