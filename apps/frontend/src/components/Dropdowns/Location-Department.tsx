@@ -10,21 +10,50 @@ interface DropdownLocationProps {
 
 const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange, reset}) => {
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-    //put this in Dropdown element and it will reset on submit
-    // const [resetDropdowns, setResetDropdowns] = useState(false);
+    const [selectedDept, setSelectedDept] = useState<string | null>(null);
+
     useEffect(() => {
         if (reset) {
             setSelectedLocation("");
         }
+        setSelectedDept("")
     }, [reset]);
+
+    useEffect(() => { //if location change
+        console.log("Selected location:", selectedLocation);
+        setSelectedDept("")
+    }, [selectedLocation]);
+
+    useEffect(() => {
+        console.log("Selected department:", selectedDept);
+    }, [selectedDept]);
+
+
     const handleLocationChange = (name: string, value: string) => {
         setSelectedLocation(value);
         onChange(name, value); // update formData in parent
     };
 
-
     const handleDepartmentChange = (name: string, value: string) => {
+        setSelectedDept(value);
         onChange(name, value); // update formData in parent
+    };
+
+    const renderDepartmentDropdown = () => {
+        switch (selectedLocation) {
+            case "Healthcare Center (22 Patriot Pl.)":
+                return <Dropdown tableName="departmentsPP22" fieldName="department" onChange={handleDepartmentChange} reset={reset} />;
+            case "Healthcare Center (20 Patriot Pl.)":
+                return <Dropdown tableName="departmentsPP20" fieldName="department" onChange={handleDepartmentChange} reset={reset}/>;
+            case "Healthcare Center (Chestnut Hill)":
+                return <Dropdown tableName="departmentsCH" fieldName="department" onChange={handleDepartmentChange} reset={reset}/>;
+            case "Faulkner Hospital":
+                return <Dropdown tableName="departmentsFAll" fieldName="department" onChange={handleDepartmentChange} reset={reset}/>;
+            case "Main Campus Hospital (75 Francis St.)":
+                return <Dropdown tableName="departmentsWAll" fieldName="department" onChange={handleDepartmentChange} reset={reset}/>;
+            default:
+                return null;
+        }
     };
 
     return (
@@ -49,19 +78,12 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange,
                                         </span>
                     </Label>
                     {/*handle departments for location*/}
-                    {selectedLocation === "Healthcare Center (22 Patriot Pl.)" ? (
-                        <Dropdown tableName={"departmentsPP22"} fieldName={'department'} onChange={handleDepartmentChange} />
-                    ) : selectedLocation === "Healthcare Center (20 Patriot Pl.)" ? (
-                        <Dropdown tableName={"departmentsPP20"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : selectedLocation === "Healthcare Center (Chestnut Hill)" ? (
-                        <Dropdown tableName={"departmentsCH"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : selectedLocation === "Faulkner Hospital" ? (
-                        <Dropdown tableName={"departmentsFAll"} fieldName={'department'} onChange={handleDepartmentChange}/>
-                    ) : selectedLocation === "Main Campus Hospital (75 Francis St.)" ? (
-                        <Dropdown tableName={"departmentsWAll"} fieldName={'department'} onChange={handleDepartmentChange} />
-                     ) : null}
+                    {renderDepartmentDropdown()}
                 </>
             )}
+
+            <p> location: {selectedLocation} </p>
+            <p> department: {selectedDept}</p>
         </div>
 
     );

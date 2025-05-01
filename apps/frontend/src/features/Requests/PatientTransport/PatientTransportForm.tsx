@@ -171,7 +171,7 @@ const TransportationRequestForm = () => {
     };
     const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
     const [selectedDesiredBuilding, setDesiredBuilding] = useState<string | null>(null);
-    const [selectedDept, setDept] = useState<string | null>(null);
+    //const [selectedDept, setDept] = useState<string | null>(null);
 
 
     //used by location dropdown so next dropdown can appear
@@ -201,7 +201,6 @@ const TransportationRequestForm = () => {
     };
 
     const handleDepartmentChange = (name: string, value: string | null) => {
-        setDept(value)
         handleDropdownChange(name, value!);// update formData in parent
     };
 
