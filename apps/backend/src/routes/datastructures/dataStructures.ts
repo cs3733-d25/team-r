@@ -1,7 +1,6 @@
 import { getNodeObjects, PathfindingAlgorithm } from "../algos/algoSelection";
 import { Node } from "../maps/mapData";
 
-
 export class Stack<T> {
   private items: T[] = [];
   push(item: T): void {
@@ -53,7 +52,7 @@ export class PriorityQueue<T> {
   }
 
   enqueue(value: T, priority: number): void {
-    const node: HeapNode<T> = {value, priority};
+    const node: HeapNode<T> = { value, priority };
     this.heap.push(node);
     this.bubbleUp();
   }
@@ -98,9 +97,9 @@ export class PriorityQueue<T> {
       }
       if (rightIdx < length) {
         const shouldSwapRight =
-            (swapIdx === null && this.heap[rightIdx].priority < node.priority) ||
-            (swapIdx !== null &&
-                this.heap[rightIdx].priority < this.heap[leftIdx].priority);
+          (swapIdx === null && this.heap[rightIdx].priority < node.priority) ||
+          (swapIdx !== null &&
+            this.heap[rightIdx].priority < this.heap[leftIdx].priority);
         if (shouldSwapRight) {
           swapIdx = rightIdx;
         }

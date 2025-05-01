@@ -16,18 +16,8 @@ import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapVi
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TourAlertDialog, TourStep, useTour } from '@/components/tour';
 import { TOUR_STEP_IDS } from '@/lib/tour-constants.ts';
-import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group.tsx'
 
 interface EditMapProps {
     status?: string;
@@ -45,7 +35,7 @@ interface InternalMapProps {
 
 export function EditMap({ status }: EditMapProps) {
     const [selectedLocation, setSelectedLocation] = useState<{building: string, floor:number}>(
-        {building: 'Patriot Place 22', floor: 1}
+        {building: 'Healthcare Center (20 Patriot Pl.)', floor: 1}
     );
         // "Faulkner 1st Floor"
         //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
@@ -75,7 +65,7 @@ export function EditMap({ status }: EditMapProps) {
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
 
-    const steps = [
+    const steps: TourStep[] = [
         { content: <div>On this page you can add, edit, and delete map nodes for pathfinding.</div>, selectorId: TOUR_STEP_IDS.CLICK_START, position: "right" },
         { content: <div>First, select the node's location by clicking on the map. The coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
         { content: <div>Enter the name of the node here. Each node should be given a name so it can be tracked.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },
@@ -102,8 +92,7 @@ export function EditMap({ status }: EditMapProps) {
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
         setSelectedLocation({building:building, floor:floor});
-        // setCurrentBuilding(building);
-        // setCurrentFloor(floor);
+
     }
 
     // set available departments when departments data loads
@@ -167,6 +156,7 @@ export function EditMap({ status }: EditMapProps) {
         // setCurrentBuilding(building);
     };
     const handleNodeDrag = (lat: number, lng: number, nodeID:string, nodeTypes:string) => {
+        setActiveTab("edit-node")
         setNodeID(nodeID)
         setEditNodeType(nodeTypes)
         console.log("Setting coordinates: x = ", lat, " y = ", lng);
@@ -413,12 +403,16 @@ export function EditMap({ status }: EditMapProps) {
             <div className="flex-1 relative cursor-pointer">
                 {/*Internal Map will reload when building is remade (which is when)?*/}
                 <InternalMap
-                    location={selectedLocation}
+                    location={{
+                        building: selectedLocation.building,
+                        floor: selectedLocation.floor,
+                    }}
                     // floor={currentFloor}
                     onNodeDelete={deleteNode}
                     promiseNodeCreate={requestPromise}
                     promiseEdgeCreate={edgeCreatePromise}
                     showEdges={true}
+                    showNodes={true}
                     onEdgeDelete={deleteEdge}
                     onNodeSelect={onNodeClick}
                     onLocationChange={setLocation}

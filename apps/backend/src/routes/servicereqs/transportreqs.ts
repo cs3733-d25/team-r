@@ -31,7 +31,7 @@ router.post("/", async function (req: Request, res: Response) {
     transportationType,
     currentBuilding,
     desiredBuilding,
-      assignedEmployee
+    assignedEmployee,
   } = req.body;
 
   try {
@@ -52,7 +52,8 @@ router.post("/", async function (req: Request, res: Response) {
         priority,
         department,
         comments,
-        status,assignedEmployee: {
+        status,
+        assignedEmployee: {
           connect: {
             id: assignedEmployee,
           },

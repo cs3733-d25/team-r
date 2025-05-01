@@ -207,8 +207,8 @@ async function main() {
             {name: 'Outpatient Infusion Center', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: 'Primary Care Physicians', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: 'Surgical Specialties', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
-            {name: 'X-Ray', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: 'X-Ray Waiting Room', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
+            {name: 'X-Ray', floorNumber: 5, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
         ]
 
 
@@ -339,7 +339,7 @@ async function main() {
                 "receptionNodeID": "Reception-1745979021528"
             },
             {
-                "name": "Jen Center for Primary Care ",
+                "name": "Jen Center for Primary Care",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
                 "receptionNodeID": "Reception-1745979021528"
@@ -399,7 +399,7 @@ async function main() {
                 "receptionNodeID": "Reception-1745979105794"
             },
             {
-                "name": "Boston Children's Hospital, Bridge to",
+                "name": "Boston Children's Hospital",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
                 "receptionNodeID": "Reception-1745979105794"

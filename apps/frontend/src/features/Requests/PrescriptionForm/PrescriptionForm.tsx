@@ -15,6 +15,7 @@ interface SubmittedPrescription {
     //employeeID: string;
     patientID: string;
     priority: string;
+    building: string;
     department: string;
     numberOfPills: number;
     refills: number;
@@ -33,9 +34,9 @@ interface SubmittedPrescription {
 export const PrescriptionForm = () => {
     const [formData, setFormData] = useState({
         employeeName: '',
-        //employeeID: '',
         patientID: '',
         priority: '',
+        building: '',
         department: '',
         numberOfPills: 0,
         refills: 0,
@@ -123,9 +124,9 @@ export const PrescriptionForm = () => {
 
                 setFormData({
                     employeeName: '',
-                    //employeeID: '',
                     patientID: '',
                     priority: '',
+                    building: '',
                     department: '',
                     numberOfPills: 0,
                     refills: 0,
@@ -208,7 +209,7 @@ export const PrescriptionForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                     </Label>
-                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Priority */}
@@ -221,7 +222,7 @@ export const PrescriptionForm = () => {
                                 </div>
 
                                 {/* Location and Department */}
-                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
@@ -530,6 +531,10 @@ export const PrescriptionForm = () => {
                             <div>
                                 <span className="font-semibold">Priority:</span>{' '}
                                 {submittedPrescription.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Location:</span>{' '}
+                                {submittedPrescription.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Department:</span>{' '}

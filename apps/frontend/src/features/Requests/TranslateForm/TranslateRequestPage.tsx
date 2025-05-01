@@ -63,13 +63,22 @@ export function TranslateRequestPage() {
         {field: 'department', header: 'Department', sortable: true},
         {field: 'roomNumber', header: 'Room', sortable: true},
         {field: 'priority', header: 'Priority', sortable: true},
-        {field: 'assignedemployeeID', header: 'Assigned Employee', sortable: true},
+        {field: 'assignedEmployeeID', header: 'Assigned Employee', sortable: true},
         {field: 'status', header: 'Status', sortable: true},
         {field: 'actions', header: 'Details', cellRenderer: (item: TranslateRequest) => (<RequestInfoButton type="Translate" id={item.translateRequestID ? Number(item.translateRequestID) : null} />)}
     ];
 
     return (
         <>
+            {/*<RequestFilters*/}
+            {/*    options={filtering.filterOptions}*/}
+            {/*    filterState={filtering.filterState}*/}
+            {/*    onFilterChange={(options, state) => {*/}
+            {/*        filtering.setFilterOptions(options);*/}
+            {/*        filtering.setFilterState(state);*/}
+            {/*    }}*/}
+            {/*    onClearFilters={filtering.clearFilters}*/}
+            {/*/>*/}
             <RequestFilters
                 options={filtering.filterOptions}
                 filterState={filtering.filterState}
@@ -78,6 +87,9 @@ export function TranslateRequestPage() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

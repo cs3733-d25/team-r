@@ -1,6 +1,10 @@
 import express, { Router, Request, Response } from "express";
 import { findPath } from "./algoSelection.ts";
 import client from "../../bin/prisma-client.ts";
+import { Graph } from "../maps/Graph.ts";
+import { BFS } from "./bfs.ts";
+import DFS from "./dfs.ts";
+import { AStar } from "./aStar.ts";
 
 const router: Router = express.Router();
 
@@ -18,8 +22,9 @@ router.post(
         locationFormat = "Healthcare Center (22 Patriot Pl.)";
       } else if (location.includes("Faulkner")) {
         locationFormat = "Faulkner Hospital";
+      } else if (location.includes("75 Francis St")) {
+        locationFormat = "Main Campus Hospital (75 Francis St.)";
       }
-      // TODO: add main campus location
       if (!department || !location) {
         res.status(400).json({ error: "Missing required fields" });
         return;
@@ -86,6 +91,41 @@ router.post("/setalgo", async function (req: Request, res: Response) {
     res.status(200).json(updatedAlgo);
   } catch (error) {
     console.error("Error updating algorithm:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
+
+router.post("/accessible-route", async function (req: Request, res: Response) {
+  const { startingPoint, endingPoint, algorithm } = req.body;
+
+  try {
+    const graph = new Graph();
+    await graph.loadGraph();
+
+    await graph.filterAccessibleNodes();
+
+    let path;
+    switch (algorithm) {
+      case "bfs":
+        const bfs = new BFS(graph);
+        path = await bfs.findPath(startingPoint, endingPoint);
+        break;
+      case "dfs":
+        const dfs = new DFS(graph);
+        path = await dfs.findPath(startingPoint, endingPoint);
+        break;
+      case "astar":
+        const astar = new AStar(graph);
+        path = await astar.findPath(startingPoint, endingPoint);
+        break;
+      default:
+        const defaultAstar = new AStar(graph);
+        path = await defaultAstar.findPath(startingPoint, endingPoint);
+    }
+
+    res.status(200).json(path);
+  } catch (error) {
+    console.error("Accessible route error:", error);
     res.status(500).json({ error: "Internal server error." });
   }
 });

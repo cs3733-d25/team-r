@@ -30,6 +30,10 @@ import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group.tsx";
 import { getFilter } from 'next/dist/build/webpack/loaders/css-loader/src/utils';
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Accordion, AccordionTrigger, AccordionContent, AccordionItem} from "@/components/ui/accordion.tsx";
+import {Label} from "@/components/ui/label.tsx";
+
 
 /*
 * Plan for Nodes
@@ -81,6 +85,7 @@ interface InternalMapProps {
     promiseEdgeCreate?: Promise<void>;
     onNodeSelect?: (nodeID:string) => void;
     showEdges?: boolean;
+    showNodes?: boolean;
     onCoordSelect?: (x:number, y:number) => void;
     onNodeDrag?: (x:number, y:number, nodeID:string, nodeType:string) => void;
     onNodeEdit?: (x:number, y:number, nodeID:string) => void;
@@ -164,7 +169,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
-const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
+const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, showNodes, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
@@ -182,6 +187,7 @@ const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
     const highlightedNodeLayers = useRef<L.Circle[]>([]);
+    const [open, setOpen] = useState(false);
 
     const selectedNodeStyle = {
         color: '#2563eb',
@@ -527,20 +533,19 @@ setEdgesOnActiveFloor(fullEdges)
                 console.log(nodesOnActiveFloor.length+" full nodes exist now in this state!");
                 // check if the layer exists for the building and floor we are in
                 const layer = getLayer(location.building, location.floor);
-                // console.log(activeLayerInfo.current);
-                console.log("layer:", layer);
                 if(layer) {
+                    // adds edges to the layer
                     edgesOnActiveFloor.map((fullEdge) => {
                         // check if we want to display that type
                         // console.log("attemption to add to layer");
                         //console.log("layers:",layer)
-                        fullEdge.polyLine.addTo(layer);
+                        if (showEdges) fullEdge.polyLine.addTo(layer);
 
 
                     })
                     nodesOnActiveFloor.map((fullNode) => {
                         // check if we want to display that type
-                            fullNode.marker.addTo(layer);
+                            if (showNodes) fullNode.marker.addTo(layer);
                     })
                     console.log("reached here")
                     console.log("Edges given", edgesOnActiveFloor)
@@ -822,14 +827,52 @@ setEdgesOnActiveFloor(fullEdges)
             />
             {onToggle?
             <div className={"absolute bottom-20 right-4"} style={{position:'absolute', zIndex:0}}>
+                <Accordion type ="single" collapsible={true} className={"w-40"}>
+                    <AccordionItem value={"legend"} >
+                <Card className="p-0">
+                    <CardContent className="p-0">
+                    <AccordionTrigger className = {"mr-10"}>
+
+                            <div className={"flex flex-col w-30 text-center text-lg"}>Node Types</div>
+
+
+                    </AccordionTrigger>
+                    <AccordionContent className={"pl-5"}>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png' alt = "hallwayNode" width = "10%" height={"10%"}></img>
+                        <Label>Hallway</Label>
+                    </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png' alt = "entranceNode" width = "10%" height={"10%"}></img>
+                            <Label>Entrance</Label>
+                        </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png' alt = "elevatorNode" width = "10%" height={"10%"}></img>
+                            <Label>Elevator</Label>
+                        </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png' alt = "lotNode" width = "10%" height={"10%"}></img>
+                            <Label>Parking Lot</Label>
+                        </div>
+                        <div className={"flex pb-1 space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png' alt = "receptionNode" width = "10%" height={"10%"}></img>
+                            <Label>Reception</Label>
+                        </div>
+                        <div className={"flex space-x-2"}>
+                            <img src = 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png' alt = "sideNode" width = "10%" height={"10%"}></img>
+                            <Label>Sidewalk</Label>
+                        </div>
+                    </AccordionContent>
+                    </CardContent>
+                </Card>
+                    </AccordionItem>
+                </Accordion>
                 <ToggleGroup type={"multiple"} >
-                    <ToggleGroupItem value={"None"}>None</ToggleGroupItem>
                     <ToggleGroupItem value={"Hallways"} onClick={()=>isFiltered("Hallway")}>H</ToggleGroupItem>
                     <ToggleGroupItem value={"Entrances"} onClick={()=>isFiltered("Entrance")}>EN</ToggleGroupItem>
                     <ToggleGroupItem value={"Parking Lots"} onClick={()=>isFiltered("Parking")}>PL</ToggleGroupItem>
                     <ToggleGroupItem value={"Reception"} onClick={()=>isFiltered("Reception")}>R</ToggleGroupItem>
                     <ToggleGroupItem value={"Elevator"} onClick={()=>isFiltered("Elevator")}>EL</ToggleGroupItem>
-                    <ToggleGroupItem value={"All"}>All</ToggleGroupItem>
                 </ToggleGroup>
             </div>:null}
 

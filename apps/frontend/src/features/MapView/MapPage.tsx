@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Select,
     SelectContent,
@@ -21,7 +22,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
-import { Node } from '../../../../backend/src/routes/maps/mapData.ts'
+import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
 
 declare global {
     interface Window {
@@ -50,6 +51,7 @@ export function MapPage() {
     >([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1);
+    // the building name (e.g. "Healthcare Cetner (20 Patriot Pl.)")
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
@@ -65,14 +67,22 @@ export function MapPage() {
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
             const buildingMap: { [key: string]: string[] } = {
-                'Healthcare Center (20 Patriot Pl.)': ['PATRIOT_PLACE_20', 'Patriot Place 20', '20 Patriot'],
-                'Healthcare Center (22 Patriot Pl.)': ['PATRIOT_PLACE_22', 'Patriot Place 22', '22 Patriot'],
+                'Healthcare Center (20 Patriot Pl.)': [
+                    'PATRIOT_PLACE_20',
+                    'Patriot Place 20',
+                    '20 Patriot',
+                ],
+                'Healthcare Center (22 Patriot Pl.)': [
+                    'PATRIOT_PLACE_22',
+                    'Patriot Place 22',
+                    '22 Patriot',
+                ],
                 'Healthcare Center (Chestnut Hill)': ['CHESTNUT_HILL', 'Chestnut Hill'],
                 'Faulkner Hospital': ['FAULKNER', 'Faulkner'],
-                // TODO: add women's hospital parking lots
-                'Main Campus Hospital (75 Francis St.)': ['WOMENS'],
+                'Main Campus Hospital (75 Francis St.)': ['WOMENS', 'Main Campus Hospital (75 Francis St.)'],
             };
 
+            // keep the parking lot if its name matches the one of the selected building
             return buildingMap[selectedBuilding]?.some((buildingName) =>
                 lot.building.toUpperCase().includes(buildingName.toUpperCase())
             );
@@ -82,13 +92,11 @@ export function MapPage() {
 
     //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            console.log("parking lot: ", selectedParkinglot);
-            console.log("department lot: ", selectedDepartment);
-        } catch {
-
-        }
+            console.log('parking lot: ', selectedParkinglot);
+            console.log('department lot: ', selectedDepartment);
+        } catch {}
     };
 
     // Main “Get Directions” handler
@@ -114,16 +122,23 @@ export function MapPage() {
             console.log('in handle get directions receptionNodeID: ', receptionNodeID);
             console.log('ALGO IN HANDLE: ', algorithm);
 
-            // 1) get the sequence of node IDs
-            const nodes = await fetchPath(
-                selectedParkinglot,
-                receptionNodeID,
-                algorithm
-            );
-            // 2) fetch their full data, reverse to start→end
+            // get the sequence of node IDs - use accessible route if selected
+            let nodes;
+            if (accessibleRoute) {
+                const routeResponse = await axios.post('/api/algo/accessible-route', {
+                    startingPoint: selectedParkinglot,
+                    endingPoint: receptionNodeID,
+                    algorithm: algorithm,
+                });
+                nodes = routeResponse.data;
+            } else {
+                nodes = await fetchPath(selectedParkinglot, receptionNodeID, algorithm);
+            }
+
+            // fetch their full data, reverse to start→end
             // group coordinates by floor
             const pathByFloor: Record<number, [number, number][]> = {};
-            nodes.forEach(node => {
+            nodes.forEach((node: Node) => {
                 if (!pathByFloor[node.floor]) {
                     pathByFloor[node.floor] = [];
                 }
@@ -131,7 +146,7 @@ export function MapPage() {
             });
 
             // set both full path and floor segments
-            const coords = nodes.map((n) => [n.xcoord, n.ycoord] as [number, number]);
+            const coords = nodes.map((n: Node) => [n.xcoord, n.ycoord] as [number, number]);
             const reversedCoords = [];
             for (let i = coords.length - 1; i >= 0; i--) {
                 reversedCoords.push(coords[i]);
@@ -164,7 +179,7 @@ export function MapPage() {
             const dx = node2.xcoord - node1.xcoord;
             const dy = node2.ycoord - node1.ycoord;
             return Math.sqrt(dx * dx + dy * dy);
-        }
+        };
 
         /**
          * Converts a distance in units (coordinates) to feet
@@ -173,8 +188,8 @@ export function MapPage() {
         const convertDistanceToFeet = (distance: number) => {
             // conversion factor for units to feet
             // calculated by using the distance from the faulkner parking lot to entrance (309 units = 231 feet)
-            return distance * 0.7475
-        }
+            return distance * 0.7475;
+        };
 
         try {
             if (nodes.length < 2) {
@@ -199,10 +214,25 @@ export function MapPage() {
                 const prevNode = nodes[i - 1];
                 const currentNode = nodes[i];
                 const nextNode = nodes[i + 1];
-                const distance = Math.round(convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode)));
+                const distance = Math.round(
+                    convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode))
+                );
 
+                if (currentNode.floor !== prevNode.floor) {
+                    const goingUp = currentNode.floor > prevNode.floor;
+                    const direction = goingUp ? 'up' : 'down';
+
+                    if (currentNode.nodeType.toLowerCase().includes('stairs')) {
+                        enhancedDirections.push(`In ${distance} feet, go ${direction} the stairs to floor ${currentNode.floor}`);
+                    } else {
+                        enhancedDirections.push(`In ${distance} feet, go ${direction} to floor ${currentNode.floor}`);
+                    }
+                    continue;
+                }
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
-                enhancedDirections.push(`In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`);
+                enhancedDirections.push(
+                    `In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`
+                );
             }
 
             // Final arrival
@@ -282,10 +312,14 @@ export function MapPage() {
             <div className="flex-1 w-full relative">
                 {/* Internal map with the computed path overlaid */}
                 <InternalMap
-                    location={selectedLocation}
+                    location={{
+                        building: selectedBuilding,
+                        floor: currentFloor,
+                    }}
                     pathCoordinates={pathCoordinates}
                     pathByFloor={pathByFloor}
-                    currentFloor={currentFloor}
+                    showEdges={false}
+                    showNodes={false}
                 />
 
                 {/* Sidebar controls */}
@@ -310,6 +344,9 @@ export function MapPage() {
                     </div>
 
                     <div className="space-y-4">
+                        <Label>
+                            Select a parking lot and department to get directions to the appropriate check-in desk.
+                        </Label>
                         {/* Parking lot picker */}
                         <Select
                             value={selectedParkinglot}
@@ -347,6 +384,17 @@ export function MapPage() {
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
+
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id="accessibleRoute"
+                                checked={accessibleRoute}
+                                onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
+                            />
+                            <Label htmlFor="accessibleRoute" className="text-sm font-medium">
+                                Show Accessible Route
+                            </Label>
+                        </div>
 
                         {/* Trigger pathfinding */}
                         <Button className="w-full" onClick={handleGetDirections}>

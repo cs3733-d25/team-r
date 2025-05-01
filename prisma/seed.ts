@@ -16,8 +16,8 @@ async function main() {
             data: {
                 id: 'admin',
                 email: 'softengd25r@gmail.com',
-                firstName: 'Wilson',
-                lastName: 'Wong',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 userType: 'Admin'
             }
         });
@@ -26,8 +26,8 @@ async function main() {
         await client.employee.create({
             data: {
                 id: 'admin',
-                firstName: 'Wilson',
-                lastName: 'Wong',
+                firstName: 'admin',
+                lastName: 'adminlast',
                 departmentId: 'Urology PP20-1',
                 role: 'Admin',
                 onShift: true,
@@ -185,7 +185,7 @@ async function main() {
         data: {
             id: 'Owen',
             email: 'ormiller@wpi.edu',
-            firstName: 'O-bot',
+            firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Employee',
         }
@@ -206,7 +206,7 @@ async function main() {
         data: {
             id: 'OwenAdmin',
             email: 'owen@redroc.com',
-            firstName: 'O-bot',
+            firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Admin',
         }
@@ -435,7 +435,7 @@ async function main() {
         data: {
             id: 'Keagan',
             email: 'kjhitt@wpi.edu',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Patient',
         }
@@ -456,7 +456,7 @@ async function main() {
         data: {
             id: 'KeaganAdmin',
             email: 'keagan@redroc.com',
-            firstName: 'Roboto',
+            firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Admin',
         }
@@ -723,6 +723,47 @@ async function main() {
             status: 'Accepted',
             assignedEmployeeID: 'Akaash',
         },
+    });
+
+    //translation request
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Brian',
+            language: 'American Sign Language',
+            building: 'Healthcare Center (22 Patriot Pl.)',
+            department: 'Primary Care',
+            roomNumber: 130,
+            status: 'Pending',
+            priority: 'Medium',
+            comments: 'N/A',
+            assignedEmployeeID: 'Nora'
+        }
+    });
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Daksh',
+            language: 'Mandarin',
+            building: 'Healthcare Center (Chestnut Hill)',
+            department:  "Endoscopy Center",
+            roomNumber: 20,
+            status: 'Canceled',
+            priority: 'High',
+            comments: 'Patient needs written instructions in mandarin.',
+            assignedEmployeeID: 'Riley',
+        }
+    });
+    await client.translateRequest.create({
+        data: {
+            employeeID: 'Riley',
+            language: 'Polish',
+            building: 'Healthcare Center (Chestnut Hill)',
+            department:  "Endoscopy Center",
+            roomNumber: 120,
+            status: 'Accepted',
+            priority: 'Low',
+            comments: 'N/A',
+            assignedEmployeeID: 'Sarayu',
+        }
     });
 
     console.log('Users and Requests seeded successfully!');
