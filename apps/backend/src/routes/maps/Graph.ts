@@ -87,4 +87,16 @@ export class Graph {
       }
     }
   }
+
+  public setEdgeWeight(u: string, v: string, weight: number): void {
+    if (!this.weightMap.has(u)) {
+      this.weightMap.set(u, new Map());
+    }
+    if (!this.weightMap.has(v)) {
+      this.weightMap.set(v, new Map());
+    }
+
+    this.weightMap.get(u)!.set(v, weight);
+    this.weightMap.get(v)!.set(u, weight);
+  }
 }
