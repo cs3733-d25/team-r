@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from '@/components/ui/select';
+import {useState, useEffect, useRef} from 'react';
+import {Button} from '@/components/ui/button';
+import {Label} from '@/components/ui/label';
+import {Textarea} from '@/components/ui/textarea';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import axios from 'axios';
-import { Mic, MicOff } from 'lucide-react';
+import {Mic, MicOff} from 'lucide-react';
 
 interface SpeechRecognitionEvent extends Event {
     results: SpeechRecognitionResultList;
@@ -78,16 +78,34 @@ export function InlineTranslator() {
     const [isLoading, setIsLoading] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const [speechSupported, setSpeechSupported] = useState(false);
+    const [micPermissionError, setMicPermissionError] = useState(false);
+    const recognitionRef = useRef<SpeechRecognition | null>(null);
 
     useEffect(() => {
         setSpeechSupported(!!window.webkitSpeechRecognition || !!window.SpeechRecognition);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (recognitionRef.current) {
+                recognitionRef.current.stop();
+            }
+        };
     }, []);
 
     const toggleSpeechToText = () => {
         if (isListening) {
             stopListening();
         } else {
-            startListening();
+            try {
+                // request microphone permission
+                await navigator.mediaDevices.getUserMedia({audio: true});
+                setMicPermissionError(false);
+                startListening();
+            } catch (error) {
+                console.error('Microphone permission error:', error);
+                setMicPermissionError(true);
+            }
         }
     };
 
@@ -97,44 +115,52 @@ export function InlineTranslator() {
             console.error('Speech recognition not supported in this browser');
             return;
         }
-        const recognition = new SpeechRecognitionClass();
 
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = 'en-US';
+        try {
+            const recognition = new SpeechRecognitionClass();
 
-        recognition.onstart = () => {
-            setIsListening(true);
-        };
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
 
-        recognition.onresult = (event) => {
-            const transcript = Array.from(event.results)
-                .map((result) => result[0])
-                .map((result) => result.transcript)
-                .join('');
+            recognition.onstart = () => {
+                setIsListening(true);
+                setMicPermissionError(false);
+            };
 
-            setSourceText(transcript);
-        };
+            recognition.onresult = (event) => {
+                const transcript = Array.from(event.results)
+                    .map((result) => result[0])
+                    .map((result) => result.transcript)
+                    .join('');
 
-        recognition.onerror = (event) => {
-            console.error('Speech recognition error:', event.error);
-            setIsListening(false);
-        };
+                setSourceText(transcript);
+            };
 
-        recognition.onend = () => {
-            setIsListening(false);
-        };
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                if (event.error && event.error.error === 'not-allowed') {
+                    setMicPermissionError(true);
+                }
+                setIsListening(false);
+            };
 
-        recognition.start();
+            recognition.onend = () => {
+                setIsListening(false);
+            };
 
-        // store recognition instance to stop it later
-        window.recognitionInstance = recognition;
+            recognitionRef.current = recognition;
+            recognition.start();
+        } catch (error) {
+            console.error('Error starting speech recognition:', error);
+            setMicPermissionError(true);
+        }
     };
 
     const stopListening = () => {
-        if (window.recognitionInstance) {
-            window.recognitionInstance.stop();
-            window.recognitionInstance = null;
+        if (recognitionRef.current) {
+            recognitionRef.current.stop();
+            recognitionRef.current = null;
         }
         setIsListening(false);
     };
@@ -187,6 +213,11 @@ export function InlineTranslator() {
                             </Button>
                         )}
                     </div>
+                    {micPermissionError && (
+                        <p className="text-amber-600 text-sm mt-1">
+                            Microphone permission denied. Please allow access to use speech input.
+                        </p>
+                    )}
                 </div>
 
                 <div>
