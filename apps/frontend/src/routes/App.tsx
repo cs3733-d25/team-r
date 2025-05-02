@@ -32,6 +32,7 @@ import PatientTransport from "@/features/Requests/PatientTransport/PatientTransp
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
 import Footer from "../components/Footer";
+import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
 
 
 function App() {
@@ -106,7 +107,8 @@ function App() {
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
                 { path: 'translation', element: <Translate /> },
-                { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> }
+                { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> },
+                { path: 'announcements', element: <AnnouncementPage /> }
             ],
         },
     ]);
