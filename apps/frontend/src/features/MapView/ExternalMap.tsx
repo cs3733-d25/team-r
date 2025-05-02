@@ -200,8 +200,8 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                         fullscreenControl={false}
                         mapTypeControl={false}
                     />
-                    {/* on the fritz, will flash screen with zoomed in locations before displaying
-                    Temporarily disabled for now, in Jira as a bug fix*/}
+                    {/* on the fritz, will flash screen with zoomed in locations before displaying */}
+                    {/* Temporarily disabled for now, in Jira as a bug fix*/}
                     {/*<MapController selectedLocation={selectedLocation} />*/}
                     <ReverseGeocoder
                         coordinates={currentCoordinates}
@@ -222,7 +222,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                 </APIProvider>
 
                 {/* Overlay sidebar */}
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
+                <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10 flex flex-col">
                     <HeadingLabel>Directions</HeadingLabel>
                     <div className="space-y-4 flex-grow overflow-auto">
                         <div className="flex flex-col space-y-2">

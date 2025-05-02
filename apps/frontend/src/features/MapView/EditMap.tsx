@@ -169,33 +169,32 @@ export function EditMap({ status }: EditMapProps) {
     // console.log("nodeType:", nodeType);
     // useEffect(() => {
 
+    // capture coordinates
 
-        // capture coordinates
+    // const originalConsoleLog = console.log;
+    // what the heck does this do? answer: breaks the console.log statements everywhere else
+    // console.log = function (...args: unknown[]) {
+    //     const argStr = String(args[0] || '');
+    //     const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
+    //     if (coordMatch) {
+    //         const lat = parseFloat(coordMatch[1]);
+    //         const lng = parseFloat(coordMatch[2]);
+    //         setCoordinates({ x: lat, y: lng });
+    //         setEditCoordinates({ x: lat, y: lng });
+    //         setCurrentBuilding(building);
+    //
+    //         window.lastClickCoordinates = { lat, lng };
+    //     }
+    //     // originalConsoleLog.apply(console, args);
+    // };
 
-        // const originalConsoleLog = console.log;
-        // what the heck does this do? answer: breaks the console.log statements everywhere else
-        // console.log = function (...args: unknown[]) {
-        //     const argStr = String(args[0] || '');
-        //     const coordMatch = argStr.match(/\[([\d\.]+), ([\d\.]+)\]/);
-        //     if (coordMatch) {
-        //         const lat = parseFloat(coordMatch[1]);
-        //         const lng = parseFloat(coordMatch[2]);
-        //         setCoordinates({ x: lat, y: lng });
-        //         setEditCoordinates({ x: lat, y: lng });
-        //         setCurrentBuilding(building);
-        //
-        //         window.lastClickCoordinates = { lat, lng };
-        //     }
-        //     // originalConsoleLog.apply(console, args);
-        // };
+    // listen for custom map click events
+    // document.addEventListener('map-click', handleMapClick as EventListener);
 
-        // listen for custom map click events
-        // document.addEventListener('map-click', handleMapClick as EventListener);
-
-        // return () => {
-        //     document.removeEventListener('map-click', handleMapClick as EventListener);
-        //     console.log = originalConsoleLog;
-        // };
+    // return () => {
+    //     document.removeEventListener('map-click', handleMapClick as EventListener);
+    //     console.log = originalConsoleLog;
+    // };
     // }, [building]);
         // setCurrentBuilding(building);
 
@@ -235,7 +234,6 @@ export function EditMap({ status }: EditMapProps) {
             alert('Please enter a valid coordinate.');
             return;
         }
-
 
         const nodeData = {
             nodeID: nodeID,
@@ -423,11 +421,9 @@ export function EditMap({ status }: EditMapProps) {
                     selectedEdgeNodes={edgeNodes}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
-                    <div className="flex  flex-col justify-start float-left">
-                        <Label className="font-bold text-2xl pt-4 pl-4 pb-4" id={TOUR_STEP_IDS.CLICK_START}>Edit Map</Label>
-
-
+                <div className="absolute top-4 left-4 bg-background text-foreground rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
+                    <div className="flex flex-col justify-start float-left">
+                        <Label className="font-bold text-2xl pt-4 pl-4 pb-4 text-foreground" id={TOUR_STEP_IDS.CLICK_START}>Edit Map</Label>
                         <div className="flex flex-col items-center justify-center text-left overflow-y-auto pl-1">
                             <Tabs
                                 defaultValue="place-node"
@@ -435,13 +431,24 @@ export function EditMap({ status }: EditMapProps) {
                                 onValueChange={setActiveTab}
                                 className="w-full flex flex-col"
                             >
-                                <TabsList className=" w-80 flex">
-                                    <TabsTrigger value="place-node" className="border border-gray-300">Place Node</TabsTrigger>
-                                    <TabsTrigger value="edit-node" className="border border-gray-300">Edit Node</TabsTrigger>
+                                <TabsList className="w-80 flex bg-muted/20">
+                                    <TabsTrigger
+                                        value="place-node"
+                                        className="border border-border data-[state=active]:bg-background data-[state=active]:text-foreground bg-muted text-muted-foreground hover:bg-muted/50"
+                                    >
+                                        Place Node
+                                    </TabsTrigger>
+                                    <TabsTrigger
+                                        value="edit-node"
+                                        className="border border-border data-[state=active]:bg-background data-[state=active]:text-foreground bg-muted text-muted-foreground hover:bg-muted/50"
+                                    >
+                                        Edit Node
+                                    </TabsTrigger>
                                 </TabsList>
+
                                 <div className={'w-80 flex flex-col'}>
                                     <TabsContent value="place-node" className="space-y-4">
-                                        <div className="bg-gray-100 p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
+                                        <div className="bg-muted p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
                                             <Label>Click on map to select node location</Label>
                                             {coordinates && (
                                                 <div className="mt-2 text-sm">
@@ -455,7 +462,7 @@ export function EditMap({ status }: EditMapProps) {
 
                                         <div className="space-y-3">
                                             <div id={TOUR_STEP_IDS.NODE_NAME}>
-                                                <Label>Node Name (Optional)</Label>
+                                                <Label className="text-background">Node Name (Optional)</Label>
                                                 <Input
                                                     value={nodeName}
                                                     onChange={(e) => setNodeName(e.target.value)}
@@ -464,7 +471,7 @@ export function EditMap({ status }: EditMapProps) {
                                             </div>
 
                                             <div id={TOUR_STEP_IDS.NODE_TYPE}>
-                                                <Label>Node Type</Label>
+                                                <Label className="text-background">Node Type</Label>
                                                 <Select
                                                     onValueChange={setNodeType}
                                                     value={nodeType}
@@ -488,8 +495,8 @@ export function EditMap({ status }: EditMapProps) {
                                             </div>
 
                                             <div id={TOUR_STEP_IDS.DEPARTMENTS}>
-                                                <Label>Associated Departments</Label>
-                                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
+                                                <Label className="text-background">Associated Departments</Label>
+                                                <div className="mt-2 border border-border rounded-md p-2 max-h-40 overflow-y-auto">
                                                     {availableDepartments.length > 0 ? (
                                                         availableDepartments.map((dept) => (
                                                             <div
@@ -516,7 +523,7 @@ export function EditMap({ status }: EditMapProps) {
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <p className="text-gray-500 text-sm">
+                                                        <p className="text-muted-foreground text-sm">
                                                             No departments available
                                                         </p>
                                                     )}
@@ -533,8 +540,8 @@ export function EditMap({ status }: EditMapProps) {
                                             Save Node
                                         </Button>
 
-                                        <div className="mt-1 pt-4 border-t border-gray-200" id={TOUR_STEP_IDS.SAVE_EDGE}>
-                                            <div className="bg-gray-100 p-3 rounded-md">
+                                        <div className="mt-1 pt-4 border-t border-border" id={TOUR_STEP_IDS.SAVE_EDGE}>
+                                            <div className="bg-muted p-3 rounded-md">
                                                 <Label>Click on two nodes to create an edge</Label>
                                                 {edgeNodes.length > 0 ? (
                                                     <div className="mt-2 text-sm">
@@ -554,14 +561,14 @@ export function EditMap({ status }: EditMapProps) {
                                     </TabsContent>
 
                                     <TabsContent value="edit-node" className="space-y-4">
-                                        <div className="bg-gray-100 p-3 rounded-md">
+                                        <div className="bg-muted p-3 rounded-md">
                                             <Label>Selected Node to Edit</Label>
                                             {nodeID !== '' ? (
                                                 <div className="mt-2 text-sm">
                                                     <p>Selected Node: {nodeID}</p>
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-gray-500">
+                                                <p className="text-sm text-muted-foreground">
                                                     Click on a node to select it for editing
                                                 </p>
                                             )}
@@ -569,7 +576,7 @@ export function EditMap({ status }: EditMapProps) {
 
                                         <div className="space-y-3">
                                             <div>
-                                                <Label>Change Node Name</Label>
+                                                <Label className="text-background">Change Node Name</Label>
                                                 <Input
                                                     value={editnodeName}
                                                     onChange={(e) =>
@@ -580,7 +587,7 @@ export function EditMap({ status }: EditMapProps) {
                                             </div>
 
                                             <div>
-                                                <Label>Change Node Type</Label>
+                                                <Label className="text-background">Change Node Type</Label>
                                                 <Select
                                                     onValueChange={setEditNodeType}
                                                     value={editnodeType}
@@ -604,8 +611,8 @@ export function EditMap({ status }: EditMapProps) {
                                             </div>
 
                                             <div>
-                                                <Label>Change Associated Departments</Label>
-                                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
+                                                <Label className="text-background">Change Associated Departments</Label>
+                                                <div className="mt-2 border border-border rounded-md p-2 max-h-40 overflow-y-auto">
                                                     {editavailableDepartments.length > 0 ? (
                                                         editavailableDepartments.map((dept) => (
                                                             <div
@@ -632,7 +639,7 @@ export function EditMap({ status }: EditMapProps) {
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <p className="text-gray-500 text-sm">
+                                                        <p className="text-muted-foreground text-sm">
                                                             No departments available
                                                         </p>
                                                     )}
@@ -642,13 +649,13 @@ export function EditMap({ status }: EditMapProps) {
                                             {editcoordinates != null ? (
                                                 <>
                                                     <div>
-                                                        <Label>Change X Coordinate</Label>
+                                                        <Label className="text-background">Change X Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.x}
                                                             onChange={(e) => {
                                                                 setEditCoordinates({
-                                                                x: e.target.value,
-                                                                y: editcoordinates.y,
+                                                                    x: e.target.value,
+                                                                    y: editcoordinates.y,
                                                                 })
                                                             }}
                                                             placeholder="Enter new X Coordinate"
@@ -656,7 +663,7 @@ export function EditMap({ status }: EditMapProps) {
                                                     </div>
 
                                                     <div>
-                                                        <Label>Change Y Coordinate</Label>
+                                                        <Label className="text-background">Change Y Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.y}
                                                             onChange={(e) =>
@@ -684,11 +691,9 @@ export function EditMap({ status }: EditMapProps) {
                                         <Label>Algorithm</Label>
                                         <Select
                                             value={algorithm}
-                                            //onValueChange={(value: string) => setAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
                                             onValueChange={(value: string) => saveAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')}
-
                                         >
-                                            <SelectTrigger>
+                                            <SelectTrigger className="text-foreground">
                                                 <SelectValue placeholder="Select algorithm" />
                                             </SelectTrigger>
                                             <SelectContent>
@@ -733,10 +738,7 @@ export function EditMap({ status }: EditMapProps) {
                             </Tabs>
                         </div>
                     </div>
-
-
                 </div>
-                {/*<div id={TOUR_STEP_IDS.WELCOME}>Welcome Section</div>*/}
                 <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
             </div>
         </div>
