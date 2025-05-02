@@ -243,10 +243,10 @@ export function InlineTranslator() {
                 </div>
 
                 <Button
-                    className="w-full"
+                    className="w-full disabled:opacity-50 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-primary/90"
                     onClick={handleTranslate}
                     disabled={isLoading || !sourceText.trim()}
-                    variant="secondary"
+                    variant="default"
                 >
                     {isLoading ? 'Translating...' : 'Translate'}
                 </Button>
