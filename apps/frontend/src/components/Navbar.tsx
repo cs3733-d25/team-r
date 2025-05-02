@@ -54,12 +54,12 @@ function Navbar(props: NavBarProps) {
                                                    * other option at atm*/
                                 'bg-mgb-blue-800 text-white'
                                 : 'text-white hover:bg-mgb-blue-700'
-                        }`}
+                        }`} style={{ fontSize: `${scale}em` }}
                     >
                         {link.name}
                     </Link>
                 ))}
-                <Link key={"Logout"} to={"/"}
+                <Link key={"Logout"} to={"/"} style={{ fontSize: `${scale}em` }}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-mgb-brown-500 text-white hover:bg-mgb-brown-700 active:bg-mgb-brown-800`}>
                     Logout
                 </Link>
@@ -92,20 +92,20 @@ function Navbar(props: NavBarProps) {
         /*NEED TO FIGURE OUT TAILWIND CONFIG ASAP
          * these colors should be added to it instead
          * of manually using them with hex here*/
-        <nav className="bg-mgb-blue text-white shadow-lg">
-            <div className="mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
+        <nav className="bg-mgb-blue text-white shadow-lg" style={{ fontSize: `${scale}em` }}>
+            <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ fontSize: `${scale}em` }}>
+                <div className="flex items-center justify-between h-16" style={{ fontSize: `${scale}em` }}>
                     {/* Logo/Brand */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0" >
                         <Link to={props.page == 'home' ? ("/") : ("/home")}
                               className="flex items-center">
                             <img className="logo w-10" src="/mgb.png" alt="Mass General Brigham" />
-                            <span className="ml-2 text-xl font-bold">Mass General Brigham</span>
+                            <span className="ml-2 text-xl font-bold" style={{ fontSize: `${scale}em` }}>Mass General Brigham</span>
                         </Link>
                     </div>
 
                     {/* Desktop nav Links */}
-                    <div className="hidden lg:block">
+                    <div className="hidden lg:block" style={{ fontSize: `${scale}em` }}>
                             {props.page == 'home' ? (
                                 loginDesktopButton()
                             ) : props.page != 'login' && (
