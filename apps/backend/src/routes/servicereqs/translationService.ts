@@ -35,7 +35,7 @@ export async function translateText(
 }
 
 router.post(
-  "/inline",
+  "/",
   async function (req: Request, res: Response): Promise<void> {
     try {
       const { text, targetLanguage } = req.body;
