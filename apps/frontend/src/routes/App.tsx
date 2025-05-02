@@ -32,6 +32,7 @@ import PatientTransport from "@/features/Requests/PatientTransport/PatientTransp
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
 import Footer from "../components/Footer";
+import {ThemeContext} from "@/context/themeContext.tsx";
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
     const [userType, setUserType] = useState("Guest");
     const [userFirstName, setUserFirstName] = useState("");
     const { theme } = useTheme();
+    const [themeValue, setThemeValue] = useState<'light' | 'dark'>('light');
+
 
     console.log('APP IS RENDERED');
 
@@ -110,13 +113,14 @@ function App() {
             ],
         },
     ]);
-
     return (
+        <ThemeContext.Provider value={{themeValue}}>
         <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
             <Footer />
         </div>
+        </ThemeContext.Provider>
     );
 }
 

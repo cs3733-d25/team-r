@@ -10,7 +10,6 @@ interface HomeMainProps {
 }
 
 export function HomeMain(props: HomeMainProps) {
-    console.log('USER TYPE', props.userType, '- Keagan');
 
     const navigate = useNavigate();
     const handleNavigateToMap = () => {
