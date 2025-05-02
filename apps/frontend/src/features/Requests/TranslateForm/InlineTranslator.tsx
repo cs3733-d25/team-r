@@ -170,6 +170,10 @@ export function InlineTranslator() {
     };
 
     const handleTranslate = async () => {
+        if (isListening) {
+            stopListening();
+        }
+
         if (!sourceText.trim()) return;
 
         setIsLoading(true);
