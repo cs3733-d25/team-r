@@ -163,13 +163,31 @@ export const DeviceReqForm = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Device Select */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Select a Device
-                                        <span className="text-accent">*</span>
-                                    </Label>
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                                {/*        Select a Device*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*    </Label>*/}
 
-                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                                {/*    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>*/}
+                                {/*</div>*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Device
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                             e.g., X-Ray, EKG, Syringe
+                                        </span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="device"
+                                        value={formData.device}
+                                        onChange={handleChange}
+                                        placeholder="Enter a medical device"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
                                 </div>
                                 {/*assignEmployee*/}
                                 <div>
