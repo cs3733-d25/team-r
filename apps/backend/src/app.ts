@@ -18,6 +18,7 @@ import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
 import inlineTranslateRouter from "./routes/servicereqs/translationService.ts";
 import announcementRouter from "./routes/announcements.ts";
+import uploadTranslateRouter from "./routes/servicereqs/uploadTranslate.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -75,6 +76,7 @@ app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
 app.use(API_ROUTES.TRANSLATE, translateRouter);
 app.use(API_ROUTES.INLINETRANSLATOR, inlineTranslateRouter);
+app.use(API_ROUTES.UPLOADTRANSLATE, uploadTranslateRouter);
 app.use(API_ROUTES.ANNOUNCEMENTS, announcementRouter);
 
 /**

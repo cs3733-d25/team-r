@@ -17,5 +17,6 @@ export const API_ROUTES = {
     DFS: '/api/dfs',
     TRANSLATE: '/api/translate',
     INLINETRANSLATOR: '/api/inline',
+    UPLOADTRANSLATE: '/api/upload-translate',
     ANNOUNCEMENTS: '/api/announcements',
 };
