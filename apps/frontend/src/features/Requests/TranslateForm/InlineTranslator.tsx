@@ -6,6 +6,58 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from '
 import axios from 'axios';
 import { Mic, MicOff } from 'lucide-react';
 
+interface SpeechRecognitionEvent extends Event {
+    results: SpeechRecognitionResultList;
+    resultIndex: number;
+    error?: {
+        error: string;
+        message?: string;
+    };
+}
+
+interface SpeechRecognitionResultList {
+    readonly length: number;
+    item(index: number): SpeechRecognitionResult;
+    [index: number]: SpeechRecognitionResult;
+}
+
+interface SpeechRecognitionResult {
+    readonly length: number;
+    item(index: number): SpeechRecognitionAlternative;
+    [index: number]: SpeechRecognitionAlternative;
+    isFinal?: boolean;
+}
+
+interface SpeechRecognitionAlternative {
+    transcript: string;
+    confidence: number;
+}
+
+interface SpeechRecognition extends EventTarget {
+    continuous: boolean;
+    interimResults: boolean;
+    lang: string;
+    start(): void;
+    stop(): void;
+    abort(): void;
+    onresult: (event: SpeechRecognitionEvent) => void;
+    onerror: (event: SpeechRecognitionEvent) => void;
+    onend: () => void;
+    onstart: () => void;
+}
+
+interface SpeechRecognitionConstructor {
+    new (): SpeechRecognition;
+}
+
+declare global {
+    interface Window {
+        SpeechRecognition?: SpeechRecognitionConstructor;
+        webkitSpeechRecognition?: SpeechRecognitionConstructor;
+        recognitionInstance?: SpeechRecognition | null;
+    }
+}
+
 const LANGUAGES = [
     { code: 'es', name: 'Spanish' },
     { code: 'fr', name: 'French' },
@@ -40,8 +92,12 @@ export function InlineTranslator() {
     };
 
     const startListening = () => {
-        const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-        const recognition = new SpeechRecognition();
+        const SpeechRecognitionClass = window.webkitSpeechRecognition || window.SpeechRecognition;
+        if (!SpeechRecognitionClass) {
+            console.error('Speech recognition not supported in this browser');
+            return;
+        }
+        const recognition = new SpeechRecognitionClass();
 
         recognition.continuous = true;
         recognition.interimResults = true;
