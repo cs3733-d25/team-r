@@ -82,7 +82,11 @@ export function InlineTranslator() {
     const recognitionRef = useRef<SpeechRecognition | null>(null);
 
     useEffect(() => {
-        setSpeechSupported(!!window.webkitSpeechRecognition || !!window.SpeechRecognition);
+        const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (Recognition) {
+            window.SpeechRecognition = Recognition;
+            setSpeechSupported(!!window.webkitSpeechRecognition || !!window.SpeechRecognition);
+        }
     }, []);
 
     useEffect(() => {
