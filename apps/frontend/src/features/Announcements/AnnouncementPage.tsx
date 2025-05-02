@@ -96,14 +96,16 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
     return (
         <div className="min-h-screen bg-background">
             <div className="container mx-auto pt-12 pb-8">
-                <div className="flex justify-between items-center mb-6">
+                <div className="relative mb-6">
                     <h1 className="text-3xl font-bold text-center">
                         Hospital Announcements Dashboard
                     </h1>
                     {isAdmin && (
-                        <Button onClick={() => navigate('/create-announcement')}>
-                            Create New Announcement
-                        </Button>
+                        <div className="absolute right-0 top-0">
+                            <Button onClick={() => navigate('/create-announcement')}>
+                                Create New Announcement
+                            </Button>
+                        </div>
                     )}
                 </div>
 
@@ -112,15 +114,6 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                         <AlertDescription>{error}</AlertDescription>
                     </Alert>
                 )}
-
-                <div className="mb-6">
-                    <Input
-                        placeholder="Search announcements..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="max-w-md"
-                    />
-                </div>
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="mb-0 border-b border-gray-200 shadow-none">
