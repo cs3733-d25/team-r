@@ -1,6 +1,6 @@
-import express, { Router, Request, Response } from "express";
+import express, {Router, Request, Response} from "express";
 import client from "../bin/prisma-client.ts";
-import { Prisma } from "database";
+import {Prisma} from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
 const router: Router = express.Router();
