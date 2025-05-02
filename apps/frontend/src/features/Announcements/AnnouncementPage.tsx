@@ -23,7 +23,7 @@ interface AnnouncementPageProps {
 }
 
 export function AnnouncementPage(props: AnnouncementPageProps) {
-    const [activeTab, setActiveTab] = useState('overview');
+    const [activeTab, setActiveTab] = useState(props.defaultTab || 'overview');
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
