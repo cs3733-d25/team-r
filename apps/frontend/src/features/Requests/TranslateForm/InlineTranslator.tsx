@@ -31,7 +31,7 @@ export function InlineTranslator() {
         try {
             const response = await axios.post('/api/translation/inline', {
                 text: sourceText,
-                targetLanguage,
+                targetLanguage: targetLanguage,
             });
             setTranslatedText(response.data.translatedText);
         } catch (error) {

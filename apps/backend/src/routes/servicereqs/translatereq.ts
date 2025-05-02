@@ -3,6 +3,7 @@ import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 import {TranslationServiceClient} from "@google-cloud/translate";
+import {translateText} from "./translationService.ts";
 
 const router: Router = express.Router();
 
@@ -84,39 +85,7 @@ router.post("/single-request", async function (req: Request, res: Response) {
   }
 });
 
-async function translateText(text: string, targetLanguage: string): Promise<string> {
-  try {
-    const projectId = "SoftwareEngineeringCourse";
-    const location = 'global';
-    const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
-
-    const response = await fetch(
-      `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: text,
-          target: targetLanguage,
-          format: "text"
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    if (data.data && data.data.translations && data.data.translations.length > 0) {
-      return data.data.translations[0].translatedText;
-    }
-
-    return "";
-  } catch (error) {
-    console.error('Google Translate API error:', error);
-    throw error;
-  }
-}
-
-router.post("/inline", async function(req: Request, res: Response) {
+router.post("/translation/inline", async function (req: Request, res: Response) {
   try {
     const { text, targetLanguage } = req.body;
 
