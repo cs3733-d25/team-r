@@ -1,4 +1,11 @@
-export async function translateText(text: string, targetLanguage: string): Promise<string> {
+import express, { Router, Request, Response } from "express";
+
+const router: Router = express.Router();
+
+export async function translateText(
+  text: string,
+  targetLanguage: string,
+): Promise<string> {
   try {
     const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
 
@@ -10,9 +17,9 @@ export async function translateText(text: string, targetLanguage: string): Promi
         body: JSON.stringify({
           q: text,
           target: targetLanguage,
-          format: "text"
-        })
-      }
+          format: "text",
+        }),
+      },
     );
 
     const data = await response.json();
@@ -22,7 +29,25 @@ export async function translateText(text: string, targetLanguage: string): Promi
     }
     return "";
   } catch (error) {
-    console.error('Google Translate API error:', error);
+    console.error("Google Translate API error:", error);
     throw error;
   }
 }
+
+router.post("/", async function (req: Request, res: Response): Promise<void> {
+  try {
+    const { text, targetLanguage } = req.body;
+
+    if (!text || !targetLanguage) {
+      res.status(400).json({ error: "Missing required parameters" });
+    }
+
+    const translatedText = await translateText(text, targetLanguage);
+    res.status(200).json({ translatedText });
+  } catch (error) {
+    console.error("Translation error:", error);
+    res.status(500).json({ error: "Translation failed" });
+  }
+});
+
+export default router;

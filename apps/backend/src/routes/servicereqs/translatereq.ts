@@ -2,8 +2,8 @@ import express, { Router, Request, Response } from "express";
 import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
-import {TranslationServiceClient} from "@google-cloud/translate";
-import {translateText} from "./translationService.ts";
+import { TranslationServiceClient } from "@google-cloud/translate";
+import { translateText } from "./translationService.ts";
 
 const router: Router = express.Router();
 
@@ -85,22 +85,25 @@ router.post("/single-request", async function (req: Request, res: Response) {
   }
 });
 
-router.post("/translation/inline", async function (req: Request, res: Response): Promise<void> {
-  try {
-    const { text, targetLanguage } = req.body;
+router.post(
+  "/translation/inline",
+  async function (req: Request, res: Response): Promise<void> {
+    try {
+      const { text, targetLanguage } = req.body;
 
-    if (!text || !targetLanguage) {
-      res.status(400).json({ error: "Missing required parameters" });
+      if (!text || !targetLanguage) {
+        res.status(400).json({ error: "Missing required parameters" });
+      }
+
+      // call API
+      const translatedText = await translateText(text, targetLanguage);
+
+      res.status(200).json({ translatedText });
+    } catch (error) {
+      console.error("Translation error:", error);
+      res.status(500).json({ error: "Translation failed" });
     }
-
-    // call API
-    const translatedText = await translateText(text, targetLanguage);
-
-    res.status(200).json({ translatedText });
-  } catch (error) {
-    console.error("Translation error:", error);
-    res.status(500).json({ error: "Translation failed" });
-  }
-});
+  },
+);
 
 export default router;

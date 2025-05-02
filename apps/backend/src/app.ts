@@ -5,7 +5,6 @@ import session from "express-session";
 import logger from "morgan";
 import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
 import employeeRouter from "./routes/userdata/employee.ts";
-//import servicereqRouter from "./routes/servicereqs.ts";
 import assignedRouter from "./routes/uselessroutes/assigned.ts";
 import csvRouter from "./routes/csv/csv.ts";
 import loginRouter from "./routes/userdata/login.ts";
@@ -17,6 +16,7 @@ import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
 import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
+import inlineTranslateRouter from "./routes/servicereqs/translationService.ts";
 import announcementRouter from "./routes/announcements.ts";
 
 import { API_ROUTES } from "common/src/constants";
@@ -74,6 +74,7 @@ app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
 app.use(API_ROUTES.TRANSLATE, translateRouter);
+app.use(API_ROUTES.INLINETRANSLATOR, inlineTranslateRouter);
 app.use(API_ROUTES.ANNOUNCEMENTS, announcementRouter);
 
 /**
