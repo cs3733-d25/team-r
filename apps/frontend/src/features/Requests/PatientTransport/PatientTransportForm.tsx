@@ -237,7 +237,7 @@ const TransportationRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                     </Label>
-                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to Assign'} reset={resetDropdowns}></Dropdown>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                                 </div>
                             </div>
                             {/* Transportation Type */}
