@@ -568,7 +568,7 @@ export function EditMap({ status }: EditMapProps) {
 
                                         <div className="space-y-3">
                                             <div>
-                                                <Label>Change Node Name</Label>
+                                                <Label className="text-background">Change Node Name</Label>
                                                 <Input
                                                     value={editnodeName}
                                                     onChange={(e) =>
@@ -579,7 +579,7 @@ export function EditMap({ status }: EditMapProps) {
                                             </div>
 
                                             <div>
-                                                <Label>Change Node Type</Label>
+                                                <Label className="text-background">Change Node Type</Label>
                                                 <Select
                                                     onValueChange={setEditNodeType}
                                                     value={editnodeType}
@@ -603,7 +603,7 @@ export function EditMap({ status }: EditMapProps) {
                                             </div>
 
                                             <div>
-                                                <Label>Change Associated Departments</Label>
+                                                <Label className="text-background">Change Associated Departments</Label>
                                                 <div className="mt-2 border border-border rounded-md p-2 max-h-40 overflow-y-auto">
                                                     {editavailableDepartments.length > 0 ? (
                                                         editavailableDepartments.map((dept) => (
@@ -641,7 +641,7 @@ export function EditMap({ status }: EditMapProps) {
                                             {editcoordinates != null ? (
                                                 <>
                                                     <div>
-                                                        <Label>Change X Coordinate</Label>
+                                                        <Label className="text-background">Change X Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.x}
                                                             onChange={(e) => {
@@ -655,7 +655,7 @@ export function EditMap({ status }: EditMapProps) {
                                                     </div>
 
                                                     <div>
-                                                        <Label>Change Y Coordinate</Label>
+                                                        <Label className="text-background">Change Y Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.y}
                                                             onChange={(e) =>
