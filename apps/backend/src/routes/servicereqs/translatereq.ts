@@ -84,7 +84,7 @@ router.post("/single-request", async function (req: Request, res: Response) {
   }
 });
 
-router.post("/inline", async function (req: Request, res: Response) {
+router.post("/inline", async function(req: Request, res: Response) {
   try {
     const { text, targetLanguage } = req.body;
 
@@ -104,7 +104,7 @@ router.post("/inline", async function (req: Request, res: Response) {
 
 async function translateText(text: string, targetLanguage: string): Promise<string> {
   try {
-    const projectId = "project-id";
+    const projectId = "SoftwareEngineeringCourse";
     const location = 'global';
     const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
 
