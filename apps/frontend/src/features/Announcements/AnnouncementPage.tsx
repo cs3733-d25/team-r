@@ -3,8 +3,6 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import {Badge} from '@/components/ui/badge';
-import {Input} from '@/components/ui/input';
-import {Alert, AlertDescription} from '@/components/ui/alert';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -26,17 +24,15 @@ interface AnnouncementPageProps {
 export function AnnouncementPage(props: AnnouncementPageProps) {
     const [activeTab, setActiveTab] = useState('overview');
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState('');
 
     const isAdmin = props.userType === 'Admin';
 
     const announcementCategories = [
-        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', filter: (a: Announcement) => a.priority === 'high' },
-        { name: 'General', description: 'Regular hospital updates and information', filter: (a: Announcement) => a.priority === 'medium' },
-        { name: 'Informational', description: 'Non-critical hospital information and updates', filter: (a: Announcement) => a.priority === 'low' }
+        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', path: '/create-announcement', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority === 'high' },
+        { name: 'General', description: 'Regular hospital updates and information', path: '/create-announcement', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'high' },
+        { name: 'Informational', description: 'Non-critical hospital information and updates', path: '/create-announcement', tab: 'informational', filter: (announcement: Announcement) => announcement.priority === 'high' },
     ];
 
     useEffect(() => {
@@ -45,15 +41,10 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
 
     const fetchAnnouncements = async () => {
         try {
-            setLoading(true);
             const response = await axios.get('/api/announcements');
             setAnnouncements(response.data);
-            setError(null);
         } catch (err) {
             console.error("Failed to fetch announcements", err);
-            setError("Unable to load announcements. Please try again later.");
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -65,7 +56,6 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
             setAnnouncements(announcements.filter(a => a.id !== id));
         } catch (err) {
             console.error("Failed to delete announcement", err);
-            setError("Failed to delete announcement. Please try again.");
         }
     };
 
@@ -91,8 +81,6 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
         });
     };
 
-    if (loading) return <div className="flex justify-center p-8">Loading announcements...</div>;
-
     return (
         <div className="min-h-screen bg-background">
             <div className="container mx-auto pt-12 pb-8">
@@ -100,89 +88,49 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                     <h1 className="text-3xl font-bold text-center">
                         Hospital Announcements Dashboard
                     </h1>
-                    {isAdmin && (
-                        <div className="absolute right-0 top-0">
-                            <Button onClick={() => navigate('/create-announcement')}>
-                                Create New Announcement
-                            </Button>
-                        </div>
-                    )}
-                </div>
 
-                {error && (
-                    <Alert variant="destructive" className="mb-6">
-                        <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                )}
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                        <TabsList className="mb-0 border-b border-gray-200 shadow-none">
+                            <TabsTrigger value="overview">Overview</TabsTrigger>
+                            <TabsTrigger value="all">All Announcements</TabsTrigger>
+                            {announcementCategories.map((category) => (
+                                <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
+                                    {category.name}
+                                </TabsTrigger>
+                            ))}
+                        </TabsList>
 
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="mb-0 border-b border-gray-200 shadow-none">
-                        <TabsTrigger value="overview">Overview</TabsTrigger>
-                        <TabsTrigger value="all">All Announcements</TabsTrigger>
-                        {announcementCategories.map((category) => (
-                            <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
-                                {category.name}
-                            </TabsTrigger>
-                        ))}
-                    </TabsList>
-
-                    {/* Overview Tab Content */}
-                    <TabsContent value="overview" className="space-y-6 -mt-px">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {announcementCategories.map((category, index) => (
-                                <Card key={category.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">
-                                    <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
-                                        <CardTitle>{category.name} Announcements</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
-                                        <p className="text-muted-foreground mb-4 min-h-[3rem]">{category.description}</p>
-                                        <div className="flex flex-col space-y-2 mt-auto">
-                                            <Button
-                                                variant="secondary"
-                                                onClick={() => setActiveTab(category.name.toLowerCase())}
-                                            >
-                                                View {category.name} Announcements
-                                            </Button>
-                                            {isAdmin && (
-                                                <Button onClick={() => navigate('/create-announcement')}>
+                        {/* Overview Tab Content */}
+                        <TabsContent value="overview" className="space-y-6 -mt-px">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {announcementCategories.map((category, index) => (
+                                    <Card key={category.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">
+                                        <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
+                                            <CardTitle>{category.name} Announcements</CardTitle>
+                                        </CardHeader>
+                                        <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                            <p className="text-muted-foreground mb-4 min-h-[3rem]">{category.description}</p>
+                                            <div className="flex flex-col space-y-2 mt-auto">
+                                                <Button variant="secondary" onClick={() => setActiveTab(category.name.toLowerCase())}>
+                                                    View {category.name} Announcements
+                                                </Button>
+                                                <Button onClick={() => navigate(category.path)}>
                                                     Create New Announcement
                                                 </Button>
-                                            )}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    </TabsContent>
-
-                    {/* All Announcements Tab */}
-                    <TabsContent value="all">
-                        {filteredAnnouncements.length === 0 ? (
-                            <p className="text-center py-8 text-gray-500">No announcements found.</p>
-                        ) : (
-                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                {filteredAnnouncements.map(announcement => (
-                                    <AnnouncementCard
-                                        key={announcement.id}
-                                        announcement={announcement}
-                                        isAdmin={isAdmin}
-                                        onDelete={deleteAnnouncement}
-                                        priorityBadgeColor={priorityBadgeColor}
-                                        formatDate={formatDate}
-                                    />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
                                 ))}
                             </div>
-                        )}
-                    </TabsContent>
+                        </TabsContent>
 
-                    {/* Priority-specific Tabs */}
-                    {announcementCategories.map((category) => (
-                        <TabsContent key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
-                            {filteredAnnouncements.filter(category.filter).length === 0 ? (
-                                <p className="text-center py-8 text-gray-500">No {category.name.toLowerCase()} announcements found.</p>
+                        {/* All Announcements Tab */}
+                        <TabsContent value="all">
+                            {filteredAnnouncements.length === 0 ? (
+                                <p className="text-center py-8 text-gray-500">No announcements found.</p>
                             ) : (
                                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                    {filteredAnnouncements.filter(category.filter).map(announcement => (
+                                    {filteredAnnouncements.map(announcement => (
                                         <AnnouncementCard
                                             key={announcement.id}
                                             announcement={announcement}
@@ -195,8 +143,33 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                 </div>
                             )}
                         </TabsContent>
-                    ))}
-                </Tabs>
+
+                        {/* Priority-specific Tabs */}
+                        {announcementCategories.map((category) => (
+                            <TabsContent key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
+                                {filteredAnnouncements.filter(category.filter).length === 0 ? (
+                                    <p className="text-center py-8 text-gray-500">No {category.name.toLowerCase()} announcements found.</p>
+                                ) : (
+                                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                        {filteredAnnouncements.filter(category.filter).map(announcement => (
+                                            <AnnouncementCard
+                                                key={announcement.id}
+                                                announcement={announcement}
+                                                isAdmin={isAdmin}
+                                                onDelete={deleteAnnouncement}
+                                                priorityBadgeColor={priorityBadgeColor}
+                                                formatDate={formatDate}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </TabsContent>
+                        ))}
+                    </Tabs>
+
+                </div>
+
+
             </div>
         </div>
     );
@@ -232,16 +205,15 @@ function AnnouncementCard({ announcement, isAdmin, onDelete, priorityBadgeColor,
                     </p>
                 )}
             </CardContent>
-            {isAdmin && (
-                <CardFooter className="flex justify-end gap-2">
-                    <Button variant="outline" size="sm" asChild>
-                        <a href={`/edit-announcement/${announcement.id}`}>Edit</a>
-                    </Button>
-                    <Button variant="destructive" size="sm" onClick={() => onDelete(announcement.id)}>
-                        Delete
-                    </Button>
-                </CardFooter>
-            )}
+
+            <CardFooter className="flex justify-end gap-2">
+                <Button variant="outline" size="sm" asChild>
+                    <a href={`/edit-announcement/${announcement.id}`}>Edit</a>
+                </Button>
+                <Button variant="destructive" size="sm" onClick={() => onDelete(announcement.id)}>
+                    Delete
+                </Button>
+            </CardFooter>
         </Card>
     );
 }
