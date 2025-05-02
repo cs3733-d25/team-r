@@ -34,20 +34,24 @@ export async function translateText(
   }
 }
 
-router.post("/", async function (req: Request, res: Response): Promise<void> {
-  try {
-    const { text, targetLanguage } = req.body;
+router.post(
+  "/inline",
+  async function (req: Request, res: Response): Promise<void> {
+    try {
+      const { text, targetLanguage } = req.body;
 
-    if (!text || !targetLanguage) {
-      res.status(400).json({ error: "Missing required parameters" });
+      if (!text || !targetLanguage) {
+        res.status(400).json({ error: "Missing required parameters" });
+        return;
+      }
+
+      const translatedText = await translateText(text, targetLanguage);
+      res.status(200).json({ translatedText });
+    } catch (error) {
+      console.error("Translation error:", error);
+      res.status(500).json({ error: "Translation failed" });
     }
-
-    const translatedText = await translateText(text, targetLanguage);
-    res.status(200).json({ translatedText });
-  } catch (error) {
-    console.error("Translation error:", error);
-    res.status(500).json({ error: "Translation failed" });
-  }
-});
+  },
+);
 
 export default router;
