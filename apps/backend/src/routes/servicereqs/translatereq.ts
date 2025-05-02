@@ -104,30 +104,30 @@ router.post("/inline", async function (req: Request, res: Response) {
 
 async function translateText(text: string, targetLanguage: string): Promise<string> {
   try {
-    // initialize client
-    const translationClient = new TranslationServiceClient({
-      keyFilename: process.env.GOOGLE_TRANSLATE_API_KEY,
-    });
-
-    const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
+    const projectId = "project-id";
     const location = 'global';
+    const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
 
-    const request = {
-      parent: `projects/${projectId}/locations/${location}`,
-      contents: [text],
-      mimeType: 'text/plain',
-      sourceLanguageCode: 'en',
-      targetLanguageCode: targetLanguage,
-    };
+    const response = await fetch(
+      `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          q: text,
+          target: targetLanguage,
+          format: "text"
+        })
+      }
+    );
 
-    // call google's API
-    const [response] = await translationClient.translateText(request);
+    const data = await response.json();
 
-    if (response.translations && response.translations.length > 0) {
-      return response.translations[0].translatedText || '';
+    if (data.data && data.data.translations && data.data.translations.length > 0) {
+      return data.data.translations[0].translatedText;
     }
 
-    return '';
+    return "";
   } catch (error) {
     console.error('Google Translate API error:', error);
     throw error;
