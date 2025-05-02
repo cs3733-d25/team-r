@@ -22,6 +22,7 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { TourProvider } from '@/components/tour.tsx';
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
+import FileTranslator from "@/features/Requests/TranslateForm/FileTranslator.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
@@ -102,6 +103,7 @@ function App() {
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
                 { path: 'translation', element: <Translate /> },
+                { path: 'upload-translate', element: <FileTranslator /> },
                 { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> },
                 { path: 'announcements', element: <AnnouncementPage /> },
                 { path: 'announcementform', element: <AnnouncementForm /> },
