@@ -112,7 +112,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                                 <Button variant="secondary" onClick={() => setActiveTab(category.name.toLowerCase())}>
                                                     View {category.name} Announcements
                                                 </Button>
-                                                <Button onClick={() => navigate('/announcement-form')}>
+                                                <Button onClick={() => navigate('/announcementform')}>
                                                     Create New Announcement
                                                 </Button>
                                             </div>
