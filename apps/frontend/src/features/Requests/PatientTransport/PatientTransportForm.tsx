@@ -141,7 +141,7 @@ const TransportationRequestForm = () => {
                 // Reset form
                 setFormData({
                     patientID: '',
-                    employeeName:'',
+                    employeeName: formData.employeeName,
                     currentBuilding :'',
                     desiredBuilding : '',
                     comments: '',

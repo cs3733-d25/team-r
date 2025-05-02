@@ -39,7 +39,7 @@ router.post("/", async function (req: Request, res: Response) {
         department,
         building,
         status,
-        roomNumber: parseInt(roomNumber, 10),
+        roomNumber,
         employeeName: {
           connect: {
             id: employeeName,
@@ -78,7 +78,7 @@ router.post("/single-request", async function (req: Request, res: Response) {
     console.log("Got request TRANSLATE", request);
     res.status(200).json(request);
   } catch (error) {
-    console.error("Error fetching pharmacy request data:", error);
+    console.error("Error fetching translate request data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
