@@ -138,7 +138,7 @@ export function NavbarMGH(props: NavBarProps) {
                             <Bell className="h-5 w-5" />
                         </Button>
                         <Popover>
-                            <PopoverTrigger asChild>
+                            <PopoverTrigger>
                                 <Button variant="ghost" size="icon" className="rounded-full">
                                     <User className="h-5 w-5" />
                                 </Button>
