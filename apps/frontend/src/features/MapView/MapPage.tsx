@@ -408,8 +408,13 @@ export function MapPage() {
                         {availableFloors.map((floor) => (
                             <Button
                                 key={floor}
-                                variant={currentFloor === floor ? 'secondary' : 'unselected'}
-                                // TODO: add a for loop to check all indices in flashingFloors
+                                variant={
+                                    currentFloor === floor
+                                        ? 'secondary'
+                                        : flashingFloors?.includes(floor)
+                                            ? 'outline'
+                                            : 'unselected'
+                                }
                                 className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {
                                     setCurrentFloor(floor);
