@@ -31,8 +31,8 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
 
     const announcementCategories = [
         { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', path: '/create-announcement', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority === 'high' },
-        { name: 'General', description: 'Regular hospital updates and information', path: '/create-announcement', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'high' },
-        { name: 'Informational', description: 'Non-critical hospital information and updates', path: '/create-announcement', tab: 'informational', filter: (announcement: Announcement) => announcement.priority === 'high' },
+        { name: 'General', description: 'Regular hospital updates and information', path: '/create-announcement', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'medium' },
+        { name: 'Bulletin', description: 'Non-critical hospital information and updates', path: '/create-announcement', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority === 'low' },
     ];
 
     useEffect(() => {
@@ -85,7 +85,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
         <div className="min-h-screen bg-background">
             <div className="container mx-auto pt-12 pb-8">
                 <div className="relative mb-6">
-                    <h1 className="text-3xl font-bold text-center">
+                    <h1 className="text-3xl font-bold mb-6 text-center">
                         Hospital Announcements Dashboard
                     </h1>
 
