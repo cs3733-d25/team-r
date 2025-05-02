@@ -85,7 +85,7 @@ export function InlineTranslator() {
 
                 {translatedText && (
                     <div className="mt-4">
-                        <Label htmlFor="translatedText">Translation</Label>
+                        <Label htmlFor="translatedText" className="mb-2 block">Translation</Label>
                         <div
                             id="translatedText"
                             className="p-3 border rounded-md bg-slate-50 min-h-24"
