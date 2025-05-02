@@ -94,12 +94,15 @@ export function InlineTranslator() {
     }, []);
 
     const toggleSpeechToText = async () => {
+        console.log("Toggle speech function called");
         if (isListening) {
             stopListening();
         } else {
             try {
                 // request microphone permission
+                console.log("Requesting microphone permission...");
                 await navigator.mediaDevices.getUserMedia({audio: true});
+                console.log("Permission granted!");
                 setMicPermissionError(false);
                 startListening();
             } catch (error) {
