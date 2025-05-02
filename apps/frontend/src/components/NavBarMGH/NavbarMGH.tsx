@@ -97,6 +97,17 @@ export function NavbarMGH(props: NavBarProps) {
                                     ]}
                                 />
                             )}
+
+                            {props.userType === 'Admin' && (
+                                <HoverPopoverNavLink
+                                    label={'Announcements'}
+                                    href={'/announcements'}
+                                    items={[
+                                        { label: 'Create Announcement', href: '/create-announcement' },
+                                        { label: 'View All Announcements', href: '/announcements' },
+                                    ]}
+                                />
+                            )}
                         </>
                     )}
                     {/*About and Credits Page*/}
