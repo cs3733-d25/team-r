@@ -105,6 +105,9 @@ function App() {
                 { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> },
                 { path: 'announcements', element: <AnnouncementPage /> },
                 { path: 'announcementform', element: <AnnouncementForm /> },
+                { path: 'urgentannouncements', element: <AnnouncementPage defaultTab = 'urgent' /> },
+                { path: 'generalannouncements', element: <AnnouncementPage defaultTab = 'general' /> },
+                { path: 'bulletinannouncements', element: <AnnouncementPage defaultTab = 'bulletin' /> },
             ],
         },
     ]);

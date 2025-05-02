@@ -19,6 +19,7 @@ interface Announcement {
 interface AnnouncementPageProps {
     userType?: string;
     userName?: string;
+    defaultTab?: string;
 }
 
 export function AnnouncementPage(props: AnnouncementPageProps) {
