@@ -40,7 +40,7 @@ router.get("/", async function (req: Request, res: Response) {
 // create new announcement
 router.post("/", async function (req: Request, res: Response) {
   console.log("Creating a new announcement");
-  const { title, content, author, priority, expirationDate } = req.body;
+  const { title, content, author, priority, type, expirationDate } = req.body;
 
   try {
     const newAnnouncement = await client.announcement.create({
@@ -50,6 +50,7 @@ router.post("/", async function (req: Request, res: Response) {
         date: new Date().toISOString(),
         author,
         priority: priority || "medium",
+        type: type || "general",
         expirationDate: expirationDate || null,
       },
     });

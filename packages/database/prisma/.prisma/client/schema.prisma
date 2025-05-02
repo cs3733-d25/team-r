@@ -173,6 +173,7 @@ model Announcement {
   date           DateTime
   author         String
   priority       String
+  type           String
   expirationDate DateTime?
 }
 

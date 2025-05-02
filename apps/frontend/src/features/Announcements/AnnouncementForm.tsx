@@ -8,12 +8,14 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import {ErrorCard} from "@/components/ServiceRequests/ErrorCard.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import {useNavigate} from 'react-router-dom';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 
 interface SubmittedAnnouncement {
     title: string;
     content: string;
     author: string;
     priority: string;
+    type: string;
     expirationDate?: string;
     timestamp: string;
 }
@@ -25,6 +27,7 @@ export const AnnouncementForm = () => {
         content: '',
         author: '',
         priority: '',
+        type: 'general',
         expirationDate: ''
     });
 
@@ -91,6 +94,7 @@ export const AnnouncementForm = () => {
                     content: '',
                     author: userName,
                     priority: '',
+                    type: formData.type,
                     expirationDate: ''
                 });
             }
@@ -126,6 +130,23 @@ export const AnnouncementForm = () => {
         }));
     };
 
+    const handleTypeChange = (value: string) => {
+        setFormData(prev => {
+           const updatedData = {
+               ...prev,
+                type: value
+           };
+
+           if (value === 'urgent') {
+               updatedData.priority = 'High';
+           } else if (value === 'bulletin') {
+               updatedData.priority = 'Low';
+           }
+
+           return updatedData;
+        });
+    };
+
     return (
         <>
             <div className="max-w-7xl mx-auto">
@@ -133,87 +154,31 @@ export const AnnouncementForm = () => {
                     <div className="p-6">
                         <h1 className="text-3xl font-bold text-center mb-6">Create Announcement</h1>
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* title */}
-                                <div className="md:col-span-2">
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Title
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Input
-                                        type="text"
-                                        name="title"
-                                        value={formData.title}
-                                        onChange={handleChange}
-                                        placeholder="Enter announcement title"
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                        required
-                                    />
+                        <Tabs defaultValue="general" value={formData.type} onValueChange={handleTypeChange} className="mb-6">
+                            <TabsList className="grid grid-cols-3 mb-4">
+                                <TabsTrigger value="urgent">Urgent Announcements</TabsTrigger>
+                                <TabsTrigger value="general">General Announcements</TabsTrigger>
+                                <TabsTrigger value="bulletin">Bulletin Announcements</TabsTrigger>
+                            </TabsList>
+
+                            <TabsContent value="urgent" className="border-2 border-red-500 p-4 rounded-lg">
+                                <div className="bg-red-100 p-3 mb-4 rounded-mb text-red-800">
+                                    <strong>Important:</strong> Urgent announcements are highly visible and should only be used for critical information.
                                 </div>
+                                {renderForm(true)}
+                            </TabsContent>
 
-                                {/* priority */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Priority Level
-                                        <span className="text-accent">*</span>
-                                    </Label>
-                                    <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
+                            <TabsContent value="general">
+                                {renderForm(false)}
+                            </TabsContent>
+
+                            <TabsContent value="bulletin" className="border-2 border-blue-300 p-4 rounded-lg">
+                                <div className="bg-blue-100 p-3 mb-4 rounded-md text-blue-800">
+                                    <strong>Note:</strong> Bulletin board items are for general information and updates.
                                 </div>
-
-                                {/* expiration */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Expiration Date
-                                        <span className="text-xs text-secondary-foreground block">
-                                            Optional: When this announcement should expire
-                                        </span>
-                                    </Label>
-                                    <Input
-                                        type="date"
-                                        name="expirationDate"
-                                        value={formData.expirationDate}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Content */}
-                            <div>
-                                <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Content
-                                    <span className="text-accent">*</span>
-                                </Label>
-                                <Textarea
-                                    name="content"
-                                    value={formData.content}
-                                    onChange={handleTextAreaChange}
-                                    placeholder="Enter announcement content"
-                                    rows={6}
-                                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                                    required
-                                />
-                            </div>
-
-                            {/* submit */}
-                            <div className="flex justify-end gap-4">
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={() => navigate('/announcements')}
-                                    className="px-6 py-2"
-                                >
-                                    Cancel
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    className="px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-200"
-                                >
-                                    Create Announcement
-                                </Button>
-                            </div>
-                        </form>
+                                {renderForm(false, true)}
+                            </TabsContent>
+                        </Tabs>
                     </div>
                 </div>
             </div>
@@ -222,7 +187,7 @@ export const AnnouncementForm = () => {
                 <ErrorCard message={submitStatus.message} />
             )}
 
-            {/* confirmation card */}
+
             {submittedAnnouncement && !submitStatus?.isError && (
                 <div className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
                     <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
@@ -240,7 +205,7 @@ export const AnnouncementForm = () => {
                                 d="M5 13l4 4L19 7"
                             />
                         </svg>
-                        Announcement Created
+                        {formData.type.charAt(0).toUpperCase() + formData.type.slice(1)} Announcement Created
                     </div>
                     <div className="p-4">
                         <h3 className="text-lg font-semibold mb-2">
@@ -250,6 +215,10 @@ export const AnnouncementForm = () => {
                             <div>
                                 <span className="font-semibold">Title:</span>{' '}
                                 {submittedAnnouncement.title}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Type:</span>{' '}
+                                {submittedAnnouncement.type.charAt(0).toUpperCase() + submittedAnnouncement.type.slice(1)}
                             </div>
                             <div>
                                 <span className="font-semibold">Priority:</span>{' '}
@@ -289,6 +258,104 @@ export const AnnouncementForm = () => {
             )}
         </>
     );
+
+    function renderForm(isUrgent = false, isBulletin = false) {
+        return (
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* title */}
+                    <div className="md:col-span-2">
+                        <Label className="block text-sm font-semibold text-foreground mb-2">
+                            Title
+                            <span className="text-accent">*</span>
+                        </Label>
+                        <Input
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            placeholder={`Enter ${isUrgent ? 'urgent alert' : isBulletin ? 'bulletin' : 'announcement'} title`}
+                            className={`w-full px-4 py-2 rounded-md border ${isUrgent ? 'border-red-500' : isBulletin ? 'border-blue-300' : 'border-border'} bg-input`}
+                            required
+                        />
+                    </div>
+
+                    {/* priority - only show if not urgent or bulletin */}
+                    {!isUrgent && !isBulletin && (
+                        <div>
+                            <Label className="block text-sm font-semibold text-foreground mb-2">
+                                Priority Level
+                                <span className="text-accent">*</span>
+                            </Label>
+                            <Dropdown
+                                tableName={"priority"}
+                                fieldName={"priority"}
+                                onChange={handleDropdownChange}
+                                reset={resetDropdowns}
+                            />
+                        </div>
+                    )}
+
+                    {/* expiration */}
+                    <div className={!isUrgent && !isBulletin ? "" : "md:col-span-2"}>
+                        <Label className="block text-sm font-semibold text-foreground mb-2">
+                            Expiration Date
+                            <span className={isUrgent ? "text-accent" : "text-xs text-secondary-foreground block"}>
+                                {isUrgent ? "*" : "Optional: When this announcement should expire"}
+                            </span>
+                        </Label>
+                        <Input
+                            type="date"
+                            name="expirationDate"
+                            value={formData.expirationDate}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                            required={isUrgent}
+                        />
+                    </div>
+                </div>
+
+                {/* Content */}
+                <div>
+                    <Label className="block text-sm font-semibold text-foreground mb-2">
+                        Content
+                        <span className="text-accent">*</span>
+                    </Label>
+                    <Textarea
+                        name="content"
+                        value={formData.content}
+                        onChange={handleTextAreaChange}
+                        placeholder={`Enter ${isUrgent ? 'urgent alert' : isBulletin ? 'bulletin' : 'announcement'} content`}
+                        rows={isUrgent ? 4 : 6}
+                        className={`w-full px-4 py-2 rounded-md border ${isUrgent ? 'border-red-500' : isBulletin ? 'border-blue-300' : 'border-border'} bg-input`}
+                        required
+                    />
+                </div>
+
+                {/* submit */}
+                <div className="flex justify-end gap-4">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => navigate('/announcements')}
+                        className="px-6 py-2"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        type="submit"
+                        className={`px-6 py-2 text-white font-medium rounded-md transition duration-200 ${
+                            isUrgent ? 'bg-red-600 hover:bg-red-700' :
+                                isBulletin ? 'bg-blue-500 hover:bg-blue-600' :
+                                    'bg-primary hover:bg-foreground'
+                        }`}
+                    >
+                        Create {isUrgent ? 'Urgent Alert' : isBulletin ? 'Bulletin' : 'Announcement'}
+                    </Button>
+                </div>
+            </form>
+        );
+    }
 };
 
 export default AnnouncementForm;
