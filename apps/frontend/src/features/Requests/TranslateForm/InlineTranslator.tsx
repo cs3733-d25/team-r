@@ -208,7 +208,7 @@ export function InlineTranslator() {
                             <Button
                                 type="button"
                                 size="icon"
-                                variant="ghost"
+                                variant="unselected"
                                 className={`absolute right-2 top-2 ${isListening ? 'text-red-500' : ''}`}
                                 onClick={toggleSpeechToText}
                                 title={isListening ? 'Stop listening' : 'Start dictation'}
@@ -243,7 +243,7 @@ export function InlineTranslator() {
                 </div>
 
                 <Button
-                    className="w-full disabled:opacity-50 disabled:cursor-not-allowed bg-primary text-primary-foreground hover:bg-primary/90"
+                    className="w-full"
                     onClick={handleTranslate}
                     disabled={isLoading || !sourceText.trim()}
                     variant="default"
