@@ -170,7 +170,7 @@ export function InlineTranslator() {
 
         setIsLoading(true);
         try {
-            const response = await axios.post('/api/translation/inline', {
+            const response = await axios.post('/api/inline', {
                 text: sourceText,
                 targetLanguage: targetLanguage,
             });
