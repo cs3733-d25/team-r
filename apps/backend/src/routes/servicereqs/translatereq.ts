@@ -2,6 +2,7 @@ import express, { Router, Request, Response } from "express";
 import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
+import {TranslationServiceClient} from "@google-cloud/translate";
 
 const router: Router = express.Router();
 
@@ -82,5 +83,55 @@ router.post("/single-request", async function (req: Request, res: Response) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+router.post("/inline", async function (req: Request, res: Response) {
+  try {
+    const { text, targetLanguage } = req.body;
+
+    if (!text || !targetLanguage) {
+      return res.status(400).json({ error: "Missing required parameters" });
+    }
+
+    // call API
+    const translatedText = await translateText(text, targetLanguage);
+
+    res.status(200).json({ translatedText });
+  } catch (error) {
+    console.error("Translation error:", error);
+    res.status(500).json({ error: "Translation failed" });
+  }
+});
+
+async function translateText(text: string, targetLanguage: string): Promise<string> {
+  try {
+    // initialize client
+    const translationClient = new TranslationServiceClient({
+      keyFilename: process.env.GOOGLE_TRANSLATE_API_KEY,
+    });
+
+    const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
+    const location = 'global';
+
+    const request = {
+      parent: `projects/${projectId}/locations/${location}`,
+      contents: [text],
+      mimeType: 'text/plain',
+      sourceLanguageCode: 'en',
+      targetLanguageCode: targetLanguage,
+    };
+
+    // call google's API
+    const [response] = await translationClient.translateText(request);
+
+    if (response.translations && response.translations.length > 0) {
+      return response.translations[0].translatedText || '';
+    }
+
+    return '';
+  } catch (error) {
+    console.error('Google Translate API error:', error);
+    throw error;
+  }
+}
 
 export default router;
