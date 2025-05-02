@@ -1,6 +1,6 @@
 // Full file with Settings link fixed and everything else untouched
 
-import React, { useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
@@ -20,6 +20,8 @@ export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
     const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0();
+    //const {textValue} = useContext(TextContext);
+    //const [textValue, setTextValue] = useState<'large' | 'largeBold'>('large');
 
     async function handleLogout() {
         try {
@@ -32,6 +34,7 @@ export function NavbarMGH(props: NavBarProps) {
 
     return (
         // main header
+
         <header className="sticky top-0 z-40 border-b bg-primary">
             <div className="flex h-16 items-center px-4 min-[1152px]:px-6">
                 {/* MGH logo and text */}
@@ -144,7 +147,7 @@ export function NavbarMGH(props: NavBarProps) {
                                     >
                                         Profile
                                     </Button>
-                                    {/* ✅ Updated Settings link */}
+
                                     <Button
                                         variant={'ghostPopover'}
                                         asChild
@@ -236,5 +239,6 @@ export function NavbarMGH(props: NavBarProps) {
                 </nav>
             </div>
         </header>
+
     );
 };

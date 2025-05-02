@@ -9,6 +9,7 @@ import {
 import values, {valueKey} from "@/constant-values.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {useTextSize} from "@/context/textContext.tsx";
 
 //more specific typing for mapping onto options dropdown
 interface Employee {
@@ -44,7 +45,7 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName
     //if (!reset) {resetForm = false;} else {resetForm = true;} //if statement because props.reset can be undefined
 
     const [options, setOptions] = useState<string[]>([]);
-
+    const  {scale}  = useTextSize();
     useEffect(() => {
         const getOptions = async () => {
             if (customOptions === 'employees') {
@@ -72,17 +73,18 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName
     const handleChange = (value: string) => {
         onChange(fieldName, value);
     };
+    const dynamicTextSize = `text-${scale > 1.5 ? 'xl' : scale > 1 ? 'lg' : 'base'}`;
 
     return (
         <Select onValueChange={handleChange} key={resetForm.toString()}>
             {/*<Select onValueChange={handleChange}>*/}
-             <SelectTrigger className={"bg-input"}>
+             <SelectTrigger className={"bg-input ${dynamicTextSize}" }>
                 <SelectValue placeholder={alternateFieldName ? 'Select a ' + alternateFieldName : 'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
-            <SelectContent className={"bg-input"} >
+            <SelectContent className={"bg-input ${dynamicTextSize}"} >
                 <SelectGroup>
                     {options.map((option) => (
-                        <SelectItem key={option} value={option}>
+                        <SelectItem key={option} value={option} className={dynamicTextSize}>
                             {option}
                         </SelectItem>
                     ))}
