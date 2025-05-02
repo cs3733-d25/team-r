@@ -93,7 +93,7 @@ export function InlineTranslator() {
         };
     }, []);
 
-    const toggleSpeechToText = () => {
+    const toggleSpeechToText = async () => {
         if (isListening) {
             stopListening();
         } else {
