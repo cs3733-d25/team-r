@@ -48,7 +48,7 @@ export function InlineTranslator() {
 
             <div className="space-y-4">
                 <div>
-                    <Label htmlFor="sourceText">Text to Translate</Label>
+                    <Label htmlFor="sourceText" className="mb-2 block">Text to Translate</Label>
                     <Textarea
                         id="sourceText"
                         value={sourceText}
@@ -59,7 +59,7 @@ export function InlineTranslator() {
                 </div>
 
                 <div>
-                    <Label htmlFor="targetLanguage">Translate To</Label>
+                    <Label htmlFor="targetLanguage" className="mb-2 block">Translate To</Label>
                     <Select value={targetLanguage} onValueChange={setTargetLanguage}>
                         <SelectTrigger id="targetLanguage">
                             <SelectValue placeholder="Select language" />
