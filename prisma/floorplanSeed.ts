@@ -282,24 +282,24 @@ async function main() {
     await PrismaClient.node.createMany({
         data: [
             {
-                "nodeID": "Entrance-1745538360518",
+                "nodeID": "Main Entrance 20",
                 "nodeType": "Entrance",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 211.67,
                 "ycoord": 386,
-                "longName": "",
-                "shortName": ""
+                "longName": "Main Entrance",
+                "shortName": "Main Entrance"
             },
             {
-                "nodeID": "Hallway-1745538370323",
+                "nodeID": "Entrance Corridor 20",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 216.67,
                 "ycoord": 475,
-                "longName": "",
-                "shortName": ""
+                "longName": "Entrance Corridor",
+                "shortName": "Entrance Corridor"
             },
             {
                 "nodeID": "Hallway-1745538375613",
@@ -312,34 +312,14 @@ async function main() {
                 "shortName": ""
             },
             {
-                "nodeID": "Hallway-1745538396035",
+                "nodeID": "Check-In Corridor 20",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 197.67,
                 "ycoord": 761,
-                "longName": "",
-                "shortName": ""
-            },
-            {
-                "nodeID": "Hallway-1745538418396",
-                "nodeType": "Hallway",
-                "building": "Healthcare Center (20 Patriot Pl.)",
-                "floor": 1,
-                "xcoord": 289.83,
-                "ycoord": 760,
-                "longName": "",
-                "shortName": ""
-            },
-            {
-                "nodeID": "Specialty Clinic",
-                "nodeType": "Reception",
-                "building": "Healthcare Center (20 Patriot Pl.)",
-                "floor": 1,
-                "xcoord": 289.83,
-                "ycoord": 738,
-                "longName": "",
-                "shortName": "Right Reception"
+                "longName": "Check-In Corridor",
+                "shortName": "Check-In Corridor"
             },
             {
                 "nodeID": "Hallway-1745538474179",
@@ -362,14 +342,14 @@ async function main() {
                 "shortName": "Left Reception"
             },
             {
-                "nodeID": "Hallway-1745538516214",
+                "nodeID": "Urology Corridor 20",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 315.92,
                 "ycoord": 760,
-                "longName": "",
-                "shortName": ""
+                "longName": "Urology Corridor",
+                "shortName": "Urology Corridor"
             },
             {
                 "nodeID": "Hallway-1745538522550",
@@ -412,44 +392,44 @@ async function main() {
                 "shortName": "Main Reception"
             },
             {
-                "nodeID": "Hallway-1745538612201",
-                "nodeType": "Hallway",
+                "nodeID": "Entrance Sidewalk 20",
+                "nodeType": "Sidewalk",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 225.67,
                 "ycoord": 273,
-                "longName": "",
-                "shortName": ""
+                "longName": "Entrance Sidewalk",
+                "shortName": "Entrance Sidewalk"
             },
             {
-                "nodeID": "Handicap Parking",
+                "nodeID": "Valet Parking",
                 "nodeType": "Parking",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 498.67,
                 "ycoord": 296,
-                "longName": "Handicap Parking",
-                "shortName": "Handicap Parking"
+                "longName": "Valet Parking",
+                "shortName": "Valet Parking"
             },
             {
-                "nodeID": "Hallway-1745539562747",
-                "nodeType": "Hallway",
+                "nodeID": "Accessible Parking Sidewalk 20",
+                "nodeType": "Sidewalk",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 74.67,
                 "ycoord": 103,
-                "longName": "",
-                "shortName": ""
+                "longName": "Accessible Parking Sidewalk",
+                "shortName": "Accessible Parking Sidewalk"
             },
             {
-                "nodeID": "Patient Parking",
+                "nodeID": "Accessible Parking 20",
                 "nodeType": "Parking",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 9.67,
                 "ycoord": 165,
-                "longName": "Patient Parking",
-                "shortName": "Patient Parking"
+                "longName": "Accessible Parking",
+                "shortName": "Accessible Parking"
             },
             {
                 "nodeID": "Stairs 20 1",
@@ -502,14 +482,14 @@ async function main() {
                 "shortName": "Hallway 20 Stairs 1"
             },
             {
-                "nodeID": "hallway20stairs2",
+                "nodeID": "Stairway Corridor 20",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (20 Patriot Pl.)",
                 "floor": 1,
                 "xcoord": 211,
                 "ycoord": 587,
-                "longName": "Hallway 20 Stairs 2",
-                "shortName": "Hallway 20 Stairs 2"
+                "longName": "Stairway Corridor",
+                "shortName": "Stairway Corridor"
             },
             {
                 "nodeID": "hallwayaroundthatcorner20",
@@ -530,6 +510,56 @@ async function main() {
                 "ycoord": 482,
                 "longName": "Hallway 20 Stairs 3",
                 "shortName": "Hallway 20 Stairs 3"
+            },
+            {
+                "nodeID": "Main Reception 20",
+                "nodeType": "Reception",
+                "building": "Healthcare Center (20 Patriot Pl.)",
+                "floor": 1,
+                "xcoord": 279.12,
+                "ycoord": 444.13,
+                "longName": "Main Reception",
+                "shortName": "Main Reception"
+            },
+            {
+                "nodeID": "Patient Parking 20",
+                "nodeType": "Parking",
+                "building": "Healthcare Center (20 Patriot Pl.)",
+                "floor": 1,
+                "xcoord": -256.9,
+                "ycoord": -123.97,
+                "longName": "Patient Parking",
+                "shortName": "Patient Parking"
+            },
+            {
+                "nodeID": "Patient Parking Sidewalk 20",
+                "nodeType": "Sidewalk",
+                "building": "Healthcare Center (20 Patriot Pl.)",
+                "floor": 1,
+                "xcoord": -164.05,
+                "ycoord": -203.95,
+                "longName": "Patient Parking",
+                "shortName": "Patient Parking"
+            },
+            {
+                "nodeID": "Secondary Reception Entrance 20",
+                "nodeType": "Hallway",
+                "building": "Healthcare Center (20 Patriot Pl.)",
+                "floor": 1,
+                "xcoord": 304.96,
+                "ycoord": 791.56,
+                "longName": "Secondary Reception Entrance",
+                "shortName": "Secondary Reception Entrance"
+            },
+            {
+                "nodeID": "Secondary Reception 20",
+                "nodeType": "Reception",
+                "building": "Healthcare Center (20 Patriot Pl.)",
+                "floor": 1,
+                "xcoord": 262.5,
+                "ycoord": 839.29,
+                "longName": "Secondary Reception Entrance",
+                "shortName": "Secondary Reception Entrance"
             }
         ],
         skipDuplicates: true
@@ -2285,7 +2315,7 @@ async function main() {
         ]
     })
 
-
+    // chestnut hill edges
     await PrismaClient.edge.createMany({
         data:[
                 {
@@ -2534,21 +2564,12 @@ async function main() {
         ]
     })
 
-
-
+    // patriot 20 edges
     await PrismaClient.edge.createMany({
         data: [
             {
-                "fromID": "Hallway-1745538418396",
-                "toID": "Specialty Clinic"
-            },
-            {
-                "fromID": "Hallway-1745538418396",
-                "toID": "Hallway-1745538396035"
-            },
-            {
                 "fromID": "hallway20stairs1",
-                "toID": "Hallway-1745538396035"
+                "toID": "Check-In Corridor 20"
             },
             {
                 "fromID": "hallway20stairs1",
@@ -2559,24 +2580,24 @@ async function main() {
                 "toID": "Stairs 20 1"
             },
             {
-                "fromID": "Hallway-1745538396035",
-                "toID": "hallway20stairs2"
+                "fromID": "Check-In Corridor 20",
+                "toID": "Stairway Corridor 20"
             },
             {
-                "fromID": "hallway20stairs2",
-                "toID": "Hallway-1745538370323"
+                "fromID": "Stairway Corridor 20",
+                "toID": "Entrance Corridor 20"
             },
             {
-                "fromID": "hallway20stairs2",
+                "fromID": "Stairway Corridor 20",
                 "toID": "Stairs 20 2"
             },
             {
-                "fromID": "Hallway-1745538370323",
-                "toID": "Entrance-1745538360518"
+                "fromID": "Entrance Corridor 20",
+                "toID": "Main Entrance 20"
             },
             {
                 "fromID": "Hallway-1745538375613",
-                "toID": "Hallway-1745538370323"
+                "toID": "Entrance Corridor 20"
             },
             {
                 "fromID": "Imaging Suite",
@@ -2616,34 +2637,45 @@ async function main() {
             },
             {
                 "fromID": "Hallway-1745538522550",
-                "toID": "Hallway-1745538516214"
+                "toID": "Urology Corridor 20"
             },
             {
-                "fromID": "Hallway-1745538516214",
-                "toID": "Hallway-1745538418396"
-            },
-            {
-                "fromID": "Hallway-1745538612201",
-                "toID": "Entrance-1745538360518"
+                "fromID": "Entrance Sidewalk 20",
+                "toID": "Main Entrance 20"
             },
             {
                 "fromID": "Handicap Parking",
-                "toID": "Hallway-1745538612201"
+                "toID": "Entrance Sidewalk 20"
             },
             {
-                "fromID": "Hallway-1745538612201",
-                "toID": "Hallway-1745539562747"
+                "fromID": "Entrance Sidewalk 20",
+                "toID": "Accessible Parking Sidewalk 20"
             },
             {
-                "fromID": "Hallway-1745539562747",
-                "toID": "Patient Parking"
+                "fromID": "Accessible Parking Sidewalk 20",
+                "toID": "Accessible Parking 20"
+            },
+            {
+                "fromID": "Main Reception 20",
+                "toID": "Main Entrance 20"
+            },
+            {
+                "fromID": "Check-In Corridor 20",
+                "toID": "Urology Corridor 20"
+            },
+            {
+                "fromID": "Secondary Reception Entrance 20",
+                "toID": "Urology Corridor 20"
+            },
+            {
+                "fromID": "Secondary Reception Entrance 20",
+                "toID": "Secondary Reception 20"
             }
         ],
         skipDuplicates: true
     });
 
-
-
+    // patriot 22 floor 1 edges
     await PrismaClient.edge.createMany({
         data: [
 
@@ -2999,8 +3031,7 @@ async function main() {
         ]
     });
 
-
-
+    // patriot 22 floor 3 edges
     await PrismaClient.edge.createMany({
         data: [
                 {
@@ -3206,8 +3237,6 @@ async function main() {
             }
         ]
     });
-
-
 
     //22 floor 4 edges
     await PrismaClient.edge.createMany({
