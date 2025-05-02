@@ -103,11 +103,11 @@ export function NavbarMGH(props: NavBarProps) {
                                     label={'Announcements'}
                                     href={'/announcements'}
                                     items={[
-                                        { label: 'Create Announcement', href: '/announcementform' },
-                                        { label: 'Urgent Announcements', href: '/urgentannouncements' },
-                                        { label: 'General Announcements' , href: '/generalannouncements' },
-                                        { label: 'Bulletin Announcements', href: '/bulletinannouncements' },
-                                        { label: 'View All Announcements', href: '/announcements' },
+                                        { label: 'Create New', href: '/announcementform' },
+                                        // { label: 'Urgent Announcements', href: '/urgentannouncements' },
+                                        // { label: 'General Announcements' , href: '/generalannouncements' },
+                                        // { label: 'Bulletin Announcements', href: '/bulletinannouncements' },
+                                        { label: 'View All', href: '/announcements' },
                                     ]}
                                 />
                             )}
