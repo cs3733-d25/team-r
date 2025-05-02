@@ -24,7 +24,8 @@ export function AnnouncementPage() {
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const { user } = useAuth0();
-    const isAdmin = user?.['https://myhealthapp.example.com/roles']?.includes('Admin');
+    // access a custom claim/attribute from the Auth0 user profile
+    // const isAdmin = user?.['...']?.includes('Admin');
 
     useEffect(() => {
         fetchAnnouncements();
