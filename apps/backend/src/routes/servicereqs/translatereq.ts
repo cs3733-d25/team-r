@@ -84,24 +84,6 @@ router.post("/single-request", async function (req: Request, res: Response) {
   }
 });
 
-router.post("/inline", async function(req: Request, res: Response) {
-  try {
-    const { text, targetLanguage } = req.body;
-
-    if (!text || !targetLanguage) {
-      return res.status(400).json({ error: "Missing required parameters" });
-    }
-
-    // call API
-    const translatedText = await translateText(text, targetLanguage);
-
-    res.status(200).json({ translatedText });
-  } catch (error) {
-    console.error("Translation error:", error);
-    res.status(500).json({ error: "Translation failed" });
-  }
-});
-
 async function translateText(text: string, targetLanguage: string): Promise<string> {
   try {
     const projectId = "SoftwareEngineeringCourse";
@@ -133,5 +115,23 @@ async function translateText(text: string, targetLanguage: string): Promise<stri
     throw error;
   }
 }
+
+router.post("/inline", async function(req: Request, res: Response) {
+  try {
+    const { text, targetLanguage } = req.body;
+
+    if (!text || !targetLanguage) {
+      return res.status(400).json({ error: "Missing required parameters" });
+    }
+
+    // call API
+    const translatedText = await translateText(text, targetLanguage);
+
+    res.status(200).json({ translatedText });
+  } catch (error) {
+    console.error("Translation error:", error);
+    res.status(500).json({ error: "Translation failed" });
+  }
+});
 
 export default router;
