@@ -237,6 +237,11 @@ export function NavbarMGH(props: NavBarProps) {
                             <a href="/csv">Database</a>
                         </Button>
                     )}
+                    {props.userType === 'Admin' && (
+                        <Button variant="ghost" asChild>
+                            <a href="/announcements">Announcements</a>
+                        </Button>
+                    )}
                     <Button variant="ghost" asChild>
                         <a href="/credits">Credits</a>
                     </Button>
