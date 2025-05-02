@@ -417,6 +417,10 @@ export function MapPage() {
                                         floor,
                                         getBuildingConstant(selectedBuilding)
                                     );
+
+                                    if (flashingFloors?.includes(floor)) {
+                                        setFlashingFloors((prev) => prev?.filter((f) => f !== floor) || null);
+                                    }
                                 }}
                             >
                                 Floor {floor}
