@@ -73,18 +73,17 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName
     const handleChange = (value: string) => {
         onChange(fieldName, value);
     };
-    const dynamicTextSize = `text-${scale > 1.5 ? 'xl' : scale > 1 ? 'lg' : 'base'}`;
 
     return (
-        <Select onValueChange={handleChange} key={resetForm.toString()}>
+        <Select onValueChange={handleChange} key={resetForm.toString()} >
             {/*<Select onValueChange={handleChange}>*/}
-             <SelectTrigger className={"bg-input ${dynamicTextSize}" }>
+             <SelectTrigger className={"bg-input" } style={{ fontSize: `${scale}em` }}>
                 <SelectValue placeholder={alternateFieldName ? 'Select a ' + alternateFieldName : 'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
-            <SelectContent className={"bg-input ${dynamicTextSize}"} >
+            <SelectContent className={"bg-input"} style={{ fontSize: `${scale}em` }}>
                 <SelectGroup>
                     {options.map((option) => (
-                        <SelectItem key={option} value={option} className={dynamicTextSize}>
+                        <SelectItem key={option} value={option} style={{ fontSize: `${scale}em` }}>
                             {option}
                         </SelectItem>
                     ))}

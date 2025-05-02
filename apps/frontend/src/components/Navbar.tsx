@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import {useTextSize} from "@/context/textContext.tsx";
 
 interface NavBarProps {
     page?: string;
@@ -6,7 +7,7 @@ interface NavBarProps {
 
 function Navbar(props: NavBarProps) {
     const location = useLocation();
-
+    const  {scale}  = useTextSize();
     const navigationLinks = [
         { name: 'Home', path: '/home' },
         { name: 'Directory', path: '/directory' },
@@ -22,7 +23,7 @@ function Navbar(props: NavBarProps) {
             <Link
                 key={'Login'}
                 to={'/login'}
-                className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-mgb-light-blue hover:bg-[#306c73] hover:text-white'}
+                className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-mgb-light-blue hover:bg-[#306c73] hover:text-white'} style={{ fontSize: `${scale}em` }}
             >
                 Login
             </Link>

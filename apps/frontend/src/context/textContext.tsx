@@ -30,4 +30,10 @@ export const TextContextProvider = ({ children }: { children: ReactNode }) => {
     );
 }
 
-export const useTextSize = () => useContext(TextSizeContext);
+export const useTextSize = (): TextSizeType => {
+    const context = useContext(TextSizeContext);
+    if(!context){
+        throw new Error ("useTextSize must be defined");
+    }
+    return context;
+};
