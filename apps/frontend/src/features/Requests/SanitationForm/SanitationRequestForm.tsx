@@ -15,7 +15,7 @@ interface SubmittedRequest {
   sanitationType: string;
   priority: string;
   department: string;
-  location: string;
+  building: string;
   roomNumber: string;
   comments: string;
   timestamp: string;
@@ -33,7 +33,7 @@ const SanitationRequestForm = () => {
     roomNumber: '',
     comments: '',
     status:'',
-    location:'',
+    building:'',
     assignedEmployee:'',
 
   });
@@ -105,14 +105,14 @@ const SanitationRequestForm = () => {
 
         // Reset form
         setFormData({
-          employeeName: '',
+          employeeName: formData.employeeName,
           sanitationType: '',
           priority: '',
           department: '',
           roomNumber: '',
           comments: '',
           status: '',
-          location: '',
+          building: '',
           assignedEmployee: '',
 
         });
@@ -184,7 +184,7 @@ const SanitationRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                   </Label>
-                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                  <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                 </div>
 
                 {/* Priority */}
@@ -197,7 +197,7 @@ const SanitationRequestForm = () => {
                 </div>
 
                 {/* Location and Department */}
-                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
                 {/* Status */}
 
                 <div>
@@ -205,25 +205,21 @@ const SanitationRequestForm = () => {
                     Request Status
                     <span className="text-accent">*</span>
                   </Label>
-                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                  <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                 </div>
                 {/* Room Number */}
                 <div>
                   <Label className="block text-sm font-semibold text-foreground mb-2">
-                    Room Number
-                    <span className="text-accent">*</span>
-                    <span className="text-xs text-secondary-foreground block">
-                      Format: Floor-Room (e.g., 3-124, L1-001)
-                    </span>
+                    Room Number<span className="text-accent">*</span>
                   </Label>
                   <Input
-                    type="text"
-                    name="roomNumber"
-                    value={formData.roomNumber}
-                    onChange={handleChange}
-                    placeholder="e.g., 3-124"
-                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
-                    required
+                      type="text"
+                      name="roomNumber"
+                      value={formData.roomNumber}
+                      onChange={handleChange}
+                      placeholder="e.g., 3-124"
+                      className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                      required
                   />
                 </div>
               </div>
@@ -274,9 +270,9 @@ const SanitationRequestForm = () => {
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold mb-2">Your sanitation request has been submitted</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                   <div>
-                    <span className="font-semibold">Employee Name:</span> {submittedRequest.employeeName}
+                    <span className="font-semibold">Employee:</span> {submittedRequest.employeeName}
                   </div>
                   <div>
                     <span className="font-semibold">Sanitation Type:</span> {submittedRequest.sanitationType}
@@ -285,20 +281,22 @@ const SanitationRequestForm = () => {
                     <span className="font-semibold">Priority:</span> {submittedRequest.priority}
                   </div>
                   <div>
-                    <span className="font-semibold">Department:</span> {submittedRequest.department}
+                    <span className="font-semibold">Location:</span> {submittedRequest.building}
                   </div>
                   <div>
-                    <span className="font-semibold">Location:</span> {submittedRequest.location}
+                    <span className="font-semibold">Department:</span> {submittedRequest.department}
                   </div>
+
                   <div>
                     <span className="font-semibold">Room:</span> {submittedRequest.roomNumber}
                   </div>
                   <div>
-                    <span className="font-semibold">Status:</span> {submittedRequest.status}
-                  </div>
-                  <div>
                     <span className="font-semibold">Assigned Employee:</span> {submittedRequest.assignedEmployee}
                   </div>
+                  <div>
+                    <span className="font-semibold">Status:</span> {submittedRequest.status}
+                  </div>
+                  <br />
                   <div>
                     <span className="font-semibold">Comments:</span> {submittedRequest.comments || "None provided"}
                   </div>

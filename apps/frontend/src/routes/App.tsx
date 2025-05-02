@@ -5,17 +5,13 @@ import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import AboutPage from '../features/AboutAndCredits/AboutPage.tsx';
 import CreditsPage from '../features/AboutAndCredits/CreditsPage.tsx';
-import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
 import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
 import PatientRequest, { AllPatientRequests } from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
-import { PatientRequestForm } from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
-import PatientRequestPage from "../features/Requests/PatientRequest/PatientRequestPage.tsx";
 import { ExternalMap } from "../features/MapView/ExternalMap.tsx";
 import { MapPage } from "../features/MapView/MapPage.tsx";
-import PatientTransportPage from "../features/Requests/PatientTransport/PatientTransportPage.tsx";
 import Prescription from "../features/Requests/PrescriptionForm/Prescription.tsx";
 import SanitationRequestTabs from "../features/Requests/SanitationForm/SanitationTabs.tsx";
 import { DeviceReq } from "../features/Requests/MedDeviceRequest/DeviceReq.tsx";
@@ -25,12 +21,13 @@ import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { TourProvider } from '@/components/tour.tsx';
-import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
-import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
+import Footer from "../components/Footer";
+import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
+import AnnouncementForm from "@/features/Announcements/AnnouncementForm.tsx";
 
 
 function App() {
@@ -98,14 +95,19 @@ function App() {
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
-                { path: 'settings', element: <SettingsPage /> }, // ✅ Added route
+                { path: 'settings', element: <SettingsPage /> },
                 { path: 'prescription', element: <Prescription /> },
                 { path: 'patientrequestpage', element: <AllPatientRequests /> },
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
                 { path: 'translation', element: <Translate /> },
-                { path: 'requests', element: <RequestPage /> }
+                { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> },
+                { path: 'announcements', element: <AnnouncementPage /> },
+                { path: 'announcementform', element: <AnnouncementForm /> },
+                { path: 'urgentannouncements', element: <AnnouncementPage defaultTab = 'urgent' /> },
+                { path: 'generalannouncements', element: <AnnouncementPage defaultTab = 'general' /> },
+                { path: 'bulletinannouncements', element: <AnnouncementPage defaultTab = 'bulletin' /> },
             ],
         },
     ]);
@@ -114,6 +116,7 @@ function App() {
         <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
+            <Footer />
         </div>
     );
 }

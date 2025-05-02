@@ -15,3 +15,11 @@ export const TOUR_STEPS_IDS_CSV = {
     EXPORT: "export",
     VIEW_DB_TABLE: "view database table",
 };
+
+export const TOUR_STEPS_IDS_SERVICE_REQS = {
+    CLICK_START: "start",
+    DASHBOARD: "dashboard",
+    MAKE_REQUEST: "make request",
+    FILTER_REQUEST: "filter request",
+    EMPLOYEE_ID: "employee id",
+};

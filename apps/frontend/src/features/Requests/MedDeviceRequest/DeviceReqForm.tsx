@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Alert, AlertDescription } from '@/components/ui/alert.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -15,12 +14,12 @@ interface SubmittedDevice {
     room: string;
     priority: string;
     department: string;
+    building: string;
     comment: string;
     employeeName: string;
-    //employeeID: string;
     status: string;
-
     timestamp: string;
+    assignedEmployee: string;
 }
 
 export const DeviceReqForm = () => {
@@ -29,10 +28,11 @@ export const DeviceReqForm = () => {
         priority: '',
         room: '',
         department: '',
+        building: '',
         comment: '',
         employeeName: '',
-        //employeeID: '',
-        status: ''
+        status: '',
+        assignedEmployee: '',
     });
     //use auth0 to get the current user data
     const [userName, setUserName] = useState('');
@@ -97,9 +97,10 @@ export const DeviceReqForm = () => {
                     room: '',
                     department: '',
                     comment: '',
-                    employeeName: '',
-                    //employeeID: '',
-                    status: ''
+                    employeeName: formData.employeeName,
+                    status: '',
+                    building: '',
+                    assignedEmployee: ''
                 });
             }
         } catch (error) {
@@ -159,13 +160,42 @@ export const DeviceReqForm = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {/* Device Select */}
-                                <div>
-                                    <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Select a Device
-                                        <span className="text-accent">*</span>
-                                    </Label>
+                                {/*<div>*/}
+                                {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                                {/*        Select a Device*/}
+                                {/*        <span className="text-accent">*</span>*/}
+                                {/*    </Label>*/}
 
-                                    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange}></Dropdown>
+                                {/*    <Dropdown tableName={"medicalDevice"} fieldName={'device'} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>*/}
+                                {/*</div>*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Device
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                                             e.g., X-Ray, EKG, Syringe
+                                        </span>
+                                    </Label>
+                                    <Input
+                                        type="text"
+                                        name="device"
+                                        value={formData.device}
+                                        onChange={handleChange}
+                                        placeholder="Enter a medical device"
+                                        className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                        required
+                                    />
+                                </div>
+                                {/*assignEmployee*/}
+                                <div>
+                                    <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                        Assigned Employee
+                                        <span className="text-accent">*</span>
+                                        <span className="text-xs text-secondary-foreground block">
+                      Choose an employee to assign to a task
+                    </span>
+                                    </Label>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                                 </div>
                                 {/* Priority */}
                                 <div>
@@ -176,8 +206,9 @@ export const DeviceReqForm = () => {
                                     <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
+
                                 {/* Location and Department */}
-                                <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                                <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
 
                                 {/* Status */}
                                 <div>
@@ -185,24 +216,20 @@ export const DeviceReqForm = () => {
                                         Request Status
                                         <span className="text-accent">*</span>
                                     </Label>
-                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                    <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                                 </div>
 
                                 {/* Room Name */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Room
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            Enter the name of the room to send the device to.
-                                        </span>
+                                        Room Number<span className="text-accent">*</span>
                                     </Label>
                                     <Input
                                         type="text"
                                         name="room"
                                         value={formData.room}
                                         onChange={handleChange}
-                                        placeholder="Enter the name of the room to send the device to."
+                                        placeholder="e.g., 3-124"
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                         required
                                     />
@@ -271,9 +298,9 @@ export const DeviceReqForm = () => {
                         <h3 className="text-lg font-semibold mb-2">
                             Your device request has been submitted
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name:</span>{' '}
+                                <span className="font-semibold">Employee:</span>{' '}
                                 {submittedDevice.employeeName}
                             </div>
                             <div>
@@ -281,25 +308,35 @@ export const DeviceReqForm = () => {
                                 {submittedDevice.device}
                             </div>
                             <div>
-                                <span className="font-semibold">Room:</span>{' '}
-                                {submittedDevice.room}
-                            </div>
-                            <div>
                                 <span className="font-semibold">Priority:</span>{' '}
                                 {submittedDevice.priority}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Building:</span>{' '}
+                                {submittedDevice.building}
                             </div>
                             <div>
                                 <span className="font-semibold">Department:</span>{' '}
                                 {submittedDevice.department}
                             </div>
                             <div>
+                                <span className="font-semibold">Room:</span>{' '}
+                                {submittedDevice.room}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Assigned Employee:</span>{' '}
+                                {submittedDevice.assignedEmployee}
+                            </div>
+                            <div>
                                 <span className="font-semibold">Status:</span>{' '}
                                 {submittedDevice.status}
                             </div>
+                            <br />
                             <div>
-                                <span className="font-semibold">Comment:</span>{' '}
+                                <span className="font-semibold">Comments:</span>{' '}
                                 {submittedDevice.comment}
                             </div>
+
                         </div>
                         <div className="mt-3 text-sm text-secondary-foreground">
                             The device request has been submitted and will be filled.

@@ -37,8 +37,11 @@ export const postEdgeDeletion  = async (edgeID: string): Promise<AxiosResponse> 
     return await axios.post('/api/map/delete-edge', {edgeID: edgeID});
 };
 
-export const fetchNodes = async (nodeType: string): Promise<AxiosResponse> => {
-    return (await axios.post(`/api/map/nodes`, {nodeType: nodeType})).data;
+export const fetchNodes = async (fields:{nodeType?: string, building?: string, floor?:number}): Promise<AxiosResponse> => {
+    return await axios.post(`/api/map/nodes`, {fields});
+}
+export const fetchEdges = async (fields:{ building?: string, floor?:number}): Promise<AxiosResponse> => {
+    return await axios.post(`/api/map/edges`, {fields});
 }
 
 export const fetchCheckIn = async (): Promise<Node[]> => {
@@ -103,6 +106,10 @@ export const fetchHallways = async (): Promise<Node[]> => {
 }
 export const fetchOther = async (): Promise<Node[]> => {
     const res = await axios.get('/api/map/other');
+    return res.data;
+}
+export const fetchAll = async (): Promise<Node[]> => {
+    const res = await axios.get('/api/map/all');
     return res.data;
 }
 

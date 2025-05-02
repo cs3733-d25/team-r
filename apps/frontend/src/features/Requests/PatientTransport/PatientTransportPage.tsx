@@ -80,6 +80,15 @@ export function PatientTransportPage() {
 
     return(
         <>
+            {/*<RequestFilters*/}
+            {/*    options={filtering.filterOptions}*/}
+            {/*    filterState={filtering.filterState}*/}
+            {/*    onFilterChange={(options, state) => {*/}
+            {/*        filtering.setFilterOptions(options);*/}
+            {/*        filtering.setFilterState(state);*/}
+            {/*    }}*/}
+            {/*    onClearFilters={filtering.clearFilters}*/}
+            {/*/>*/}
             <RequestFilters
                 options={filtering.filterOptions}
                 filterState={filtering.filterState}
@@ -88,6 +97,9 @@ export function PatientTransportPage() {
                     filtering.setFilterState(state);
                 }}
                 onClearFilters={filtering.clearFilters}
+                sortField={filtering.sortField}
+                sortDirection={filtering.sortDirection}
+                resetSort={filtering.resetSort}
             />
 
             <SortableTable

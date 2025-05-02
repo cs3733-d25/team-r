@@ -16,16 +16,7 @@ import { useMapData, postNodeDeletion, postEdgeDeletion } from '@/features/MapVi
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { TourAlertDialog, TourProvider, useTour } from '@/components/tour';
+import { TourAlertDialog, TourStep, useTour } from '@/components/tour';
 import { TOUR_STEP_IDS } from '@/lib/tour-constants.ts';
 
 interface EditMapProps {
@@ -43,11 +34,14 @@ interface InternalMapProps {
 
 
 export function EditMap({ status }: EditMapProps) {
-    const [selectedLocation, setSelectedLocation] = useState<string>(
-        "Faulkner 1st Floor"
-        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+    const [selectedLocation, setSelectedLocation] = useState<{building: string, floor:number}>(
+        {building: 'Healthcare Center (20 Patriot Pl.)', floor: 1}
     );
-    const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
+        // "Faulkner 1st Floor"
+        //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
+    // );
+    // const [building, setBuilding] = useState<string>('Faulkner');
+    // const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);          // coordinates that were last clicked
     const [editcoordinates, setEditCoordinates] = useState<{ x: string; y: string } | null>({x:"", y:""});  // coordinates that are entered into the textbox (also get updated when map is clicked)
@@ -60,19 +54,18 @@ export function EditMap({ status }: EditMapProps) {
     const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
     const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
     const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
-    const [currentBuilding, setCurrentBuilding] = useState<string>('');
+    // const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
-    const building = getBuildingFromLocation(selectedLocation);
-    const { departments } = useMapData(building);
+    const building = getBuildingFromLocation(selectedLocation.building);
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
 
-    const steps = [
+    const steps: TourStep[] = [
         { content: <div>On this page you can add, edit, and delete map nodes for pathfinding.</div>, selectorId: TOUR_STEP_IDS.CLICK_START, position: "right" },
         { content: <div>First, select the node's location by clicking on the map. The coordinates will show up here.</div>, selectorId: TOUR_STEP_IDS.CLICK_DESCRIPTOR, position: "right" },
         { content: <div>Enter the name of the node here. Each node should be given a name so it can be tracked.</div>, selectorId: TOUR_STEP_IDS.NODE_NAME, position: "right" },
@@ -82,6 +75,7 @@ export function EditMap({ status }: EditMapProps) {
         { content: <div>To add an edge between nodes, select the two nodes you want to connect, and click save here.</div>, selectorId: TOUR_STEP_IDS.SAVE_EDGE, position: "right" },
         // Add more steps here
     ];
+    const { departments } = useMapData(selectedLocation.building);
 
     async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
         try {
@@ -97,8 +91,8 @@ export function EditMap({ status }: EditMapProps) {
 
     function setLocation(building: string, floor: number) {
         console.log('Active Layer Changed', building, floor);
-        setCurrentBuilding(building);
-        setCurrentFloor(floor);
+        setSelectedLocation({building:building, floor:floor});
+
     }
 
     // set available departments when departments data loads
@@ -159,9 +153,10 @@ export function EditMap({ status }: EditMapProps) {
             x: lat.toString(),
             y: lng.toString(),
         });
-        setCurrentBuilding(building);
+        // setCurrentBuilding(building);
     };
     const handleNodeDrag = (lat: number, lng: number, nodeID:string, nodeTypes:string) => {
+        setActiveTab("edit-node")
         setNodeID(nodeID)
         setEditNodeType(nodeTypes)
         console.log("Setting coordinates: x = ", lat, " y = ", lng);
@@ -169,7 +164,7 @@ export function EditMap({ status }: EditMapProps) {
             x: lat.toString(),
             y: lng.toString(),
         });
-        setCurrentBuilding(building);
+        //setCurrentBuilding(building);
     };
     // console.log("nodeType:", nodeType);
     // useEffect(() => {
@@ -201,6 +196,8 @@ export function EditMap({ status }: EditMapProps) {
     //     console.log = originalConsoleLog;
     // };
     // }, [building]);
+        // setCurrentBuilding(building);
+
 
     // TODO: make this an array of strings not objects
     const nodeTypes = [
@@ -241,8 +238,8 @@ export function EditMap({ status }: EditMapProps) {
         const nodeData = {
             nodeID: nodeID,
             nodeType: editnodeType,
-            building: currentBuilding,
-            floor: currentFloor,
+            building: selectedLocation.building,
+            floor: selectedLocation.floor,
             xcoord: parseFloat(editcoordinates.x),
             ycoord: parseFloat(editcoordinates.y),
             longName: '',
@@ -281,14 +278,14 @@ export function EditMap({ status }: EditMapProps) {
             return;
         }
 
-        console.log(currentFloor);
+        console.log(selectedLocation.floor);
 
         // use currentBuilding and currentFloor from state (automatically updated when layer changes)
         const nodeData = {
-            nodeID: nodeName || `${nodeType}-${Date.now()}`,
+            nodeID: `${nodeType}-${Date.now()}`,
             nodeType: nodeType,
-            building: currentBuilding,
-            floor: currentFloor,
+            building: selectedLocation.building,
+            floor: selectedLocation.floor,
             xcoord: coordinates.x,
             ycoord: coordinates.y,
             longName: '',
@@ -353,6 +350,9 @@ export function EditMap({ status }: EditMapProps) {
             alert('An error occurred while saving the edge.');
         }
     };
+    function setToggle(){
+        return true;
+    }
 
     const resetMap = async () => {
         if (confirm('Are you sure you want to reset the map?')) {
@@ -381,6 +381,8 @@ export function EditMap({ status }: EditMapProps) {
 
     // console.log('edit Coordinates', editcoordinates);
     // console.log(' Coordinates', coordinates);
+    // console.log('edit Coordinates', editcoordinates);
+    // console.log(' Coordinates', coordinates);
 
     const { setSteps } = useTour();
     const [openTour, setOpenTour] = useState(false);
@@ -397,19 +399,25 @@ export function EditMap({ status }: EditMapProps) {
     return (
         <div className="flex flex-col h-[calc(100vh-65px)]">
             <div className="flex-1 relative cursor-pointer">
+                {/*Internal Map will reload when building is remade (which is when)?*/}
                 <InternalMap
-                    location={selectedLocation}
-                    floor={currentFloor}
+                    location={{
+                        building: selectedLocation.building,
+                        floor: selectedLocation.floor,
+                    }}
+                    // floor={currentFloor}
                     onNodeDelete={deleteNode}
                     promiseNodeCreate={requestPromise}
                     promiseEdgeCreate={edgeCreatePromise}
                     showEdges={true}
+                    showNodes={true}
                     onEdgeDelete={deleteEdge}
                     onNodeSelect={onNodeClick}
                     onLocationChange={setLocation}
                     onCoordSelect={handleMapClick}
                     onNodeDrag={handleNodeDrag}
                     onNodeEdit={editNode}
+                    onToggle={setToggle}
                     selectedEdgeNodes={edgeNodes}
                 />
 
@@ -446,8 +454,8 @@ export function EditMap({ status }: EditMapProps) {
                                                 <div className="mt-2 text-sm">
                                                     <p>X: {coordinates.x.toFixed(2)}</p>
                                                     <p>Y: {coordinates.y.toFixed(2)}</p>
-                                                    <p>Building: {currentBuilding}</p>
-                                                    <p>Floor: {currentFloor}</p>
+                                                    <p>Building: {selectedLocation.building}</p>
+                                                    <p>Floor: {selectedLocation.floor}</p>
                                                 </div>
                                             )}
                                         </div>

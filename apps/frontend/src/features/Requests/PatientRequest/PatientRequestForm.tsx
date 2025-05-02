@@ -12,10 +12,9 @@ import {useAuth0} from "@auth0/auth0-react";
 
 interface SubmittedPatientRequest{
     patientID: string;
-    assignedEmpID:string;
     priority: string;
     department: string;
-    location: string;
+    building: string;
     comment: string;
     time: string;
     status: string;
@@ -28,14 +27,13 @@ export const PatientRequestForm = () => {
     const [formData, setFormData] = useState({
 
         patientID: "",
-        assignedEmpID:"",
         priority: "",
         department: "",
-        location: "",
+        building: "",
         comment: "",
         time: new Date().toString(),
         status: '',
-        request: ' ',
+        request: '',
         employeeName: '',
         assignedEmployee: '',
 
@@ -99,15 +97,14 @@ export const PatientRequestForm = () => {
                 setFormData({
 
                     patientID: "",
-                    assignedEmpID:"",
                     priority: "",
                     department: "",
-                    location: "",
+                    building: "",
                     comment: "",
                     time: new Date().toLocaleString(),
                     status: '',
-                    request: ' ',
-                    employeeName: '',
+                    request: '',
+                    employeeName: formData.employeeName,
                     assignedEmployee: ''
 
                 });
@@ -159,7 +156,36 @@ export const PatientRequestForm = () => {
                 >
                 <div className="p-6">
                     <form onSubmit={handleSubmit} className="space-y-6">
+
+                            {/*nonemergent request*/}
+                            {/*<div>*/}
+                            {/*    <Label className="block text-sm font-semibold text-foreground mb-2">*/}
+                            {/*        Nonemergent Request*/}
+                            {/*        <span className="text-accent">*</span>*/}
+                            {/*    </Label>*/}
+
+                            {/*    <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>*/}
+                            {/*</div>*/}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <Label className= "block text-sm font-semibold text-foreground mb-2">
+                                Nonemergent Request
+                                <span className="text-accent">*</span>
+                                <span className="text-xs text-secondary-foreground block">
+                                             e.g., Speak to a doctor, food services, visitation hours
+                                        </span>
+                            </Label>
+                            <Input
+                                type="text"
+                                name="request"
+                                value={formData.request}
+                                onChange={handleChange}
+                                placeholder="Enter a nonemergent request"
+                                className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                                required
+                            />
+                        </div>
+
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Patient ID
@@ -177,15 +203,6 @@ export const PatientRequestForm = () => {
                                     required
                                 />
                             </div>
-                            {/*nonemergent request*/}
-                            <div>
-                                <Label className="block text-sm font-semibold text-foreground mb-2">
-                                    Nonemergent Request
-                                    <span className="text-accent">*</span>
-                                </Label>
-
-                                <Dropdown tableName={"nonemergentRequest"} fieldName={"request"} onChange={handleDropdownChange}></Dropdown>
-                            </div>
                             {/*assignEmployee*/}
                             <div>
                                 <Label className= "block text-sm font-semibold text-foreground mb-2">
@@ -195,7 +212,7 @@ export const PatientRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                 </Label>
-                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                             </div>
 
                             {/* Priority */}
@@ -204,16 +221,16 @@ export const PatientRequestForm = () => {
                                     Priority Level
                                     <span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"priority"} fieldName={"priority"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                             {/* Location and Department */}
-                            <LocationDepartmentDropdown onChange={handleDropdownChange} ></LocationDepartmentDropdown>
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}></LocationDepartmentDropdown>
                             <div>
                                 <label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status
                                     <span className="text-accent">*</span>
                                 </label>
-                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange}></Dropdown>
+                                <Dropdown tableName={"status"} fieldName={"status"} onChange={handleDropdownChange} reset={resetDropdowns}></Dropdown>
                             </div>
                         </div>
                         {/* Additional Instructions */}
@@ -263,29 +280,37 @@ export const PatientRequestForm = () => {
                     </div>
                     <div className="p-4">
                         <h3 className="text-lg font-semibold mb-2">Your request has been submitted</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name: </span>
+                                <span className="font-semibold">Employee: </span>
                                 {submittedPatientRequest.employeeName}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Patient ID:</span> {submittedPatientRequest.patientID}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
                             </div>
                             <div>
                                 <span className="font-semibold">Non Emergent Request:</span> {submittedPatientRequest.request}
                             </div>
                             <div>
-                                <span className="font-semibold">Location:</span> {submittedPatientRequest.location}
+                                <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
                             </div>
+
+                            <div>
+                                <span className="font-semibold">Location:</span> {submittedPatientRequest.building}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
+                            </div>
+
+                            <div>
+                                <span className="font-semibold">Patient:</span> {submittedPatientRequest.patientID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Assigned Employee:</span> {submittedPatientRequest.assignedEmployee}
+                            </div>
+
+
                             <div>
                                 <span className="font-semibold">Status:</span> {submittedPatientRequest.status}
                             </div>
+                            <br />
                             <div>
                                 <span className="font-semibold">Comment:</span> {submittedPatientRequest.comment}
                             </div>

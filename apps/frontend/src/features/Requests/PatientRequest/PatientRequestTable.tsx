@@ -4,7 +4,6 @@ interface PatientRequestTableProps {
     patientRequest: {
         patientRequestID: number | null,
         patientID: string | null,
-        assignedEmpID: string | null,
         priority: string | null,
         department: string | null,
         building: string | null,

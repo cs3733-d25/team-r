@@ -14,7 +14,7 @@ interface SubmittedRequest {
     language: string;
     priority: string;
     department: string;
-    location: string;
+    building: string;
     roomNumber: string;
     notes: string;
     timestamp: string;
@@ -28,7 +28,7 @@ const TranslateRequestForm = () => {
         language: '',
         priority: '',
         department: '',
-        location: '',
+        building: '',
         roomNumber: '',
         notes: '',
         status: '',
@@ -87,11 +87,11 @@ const TranslateRequestForm = () => {
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
-                    employeeName: '',
+                    employeeName: formData.employeeName,
                     language: '',
                     priority: '',
                     department: '',
-                    location: '',
+                    building: '',
                     roomNumber: '',
                     notes: '',
                     status: '',
@@ -151,7 +151,7 @@ const TranslateRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                 </Label>
-                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                                <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={"employee to assign"} reset={resetDropdowns}></Dropdown>
                             </div>
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
@@ -160,13 +160,13 @@ const TranslateRequestForm = () => {
                                 <Dropdown tableName="priority" fieldName="priority" onChange={handleDropdownChange} reset={resetDropdowns} />
                             </div>
 
-                            <LocationDepartmentDropdown onChange={handleDropdownChange} />
+                            <LocationDepartmentDropdown onChange={handleDropdownChange} reset={resetDropdowns}/>
 
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2">
                                     Request Status<span className="text-accent">*</span>
                                 </Label>
-                                <Dropdown tableName="status" fieldName="status" onChange={handleDropdownChange} />
+                                <Dropdown tableName="status" fieldName="status" onChange={handleDropdownChange} reset={resetDropdowns}/>
                             </div>
 
                             <div>
@@ -224,9 +224,9 @@ const TranslateRequestForm = () => {
                     </div>
                     <div className="p-4">
                         <h3 className="text-lg font-semibold mb-2">Your translator request has been submitted</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name: </span>
+                                <span className="font-semibold">Employee: </span>
                                 {submittedRequest.employeeName}
                             </div>
                             <div>
@@ -234,30 +234,34 @@ const TranslateRequestForm = () => {
                                 {submittedRequest.language}
                             </div>
                             <div>
-                                <span className="font-semibold">Assigned Employee: </span>
-                                {submittedRequest.assignedEmployee}
-                            </div>
-                            <div>
                                 <span className="font-semibold">Priority: </span>
                                 {submittedRequest.priority}</div>
+
+                                <div>
+                                    <span className="font-semibold">Location: </span>
+                                    {submittedRequest.building}
+                                </div>
                             <div>
                                 <span className="font-semibold">Department: </span>
                                 {submittedRequest.department}
                             </div>
-                            <div>
-                                <span className="font-semibold">Location: </span>
-                                {submittedRequest.location}
-                            </div>
+
+
                             <div>
                                 <span className="font-semibold">Room: </span>
                                 {submittedRequest.roomNumber}
                             </div>
                             <div>
+                                <span className="font-semibold">Assigned Employee: </span>
+                                {submittedRequest.assignedEmployee}
+                            </div>
+                            <div>
                                 <span className="font-semibold">Status: </span>
                                 {submittedRequest.status}
                             </div>
+                            <br/>
                             <div>
-                                <span className="font-semibold">Notes: </span>
+                                <span className="font-semibold">Comments: </span>
                                 {submittedRequest.notes || "None provided"}
                             </div>
                         </div>

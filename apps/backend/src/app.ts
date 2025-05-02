@@ -3,7 +3,6 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
-
 import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
 import employeeRouter from "./routes/userdata/employee.ts";
 //import servicereqRouter from "./routes/servicereqs.ts";
@@ -18,6 +17,7 @@ import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
 import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
+import announcementRouter from "./routes/announcements.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -49,11 +49,14 @@ if (secret) {
       resave: false,
       saveUninitialized: false,
       cookie: {
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
     }),
   );
 }
+
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
 // TODO: refactor to put all of the requests in a single router
@@ -71,6 +74,7 @@ app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
 app.use(API_ROUTES.TRANSLATE, translateRouter);
+app.use(API_ROUTES.ANNOUNCEMENTS, announcementRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

@@ -141,7 +141,7 @@ const TransportationRequestForm = () => {
                 // Reset form
                 setFormData({
                     patientID: '',
-                    employeeName:'',
+                    employeeName: formData.employeeName,
                     currentBuilding :'',
                     desiredBuilding : '',
                     comments: '',
@@ -237,7 +237,7 @@ const TransportationRequestForm = () => {
                       Choose an employee to assign to a task
                     </span>
                                     </Label>
-                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'}></Dropdown>
+                                    <Dropdown customOptions={'employees'} onChange={handleDropdownChange} fieldName={'assignedEmployee'} alternateFieldName={'employee to assign'} reset={resetDropdowns}></Dropdown>
                                 </div>
                             </div>
                             {/* Transportation Type */}
@@ -395,14 +395,10 @@ const TransportationRequestForm = () => {
                             <h3 className="text-lg font-semibold mb-2">
                                 Your transportation request has been submitted
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                                 <div>
-                                    <span className="font-semibold">Employee Name:</span>{' '}
+                                    <span className="font-semibold">Employee:</span>{' '}
                                     {submittedTransport.employeeName}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">Patient ID:</span>{' '}
-                                    {submittedTransport.patientID}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Transportation Type:</span>{' '}
@@ -417,14 +413,22 @@ const TransportationRequestForm = () => {
                                     {submittedTransport.currentBuilding}
                                 </div>
                                 <div>
-                                    <span className="font-semibold">Desired Building:</span>{' '}
+                                    <span className="font-semibold">Destination:</span>{' '}
                                     {submittedTransport.desiredBuilding}
                                 </div>
                                 <div>
                                     <span className="font-semibold">Department:</span>{' '}
                                     {submittedTransport.department}
                                 </div>
-
+                                <div>
+                                    <span className="font-semibold">Patient:</span>{' '}
+                                    {submittedTransport.patientID}
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Assigned Employee:</span>{' '}
+                                    {submittedTransport.assignedEmployee}
+                                </div>
+                                <br />
                                 <div>
                                     <span className="font-semibold">Comments:</span>{' '}
                                     {submittedTransport.comments || 'None provided'}
