@@ -27,12 +27,10 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
 
-    const isAdmin = props.userType === 'Admin';
-
     const announcementCategories = [
-        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', path: '/create-announcement', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority === 'high' },
-        { name: 'General', description: 'Regular hospital updates and information', path: '/create-announcement', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'medium' },
-        { name: 'Bulletin', description: 'Non-critical hospital information and updates', path: '/create-announcement', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority === 'low' },
+        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority === 'high' },
+        { name: 'General', description: 'Regular hospital updates and information', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'medium' },
+        { name: 'Bulletin', description: 'Non-critical hospital information and updates', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority === 'low' },
     ];
 
     useEffect(() => {
@@ -114,7 +112,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                                 <Button variant="secondary" onClick={() => setActiveTab(category.name.toLowerCase())}>
                                                     View {category.name} Announcements
                                                 </Button>
-                                                <Button onClick={() => navigate(category.path)}>
+                                                <Button onClick={() => navigate('/announcement-form')}>
                                                     Create New Announcement
                                                 </Button>
                                             </div>
@@ -134,7 +132,6 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                         <AnnouncementCard
                                             key={announcement.id}
                                             announcement={announcement}
-                                            isAdmin={isAdmin}
                                             onDelete={deleteAnnouncement}
                                             priorityBadgeColor={priorityBadgeColor}
                                             formatDate={formatDate}
@@ -155,7 +152,6 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                             <AnnouncementCard
                                                 key={announcement.id}
                                                 announcement={announcement}
-                                                isAdmin={isAdmin}
                                                 onDelete={deleteAnnouncement}
                                                 priorityBadgeColor={priorityBadgeColor}
                                                 formatDate={formatDate}
@@ -177,13 +173,12 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
 
 interface AnnouncementCardProps {
     announcement: Announcement;
-    isAdmin: boolean;
     onDelete: (id: string) => void;
     priorityBadgeColor: (priority: string) => string;
     formatDate: (date: string) => string;
 }
 
-function AnnouncementCard({ announcement, isAdmin, onDelete, priorityBadgeColor, formatDate }: AnnouncementCardProps) {
+function AnnouncementCard({ announcement, onDelete, priorityBadgeColor, formatDate }: AnnouncementCardProps) {
     return (
         <Card className={announcement.priority === 'high' ? 'border-red-500 shadow-md' : ''}>
             <CardHeader>
