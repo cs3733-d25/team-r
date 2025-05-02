@@ -2,6 +2,7 @@ import {useState} from 'react'
 import axios from 'axios'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select.tsx';
 import {Button} from '@/components/ui/button.tsx';
+import {Label} from '@/components/ui/label.tsx';
 
 export function FileTranslator() {
     const [file, setFile] = useState<File | null>(null)
