@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <footer className="w-full bg-card border-t border-border text-foreground py-6 mt-12">
+        <footer className="w-full border-t border-border text-foreground py-6 mt-12">
             <div className="max-w-7xl mx-auto px-4 flex flex-col items-center text-center text-sm">
                 <p className="mb-3 font-trade text-muted-foreground">
                     This website is a term project exercise for WPI CS 3733 Software Engineering (Prof. Wong) and is not to be confused with the actual Brigham & Women’s Hospital website.
