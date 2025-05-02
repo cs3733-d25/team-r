@@ -155,13 +155,13 @@ export const AnnouncementForm = () => {
                         <h1 className="text-3xl font-bold text-center mb-6">Create Announcement</h1>
 
                         <Tabs defaultValue="general" value={formData.type} onValueChange={handleTypeChange} className="mb-6">
-                            <TabsList className="grid grid-cols-3 mb-4">
+                            <TabsList className="grid grid-cols-3">
                                 <TabsTrigger value="urgent">Urgent Announcements</TabsTrigger>
                                 <TabsTrigger value="general">General Announcements</TabsTrigger>
                                 <TabsTrigger value="bulletin">Bulletin Announcements</TabsTrigger>
                             </TabsList>
 
-                            <TabsContent value="urgent" className="border-2 border-red-500 p-4 rounded-lg">
+                            <TabsContent value="urgent" className="border-2 border-red-500 p-4 rounded-b-lg">
                                 <div className="bg-red-100 p-3 mb-4 rounded-mb text-red-800">
                                     <strong>Important:</strong> Urgent announcements are highly visible and should only be used for critical information.
                                 </div>
@@ -172,7 +172,7 @@ export const AnnouncementForm = () => {
                                 {renderForm(false)}
                             </TabsContent>
 
-                            <TabsContent value="bulletin" className="border-2 border-blue-300 p-4 rounded-lg">
+                            <TabsContent value="bulletin" className="border-2 border-blue-300 p-4 rounded-b-lg">
                                 <div className="bg-blue-100 p-3 mb-4 rounded-md text-blue-800">
                                     <strong>Note:</strong> Bulletin board items are for general information and updates.
                                 </div>
