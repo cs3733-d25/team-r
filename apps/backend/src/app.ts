@@ -17,6 +17,7 @@ import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
 import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
+import announcementRouter from "./routes/announcements.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -73,6 +74,7 @@ app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
 app.use(API_ROUTES.TRANSLATE, translateRouter);
+app.use(API_ROUTES.ANNOUNCEMENTS, announcementRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

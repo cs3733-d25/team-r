@@ -16,4 +16,5 @@ export const API_ROUTES = {
     ASTAR: '/api/aStar',
     DFS: '/api/dfs',
     TRANSLATE: '/api/translate',
+    ANNOUNCEMENTS: '/api/announcements',
 };

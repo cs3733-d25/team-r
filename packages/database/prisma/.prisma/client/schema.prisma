@@ -166,6 +166,17 @@ model TranslateRequest {
   assignedEmployee   Employee @relation("translateRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
+model Announcement {
+  id             String    @id @default(cuid())
+  title          String
+  content        String
+  date           DateTime
+  author         String
+  priority       String
+  type           String
+  expirationDate DateTime?
+}
+
 generator client {
   provider        = "prisma-client-js"
   output          = "../.prisma/client"
