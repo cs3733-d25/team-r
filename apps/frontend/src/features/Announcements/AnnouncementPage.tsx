@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect } from 'react';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
+import {Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter} from '@/components/ui/card';
+import {Button} from '@/components/ui/button';
+import {Badge} from '@/components/ui/badge';
+import {Input} from '@/components/ui/input';
+import {Alert, AlertDescription} from '@/components/ui/alert';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
-import {Alert, AlertDescription} from "@/components/ui/alert";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {Badge} from "@/components/ui/badge";
-import {useAuth0} from "@auth0/auth0-react";
 
 interface Announcement {
     id: string;
@@ -18,14 +18,26 @@ interface Announcement {
     expirationDate?: string;
 }
 
-export function AnnouncementPage() {
+interface AnnouncementPageProps {
+    userType?: string;
+    userName?: string;
+}
+
+export function AnnouncementPage(props: AnnouncementPageProps) {
+    const [activeTab, setActiveTab] = useState('overview');
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const { user } = useAuth0();
-    // access a custom claim/attribute from the Auth0 user profile
-    // const isAdmin = user?.['...']?.includes('Admin');
+    const navigate = useNavigate();
+
+    const isAdmin = props.userType === 'Admin';
+
+    const announcementCategories = [
+        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', filter: (a: Announcement) => a.priority === 'high' },
+        { name: 'General', description: 'Regular hospital updates and information', filter: (a: Announcement) => a.priority === 'medium' },
+        { name: 'Informational', description: 'Non-critical hospital information and updates', filter: (a: Announcement) => a.priority === 'low' }
+    ];
 
     useEffect(() => {
         fetchAnnouncements();
@@ -62,9 +74,6 @@ export function AnnouncementPage() {
         announcement.content.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const priorityAnnouncements = filteredAnnouncements.filter(a => a.priority === 'high');
-    const regularAnnouncements = filteredAnnouncements.filter(a => a.priority !== 'high');
-
     const priorityBadgeColor = (priority: string) => {
         switch(priority) {
             case 'high': return 'bg-red-500 hover:bg-red-600';
@@ -85,75 +94,117 @@ export function AnnouncementPage() {
     if (loading) return <div className="flex justify-center p-8">Loading announcements...</div>;
 
     return (
-        <div className="container mx-auto py-8 px-4">
-            <div className="flex justify-between items-center mb-6">
-                <h1 className="text-3xl font-bold">Hospital Announcements</h1>
-                {isAdmin && (
-                    <Button asChild>
-                        <a href="/create-announcement">New Announcement</a>
-                    </Button>
+        <div className="min-h-screen bg-background">
+            <div className="container mx-auto pt-12 pb-8">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-3xl font-bold text-center">
+                        Hospital Announcements Dashboard
+                    </h1>
+                    {isAdmin && (
+                        <Button onClick={() => navigate('/create-announcement')}>
+                            Create New Announcement
+                        </Button>
+                    )}
+                </div>
+
+                {error && (
+                    <Alert variant="destructive" className="mb-6">
+                        <AlertDescription>{error}</AlertDescription>
+                    </Alert>
                 )}
-            </div>
 
-            {error && (
-                <Alert variant="destructive" className="mb-6">
-                    <AlertDescription>{error}</AlertDescription>
-                </Alert>
-            )}
+                <div className="mb-6">
+                    <Input
+                        placeholder="Search announcements..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="max-w-md"
+                    />
+                </div>
 
-            <div className="mb-6">
-                <Input
-                    placeholder="Search announcements..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="max-w-md"
-                />
-            </div>
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                    <TabsList className="mb-0 border-b border-gray-200 shadow-none">
+                        <TabsTrigger value="overview">Overview</TabsTrigger>
+                        <TabsTrigger value="all">All Announcements</TabsTrigger>
+                        {announcementCategories.map((category) => (
+                            <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
+                                {category.name}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
 
-            <Tabs defaultValue="all" className="w-full">
-                <TabsList className="mb-4">
-                    <TabsTrigger value="all">All</TabsTrigger>
-                    <TabsTrigger value="urgent">Urgent</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="all">
-                    {filteredAnnouncements.length === 0 ? (
-                        <p className="text-center py-8 text-gray-500">No announcements found.</p>
-                    ) : (
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {[...priorityAnnouncements, ...regularAnnouncements].map(announcement => (
-                                <AnnouncementCard
-                                    key={announcement.id}
-                                    announcement={announcement}
-                                    isAdmin={isAdmin}
-                                    onDelete={deleteAnnouncement}
-                                    priorityBadgeColor={priorityBadgeColor}
-                                    formatDate={formatDate}
-                                />
+                    {/* Overview Tab Content */}
+                    <TabsContent value="overview" className="space-y-6 -mt-px">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {announcementCategories.map((category, index) => (
+                                <Card key={category.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">
+                                    <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
+                                        <CardTitle>{category.name} Announcements</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                        <p className="text-muted-foreground mb-4 min-h-[3rem]">{category.description}</p>
+                                        <div className="flex flex-col space-y-2 mt-auto">
+                                            <Button
+                                                variant="secondary"
+                                                onClick={() => setActiveTab(category.name.toLowerCase())}
+                                            >
+                                                View {category.name} Announcements
+                                            </Button>
+                                            {isAdmin && (
+                                                <Button onClick={() => navigate('/create-announcement')}>
+                                                    Create New Announcement
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </CardContent>
+                                </Card>
                             ))}
                         </div>
-                    )}
-                </TabsContent>
+                    </TabsContent>
 
-                <TabsContent value="urgent">
-                    {priorityAnnouncements.length === 0 ? (
-                        <p className="text-center py-8 text-gray-500">No urgent announcements.</p>
-                    ) : (
-                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            {priorityAnnouncements.map(announcement => (
-                                <AnnouncementCard
-                                    key={announcement.id}
-                                    announcement={announcement}
-                                    isAdmin={isAdmin}
-                                    onDelete={deleteAnnouncement}
-                                    priorityBadgeColor={priorityBadgeColor}
-                                    formatDate={formatDate}
-                                />
-                            ))}
-                        </div>
-                    )}
-                </TabsContent>
-            </Tabs>
+                    {/* All Announcements Tab */}
+                    <TabsContent value="all">
+                        {filteredAnnouncements.length === 0 ? (
+                            <p className="text-center py-8 text-gray-500">No announcements found.</p>
+                        ) : (
+                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                {filteredAnnouncements.map(announcement => (
+                                    <AnnouncementCard
+                                        key={announcement.id}
+                                        announcement={announcement}
+                                        isAdmin={isAdmin}
+                                        onDelete={deleteAnnouncement}
+                                        priorityBadgeColor={priorityBadgeColor}
+                                        formatDate={formatDate}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </TabsContent>
+
+                    {/* Priority-specific Tabs */}
+                    {announcementCategories.map((category) => (
+                        <TabsContent key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
+                            {filteredAnnouncements.filter(category.filter).length === 0 ? (
+                                <p className="text-center py-8 text-gray-500">No {category.name.toLowerCase()} announcements found.</p>
+                            ) : (
+                                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                    {filteredAnnouncements.filter(category.filter).map(announcement => (
+                                        <AnnouncementCard
+                                            key={announcement.id}
+                                            announcement={announcement}
+                                            isAdmin={isAdmin}
+                                            onDelete={deleteAnnouncement}
+                                            priorityBadgeColor={priorityBadgeColor}
+                                            formatDate={formatDate}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </TabsContent>
+                    ))}
+                </Tabs>
+            </div>
         </div>
     );
 }
