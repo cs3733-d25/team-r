@@ -6,12 +6,12 @@ async function main() {
     //Patriot Place 20 Floor 1
     await client.directory.createMany({
         data: [
-            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
+            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
             {name: "Pharmacy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
             {name: "Radiology", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
             {name: "Cardiovascular Services", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
             {name: "Urology", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
-            {name: "Urgent Care Center", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Urgent Care Center", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
         ]
     });
     //Patriot Place 20 Floor 2

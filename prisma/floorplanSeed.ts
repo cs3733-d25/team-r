@@ -538,8 +538,8 @@ async function main() {
                 "floor": 1,
                 "xcoord": -164.05,
                 "ycoord": -203.95,
-                "longName": "Patient Parking",
-                "shortName": "Patient Parking"
+                "longName": "Patient Parking Sidewalk",
+                "shortName": "Patient Parking Sidewalk"
             },
             {
                 "nodeID": "Secondary Reception Entrance 20",
@@ -2644,7 +2644,7 @@ async function main() {
                 "toID": "Main Entrance 20"
             },
             {
-                "fromID": "Handicap Parking",
+                "fromID": "Valet Parking",
                 "toID": "Entrance Sidewalk 20"
             },
             {
@@ -2670,6 +2670,14 @@ async function main() {
             {
                 "fromID": "Secondary Reception Entrance 20",
                 "toID": "Secondary Reception 20"
+            },
+            {
+                "fromID": "Patient Parking 20",
+                "toID": "Patient Parking Sidewalk 20"
+            },
+            {
+                "fromID": "Accessible Parking Sidewalk 20",
+                "toID": "Patient Parking Sidewalk 20"
             }
         ],
         skipDuplicates: true
