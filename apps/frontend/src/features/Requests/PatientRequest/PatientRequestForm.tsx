@@ -260,29 +260,37 @@ export const PatientRequestForm = () => {
                     </div>
                     <div className="p-4">
                         <h3 className="text-lg font-semibold mb-2">Your request has been submitted</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name: </span>
+                                <span className="font-semibold">Employee: </span>
                                 {submittedPatientRequest.employeeName}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Patient ID:</span> {submittedPatientRequest.patientID}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
                             </div>
                             <div>
                                 <span className="font-semibold">Non Emergent Request:</span> {submittedPatientRequest.request}
                             </div>
                             <div>
+                                <span className="font-semibold">Priority:</span> {submittedPatientRequest.priority}
+                            </div>
+
+                            <div>
                                 <span className="font-semibold">Location:</span> {submittedPatientRequest.building}
                             </div>
                             <div>
+                                <span className="font-semibold">Department:</span> {submittedPatientRequest.department}
+                            </div>
+
+                            <div>
+                                <span className="font-semibold">Patient:</span> {submittedPatientRequest.patientID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Assigned Employee:</span> {submittedPatientRequest.assignedEmployee}
+                            </div>
+
+
+                            <div>
                                 <span className="font-semibold">Status:</span> {submittedPatientRequest.status}
                             </div>
+                            <br />
                             <div>
                                 <span className="font-semibold">Comment:</span> {submittedPatientRequest.comment}
                             </div>
