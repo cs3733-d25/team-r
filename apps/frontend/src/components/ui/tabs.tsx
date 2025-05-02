@@ -4,16 +4,19 @@ import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
+import {useTextSize} from "@/context/textContext.tsx";
 
 function Tabs({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Root>) {
+  const  {scale}  = useTextSize();
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
       className={cn("items-center justify-center w-full px-50", className)}
-      {...props}
+
+      {...props} style={{ fontSize: `${scale}em` }}
     />
   )
 }
@@ -39,6 +42,8 @@ function TabsTrigger({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+  const  {scale}  = useTextSize();
+  const smallerScale = Math.min(Math.max(0.5, scale), 0.6);
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
@@ -50,6 +55,7 @@ function TabsTrigger({
           className
       )}
       {...props}
+      style={{ fontSize: `${smallerScale}em` }}
     />
   )
 }
