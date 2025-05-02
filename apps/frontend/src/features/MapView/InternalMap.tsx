@@ -10,27 +10,11 @@ import faulkner from '../../../public/faulkner1.svg';
 import womens from '../../../public/womens2.svg';
 import {goToFloor} from '../MapView/floorNavigation.ts';
 import './leaflet.css';
-import {
-    fetchCheckIn,
-    fetchEdges20_1,
-    fetchElevators,
-    fetchEdges22_1,
-    fetchEdges22_3,
-    fetchEdges22_4,
-    fetchEdgesChestnut,
-    fetchEdgesWomensHospital,
-    fetchEntrances,
-    fetchParkingLots,
-    fetchEdgesFaulkner,
-    fetchHallways,
-    fetchOther,
-    fetchNodes, fetchAll, fetchEdges,
-} from '@/features/MapView/mapService.ts';
+import {fetchNodes, fetchEdges} from '@/features/MapView/mapService.ts';
 import { Node, Edge } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group.tsx";
-import { getFilter } from 'next/dist/build/webpack/loaders/css-loader/src/utils';
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Card, CardContent} from "@/components/ui/card.tsx";
 import {Accordion, AccordionTrigger, AccordionContent, AccordionItem} from "@/components/ui/accordion.tsx";
 import {Label} from "@/components/ui/label.tsx";
 
@@ -510,7 +494,7 @@ setEdgesOnActiveFloor(fullEdges)
             hardwareAccelerated: true
         };
 
-        // @ts-expect-error
+        // @ts-expect-error missing type definitions for antPath method from leaflet-ant-path
         const antPoly = L.polyline.antPath(currentFloorPath, antPathOptions);
         antPoly.addTo(map);
         routeLayer.current = antPoly;
