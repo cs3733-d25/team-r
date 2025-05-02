@@ -64,4 +64,64 @@ export class Graph {
   public getNodePosition(id: string): { x: number; y: number } {
     return this.positions.get(id) ?? { x: 0, y: 0 };
   }
+
+  async filterAccessibleNodes(): Promise<void> {
+    const stairNodes = await client.node.findMany({
+      where: {
+        nodeType: {
+          contains: "STAIR",
+          mode: "insensitive",
+        },
+      },
+      select: {
+        nodeID: true,
+      },
+    });
+
+    const stairNodeIDs = stairNodes.map((node) => node.nodeID);
+    for (const stairId of stairNodeIDs) {
+      const neighbors = this.getNeighbors(stairId);
+      for (const neighbor of neighbors) {
+        this.setEdgeWeight(stairId, neighbor, Number.MAX_SAFE_INTEGER);
+        this.setEdgeWeight(neighbor, stairId, Number.MAX_SAFE_INTEGER);
+      }
+    }
+
+    const elevatorNodes = await client.node.findMany({
+      where: {
+        nodeType: {
+          contains: "ELEVATOR",
+          mode: "insensitive",
+        },
+      },
+      select: {
+        nodeID: true,
+      },
+    });
+
+    const elevatorNodeIDs = elevatorNodes.map((node) => node.nodeID);
+    for (const elevatorId of elevatorNodeIDs) {
+      const neighbors = this.getNeighbors(elevatorId);
+      for (const neighbor of neighbors) {
+        const currentWeight = this.getEdgeWeight(elevatorId, neighbor);
+        // only reduce non-infinite weights
+        if (currentWeight < Number.MAX_SAFE_INTEGER / 2) {
+          this.setEdgeWeight(elevatorId, neighbor, Math.max(1, currentWeight * 0.8));
+          this.setEdgeWeight(neighbor, elevatorId, Math.max(1, currentWeight * 0.8));
+        }
+      }
+    }
+  }
+
+  public setEdgeWeight(u: string, v: string, weight: number): void {
+    if (!this.weightMap.has(u)) {
+      this.weightMap.set(u, new Map());
+    }
+    if (!this.weightMap.has(v)) {
+      this.weightMap.set(v, new Map());
+    }
+
+    this.weightMap.get(u)!.set(v, weight);
+    this.weightMap.get(v)!.set(u, weight);
+  }
 }

@@ -169,6 +169,7 @@ const nodePlaceholderOptions = {
     radius: 5
 }
 
+// we should seriously not use destructuring with this many props... - Akaash
 const InternalMap: React.FC<InternalMapProps> = ({pathCoordinates, pathByFloor, location, onLocationChange, onDataChange, onNodeDelete, onEdgeDelete, promiseNodeCreate, promiseEdgeCreate, onNodeSelect, showEdges, showNodes, onCoordSelect, onNodeDrag,onNodeEdit, onToggle,selectedEdgeNodes}) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
@@ -484,6 +485,61 @@ setEdgesOnActiveFloor(fullEdges)
         return out;
     }
 
+    /**
+     * Draws the path on the map using the ant path
+     * @param currentFloorPath - the path to draw
+     * @param map - the map to draw on
+     * @returns {void}
+     */
+    const drawPath = (currentFloorPath: [number, number][], map: L.Map) => {
+        // Remove existing route if present
+        if (routeLayer.current) {
+            routeLayer.current.remove();
+            routeLayer.current = null;
+        }
+
+        // Draw new route with ant path
+        const antPathOptions = {
+            delay: 100,
+            dashArray: [10, 20],
+            weight: 5,
+            color: 'darkorange',
+            pulseColor: '#FFFFFF',
+            paused: false,
+            reverse: false,
+            hardwareAccelerated: true
+        };
+
+        // @ts-expect-error
+        const antPoly = L.polyline.antPath(currentFloorPath, antPathOptions);
+        antPoly.addTo(map);
+        routeLayer.current = antPoly;
+
+        // Add start and end markers
+        if (currentFloorPath.length > 0) {
+            // Remove previous markers
+            if (map.startMarker) {
+                map.startMarker.remove();
+                map.startMarker = null;
+            }
+            if (map.endMarker) {
+                map.endMarker.remove();
+                map.endMarker = null;
+            }
+
+            // Add new markers
+            map.startMarker = L.marker(currentFloorPath[0], {
+                title: "Start",
+                icon: L.divIcon({ className: 'start-marker' }),
+            }).addTo(map);
+
+            map.endMarker = L.marker(currentFloorPath[currentFloorPath.length - 1], {
+                title: "End",
+                icon: L.divIcon({ className: 'end-marker' }),
+            }).addTo(map);
+        }
+    };
+
     // every node that we want to display gets created as a marker with the node's coordinates, icon, and options, and then is added to the layer
 
     // ****** USE EFFECTS *********
@@ -525,15 +581,15 @@ setEdgesOnActiveFloor(fullEdges)
         console.log(location.building + " "+location.floor);
     }, [hallwayFiltered, entranceFiltered, sidewalkingFiltered, elevatorFiltered, receptionFiltered, parkingLotFiltered]);
 
-    // reload the leaflet elements when something changes
+    // reload the leaflet elements (map) when something changes
     useEffect(() => {
         if (mapRef.current && !mapInstance.current) {
             // when the nodes and markers are loaded, display them
-            if(nodesOnActiveFloor && edgesOnActiveFloor) {
-                console.log(nodesOnActiveFloor.length+" full nodes exist now in this state!");
+            if (nodesOnActiveFloor && edgesOnActiveFloor) {
+                console.log(nodesOnActiveFloor.length + " full nodes exist now in this state!");
                 // check if the layer exists for the building and floor we are in
                 const layer = getLayer(location.building, location.floor);
-                if(layer) {
+                if (layer) {
                     // adds edges to the layer
                     edgesOnActiveFloor.map((fullEdge) => {
                         // check if we want to display that type
@@ -545,7 +601,7 @@ setEdgesOnActiveFloor(fullEdges)
                     })
                     nodesOnActiveFloor.map((fullNode) => {
                         // check if we want to display that type
-                            if (showNodes) fullNode.marker.addTo(layer);
+                        if (showNodes) fullNode.marker.addTo(layer);
                     })
                     console.log("reached here")
                     console.log("Edges given", edgesOnActiveFloor)
@@ -560,7 +616,7 @@ setEdgesOnActiveFloor(fullEdges)
             }).setView([500, 500], 0);
 
             // start the placeholder off-screen
-            const nodePlaceholder = L.circle([-100,-100], nodePlaceholderOptions).addTo(map);
+            const nodePlaceholder = L.circle([-100, -100], nodePlaceholderOptions).addTo(map);
 
             // Define bounds
             const bounds20_1: L.LatLngBoundsLiteral = [
@@ -616,37 +672,35 @@ setEdgesOnActiveFloor(fullEdges)
             // tracking layer changes
 
 
-
             // add a default layer
             if (typeof location.building === "string") {
                 if (location.building.includes('20')) {
                     floorLayer20_1.addTo(map);
                 } else if (location.building.includes('22')) {
-                    if(location.floor == 1) {
+                    if (location.floor == 1) {
                         floorLayer22_1.addTo(map);
-                    }else if(location.floor == 3) {
+                    } else if (location.floor == 3) {
                         floorLayer22_3.addTo(map);
-                    }else if(location.floor == 4) {
+                    } else if (location.floor == 4) {
                         floorLayer22_4.addTo(map);
                     }
                 } else if (location.building.includes('Chestnut Hill')) {
                     floorLayerChestnutHill.addTo(map);
                 } else if (location.building.includes('Faulkner')) {
                     floorLayerFaulkner.addTo(map);
-                }
-                else if (location.building.includes('Main')) {
+                } else if (location.building.includes('Main')) {
                     floorLayerWomens.addTo(map);
                 }
             }
-            map.on('baselayerchange', function(e) {
+            map.on('baselayerchange', function (e) {
                 // extract info from layer name
                 const layerName = e.name;
                 let building = '';
                 let floor = 1;
 
-                if (layerName.includes('20')||layerName.includes('20 Patriot')) {
+                if (layerName.includes('20') || layerName.includes('20 Patriot')) {
                     building = 'Healthcare Center (20 Patriot Pl.)';
-                } else if (layerName.includes('22' ) || layerName.includes('22 Patriot')) {
+                } else if (layerName.includes('22') || layerName.includes('22 Patriot')) {
                     building = 'Healthcare Center (22 Patriot Pl.)';
                     floor = parseInt(layerName.match(/Floor (\d+)/)?.[1] || '1');
                 } else if (layerName.includes('Chestnut Hill')) {
@@ -673,10 +727,10 @@ setEdgesOnActiveFloor(fullEdges)
                 // super ugly way of truncating to two digits
                 const x = parseFloat(e.latlng.lat.toFixed(2));
                 const y = parseFloat(e.latlng.lng.toFixed(2));
-                console.log("["+x+", "+y+"]");
+                console.log("[" + x + ", " + y + "]");
 
                 // send coordinates to parent function
-                if(onCoordSelect) {
+                if (onCoordSelect) {
                     onCoordSelect(x, y);
                 }
 
@@ -704,8 +758,29 @@ setEdgesOnActiveFloor(fullEdges)
                     floorLayerWomens,
                     building
                 );
-            };
-        }
+
+                // Only draw the path if this floor actually has a path segment
+                if (pathByFloor && pathByFloor[floor] && pathByFloor[floor].length > 1) {
+                    drawPath(pathByFloor[floor], map);
+                } else {
+                    // Clear any existing path if this floor doesn't have a path segment
+                    if (routeLayer.current) {
+                        routeLayer.current.remove();
+                        routeLayer.current = null;
+                    }
+
+                    // Also clear any markers
+                    if (map.startMarker) {
+                        map.startMarker.remove();
+                        map.startMarker = null;
+                    }
+                    if (map.endMarker) {
+                        map.endMarker.remove();
+                        map.endMarker = null;
+                    }
+                }
+            }
+        };
 
         return () => {
             if (mapInstance.current) {
@@ -713,78 +788,32 @@ setEdgesOnActiveFloor(fullEdges)
                 mapInstance.current = null;
             }
         };
-    }, [nodesOnActiveFloor, edgesOnActiveFloor]); //entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner
+    }, []); //entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner
 
-    // Redraw route whenever pathCoordinates change
+    // Update the path drawing useEffect
     useEffect(() => {
         if (!mapInstance.current) return;
-        // remove existing route
-        if (routeLayer.current) {
-            routeLayer.current.remove();
-            routeLayer.current = null;
-        }
 
-        const currentFloor = location.floor; // TODO:??
+        if (pathByFloor && pathByFloor[location.floor] && pathByFloor[location.floor].length > 1) {
+            drawPath(pathByFloor[location.floor], mapInstance.current);
+        } else {
+            // Clear the path if there's no path for this floor
+            if (routeLayer.current) {
+                routeLayer.current.remove();
+                routeLayer.current = null;
+            }
 
-        const currentFloorPath = pathByFloor?.[currentFloor || 1] || [];
-
-        // draw new route
-        if (currentFloorPath.length > 1) {
-            console.log("Drawing path for floor", currentFloor);
-
-
-            // ant path animation
-            const antPathOptions = {
-                delay: 100, // Delay in milliseconds between dashes
-                dashArray: [10, 20], // Defines the pattern of dashes and gaps
-                weight: 5, // Line weight
-                color: 'darkorange', // Line color
-                pulseColor: '#FFFFFF', // Color of the pulsing outline
-                paused: false, // Whether the animation is paused
-                reverse: false, // Reverse the animation direction
-                hardwareAccelerated: true // Use hardware acceleration if possible
-            };
-
-            // ignore the fact that antPath never resolves properly for me
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            const antPoly = L.polyline.antPath(currentFloorPath, antPathOptions);
-            antPoly.addTo(mapInstance.current);
-            routeLayer.current = antPoly
-
-            // Always create start and end markers for each floor's path segment
-            if (pathCoordinates && pathCoordinates.length > 0 && currentFloorPath.length > 0) {
-                // Create references to store markers so we can remove them later
-                if (!mapInstance.current.startMarker) {
-                    mapInstance.current.startMarker = null;
-                    mapInstance.current.endMarker = null;
-                }
-
-                // Remove previous markers if they exist
-                if (mapInstance.current.startMarker) {
-                    mapInstance.current.startMarker.remove();
-                    mapInstance.current.startMarker = null;
-                }
-
-                if (mapInstance.current.endMarker) {
-                    mapInstance.current.endMarker.remove();
-                    mapInstance.current.endMarker = null;
-                }
-
-                // Add start marker for this floor's path segment
-                mapInstance.current.startMarker = L.marker(currentFloorPath[0], {
-                    title: "Start",
-                    icon: L.divIcon({ className: 'start-marker' }),
-                }).addTo(mapInstance.current);
-
-                // Add end marker for this floor's path segment
-                mapInstance.current.endMarker = L.marker(currentFloorPath[currentFloorPath.length - 1], {
-                    title: "End",
-                    icon: L.divIcon({ className: 'end-marker' }),
-                }).addTo(mapInstance.current);
+            // Clear markers too
+            if (mapInstance.current.startMarker) {
+                mapInstance.current.startMarker.remove();
+                mapInstance.current.startMarker = null;
+            }
+            if (mapInstance.current.endMarker) {
+                mapInstance.current.endMarker.remove();
+                mapInstance.current.endMarker = null;
             }
         }
-    }, [pathCoordinates, pathByFloor]); // also on location ?
+    }, [pathCoordinates, pathByFloor, location.floor]);
 
     // function to update highlighted nodes
     const updateHighlightedNodes = () => {
