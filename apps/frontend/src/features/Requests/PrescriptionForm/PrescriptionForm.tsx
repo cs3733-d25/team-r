@@ -294,7 +294,7 @@ export const PrescriptionForm = () => {
                                 </div>
                             </div>
 
-                            <h2 className={'text-foreground font-bold'}>Instructions for Patient:</h2>
+                            <h2 className={'text-foreground font-bold font-trade'}>Instructions for Patient:</h2>
                             {/* Pill Quantities per Time */}
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
