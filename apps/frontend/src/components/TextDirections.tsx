@@ -1,13 +1,17 @@
 import { Label } from '@/components/ui/label.tsx';
+import { Toggle } from '@/components/ui/toggle.tsx';
 import {VolumeMute, VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
 import { Arrow90degLeft, Arrow90degRight, ArrowUp, ArrowDownUp } from 'react-bootstrap-icons';
 import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
+
 interface TextDirectionsProps {
     steps: string[];
     distance?: string;
     duration?: string;
+    useMeters?: boolean;
+    onUseMetersChange: (useMeters: boolean) => void;
 }
 
 /**
@@ -15,10 +19,13 @@ interface TextDirectionsProps {
  * @param steps - array of text directions
  * @param distance - distance of the route (optional)
  * @param duration - time it takes to travel (optional)
+ * @param useMeters - whether to display distances in meters
+ * @param onUseMetersChange - callback to toggle the use of meters vs feet
  * @constructor
  */
-function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
+function TextDirections({ steps, distance, duration, useMeters, onUseMetersChange }: TextDirectionsProps) {
     const [speaking, setSpeaking] = useState<boolean>(false);
+    //const [useMeters, setUseMeters] = useState<boolean>(false);
     /**
      * handleTTS - handles the text-to-speech functionality
      * does both internal and external maps
@@ -70,9 +77,24 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                     <Label className="text-xl text-black">
                         {distance && duration
                             ? `${distance} - ${duration}`
-                            : "Read directions aloud:"
+                            : "Directions:"
                         }
                     </Label>
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium">Feet</span>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                                type="checkbox"
+                                className="sr-only peer"
+                                checked={useMeters}
+                                onChange={() => onUseMetersChange(!useMeters)}
+                            />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
+                        </label>
+                        <span className="text-sm font-medium">Meters</span>
+
+                    </div>
                 {displayInfo(
                     speaking ? (
                         <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
@@ -81,10 +103,14 @@ function TextDirections({ steps, distance, duration }: TextDirectionsProps) {
                     ),
                     "Click on this button to toggle text-to-speech directions."
                 )}
+              </div>
             </div>
             <ol className="list-decimal list-inside space-y-2">
                 {steps.map((step, index) => {
                     const icon = getDirectionIcon(step.replace(/<[^>]+>/g, ''));
+
+                    const changeStep = step.replace(/<[^>]+>/g, '');
+
 
                     return (
                         <li
