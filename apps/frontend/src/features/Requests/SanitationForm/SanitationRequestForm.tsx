@@ -105,7 +105,7 @@ const SanitationRequestForm = () => {
 
         // Reset form
         setFormData({
-          employeeName: '',
+          employeeName: formData.employeeName,
           sanitationType: '',
           priority: '',
           department: '',
@@ -210,19 +210,16 @@ const SanitationRequestForm = () => {
                 {/* Room Number */}
                 <div>
                   <Label className="block text-sm font-semibold text-foreground mb-2">
-                    Room Number
-                    <span className="text-accent">*</span>
-                    <span className="text-xs text-secondary-foreground block">
-                      Format: Floor-Room (e.g., 3-124, L1-001)
-                    </span>
+                    Room Number<span className="text-accent">*</span>
                   </Label>
                   <Input
-                    type="text"
-                    name="roomNumber"
-                    value={formData.roomNumber}
-                    onChange={handleChange}
-                    placeholder="e.g., 3-124"
-                    className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                      type="text"
+                      name="roomNumber"
+                      value={formData.roomNumber}
+                      onChange={handleChange}
+                      placeholder="e.g., 3-124"
+                      className="w-full px-4 py-2 rounded-md border border-border bg-input"
+                      required
                   />
                 </div>
               </div>

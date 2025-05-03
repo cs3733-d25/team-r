@@ -24,9 +24,6 @@ const Footer = () => {
                     </a>
                     .
                 </p>
-                <p className="text-xs text-muted-foreground">
-                    © {new Date().getFullYear()} Team D25. For educational purposes only.
-                </p>
             </div>
         </footer>
     );

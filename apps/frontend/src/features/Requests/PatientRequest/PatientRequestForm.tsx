@@ -33,7 +33,7 @@ export const PatientRequestForm = () => {
         comment: "",
         time: new Date().toString(),
         status: '',
-        request: ' ',
+        request: '',
         employeeName: '',
         assignedEmployee: '',
 
@@ -103,8 +103,8 @@ export const PatientRequestForm = () => {
                     comment: "",
                     time: new Date().toLocaleString(),
                     status: '',
-                    request: ' ',
-                    employeeName: '',
+                    request: '',
+                    employeeName: formData.employeeName,
                     assignedEmployee: ''
 
                 });

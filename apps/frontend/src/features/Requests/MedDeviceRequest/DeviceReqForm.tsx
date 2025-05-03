@@ -17,7 +17,6 @@ interface SubmittedDevice {
     building: string;
     comment: string;
     employeeName: string;
-    //employeeID: string;
     status: string;
     timestamp: string;
     assignedEmployee: string;
@@ -98,8 +97,7 @@ export const DeviceReqForm = () => {
                     room: '',
                     department: '',
                     comment: '',
-                    employeeName: '',
-                    //employeeID: '',
+                    employeeName: formData.employeeName,
                     status: '',
                     building: '',
                     assignedEmployee: ''
@@ -224,18 +222,14 @@ export const DeviceReqForm = () => {
                                 {/* Room Name */}
                                 <div>
                                     <Label className="block text-sm font-semibold text-foreground mb-2">
-                                        Room
-                                        <span className="text-accent">*</span>
-                                        <span className="text-xs text-secondary-foreground block">
-                                            Enter the name of the room to send the device to.
-                                        </span>
+                                        Room Number<span className="text-accent">*</span>
                                     </Label>
                                     <Input
                                         type="text"
                                         name="room"
                                         value={formData.room}
                                         onChange={handleChange}
-                                        placeholder="Enter the name of the room to send the device to."
+                                        placeholder="e.g., 3-124"
                                         className="w-full px-4 py-2 rounded-md border border-border bg-input"
                                         required
                                     />

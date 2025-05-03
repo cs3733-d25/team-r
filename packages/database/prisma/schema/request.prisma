@@ -99,7 +99,7 @@ model TranslateRequest {
   employeeName       Employee @relation(fields: [employeeID], references: [id])
   language           String
   building           String
-  roomNumber         Int
+  roomNumber         String
   status             String
   comments           String
   priority           String

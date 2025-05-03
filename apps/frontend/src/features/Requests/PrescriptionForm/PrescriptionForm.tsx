@@ -123,7 +123,7 @@ export const PrescriptionForm = () => {
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
-                    employeeName: '',
+                    employeeName: formData.employeeName,
                     patientID: '',
                     priority: '',
                     building: '',
@@ -294,7 +294,7 @@ export const PrescriptionForm = () => {
                                 </div>
                             </div>
 
-                            <h2 className={'text-foreground font-bold'}>Instructions for Patient:</h2>
+                            <h2 className={'text-foreground font-bold font-trade'}>Instructions for Patient:</h2>
                             {/* Pill Quantities per Time */}
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
@@ -593,15 +593,17 @@ export const PrescriptionForm = () => {
                             </div>
                         </div>
                         </div>
-                        <div className="mt-3 text-sm text-secondary-foreground">
+                        <div className="mt-3 px-4 text-sm text-secondary-foreground">
                             The prescription request has been submitted and will be filled.
                         </div>
-                        <Button
-                            onClick={() => setSubmittedPrescription(null)}
-                            className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
-                        >
-                            Dismiss
-                        </Button>
+                        <div className={"px-4 py-4"}>
+                            <Button
+                                onClick={() => setSubmittedPrescription(null)}
+                                className="mt-4 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
+                            >
+                                Dismiss
+                            </Button>
+                        </div>
                     </div>
                 // </div>
             )}

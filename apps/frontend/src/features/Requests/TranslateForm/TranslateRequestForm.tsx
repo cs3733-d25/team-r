@@ -87,7 +87,7 @@ const TranslateRequestForm = () => {
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
-                    employeeName: '',
+                    employeeName: formData.employeeName,
                     language: '',
                     priority: '',
                     department: '',
