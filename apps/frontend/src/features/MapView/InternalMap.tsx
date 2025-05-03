@@ -943,28 +943,42 @@ const InternalMap: React.FC<InternalMapProps> = ({
                             </Card>
                         </AccordionItem>
                     </Accordion>
-                    <ToggleGroup type={'multiple'}>
-                        <ToggleGroupItem value={'Hallways'} onClick={() => isFiltered('Hallway')}>
-                            H
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value={'Entrances'} onClick={() => isFiltered('Entrance')}>
-                            EN
-                        </ToggleGroupItem>
-                        <ToggleGroupItem
-                            value={'Parking Lots'}
-                            onClick={() => isFiltered('Parking')}
-                        >
-                            PL
-                        </ToggleGroupItem>
-                        <ToggleGroupItem
-                            value={'Reception'}
-                            onClick={() => isFiltered('Reception')}
-                        >
-                            R
-                        </ToggleGroupItem>
-                        <ToggleGroupItem value={'Elevator'} onClick={() => isFiltered('Elevator')}>
-                            EL
-                        </ToggleGroupItem>
+                    <ToggleGroup type={'multiple'} className={'bg-white shadow-md'}>
+                        <div className={'flex flex-col p-2 space-y-2'}>
+                            <Label className="text-center w-full font-medium">Filter Nodes</Label>
+                            <div className={'flex space-x-2 justify-center'}>
+                                <ToggleGroupItem
+                                    value={'Hallways'}
+                                    onClick={() => isFiltered('Hallway')}
+                                >
+                                    H
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value={'Entrances'}
+                                    onClick={() => isFiltered('Entrance')}
+                                >
+                                    EN
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value={'Parking Lots'}
+                                    onClick={() => isFiltered('Parking')}
+                                >
+                                    PL
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value={'Reception'}
+                                    onClick={() => isFiltered('Reception')}
+                                >
+                                    R
+                                </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value={'Elevator'}
+                                    onClick={() => isFiltered('Elevator')}
+                                >
+                                    EL
+                                </ToggleGroupItem>
+                            </div>
+                        </div>
                     </ToggleGroup>
                 </div>
             ) : null}
