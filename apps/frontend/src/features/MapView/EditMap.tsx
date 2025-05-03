@@ -182,8 +182,9 @@ export function EditMap({ status }: EditMapProps) {
         });
     }
 
-    function onNodeClick(nodeID: string) {
+    function onNodeClick(nodeID: string, nodeName:string) {
         setNodeID(nodeID);
+        setEditNodeName(nodeName);
         setEdgeNodes((nodes) => {
             if (nodes.length == 0) {
                 return [nodeID];
@@ -207,9 +208,10 @@ export function EditMap({ status }: EditMapProps) {
         });
         // setCurrentBuilding(building);
     };
-    const handleNodeDrag = (lat: number, lng: number, nodeID: string, nodeTypes: string) => {
+    const handleNodeDrag = (lat: number, lng: number, nodeID: string, nodeTypes: string, nodeName:string) => {
         setActiveTab('edit-node');
         setNodeID(nodeID);
+        setEditNodeName(nodeName);
         setEditNodeType(nodeTypes);
         console.log('Setting coordinates: x = ', lat, ' y = ', lng);
         setEditCoordinates({
@@ -637,7 +639,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 <Input
                                                     value={editnodeName}
                                                     onChange={(e) =>
-                                                        setEditNodeName(e.target.value)
+                                                        console.log("Node Name Value: ", e.target.value)
                                                     }
                                                     placeholder="Enter new node name"
                                                 />

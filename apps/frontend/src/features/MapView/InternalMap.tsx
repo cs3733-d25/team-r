@@ -71,11 +71,11 @@ interface InternalMapProps {
     onEdgeDelete?: (edgeID: string) => Promise<void>;
     promiseNodeCreate?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
     promiseEdgeCreate?: Promise<void>;
-    onNodeSelect?: (nodeID: string) => void;
+    onNodeSelect?: (nodeID: string, nodeName:string) => void;
     showEdges?: boolean;
     showNodes?: boolean;
     onCoordSelect?: (x: number, y: number) => void;
-    onNodeDrag?: (x: number, y: number, nodeID: string, nodeType: string) => void;
+    onNodeDrag?: (x: number, y: number, nodeID: string, nodeType: string, nodeName:string) => void;
     onNodeEdit?: (x: number, y: number, nodeID: string) => void;
     onToggle?: (bool: boolean) => void;
     selectedEdgeNodes?: string[];
@@ -249,7 +249,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
 
             // tell the parent element if the node has been selected
             if (onNodeSelect) {
-                onNodeSelect(data.nodeID);
+                onNodeSelect(data.nodeID, data.shortName);
             }
         });
 
@@ -276,7 +276,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
             // send coordinates to parent function
             if (onNodeDrag) {
                 console.log('Calling onNodeEdit with:', x, y, node.nodeID);
-                onNodeDrag(x, y, node.nodeID, node.nodeType);
+                onNodeDrag(x, y, node.nodeID, node.nodeType, node.shortName);
             }
         });
     }
