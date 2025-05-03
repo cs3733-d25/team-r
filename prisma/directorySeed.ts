@@ -67,9 +67,9 @@ async function main() {
                 "name": "MassGeneral Hospital for Children",
                 "floorNumber": 1,
                 "building": "Healthcare Center (22 Patriot Pl.)",
-                "receptionNodeID": "Entrance-1745515055030"
+                "receptionNodeID": "Main Reception 22_1"
             },
-            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Entrance-1745515055030"},
+            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_1"},
         ]
     });
     //Patriot Place 22 Floor 3
