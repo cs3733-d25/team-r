@@ -1,6 +1,6 @@
 import Directions from '@/features/MapView/Directions.tsx';
 import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -17,6 +17,7 @@ import {
 import { HeadingLabel } from '@/components/ui/heading-label';
 import { ZoomIn } from 'lucide-react';
 import { displayInfo } from '@/features/MapView/DisplayInformation.tsx';
+import { CarFrontFill, GeoAltFill } from 'react-bootstrap-icons';
 
 /**
  * ExternalMapProps
@@ -245,6 +246,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                             {displayInfo(
                                 <Button onClick={getLocation} className={'w-full'}>
                                     Use my Location
+                                    <GeoAltFill />
                                 </Button>,
                                 'Allow our application to use your location and find a route to one of our hospitals.'
                             )}
@@ -256,9 +258,12 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Travel Mode</SelectLabel>
-                                            <SelectItem value={'DRIVING'}>Car</SelectItem>
+                                            <div className="flex items-center justify-between">
+                                                <SelectItem value={'DRIVING'}>Car</SelectItem>
+                                                <CarFrontFill/>
+                                            </div>
                                             <SelectItem value={'TRANSIT'}>
-                                                Public Transportation
+                                                Public Transit
                                             </SelectItem>
                                             <SelectItem value={'BICYCLING'}>Bicycle</SelectItem>
                                             <SelectItem value={'WALKING'}>Walk</SelectItem>

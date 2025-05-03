@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { useNavigate } from 'react-router-dom';
 import Disclaimer from '../components/Disclaimer';
 import { Label } from '@/components/ui/label.tsx';
+import { GeoAlt, GeoAltFill } from 'react-bootstrap-icons';
 
 interface HomeMainProps {
     status?: string;
@@ -42,7 +43,7 @@ export function HomeMain(props: HomeMainProps) {
                             Welcome to Mass General Brigham
                         </Label>
                         {(!props.userType || props.status != 'logged-in') && (
-                            <Label className={'text-white font-bold mb-4 mx-10'}>
+                            <Label className={'text-white mb-4 mx-10'}>
                                 Log in to locate a department using our pathfinding page so that we
                                 can help you navigate toward any service that you may need.
                             </Label>
@@ -50,11 +51,11 @@ export function HomeMain(props: HomeMainProps) {
                     </div>
                     <div className={'justify-self-center'}>
                         <Button
-                            variant="ghost"
-                            className={'bg-primary hover:bg-foreground hover:text-white mt-10'}
+                            variant="default"
                             onClick={handleNavigateToMap}
                         >
                             Find a Location
+                            <GeoAltFill/>
                         </Button>
                     </div>
                 </div>
