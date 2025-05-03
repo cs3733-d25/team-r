@@ -2041,14 +2041,14 @@ async function main() {
                 "shortName": "Elevator Bay"
             },
             {
-                "nodeID": "Elevator-1745978735954",
-                "nodeType": "Elevator",
+                "nodeID": "Main Reception MC",
+                "nodeType": "Reception",
                 "building": "Main Campus Hospital (75 Francis St.)",
                 "floor": 1,
-                "xcoord": 590.17,
-                "ycoord": 668.93,
-                "longName": "",
-                "shortName": "Elevator"
+                "xcoord": 589.25,
+                "ycoord": 658.62,
+                "longName": "Main Reception",
+                "shortName": "Main Reception"
             },
             {
                 "nodeID": "Hallway-1745978877180",
@@ -3676,7 +3676,7 @@ async function main() {
                 "toID": "Entrance-1745978697506"
             },
             {
-                "fromID": "Elevator-1745978735954",
+                "fromID": "Main Reception MC",
                 "toID": "Hallway-1745978726808"
             },
             {
