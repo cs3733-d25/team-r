@@ -182,9 +182,10 @@ export function EditMap({ status }: EditMapProps) {
         });
     }
 
-    function onNodeClick(nodeID: string, nodeName:string) {
+    function onNodeClick(nodeID: string, nodeName:string, nodeType:string) {
         setNodeID(nodeID);
         setEditNodeName(nodeName);
+        setEditNodeType(nodeType);
         setEdgeNodes((nodes) => {
             if (nodes.length == 0) {
                 return [nodeID];
@@ -311,7 +312,8 @@ export function EditMap({ status }: EditMapProps) {
             // alert(nodeName);
             if (response.status === 200) {
                 // alert('Node saved successfully!');
-                // reset form
+                // reset forms
+                setNodeID('')
                 setEditNodeName('');
                 setEditNodeType('');
                 setEditSelectedDepartments([]);
