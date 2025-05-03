@@ -63,12 +63,13 @@ export function MapPage() {
     const [showDirections, setShowDirections] = useState(false);
     const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
     const [pathByFloor, setPathByFloor] = useState<Record<number, [number, number][]>>({});
+    const [hasClickedGetDirections, setHasClickedGetDirections] = useState(false);
 
     useEffect(() => {
-        if (selectedParkinglot && selectedDepartment) {
+        if (hasClickedGetDirections && selectedParkinglot && selectedDepartment) {
             handleGetDirections();
         }
-    }, [selectedParkinglot, selectedDepartment, accessibleRoute]);
+    }, [selectedParkinglot, selectedDepartment, accessibleRoute, hasClickedGetDirections]);
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -106,7 +107,10 @@ export function MapPage() {
     };
 
     // Main “Get Directions” handler
-    const handleGetDirections = async () => {
+    const handleGetDirections = async (e?: React.FormEvent) => {
+        e?.preventDefault();
+        setHasClickedGetDirections(true);
+
         if (!selectedParkinglot || !selectedDepartment) {
             alert('Please select both a parking lot and a department.');
             return;
