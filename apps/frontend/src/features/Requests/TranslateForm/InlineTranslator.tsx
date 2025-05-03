@@ -1,10 +1,16 @@
-import {useState, useEffect, useRef} from 'react';
-import {Button} from '@/components/ui/button';
-import {Label} from '@/components/ui/label';
-import {Textarea} from '@/components/ui/textarea';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import { useState, useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import axios from 'axios';
-import {Mic, MicOff} from 'lucide-react';
+import { Mic, MicOff, Volume2 } from 'lucide-react';
 import FileTranslator from './FileTranslator';
 
 interface SpeechRecognitionEvent extends Event {
@@ -18,14 +24,19 @@ interface SpeechRecognitionEvent extends Event {
 
 interface SpeechRecognitionResultList {
     readonly length: number;
+
     item(index: number): SpeechRecognitionResult;
+
     [index: number]: SpeechRecognitionResult;
 }
 
 interface SpeechRecognitionResult {
     readonly length: number;
+
     item(index: number): SpeechRecognitionAlternative;
+
     [index: number]: SpeechRecognitionAlternative;
+
     isFinal?: boolean;
 }
 
@@ -38,9 +49,13 @@ interface SpeechRecognition extends EventTarget {
     continuous: boolean;
     interimResults: boolean;
     lang: string;
+
     start(): void;
+
     stop(): void;
+
     abort(): void;
+
     onresult: (event: SpeechRecognitionEvent) => void;
     onerror: (event: SpeechRecognitionEvent) => void;
     onend: () => void;
@@ -107,7 +122,7 @@ export function InlineTranslator() {
         } else {
             try {
                 // request microphone permission
-                await navigator.mediaDevices.getUserMedia({audio: true});
+                await navigator.mediaDevices.getUserMedia({ audio: true });
                 setMicPermissionError(false);
                 startListening();
             } catch (error) {
@@ -207,10 +222,16 @@ export function InlineTranslator() {
             <h2 className="text-xl font-bold mb-4">Quick Translator</h2>
 
             <div className="flex space-x-2 mb-4">
-                <Button variant={mode === 'text' ? 'default' : 'outline'} onClick={() => setMode('text')}>
+                <Button
+                    variant={mode === 'text' ? 'default' : 'outline'}
+                    onClick={() => setMode('text')}
+                >
                     Text
                 </Button>
-                <Button variant={mode === 'file' ? 'default' : 'outline'} onClick={() => setMode('file')}>
+                <Button
+                    variant={mode === 'file' ? 'default' : 'outline'}
+                    onClick={() => setMode('file')}
+                >
                     File
                 </Button>
             </div>
@@ -243,7 +264,8 @@ export function InlineTranslator() {
                         </div>
                         {micPermissionError && (
                             <p className="text-amber-600 text-sm mt-1">
-                                Microphone permission denied. Please allow access to use speech input.
+                                Microphone permission denied. Please allow access to use speech
+                                input.
                             </p>
                         )}
                     </div>
@@ -280,19 +302,24 @@ export function InlineTranslator() {
                             <Label htmlFor="translatedText" className="mb-2 block">
                                 Translation
                             </Label>
-                            <div
-                                id="translatedText"
-                                className="p-3 border rounded-md bg-slate-50 min-h-24"
-                            >
-                                {translatedText}
+                            <div className="relative">
+                                <div
+                                    id="translatedText"
+                                    className="p-3 border rounded-md bg-slate-50 min-h-24"
+                                >
+                                    {translatedText}
+                                </div>
+                                <Button
+                                    type="button"
+                                    size="icon"
+                                    variant="unselected"
+                                    onClick={speakText}
+                                    title="Speak Translation"
+                                    className="absolute right-2 top-2"
+                                >
+                                    <Volume2 size={18} />
+                                </Button>
                             </div>
-                            <Button
-                                onClick={speakText}
-                                variant="default"
-                                className="w-full"
-                            >
-                                Speak Translation
-                            </Button>
                         </div>
                     )}
                 </div>
