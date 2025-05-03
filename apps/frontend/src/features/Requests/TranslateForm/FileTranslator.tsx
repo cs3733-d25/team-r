@@ -36,8 +36,10 @@ export function FileTranslator() {
     }
 
     return (
-        <div className="p-6 bg-white rounded-lg shadow-lg max-w-2xl mx-auto space-y-6">
-            <h3 className="text-xl font-semibold">Upload & Translate File</h3>
+        <div className="space-y-6">
+            <Label htmlFor="sourceText" className="mb-2 block">
+                Upload & Translate File
+            </Label>
 
             <input
                 ref={fileInputRef}
