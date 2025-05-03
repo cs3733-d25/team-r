@@ -977,6 +977,12 @@ const InternalMap: React.FC<InternalMapProps> = ({
                                 >
                                     EL
                                 </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value={'Sidewalk'}
+                                    onClick={() => isFiltered('Sidewalk')}
+                                >
+                                    S
+                                </ToggleGroupItem>
                             </div>
                         </div>
                     </ToggleGroup>
