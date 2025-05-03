@@ -578,6 +578,16 @@ async function main() {
                 "shortName": "East Central Hallway"
             },
             {
+                "nodeID": "Dialysis Entrance Sidewalk F",
+                "nodeType": "Sidewalk",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 794.71,
+                "ycoord": 328.77,
+                "longName": "Dialysis Entrance Sidewalk",
+                "shortName": "Dialysis Entrance Sidewalk"
+            },
+            {
                 "nodeID": "Hallway-1745468105189",
                 "nodeType": "Hallway",
                 "building": "Faulkner Hospital",
@@ -828,14 +838,14 @@ async function main() {
                 "shortName": "Dialysis Entrance"
             },
             {
-                "nodeID": "Hallway-1745546310011",
-                "nodeType": "Hallway",
+                "nodeID": "Dialysis Pathway Sidewalk F",
+                "nodeType": "Sidewalk",
                 "building": "Faulkner Hospital",
                 "floor": 1,
                 "xcoord": 750,
                 "ycoord": 364,
-                "longName": "",
-                "shortName": ""
+                "longName": "Dialysis Pathway Sidewalk",
+                "shortName": "Dialysis Pathway Sidewalk"
             },
             {
                 "nodeID": "Dialysis Reception",
@@ -3632,11 +3642,11 @@ async function main() {
             },
 
             {
-                "fromID": "Dialysis Entrance",
-                "toID": "Hallway-1745546310011",
+                "fromID": "Dialysis Entrance Sidewalk F",
+                "toID": "Dialysis Pathway Sidewalk F",
             },
             {
-                "fromID": "Hallway-1745546310011",
+                "fromID": "Dialysis Pathway Sidewalk F",
                 "toID": "Faulkner Hospital Entrance",
             },
             {
@@ -3644,8 +3654,12 @@ async function main() {
                 "toID": "Dialysis Entrance",
             },
             {
-                "fromID": "Hallway-1745546310011",
+                "fromID": "Dialysis Pathway Sidewalk F",
                 "toID": "Parking-1745468723599"
+            },
+            {
+                "fromID": "Dialysis Entrance Sidewalk F",
+                "toID": "Dialysis Entrance"
             }
         ]
     });
