@@ -5,6 +5,7 @@ import {Textarea} from '@/components/ui/textarea';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import axios from 'axios';
 import {Mic, MicOff} from 'lucide-react';
+import FileTranslator from './FileTranslator';
 
 interface SpeechRecognitionEvent extends Event {
     results: SpeechRecognitionResultList;
@@ -82,6 +83,7 @@ export function InlineTranslator() {
     const [speechSupported, setSpeechSupported] = useState(false);
     const [micPermissionError, setMicPermissionError] = useState(false);
     const recognitionRef = useRef<SpeechRecognition | null>(null);
+    const [mode, setMode] = useState<'text' | 'file'>('text');
 
     useEffect(() => {
         const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -197,80 +199,92 @@ export function InlineTranslator() {
         <div className="bg-white rounded-lg shadow-lg p-4 max-w-2xl mx-auto">
             <h2 className="text-xl font-bold mb-4">Quick Translator</h2>
 
-            <div className="space-y-4">
-                <div>
-                    <Label htmlFor="sourceText" className="mb-2 block">
-                        Text to Translate
-                    </Label>
-                    <div className="relative">
-                        <Textarea
-                            id="sourceText"
-                            value={sourceText}
-                            onChange={(e) => setSourceText(e.target.value)}
-                            placeholder="Enter text to translate..."
-                            className="h-24"
-                        />
-                        {speechSupported && (
-                            <Button
-                                type="button"
-                                size="icon"
-                                variant="unselected"
-                                className={`absolute right-2 top-2 ${isListening ? 'text-red-500' : ''}`}
-                                onClick={toggleSpeechToText}
-                                title={isListening ? 'Stop listening' : 'Start dictation'}
-                            >
-                                {isListening ? <MicOff size={18} /> : <Mic size={18} />}
-                            </Button>
+            <div className="flex space-x-2 mb-4">
+                <Button variant={mode === 'text' ? 'default' : 'outline'} onClick={() => setMode('text')}>
+                    Text
+                </Button>
+                <Button variant={mode === 'file' ? 'default' : 'outline'} onClick={() => setMode('file')}>
+                    File
+                </Button>
+            </div>
+            {mode === 'text' ? (
+                <div className="space-y-4">
+                    <div>
+                        <Label htmlFor="sourceText" className="mb-2 block">
+                            Text to Translate
+                        </Label>
+                        <div className="relative">
+                            <Textarea
+                                id="sourceText"
+                                value={sourceText}
+                                onChange={(e) => setSourceText(e.target.value)}
+                                placeholder="Enter text to translate..."
+                                className="h-24"
+                            />
+                            {speechSupported && (
+                                <Button
+                                    type="button"
+                                    size="icon"
+                                    variant="unselected"
+                                    className={`absolute right-2 top-2 ${isListening ? 'text-red-500' : ''}`}
+                                    onClick={toggleSpeechToText}
+                                    title={isListening ? 'Stop listening' : 'Start dictation'}
+                                >
+                                    {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                                </Button>
+                            )}
+                        </div>
+                        {micPermissionError && (
+                            <p className="text-amber-600 text-sm mt-1">
+                                Microphone permission denied. Please allow access to use speech input.
+                            </p>
                         )}
                     </div>
-                    {micPermissionError && (
-                        <p className="text-amber-600 text-sm mt-1">
-                            Microphone permission denied. Please allow access to use speech input.
-                        </p>
+
+                    <div>
+                        <Label htmlFor="targetLanguage" className="mb-2 block">
+                            Translate To
+                        </Label>
+                        <Select value={targetLanguage} onValueChange={setTargetLanguage}>
+                            <SelectTrigger id="targetLanguage">
+                                <SelectValue placeholder="Select language" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {LANGUAGES.map((lang) => (
+                                    <SelectItem key={lang.code} value={lang.code}>
+                                        {lang.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    <Button
+                        className="w-full"
+                        onClick={handleTranslate}
+                        disabled={isLoading || !sourceText.trim()}
+                        variant="default"
+                    >
+                        {isLoading ? 'Translating...' : 'Translate'}
+                    </Button>
+
+                    {translatedText && (
+                        <div className="mt-4">
+                            <Label htmlFor="translatedText" className="mb-2 block">
+                                Translation
+                            </Label>
+                            <div
+                                id="translatedText"
+                                className="p-3 border rounded-md bg-slate-50 min-h-24"
+                            >
+                                {translatedText}
+                            </div>
+                        </div>
                     )}
                 </div>
-
-                <div>
-                    <Label htmlFor="targetLanguage" className="mb-2 block">
-                        Translate To
-                    </Label>
-                    <Select value={targetLanguage} onValueChange={setTargetLanguage}>
-                        <SelectTrigger id="targetLanguage">
-                            <SelectValue placeholder="Select language" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {LANGUAGES.map((lang) => (
-                                <SelectItem key={lang.code} value={lang.code}>
-                                    {lang.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                <Button
-                    className="w-full"
-                    onClick={handleTranslate}
-                    disabled={isLoading || !sourceText.trim()}
-                    variant="default"
-                >
-                    {isLoading ? 'Translating...' : 'Translate'}
-                </Button>
-
-                {translatedText && (
-                    <div className="mt-4">
-                        <Label htmlFor="translatedText" className="mb-2 block">
-                            Translation
-                        </Label>
-                        <div
-                            id="translatedText"
-                            className="p-3 border rounded-md bg-slate-50 min-h-24"
-                        >
-                            {translatedText}
-                        </div>
-                    </div>
-                )}
-            </div>
+            ) : (
+                <FileTranslator />
+            )}
         </div>
     );
 }
