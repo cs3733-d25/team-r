@@ -75,29 +75,30 @@ async function main() {
     //Patriot Place 22 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Multi Specialty Clinic", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Allergy", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Dermatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Endocrinology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Gastroenterology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Neurology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Neurosurgery", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Ophthalmology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Optometry", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Pulmonology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Rheumatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Vein Care Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Women's Health", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Patient Financial Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Multi Specialty Clinic", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Allergy", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Dermatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Endocrinology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Gastroenterology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Neurology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Neurosurgery", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Ophthalmology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Optometry", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Pulmonology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Rheumatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Vein Care Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Women's Health", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Patient Financial Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
         ]
     });
     // Patriot Place 22 Floor 4
     await client.directory.createMany({
         data: [
-            {name: "Community Room", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Primary Care"},
-            {name: "Primary Care", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Community Room"},
+            {name: "Community Room", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_4"},
+            {name: "Primary Care", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_4"},
+            {name: "Blood Draw/Phlebotomy", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_4"},
         ]
     })
 

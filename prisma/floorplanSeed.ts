@@ -1272,24 +1272,24 @@ async function main() {
     await PrismaClient.node.createMany({
         data: [
             {
-                "nodeID": "Elevator-1745530797419",
+                "nodeID": "Floor 3 Elevator 22_3",
                 "nodeType": "Elevator",
                 "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
-                "xcoord": 441.67,
-                "ycoord": 694,
-                "longName": "",
-                "shortName": ""
+                "xcoord": 425.25,
+                "ycoord": 685.75,
+                "longName": "Floor 3 Elevator",
+                "shortName": "Floor 3 Elevator"
             },
             {
-                "nodeID": "Hallway-1745530802852",
+                "nodeID": "Elevator Corridor 22_3",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
-                "xcoord": 396.83,
-                "ycoord": 697.5,
-                "longName": "",
-                "shortName": ""
+                "xcoord": 396.5,
+                "ycoord": 687.5,
+                "longName": "Elevator Corridor",
+                "shortName": "Elevator Corridor"
             },
             {
                 "nodeID": "Hallway-1745530806495",
@@ -1362,14 +1362,24 @@ async function main() {
                 "shortName": ""
             },
             {
-                "nodeID": "Hallway-1745530850336",
+                "nodeID": "Reception Corridor 22_3",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 3,
-                "xcoord": 397.67,
-                "ycoord": 548,
-                "longName": "",
-                "shortName": ""
+                "xcoord": 394.5,
+                "ycoord": 561.5,
+                "longName": "Reception Corridor",
+                "shortName": "Reception Corridor"
+            },
+            {
+                "nodeID": "Main Reception 22_3",
+                "nodeType": "Reception",
+                "building": "Healthcare Center (22 Patriot Pl.)",
+                "floor": 3,
+                "xcoord": 368.73,
+                "ycoord": 521.27,
+                "longName": "Main Reception",
+                "shortName": "Main Reception"
             },
             {
                 "nodeID": "Hallway-1745530855313",
@@ -1904,34 +1914,34 @@ async function main() {
                 "shortName": ""
             },
             {
-                "nodeID": "Hallway-1745532978783",
+                "nodeID": "Elevator Corridor 22_4",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 339.67,
                 "ycoord": 716,
-                "longName": "",
-                "shortName": ""
+                "longName": "Elevator Corridor",
+                "shortName": "Elevator Corridor"
             },
             {
-                "nodeID": "Elevator-1745532984035",
+                "nodeID": "Floor 4 Elevator 22_4",
                 "nodeType": "Elevator",
                 "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
                 "xcoord": 370.83,
                 "ycoord": 719,
-                "longName": "",
-                "shortName": ""
+                "longName": "Floor 4 Elevator",
+                "shortName": "Floor 4 Elevator"
             },
             {
-                "nodeID": "Hallway-1745532989467",
+                "nodeID": "Reception Corridor 22_4",
                 "nodeType": "Hallway",
                 "building": "Healthcare Center (22 Patriot Pl.)",
                 "floor": 4,
-                "xcoord": 339.83,
-                "ycoord": 819,
-                "longName": "",
-                "shortName": ""
+                "xcoord": 339,
+                "ycoord": 807,
+                "longName": "Reception Corridor",
+                "shortName": "Reception Corridor"
             },
             {
                 "nodeID": "Hallway-1745532994775",
@@ -1972,6 +1982,16 @@ async function main() {
                 "ycoord": 232,
                 "longName": "",
                 "shortName": "Community Room"
+            },
+            {
+                "nodeID": "Main Reception 22_4",
+                "nodeType": "Reception",
+                "building": "Healthcare Center (22 Patriot Pl.)",
+                "floor": 4,
+                "xcoord": 302.74,
+                "ycoord": 809.03,
+                "longName": "Main Reception",
+                "shortName": "Main Reception"
             }
         ],
         skipDuplicates: true
@@ -2695,9 +2715,9 @@ async function main() {
     await PrismaClient.edge.createMany({
         data: [
 
-                {
+                { //floor 1 to 3 elevator
                     "fromID": "Floor 1 Elevator 22_1",
-                    "toID": "Elevator-1745548528982"
+                    "toID": "Floor 3 Elevator 22_3"
                 },
                 {
                     "fromID": "Elevator-1745549178298",
@@ -3180,19 +3200,19 @@ async function main() {
             },
             {
                 "fromID": "Hallway-1745530806495",
-                "toID": "Hallway-1745530802852"
+                "toID": "Elevator Corridor 22_3"
             },
             {
-                "fromID": "Elevator-1745530797419",
-                "toID": "Hallway-1745530802852"
+                "fromID": "Floor 3 Elevator 22_3",
+                "toID": "Elevator Corridor 22_3"
             },
             {
-                "fromID": "Hallway-1745530802852",
-                "toID": "Hallway-1745530850336"
+                "fromID": "Elevator Corridor 22_3",
+                "toID": "Reception Corridor 22_3"
             },
             {
                 "fromID": "Hallway-1745530855313",
-                "toID": "Hallway-1745530850336"
+                "toID": "Reception Corridor 22_3"
             },
             {
                 "fromID": "Hallway-1745530855313",
@@ -3249,6 +3269,10 @@ async function main() {
             {
                 "fromID": "all-patriot-22-3-departments",
                 "toID": "Hallway-1745530869011"
+            },
+            {
+                "fromID": "Reception Corridor 22_3",
+                "toID": "Main Reception 22_3"
             }
         ]
     });
@@ -3446,18 +3470,22 @@ async function main() {
             },
             {
                 "fromID": "Hallway-1745532856923",
-                "toID": "Hallway-1745532989467"
+                "toID": "Reception Corridor 22_4"
             },
             {
-                "fromID": "Hallway-1745532989467",
-                "toID": "Hallway-1745532978783"
+                "fromID": "Reception Corridor 22_4",
+                "toID": "Elevator Corridor 22_4"
             },
             {
-                "fromID": "Elevator-1745532984035",
-                "toID": "Hallway-1745532978783"
+                "fromID": "Reception Corridor 22_4",
+                "toID": "Main Reception 22_4"
             },
             {
-                "fromID": "Hallway-1745532978783",
+                "fromID": "Floor 4 Elevator 22_4",
+                "toID": "Elevator Corridor 22_4"
+            },
+            {
+                "fromID": "Elevator Corridor 22_4",
                 "toID": "Hallway-1745532974069"
             },
             {
@@ -3494,7 +3522,7 @@ async function main() {
             },
             { //elevator between floor 1 and 4
                 "fromID": "Floor 1 Elevator 22_1",
-                "toID": "Elevator-1745532984035"
+                "toID": "Floor 4 Elevator 22_4"
             }
         ]
     });
