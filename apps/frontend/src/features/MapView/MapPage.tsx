@@ -51,7 +51,7 @@ export function MapPage() {
     >([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1);
-    // the building name (e.g. "Healthcare Cetner (20 Patriot Pl.)")
+    // the building name (e.g. "Healthcare Center (20 Patriot Pl.)")
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
@@ -63,6 +63,12 @@ export function MapPage() {
     const [showDirections, setShowDirections] = useState(false);
     const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
     const [pathByFloor, setPathByFloor] = useState<Record<number, [number, number][]>>({});
+
+    useEffect(() => {
+        if (selectedParkinglot && selectedDepartment) {
+            handleGetDirections();
+        }
+    }, [selectedParkinglot, selectedDepartment, accessibleRoute]);
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
