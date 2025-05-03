@@ -17,6 +17,21 @@ router.get("/", async function (req: Request, res: Response) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+router.get("/priority", async function (req: Request, res: Response) {
+  try {
+    const requests = await client.sanitationRequest.findMany({
+      orderBy: { priority: "asc" },
+      include:{
+        priority:true
+      }
+    });
+    console.log(requests);
+    res.status(200).json(requests); // Send sanitation data as JSON
+  } catch (error) {
+    console.error("Error fetching sanitation request data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a sanitation request");
