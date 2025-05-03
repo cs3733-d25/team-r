@@ -249,18 +249,18 @@ const TransportationRequestForm = () => {
                                        e.g., Ambulance, Helicopter, etc
                                    </span>
 
-                                    <RadioGroup name = "transportationType" value = {formData.transportationType} onValueChange={(value)=>setFormData((prev)=>({...prev,transportationType: value}))}>
-                                        <div className="flex items-center space-x-2 space-y-2">
-                                            <RadioGroupItem value="Non-Emergency Ambulance" id="Non-EmergencyAmbulance" />
-                                            <Label htmlFor="Non-EmergencyAmbulance">Non-Emergency Ambulance</Label>
+                                    <RadioGroup name = "transportationType" value = {formData.transportationType} onValueChange={(value)=>setFormData((prev)=>({...prev,transportationType: value}))} className={"font-light"} >
+                                        <div className="flex items-center space-x-2 pt-2">
+                                            <RadioGroupItem value="Non-Emergency Ambulance" id="Non-EmergencyAmbulance" className={"border-primary"} />
+                                            <Label htmlFor="Non-EmergencyAmbulance" className={"font-trade"}>Non-Emergency Ambulance</Label>
                                         </div>
-                                        <div className="flex items-center space-x-2 space y-2">
-                                            <RadioGroupItem value="Emergency Ambulance" id="EmergencyAmbulance" />
-                                            <Label htmlFor="EmergencyAmbulance">Emergency Ambulance</Label>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="Emergency Ambulance" id="EmergencyAmbulance" className={"border-primary"}/>
+                                            <Label htmlFor="EmergencyAmbulance" className={"font-trade"}>Emergency Ambulance</Label>
                                         </div>
-                                        <div className="flex items-center space-x-2 space y-2">
-                                            <RadioGroupItem value="Helicopter" id="Helicopter" />
-                                            <Label htmlFor="Helicopter">Helicopter</Label>
+                                        <div className="flex items-center space-x-2 font-normal">
+                                            <RadioGroupItem value="Helicopter" id="Helicopter" className={"border-primary"}/>
+                                            <Label htmlFor="Helicopter" >Helicopter</Label>
                                         </div>
                                     </RadioGroup>
                                 </Label>
