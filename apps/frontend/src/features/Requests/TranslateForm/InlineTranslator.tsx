@@ -195,6 +195,13 @@ export function InlineTranslator() {
         }
     };
 
+    const speakText = () => {
+        if (!translatedText) return;
+        const utterance = new SpeechSynthesisUtterance(translatedText);
+        utterance.lang = targetLanguage;
+        window.speechSynthesis.speak(utterance);
+    };
+
     return (
         <div className="bg-white rounded-lg shadow-lg p-4 max-w-2xl mx-auto">
             <h2 className="text-xl font-bold mb-4">Quick Translator</h2>
@@ -269,7 +276,7 @@ export function InlineTranslator() {
                     </Button>
 
                     {translatedText && (
-                        <div className="mt-4">
+                        <div className="mt-4 space-y-2">
                             <Label htmlFor="translatedText" className="mb-2 block">
                                 Translation
                             </Label>
@@ -279,6 +286,13 @@ export function InlineTranslator() {
                             >
                                 {translatedText}
                             </div>
+                            <Button
+                                onClick={speakText}
+                                variant="default"
+                                className="w-full"
+                            >
+                                Speak Translation
+                            </Button>
                         </div>
                     )}
                 </div>
