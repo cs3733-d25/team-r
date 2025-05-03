@@ -520,7 +520,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
             hardwareAccelerated: true,
         };
 
-        // @ts-expect-error
+        // @ts-expect-error missing type definitions for antPath method from leaflet-ant-path
         const antPoly = L.polyline.antPath(currentFloorPath, antPathOptions);
         antPoly.addTo(map);
         routeLayer.current = antPoly;

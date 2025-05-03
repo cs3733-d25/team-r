@@ -70,15 +70,6 @@ export function TranslateRequestPage() {
 
     return (
         <>
-            {/*<RequestFilters*/}
-            {/*    options={filtering.filterOptions}*/}
-            {/*    filterState={filtering.filterState}*/}
-            {/*    onFilterChange={(options, state) => {*/}
-            {/*        filtering.setFilterOptions(options);*/}
-            {/*        filtering.setFilterState(state);*/}
-            {/*    }}*/}
-            {/*    onClearFilters={filtering.clearFilters}*/}
-            {/*/>*/}
             <RequestFilters
                 options={filtering.filterOptions}
                 filterState={filtering.filterState}
