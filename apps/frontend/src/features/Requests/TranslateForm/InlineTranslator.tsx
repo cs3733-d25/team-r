@@ -223,13 +223,13 @@ export function InlineTranslator() {
 
             <div className="flex space-x-2 mb-4">
                 <Button
-                    variant={mode === 'text' ? 'default' : 'outline'}
+                    variant={mode === 'text' ? 'default' : 'unselected'}
                     onClick={() => setMode('text')}
                 >
                     Text
                 </Button>
                 <Button
-                    variant={mode === 'file' ? 'default' : 'outline'}
+                    variant={mode === 'file' ? 'default' : 'unselected'}
                     onClick={() => setMode('file')}
                 >
                     File

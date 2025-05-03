@@ -4,10 +4,25 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/c
 import {Button} from '@/components/ui/button.tsx';
 import {Label} from '@/components/ui/label.tsx';
 
+const LANGUAGES = [
+    { code: 'es', name: 'Spanish' },
+    { code: 'fr', name: 'French' },
+    { code: 'zh', name: 'Chinese' },
+    { code: 'ar', name: 'Arabic' },
+    { code: 'ru', name: 'Russian' },
+    { code: 'hi', name: 'Hindi' },
+    { code: 'pt', name: 'Portuguese' },
+    { code: 'de', name: 'German' },
+    { code: 'ja', name: 'Japanese' },
+    { code: 'ko', name: 'Korean' },
+    { code: 'pol', name: 'Polish' },
+    { code: 'it', name: 'Italian' },
+];
+
 export function FileTranslator() {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [file, setFile] = useState<File | null>(null)
-    const [targetLanguage, setTargetLanguage] = useState('es')
+    const [targetLanguage, setTargetLanguage] = useState(LANGUAGES[0].code)
     const [translatedText, setTranslatedText] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
@@ -50,7 +65,7 @@ export function FileTranslator() {
             />
 
             <div className="flex items-center space-x-4">
-                <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+                <Button variant="unselected" onClick={() => fileInputRef.current?.click()}>
                     {file ? 'Change File' : 'Choose File'}
                 </Button>
                 {file && <span className="text-gray-700">{file.name}</span>}
@@ -63,9 +78,9 @@ export function FileTranslator() {
                         <SelectValue placeholder="Language" />
                     </SelectTrigger>
                     <SelectContent>
-                        {['es', 'fr', 'de'].map(code => (
-                            <SelectItem key={code} value={code}>
-                                {code}
+                        {LANGUAGES.map(lang => (
+                            <SelectItem key={lang.code} value={lang.code}>
+                                {lang.name}
                             </SelectItem>
                         ))}
                     </SelectContent>
