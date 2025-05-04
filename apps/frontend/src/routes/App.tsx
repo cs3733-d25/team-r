@@ -276,12 +276,62 @@ function App() {
                         </TourProvider>
                     ),
                 },
-                { path: 'announcements', element: <><TourProvider><AnnouncementPage /></TourProvider></>},
-                { path: 'announcementform', element: <CreateAnnouncement /> },
-                { path: 'announcementedit/:id', element: <AnnouncementEdit /> },
-                { path: 'urgentannouncements', element: <AnnouncementPage defaultTab = 'urgent' /> },
-                { path: 'generalannouncements', element: <AnnouncementPage defaultTab = 'general' /> },
-                { path: 'bulletinannouncements', element: <AnnouncementPage defaultTab = 'bulletin' /> },
+                {
+                    path: 'announcements',
+                    element: (
+                        <>
+                            <TourProvider>
+                                <AnnouncementPage />
+                                <Footer />
+                            </TourProvider>
+                        </>
+                    ),
+                },
+                {
+                    path: 'announcementform',
+                    element: (
+                        <>
+                            <CreateAnnouncement />
+                            <Footer />
+                        </>
+                    ),
+                },
+                {
+                    path: 'announcementedit/:id',
+                    element: (
+                        <>
+                            <AnnouncementEdit />
+                            <Footer />
+                        </>
+                    ),
+                },
+                {
+                    path: 'urgentannouncements',
+                    element: (
+                        <>
+                            <AnnouncementPage defaultTab="urgent" />
+                            <Footer />
+                        </>
+                    ),
+                },
+                {
+                    path: 'generalannouncements',
+                    element: (
+                        <>
+                            <AnnouncementPage defaultTab="general" />
+                            <Footer />
+                        </>
+                    ),
+                },
+                {
+                    path: 'bulletinannouncements',
+                    element: (
+                        <>
+                            <AnnouncementPage defaultTab="bulletin" />
+                            <Footer />
+                        </>
+                    ),
+                },
             ],
         },
     ]);
