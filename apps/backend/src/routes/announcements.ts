@@ -51,7 +51,9 @@ router.post("/", async function (req: Request, res: Response) {
         author,
         priority: priority || "medium",
         type: type || "general",
-        expirationDate: expirationDate || null,
+        expirationDate: expirationDate
+          ? new Date(expirationDate).toISOString()
+          : null,
       },
     });
     res.status(201).json({
