@@ -465,6 +465,7 @@ export function MapPage() {
                     </div>
 
                     {/* Floor navigation */}
+                    {selectedBuilding.includes("22") &&
                     <div className="mt-4 pt-4 border-t">
                         <Label className="font-bold mb-2">Floors</Label>
                         {availableFloors.map((floor) => (
@@ -495,7 +496,7 @@ export function MapPage() {
                                 </Button>,
                                 `Click here to display the route on Floor ${floor}.`)
                         ))}
-                    </div>
+                    </div>}
                 </div>
                 {showDirections && (
                     <div>

@@ -31,14 +31,11 @@ function filterDirectory(
       }[],
 ) {
   return directoryData.map((directory) => {
-    //CSV files will allow commas if encased in double quotes, which is why the two string fields (name and building) are
-    //concatenated with double quotes. This does mean that if a directory name contains double quotes then it will not be
-    //exported properly and will likely break the CSV, but no names have double quotes in our database.
     return {
       id: directory.id,
-      name: addDoubleQuotes(directory.name),
+      name: removeCommas(directory.name),
       floorNumber: directory.floorNumber,
-      building: addDoubleQuotes(directory.building),
+      building: removeCommas(directory.building),
     };
   });
 }
@@ -53,13 +50,12 @@ function removeDoubleQuotes(str: string) {
 }
 
 /**
- * What if you decided that you regretted running the last function? Here's where this one
- * comes in to save you. This function takes in a string and adds double quotes around it,
- * which I suppose you can remove again if you want to.
- * @param str the string that should have double quotes
+ * This function takes in a string and returns the same string but with no commas.
+ * @param str the string that should not have commas
  */
-function addDoubleQuotes(str: string) {
-  return '"'.concat(str).concat('"');
+function removeCommas(str: string) {
+  const regex = new RegExp(',', "g");
+  return str.replace(regex, "");
 }
 
 // export directory data as CSV
