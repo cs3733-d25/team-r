@@ -71,7 +71,7 @@ router.post("/", async function (req: Request, res: Response) {
   }
 });
 
-// update an announcement
+// edit an announcement
 router.put("/:id", async function (req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const { title, content, priority, expirationDate } = req.body;
