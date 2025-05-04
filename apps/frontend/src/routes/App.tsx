@@ -36,8 +36,17 @@ function App() {
     const [userType, setUserType] = useState("Guest");
     const [userFirstName, setUserFirstName] = useState("");
     const { theme } = useTheme();
+    const [noFooter, setNoFooter] = useState(false);
 
     console.log('APP IS RENDERED');
+
+    // only show the footer on certain pages
+    // external map doesn't need a footer since it interferes with the zoom functionality
+    useEffect(() => {
+        const pathsWithoutFooter = ['/external-map'];
+        const shouldHideFooter = pathsWithoutFooter.includes(location.pathname);
+        setNoFooter(shouldHideFooter);
+    }, [location]);
 
     // Get the user type from the database after the user has logged in
     useEffect(() => {
@@ -118,7 +127,7 @@ function App() {
         <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
-            <Footer />
+            {!noFooter && <Footer/>}
         </div>
     );
 }
