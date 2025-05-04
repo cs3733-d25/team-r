@@ -18,24 +18,24 @@ router.get("/", async function (req: Request, res: Response) {
   }
 });
 
-// // get announcement by ID
-// router.get("/:id", async function (req: Request, res: Response) {
-//   const { id } = req.params;
-//   try {
-//     const announcement = await client.announcement.findUnique({
-//       where: { id },
-//     });
-//
-//     if (!announcement) {
-//       return res.status(404).json({ error: "Announcement not found" });
-//     }
-//
-//     res.status(200).json(announcement);
-//   } catch (error) {
-//     console.error("Error fetching announcement:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
+// get announcement by ID
+router.get("/:id", async function (req: Request, res: Response): Promise<void> {
+  const { id } = req.params;
+  try {
+    const announcement = await client.announcement.findUnique({
+      where: { id },
+    });
+
+    if (!announcement) {
+      res.status(404).json({ error: "Announcement not found" });
+    }
+
+    res.status(200).json(announcement);
+  } catch (error) {
+    console.error("Error fetching announcement:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 // create new announcement
 router.post("/", async function (req: Request, res: Response) {
