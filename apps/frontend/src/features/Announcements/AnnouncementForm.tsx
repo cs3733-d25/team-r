@@ -6,7 +6,6 @@ import {Label} from '@/components/ui/label.tsx'
 import {Input} from '@/components/ui/input.tsx'
 import {Textarea} from '@/components/ui/textarea.tsx'
 import {Button} from '@/components/ui/button.tsx'
-import Dropdown from '@/components/Dropdowns/Dropdown.tsx'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx'
 
 export interface AnnouncementFormProps {
@@ -30,10 +29,7 @@ export interface AnnouncementFormProps {
     }) => Promise<void>
 }
 
-export default function AnnouncementForm({
-                                             initialData,
-                                             onSubmit,
-                                         }: AnnouncementFormProps) {
+export default function AnnouncementForm({ initialData, onSubmit, }: AnnouncementFormProps) {
     const navigate = useNavigate()
     const { user } = useAuth0()
     const [userName, setUserName] = useState('')
@@ -41,7 +37,7 @@ export default function AnnouncementForm({
         title: initialData?.title || '',
         content: initialData?.content || '',
         author: initialData?.author || '',
-        priority: initialData?.priority || '',
+        priority: initialData?.priority || 'medium',
         type: initialData?.type || 'general',
         expirationDate: initialData?.expirationDate || '',
     })
@@ -61,26 +57,22 @@ export default function AnnouncementForm({
         }
     }, [initialData, userName])
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target
-        setFormData(prev => ({ ...prev, [name]: value }))
-    }
-
-    const handleDropdownChange = (name: string, value: string) => {
-        setFormData(prev => ({ ...prev, [name]: value }))
-    }
-
     const handleTypeChange = (value: string) => {
         setFormData(prev => {
-            const updated = { ...prev, type: value }
-            if (value === 'urgent') updated.priority = 'High'
-            if (value === 'bulletin') updated.priority = 'Low'
-            return updated
+            let priority = 'medium'
+            if (value === 'urgent') priority = 'High'
+            if (value === 'bulletin') priority = 'Low'
+            return {...prev, type: value, priority};
         })
     }
 
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const {name, value} = e.target
+        setFormData(prev => ({...prev, [name]: value}))
+    }
+    
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         await onSubmit({
@@ -90,39 +82,17 @@ export default function AnnouncementForm({
     }
 
     return (
-        <>
-            <Tabs
-                defaultValue="general"
-                value={formData.type}
-                onValueChange={handleTypeChange}
-                className="mb-6"
-            >
-                <TabsList className="grid grid-cols-3">
-                    <TabsTrigger value="urgent">Urgent Announcements</TabsTrigger>
-                    <TabsTrigger value="general">General Announcements</TabsTrigger>
-                    <TabsTrigger value="bulletin">Bulletin Announcements</TabsTrigger>
-                </TabsList>
+        <Tabs defaultValue={formData.type} value={formData.type} onValueChange={handleTypeChange} className="mb-6">
+            <TabsList className="grid grid-cols-3">
+                <TabsTrigger value="urgent">Urgent Announcements</TabsTrigger>
+                <TabsTrigger value="general">General Announcements</TabsTrigger>
+                <TabsTrigger value="bulletin">Bulletin Announcements</TabsTrigger>
+            </TabsList>
 
-                <TabsContent value="urgent" className="border-2 border-red-500 p-4 rounded-b-lg">
-                    <div className="bg-red-100 p-3 mb-4 rounded-md text-red-800">
-                        <strong>Important:</strong> Urgent announcements are critical.
-                    </div>
-                    {renderForm(true)}
-                </TabsContent>
-
-                <TabsContent value="general">{renderForm()}</TabsContent>
-
-                <TabsContent
-                    value="bulletin"
-                    className="border-2 border-blue-300 p-4 rounded-b-lg"
-                >
-                    <div className="bg-blue-100 p-3 mb-4 rounded-md text-blue-800">
-                        <strong>Note:</strong> Bulletin items are for general info.
-                    </div>
-                    {renderForm(false, true)}
-                </TabsContent>
-            </Tabs>
-        </>
+            <TabsContent value="urgent">{renderForm(true)}</TabsContent>
+            <TabsContent value="general">{renderForm()}</TabsContent>
+            <TabsContent value="bulletin">{renderForm(false, true)}</TabsContent>
+        </Tabs>
     )
 
     function renderForm(isUrgent = false, isBulletin = false) {
@@ -145,20 +115,6 @@ export default function AnnouncementForm({
                             required
                         />
                     </div>
-
-                    {/* Priority (only in general) */}
-                    {!isUrgent && !isBulletin && (
-                        <div>
-                            <Label className="text-sm font-semibold mb-2">
-                                Priority<span className="text-accent">*</span>
-                            </Label>
-                            <Dropdown
-                                tableName="priority"
-                                fieldName="priority"
-                                onChange={handleDropdownChange}
-                            />
-                        </div>
-                    )}
 
                     {/* Expiration */}
                     <div className={!isUrgent && !isBulletin ? '' : 'md:col-span-2'}>
