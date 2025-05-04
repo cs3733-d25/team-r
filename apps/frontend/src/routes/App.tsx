@@ -30,7 +30,6 @@ import SettingsPage from '@/features/ThemeSwitcher/SettingsPage.tsx';
 import { useTheme } from '../hooks/useTheme';
 import Footer from '../components/Footer';
 import {AnnouncementPage} from '@/features/Announcements/AnnouncementPage.tsx';
-import AnnouncementEdit from "@/features/Announcements/AnnouncementEdit.tsx";
 import CreateAnnouncement from '@/features/Announcements/CreateAnnouncement.tsx';
 
 function App() {
