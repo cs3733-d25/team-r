@@ -1,8 +1,14 @@
-import {useRef, useState} from 'react'
-import axios from 'axios'
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select.tsx';
-import {Button} from '@/components/ui/button.tsx';
-import {Label} from '@/components/ui/label.tsx';
+import { useRef, useState } from 'react';
+import axios from 'axios';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Label } from '@/components/ui/label.tsx';
 
 const LANGUAGES = [
     { code: 'es', name: 'Spanish' },
@@ -20,35 +26,35 @@ const LANGUAGES = [
 ];
 
 export function FileTranslator() {
-    const fileInputRef = useRef<HTMLInputElement>(null)
-    const [file, setFile] = useState<File | null>(null)
-    const [targetLanguage, setTargetLanguage] = useState(LANGUAGES[0].code)
-    const [translatedText, setTranslatedText] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [targetLanguage, setTargetLanguage] = useState(LANGUAGES[0].code);
+    const [translatedText, setTranslatedText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFile(e.target.files?.[0] ?? null)
-    }
+        setFile(e.target.files?.[0] ?? null);
+    };
 
     const handleFileUpload = async () => {
-        if (!file) return
-        setIsLoading(true)
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('targetLanguage', targetLanguage)
+        if (!file) return;
+        setIsLoading(true);
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('targetLanguage', targetLanguage);
 
         try {
             const resp = await axios.post('/api/upload-translate', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
-            })
-            setTranslatedText(resp.data.translatedText)
+            });
+            setTranslatedText(resp.data.translatedText);
         } catch (err) {
-            console.error(err)
-            setTranslatedText('Error translating file.')
+            console.error(err);
+            setTranslatedText('Error translating file.');
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div className="space-y-6">
@@ -78,7 +84,7 @@ export function FileTranslator() {
                         <SelectValue placeholder="Language" />
                     </SelectTrigger>
                     <SelectContent>
-                        {LANGUAGES.map(lang => (
+                        {LANGUAGES.map((lang) => (
                             <SelectItem key={lang.code} value={lang.code}>
                                 {lang.name}
                             </SelectItem>
@@ -94,11 +100,13 @@ export function FileTranslator() {
             {translatedText && (
                 <div>
                     <Label>Result</Label>
-                    <pre className="bg-gray-100 p-4 rounded">{translatedText}</pre>
+                    <pre className="bg-gray-100 p-4 rounded overflow-auto max-h-64 whitespace-pre-wrap break-words">
+                        {translatedText}
+                    </pre>
                 </div>
             )}
         </div>
-    )
+    );
 }
 
-export default FileTranslator
+export default FileTranslator;
