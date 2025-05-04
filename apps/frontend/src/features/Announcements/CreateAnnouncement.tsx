@@ -9,7 +9,6 @@ export default function CreateAnnouncement() {
         title: string
         content: string
         author: string
-        priority: string
         type: string
         expirationDate?: string
     }) => {

@@ -40,7 +40,7 @@ router.get("/:id", async function (req: Request, res: Response): Promise<void> {
 // create new announcement
 router.post("/", async function (req: Request, res: Response) {
   console.log("Creating a new announcement");
-  const { title, content, author, priority, type, expirationDate } = req.body;
+  const { title, content, author, type, expirationDate } = req.body;
 
   try {
     const newAnnouncement = await client.announcement.create({
@@ -49,7 +49,6 @@ router.post("/", async function (req: Request, res: Response) {
         content,
         date: new Date().toISOString(),
         author,
-        priority: priority || "medium",
         type: type || "general",
         expirationDate: expirationDate
           ? new Date(expirationDate).toISOString()
@@ -74,7 +73,7 @@ router.post("/", async function (req: Request, res: Response) {
 // edit an announcement
 router.put("/:id", async function (req: Request, res: Response): Promise<void> {
   const { id } = req.params;
-  const { title, content, priority, expirationDate } = req.body;
+  const { title, content, expirationDate } = req.body;
 
   try {
     const updatedAnnouncement = await client.announcement.update({
@@ -82,7 +81,6 @@ router.put("/:id", async function (req: Request, res: Response): Promise<void> {
       data: {
         title,
         content,
-        priority,
         expirationDate,
       },
     });
