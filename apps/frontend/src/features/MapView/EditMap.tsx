@@ -431,7 +431,7 @@ export function EditMap({ status }: EditMapProps) {
                     selectedEdgeNodes={edgeNodes}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[calc(100vh-95px)] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
                         <Label
                             className="font-bold text-2xl pt-4 pl-4 pb-4"
