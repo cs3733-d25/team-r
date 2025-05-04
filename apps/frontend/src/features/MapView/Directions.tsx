@@ -75,7 +75,7 @@ function Directions({ selectedLocation, startingLocation, travelMode }: Directio
     }
 
     return (
-        <TextDirections steps={steps} distance={distance} duration={duration}/>
+        <TextDirections steps={steps} distance={distance} duration={duration} isInternal={false}/>
     );
 }
 

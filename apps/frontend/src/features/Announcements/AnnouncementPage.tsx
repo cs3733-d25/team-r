@@ -31,9 +31,9 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
     const [searchTerm, setSearchTerm] = useState('');
 
     const announcementCategories = [
-        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority === 'high' },
-        { name: 'General', description: 'Regular hospital updates and information', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'medium' },
-        { name: 'Bulletin', description: 'Non-critical hospital information and updates', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority === 'low' },
+        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority.toLowerCase() === 'high' },
+        { name: 'General', description: 'Regular hospital updates and information', tab: 'general', filter: (announcement: Announcement) => announcement.priority.toLowerCase() === 'medium' },
+        { name: 'Bulletin', description: 'Non-critical hospital information and updates', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority.toLowerCase() === 'low' },
     ];
 
     useEffect(() => {

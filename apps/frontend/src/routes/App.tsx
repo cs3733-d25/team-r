@@ -31,6 +31,8 @@ import { useTheme } from '../hooks/useTheme';
 import Footer from '../components/Footer';
 import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
 import AnnouncementForm from '@/features/Announcements/AnnouncementForm.tsx';
+import AnnouncementEdit from "@/features/Announcements/AnnouncementEdit.tsx";
+import CreateAnnouncement from '@/features/Announcements/CreateAnnouncement.tsx';
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -274,53 +276,12 @@ function App() {
                         </TourProvider>
                     ),
                 },
-                {
-                    path: 'announcements',
-                    element: (
-                        <>
-                            <TourProvider>
-                                <AnnouncementPage />
-                                <Footer />
-                            </TourProvider>
-                        </>
-                    ),
-                },
-                {
-                    path: 'announcementform',
-                    element: (
-                        <>
-                            <AnnouncementForm />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'urgentannouncements',
-                    element: (
-                        <>
-                            <AnnouncementPage defaultTab="urgent" />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'generalannouncements',
-                    element: (
-                        <>
-                            <AnnouncementPage defaultTab="general" />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'bulletinannouncements',
-                    element: (
-                        <>
-                            <AnnouncementPage defaultTab="bulletin" />
-                            <Footer />
-                        </>
-                    ),
-                },
+                { path: 'announcements', element: <><TourProvider><AnnouncementPage /></TourProvider></>},
+                { path: 'announcementform', element: <CreateAnnouncement /> },
+                { path: 'announcementedit/:id', element: <AnnouncementEdit /> },
+                { path: 'urgentannouncements', element: <AnnouncementPage defaultTab = 'urgent' /> },
+                { path: 'generalannouncements', element: <AnnouncementPage defaultTab = 'general' /> },
+                { path: 'bulletinannouncements', element: <AnnouncementPage defaultTab = 'bulletin' /> },
             ],
         },
     ]);
