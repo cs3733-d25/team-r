@@ -5,6 +5,8 @@ import {Button} from '@/components/ui/button';
 import {Badge} from '@/components/ui/badge';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import {TourAlertDialog, TourStep, useTour} from "@/components/tour.tsx";
+import {TOUR_STEPS_IDS_ANNS} from "@/lib/tour-constants.ts";
 
 interface Announcement {
     id: string;
@@ -80,20 +82,48 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
         });
     };
 
+    //tour component steps
+    const steps: TourStep[] = [
+        { content: <div>On this page you can create and view hospital announcements.</div>, selectorId: TOUR_STEPS_IDS_ANNS.CLICK_START, position: "bottom" },
+        { content: <div>Click on this button to be taken to a page where you can create an announcement. </div>, selectorId: TOUR_STEPS_IDS_ANNS.CREATE, position: "bottom" },
+        { content: <div>Click on this tab to view all current announcements.</div>, selectorId: TOUR_STEPS_IDS_ANNS.ALL, position: "right" },
+        { content: <div>Click on any of the remaining tabs to view specific types of announcements.</div>, selectorId: TOUR_STEPS_IDS_ANNS.TYPES, position: "right" },
+    ];
+    const { setSteps } = useTour();
+    const [openTour, setOpenTour] = useState(true);
+
+    //tour displaying
+    useEffect(() => {
+        setSteps(steps);
+
+        // check if user has already seen the tour
+        const hasSeenTour = localStorage.getItem('hasSeenCSVTour') === 'true';
+
+        if (!hasSeenTour) {
+            const timer = setTimeout(() => {
+                setOpenTour(true);
+                // mark that user has seen the tour
+                localStorage.setItem('hasSeenCSVTour', 'true');
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, [setSteps]);
+
     return (
         <div className="min-h-screen bg-background">
             <div className="container mx-auto pt-12 pb-8">
                 <div className="relative mb-6">
-                    <h1 className="text-3xl font-bold mb-6 text-center">
+                    <h1 className="text-3xl font-bold mb-6 text-center" id={TOUR_STEPS_IDS_ANNS.CLICK_START}>
                         Hospital Announcements Dashboard
                     </h1>
 
                     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                         <TabsList className="mb-0 border-b border-gray-200 shadow-none">
                             <TabsTrigger value="overview">Overview</TabsTrigger>
-                            <TabsTrigger value="all">All Announcements</TabsTrigger>
+                            <TabsTrigger value="all" id={TOUR_STEPS_IDS_ANNS.ALL}>All Announcements</TabsTrigger>
                             {announcementCategories.map((category) => (
-                                <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
+                                <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()} id={TOUR_STEPS_IDS_ANNS.TYPES}>
                                     {category.name}
                                 </TabsTrigger>
                             ))}
@@ -113,7 +143,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                                 <Button variant="secondary" onClick={() => setActiveTab(category.name.toLowerCase())}>
                                                     View {category.name} Announcements
                                                 </Button>
-                                                <Button onClick={() => navigate('/announcementform')}>
+                                                <Button onClick={() => navigate('/announcementform')} id={TOUR_STEPS_IDS_ANNS.CREATE}>
                                                     Create New Announcement
                                                 </Button>
                                             </div>
@@ -164,9 +194,8 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                         ))}
                     </Tabs>
 
+                    <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
                 </div>
-
-
             </div>
         </div>
     );
