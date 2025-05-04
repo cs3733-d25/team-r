@@ -244,12 +244,7 @@ interface AnnouncementCardProps {
     formatDate: (date: string) => string;
 }
 
-function AnnouncementCard({
-                              announcement,
-                              onDelete,
-                              badgeColor,
-                              formatDate,
-                          }: AnnouncementCardProps) {
+function AnnouncementCard({announcement, onDelete, badgeColor, formatDate}: AnnouncementCardProps) {
     return (
         <Card className="border-gray-200">
             <CardHeader>
@@ -273,9 +268,6 @@ function AnnouncementCard({
                 )}
             </CardContent>
             <CardFooter className="flex justify-end gap-2">
-                <Button variant="outline" size="sm" asChild>
-                    <a href={`/announcementedit/${announcement.id}`}>Edit</a>
-                </Button>
                 <Button variant="destructive" size="sm" onClick={() => onDelete(announcement.id)}>
                     Delete
                 </Button>

@@ -296,15 +296,6 @@ function App() {
                     ),
                 },
                 {
-                    path: 'announcementedit/:id',
-                    element: (
-                        <>
-                            <AnnouncementEdit />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
                     path: 'urgentannouncements',
                     element: (
                         <>
