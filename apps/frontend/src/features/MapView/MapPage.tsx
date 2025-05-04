@@ -268,7 +268,7 @@ export function MapPage() {
                     if (currentNode.nodeType.toLowerCase().includes('stairs')) {
                         enhancedDirections.push(`In ${distanceText}, go ${direction} the stairs to floor ${currentNode.floor}`);
                     } else {
-                        enhancedDirections.push(`In ${distanceText} feet, go ${direction} to floor ${currentNode.floor}`);
+                        enhancedDirections.push(`In ${distanceText}, go ${direction} to floor ${currentNode.floor}`);
                     }
                     continue;
                 }
