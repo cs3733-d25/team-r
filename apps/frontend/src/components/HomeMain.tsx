@@ -29,7 +29,7 @@ export function HomeMain(props: HomeMainProps) {
             {/* Hero page image is a photo taken by our incredible AKAASH WALKER */}
             <div
                 className={
-                    'flex-col bg-[url(/mgb-bg.png)] bg-no-repeat bg-cover h-11/12 content-center'
+                    'flex-col bg-[url(/mgb-bg.png)] bg-no-repeat bg-cover h-full content-center'
                 }
             >
                 <div

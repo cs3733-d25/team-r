@@ -260,7 +260,6 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                             <SelectLabel>Travel Mode</SelectLabel>
                                             <div className="flex items-center justify-between">
                                                 <SelectItem value={'DRIVING'}>Car</SelectItem>
-                                                <CarFrontFill/>
                                             </div>
                                             <SelectItem value={'TRANSIT'}>
                                                 Public Transit
