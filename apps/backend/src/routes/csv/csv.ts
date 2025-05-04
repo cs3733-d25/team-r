@@ -54,7 +54,7 @@ function removeDoubleQuotes(str: string) {
  * @param str the string that should not have commas
  */
 function removeCommas(str: string) {
-  const regex = new RegExp(',', "g");
+  const regex = new RegExp(",", "g");
   return str.replace(regex, "");
 }
 
