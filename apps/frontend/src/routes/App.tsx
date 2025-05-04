@@ -28,8 +28,8 @@ import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
 import Footer from "../components/Footer";
 import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
-import AnnouncementForm from "@/features/Announcements/AnnouncementForm.tsx";
 import AnnouncementEdit from "@/features/Announcements/AnnouncementEdit.tsx";
+import CreateAnnouncement from '@/features/Announcements/CreateAnnouncement.tsx';
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -106,7 +106,7 @@ function App() {
                 { path: 'upload-translate', element: <FileTranslator /> },
                 { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> },
                 { path: 'announcements', element: <><TourProvider><AnnouncementPage /></TourProvider></>},
-                { path: 'announcementform', element: <AnnouncementForm /> },
+                { path: 'announcementform', element: <CreateAnnouncement /> },
                 { path: 'announcementedit/:id', element: <AnnouncementEdit /> },
                 { path: 'urgentannouncements', element: <AnnouncementPage defaultTab = 'urgent' /> },
                 { path: 'generalannouncements', element: <AnnouncementPage defaultTab = 'general' /> },
