@@ -559,7 +559,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 <Input
                                                     value={editnodeName}
                                                     onChange={(e) =>
-                                                        console.log("Node Name Value: ", e.target.value)
+                                                        setEditNodeName(e.target.value)
                                                     }
                                                     placeholder="Enter new node name"
                                                 />
