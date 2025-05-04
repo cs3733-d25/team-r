@@ -17,5 +17,10 @@ export default function CreateAnnouncement() {
         navigate('/announcements')
     }
 
-    return <AnnouncementForm onSubmit={handleSubmit} />
+    return(
+        <div className="px-8 py-6">
+            <h1 className="text-2xl font-bold mb-4 text-center">Create Announcement</h1>
+            <AnnouncementForm onSubmit={handleSubmit} />
+        </div>
+    )
 }
