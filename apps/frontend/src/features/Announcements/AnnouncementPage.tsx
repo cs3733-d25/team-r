@@ -3,7 +3,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import {Badge} from '@/components/ui/badge';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import axios from 'axios';
 import {TourAlertDialog, TourStep, useTour} from "@/components/tour.tsx";
 import {TOUR_STEPS_IDS_ANNS} from "@/lib/tour-constants.ts";
@@ -18,19 +18,20 @@ interface Announcement {
     expirationDate?: string;
 }
 
-interface AnnouncementPageProps {
-    userType?: string;
-    userName?: string;
-    defaultTab?: 'overview' | 'all' | 'urgent' | 'general' | 'bulletin';
-}
-
-export function AnnouncementPage(props: AnnouncementPageProps) {
-    const [activeTab, setActiveTab] = useState(props.defaultTab || 'overview');
+export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
+    const [searchParams] = useSearchParams();
+    const paramTab = searchParams.get('tab') as 'overview' | 'all' | 'urgent' | 'general' | 'bulletin' | null;
+    const [activeTab, setActiveTab] = useState(paramTab ?? defaultTab ?? 'overview');
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const navigate = useNavigate();
     const [searchTerm] = useState('');
     const {setSteps} = useTour();
     const [openTour, setOpenTour] = useState(true);
+
+    useEffect(() => {
+        const p = searchParams.get('tab');
+        if (p) setActiveTab(p as typeof activeTab);
+    }, [searchParams]);
 
     useEffect(() => {
         fetchAnnouncements();
@@ -244,12 +245,7 @@ interface AnnouncementCardProps {
     formatDate: (date: string) => string;
 }
 
-function AnnouncementCard({
-                              announcement,
-                              onDelete,
-                              badgeColor,
-                              formatDate,
-                          }: AnnouncementCardProps) {
+function AnnouncementCard({announcement, onDelete, badgeColor, formatDate}: AnnouncementCardProps) {
     return (
         <Card className="border-gray-200">
             <CardHeader>
@@ -273,9 +269,6 @@ function AnnouncementCard({
                 )}
             </CardContent>
             <CardFooter className="flex justify-end gap-2">
-                <Button variant="outline" size="sm" asChild>
-                    <a href={`/announcementedit/${announcement.id}`}>Edit</a>
-                </Button>
                 <Button variant="destructive" size="sm" onClick={() => onDelete(announcement.id)}>
                     Delete
                 </Button>
