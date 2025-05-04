@@ -1,5 +1,4 @@
 import { Label } from '@/components/ui/label.tsx';
-import { Toggle } from '@/components/ui/toggle.tsx';
 import {VolumeMute, VolumeUp} from 'react-bootstrap-icons';
 import {useState} from "react";
 import { Arrow90degLeft, Arrow90degRight, ArrowUp, ArrowDownUp } from 'react-bootstrap-icons';
@@ -11,7 +10,8 @@ interface TextDirectionsProps {
     distance?: string;
     duration?: string;
     useMeters?: boolean;
-    onUseMetersChange: (useMeters: boolean) => void;
+    onUseMetersChange?: (useMeters: boolean) => void;
+    isInternal?: boolean;
 }
 
 /**
@@ -21,9 +21,10 @@ interface TextDirectionsProps {
  * @param duration - time it takes to travel (optional)
  * @param useMeters - whether to display distances in meters
  * @param onUseMetersChange - callback to toggle the use of meters vs feet
+ * @param isInternal - is internal directions or not
  * @constructor
  */
-function TextDirections({ steps, distance, duration, useMeters, onUseMetersChange }: TextDirectionsProps) {
+function TextDirections({ steps, distance, duration, useMeters, onUseMetersChange, isInternal}: TextDirectionsProps) {
     const [speaking, setSpeaking] = useState<boolean>(false);
     //const [useMeters, setUseMeters] = useState<boolean>(false);
     /**
@@ -74,13 +75,12 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
         steps.length > 0 && (
         <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
             <div className="flex justify-between mb-4 text-sm text-gray-600">
-                    <Label className="text-xl text-black">
-                        {distance && duration
-                            ? `${distance} - ${duration}`
-                            : "Directions:"
-                        }
-                    </Label>
+                <Label className="font-bold text-xl text-black">
+                    {isInternal ? "Directions" : `${distance} - ${duration}`}
+                </Label>
+
                 <div className="flex items-center gap-4">
+                    {isInternal && (
                     <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">Feet</span>
                         <label className="relative inline-flex items-center cursor-pointer">
@@ -88,13 +88,12 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
                                 type="checkbox"
                                 className="sr-only peer"
                                 checked={useMeters}
-                                onChange={() => onUseMetersChange(!useMeters)}
+                                onChange={() => onUseMetersChange?.(!useMeters)}
                             />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-black after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
                         </label>
                         <span className="text-sm font-medium">Meters</span>
-
-                    </div>
+                    </div>)}
                 {displayInfo(
                     speaking ? (
                         <VolumeUp className={'text-3xl text-left'} onClick={handleTTS} />
@@ -108,8 +107,6 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
             <ol className="list-decimal list-inside space-y-2">
                 {steps.map((step, index) => {
                     const icon = getDirectionIcon(step.replace(/<[^>]+>/g, ''));
-
-                    const changeStep = step.replace(/<[^>]+>/g, '');
 
 
                     return (

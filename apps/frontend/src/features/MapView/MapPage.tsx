@@ -459,6 +459,7 @@ export function MapPage() {
                             steps={directionStrings}
                             useMeters={useMeters}
                             onUseMetersChange={(useMeters) => setUseMeters(useMeters)}
+                            isInternal={true}
                         />
                     </div>
                 )}
