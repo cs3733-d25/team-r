@@ -1,17 +1,17 @@
 model SanitationRequest {
-  requestId      Int      @id @default(autoincrement())
-  sanitationType String
-  priority       String
-  building       String
-  department     String?
-  roomNumber     String
-  requestTime    DateTime @default(now())
-  comments       String?
-  status         String
-  employeeID     String
-  employeeName   Employee @relation(fields: [employeeID], references: [id])
+  requestId          Int      @id @default(autoincrement())
+  sanitationType     String
+  priority           String
+  building           String
+  department         String?
+  roomNumber         String
+  requestTime        DateTime @default(now())
+  comments           String?
+  status             String
+  employeeID         String
+  employeeName       Employee @relation(fields: [employeeID], references: [id])
   assignedEmployeeID String
-  assignedEmployee Employee @relation("sanitationRequestAssigned", fields: [assignedEmployeeID], references: [id])
+  assignedEmployee   Employee @relation("sanitationRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model DeviceRequest {
@@ -28,7 +28,7 @@ model DeviceRequest {
   status       String
 
   assignedEmployeeID String
-  assignedEmployee Employee @relation("deviceRequestAssigned", fields: [assignedEmployeeID], references: [id])
+  assignedEmployee   Employee @relation("deviceRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model PharmacyRequest {
@@ -52,7 +52,7 @@ model PharmacyRequest {
   status                 String
 
   assignedEmployeeID String
-  assignedEmployee Employee @relation("PharmacyRequestAssigned", fields: [assignedEmployeeID], references: [id])
+  assignedEmployee   Employee @relation("PharmacyRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model PatientRequest {
@@ -70,7 +70,7 @@ model PatientRequest {
   comment          String
 
   assignedEmployeeID String
-  assignedEmployee Employee @relation("patientRequestAssigned", fields: [assignedEmployeeID], references: [id])
+  assignedEmployee   Employee @relation("patientRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model TransportRequest {
@@ -90,7 +90,7 @@ model TransportRequest {
   requestTime DateTime @default(now())
 
   assignedEmployeeID String
-  assignedEmployee Employee @relation("transportRequestAssigned", fields: [assignedEmployeeID], references: [id])
+  assignedEmployee   Employee @relation("transportRequestAssigned", fields: [assignedEmployeeID], references: [id])
 }
 
 model TranslateRequest {
@@ -99,11 +99,21 @@ model TranslateRequest {
   employeeName       Employee @relation(fields: [employeeID], references: [id])
   language           String
   building           String
-  roomNumber         Int
+  roomNumber         String
   status             String
   comments           String
   priority           String
   department         String
   assignedEmployeeID String
-  assignedEmployee Employee @relation("translateRequestAssigned", fields: [assignedEmployeeID], references: [id])
+  assignedEmployee   Employee @relation("translateRequestAssigned", fields: [assignedEmployeeID], references: [id])
+}
+
+model Announcement {
+  id             String    @id @default(cuid())
+  title          String
+  content        String
+  date           DateTime
+  author         String
+  type           String
+  expirationDate DateTime?
 }

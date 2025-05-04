@@ -58,14 +58,13 @@ export function Directory() {
             <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
             <div className="flex flex-col md:flex-row gap-6 h-full">
                 <div className="w-full md:w-1/4 h-full">
-                    <div className="flex flex-col space-y-2 bg-white p-4 rounded-lg shadow-sm h-full">
+                    <div className="flex flex-col space-y-2 bg-white dark:bg-card p-4 rounded-lg shadow-sm h-full">
                         <h2 className="text-xl font-semibold mb-2">Locations</h2>
                         {hospitalData.map((buildingInfo) => (
                             <Button
                                 key={buildingInfo.buildingValue}
                                 onClick={() => setSelectedBuilding(buildingInfo.buildingValue)}
                                 variant={selectedBuilding === buildingInfo.buildingValue ? 'secondary' : 'unselected'}
-
                             >
                                 {buildingInfo.building}
                             </Button>
@@ -77,7 +76,7 @@ export function Directory() {
                     {selectedBuildingData && (
                         <div className="h-full">
                             {selectedBuildingData.floors.map((floorGroup) => (
-                                <div key={floorGroup.floor} className="mb-8 bg-white p-6 rounded-lg shadow-sm">
+                                <div key={floorGroup.floor} className="mb-8 bg-white dark:bg-card p-6 rounded-lg shadow-sm">
                                     <h2 className="text-2xl font-semibold border-b pb-2 mb-4">
                                         {floorGroup.floor}
                                     </h2>

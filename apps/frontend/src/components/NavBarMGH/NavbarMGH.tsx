@@ -1,13 +1,12 @@
 // Full file with Settings link fixed and everything else untouched
 
-import React, { useEffect, useState} from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
-import axios from "axios";
 import {useAuth0} from "@auth0/auth0-react";
 
 interface NavBarProps {
@@ -98,6 +97,20 @@ export function NavbarMGH(props: NavBarProps) {
                                     ]}
                                 />
                             )}
+
+                            {props.userType === 'Admin' && (
+                                <HoverPopoverNavLink
+                                    label={'Announcements'}
+                                    href={'/announcements'}
+                                    items={[
+                                        { label: 'Create New', href: '/announcementform' },
+                                        // { label: 'Urgent Announcements', href: '/urgentannouncements' },
+                                        // { label: 'General Announcements' , href: '/generalannouncements' },
+                                        // { label: 'Bulletin Announcements', href: '/bulletinannouncements' },
+                                        { label: 'View All', href: '/announcements' },
+                                    ]}
+                                />
+                            )}
                         </>
                     )}
                     {/*About and Credits Page*/}
@@ -144,7 +157,7 @@ export function NavbarMGH(props: NavBarProps) {
                                     >
                                         Profile
                                     </Button>
-                                    {/* ✅ Updated Settings link */}
+
                                     <Button
                                         variant={'ghostPopover'}
                                         asChild
@@ -227,6 +240,11 @@ export function NavbarMGH(props: NavBarProps) {
                             <a href="/csv">Database</a>
                         </Button>
                     )}
+                    {props.userType === 'Admin' && (
+                        <Button variant="ghost" asChild>
+                            <a href="/announcements">Announcements</a>
+                        </Button>
+                    )}
                     <Button variant="ghost" asChild>
                         <a href="/credits">Credits</a>
                     </Button>
@@ -237,4 +255,4 @@ export function NavbarMGH(props: NavBarProps) {
             </div>
         </header>
     );
-};
+}

@@ -24,6 +24,7 @@ import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
 import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
 
+
 declare global {
     interface Window {
         goToFloor?: (floor: number, building?: string) => void;
@@ -51,18 +52,39 @@ export function MapPage() {
     >([]);
     const [selectedDepartment, setSelectedDepartment] = useState<string>('');
     const [currentFloor, setCurrentFloor] = useState<number>(1);
-    // the building name (e.g. "Healthcare Cetner (20 Patriot Pl.)")
+    // the building name (e.g. "Healthcare Center (20 Patriot Pl.)")
     const [selectedBuilding] = useState<string>(
         buildingIdentifier || getBuildingFromLocation(selectedLocation)
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
-    const { parkingLots, departments } = useMapData(selectedBuilding);
+
+    /**
+     * This function gets the parking lots and departments and then sorts the departments alphabetically.
+     */
+    function getParkingAndDepartments() {
+        const mapData = useMapData(selectedBuilding);
+        mapData.departments = mapData.departments.sort((a, b) => {
+            if (a.name > b.name) return 1;
+            else return -1;
+        });
+        return mapData;
+    }
+    const { parkingLots, departments } = getParkingAndDepartments();
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
+    const [lastUsedNodes, setLastUsedNodes] = useState<Node[] | null>(null);
     console.log('departments: ', departments);
     const [showDirections, setShowDirections] = useState(false);
     const [flashingFloors, setFlashingFloors] = useState<number[] | null>(null);
     const [pathByFloor, setPathByFloor] = useState<Record<number, [number, number][]>>({});
+    const [useMeters, setUseMeters] = useState(false);
+    const [hasClickedGetDirections, setHasClickedGetDirections] = useState(false);
+
+    useEffect(() => {
+        if (hasClickedGetDirections && selectedParkinglot && selectedDepartment) {
+            handleGetDirections();
+        }
+    }, [selectedParkinglot, selectedDepartment, accessibleRoute, hasClickedGetDirections]);
 
     useEffect(() => {
         const filtered = parkingLots.filter((lot) => {
@@ -90,6 +112,12 @@ export function MapPage() {
         setFilterParkingLots(filtered);
     }, [parkingLots, selectedBuilding]);
 
+    useEffect(() => {
+        if (lastUsedNodes) {
+            calculateTextDirections(lastUsedNodes, useMeters);
+        }
+    }, [useMeters]);
+
     //from iteration 3
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -100,7 +128,10 @@ export function MapPage() {
     };
 
     // Main “Get Directions” handler
-    const handleGetDirections = async () => {
+    const handleGetDirections = async (e?: React.FormEvent) => {
+        e?.preventDefault();
+        setHasClickedGetDirections(true);
+
         if (!selectedParkinglot || !selectedDepartment) {
             alert('Please select both a parking lot and a department.');
             return;
@@ -157,7 +188,9 @@ export function MapPage() {
             setPathCoordinates(coords);
             setPathByFloor(pathByFloor);
             // give the node ID's to the calculateTextDirections function to turn into text directions
-            calculateTextDirections(nodes);
+            await calculateTextDirections(nodes, useMeters);
+            //set last use nodes
+            setLastUsedNodes(nodes);
             // set the floors that need to flash
             floorsTraveled(nodes);
         } catch (err) {
@@ -169,7 +202,7 @@ export function MapPage() {
      * Given a string array of nodeIDs, this function converts them to their shortNames
      * @param nodes - an array of nodes (path)
      */
-    const calculateTextDirections = async (nodes: Node[]) => {
+    const calculateTextDirections = async (nodes: Node[], useMeters: boolean) => {
         /**
          * Calculates the distance between two nodes in units (raw coordinates)
          * @param node1 - the first node
@@ -190,6 +223,14 @@ export function MapPage() {
             // calculated by using the distance from the faulkner parking lot to entrance (309 units = 231 feet)
             return distance * 0.7475;
         };
+
+        const convertDistance = (distance: number) => {
+            const feet = convertDistanceToFeet(distance);
+            return useMeters
+                ? `${(feet * 0.3048).toFixed(1)} meters`
+                : `${Math.round(feet)} feet`;
+        }
+
 
         try {
             if (nodes.length < 2) {
@@ -214,24 +255,25 @@ export function MapPage() {
                 const prevNode = nodes[i - 1];
                 const currentNode = nodes[i];
                 const nextNode = nodes[i + 1];
-                const distance = Math.round(
-                    convertDistanceToFeet(calculateDistanceUnits(prevNode, currentNode))
-                );
+                const rawDistance = calculateDistanceUnits(prevNode, currentNode);
+                const distanceText = convertDistance(rawDistance);
+
+
 
                 if (currentNode.floor !== prevNode.floor) {
                     const goingUp = currentNode.floor > prevNode.floor;
                     const direction = goingUp ? 'up' : 'down';
 
                     if (currentNode.nodeType.toLowerCase().includes('stairs')) {
-                        enhancedDirections.push(`In ${distance} feet, go ${direction} the stairs to floor ${currentNode.floor}`);
+                        enhancedDirections.push(`In ${distanceText}, go ${direction} the stairs to floor ${currentNode.floor}`);
                     } else {
-                        enhancedDirections.push(`In ${distance} feet, go ${direction} to floor ${currentNode.floor}`);
+                        enhancedDirections.push(`In ${distanceText} feet, go ${direction} to floor ${currentNode.floor}`);
                     }
                     continue;
                 }
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
                 enhancedDirections.push(
-                    `In ${distance} feet, ${directionChange} toward ${nextNode.shortName}`
+                    `In ${distanceText}, ${directionChange} toward ${nextNode.shortName}`
                 );
             }
 
@@ -322,8 +364,10 @@ export function MapPage() {
                     showNodes={false}
                 />
 
+
+
                 {/* Sidebar controls */}
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-108 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="font-bold text-xl">Selected Location</Label>
@@ -365,17 +409,6 @@ export function MapPage() {
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
-
-                        <div className="flex items-center space-x-2">
-                            <Checkbox
-                                id="accessibleRoute"
-                                checked={accessibleRoute}
-                                onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
-                            />
-                            <Label htmlFor="accessibleRoute" className="text-sm font-medium">
-                                Show Accessible Route
-                            </Label>
-                        </div>
 
                         {/* Department picker */}
                         <Select
@@ -419,8 +452,13 @@ export function MapPage() {
                         {availableFloors.map((floor) => (
                             <Button
                                 key={floor}
-                                variant={currentFloor === floor ? 'secondary' : 'unselected'}
-                                // TODO: add a for loop to check all indices in flashingFloors
+                                variant={
+                                    currentFloor === floor
+                                        ? 'secondary'
+                                        : flashingFloors?.includes(floor)
+                                            ? 'outline'
+                                            : 'unselected'
+                                }
                                 className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
                                 onClick={() => {
                                     setCurrentFloor(floor);
@@ -428,6 +466,10 @@ export function MapPage() {
                                         floor,
                                         getBuildingConstant(selectedBuilding)
                                     );
+
+                                    if (flashingFloors?.includes(floor)) {
+                                        setFlashingFloors((prev) => prev?.filter((f) => f !== floor) || null);
+                                    }
                                 }}
                             >
                                 Floor {floor}
@@ -439,6 +481,9 @@ export function MapPage() {
                     <div>
                         <TextDirections
                             steps={directionStrings}
+                            useMeters={useMeters}
+                            onUseMetersChange={(useMeters) => setUseMeters(useMeters)}
+                            isInternal={true}
                         />
                     </div>
                 )}

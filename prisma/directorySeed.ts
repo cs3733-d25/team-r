@@ -6,58 +6,58 @@ async function main() {
     //Patriot Place 20 Floor 1
     await client.directory.createMany({
         data: [
-            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Phlebotomy"},
-            {name: "Pharmacy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Phlebotomy"},
-            {name: "Radiology", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Imaging Suite"},
-            {name: "Cardiovascular Services", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Specialty Clinic"},
-            {name: "Urology", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Specialty Clinic"},
-            {name: "Urgent Care Center", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Ambulatory/Urgent Care"},
+            {name: "Blood Draw/Phlebotomy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Pharmacy", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Radiology", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Cardiovascular Services", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
+            {name: "Urology", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
+            {name: "Urgent Care Center", floorNumber: 1, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Secondary Reception 20"},
         ]
     });
     //Patriot Place 20 Floor 2
     await client.directory.createMany({
         data: [
-            {name: "Orthopaedics", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Hand and Upper Extremity", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Arthroplasty", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Pediatric Trauma", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Physiatry", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Podiatry", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Rehabilitation Services", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Cardiac Rehab", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Occupational Therapy", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Hand Therapy", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Upper Extremity", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Physical Therapy", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Speech - Language", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Clinical Lab", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Surgi-Care", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
+            {name: "Orthopaedics", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Hand and Upper Extremity", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Arthroplasty", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Pediatric Trauma", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Physiatry", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Podiatry", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Rehabilitation Services", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Cardiac Rehab", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Occupational Therapy", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Hand Therapy", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Upper Extremity", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Physical Therapy", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Speech - Language", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Clinical Lab", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Surgi-Care", floorNumber: 2, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
         ]
     });
     //Patriot Place 20 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Surgical Specialties", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Audiology", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "ENT", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Plastic Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Thoracic Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Vascular Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Weight Management and Wellness", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Sports Medicine Center", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "X-Ray Suite", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
+            {name: "Surgical Specialties", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Audiology", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "ENT", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "General and Gastrointestinal Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Plastic Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Thoracic Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Vascular Surgery", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Weight Management and Wellness", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Sports Medicine Center", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "X-Ray Suite", floorNumber: 3, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
         ]
     });
     //Patriot Place 20 Floor 4
     await client.directory.createMany({
         data: [
-            {name: "Electromyography", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Nutrition", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Pain Medicine", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Physiatry", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Pulmonary Function Testing", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
-            {name: "Day Surgery Center", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Elevator 20"},
+            {name: "Electromyography", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Nutrition", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Pain Medicine", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Physiatry", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Pulmonary Function Testing", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
+            {name: "Day Surgery Center", floorNumber: 4, building: "Healthcare Center (20 Patriot Pl.)", receptionNodeID: "Main Reception 20"},
         ]
     });
     //Patriot Place 22 Floor 1
@@ -67,37 +67,38 @@ async function main() {
                 "name": "MassGeneral Hospital for Children",
                 "floorNumber": 1,
                 "building": "Healthcare Center (22 Patriot Pl.)",
-                "receptionNodeID": "Entrance-1745515055030"
+                "receptionNodeID": "Main Reception 22_1"
             },
-            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Entrance-1745515055030"},
+            {name: "Spaulding Outpatient Care for Children", floorNumber: 1, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_1"},
         ]
     });
     //Patriot Place 22 Floor 3
     await client.directory.createMany({
         data: [
-            {name: "Multi Specialty Clinic", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Allergy", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Dermatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Endocrinology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Gastroenterology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Neurology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Neurosurgery", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Ophthalmology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Optometry", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Pulmonology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Rheumatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Vein Care Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Women's Health", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
-            {name: "Patient Financial Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"all-patriot-22-3-departments"},
+            {name: "Multi Specialty Clinic", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Allergy", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Cardiac Arrhythmia", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Dermatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Endocrinology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Gastroenterology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Kidney (Renal) Medicine", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Neurology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Neurosurgery", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Ophthalmology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Optometry", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Pulmonology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Rheumatology", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Vein Care Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Women's Health", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
+            {name: "Patient Financial Services", floorNumber: 3, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID:"Main Reception 22_3"},
         ]
     });
     // Patriot Place 22 Floor 4
     await client.directory.createMany({
         data: [
-            {name: "Community Room", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Primary Care"},
-            {name: "Primary Care", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Community Room"},
+            {name: "Community Room", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_4"},
+            {name: "Primary Care", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_4"},
+            {name: "Blood Draw/Phlebotomy", floorNumber: 4, building: "Healthcare Center (22 Patriot Pl.)", receptionNodeID: "Main Reception 22_4"},
         ]
     })
 
@@ -106,7 +107,7 @@ async function main() {
         data: [
             {name: "Laboratory", floorNumber: 1, building: "Healthcare Center (Chestnut Hill)", receptionNodeID: "Reception-1745475750292" },
             {name: "Multi-Specialty Clinic", floorNumber: 1, building: "Healthcare Center (Chestnut Hill)", receptionNodeID: "Reception-1745475823905" },
-            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Healthcare Center (Chestnut Hill)", receptionNodeID: "Reception-1745475823905" },
+            {name: "Radiology (MRI/CT Scan)", floorNumber: 1, building: "Healthcare Center (Chestnut Hill)", receptionNodeID: "Reception-1745475750292" },
 
             {name: "Backup Child Care Center", floorNumber: 2, building: "Healthcare Center (Chestnut Hill)", receptionNodeID: 'Reception-1745475750292' },
             {name: "Crohn's and Colitis Center", floorNumber: 2, building: "Healthcare Center (Chestnut Hill)", receptionNodeID: 'Reception-1745475750292' },
@@ -143,13 +144,13 @@ async function main() {
             {name: "Dialysis", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Dialysis Reception"},
             {name: "Emergency Department", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: "Emergency Entrance", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
-            {name: "GI Endoscopy", floorNumber: 1, building: "Faulkner Hospital",  receptionNodeID: 'Reception-1745468288835' },
+            {name: "GI Endoscopy", floorNumber: 1, building: "Faulkner Hospital",  receptionNodeID: 'Reception-1745468225241' },
             {name: "Information", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
-            {name: "MRI/CT", floorNumber: 1, building: "Faulkner Hospital",  receptionNodeID: 'Reception-1745468241433' },
+            {name: "MRI/CT", floorNumber: 1, building: "Faulkner Hospital",  receptionNodeID: 'Reception-1745468225241' },
             {name: "Patient Finances", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: "Pre-Admittance Screening", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
-            {name: "Pulmonary Lab", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468299003"},
-            {name: "Radiology", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468256681"},
+            {name: "Pulmonary Lab", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
+            {name: "Radiology", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: "Special Testing", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: "Starbucks", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
             {name: "Taiclet Family Center", floorNumber: 1, building: "Faulkner Hospital", receptionNodeID: "Reception-1745468225241"},
@@ -215,231 +216,277 @@ async function main() {
 
     });
 
-    // Main Campus Hospital (75 Francis St.) floor 2
+    // Main Campus Hospital (75 Francis St.)
     await client.directory.createMany({
         data: [
+            //floor -2
+            {name: 'Cardiovascular Imaging Center', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Cath Lab', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Radiation Oncology', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Radiology (MRI and CT Scan)', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Cross-Sectional Interventional Radiology', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Day Surgery Check-in / Pre-Op', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Medical Records / Film Library', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Nuclear Medicine & Molecular Imaging', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Outpatient X-ray', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'PACU', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Radiology (MRI and CSIR)', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Ultrasound', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Infusion', floorNumber: 0, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Phlebotomy, Outpatient', floorNumber: 0, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Admitting', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Bretholtz Family Center', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Bridge Clinic, Dushku-Palandijian', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Chapel, Multi-Faith', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Emergency', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Neurology', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Neurosurgery', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Obstetrics Admitting', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Rehabilitation Services PT / OT', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Wound Care Center', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
             {
                 "name": "Ambulatory Radiology (X-ray & CT scan)",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Breast Imaging, Lee Bell Center",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Mammography",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Shapiro Procedural Check-in",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Brigham Circle Medical Associates (BCMA)",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Brigham Medical Specialties / Schuster Transplant",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Center for Weight Management & Metabolic Surgery",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Endocrine – Diabetes",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978920070"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Gastroenterology & Hepatology",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978956684"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Genetics & Genomics Medicine",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978956684"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Kidney / Pancreas Transplant",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978956684"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Kidney Medicine",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745978956684"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Nutrition",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Chest Diseases, Center for",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Comprehensive Breast Health Center",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Dental Group / Oral Medicine",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Ear, Nose and Throat (ENT)",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Echocardiography Lab (ECHO)",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Electrophysiology",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "International Patient Center / Executive Health",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Jen Center for Primary Care",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979021528"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Lung Center",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979064138"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Orthopedics",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979064138"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Plastic & Reconstructive Surgery",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979064138"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Podiatry",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979064138"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Rheumatology",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979064138"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Thoracic Surgery Clinic",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979064138"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Watkins Cardiovascular Clinic",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Weiner Center for Pre-Op Evaluation",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Bornstein Amphitheater",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Boston Children's Hospital",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Cafeteria",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Carrie Hall Conference Room",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Patient Financial Registration",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979105794"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Pharmacy",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979160598"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Radiation Procedural Check-in",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979160598"
+                "receptionNodeID": "Main Reception MC"
             },
             {
                 "name": "Shapiro Family Center",
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
-                "receptionNodeID": "Reception-1745979202834"
-            }
+                "receptionNodeID": "Main Reception MC"
+            },
+
+            {name: 'Center for Fetal Medicine & Reproductive Genetics', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Center for Infertility & Reproductive Surgery', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Connors Center for Women\'s Health', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Dialysis', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Gynecologic Oncology', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'High Risk Obstetric Ultrasound', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Infertility & Reproductive Surgery', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Maternal Fetal Medicine', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Minimally Invasive Gynecologic Surgery', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Reproductive Endocrinology Lab', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Urology', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Vascular Diagnostic Laboratory', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Infectious Disease', floorNumber: 4, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Dana-Farber Cancer Inpatient Hospital', floorNumber: 6, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
         ]
     });
 

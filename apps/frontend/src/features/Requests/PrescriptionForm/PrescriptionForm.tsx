@@ -123,7 +123,7 @@ export const PrescriptionForm = () => {
                 setResetDropdowns(!resetDropdowns);
 
                 setFormData({
-                    employeeName: '',
+                    employeeName: formData.employeeName,
                     patientID: '',
                     priority: '',
                     building: '',
@@ -294,7 +294,7 @@ export const PrescriptionForm = () => {
                                 </div>
                             </div>
 
-                            <h2 className={'text-foreground font-bold'}>Instructions for Patient:</h2>
+                            <h2 className={'text-foreground font-bold font-trade'}>Instructions for Patient:</h2>
                             {/* Pill Quantities per Time */}
                             <div>
                                 <Label className="block text-sm font-semibold text-foreground mb-2 text-center">
@@ -518,16 +518,16 @@ export const PrescriptionForm = () => {
                         <h3 className="text-lg font-semibold mb-2">
                             Your prescription request has been submitted
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
                             <div>
-                                <span className="font-semibold">Employee Name:</span>{' '}
+                                <span className="font-semibold">Employee:</span>{' '}
                                 {submittedPrescription.employeeName}
                             </div>
-
                             <div>
-                                <span className="font-semibold">Patient ID:</span>{' '}
-                                {submittedPrescription.patientID}
+                                <span className="font-semibold">Prescription Name:</span>{' '}
+                                {submittedPrescription.drugName}
                             </div>
+
                             <div>
                                 <span className="font-semibold">Priority:</span>{' '}
                                 {submittedPrescription.priority}
@@ -541,9 +541,35 @@ export const PrescriptionForm = () => {
                                 {submittedPrescription.department}
                             </div>
                             <div>
+                                <span className="font-semibold">Patient:</span>{' '}
+                                {submittedPrescription.patientID}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Assigned Employee:</span>{' '}
+                                {submittedPrescription.assignedEmployee}
+                            </div>
+                            <div>
                                 <span className="font-semibold">Status:</span>{' '}
                                 {submittedPrescription.status}
                             </div>
+                            <br />
+                            <br />
+
+                            <div>
+                                <span className="font-semibold">Pills per Bottle:</span>{' '}
+                                {submittedPrescription.numberOfPills}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Refills:</span>{' '}
+                                {submittedPrescription.refills}
+                            </div>
+                            <div>
+                                <span className="font-semibold">Days per Week:</span>{' '}
+                                {submittedPrescription.days}
+                            </div>
+                            <br />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 text-sm">
                             <div>
                                 <span className="font-semibold">Morning Pill Count:</span>{' '}
                                 {submittedPrescription.morningPillCount}
@@ -560,39 +586,26 @@ export const PrescriptionForm = () => {
                                 <span className="font-semibold">Bedtime Pill Count:</span>{' '}
                                 {submittedPrescription.nightPillCount}
                             </div>
-                            <div>
-                                <span className="font-semibold">Drug Name:</span>{' '}
-                                {submittedPrescription.drugName}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Pills per Bottle:</span>{' '}
-                                {submittedPrescription.numberOfPills}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Refills:</span>{' '}
-                                {submittedPrescription.refills}
-                            </div>
-                            <div>
-                                <span className="font-semibold">Days per Week:</span>{' '}
-                                {submittedPrescription.days}
-                            </div>
                             <div className="col-span-2">
-                                <span className="font-semibold">Additional Instructions:</span>{' '}
+                                <span className="font-semibold">Comments:</span>{' '}
                                 {submittedPrescription.additionalInstructions ||
                                     'None provided'}
                             </div>
                         </div>
-                        <div className="mt-3 text-sm text-secondary-foreground">
+                        </div>
+                        <div className="mt-3 px-4 text-sm text-secondary-foreground">
                             The prescription request has been submitted and will be filled.
                         </div>
-                        <Button
-                            onClick={() => setSubmittedPrescription(null)}
-                            className="mt-4 px-4 py-2 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
-                        >
-                            Dismiss
-                        </Button>
+                        <div className={"px-4 py-4"}>
+                            <Button
+                                onClick={() => setSubmittedPrescription(null)}
+                                className="mt-4 bg-secondary text-foreground rounded hover:bg-secondary-foreground transition duration-200"
+                            >
+                                Dismiss
+                            </Button>
+                        </div>
                     </div>
-                </div>
+                // </div>
             )}
         </>
     );

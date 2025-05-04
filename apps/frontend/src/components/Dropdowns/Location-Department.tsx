@@ -34,7 +34,7 @@ const LocationDepartmentDropdown: React.FC<DropdownLocationProps> = ({ onChange,
                 Location
                 <span className="text-accent">*</span>
                 <span className="text-xs text-secondary-foreground block">
-                    Select the building making the patient request.
+                    Select the building making the request.
                 </span>
             </Label>
             <Dropdown tableName={"building"} fieldName={'building'} onChange={handleLocationChange} reset={reset}/>

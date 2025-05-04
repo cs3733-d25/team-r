@@ -71,7 +71,7 @@ export function RequestPage() {
                 </h1>
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="mb-0 border-b border-gray-200 shadow-none" id={TOUR_STEPS_IDS_SERVICE_REQS.FILTER_REQUEST}>
+                    <TabsList className="mb-0 border-l border-gray-300 shadow-none" id={TOUR_STEPS_IDS_SERVICE_REQS.FILTER_REQUEST}>
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="all">All Requests</TabsTrigger>
                         {requestTypes.map((type) => (
@@ -82,7 +82,7 @@ export function RequestPage() {
                     </TabsList>
 
                     {/* Overview Tab Content - Default View */}
-                    <TabsContent value="overview" className="space-y-6 -mt-px">
+                    <TabsContent value="overview" className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id={TOUR_STEPS_IDS_SERVICE_REQS.DASHBOARD}>
                             {requestTypes.map((type, index) => (
                                 <Card key={type.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">

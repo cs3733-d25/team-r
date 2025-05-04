@@ -157,13 +157,23 @@ model TranslateRequest {
   employeeName       Employee @relation(fields: [employeeID], references: [id])
   language           String
   building           String
-  roomNumber         Int
+  roomNumber         String
   status             String
   comments           String
   priority           String
   department         String
   assignedEmployeeID String
   assignedEmployee   Employee @relation("translateRequestAssigned", fields: [assignedEmployeeID], references: [id])
+}
+
+model Announcement {
+  id             String    @id @default(cuid())
+  title          String
+  content        String
+  date           DateTime
+  author         String
+  type           String
+  expirationDate DateTime?
 }
 
 generator client {

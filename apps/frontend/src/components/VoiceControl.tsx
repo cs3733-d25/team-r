@@ -26,50 +26,59 @@ interface VoiceControlProps {
  * @constructor
  */
 export function VoiceControl({
-                                 selectedBuilding,
-                                 onParkingLotSelected,
-                                 onDepartmentSelected,
-                                 onSelectionComplete,
-                             }: VoiceControlProps) {
+    selectedBuilding,
+    onParkingLotSelected,
+    onDepartmentSelected,
+    onSelectionComplete,
+}: VoiceControlProps) {
     // gets the current building object, which provides access to the parking lots and departments
     const building = useMapData(selectedBuilding);
     const [parkingLot, setParkingLot] = useState<string>('');
     const [department, setDepartment] = useState<string>('');
     //some names aren't recognized by voice recognition, so replaces it with what the user would likely try to pronounce it as
     const altNames = new Map<string, string>([
-        ["Blood Draw/Phlebotomy", "blood draw / phlebotomy"],
-        ["Orthopaedics", "orthopedics"],
-        ["Speech - Language", "speech language"],
-        ["Surgi-Care", "surgicare"],
-        ["MassGeneral Hospital for Children", "mass general hospital for children"],
-        ["Spaulding Outpatient Care for Children", "spalding outpatient care for children"],
-        ["Multi Specialty Clinic", "multi-specialty clinic"],
-        ["Kidney (Renal) Medicine", "kidney renal medicine"],
-        ["Radiology (MRI/CT Scan)", "radiology mri ct scan"],
-        ["Brigham Dermatology Associates (BDA)", "brigham dermatology associates"],
-        ["Brigham Physicians Group (BPG)", "brigham physicians group"],
-        ["Gretchen S. and Edward A. Fish Center for Women's Health", "gretchen s and edward a fish center for women's health"],
-        ["Brigham Obstetrics and Gynecology Group (BOGG)", "brigham obstetrics and gynecology group"],
-        ["Taiclet Family Center", "takelet family center"],
-        ["Psychiatric/Addiction Recovery", "psychiatric / addiction recovery"],
-        ["Gynecology & Oncology", "gynecology and oncology"],
-        ["Huvos Auditorium", "juvos auditorium"],
-        ["Sadowsky Conference Room", "sadowski conference room"],
-        ["Endocrinology/Diabetes/Hemotology", "endocrinology/diabetes/hematology"],
-        ["Orthopaedic Associates", "orthopedic associates"],
-        ["Ambulatory Radiology (X-ray & CT scan)", "ambulatory radiology x-ray and ct scan"],
-        ["Breast Imaging, Lee Bell Center", "breast imaging lee bell center"],
-        ["Brigham Circle Medical Associates (BCMA)", "brigham circle medical associates"],
-        ["Center for Weight Management & Metabolic Surgery", "center for weight management and metabolic surgery"],
-        ["Endocrine – Diabetes", "endocrine diabetes"],
-        ["Gastroenterology & Hepatology", "gastroenterology and hepatology"],
-        ["Genetics & Genomics Medicine", "genetics and genomics medicine"],
-        ["Chest Diseases, Center for", "chest diseases center for"],
-        ["Ear, Nose and Throat (ENT)", "ear nose and throat"],
-        ["Echocardiography Lab (ECHO)", "echocardiography lab"],
-        ["Plastic & Reconstructive Surgery", "plastic and reconstructive surgery"],
-        ["Weiner Center for Pre-Op Evaluation", "wiener center for pre-op evaluation"],
-    ])
+        ['Blood Draw/Phlebotomy', 'blood draw / phlebotomy'],
+        ['Orthopaedics', 'orthopedics'],
+        ['Speech - Language', 'speech language'],
+        ['Surgi-Care', 'surgicare'],
+        ['MassGeneral Hospital for Children', 'mass general hospital for children'],
+        ['Spaulding Outpatient Care for Children', 'spalding outpatient care for children'],
+        ['Multi Specialty Clinic', 'multi-specialty clinic'],
+        ['Kidney (Renal) Medicine', 'kidney renal medicine'],
+        ['Radiology (MRI/CT Scan)', 'radiology mri ct scan'],
+        ['Brigham Dermatology Associates (BDA)', 'brigham dermatology associates'],
+        ['Brigham Physicians Group (BPG)', 'brigham physicians group'],
+        [
+            "Gretchen S. and Edward A. Fish Center for Women's Health",
+            "gretchen s and edward a fish center for women's health",
+        ],
+        [
+            'Brigham Obstetrics and Gynecology Group (BOGG)',
+            'brigham obstetrics and gynecology group',
+        ],
+        ['Taiclet Family Center', 'takelet family center'],
+        ['Psychiatric/Addiction Recovery', 'psychiatric / addiction recovery'],
+        ['Gynecology & Oncology', 'gynecology and oncology'],
+        ['Huvos Auditorium', 'juvos auditorium'],
+        ['Sadowsky Conference Room', 'sadowski conference room'],
+        ['Endocrinology/Diabetes/Hemotology', 'endocrinology/diabetes/hematology'],
+        ['Orthopaedic Associates', 'orthopedic associates'],
+        ['Ambulatory Radiology (X-ray & CT scan)', 'ambulatory radiology x-ray and ct scan'],
+        ['Breast Imaging, Lee Bell Center', 'breast imaging lee bell center'],
+        ['Brigham Circle Medical Associates (BCMA)', 'brigham circle medical associates'],
+        [
+            'Center for Weight Management & Metabolic Surgery',
+            'center for weight management and metabolic surgery',
+        ],
+        ['Endocrine – Diabetes', 'endocrine diabetes'],
+        ['Gastroenterology & Hepatology', 'gastroenterology and hepatology'],
+        ['Genetics & Genomics Medicine', 'genetics and genomics medicine'],
+        ['Chest Diseases, Center for', 'chest diseases center for'],
+        ['Ear, Nose and Throat (ENT)', 'ear nose and throat'],
+        ['Echocardiography Lab (ECHO)', 'echocardiography lab'],
+        ['Plastic & Reconstructive Surgery', 'plastic and reconstructive surgery'],
+        ['Weiner Center for Pre-Op Evaluation', 'wiener center for pre-op evaluation'],
+    ]);
 
     /**
      * commands is an array of objects that define the commands for the speech recognition
@@ -109,10 +118,12 @@ export function VoiceControl({
      * useEffect that handles action when the final transcript is received
      */
     useEffect(() => {
-        console.log("Selected building:", selectedBuilding);
-        console.log("Building departments:", building.departments);
-        const parkingLots = building.parkingLots.filter((parkingLot) => parkingLot.building === selectedBuilding);
-        console.log("Parking lots:", parkingLots);
+        console.log('Selected building:', selectedBuilding);
+        console.log('Building departments:', building.departments);
+        const parkingLots = building.parkingLots.filter(
+            (parkingLot) => parkingLot.building === selectedBuilding
+        );
+        console.log('Parking lots:', parkingLots);
 
         if (!finalTranscript) return;
         // Handle the final transcript here
@@ -174,6 +185,8 @@ export function VoiceControl({
             alert('Your browser does not support speech recognition');
         } else {
             if (!listening) {
+                // reset transcript before next listen
+                resetTranscript();
                 // Start listening
                 SpeechRecognition.startListening({ continuous: true, language: 'en' });
                 console.log('Listening...');
@@ -188,12 +201,22 @@ export function VoiceControl({
     };
 
     return (
-        <button>
-            <Mic
-                className={`text-3xl ${listening ? 'text-red-500' : 'text-gray-500'}`}
-                onClick={handleVoiceControl}
-                title={listening ? 'Stop Listening' : 'Start Listening'}
-            />
-        </button>
+        <>
+            <button>
+                <Mic
+                    className={`text-3xl ${listening ? 'text-red-500' : 'text-gray-500'}`}
+                    onClick={handleVoiceControl}
+                    title={listening ? 'Stop Listening' : 'Start Listening'}
+                />
+            </button>
+            {listening && (
+                <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg max-w-md w-full z-50 border border-gray-200 dark:border-gray-700">
+                    <div className="flex flex-col gap-1">
+                        <h4 className="text-sm font-semibold text-gray-500">Listening...</h4>
+                        <p className="text-md">{transcript || 'Speak now...'}</p>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }

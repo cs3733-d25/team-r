@@ -25,7 +25,7 @@ export const CreditsPage = () => {
         <div>
             <h1 className='p-4 text-4xl font-bold text-center space-y-1'>Credits</h1>
             {/*<Label/>*/}
-            <p className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center'> This web application was developed using the PERN (PostgreSQL, Express, React, Node.js) stack with
+            <p className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center text-center'> This web application was developed using the PERN (PostgreSQL, Express, React, Node.js) stack with
                 Typescript, Prisma ORM, Shadcn and Tailwind. Deployment on the cloud was accomplished using AWS EC, a
                 Docker container, and AWS RDS to run the PostgreSQL server.
             </p>

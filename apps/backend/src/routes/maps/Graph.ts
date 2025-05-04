@@ -106,8 +106,16 @@ export class Graph {
         const currentWeight = this.getEdgeWeight(elevatorId, neighbor);
         // only reduce non-infinite weights
         if (currentWeight < Number.MAX_SAFE_INTEGER / 2) {
-          this.setEdgeWeight(elevatorId, neighbor, Math.max(1, currentWeight * 0.8));
-          this.setEdgeWeight(neighbor, elevatorId, Math.max(1, currentWeight * 0.8));
+          this.setEdgeWeight(
+            elevatorId,
+            neighbor,
+            Math.max(1, currentWeight * 0.8),
+          );
+          this.setEdgeWeight(
+            neighbor,
+            elevatorId,
+            Math.max(1, currentWeight * 0.8),
+          );
         }
       }
     }
