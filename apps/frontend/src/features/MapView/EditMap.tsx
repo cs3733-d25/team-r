@@ -446,7 +446,7 @@ export function EditMap({ status }: EditMapProps) {
                                 onValueChange={setActiveTab}
                                 className="w-full flex flex-col"
                             >
-                                <TabsList className="w-80 flex dark:bg-gray-700">
+                                <TabsList className="w-80 flex dark:bg-aceent">
                                     <TabsTrigger
                                         value="place-node"
                                         className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
@@ -462,7 +462,7 @@ export function EditMap({ status }: EditMapProps) {
                                 </TabsList>
 
                                 <div className={'w-80 flex flex-col'}>
-                                    <TabsContent value="place-node" className="space-y-4">
+                                    <TabsContent value="place-node" className="space-y-4 dark:bg-background">
                                         <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
                                             <Label className="dark:text-white">Click on map to select node location</Label>
                                             {coordinates && (
@@ -541,7 +541,7 @@ export function EditMap({ status }: EditMapProps) {
                                         </div>
                                     </TabsContent>
 
-                                    <TabsContent value="edit-node" className="space-y-4  dark:bg-background">
+                                    <TabsContent value="edit-node" className="space-y-4 dark:bg-background">
                                         <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md">
                                             <Label className="dark:text-white">Selected Node to Edit</Label>
                                             {nodeID !== '' ? (
