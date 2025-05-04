@@ -31,6 +31,7 @@ import { useTheme } from '../hooks/useTheme';
 import Footer from '../components/Footer';
 import {AnnouncementPage} from '@/features/Announcements/AnnouncementPage.tsx';
 import CreateAnnouncement from '@/features/Announcements/CreateAnnouncement.tsx';
+import {TextContextProvider} from "@/context/textContext.tsx";
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -325,10 +326,12 @@ function App() {
         },
     ]);
     return (
+        <TextContextProvider>
         <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
         </div>
+        </TextContextProvider>
     );
 }
 

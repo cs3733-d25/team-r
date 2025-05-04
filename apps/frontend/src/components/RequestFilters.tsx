@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import values from '@/constant-values';
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select.tsx';
 
 export interface FilterOptions {
     employeeID: string;
@@ -61,7 +62,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
     // filter pills
     const FilterPill = ({ label, value, onRemove }: { label: string; value: string; onRemove: () => void }) => (
         <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
-            <span className="mr-1 font-medium">{label}:</span> {value}
+            <span className="mr-1 text-inherit">{label}:</span> {value}
             <button onClick={onRemove} className="ml-2 hover:text-gray-200">×</button>
         </div>
     );
@@ -154,18 +155,6 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                 <button onClick={resetSort} className="ml-2 hover:text-gray-200">×</button>
                             </div>
                         )}
-
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                                onClearFilters();
-                                resetSort();
-                            }}
-                            className="ml-2 text-sm"
-                        >
-                            Clear All
-                        </Button>
                     </div>
                 </div>
             )}
@@ -180,26 +169,29 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                             <div className="flex flex-col space-y-1.5">
                                 <label htmlFor="building">Building</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="building"
+                                    <Select
                                         value={localOptions.building}
-                                        onChange={(e) => {
-                                            const newBuilding = e.target.value;
+                                        onValueChange={(value) => {
                                             setLocalOptions({
                                                 ...localOptions,
-                                                building: newBuilding,
-                                                department: ''
+                                                building: value,
+                                                department: '',
                                             });
                                         }}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
                                     >
-                                        <option value="">All Buildings</option>
-                                        {values.building.map((building) => (
-                                            <option key={building} value={building}>
-                                                {building}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Buildings" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {values.building.map((building) => (
+                                                    <SelectItem key={building} value={building}>
+                                                        {building}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByBuilding ? 'default' : 'outline'}
                                         size="sm"
@@ -216,24 +208,27 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                             {/*department filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <label htmlFor="department">Department</label>
+                                <label htmlFor="building">Department</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="department"
+                                    <Select
                                         value={localOptions.department}
-                                        onChange={(e) => setLocalOptions({
-                                            ...localOptions,
-                                            department: e.target.value
-                                        })}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        onValueChange={(value) =>
+                                            setLocalOptions({ ...localOptions, department: value })
+                                        }
                                     >
-                                        <option value="">All Departments</option>
-                                        {availableDepartments.map((dept) => (
-                                            <option key={dept} value={dept}>
-                                                {dept}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Departments" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {availableDepartments.map((dept) => (
+                                                    <SelectItem key={dept} value={dept}>
+                                                        {dept}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByDepartment ? 'default' : 'outline'}
                                         size="sm"
@@ -258,22 +253,28 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                             <div className="flex flex-col space-y-1.5">
                                 <label htmlFor="status">Status</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="status"
+                                    <Select
                                         value={localOptions.status}
-                                        onChange={(e) => setLocalOptions({
-                                            ...localOptions,
-                                            status: e.target.value
-                                        })}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        onValueChange={(value) => {
+                                            setLocalOptions({
+                                                ...localOptions,
+                                                status: value,
+                                            });
+                                        }}
                                     >
-                                        <option value="">All Statuses</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Canceled">Canceled</option>
-                                        <option value="Accepted">Accepted</option>
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Statuses" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="Pending">Pending</SelectItem>
+                                                <SelectItem value="In Progress">In Progress</SelectItem>
+                                                <SelectItem value="Completed">Completed</SelectItem>
+                                                <SelectItem value="Canceled">Canceled</SelectItem>
+                                                <SelectItem value="Accepted">Accepted</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByStatus ? 'default' : 'outline'}
                                         size="sm"
@@ -292,21 +293,27 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                             <div className="flex flex-col space-y-1.5">
                                 <label htmlFor="priority">Priority</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="priority"
+                                    <Select
                                         value={localOptions.priority}
-                                        onChange={(e) => setLocalOptions({
-                                            ...localOptions,
-                                            priority: e.target.value
-                                        })}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        onValueChange={(value) => {
+                                            setLocalOptions({
+                                                ...localOptions,
+                                                priority: value,
+                                            });
+                                        }}
                                     >
-                                        <option value="">All Priorities</option>
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                        <option value="Urgent">Urgent</option>
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Priorities" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="Low">Low</SelectItem>
+                                                <SelectItem value="Medium">Medium</SelectItem>
+                                                <SelectItem value="High">High</SelectItem>
+                                                <SelectItem value="Urgent">Urgent</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByPriority ? 'default' : 'outline'}
                                         size="sm"

@@ -9,6 +9,7 @@ import {
 import values, {valueKey} from "@/constant-values.ts";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {useTextSize} from "@/context/textContext.tsx";
 
 //more specific typing for mapping onto options dropdown
 interface Employee {
@@ -40,8 +41,6 @@ interface DropdownProps {
  * @constructor
  */
 const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName, onChange, reset, currentSelection, mutuallyExclusiveOption, alternateFieldName}) => {
-    //let resetForm = true; //if submitted, resetForm will change and the key should change making the dropdown reset
-    //if (!reset) {resetForm = false;} else {resetForm = true;} //if statement because props.reset can be undefined
 
     const [options, setOptions] = useState<string[]>([]);
 
@@ -76,7 +75,7 @@ const Dropdown: React.FC<DropdownProps> = ({ tableName, customOptions, fieldName
     return (
         <Select onValueChange={handleChange} key={resetForm.toString()}>
             {/*<Select onValueChange={handleChange}>*/}
-             <SelectTrigger className={"bg-input"}>
+            <SelectTrigger className={"bg-input" } >
                 <SelectValue placeholder={alternateFieldName ? 'Select a ' + alternateFieldName : 'Select a ' + fieldName}></SelectValue>
             </SelectTrigger>
             <SelectContent className={"bg-input"} >
