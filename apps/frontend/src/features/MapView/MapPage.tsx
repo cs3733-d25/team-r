@@ -23,6 +23,7 @@ import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
 import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
+import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
 
 declare global {
@@ -371,6 +372,7 @@ export function MapPage() {
                     <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="font-bold text-xl">Selected Location</Label>
+                            {displayInfo(
                             <VoiceControl
                                 selectedBuilding={buildingIdentifier}
                                 onParkingLotSelected={setSelectedParkinglot}
@@ -380,7 +382,8 @@ export function MapPage() {
                                     setSelectedDepartment(deptId);
                                     handleGetDirections();
                                 }}
-                            />
+                            />,
+                                "Click on this button to enable microphone use for voice control. To find a path, say something like, \"Take me from Patient Parking to Dialysis\".")}
                         </div>
                         <div className={'font-bold text-secondary text-lg'}>
                             {getShortLocationName(selectedLocation)}
@@ -396,9 +399,13 @@ export function MapPage() {
                             value={selectedParkinglot}
                             onValueChange={setSelectedParkinglot}
                         >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Parking Lot" />
-                            </SelectTrigger>
+                            <div>
+                                {displayInfo(
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Parking Lot" />
+                                </SelectTrigger>,
+                                "Click here to choose a parking lot as a starting location.")}
+                            </div>
                             <SelectContent>
                                 <SelectGroup>
                                     {filterParkingLots.map((lot) => (
@@ -415,9 +422,14 @@ export function MapPage() {
                             value={selectedDepartment}
                             onValueChange={setSelectedDepartment}
                         >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Department" />
-                            </SelectTrigger>
+                            <div>
+                                {displayInfo(
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Department" />
+                                    </SelectTrigger>,
+                                    "Click here to choose a department as a destination."
+                                )}
+                            </div>
                             <SelectContent>
                                 <SelectGroup>
                                     {departments.map((dept) => (
@@ -429,51 +441,59 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
-                        <div className="flex items-center space-x-2">
-                            <Checkbox
-                                id="accessibleRoute"
-                                checked={accessibleRoute}
-                                onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
-                            />
-                            <Label htmlFor="accessibleRoute" className="text-sm font-medium">
-                                Show Accessible Route
-                            </Label>
+                        <div>
+                            {displayInfo(
+                            <div className="flex items-center space-x-2">
+                                <Checkbox
+                                    id="accessibleRoute"
+                                    checked={accessibleRoute}
+                                    onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
+                                />
+                                <Label htmlFor="accessibleRoute" className="text-sm font-medium">
+                                    Show Accessible Route
+                                </Label>
+                            </div>,
+                            "Click on this checkbox to select only accessible routes.")}
                         </div>
 
                         {/* Trigger pathfinding */}
+                        {displayInfo(
                         <Button className="w-full" onClick={handleGetDirections}>
                             Get Directions
-                        </Button>
+                        </Button>,
+                        "Once a parking lot and department are selected, click here to display directions.")}
                     </div>
 
                     {/* Floor navigation */}
                     <div className="mt-4 pt-4 border-t">
                         <Label className="font-bold mb-2">Floors</Label>
                         {availableFloors.map((floor) => (
-                            <Button
-                                key={floor}
-                                variant={
-                                    currentFloor === floor
-                                        ? 'secondary'
-                                        : flashingFloors?.includes(floor)
-                                            ? 'outline'
-                                            : 'unselected'
-                                }
-                                className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
-                                onClick={() => {
-                                    setCurrentFloor(floor);
-                                    window.goToFloor?.(
-                                        floor,
-                                        getBuildingConstant(selectedBuilding)
-                                    );
-
-                                    if (flashingFloors?.includes(floor)) {
-                                        setFlashingFloors((prev) => prev?.filter((f) => f !== floor) || null);
+                            displayInfo(
+                                <Button
+                                    key={floor}
+                                    variant={
+                                        currentFloor === floor
+                                            ? 'secondary'
+                                            : flashingFloors?.includes(floor)
+                                                ? 'outline'
+                                                : 'unselected'
                                     }
-                                }}
-                            >
-                                Floor {floor}
-                            </Button>
+                                    className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
+                                    onClick={() => {
+                                        setCurrentFloor(floor);
+                                        window.goToFloor?.(
+                                            floor,
+                                            getBuildingConstant(selectedBuilding)
+                                        );
+
+                                        if (flashingFloors?.includes(floor)) {
+                                            setFlashingFloors((prev) => prev?.filter((f) => f !== floor) || null);
+                                        }
+                                    }}
+                                >
+                                    Floor {floor}
+                                </Button>,
+                                `Click here to display the route on Floor ${floor}.`)
                         ))}
                     </div>
                 </div>
