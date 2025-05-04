@@ -9,19 +9,19 @@ function CSVTabPage() {
         <>
             <Tabs defaultValue="CSVPage" className={"py-5"}>
                 <TabsList>
-                    <TabsTrigger value="CSVPage"
+                    <TabsTrigger value="CSVPage" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
                                  >
                         Import/Export CSV</TabsTrigger>
-                    <TabsTrigger value="CSVTable"
+                    <TabsTrigger value="CSVTable" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
                                  id={TOUR_STEPS_IDS_CSV.VIEW_DB_TABLE}
                                  >
                         View DB Table</TabsTrigger>
                 </TabsList>
-                <div >
-                    <TabsContent value="CSVPage">
+                <div>
+                    <TabsContent value="CSVPage" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">
                         <CSVPage/>
                     </TabsContent>
-                    <TabsContent value="CSVTable">
+                    <TabsContent value="CSVTable" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">
                         <CSVTablePage />
                     </TabsContent>
                 </div>
