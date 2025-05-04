@@ -9,10 +9,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select.tsx';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
 import InternalMap from '@/features/MapView/InternalMap.tsx';
-import { getBuildingFromLocation } from '@/features/MapView/mapUtils.ts';
-import { postEdgeDeletion, postNodeDeletion, useMapData } from '@/features/MapView/mapService.ts';
+import { postEdgeDeletion, postNodeDeletion } from '@/features/MapView/mapService.ts';
 import axios from 'axios';
 import { Label } from '@/components/ui/label.tsx';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.tsx';
@@ -21,15 +19,6 @@ import { TOUR_STEP_IDS } from '@/lib/tour-constants.ts';
 
 interface EditMapProps {
     status?: string;
-}
-
-interface Department {
-    id: string;
-    name: string;
-}
-
-interface InternalMapProps {
-    onLocationChange?: (building: string, floor: number) => void;
 }
 
 export function EditMap({ status }: EditMapProps) {
@@ -54,9 +43,6 @@ export function EditMap({ status }: EditMapProps) {
     const [editnodeType, setEditNodeType] = useState<string>('Hallway');
     const [nodeID, setNodeID] = useState<string>(''); // stores the nodeID that was selected when a node was clicked on
     const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
-    const [availableDepartments, setAvailableDepartments] = useState<Department[]>([]);
-    const [editselectedDepartments, setEditSelectedDepartments] = useState<string[]>([]);
-    const [editavailableDepartments, setEditAvailableDepartments] = useState<Department[]>([]);
     // const [currentBuilding, setCurrentBuilding] = useState<string>('');
     const [requestPromise, setRequestPromise] = useState<Promise<void>>(); // allows for the internal map to know when to reload nodes after the map page has created them
     const [edgeCreatePromise, setEdgeCreatePromise] = useState<Promise<void>>();
@@ -64,7 +50,6 @@ export function EditMap({ status }: EditMapProps) {
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
     const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
-    const building = getBuildingFromLocation(selectedLocation.building);
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -102,16 +87,6 @@ export function EditMap({ status }: EditMapProps) {
             position: 'right',
         },
         {
-            content: (
-                <div>
-                    If the node is a reception node, it can serve as the reception desk for any
-                    number of departments. Select them here.
-                </div>
-            ),
-            selectorId: TOUR_STEP_IDS.DEPARTMENTS,
-            position: 'right',
-        },
-        {
             content: <div>When finished, save the node, and it should pop up on the map!</div>,
             selectorId: TOUR_STEP_IDS.SAVE_NODE,
             position: 'left',
@@ -128,7 +103,6 @@ export function EditMap({ status }: EditMapProps) {
         },
         // Add more steps here
     ];
-    const { departments } = useMapData(selectedLocation.building);
 
     async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
         try {
@@ -146,18 +120,6 @@ export function EditMap({ status }: EditMapProps) {
         console.log('Active Layer Changed', building, floor);
         setSelectedLocation({ building: building, floor: floor });
     }
-
-    // set available departments when departments data loads
-    useEffect(() => {
-        if (departments && departments.length > 0) {
-            setAvailableDepartments(departments);
-        }
-    }, [departments]);
-    useEffect(() => {
-        if (departments && departments.length > 0) {
-            setEditAvailableDepartments(departments);
-        }
-    }, [departments]);
 
     // check if the instructions should be opened
     useEffect(() => {
@@ -261,18 +223,11 @@ export function EditMap({ status }: EditMapProps) {
         { id: 'hallway', name: 'Hallway' },
         { id: 'sidewalk', name: 'Sidewalk' },
         { id: 'elevator', name: 'Elevator' },
-        { id: 'checkIn', name: 'Check-In' },
+        //{ id: 'checkIn', name: 'Check-In' },  What is this? commented it out since it caused errors if I created one
     ];
 
     const handleDepartmentToggle = (departmentId: string) => {
         setSelectedDepartments((prev) =>
-            prev.includes(departmentId)
-                ? prev.filter((id) => id !== departmentId)
-                : [...prev, departmentId]
-        );
-    };
-    const handleEditDepartmentToggle = (departmentId: string) => {
-        setEditSelectedDepartments((prev) =>
             prev.includes(departmentId)
                 ? prev.filter((id) => id !== departmentId)
                 : [...prev, departmentId]
@@ -316,7 +271,6 @@ export function EditMap({ status }: EditMapProps) {
                 setNodeID('')
                 setEditNodeName('');
                 setEditNodeType('');
-                setEditSelectedDepartments([]);
                 setEditCoordinates({ x: '', y: '' });
             } else {
                 alert('Failed to save node.');
@@ -477,7 +431,7 @@ export function EditMap({ status }: EditMapProps) {
                     selectedEdgeNodes={edgeNodes}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[calc(100vh-95px)] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
                         <Label
                             className="font-bold text-2xl pt-4 pl-4 pb-4"
@@ -554,42 +508,6 @@ export function EditMap({ status }: EditMapProps) {
                                                     </SelectContent>
                                                 </Select>
                                             </div>
-
-                                            <div id={TOUR_STEP_IDS.DEPARTMENTS}>
-                                                <Label>Associated Departments</Label>
-                                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
-                                                    {availableDepartments.length > 0 ? (
-                                                        availableDepartments.map((dept) => (
-                                                            <div
-                                                                key={dept.id}
-                                                                className="flex items-center space-x-2 py-1"
-                                                            >
-                                                                <Checkbox
-                                                                    id={'dept-${dept.id}'}
-                                                                    checked={selectedDepartments.includes(
-                                                                        dept.id
-                                                                    )}
-                                                                    onCheckedChange={() =>
-                                                                        handleDepartmentToggle(
-                                                                            dept.id
-                                                                        )
-                                                                    }
-                                                                />
-                                                                <Label
-                                                                    htmlFor={`dept-${dept.id}`}
-                                                                    className="cursor-pointer"
-                                                                >
-                                                                    {dept.name}
-                                                                </Label>
-                                                            </div>
-                                                        ))
-                                                    ) : (
-                                                        <p className="text-gray-500 text-sm">
-                                                            No departments available
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </div>
                                         </div>
 
                                         <Button
@@ -641,7 +559,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 <Input
                                                     value={editnodeName}
                                                     onChange={(e) =>
-                                                        console.log("Node Name Value: ", e.target.value)
+                                                        setEditNodeName(e.target.value)
                                                     }
                                                     placeholder="Enter new node name"
                                                 />
@@ -669,42 +587,6 @@ export function EditMap({ status }: EditMapProps) {
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
-                                            </div>
-
-                                            <div>
-                                                <Label>Change Associated Departments</Label>
-                                                <div className="mt-2 border rounded-md p-2 max-h-40 overflow-y-auto">
-                                                    {editavailableDepartments.length > 0 ? (
-                                                        editavailableDepartments.map((dept) => (
-                                                            <div
-                                                                key={dept.id}
-                                                                className="flex items-center space-x-2 py-1"
-                                                            >
-                                                                <Checkbox
-                                                                    id={`edit-dept-${dept.id}`}
-                                                                    checked={editselectedDepartments.includes(
-                                                                        dept.id
-                                                                    )}
-                                                                    onCheckedChange={() =>
-                                                                        handleEditDepartmentToggle(
-                                                                            dept.id
-                                                                        )
-                                                                    }
-                                                                />
-                                                                <Label
-                                                                    htmlFor={`edit-dept-${dept.id}`}
-                                                                    className="cursor-pointer"
-                                                                >
-                                                                    {dept.name}
-                                                                </Label>
-                                                            </div>
-                                                        ))
-                                                    ) : (
-                                                        <p className="text-gray-500 text-sm">
-                                                            No departments available
-                                                        </p>
-                                                    )}
-                                                </div>
                                             </div>
 
                                             {editcoordinates != null ? (
