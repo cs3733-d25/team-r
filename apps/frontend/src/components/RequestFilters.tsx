@@ -163,7 +163,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
             <div className="bg-muted/40 rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <h3 className="text-sm font-medium">Location Filters</h3>
+                        <h3 className="text-inherit font-medium">Location Filters</h3>
                         <div className="space-y-3">
                             {/*building filter*/}
                             <div className="flex flex-col space-y-1.5">
@@ -247,7 +247,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                     {/*status filters group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <h3 className="text-sm font-medium">Request Status</h3>
+                        <h3 className="text-inherit font-medium">Request Status</h3>
                         <div className="space-y-3">
                             {/*status filter*/}
                             <div className="flex flex-col space-y-1.5">
@@ -332,7 +332,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                     {/*personnel filter group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <h3 className="text-sm font-medium">Personnel</h3>
+                        <h3 className="text-inherit font-medium">Personnel</h3>
                         <div className="space-y-3">
                             {/*employee filter*/}
                             <div className="flex flex-col space-y-1.5">

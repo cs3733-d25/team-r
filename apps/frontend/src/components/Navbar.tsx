@@ -22,7 +22,7 @@ function Navbar(props: NavBarProps) {
             <Link
                 key={'Login'}
                 to={'/login'}
-                className={'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 text-black bg-mgb-light-blue hover:bg-[#306c73] hover:text-white'}
+                className={'px-3 py-2 rounded-md text-inherit font-medium transition-colors duration-200 text-black bg-mgb-light-blue hover:bg-[#306c73] hover:text-white'}
             >
                 Login
             </Link>
@@ -47,7 +47,7 @@ function Navbar(props: NavBarProps) {
                     <Link
                         key={link.path}
                         to={link.path}
-                        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                        className={`px-3 py-2 rounded-md text-inherit font-medium transition-colors duration-200 ${
                             location.pathname === link.path
                                 ? /* Again i don't like using a manual hex code but i have no
                                                    * other option at atm*/
@@ -59,7 +59,7 @@ function Navbar(props: NavBarProps) {
                     </Link>
                 ))}
                 <Link key={"Logout"} to={"/"}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 bg-mgb-brown-500 text-white hover:bg-mgb-brown-700 active:bg-mgb-brown-800`}>
+                    className={`px-3 py-2 rounded-md text-inherit font-medium transition-colors duration-200 bg-mgb-brown-500 text-white hover:bg-mgb-brown-700 active:bg-mgb-brown-800`}>
                     Logout
                 </Link>
             </div>

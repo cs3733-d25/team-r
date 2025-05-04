@@ -330,14 +330,14 @@ export function TourProvider({
 											<button
 												onClick={previousStep}
 												disabled={currentStep === 0}
-												className="text-sm text-muted-foreground hover:text-foreground"
+												className="text-inherit text-muted-foreground hover:text-foreground"
 											>
 												Previous
 											</button>
 										)}
 										<button
 											onClick={nextStep}
-											className="ml-auto text-sm font-medium text-primary hover:text-primary/90"
+											className="ml-auto text-inherit font-medium text-primary hover:text-primary/90"
 										>
 											{currentStep === steps.length - 1 ? "Finish" : "Next"}
 										</button>
@@ -404,10 +404,10 @@ export function TourAlertDialog({
 						{/*>*/}
 						{/*</motion.div>*/}
 					{/*</div>*/}
-					<AlertDialogTitle className="text-center text-xl font-medium">
+					<AlertDialogTitle className="text-center text-inherit font-medium">
 						Welcome to the Tour
 					</AlertDialogTitle>
-					<AlertDialogDescription className="text-muted-foreground mt-2 text-center text-sm">
+					<AlertDialogDescription className="text-muted-foreground mt-2 text-center text-inherit">
 						Learn about the key features and functionality of this page
 					</AlertDialogDescription>
 				</AlertDialogHeader>

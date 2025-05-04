@@ -12,14 +12,14 @@ interface PaginationProps {
 export function PaginationControls({currentPage, totalPages, itemsPerPage, totalItems, onPageChange, onItemsPerPageChange}: PaginationProps) {
     return (
         <div className="flex items-center justify-between mt-4">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-inherit text-muted-foreground">
                 Showing {totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}{' '}
                 to {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems} results
             </div>
 
             <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2">
-                    <span className="text-sm">Results per page:</span>
+                    <span className="text-inherit">Results per page:</span>
                     <select
                         value={itemsPerPage}
                         onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
@@ -41,7 +41,7 @@ export function PaginationControls({currentPage, totalPages, itemsPerPage, total
                     >
                         Previous
                     </Button>
-                    <span className="text-sm">
+                    <span className="text-inherit">
             Page {currentPage} of {totalPages || 1}
           </span>
                     <Button

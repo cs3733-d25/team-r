@@ -68,8 +68,8 @@ const AboutPage = () => {
                 </div>
             </div>
             <div className="flex flex-col justify-center text-left">
-                <h3 className="text-xl font-bold">{name}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{role}</p>
+                <h3 className="text-[1.5em] font-bold">{name}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-inherit">{role}</p>
             </div>
         </div>
     );
