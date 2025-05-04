@@ -24,7 +24,7 @@ function SanitationRequestTabs() {
                         <SanitationRequestPage />
                     </TabsContent>
                     <TabsContent value="sanitationRequestGraph">
-                        {Graphs("Sanitation")}
+                        <Graphs requestType="Sanitation"/>
                     </TabsContent>
                 </div>
 

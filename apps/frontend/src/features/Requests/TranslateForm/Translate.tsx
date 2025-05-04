@@ -27,7 +27,7 @@ function TranslateRequestTabs() {
                         <TranslateRequestPage />
                     </TabsContent>
                     <TabsContent value="translateRequestGraph">
-                        {Graphs("Translate")}
+                        <Graphs requestType="Translate"/>
                     </TabsContent>
                 </div>
             </Tabs>

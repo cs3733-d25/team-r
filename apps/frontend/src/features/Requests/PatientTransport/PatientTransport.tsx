@@ -26,7 +26,7 @@ export function TransportRequestPage() {
                         <PatientTransportPage />
                     </TabsContent>
                     <TabsContent value="patientTransportGraph">
-                        {Graphs("Transport")}
+                        <Graphs requestType="Transport"/>
                     </TabsContent>
                 </div>
             </Tabs>

@@ -27,7 +27,7 @@ export function Prescription() {
                         <PrescriptionPage />
                     </TabsContent>
                     <TabsContent value="prescriptionGraphs">
-                        {Graphs("Prescription")}
+                        <Graphs requestType="Prescription"/>
                     </TabsContent>
             </div>
             </Tabs>

@@ -27,7 +27,7 @@ export function AllPatientRequests() {
                         <PatientRequestPage/>
                     </TabsContent>
                     <TabsContent value="patientGraph">
-                        {Graphs("Nonemergent")}
+                        <Graphs requestType="Nonemergent"/>
                     </TabsContent>
                 </div>
             </Tabs>

@@ -26,7 +26,7 @@ export function DeviceReq() {
                         <DeviceReqPage />
                     </TabsContent>
                     <TabsContent value="deviceGraph">
-                        {Graphs("Device")}
+                        <Graphs requestType="Device"/>
                     </TabsContent>
                 </div>
             </Tabs>

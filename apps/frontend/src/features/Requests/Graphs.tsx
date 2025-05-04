@@ -12,7 +12,7 @@ const chartConfig = {
         color: "primary",
     }
 }satisfies ChartConfig
-export function Graphs(requestType:string) {
+export function Graphs({requestType}:{requestType:string}) {
     const [priorityData, setPriorityData] = useState([])
     const priorityCount:Record<string, number> = {}
     const priorityOrder :{[key:string]:number}={Low:0, Medium:1, High:2, Urgent:3}
@@ -22,11 +22,6 @@ export function Graphs(requestType:string) {
     useEffect(() => {
         retrieveFromDatabase();
     }, []);
-    useEffect(() => {
-        if(priorityData && locationData) {
-            retrieveFromDatabase();
-        }
-    }, [priorityData,locationData]);
 
 
     async function retrieveFromDatabase() {
