@@ -58,7 +58,19 @@ export function MapPage() {
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
-    const { parkingLots, departments } = useMapData(selectedBuilding);
+
+    /**
+     * This function gets the parking lots and departments and then sorts the departments alphabetically.
+     */
+    function getParkingAndDepartments() {
+        const mapData = useMapData(selectedBuilding);
+        mapData.departments = mapData.departments.sort((a, b) => {
+            if (a.name > b.name) return 1;
+            else return -1;
+        });
+        return mapData;
+    }
+    const { parkingLots, departments } = getParkingAndDepartments();
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     const [lastUsedNodes, setLastUsedNodes] = useState<Node[] | null>(null);
     console.log('departments: ', departments);
