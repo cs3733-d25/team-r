@@ -73,9 +73,9 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
 
     return (
         steps.length > 0 && (
-        <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
+        <div className="absolute top-4 right-4 bg-white dark:bg-background rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
             <div className="flex justify-between mb-4 text-sm text-gray-600">
-                <Label className="font-bold text-xl text-black">
+                <Label className="font-bold text-xl text-black dark:text-white">
                     {isInternal ? "Directions" : `${distance} - ${duration}`}
                 </Label>
 
