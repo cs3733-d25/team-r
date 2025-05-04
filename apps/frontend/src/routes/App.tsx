@@ -29,7 +29,7 @@ import { useTheme } from '../hooks/useTheme';
 import Footer from "../components/Footer";
 import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
 import AnnouncementForm from "@/features/Announcements/AnnouncementForm.tsx";
-
+import AnnouncementEdit from "@/features/Announcements/AnnouncementEdit.tsx";
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -107,6 +107,7 @@ function App() {
                 { path: 'requests', element: <TourProvider><RequestPage /></TourProvider> },
                 { path: 'announcements', element: <><TourProvider><AnnouncementPage /></TourProvider></>},
                 { path: 'announcementform', element: <AnnouncementForm /> },
+                { path: 'announcementedit/:id', element: <AnnouncementEdit /> },
                 { path: 'urgentannouncements', element: <AnnouncementPage defaultTab = 'urgent' /> },
                 { path: 'generalannouncements', element: <AnnouncementPage defaultTab = 'general' /> },
                 { path: 'bulletinannouncements', element: <AnnouncementPage defaultTab = 'bulletin' /> },
