@@ -216,9 +216,38 @@ async function main() {
 
     });
 
-    // Main Campus Hospital (75 Francis St.) floor 2
+    // Main Campus Hospital (75 Francis St.)
     await client.directory.createMany({
         data: [
+            //floor -2
+            {name: 'Cardiovascular Imaging Center', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Cath Lab', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Radiation Oncology', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Radiology (MRI and CT Scan)', floorNumber: -2, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Cross-Sectional Interventional Radiology', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Day Surgery Check-in / Pre-Op', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Medical Records / Film Library', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Nuclear Medicine & Molecular Imaging', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Outpatient X-ray', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'PACU', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Radiology (MRI and CSIR)', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Ultrasound', floorNumber: -1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Infusion', floorNumber: 0, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Phlebotomy, Outpatient', floorNumber: 0, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Admitting', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Bretholtz Family Center', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Bridge Clinic, Dushku-Palandijian', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Chapel, Multi-Faith', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Emergency', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Neurology', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Neurosurgery', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Obstetrics Admitting', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Rehabilitation Services PT / OT', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Wound Care Center', floorNumber: 1, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
             {
                 "name": "Ambulatory Radiology (X-ray & CT scan)",
                 "floorNumber": 2,
@@ -440,7 +469,24 @@ async function main() {
                 "floorNumber": 2,
                 "building": "Main Campus Hospital (75 Francis St.)",
                 "receptionNodeID": "Main Reception MC"
-            }
+            },
+
+            {name: 'Center for Fetal Medicine & Reproductive Genetics', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Center for Infertility & Reproductive Surgery', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Connors Center for Women\'s Health', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Dialysis', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Gynecologic Oncology', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'High Risk Obstetric Ultrasound', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Infertility & Reproductive Surgery', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Maternal Fetal Medicine', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Minimally Invasive Gynecologic Surgery', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Reproductive Endocrinology Lab', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Urology', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+            {name: 'Vascular Diagnostic Laboratory', floorNumber: 3, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Infectious Disease', floorNumber: 4, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
+
+            {name: 'Dana-Farber Cancer Inpatient Hospital', floorNumber: 6, building: "Main Campus Hospital (75 Francis St.)", receptionNodeID: "Main Reception MC"},
         ]
     });
 
