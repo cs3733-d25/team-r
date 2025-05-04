@@ -28,6 +28,7 @@ import { useTheme } from '../hooks/useTheme';
 import Footer from "../components/Footer";
 import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
 import AnnouncementForm from "@/features/Announcements/AnnouncementForm.tsx";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 
 function App() {

@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import PatientTransportForm from "@/features/Requests/PatientTransport/PatientTransportForm.tsx";
 import PatientTransportPage from "@/features/Requests/PatientTransport/PatientTransportPage.tsx";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 export function TransportRequestPage() {
     return(
@@ -13,6 +14,9 @@ export function TransportRequestPage() {
                     <TabsTrigger value="patientTransportTable"
                     >
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="patientTransportGraph"
+                    >
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="patientTransportForm">
@@ -20,6 +24,9 @@ export function TransportRequestPage() {
                     </TabsContent>
                     <TabsContent value="patientTransportTable">
                         <PatientTransportPage />
+                    </TabsContent>
+                    <TabsContent value="patientTransportGraph">
+                        {Graphs("Transport")}
                     </TabsContent>
                 </div>
             </Tabs>

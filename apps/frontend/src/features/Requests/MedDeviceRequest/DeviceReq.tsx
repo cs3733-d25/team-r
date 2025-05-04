@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import {DeviceReqForm} from "./DeviceReqForm";
 import {DeviceReqPage} from "./DeviceReqPage";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 export function DeviceReq() {
     return(
@@ -13,6 +14,9 @@ export function DeviceReq() {
                     <TabsTrigger value="devicePage"
                                  >
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="deviceGraph"
+                    >
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="deviceForm">
@@ -20,6 +24,9 @@ export function DeviceReq() {
                     </TabsContent>
                     <TabsContent value="devicePage">
                         <DeviceReqPage />
+                    </TabsContent>
+                    <TabsContent value="deviceGraph">
+                        {Graphs("Device")}
                     </TabsContent>
                 </div>
             </Tabs>

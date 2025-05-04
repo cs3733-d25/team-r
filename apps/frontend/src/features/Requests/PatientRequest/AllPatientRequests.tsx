@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import PatientRequestForm from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
 import PatientRequestPage from "@/features/Requests/PatientRequest/PatientRequestPage.tsx";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 
 export function AllPatientRequests() {
@@ -14,6 +15,9 @@ export function AllPatientRequests() {
                     <TabsTrigger value="patientPage"
                     >
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="patientGraph"
+                    >
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="patientForm">
@@ -21,6 +25,9 @@ export function AllPatientRequests() {
                     </TabsContent>
                     <TabsContent value="patientPage">
                         <PatientRequestPage/>
+                    </TabsContent>
+                    <TabsContent value="patientGraph">
+                        {Graphs("Nonemergent")}
                     </TabsContent>
                 </div>
             </Tabs>
