@@ -17,7 +17,32 @@ router.get("/", async function (req: Request, res: Response) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
+router.get("/priority", async function (req: Request, res: Response) {
+  try {
+    const requests = await client.deviceRequest.findMany({
+      orderBy: { priority: "asc" },
+    });
+    const priorities = requests.map((request) => request.priority);
+    console.log(priorities);
+    res.status(200).json(priorities); // Send priorities data as JSON
+  } catch (error) {
+    console.error("Error fetching sanitation priorities data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.get("/location", async function (req: Request, res: Response) {
+  try {
+    const requests = await client.deviceRequest.findMany({
+      orderBy: { priority: "asc" },
+    });
+    const locations = requests.map((request) => request.building);
+    console.log(locations);
+    res.status(200).json(locations); // Send priorities data as JSON
+  } catch (error) {
+    console.error("Error fetching sanitation priorities data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 router.post("/", async function (req: Request, res: Response) {
   console.log("A user entered a med device request");
   const {

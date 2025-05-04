@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.t
 import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
 import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
 import InlineTranslator from '@/features/Requests/TranslateForm/InlineTranslator.tsx';
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 function TranslateRequestTabs() {
     return (
@@ -15,6 +16,9 @@ function TranslateRequestTabs() {
                     <TabsTrigger value="translateRequestTable">
                         View All Requests
                     </TabsTrigger>
+                    <TabsTrigger value="translateRequestGraph">
+                        View Graphs
+                    </TabsTrigger>
                     <TabsTrigger value='inlineTranslator'>
                         Quick Translator
                     </TabsTrigger>
@@ -25,6 +29,9 @@ function TranslateRequestTabs() {
                     </TabsContent>
                     <TabsContent value="translateRequestTable">
                         <TranslateRequestPage />
+                    </TabsContent>
+                    <TabsContent value="translateRequestGraph">
+                        <Graphs requestType="Translate"/>
                     </TabsContent>
                     <TabsContent value='inlineTranslator'>
                         <InlineTranslator />

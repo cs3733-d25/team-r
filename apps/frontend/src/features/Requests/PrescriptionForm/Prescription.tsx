@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import {PrescriptionForm} from "./PrescriptionForm";
 import {PrescriptionPage} from "./PrescriptionPage";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 export function Prescription() {
     return(
@@ -14,6 +15,9 @@ export function Prescription() {
                     <TabsTrigger value="prescriptionPage"
                                  >
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="prescriptionGraphs"
+                    >
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="prescriptionForm">
@@ -21,6 +25,9 @@ export function Prescription() {
                     </TabsContent>
                     <TabsContent value="prescriptionPage">
                         <PrescriptionPage />
+                    </TabsContent>
+                    <TabsContent value="prescriptionGraphs">
+                        <Graphs requestType="Prescription"/>
                     </TabsContent>
             </div>
             </Tabs>
