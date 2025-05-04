@@ -31,9 +31,9 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
     const [searchTerm, setSearchTerm] = useState('');
 
     const announcementCategories = [
-        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority === 'high' },
-        { name: 'General', description: 'Regular hospital updates and information', tab: 'general', filter: (announcement: Announcement) => announcement.priority === 'medium' },
-        { name: 'Bulletin', description: 'Non-critical hospital information and updates', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority === 'low' },
+        { name: 'Urgent', description: 'Critical hospital announcements that require immediate attention', tab: 'urgent', filter: (announcement: Announcement) => announcement.priority.toLowerCase() === 'high' },
+        { name: 'General', description: 'Regular hospital updates and information', tab: 'general', filter: (announcement: Announcement) => announcement.priority.toLowerCase() === 'medium' },
+        { name: 'Bulletin', description: 'Non-critical hospital information and updates', tab: 'bulletin', filter: (announcement: Announcement) => announcement.priority.toLowerCase() === 'low' },
     ];
 
     useEffect(() => {
@@ -119,7 +119,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                     </h1>
 
                     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                        <TabsList className="mb-0 border-b border-gray-200 shadow-none">
+                        <TabsList className="mb-0 border-l border-gray-300 shadow-none">
                             <TabsTrigger value="overview">Overview</TabsTrigger>
                             <TabsTrigger value="all" id={TOUR_STEPS_IDS_ANNS.ALL}>All Announcements</TabsTrigger>
                             {announcementCategories.map((category) => (
