@@ -18,6 +18,25 @@ router.get("/", async function (req: Request, res: Response) {
   }
 });
 
+// // get announcement by ID
+// router.get("/:id", async function (req: Request, res: Response) {
+//   const { id } = req.params;
+//   try {
+//     const announcement = await client.announcement.findUnique({
+//       where: { id },
+//     });
+//
+//     if (!announcement) {
+//       return res.status(404).json({ error: "Announcement not found" });
+//     }
+//
+//     res.status(200).json(announcement);
+//   } catch (error) {
+//     console.error("Error fetching announcement:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 // create new announcement
 router.post("/", async function (req: Request, res: Response) {
   console.log("Creating a new announcement");
@@ -49,5 +68,55 @@ router.post("/", async function (req: Request, res: Response) {
     }
   }
 });
+
+// // update an announcement
+// router.put("/:id", async function (req: Request, res: Response) {
+//   const { id } = req.params;
+//   const { title, content, priority, expirationDate } = req.body;
+//
+//   try {
+//     const updatedAnnouncement = await client.announcement.update({
+//       where: { id },
+//       data: {
+//         title,
+//         content,
+//         priority,
+//         expirationDate,
+//       },
+//     });
+//     res.status(200).json({
+//       message: "Announcement updated successfully",
+//       announcement: updatedAnnouncement,
+//     });
+//   } catch (error) {
+//     if (error instanceof Prisma.PrismaClientKnownRequestError) {
+//       if (error.code === "P2025") {
+//         return res.status(404).json({ error: "Announcement not found" });
+//       }
+//     }
+//     console.error("Error updating announcement:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// delete an announcement
+// router.delete("/:id", async function (req: Request, res: Response) {
+//   const { id } = req.params;
+//
+//   try {
+//     await client.announcement.delete({
+//       where: { id },
+//     });
+//     res.status(200).json({ message: "Announcement deleted successfully" });
+//   } catch (error) {
+//     if (error instanceof Prisma.PrismaClientKnownRequestError) {
+//       if (error.code === "P2025") {
+//         return res.status(404).json({ error: "Announcement not found" });
+//       }
+//     }
+//     console.error("Error deleting announcement:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 export default router;
