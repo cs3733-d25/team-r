@@ -9,7 +9,7 @@ interface Announcement {
     content: string;
     author: string;
     priority: string;
-    type: string;
+    type: 'urgent' | 'general' | 'bulletin';
     expirationDate?: string;
     timestamp: string;
 }
@@ -30,7 +30,6 @@ export default function AnnouncementEdit() {
         title: string;
         content: string;
         author: string;
-        priority: string;
         type: string;
         expirationDate?: string;
     }) => {
