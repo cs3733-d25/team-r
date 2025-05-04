@@ -21,14 +21,12 @@ router.get("/priority", async function (req: Request, res: Response) {
   try {
     const requests = await client.sanitationRequest.findMany({
       orderBy: { priority: "asc" },
-      include:{
-        priority:true
-      }
     });
-    console.log(requests);
-    res.status(200).json(requests); // Send sanitation data as JSON
+    const priorities = requests.map((request) => request.priority);
+    console.log(priorities);
+    res.status(200).json(priorities); // Send priorities data as JSON
   } catch (error) {
-    console.error("Error fetching sanitation request data:", error);
+    console.error("Error fetching sanitation priorities data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
