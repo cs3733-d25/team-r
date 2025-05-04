@@ -120,17 +120,17 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
 
                     <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                         <TabsList className="mb-0 border-l border-gray-300 shadow-none">
-                            <TabsTrigger value="overview">Overview</TabsTrigger>
-                            <TabsTrigger value="all" id={TOUR_STEPS_IDS_ANNS.ALL}>All Announcements</TabsTrigger>
+                            <TabsTrigger value="overview" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Overview</TabsTrigger>
+                            <TabsTrigger value="all" id={TOUR_STEPS_IDS_ANNS.ALL} className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">All Announcements</TabsTrigger>
                             {announcementCategories.map((category) => (
-                                <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()} id={TOUR_STEPS_IDS_ANNS.TYPES}>
+                                <TabsTrigger key={category.name.toLowerCase()} value={category.name.toLowerCase()} className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300" id={TOUR_STEPS_IDS_ANNS.TYPES}>
                                     {category.name}
                                 </TabsTrigger>
                             ))}
                         </TabsList>
 
                         {/* Overview Tab Content */}
-                        <TabsContent value="overview" className="space-y-6">
+                        <TabsContent value="overview" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {announcementCategories.map((category, index) => (
                                     <Card key={category.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">
@@ -154,7 +154,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                         </TabsContent>
 
                         {/* All Announcements Tab */}
-                        <TabsContent value="all">
+                        <TabsContent className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300" value="all">
                             {filteredAnnouncements.length === 0 ? (
                                 <p className="text-center py-8 text-gray-500">No announcements found.</p>
                             ) : (
@@ -174,7 +174,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
 
                         {/* Priority-specific Tabs */}
                         {announcementCategories.map((category) => (
-                            <TabsContent key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
+                            <TabsContent className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300" key={category.name.toLowerCase()} value={category.name.toLowerCase()}>
                                 {filteredAnnouncements.filter(category.filter).length === 0 ? (
                                     <p className="text-center py-8 text-gray-500">No {category.name.toLowerCase()} announcements found.</p>
                                 ) : (
