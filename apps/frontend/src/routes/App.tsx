@@ -26,10 +26,9 @@ import FileTranslator from "@/features/Requests/TranslateForm/FileTranslator.tsx
 import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
 import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
 import { useTheme } from '../hooks/useTheme';
-import Footer from "../components/Footer";
-import AnnouncementPage from '@/features/Announcements/AnnouncementPage.tsx';
-import AnnouncementForm from "@/features/Announcements/AnnouncementForm.tsx";
-
+import Footer from '../components/Footer';
+import {AnnouncementPage} from '@/features/Announcements/AnnouncementPage.tsx';
+import CreateAnnouncement from '@/features/Announcements/CreateAnnouncement.tsx';
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
