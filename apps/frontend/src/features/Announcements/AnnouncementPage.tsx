@@ -175,7 +175,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                                 >
                                                     View {cat.name} Announcements
                                                 </Button>
-                                                <Button onClick={() => navigate('/announcementform')} id={TOUR_STEPS_IDS_ANNS.CREATE}>
+                                                <Button onClick={() => navigate(`/announcementform?type=${cat.tab}`)} id={TOUR_STEPS_IDS_ANNS.CREATE}>
                                                     Create New Announcement
                                                 </Button>
                                             </div>

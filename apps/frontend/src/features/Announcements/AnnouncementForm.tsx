@@ -18,6 +18,7 @@ export interface AnnouncementFormProps {
         expirationDate?: string;
         timestamp: string;
     };
+    defaultType?: 'urgent' | 'general' | 'bulletin';
     onSubmit: (data: {
         title: string;
         content: string;
@@ -27,7 +28,7 @@ export interface AnnouncementFormProps {
     }) => Promise<void>;
 }
 
-export default function AnnouncementForm({ initialData, onSubmit }: AnnouncementFormProps) {
+export default function AnnouncementForm({ initialData, defaultType, onSubmit }: AnnouncementFormProps) {
     const navigate = useNavigate();
     const {user} = useAuth0();
     const [userName, setUserName] = useState('');
@@ -35,7 +36,7 @@ export default function AnnouncementForm({ initialData, onSubmit }: Announcement
         title: initialData?.title || '',
         content: initialData?.content || '',
         author: initialData?.author || '',
-        type: initialData?.type || 'general',
+        type: initialData?.type || defaultType || 'general',
         expirationDate: initialData?.expirationDate || '',
     });
 
@@ -73,7 +74,7 @@ export default function AnnouncementForm({ initialData, onSubmit }: Announcement
         <Tabs
             defaultValue={formData.type}
             value={formData.type}
-            onValueChange={handleTypeChange}
+            onValueChange={(value) => handleTypeChange(value)}
             className="mb-6"
         >
             <TabsList className="grid grid-cols-3">
