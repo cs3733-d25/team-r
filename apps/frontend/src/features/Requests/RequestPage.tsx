@@ -72,24 +72,24 @@ export function RequestPage() {
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="mb-0 border-l border-gray-300 shadow-none" id={TOUR_STEPS_IDS_SERVICE_REQS.FILTER_REQUEST}>
-                        <TabsTrigger value="overview">Overview</TabsTrigger>
-                        <TabsTrigger value="all">All Requests</TabsTrigger>
+                        <TabsTrigger value="overview" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>Overview</TabsTrigger>
+                        <TabsTrigger value="all" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>All Requests</TabsTrigger>
                         {requestTypes.map((type) => (
-                            <TabsTrigger key={type.tab} value={type.tab}>
+                            <TabsTrigger key={type.tab} value={type.tab} className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                                 {type.name}
                             </TabsTrigger>
                         ))}
                     </TabsList>
 
                     {/* Overview Tab Content - Default View */}
-                    <TabsContent value="overview" className="space-y-6">
+                    <TabsContent value="overview" className="space-y-6 dark:bg-background dark:border-gray-600">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id={TOUR_STEPS_IDS_SERVICE_REQS.DASHBOARD}>
                             {requestTypes.map((type, index) => (
                                 <Card key={type.name} className="rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-primary">
                                     <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                                         <CardTitle>{type.name} Requests</CardTitle>
                                     </CardHeader>
-                                    <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                    <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col dark:border-gray-600 dark:bg-background">
                                         <p className="text-muted-foreground mb-4 min-h-[3rem]">{type.description}</p>
                                         <div className="flex flex-col space-y-2 mt-auto">
                                             <Button variant="secondary" onClick={() => setActiveTab(type.tab)}>
@@ -109,27 +109,27 @@ export function RequestPage() {
                     </TabsContent>
 
                     {/* All Requests Table */}
-                    <TabsContent value="all">
+                    <TabsContent value="all" className="dark:bg-background dark:border-gray-600">
                         <AllRequestsTable />
                     </TabsContent>
 
                     {/* Individual Service Tabs */}
-                    <TabsContent value="medical-device">
+                    <TabsContent value="medical-device" className="dark:bg-background dark:border-gray-600">
                         <DeviceReqPage />
                     </TabsContent>
-                    <TabsContent value="prescription">
+                    <TabsContent value="prescription" className="dark:bg-background dark:border-gray-600">
                         <PrescriptionPage />
                     </TabsContent>
-                    <TabsContent value="patient">
+                    <TabsContent value="patient" className="dark:bg-background dark:border-gray-600">
                         <PatientRequestPage />
                     </TabsContent>
-                    <TabsContent value="transport">
+                    <TabsContent value="transport" className="dark:bg-background dark:border-gray-600">
                         <PatientTransportPage />
                     </TabsContent>
-                    <TabsContent value="sanitation">
+                    <TabsContent value="sanitation" className="dark:bg-background dark:border-gray-600">
                         <SanitationRequestPage />
                     </TabsContent>
-                    <TabsContent value="translator">
+                    <TabsContent value="translator" className="dark:bg-background dark:border-gray-600">
                         <TranslateRequestPage />
                     </TabsContent>
                 </Tabs>
