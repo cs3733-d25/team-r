@@ -48,8 +48,8 @@ export async function findPath(
     const dfs = new DFS(graph);
     return dfs.findPath(startingPoint, endingPoint);
   }
-  if (algorithm === "dijkstra") {
-    console.log("in findPath dijkstra: ", startingPoint, endingPoint);
+  if (algorithm === "aStar") {
+    console.log("in findPath aStar: ", startingPoint, endingPoint);
 
     return new AStar(graph).findPath(startingPoint, endingPoint);
   }
