@@ -98,23 +98,23 @@ export default function AnnouncementForm({
                 className="mb-6"
             >
                 <TabsList className="grid grid-cols-3">
-                    <TabsTrigger value="urgent">Urgent Announcements</TabsTrigger>
-                    <TabsTrigger value="general">General Announcements</TabsTrigger>
-                    <TabsTrigger value="bulletin">Bulletin Announcements</TabsTrigger>
+                    <TabsTrigger value="urgent" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Urgent Announcements</TabsTrigger>
+                    <TabsTrigger value="general" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">General Announcements</TabsTrigger>
+                    <TabsTrigger value="bulletin" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Bulletin Announcements</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="urgent" className="border-2 border-red-500 p-4 rounded-b-lg">
+                <TabsContent value="urgent" className="border-2 border-red-500 p-4 rounded-b-lg dark:border-gray-600 dark:bg-background">
                     <div className="bg-red-100 p-3 mb-4 rounded-md text-red-800">
                         <strong>Important:</strong> Urgent announcements are critical.
                     </div>
                     {renderForm(true)}
                 </TabsContent>
 
-                <TabsContent value="general">{renderForm()}</TabsContent>
+                <TabsContent value="general" className={"dark:border-gray-600 dark:bg-background"}>{renderForm()}</TabsContent>
 
                 <TabsContent
                     value="bulletin"
-                    className="border-2 border-blue-300 p-4 rounded-b-lg"
+                    className="border-2 border-blue-300 p-4 rounded-b-lg dark:border-gray-600 dark:bg-background"
                 >
                     <div className="bg-blue-100 p-3 mb-4 rounded-md text-blue-800">
                         <strong>Note:</strong> Bulletin items are for general info.
@@ -127,7 +127,7 @@ export default function AnnouncementForm({
 
     function renderForm(isUrgent = false, isBulletin = false) {
         return (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 dark:bg-background">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Title */}
                     <div className="md:col-span-2">
