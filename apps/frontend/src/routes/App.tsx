@@ -31,6 +31,7 @@ import { useTheme } from '../hooks/useTheme';
 import Footer from '../components/Footer';
 import { AnnouncementPage } from '@/features/Announcements/AnnouncementPage.tsx';
 import AnnouncementForm from '@/features/Announcements/AnnouncementForm.tsx';
+import PageNotFound from '@/features/PageNotFound.tsx';
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -89,11 +90,7 @@ function App() {
     const router = createBrowserRouter([
         {
             path: '/',
-            errorElement: (
-                <div className={'bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover'}>
-                    <p className={'font-trade'}>Page not found</p>
-                </div>
-            ),
+            errorElement: <PageNotFound />,
             children: [
                 { index: true, element: <HomeMain userType={userType} /> },
                 { path: 'home', element: <HomeMain userType={userType} status={'logged-in'} /> },
