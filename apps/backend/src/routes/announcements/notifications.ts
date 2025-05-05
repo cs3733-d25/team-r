@@ -23,7 +23,7 @@ router.post("/user", async function (req: Request, res: Response): Promise<void>
     // get notifs that haven't expired
     const notifications = await client.notification.findMany({
       where: {
-        userId: user.id,
+        userId: user.employee.id,
         OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
       },
       orderBy: { createdAt: "desc" },
