@@ -16,9 +16,9 @@ echo "POSTGRES_URL: ${POSTGRES_URL}"
 yarn workspace database push
 
 # Build the frontend
-echo "Building frontend..."
-cd /app/apps/frontend
-yarn build
+echo "NOT Building frontend..."
+#cd /app/apps/frontend
+#yarn build
 
 # Start the backend server in the background
 echo "Starting backend..."
