@@ -1,6 +1,6 @@
 import Directions from '@/features/MapView/Directions.tsx';
 import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
