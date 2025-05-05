@@ -27,11 +27,16 @@ export function Notifications() {
     const [loading, setLoading] = useState(true);
 
     const fetchNotifications = async () => {
-        if (!user?.email) return;
+        if (!user?.email) {
+            console.log("No user email available");
+            return;
+        }
 
         try {
             setLoading(true);
+            console.log("Fetching notifications for:", user.email);
             const response = await axios.post('/api/notifications/user', { email: user.email });
+            console.log("Notifications response:", response.data);
             setNotifications(response.data);
         } catch (error) {
             console.error('Failed to fetch notifications', error);
@@ -67,7 +72,7 @@ export function Notifications() {
                 <div className="inline-flex items-center justify-center rounded-md text-sm font-medium text-white bg-transparent hover:bg-primary-foreground/10 h-10 w-10 relative cursor-pointer">
                     <Bell className="h-4 w-4" />
                     {unreadCount > 0 && (
-                        <Badge className="absolute -top-1 -right-1 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center">
+                        <Badge className="absolute -top-1 -right-1 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center text-xs">
                             {unreadCount}
                         </Badge>
                     )}
