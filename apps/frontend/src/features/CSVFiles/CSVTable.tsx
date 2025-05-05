@@ -7,7 +7,7 @@ function CSVTablePage() {
 
     function swapRows(row: number) {
         if (row % 2 === 0) {
-            return 'white';
+            return ''; //if put white here, breaks view in dark mode
         } else {
             return 'background';
         }
