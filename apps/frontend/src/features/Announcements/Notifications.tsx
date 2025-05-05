@@ -69,7 +69,7 @@ export function Notifications() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <div className="inline-flex items-center justify-center rounded-md text-sm font-medium text-white bg-transparent hover:bg-primary-foreground/10 h-10 w-10 relative cursor-pointer">
+                <div className="inline-flex items-center justify-center rounded-md text-sm font-medium text-white bg-transparent hover:bg-blue-100/30 h-10 w-10 relative cursor-pointer">
                     <Bell className="h-4 w-4" />
                     {unreadCount > 0 && (
                         <Badge className="absolute -top-1 -right-1 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center text-xs">
