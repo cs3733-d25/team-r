@@ -475,7 +475,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
      * @param map - the map to draw on
      * @returns {void}
      */
-    const drawPath = (currentFloorPath: [number, number][], map: L.Map) => {
+    const drawPath = (currentFloorPath: [number, number][], map: L.Map): void => {
         // Remove existing route if present
         if (routeLayer.current) {
             routeLayer.current.remove();
