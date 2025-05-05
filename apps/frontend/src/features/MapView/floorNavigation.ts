@@ -1,4 +1,4 @@
-import L, { LayerGroup } from 'leaflet';
+// import L, { LayerGroup } from 'leaflet';
 
 export function goToFloor(
     floor: number,
