@@ -71,7 +71,10 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
     };
 
     return (
-        <Tabs
+        <>
+            <h1 className="text-3xl font-bold mb-6 text-center pt-12">Create an Announcement</h1>
+
+            <Tabs
             defaultValue={formData.type}
             value={formData.type}
             onValueChange={(value) => handleTypeChange(value)}
@@ -87,6 +90,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
             <TabsContent value="general" className={"dark:border-gray-600 dark:bg-background"}>{renderForm()}</TabsContent>
             <TabsContent value="bulletin" className={"dark:border-gray-600 dark:bg-background"}>{renderForm(false, true)}</TabsContent>
         </Tabs>
+        </>
     );
 
     function renderForm(isUrgent = false, isBulletin = false) {

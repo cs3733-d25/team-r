@@ -7,6 +7,8 @@ import {useNavigate, useSearchParams} from 'react-router-dom';
 import axios from 'axios';
 import {TourAlertDialog, TourStep, useTour} from "@/components/tour.tsx";
 import {TOUR_STEPS_IDS_ANNS} from "@/lib/tour-constants.ts";
+import {Calendar} from "@/components/ui/calendar.tsx";
+import Dashboard from "@/features/calendar/calendarDashboard.tsx";
 
 interface Announcement {
     id: string;
@@ -129,6 +131,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
             return () => clearTimeout(timer);
         }
     }, [setSteps]);
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 
     return (
         <div className="min-h-screen bg-background">
@@ -152,6 +155,9 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                     {cat.name}
                                 </TabsTrigger>
                             ))}
+                            <TabsTrigger value="calendar" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">
+                                Calendar
+                            </TabsTrigger>
                         </TabsList>
 
                         {/* Overview */}
@@ -181,6 +187,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                                     Create New Announcement
                                                 </Button>
                                             </div>
+
                                         </CardContent>
                                     </Card>
                                 ))}
@@ -208,7 +215,6 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                             )}
                         </TabsContent>
 
-
                         {/* Type-specific */}
                         {announcementCategories.map((cat) => (
                             <TabsContent key={cat.tab} value={cat.tab} className="dark:bg-background dark:border-grey-600">
@@ -231,6 +237,48 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                 )}
                             </TabsContent>
                         ))}
+                        <TabsContent value="calendar" className="dark:bg-background dark:border-grey-600">
+                            <div className="flex flex-col lg:flex-row gap-6 justify-center">
+                                {/*/!* Left Side: Matching Announcements *!/*/}
+                                {/*<div className="flex-1">*/}
+                                {/*    <h2 className="text-lg font-semibold mb-4 text-center lg:text-left">*/}
+                                {/*        Announcements for {selectedDate ? formatDate(selectedDate.toISOString()) : "Selected Date"}*/}
+                                {/*    </h2>*/}
+                                {/*    {selectedDate ? (*/}
+                                {/*        filtered.filter(a => {*/}
+                                {/*            return a.expirationDate &&*/}
+                                {/*                new Date(a.expirationDate).toDateString() === selectedDate.toDateString();*/}
+                                {/*        }).length > 0 ? (*/}
+                                {/*            <div className="grid gap-4">*/}
+                                {/*                {filtered.filter(a => {*/}
+                                {/*                    return a.expirationDate &&*/}
+                                {/*                        new Date(a.expirationDate).toDateString() === selectedDate.toDateString();*/}
+                                {/*                }).map(ann => (*/}
+                                {/*                    <AnnouncementCard*/}
+                                {/*                        key={ann.id}*/}
+                                {/*                        announcement={ann}*/}
+                                {/*                        onDelete={deleteAnnouncement}*/}
+                                {/*                        badgeColor={typeBadgeColor}*/}
+                                {/*                        formatDate={formatDate}*/}
+                                {/*                    />*/}
+                                {/*                ))}*/}
+                                {/*            </div>*/}
+                                {/*        ) : (*/}
+                                {/*            <p className="text-center text-gray-500">No announcements for this date.</p>*/}
+                                {/*        )*/}
+                                {/*    ) : (*/}
+                                {/*        <p className="text-center text-gray-500">Select a date to view announcements.</p>*/}
+                                {/*    )}*/}
+                                {/*</div>*/}
+
+                                {/*/!* Right Side: Calendar *!/*/}
+                                {/*<div className="flex justify-center">*/}
+                                {/*    <Calendar selected={selectedDate} onSelect={setSelectedDate} />*/}
+                                {/*</div>*/}
+                                <Dashboard></Dashboard>
+                            </div>
+                        </TabsContent>
+
                     </Tabs>
 
                     <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />
