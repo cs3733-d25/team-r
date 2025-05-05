@@ -645,6 +645,17 @@ const InternalMap: React.FC<InternalMapProps> = ({
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
             L.imageOverlay(womens, boundsWomens).addTo(floorLayerWomens);
 
+            // layer controls
+            L.control.layers({
+                '20 Patriot Place - Floor 1': floorLayer20_1,
+                '22 Patriot Place - Floor 1': floorLayer22_1,
+                '22 Patriot Place - Floor 3': floorLayer22_3,
+                '22 Patriot Place - Floor 4': floorLayer22_4,
+                'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
+                'Faulkner Hospital': floorLayerFaulkner,
+                'Main Campus Hospital': floorLayerWomens,
+            }, {}).addTo(map);
+
             // add a default layer
             if (location.building.includes('20')) {
                 floorLayer20_1.addTo(map);
