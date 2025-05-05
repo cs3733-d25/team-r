@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button.tsx';
 
 export function InternalMapControls() {
     return (
-        <div className="absolute bottom-16 right-16 bg-white rounded-lg shadow-lg p-4 w-60 max-h-[90%] overflow-y-auto z-10">
+        <div className="absolute bottom-16 right-16 bg-white dark:bg-background rounded-lg shadow-lg p-4 w-60 max-h-[90%] overflow-y-auto z-10">
             <div className="flex justify-center text-sm text-gray-600 ">
                 <Label className="text-xl text-black">Steps</Label>
             </div>

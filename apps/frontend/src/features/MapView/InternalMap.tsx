@@ -943,7 +943,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
                             </Card>
                         </AccordionItem>
                     </Accordion>
-                    <ToggleGroup type={'multiple'} className={'bg-white shadow-md'}>
+                    <ToggleGroup type={'multiple'} className={'bg-white dark:bg-background shadow-md'}>
                         <div className={'flex flex-col p-2 space-y-2'}>
                             <Label className="text-center w-full font-medium">Filter Nodes</Label>
                             <div className={'flex space-x-2 justify-center'}>
