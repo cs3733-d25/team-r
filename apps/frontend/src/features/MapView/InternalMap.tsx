@@ -61,10 +61,7 @@ declare module 'leaflet' {
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     pathByFloor?: Record<number, [number, number][]>;
-    // currentFloor?: number; // don't need?
-    // this location is dynamic, but does not have to be updated (onLocationChange is optional)
     location: { building: string; floor: number };
-    // floor?: number;
     onLocationChange?: (building: string, floor: number) => void;
     onDataChange?: (name: string, value: string | number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID: string) => Promise<void>; // for actions that are triggered in the internal map using data from the internal map
@@ -79,6 +76,7 @@ interface InternalMapProps {
     onNodeEdit?: (x: number, y: number, nodeID: string) => void;
     onToggle?: (bool: boolean) => void;
     selectedEdgeNodes?: string[];
+    showLayerControl?: boolean; // controls leaflet layer control box visibility
 }
 
 // persistent leaflet elements
