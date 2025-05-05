@@ -156,14 +156,14 @@ export function NavbarMGH(props: NavBarProps) {
                                         Hi, {props.userName}!
                                     </Label>
                                     <div className="border-t"></div>
-                                    <Button
-                                        variant={'ghostPopover'}
-                                        onClick={() =>
-                                            alert("This button doesn't work yet! - Akaash")
-                                        }
-                                    >
-                                        Profile
-                                    </Button>
+                                    {/*<Button*/}
+                                    {/*    variant={'ghostPopover'}*/}
+                                    {/*    onClick={() =>*/}
+                                    {/*        alert("This button doesn't work yet!")*/}
+                                    {/*    }*/}
+                                    {/*>*/}
+                                    {/*    Profile*/}
+                                    {/*</Button>*/}
 
                                     <Button
                                         variant={'ghostPopover'}
