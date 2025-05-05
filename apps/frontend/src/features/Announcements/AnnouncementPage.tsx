@@ -7,6 +7,8 @@ import {useNavigate, useSearchParams} from 'react-router-dom';
 import axios from 'axios';
 import {TourAlertDialog, TourStep, useTour} from "@/components/tour.tsx";
 import {TOUR_STEPS_IDS_ANNS} from "@/lib/tour-constants.ts";
+import {Calendar} from "@/components/ui/calendar.tsx";
+import Dashboard from "@/features/calendar/calendarDashboard.tsx";
 
 interface Announcement {
     id: string;
@@ -129,6 +131,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
             return () => clearTimeout(timer);
         }
     }, [setSteps]);
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>();
 
     return (
         <div className="min-h-screen bg-background">
@@ -143,19 +146,23 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
 
                     <Tabs value={activeTab} onValueChange={(value: string) => setActiveTab(value as 'overview' | 'all' | 'urgent' | 'general' | 'bulletin')} className="w-full">
                         <TabsList className="mb-0 border-l border-gray-300 shadow-none">
-                            <TabsTrigger value="overview">Overview</TabsTrigger>
-                            <TabsTrigger value="all" id={TOUR_STEPS_IDS_ANNS.ALL}>
+                            <TabsTrigger value="overview" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Overview</TabsTrigger>
+                            <TabsTrigger value="all" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300" id={TOUR_STEPS_IDS_ANNS.ALL}>
                                 All Announcements
                             </TabsTrigger>
                             {announcementCategories.map((cat) => (
-                                <TabsTrigger key={cat.tab} value={cat.tab} id={TOUR_STEPS_IDS_ANNS.TYPES}>
+                                <TabsTrigger key={cat.tab} value={cat.tab} id={TOUR_STEPS_IDS_ANNS.TYPES}  className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">
                                     {cat.name}
                                 </TabsTrigger>
                             ))}
+                            <TabsTrigger value="calendar" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">
+                                Calendar
+                            </TabsTrigger>
                         </TabsList>
 
                         {/* Overview */}
-                        <TabsContent value="overview" className="space-y-6">
+                        <TabsContent value="overview" className="space-y-6 dark:border-grey-600 dark:bg-background">
+
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {announcementCategories.map((cat) => (
                                     <Card
@@ -165,7 +172,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                         <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                                             <CardTitle>{cat.name} Announcements</CardTitle>
                                         </CardHeader>
-                                        <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                        <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col dark:border-gray-600 dark:bg-background">
                                             <p className="text-muted-foreground mb-4 min-h-[3rem]">
                                                 {cat.description}
                                             </p>
@@ -180,6 +187,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                                     Create New Announcement
                                                 </Button>
                                             </div>
+
                                         </CardContent>
                                     </Card>
                                 ))}
@@ -187,7 +195,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                         </TabsContent>
 
                         {/* All */}
-                        <TabsContent value="all">
+                        <TabsContent value="all" className="dark:bg-background dark:border-grey-600">
                             {filtered.length === 0 ? (
                                 <p className="text-center py-8 text-gray-500">
                                     No announcements found.
@@ -209,7 +217,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
 
                         {/* Type-specific */}
                         {announcementCategories.map((cat) => (
-                            <TabsContent key={cat.tab} value={cat.tab}>
+                            <TabsContent key={cat.tab} value={cat.tab} className="dark:bg-background dark:border-grey-600">
                                 {filtered.filter(cat.filter).length === 0 ? (
                                     <p className="text-center py-8 text-gray-500">
                                         No {cat.name.toLowerCase()} announcements found.
@@ -229,6 +237,48 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                 )}
                             </TabsContent>
                         ))}
+                        <TabsContent value="calendar" className="dark:bg-background dark:border-grey-600">
+                            <div className="flex flex-col lg:flex-row gap-6 justify-center">
+                                {/*/!* Left Side: Matching Announcements *!/*/}
+                                {/*<div className="flex-1">*/}
+                                {/*    <h2 className="text-lg font-semibold mb-4 text-center lg:text-left">*/}
+                                {/*        Announcements for {selectedDate ? formatDate(selectedDate.toISOString()) : "Selected Date"}*/}
+                                {/*    </h2>*/}
+                                {/*    {selectedDate ? (*/}
+                                {/*        filtered.filter(a => {*/}
+                                {/*            return a.expirationDate &&*/}
+                                {/*                new Date(a.expirationDate).toDateString() === selectedDate.toDateString();*/}
+                                {/*        }).length > 0 ? (*/}
+                                {/*            <div className="grid gap-4">*/}
+                                {/*                {filtered.filter(a => {*/}
+                                {/*                    return a.expirationDate &&*/}
+                                {/*                        new Date(a.expirationDate).toDateString() === selectedDate.toDateString();*/}
+                                {/*                }).map(ann => (*/}
+                                {/*                    <AnnouncementCard*/}
+                                {/*                        key={ann.id}*/}
+                                {/*                        announcement={ann}*/}
+                                {/*                        onDelete={deleteAnnouncement}*/}
+                                {/*                        badgeColor={typeBadgeColor}*/}
+                                {/*                        formatDate={formatDate}*/}
+                                {/*                    />*/}
+                                {/*                ))}*/}
+                                {/*            </div>*/}
+                                {/*        ) : (*/}
+                                {/*            <p className="text-center text-gray-500">No announcements for this date.</p>*/}
+                                {/*        )*/}
+                                {/*    ) : (*/}
+                                {/*        <p className="text-center text-gray-500">Select a date to view announcements.</p>*/}
+                                {/*    )}*/}
+                                {/*</div>*/}
+
+                                {/*/!* Right Side: Calendar *!/*/}
+                                {/*<div className="flex justify-center">*/}
+                                {/*    <Calendar selected={selectedDate} onSelect={setSelectedDate} />*/}
+                                {/*</div>*/}
+                                <Dashboard></Dashboard>
+                            </div>
+                        </TabsContent>
+
                     </Tabs>
 
                     <TourAlertDialog isOpen={openTour} setIsOpen={setOpenTour} />

@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import client from "../bin/prisma-client.ts";
+import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
@@ -55,6 +55,25 @@ router.post("/", async function (req: Request, res: Response) {
           : null,
       },
     });
+
+    // create notifications for all employees
+    const employees = await client.employee.findMany();
+
+    // create notifications in bulk
+    await client.notification.createMany({
+      data: employees.map((employee) => ({
+        userId: employee.id,
+        title: `New ${type} Announcement: ${title}`,
+        content:
+          content.substring(0, 100) + (content.length > 100 ? "..." : ""),
+        type: "announcement",
+        sourceId: newAnnouncement.id,
+        expiresAt: expirationDate
+          ? new Date(expirationDate).toISOString()
+          : null,
+      })),
+    });
+
     res.status(201).json({
       message: "Announcement created successfully",
       announcement: newAnnouncement,
@@ -122,4 +141,21 @@ router.delete(
   },
 );
 
+//get anouncements for certain day
+router.get("/:selectedDate", async function (req: Request, res: Response): Promise<void> {
+  const { selectedDate } = req.params;
+  try {
+    const announcement = await client.announcement.findMany({
+      where: { date: selectedDate },
+    });
+    if (!announcement) {
+      res.status(404).json({ error: "Announcement not found" });
+    }
+    console.log("here is anounce: ", announcement);
+    res.status(200).json(announcement);
+  } catch (error) {
+    console.error("Error fetching announcement:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 export default router;

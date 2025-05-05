@@ -19,4 +19,5 @@ export const API_ROUTES = {
     INLINETRANSLATOR: '/api/inline',
     UPLOADTRANSLATE: '/api/upload-translate',
     ANNOUNCEMENTS: '/api/announcements',
+    NOTIFICATIONS: '/api/notifications',
 };
