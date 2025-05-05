@@ -119,14 +119,14 @@ model Announcement {
 }
 
 model Notification {
-  id          String    @id @default(cuid())
-  userId      String
-  title       String
-  content     String    @db.Text
-  createdAt   DateTime  @default(now())
-  isRead      Boolean   @default(false)
-  type        String    // "announcement"
-  sourceId    String    // announcement id
-  expiresAt   DateTime?
-  employee    Employee  @relation(fields: [userId], references: [id])
+  id        String    @id @default(cuid())
+  userId    String
+  title     String
+  content   String    @db.Text
+  createdAt DateTime  @default(now())
+  isRead    Boolean   @default(false)
+  type      String // "announcement"
+  sourceId  String // announcement id
+  expiresAt DateTime?
+  employee  Employee  @relation(fields: [userId], references: [id])
 }

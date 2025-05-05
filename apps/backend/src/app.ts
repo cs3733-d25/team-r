@@ -17,7 +17,7 @@ import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
 import inlineTranslateRouter from "./routes/servicereqs/translationService.ts";
-import announcementRouter from "./routes/announcements.ts";
+import announcementRouter from "./routes/announcements/announcements.ts";
 import uploadTranslateRouter from "./routes/servicereqs/uploadTranslate.ts";
 
 import { API_ROUTES } from "common/src/constants";
