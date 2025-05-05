@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { useNavigate } from 'react-router-dom';
 import Disclaimer from '../components/Disclaimer';
 import { Label } from '@/components/ui/label.tsx';
-import { GeoAlt, GeoAltFill } from 'react-bootstrap-icons';
+import { GeoAltFill } from 'react-bootstrap-icons';
 
 interface HomeMainProps {
     status?: string;
@@ -44,8 +44,7 @@ export function HomeMain(props: HomeMainProps) {
                         </Label>
                         {(!props.userType || props.status != 'logged-in') && (
                             <Label className={'text-white mb-4 mx-10'}>
-                                Log in to locate a department using our pathfinding page so that we
-                                can help you navigate toward any service that you may need.
+                                Use our interactive map to find your way around the hospital.
                             </Label>
                         )}
                     </div>
