@@ -9,6 +9,7 @@ export default function CreateAnnouncement() {
     const [searchParams] = useSearchParams()
     const typeParam = searchParams.get('type') as 'urgent' | 'general' | 'bulletin' | null
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [formKey, setFormKey] = useState(0)
     const [announcement, setAnnouncement] = useState<{
         title: string;
         content: string;
@@ -29,16 +30,29 @@ export default function CreateAnnouncement() {
             const response = await axios.post('/api/announcements', data)
             setAnnouncement(response.data.announcement)
             setIsSubmitted(true)
+            setFormKey(prev => prev + 1) // reset form
         } catch (error) {
             console.error('Error creating announcement:', error)
         }
     }
 
-    if (isSubmitted) {
-        return (
-            <div className="px-8 py-6">
-                {/* Confirmation Card */}
-                <div className="mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+    const handleCreateAnother = () => {
+        setIsSubmitted(false)
+        setAnnouncement(null)
+    }
+
+    return (
+        <div className="px-8 py-6">
+            <h1 className="text-2xl font-bold mb-4 text-center">Create Announcement</h1>
+            <AnnouncementForm
+                key={formKey}
+                defaultType={typeParam ?? 'general'}
+                onSubmit={handleSubmit}
+            />
+
+            {/* Confirmation Card - only shown when isSubmitted is true */}
+            {isSubmitted && announcement && (
+                <div className="mt-8 mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
                     <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -63,21 +77,21 @@ export default function CreateAnnouncement() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
                                 <span className="font-semibold">Title:</span>{' '}
-                                {announcement?.title}
+                                {announcement.title}
                             </div>
                             <div>
                                 <span className="font-semibold">Type:</span>{' '}
-                                {announcement?.type}
+                                {announcement.type}
                             </div>
                             <div>
                                 <span className="font-semibold">Author:</span>{' '}
-                                {announcement?.author}
+                                {announcement.author}
                             </div>
                             <div>
                                 <span className="font-semibold">Date:</span>{' '}
-                                {announcement && new Date(announcement.date).toLocaleString()}
+                                {new Date(announcement.date).toLocaleString()}
                             </div>
-                            {announcement?.expirationDate && (
+                            {announcement.expirationDate && (
                                 <div>
                                     <span className="font-semibold">Expires:</span>{' '}
                                     {new Date(announcement.expirationDate).toLocaleString()}
@@ -86,20 +100,17 @@ export default function CreateAnnouncement() {
                         </div>
                         <div className="mt-4">
                             <span className="font-semibold">Content:</span>{' '}
-                            <p className="mt-1 p-2 bg-background/50 rounded">{announcement?.content}</p>
+                            <p className="mt-1 p-2 bg-background/50 rounded">{announcement.content}</p>
                         </div>
                         <div className="mt-3 text-sm text-secondary-foreground">
                             The announcement has been published and is now visible to all users.
                         </div>
                         <div className="flex gap-4 mt-4">
                             <Button
-                                onClick={() => {
-                                    setIsSubmitted(false)
-                                    setAnnouncement(null)
-                                }}
+                                onClick={handleCreateAnother}
                                 variant="outline"
                             >
-                                Create Another Announcement
+                                Dismiss
                             </Button>
                             <Button
                                 onClick={() => navigate('/announcements')}
@@ -110,14 +121,7 @@ export default function CreateAnnouncement() {
                         </div>
                     </div>
                 </div>
-            </div>
-        )
-    }
-
-    return(
-        <div className="px-8 py-6">
-            <h1 className="text-2xl font-bold mb-4 text-center">Create Announcement</h1>
-            <AnnouncementForm defaultType={typeParam ?? 'general'} onSubmit={handleSubmit} />
+            )}
         </div>
     )
 }
