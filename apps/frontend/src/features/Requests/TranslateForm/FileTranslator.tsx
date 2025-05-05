@@ -21,7 +21,7 @@ const LANGUAGES = [
     { code: 'de', name: 'German' },
     { code: 'ja', name: 'Japanese' },
     { code: 'ko', name: 'Korean' },
-    { code: 'pol', name: 'Polish' },
+    { code: 'pl', name: 'Polish' },
     { code: 'it', name: 'Italian' },
 ];
 

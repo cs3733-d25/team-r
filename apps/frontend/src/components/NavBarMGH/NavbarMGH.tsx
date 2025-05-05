@@ -62,10 +62,21 @@ export function NavbarMGH(props: NavBarProps) {
                         items={
                             props.userType === 'Admin'
                                 ? [
-                                    { label: 'Find a Location', href: '/external-map' },
+                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
+                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
+                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
+                                    { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
                                     { label: 'Edit Map', href: '/edit-map' },
                                 ]
-                                : [{ label: 'Find a Location', href: '/external-map' }]
+                                : [
+                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
+                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
+                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
+                                    { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
+                                ]
+
                         }
                     />
 
