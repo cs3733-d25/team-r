@@ -250,7 +250,7 @@ export function InlineTranslator() {
     }, [setSteps]);
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-4 max-w-2xl mx-auto">
+        <div className="bg-white dark:bg-background dark:border-grey-600 rounded-lg shadow-lg p-4 max-w-2xl mx-auto">
             <h2 className="text-xl font-bold mb-4" id={TOUR_STEPS_IDS_TRANS.CLICK_START}>Quick Translator</h2>
 
             <div className="flex space-x-2 mb-4" id={TOUR_STEPS_IDS_TRANS.CHOOSE}>
