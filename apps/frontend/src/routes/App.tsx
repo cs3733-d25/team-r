@@ -30,8 +30,9 @@ import SettingsPage from '@/features/ThemeSwitcher/SettingsPage.tsx';
 import { useTheme } from '../hooks/useTheme';
 import Footer from '../components/Footer';
 import { AnnouncementPage } from '@/features/Announcements/AnnouncementPage.tsx';
-import AnnouncementForm from '@/features/Announcements/AnnouncementForm.tsx';
+// import AnnouncementForm from '@/features/Announcements/AnnouncementForm.tsx';
 import PageNotFound from '@/features/PageNotFound.tsx';
+import CreateAnnouncement from "@/features/Announcements/CreateAnnouncement.tsx";
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
@@ -143,19 +144,7 @@ function App() {
                 { path: 'announcements', element: <TourProvider><AnnouncementPage /></TourProvider> },
                 {
                     path: 'announcementform',
-                    element: (
-                        <AnnouncementForm
-                            onSubmit={function (data: {
-                                title: string;
-                                content: string;
-                                author: string;
-                                type: 'urgent' | 'general' | 'bulletin';
-                                expirationDate?: string;
-                            }): Promise<void> {
-                                throw new Error('Function not implemented.');
-                            }}
-                        />
-                    ),
+                    element: <CreateAnnouncement />
                 },
                 { path: 'urgentannouncements', element: <AnnouncementPage defaultTab="urgent" /> },
                 {
