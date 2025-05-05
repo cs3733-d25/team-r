@@ -59,7 +59,7 @@ const MapController = ({ selectedLocation }: { selectedLocation: string }) => {
 
     return (
         displayInfo(
-            <div className="mt-4 pt-2">
+            <div className="mt-2 relative -top-14 right-0">
                 <Button
                     variant="unselected"
                     disabled={selectedLocation === ''}
