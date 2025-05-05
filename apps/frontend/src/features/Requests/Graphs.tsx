@@ -153,7 +153,7 @@ console.log("Priority Chart:",priorityChart);
 
 
     return(
-        <div className ="h-64 flex flex-col justify-center mt-125 mb-125 w-250 mx-auto">
+        <div className ="h-64 flex flex-col justify-center mt-70 mb-70 w-150 mx-auto">
             <h1 className={"text-center text-2xl"}>Priority</h1>
         <ChartContainer config={chartConfig}>
             <BarChart data={priorityPercent}>
