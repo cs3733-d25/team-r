@@ -22,10 +22,7 @@ router.post("/user", async function (req: Request, res: Response) {
     const notifications = await client.notification.findMany({
       where: {
         userId: user.id,
-        OR: [
-          { expiresAt: null },
-          { expiresAt: { gt: now } }
-        ]
+        OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
       },
       orderBy: { createdAt: "desc" },
     });
