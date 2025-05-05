@@ -61,14 +61,17 @@ router.post("/", async function (req: Request, res: Response) {
 
     // create notifications in bulk
     await client.notification.createMany({
-      data: employees.map(employee => ({
+      data: employees.map((employee) => ({
         userId: employee.id,
         title: `New ${type} Announcement: ${title}`,
-        content: content.substring(0, 100) + (content.length > 100 ? '...' : ''),
-        type: 'announcement',
+        content:
+          content.substring(0, 100) + (content.length > 100 ? "..." : ""),
+        type: "announcement",
         sourceId: newAnnouncement.id,
-        expiresAt: expirationDate ? new Date(expirationDate).toISOString() : null,
-      }))
+        expiresAt: expirationDate
+          ? new Date(expirationDate).toISOString()
+          : null,
+      })),
     });
 
     res.status(201).json({

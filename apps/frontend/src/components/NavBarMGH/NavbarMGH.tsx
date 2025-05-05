@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 import {useAuth0} from "@auth0/auth0-react";
+import {Notifications} from '@/features/Announcements/Notifications.tsx';
 
 interface NavBarProps {
     page?: string;
@@ -141,14 +142,17 @@ export function NavbarMGH(props: NavBarProps) {
                 {props.userType && props.userType != 'Guest' && (
                     <div className="ml-auto flex items-center gap-2">
                         {/* Bell currently non-functional*/}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="rounded-full"
-                            onClick={() => alert("This button doesn't work yet! - Akaash")}
-                        >
-                            <Bell className="h-5 w-5" />
-                        </Button>
+                        {/*<Button*/}
+                        {/*    variant="ghost"*/}
+                        {/*    size="icon"*/}
+                        {/*    className="rounded-full"*/}
+                        {/*    onClick={() => alert("This button doesn't work yet! - Akaash")}*/}
+                        {/*>*/}
+                        {/*    <Bell className="h-5 w-5" />*/}
+                        {/*</Button>*/}
+                        <Notifications />
+
+                        {/* User Profile Popover */}
                         <Popover>
                             <PopoverTrigger>
                                 <Button variant="ghost" size="icon" className="rounded-full">
