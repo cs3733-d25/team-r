@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { ExclamationTriangle } from 'react-bootstrap-icons';
 
 //Input any message for the disclaimer when it is called so it can be reused.
