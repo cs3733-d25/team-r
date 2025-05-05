@@ -516,11 +516,13 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 title: 'Start',
                 icon: L.divIcon({ className: 'start-marker' }),
             }).addTo(map);
+            map.startMarker.bindPopup(`Starting Point at Coordinates ${currentFloorPath[0]}`).openPopup();
 
             map.endMarker = L.marker(currentFloorPath[currentFloorPath.length - 1], {
                 title: 'End',
                 icon: L.divIcon({ className: 'end-marker' }),
             }).addTo(map);
+            map.endMarker.bindPopup(`Ending Point at Coordinates ${currentFloorPath[1]}`).openPopup();
         }
     };
 
