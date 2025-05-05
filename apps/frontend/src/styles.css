@@ -263,6 +263,8 @@
     /* Optional font-style helpers */
     .italic { font-style: italic; }
     .not-italic { font-style: normal; }
+
+    /* keyframes */
     @keyframes flash {
         0% { opacity: 1; }
         50% { opacity: 0; }
@@ -272,6 +274,8 @@
         0% { opacity: 0; }
         100% { opacity: 1; }
     }
+
+    /* Animation utilities */
     .animate-flash {
         animation: flash 1s linear infinite;
     }
@@ -283,5 +287,23 @@
         animation-delay: 1s;
         opacity: 0;
         animation-fill-mode: forwards;
+    }
+
+
+    /* Card flip utilities */
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    .backface-hidden {
+        backface-visibility: hidden;
+    }
+
+    .rotate-y-180 {
+        transform: rotateY(180deg);
     }
 }

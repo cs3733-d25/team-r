@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import client from "../bin/prisma-client.ts";
+import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
 
@@ -40,7 +40,7 @@ router.get("/:id", async function (req: Request, res: Response): Promise<void> {
 // create new announcement
 router.post("/", async function (req: Request, res: Response) {
   console.log("Creating a new announcement");
-  const { title, content, author, priority, type, expirationDate } = req.body;
+  const { title, content, author, type, expirationDate } = req.body;
 
   try {
     const newAnnouncement = await client.announcement.create({
@@ -49,13 +49,31 @@ router.post("/", async function (req: Request, res: Response) {
         content,
         date: new Date().toISOString(),
         author,
-        priority: priority || "medium",
         type: type || "general",
         expirationDate: expirationDate
           ? new Date(expirationDate).toISOString()
           : null,
       },
     });
+
+    // create notifications for all employees
+    const employees = await client.employee.findMany();
+
+    // create notifications in bulk
+    await client.notification.createMany({
+      data: employees.map((employee) => ({
+        userId: employee.id,
+        title: `New ${type} Announcement: ${title}`,
+        content:
+          content.substring(0, 100) + (content.length > 100 ? "..." : ""),
+        type: "announcement",
+        sourceId: newAnnouncement.id,
+        expiresAt: expirationDate
+          ? new Date(expirationDate).toISOString()
+          : null,
+      })),
+    });
+
     res.status(201).json({
       message: "Announcement created successfully",
       announcement: newAnnouncement,
@@ -74,7 +92,7 @@ router.post("/", async function (req: Request, res: Response) {
 // edit an announcement
 router.put("/:id", async function (req: Request, res: Response): Promise<void> {
   const { id } = req.params;
-  const { title, content, priority, expirationDate } = req.body;
+  const { title, content, expirationDate } = req.body;
 
   try {
     const updatedAnnouncement = await client.announcement.update({
@@ -82,7 +100,6 @@ router.put("/:id", async function (req: Request, res: Response): Promise<void> {
       data: {
         title,
         content,
-        priority,
         expirationDate,
       },
     });

@@ -5,6 +5,14 @@ import {Table, TableHeader, TableBody, TableHead, TableRow, TableCell} from "@/c
 function CSVTablePage() {
     const [directoryTable, setDirectoryTable] = useState([{id:null, name:null, floorNumber:null,building: null}]);
 
+    function swapRows(row: number) {
+        if (row % 2 === 0) {
+            return 'white';
+        } else {
+            return 'background';
+        }
+    }
+
     useEffect(() => {
         retrieveFromDatabase();
     }, []);
@@ -43,9 +51,9 @@ function CSVTablePage() {
                                         <TableCell colSpan={2} className="text-center font-bold text-lg">{row.building}</TableCell>
                                     </TableRow>
                                 )}
-                                <TableRow key={index}>
-                                    <TableCell >{row.name}</TableCell>
-                                    {newFloor? <TableCell className={"font-bold text-right"}>{row.floorNumber}</TableCell>:null}
+                                <TableRow key={index} className={"bg-".concat(swapRows(index))}>
+                                    <TableCell className={newFloor? "border-t border-primary" : ""}>{row.name}</TableCell>
+                                    {newFloor? <TableCell className={"font-bold text-right border-t border-primary"}>{row.floorNumber}</TableCell>: <TableCell></TableCell>}
                                 </TableRow>
                             </>
                         );

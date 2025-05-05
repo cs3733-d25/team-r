@@ -23,6 +23,7 @@ import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
 import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
+import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
 
 
 declare global {
@@ -30,17 +31,6 @@ declare global {
         goToFloor?: (floor: number, building?: string) => void;
     }
 }
-
-const blankNode = {
-    nodeID: '',
-    nodeType: '',
-    building: '',
-    floor: 0,
-    xcoord: 0,
-    ycoord: 0,
-    longName: '',
-    shortName: '',
-};
 
 export function MapPage() {
     const location = useLocation();
@@ -58,7 +48,32 @@ export function MapPage() {
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
-    const { parkingLots, departments } = useMapData(selectedBuilding);
+
+    /**
+     * This function gets the parking lots and departments, removes duplicates, then sorts the departments alphabetically.
+     */
+    function getParkingAndDepartments() {
+        const mapData = useMapData(selectedBuilding);
+        const dups : string[] = [];
+        //filter to remove duplicates
+        mapData.departments = mapData.departments.filter((dep) => {
+            if (dups.includes(dep.name)) {
+                console.log("duplicate!");
+                return false;
+            } else {
+                dups.push(dep.name);
+                return true;
+            }
+        })
+        //sorting alphabetically by name
+        mapData.departments = mapData.departments.sort((a, b) => {
+            if (a.name > b.name) return 1;
+            else return -1;
+        });
+
+        return mapData;
+    }
+    const { parkingLots, departments } = getParkingAndDepartments();
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     const [lastUsedNodes, setLastUsedNodes] = useState<Node[] | null>(null);
     console.log('departments: ', departments);
@@ -105,15 +120,6 @@ export function MapPage() {
             calculateTextDirections(lastUsedNodes, useMeters);
         }
     }, [useMeters]);
-
-    //from iteration 3
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            console.log('parking lot: ', selectedParkinglot);
-            console.log('department lot: ', selectedDepartment);
-        } catch {}
-    };
 
     // Main “Get Directions” handler
     const handleGetDirections = async (e?: React.FormEvent) => {
@@ -180,7 +186,7 @@ export function MapPage() {
             //set last use nodes
             setLastUsedNodes(nodes);
             // set the floors that need to flash
-            floorsTraveled(nodes);
+            await floorsTraveled(nodes);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -189,6 +195,7 @@ export function MapPage() {
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
      * @param nodes - an array of nodes (path)
+     * @param useMeters
      */
     const calculateTextDirections = async (nodes: Node[], useMeters: boolean) => {
         /**
@@ -255,7 +262,7 @@ export function MapPage() {
                     if (currentNode.nodeType.toLowerCase().includes('stairs')) {
                         enhancedDirections.push(`In ${distanceText}, go ${direction} the stairs to floor ${currentNode.floor}`);
                     } else {
-                        enhancedDirections.push(`In ${distanceText} feet, go ${direction} to floor ${currentNode.floor}`);
+                        enhancedDirections.push(`In ${distanceText}, go ${direction} to floor ${currentNode.floor}`);
                     }
                     continue;
                 }
@@ -359,6 +366,7 @@ export function MapPage() {
                     <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="font-bold text-xl">Selected Location</Label>
+                            {displayInfo(
                             <VoiceControl
                                 selectedBuilding={buildingIdentifier}
                                 onParkingLotSelected={setSelectedParkinglot}
@@ -368,7 +376,8 @@ export function MapPage() {
                                     setSelectedDepartment(deptId);
                                     handleGetDirections();
                                 }}
-                            />
+                            />,
+                                "Click on this button to enable microphone use for voice control. To find a path, say something like, \"Take me from Patient Parking to Dialysis\".")}
                         </div>
                         <div className={'font-bold text-secondary text-lg'}>
                             {getShortLocationName(selectedLocation)}
@@ -384,9 +393,13 @@ export function MapPage() {
                             value={selectedParkinglot}
                             onValueChange={setSelectedParkinglot}
                         >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Parking Lot" />
-                            </SelectTrigger>
+                            <div>
+                                {displayInfo(
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Parking Lot" />
+                                </SelectTrigger>,
+                                "Click here to choose a parking lot as a starting location.")}
+                            </div>
                             <SelectContent>
                                 <SelectGroup>
                                     {filterParkingLots.map((lot) => (
@@ -403,9 +416,14 @@ export function MapPage() {
                             value={selectedDepartment}
                             onValueChange={setSelectedDepartment}
                         >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Department" />
-                            </SelectTrigger>
+                            <div>
+                                {displayInfo(
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Department" />
+                                    </SelectTrigger>,
+                                    "Click here to choose a department as a destination."
+                                )}
+                            </div>
                             <SelectContent>
                                 <SelectGroup>
                                     {departments.map((dept) => (
@@ -417,53 +435,62 @@ export function MapPage() {
                             </SelectContent>
                         </Select>
 
-                        <div className="flex items-center space-x-2">
-                            <Checkbox
-                                id="accessibleRoute"
-                                checked={accessibleRoute}
-                                onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
-                            />
-                            <Label htmlFor="accessibleRoute" className="text-sm font-medium">
-                                Show Accessible Route
-                            </Label>
+                        <div>
+                            {displayInfo(
+                            <div className="flex items-center space-x-2">
+                                <Checkbox
+                                    id="accessibleRoute"
+                                    checked={accessibleRoute}
+                                    onCheckedChange={(checked) => setAccessibleRoute(checked as boolean)}
+                                />
+                                <Label htmlFor="accessibleRoute" className="text-sm font-medium">
+                                    Show Accessible Route
+                                </Label>
+                            </div>,
+                            "Click on this checkbox to select only accessible routes.")}
                         </div>
 
                         {/* Trigger pathfinding */}
+                        {displayInfo(
                         <Button className="w-full" onClick={handleGetDirections}>
                             Get Directions
-                        </Button>
+                        </Button>,
+                        "Once a parking lot and department are selected, click here to display directions.")}
                     </div>
 
                     {/* Floor navigation */}
+                    {selectedBuilding.includes("22") &&
                     <div className="mt-4 pt-4 border-t">
                         <Label className="font-bold mb-2">Floors</Label>
                         {availableFloors.map((floor) => (
-                            <Button
-                                key={floor}
-                                variant={
-                                    currentFloor === floor
-                                        ? 'secondary'
-                                        : flashingFloors?.includes(floor)
-                                            ? 'outline'
-                                            : 'unselected'
-                                }
-                                className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
-                                onClick={() => {
-                                    setCurrentFloor(floor);
-                                    window.goToFloor?.(
-                                        floor,
-                                        getBuildingConstant(selectedBuilding)
-                                    );
-
-                                    if (flashingFloors?.includes(floor)) {
-                                        setFlashingFloors((prev) => prev?.filter((f) => f !== floor) || null);
+                            displayInfo(
+                                <Button
+                                    key={floor}
+                                    variant={
+                                        currentFloor === floor
+                                            ? 'secondary'
+                                            : flashingFloors?.includes(floor)
+                                                ? 'outline'
+                                                : 'unselected'
                                     }
-                                }}
-                            >
-                                Floor {floor}
-                            </Button>
+                                    className={`${flashingFloors?.includes(floor) ? 'animate-flash' : ''} w-full mb-1`}
+                                    onClick={() => {
+                                        setCurrentFloor(floor);
+                                        window.goToFloor?.(
+                                            floor,
+                                            getBuildingConstant(selectedBuilding)
+                                        );
+
+                                        if (flashingFloors?.includes(floor)) {
+                                            setFlashingFloors((prev) => prev?.filter((f) => f !== floor) || null);
+                                        }
+                                    }}
+                                >
+                                    Floor {floor}
+                                </Button>,
+                                `Click here to display the route on Floor ${floor}.`)
                         ))}
-                    </div>
+                    </div>}
                 </div>
                 {showDirections && (
                     <div>

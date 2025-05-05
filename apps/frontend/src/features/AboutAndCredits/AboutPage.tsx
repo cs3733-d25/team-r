@@ -1,6 +1,8 @@
+import { AboutCard } from '@/components/AboutCard';
 import React from 'react';
+import { HeadingLabel } from '@/components/ui/heading-label.tsx';
 
-const AboutPage = () => {
+export default function AboutPage() {
     const root = './ProfilePics/'; //image link comes after this
 
     const lead = [
@@ -8,6 +10,8 @@ const AboutPage = () => {
             name: 'Sarayu Vijayanagaram',
             role: 'Lead Software Engineer',
             photoURL: root + '/sarayu.png',
+            quote: 'I would rather die of passion than boredom.',
+            quoteAuthor: 'Vincent van Gogh'
         },
     ];
 
@@ -16,11 +20,15 @@ const AboutPage = () => {
             name: 'Nora Cleary',
             role: 'Assistant Software Engineer / Back-End Developer',
             photoURL: root + '/nora.png',
+            quote: 'Disastrous.',
+            quoteAuthor: 'Nora Cleary'
         },
         {
             name: 'Akaash Walker',
             role: 'Assistant Software Engineer / Front-End Developer',
             photoURL: root + '/akaash.png',
+            quote: 'lgtm',
+            quoteAuthor: 'Akaash Walker'
         },
     ];
 
@@ -29,11 +37,15 @@ const AboutPage = () => {
             name: 'Brian Grande',
             role: 'Project Manager / Back-End Developer',
             photoURL: root + '/brian.png',
+            quote: "It never ceases to amaze me: we all love themselves more than other people, but care more about their opinions than our own.",
+            quoteAuthor: 'Marcus Aurelius'
         },
         {
             name: 'Alex Lowczyk',
             role: 'Front-End Developer / Product Owner',
             photoURL: root + '/alex.png',
+            quote: "Life isn’t about waiting for the storm to pass. It’s about learning how to dance in the rain.",
+            quoteAuthor: 'Vivian Greene'
         },
     ];
 
@@ -42,138 +54,60 @@ const AboutPage = () => {
             name: 'Keagan Hitt',
             role: 'Scrum Master / Front-End Developer',
             photoURL: root + '/keagan.jpg',
+            quote: 'Happy coding! 🗾',
+            quoteAuthor: 'Keagan Hitt'
         },
         {
             name: 'Owen Miller',
             role: 'Documentation Analyst / Back-End Developer',
             photoURL: root + '/owen.png',
+            quote: "Great things are done by a series of small things brought together.",
+            quoteAuthor: 'Vincent van Gogh'
         },
     ];
 
     const developers = [
-        { name: 'Daksh Gajaria', role: 'Back-End Developer', photoURL: root + '/daksh.png' },
-        { name: 'Joshua Gifford', role: 'Front-End Developer', photoURL: root + '/joshua.jpg' },
-        { name: 'Riley Meyers', role: 'Front-End Developer', photoURL: root + '/riley.png' },
+        { name: 'Daksh Gajaria', role: 'Back-End Developer', photoURL: root + '/daksh.png', quote: "What we think, we become.", quoteAuthor: 'Buddha' },
+        { name: 'Joshua Gifford', role: 'Front-End Developer', photoURL: root + '/joshua.jpg', quote: 'Perfection is not attainable, but if we chase perfection we can catch excellence.', quoteAuthor: 'Vincent Lombardi' },
+        { name: 'Riley Meyers', role: 'Front-End Developer', photoURL: root + '/riley.png', quote: "Keep your eyes to the sky, never glued to your shoes.", quoteAuthor: 'Mac Miller' },
     ];
 
-    const Card = ({ name, role, photoURL }: { name: string; role: string; photoURL: string }) => (
-        <div className="bg-white dark:bg-card shadow-md rounded-2xl p-4 flex flex-row items-center w-96 h-48 space-x-4 hover:shadow-lg transition-shadow">
-            <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-2xl overflow-hidden">
-                    <img
-                        src={photoURL}
-                        alt={name}
-                        className="w-full h-full rounded-lg object-cover"
-                    />
-                </div>
-            </div>
-            <div className="flex flex-col justify-center text-left">
-                <h3 className="text-xl font-bold">{name}</h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{role}</p>
-            </div>
-        </div>
-    );
-
     return (
-        <div className="flex flex-col items-center p-6 space-y-12">
-            {/* AboutAndCredits Header */}
-            <div className="text-center space-y-1">
-                <h1 className="p-4 text-4xl font-bold">About Us</h1>
-                <h2 className="text-xl font-bold font-trade">WPI Computer Science Department</h2>
-                <h2 className="text-xl font-bold font-trade">CS3733-D25 Software Engineering</h2>
-                <h2 className="text-xl font-bold font-trade">Professor: Wilson Wong</h2>
-                <h2 className="text-xl font-bold font-trade">Team Coach: Keira Schoolcraft</h2>
+        <div className="flex flex-col items-center justify-center min-h-screen dark:bg-gray-900 py-8">
+            <HeadingLabel className="text-4xl mb-6">About us</HeadingLabel>
+            {/* Lead section - special case for single card */}
+            <div className="flex justify-center w-full max-w-7xl mx-auto px-4">
+                {lead.map((member) => (
+                    <AboutCard key={member.name} {...member} />
+                ))}
             </div>
 
-            {/* Team Sections */}
-            <div className="flex flex-col w-full max-w-[1400px] space-y-16">
-                {/* Lead */}
-                <div className="flex flex-col items-center space-y-6">
-                    <h2 className="text-2xl font-bold text-center">Lead Software Engineer</h2>
-                    <div className="flex justify-center flex-wrap gap-8">
-                        {lead.map((member, idx) => (
-                            <Card
-                                key={idx}
-                                name={member.name}
-                                role={member.role}
-                                photoURL={member.photoURL}
-                            />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Assistant Leads */}
-                <div className="flex flex-col items-center space-y-6">
-                    <h2 className="text-2xl font-bold text-center">Assistant Software Engineers</h2>
-                    <div className="flex justify-center flex-wrap gap-8">
-                        {assistantLeads.map((member, idx) => (
-                            <Card
-                                key={idx}
-                                name={member.name}
-                                role={member.role}
-                                photoURL={member.photoURL}
-                            />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Management */}
-                <div className="flex flex-col items-center space-y-6">
-                    <h2 className="text-2xl font-bold text-center">Management Team</h2>
-
-                    {/* Top Management Row -> Product Owner/Project Manager*/}
-                    <div className="flex justify-center gap-8">
-                        {managementTop.map((member, idx) => (
-                            <Card
-                                key={idx}
-                                name={member.name}
-                                role={member.role}
-                                photoURL={member.photoURL}
-                            />
-                        ))}
-                    </div>
-
-                    {/* Bottom Management Row -> Documentation/Scrum Master */}
-                    <div className="flex justify-center gap-8">
-                        {managementBottom.map((member, idx) => (
-                            <Card
-                                key={idx}
-                                name={member.name}
-                                role={member.role}
-                                photoURL={member.photoURL}
-                            />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Developers */}
-                <div className="flex flex-col items-center space-y-6">
-                    <h2 className="text-2xl font-bold text-center">Developers</h2>
-                    <div className="flex justify-center flex-wrap gap-8">
-                        {developers.map((member, idx) => (
-                            <Card
-                                key={idx}
-                                name={member.name}
-                                role={member.role}
-                                photoURL={member.photoURL}
-                            />
-                        ))}
-                    </div>
-                </div>
+            <HeadingLabel className="text-4xl mt-12 mb-6">Assistant Leads</HeadingLabel>
+            <div className="flex flex-wrap justify-center gap-6 w-full max-w-7xl mx-auto px-4">
+                {assistantLeads.map((member) => (
+                    <AboutCard key={member.name} {...member} />
+                ))}
             </div>
 
-            {/* Footer */}
-            <div className="text-center space-y-4 pt-8">
-                <p className="text-lg font-semibold">
-                    Special Thanks to Brigham and Women’s Hospital and Andrew Shinn
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                    The Brigham & Women’s Hospital maps and data used in this application are
-                    copyrighted and provided for the sole use of educational purposes.
-                </p>
+            <HeadingLabel className="text-4xl mt-12 mb-6">Management</HeadingLabel>
+            <div className="flex flex-wrap justify-center gap-6 w-full max-w-7xl mx-auto px-4">
+                {managementTop.map((member) => (
+                    <AboutCard key={member.name} {...member} />
+                ))}
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-6 w-full max-w-7xl mx-auto mt-6 px-4">
+                {managementBottom.map((member) => (
+                    <AboutCard key={member.name} {...member} />
+                ))}
+            </div>
+
+            <HeadingLabel className="text-4xl mt-12 mb-6">Developers</HeadingLabel>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl mx-auto px-4 place-items-center">
+                {developers.map((member) => (
+                    <AboutCard key={member.name} {...member} />
+                ))}
             </div>
         </div>
-    );
-};
-
-export default AboutPage;
+    )
+}

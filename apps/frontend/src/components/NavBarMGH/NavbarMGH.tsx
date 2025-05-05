@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 import {useAuth0} from "@auth0/auth0-react";
+import {Notifications} from '@/features/Announcements/Notifications.tsx';
 
 interface NavBarProps {
     page?: string;
@@ -59,13 +60,24 @@ export function NavbarMGH(props: NavBarProps) {
                     <HoverPopoverNavLink
                         label={'Navigate'}
                         href={'/external-map'}
+                        popoverWidth="18rem"
                         items={
                             props.userType === 'Admin'
                                 ? [
-                                    { label: 'Find a Location', href: '/external-map' },
+                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
+                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
+                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
+                                    { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
                                     { label: 'Edit Map', href: '/edit-map' },
                                 ]
-                                : [{ label: 'Find a Location', href: '/external-map' }]
+                                : [
+                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
+                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
+                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
+                                    { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
+                                ]
                         }
                     />
 
@@ -75,6 +87,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 <HoverPopoverNavLink
                                     label={'Request a Service'}
                                     href={'/requests'}
+                                    popoverWidth="14rem"
                                     items={[
                                         { label: 'Sanitation', href: '/sanitation' },
                                         { label: 'Medical Device', href: '/devicerequest' },
@@ -91,6 +104,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 <HoverPopoverNavLink
                                     label={'Database'}
                                     href={'/csv'}
+                                    popoverWidth="10rem"
                                     items={[
                                         { label: 'Import a CSV', href: '/csv' },
                                         { label: 'Export CSV', href: '/csv' },
@@ -102,12 +116,10 @@ export function NavbarMGH(props: NavBarProps) {
                                 <HoverPopoverNavLink
                                     label={'Announcements'}
                                     href={'/announcements'}
+                                    popoverWidth="10rem"
                                     items={[
                                         { label: 'Create New', href: '/announcementform' },
-                                        // { label: 'Urgent Announcements', href: '/urgentannouncements' },
-                                        // { label: 'General Announcements' , href: '/generalannouncements' },
-                                        // { label: 'Bulletin Announcements', href: '/bulletinannouncements' },
-                                        { label: 'View All', href: '/announcements' },
+                                        { label: 'View All', href: '/announcements?tab=all' },
                                     ]}
                                 />
                             )}
@@ -117,6 +129,7 @@ export function NavbarMGH(props: NavBarProps) {
                     <HoverPopoverNavLink
                         label={'About'}
                         href={'/about'}
+                        popoverWidth="10rem"
                         items={[
                             { label: 'Credits', href: '/credits' },
                             { label: 'Our Team', href: '/about' },]}
@@ -128,15 +141,9 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Icons on right */}
                 {props.userType && props.userType != 'Guest' && (
                     <div className="ml-auto flex items-center gap-2">
-                        {/* Bell currently non-functional*/}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="rounded-full"
-                            onClick={() => alert("This button doesn't work yet! - Akaash")}
-                        >
-                            <Bell className="h-5 w-5" />
-                        </Button>
+                        <Notifications />
+
+                        {/* User Profile Popover */}
                         <Popover>
                             <PopoverTrigger>
                                 <Button variant="ghost" size="icon" className="rounded-full">

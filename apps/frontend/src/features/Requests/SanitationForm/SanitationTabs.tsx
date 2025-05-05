@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import SanitationRequestForm from "@/features/Requests/SanitationForm/SanitationRequestForm.tsx";
 import SanitationRequestPage from "@/features/Requests/SanitationForm/SanitationRequestPage.tsx";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 function SanitationRequestTabs() {
     return(
@@ -12,6 +13,8 @@ function SanitationRequestTabs() {
                         Sanitation Request Form</TabsTrigger>
                     <TabsTrigger value="sanitationRequestTable" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="sanitationRequestGraph">
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div >
                     <TabsContent value="sanitationRequestForm" className="dark:bg-background dark:border-gray-600">
@@ -19,6 +22,9 @@ function SanitationRequestTabs() {
                     </TabsContent>
                     <TabsContent value="sanitationRequestTable" className="dark:bg-background dark:border-gray-600">
                         <SanitationRequestPage />
+                    </TabsContent>
+                    <TabsContent value="sanitationRequestGraph">
+                        <Graphs requestType="Sanitation"/>
                     </TabsContent>
                 </div>
 

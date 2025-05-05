@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import {DeviceReqForm} from "./DeviceReqForm";
 import {DeviceReqPage} from "./DeviceReqPage";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 export function DeviceReq() {
     return(
@@ -13,6 +14,9 @@ export function DeviceReq() {
                     <TabsTrigger value="devicePage" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}
                                  >
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="deviceGraph"
+                    >
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="deviceForm" className="dark:bg-background dark:border-gray-600">
@@ -20,6 +24,9 @@ export function DeviceReq() {
                     </TabsContent>
                     <TabsContent value="devicePage" className="dark:bg-background dark:border-gray-600">
                         <DeviceReqPage />
+                    </TabsContent>
+                    <TabsContent value="deviceGraph">
+                        <Graphs requestType="Device"/>
                     </TabsContent>
                 </div>
             </Tabs>

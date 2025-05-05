@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs.tsx';
 import {PrescriptionForm} from "./PrescriptionForm";
 import {PrescriptionPage} from "./PrescriptionPage";
+import {Graphs} from "@/features/Requests/Graphs.tsx";
 
 export function Prescription() {
     return(
@@ -14,6 +15,9 @@ export function Prescription() {
                     <TabsTrigger value="prescriptionPage" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}
                                  >
                         View All Requests</TabsTrigger>
+                    <TabsTrigger value="prescriptionGraphs"
+                    >
+                        View Graphs</TabsTrigger>
                 </TabsList>
                 <div>
                     <TabsContent value="prescriptionForm" className="dark:bg-background dark:border-gray-600">
@@ -21,6 +25,9 @@ export function Prescription() {
                     </TabsContent>
                     <TabsContent value="prescriptionPage" className="dark:bg-background dark:border-gray-600">
                         <PrescriptionPage />
+                    </TabsContent>
+                    <TabsContent value="prescriptionGraphs">
+                        <Graphs requestType="Prescription"/>
                     </TabsContent>
             </div>
             </Tabs>
