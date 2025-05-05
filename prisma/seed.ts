@@ -41,6 +41,28 @@ async function main() {
         ],
         skipDuplicates: true,
     });
+    // 3. Create user
+    await client.user.create({
+        data: {
+            id: 'admin1',
+            email: 'admind25r@gmail.com',
+            firstName: 'admin1',
+            lastName: 'admin1last',
+            userType: 'Admin',
+        },
+    });
+
+    // 4. Create employee (after department is available)
+    await client.employee.create({
+        data: {
+            id: 'admin1',
+            firstName: 'admin1',
+            lastName: 'admin1last',
+            departmentId: 'Urology PP20-1',
+            role: 'Admin',
+            onShift: true,
+        },
+    });
 
     // 3. Create user
     await client.user.create({
