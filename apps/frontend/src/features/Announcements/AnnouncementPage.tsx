@@ -107,7 +107,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
     //tour component steps
     const steps: TourStep[] = [
         { content: <div>On this page you can create and view hospital announcements.</div>, selectorId: TOUR_STEPS_IDS_ANNS.CLICK_START, position: "bottom" },
-        { content: <div>Click on this button to be taken to a page where you can create an announcement. </div>, selectorId: TOUR_STEPS_IDS_ANNS.CREATE, position: "bottom" },
+        { content: <div>Click on this button to be taken to a page where you can create an announcement. </div>, selectorId: TOUR_STEPS_IDS_ANNS.CREATE, position: "right" },
         { content: <div>Click on this tab to view all current announcements.</div>, selectorId: TOUR_STEPS_IDS_ANNS.ALL, position: "right" },
         { content: <div>Click on any of the remaining tabs to view specific types of announcements.</div>, selectorId: TOUR_STEPS_IDS_ANNS.TYPES, position: "right" },
     ];
@@ -144,7 +144,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
 
                     <Tabs value={activeTab} onValueChange={(value: string) => setActiveTab(value as 'overview' | 'all' | 'urgent' | 'general' | 'bulletin')} className="w-full">
                         <TabsList className="mb-0 border-l border-gray-300 shadow-none">
-                            <TabsTrigger value="overview" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Overview</TabsTrigger>
+                            <TabsTrigger value="overview" id={TOUR_STEPS_IDS_ANNS.CREATE} className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Overview</TabsTrigger>
                             <TabsTrigger value="all" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300" id={TOUR_STEPS_IDS_ANNS.ALL}>
                                 All Announcements
                             </TabsTrigger>
@@ -181,7 +181,7 @@ export function AnnouncementPage({ defaultTab }: { defaultTab?: string }) {
                                                 >
                                                     View {cat.name} Announcements
                                                 </Button>
-                                                <Button onClick={() => navigate(`/announcementform?type=${cat.tab}`)} id={TOUR_STEPS_IDS_ANNS.CREATE}>
+                                                <Button onClick={() => navigate(`/announcementform?type=${cat.tab}`)} >
                                                     Create New Announcement
                                                 </Button>
                                             </div>
