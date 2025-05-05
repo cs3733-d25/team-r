@@ -8,7 +8,7 @@ import axios from 'axios';
 import {TourAlertDialog, TourStep, useTour} from "@/components/tour.tsx";
 import {TOUR_STEPS_IDS_ANNS} from "@/lib/tour-constants.ts";
 import {Calendar} from "@/components/ui/calendar.tsx";
-import Dashboard from "@/features/calendar/calendar.tsx";
+import Dashboard from "@/features/calendar/calendarDashboard.tsx";
 
 interface Announcement {
     id: string;
