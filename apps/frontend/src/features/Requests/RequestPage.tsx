@@ -53,14 +53,10 @@ export function RequestPage() {
 
     useEffect(() => {
         setSteps(steps);
-        const hasSeenTour = localStorage.getItem('hasSeenServiceReqsTour') === 'true';
-        if (!hasSeenTour) {
-            const timer = setTimeout(() => {
-                setOpenTour(true);
-                localStorage.setItem('hasSeenServiceReqsTour', 'true');
-            }, 100);
-            return () => clearTimeout(timer);
-        }
+        const timer = setTimeout(() => {
+            setOpenTour(true);
+        }, 100);
+        return () => clearTimeout(timer);
     }, [setSteps]);
 
     return (
