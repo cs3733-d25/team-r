@@ -14,7 +14,7 @@ export function TransportRequestPage() {
                     <TabsTrigger value="patientTransportTable" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}
                     >
                         View All Requests</TabsTrigger>
-                    <TabsTrigger value="patientTransportGraph"
+                    <TabsTrigger value="patientTransportGraph" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
                     >
                         View Graphs</TabsTrigger>
                 </TabsList>
@@ -25,7 +25,7 @@ export function TransportRequestPage() {
                     <TabsContent value="patientTransportTable" className="dark:bg-background dark:border-gray-600">
                         <PatientTransportPage />
                     </TabsContent>
-                    <TabsContent value="patientTransportGraph">
+                    <TabsContent value="patientTransportGraph" className="dark:bg-background dark:border-gray-600">
                         <Graphs requestType="Transport"/>
                     </TabsContent>
                 </div>

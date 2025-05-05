@@ -15,7 +15,7 @@ export function Prescription() {
                     <TabsTrigger value="prescriptionPage" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}
                                  >
                         View All Requests</TabsTrigger>
-                    <TabsTrigger value="prescriptionGraphs"
+                    <TabsTrigger value="prescriptionGraphs" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
                     >
                         View Graphs</TabsTrigger>
                 </TabsList>
@@ -26,7 +26,7 @@ export function Prescription() {
                     <TabsContent value="prescriptionPage" className="dark:bg-background dark:border-gray-600">
                         <PrescriptionPage />
                     </TabsContent>
-                    <TabsContent value="prescriptionGraphs">
+                    <TabsContent value="prescriptionGraphs" className="dark:bg-background dark:border-gray-600">
                         <Graphs requestType="Prescription"/>
                     </TabsContent>
             </div>

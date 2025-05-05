@@ -15,7 +15,7 @@ export function AllPatientRequests() {
                     <TabsTrigger value="patientPage" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}
                     >
                         View All Requests</TabsTrigger>
-                    <TabsTrigger value="patientGraph"
+                    <TabsTrigger value="patientGraph" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}
                     >
                         View Graphs</TabsTrigger>
                 </TabsList>
@@ -26,7 +26,7 @@ export function AllPatientRequests() {
                     <TabsContent value="patientPage" className="dark:bg-background dark:border-gray-600">
                         <PatientRequestPage/>
                     </TabsContent>
-                    <TabsContent value="patientGraph">
+                    <TabsContent value="patientGraph" className="dark:bg-background dark:border-gray-600">
                         <Graphs requestType="Nonemergent"/>
                     </TabsContent>
                 </div>

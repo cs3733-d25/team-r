@@ -13,7 +13,7 @@ function SanitationRequestTabs() {
                         Sanitation Request Form</TabsTrigger>
                     <TabsTrigger value="sanitationRequestTable" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         View All Requests</TabsTrigger>
-                    <TabsTrigger value="sanitationRequestGraph">
+                    <TabsTrigger value="sanitationRequestGraph" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         View Graphs</TabsTrigger>
                 </TabsList>
                 <div >
@@ -23,7 +23,7 @@ function SanitationRequestTabs() {
                     <TabsContent value="sanitationRequestTable" className="dark:bg-background dark:border-gray-600">
                         <SanitationRequestPage />
                     </TabsContent>
-                    <TabsContent value="sanitationRequestGraph">
+                    <TabsContent value="sanitationRequestGraph" className="dark:bg-background dark:border-gray-600">
                         <Graphs requestType="Sanitation"/>
                     </TabsContent>
                 </div>

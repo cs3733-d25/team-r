@@ -23,7 +23,7 @@ export function Graphs({requestType}:{requestType:string}) {
         "Faulkner Hospital": "#304269",
         "Healthcare Center (22 Patriot Pl.)":"#64748BFF",
         "Healthcare Center (Chestnut Hill)":"#1E293BFF",
-        "Main Campus Hospital":"#0F172AFF",
+        "Main Campus Hospital (75 Francis St.)":"#3B82F6FF",
     }
 
     useEffect(() => {
@@ -185,7 +185,7 @@ console.log("Priority Chart:",priorityChart);
 
                     </ChartTooltip>
                     <Pie data={locationPercent} dataKey ="counts" nameKey = "location" >
-                        <LabelList dataKey="labeled" position="inside" className = "text-[8px]"></LabelList>
+                        <LabelList dataKey="labeled" position="inside"></LabelList>
                         {locationChart.map((place)=>(
                             <Cell  fill={locationColor[place.location]}></Cell>
 
