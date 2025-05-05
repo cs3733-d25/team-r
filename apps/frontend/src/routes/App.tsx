@@ -130,7 +130,7 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
-                { path: 'translation', element: <Translate /> },
+                { path: 'translation', element: <TourProvider><Translate /></TourProvider> },
                 { path: 'upload-translate', element: <FileTranslator /> },
                 {
                     path: 'requests',
@@ -140,7 +140,7 @@ function App() {
                         </TourProvider>
                     ),
                 },
-                { path: 'announcements', element: <AnnouncementPage /> },
+                { path: 'announcements', element: <TourProvider><AnnouncementPage /></TourProvider> },
                 {
                     path: 'announcementform',
                     element: (
