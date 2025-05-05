@@ -50,14 +50,27 @@ export function MapPage() {
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
     /**
-     * This function gets the parking lots and departments and then sorts the departments alphabetically.
+     * This function gets the parking lots and departments, removes duplicates, then sorts the departments alphabetically.
      */
     function getParkingAndDepartments() {
         const mapData = useMapData(selectedBuilding);
+        const dups : string[] = [];
+        //filter to remove duplicates
+        mapData.departments = mapData.departments.filter((dep) => {
+            if (dups.includes(dep.name)) {
+                console.log("duplicate!");
+                return false;
+            } else {
+                dups.push(dep.name);
+                return true;
+            }
+        })
+        //sorting alphabetically by name
         mapData.departments = mapData.departments.sort((a, b) => {
             if (a.name > b.name) return 1;
             else return -1;
         });
+
         return mapData;
     }
     const { parkingLots, departments } = getParkingAndDepartments();
