@@ -137,7 +137,7 @@ export function AnnouncementPage(props: AnnouncementPageProps) {
                                         <CardHeader className="text-primary-foreground bg-primary rounded-t-lg px-6">
                                             <CardTitle>{category.name} Announcements</CardTitle>
                                         </CardHeader>
-                                        <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col">
+                                        <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col dark:border-gray-600 dark:bg-background">
                                             <p className="text-muted-foreground mb-4 min-h-[3rem]">{category.description}</p>
                                             <div className="flex flex-col space-y-2 mt-auto">
                                                 <Button variant="secondary" onClick={() => setActiveTab(category.name.toLowerCase())}>
