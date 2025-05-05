@@ -109,15 +109,6 @@ const blackIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
 });
-const orangeIcon = new L.Icon({
-    iconUrl:
-        'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-});
 const yellowIcon = new L.Icon({
     iconUrl:
         'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
@@ -163,15 +154,12 @@ const nodePlaceholderOptions = {
     radius: 5,
 };
 
-// we should seriously not use destructuring with this many props... - Akaash
 const InternalMap: React.FC<InternalMapProps> = ({
     pathCoordinates,
     pathByFloor,
     location,
     onLocationChange,
-    onDataChange,
     onNodeDelete,
-    onEdgeDelete,
     promiseNodeCreate,
     promiseEdgeCreate,
     onNodeSelect,
@@ -179,7 +167,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
     showNodes,
     onCoordSelect,
     onNodeDrag,
-    onNodeEdit,
     onToggle,
     selectedEdgeNodes,
 }) => {
@@ -201,10 +188,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
         { edgeData: Edge; polyLine: L.Polyline }[]
     >([]);
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
     const highlightedNodeLayers = useRef<L.Circle[]>([]);
-    const [open, setOpen] = useState(false);
 
     const selectedNodeStyle = {
         color: '#2563eb',
@@ -266,7 +250,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
     function dragMarker(node: Node, marker: L.Marker, e: LeafletEvent): void {
         marker.on('drag', () => {
             // parse the new coordinates
-            // super ugly way of truncating to two digits
             const marker = e.target as L.Marker;
             const draggedLatlng = marker.getLatLng();
             const x = parseFloat(draggedLatlng.lat.toFixed(2));
@@ -284,15 +267,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
     console.log('App Update');
     console.log(location.building + ' ' + location.floor);
 
-    function clickEdge(edge: Edge, pLine: L.Polyline) {
-        pLine.on('contextmenu', () => {
-            console.log('delete edge ' + edge.edgeID);
-            if (onEdgeDelete) {
-                onEdgeDelete(edge.edgeID).then(loadAll);
-            }
-        });
-    }
-
     // get all nodes for the current floor and create markers for them as well
     const loadAllNodes = async () => {
         if (
@@ -308,7 +282,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 const nodes = (
                     await fetchNodes({ building: location.building, floor: location.floor })
                 ).data;
-                console.log('recieved nodes');
+                console.log('received nodes');
                 console.log(nodes);
 
                 // create fullNodes that have the data of the node and a marker object
@@ -419,7 +393,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
         }
     }
 
-    // return whether or not that marker type should be displayed or not (using Icon
+    // return whether that marker type should be displayed or not (using Icon
     function isFiltered(nodeType: string) {
         switch (nodeType) {
             case 'Entrance':
@@ -559,7 +533,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
         if (promiseNodeCreate) {
             console.log(promiseNodeCreate);
             promiseNodeCreate.then(async () => {
-                await loadAll();
+                loadAll();
                 console.log('loaded all stuff');
             });
         }
@@ -571,7 +545,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
             console.log(promiseEdgeCreate);
             promiseEdgeCreate.then(async () => {
                 console.log('Created stuff');
-                await loadAll();
+                loadAll();
                 console.log('loaded all stuff');
             });
         }
@@ -671,43 +645,23 @@ const InternalMap: React.FC<InternalMapProps> = ({
             L.imageOverlay(faulkner, boundsFaulkner).addTo(floorLayerFaulkner);
             L.imageOverlay(womens, boundsWomens).addTo(floorLayerWomens);
 
-            // layer controls
-            L.control
-                .layers(
-                    {
-                        '20 Patriot Place - Floor 1': floorLayer20_1,
-                        '22 Patriot Place - Floor 1': floorLayer22_1,
-                        '22 Patriot Place - Floor 3': floorLayer22_3,
-                        '22 Patriot Place - Floor 4': floorLayer22_4,
-                        'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
-                        'Faulkner Hospital': floorLayerFaulkner,
-                        'Main Campus Hospital': floorLayerWomens,
-                    },
-                    {}
-                )
-                .addTo(map);
-
-            // tracking layer changes
-
             // add a default layer
-            if (typeof location.building === 'string') {
-                if (location.building.includes('20')) {
-                    floorLayer20_1.addTo(map);
-                } else if (location.building.includes('22')) {
-                    if (location.floor == 1) {
-                        floorLayer22_1.addTo(map);
-                    } else if (location.floor == 3) {
-                        floorLayer22_3.addTo(map);
-                    } else if (location.floor == 4) {
-                        floorLayer22_4.addTo(map);
-                    }
-                } else if (location.building.includes('Chestnut Hill')) {
-                    floorLayerChestnutHill.addTo(map);
-                } else if (location.building.includes('Faulkner')) {
-                    floorLayerFaulkner.addTo(map);
-                } else if (location.building.includes('Main')) {
-                    floorLayerWomens.addTo(map);
+            if (location.building.includes('20')) {
+                floorLayer20_1.addTo(map);
+            } else if (location.building.includes('22')) {
+                if (location.floor == 1) {
+                    floorLayer22_1.addTo(map);
+                } else if (location.floor == 3) {
+                    floorLayer22_3.addTo(map);
+                } else if (location.floor == 4) {
+                    floorLayer22_4.addTo(map);
                 }
+            } else if (location.building.includes('Chestnut Hill')) {
+                floorLayerChestnutHill.addTo(map);
+            } else if (location.building.includes('Faulkner')) {
+                floorLayerFaulkner.addTo(map);
+            } else if (location.building.includes('Main')) {
+                floorLayerWomens.addTo(map);
             }
             map.on('baselayerchange', function (e) {
                 // extract info from layer name
@@ -740,7 +694,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
 
             map.on('click', function (e) {
                 // parse the new coordinates
-                // super ugly way of truncating to two digits
                 const x = parseFloat(e.latlng.lat.toFixed(2));
                 const y = parseFloat(e.latlng.lng.toFixed(2));
                 console.log('[' + x + ', ' + y + ']');
@@ -800,8 +753,8 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 mapInstance.current = null;
             }
         };
-        // update when the nodes and edges on a floor update (idk why buy this works)
-    }, [nodesOnActiveFloor, edgesOnActiveFloor]); //entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner
+        // update when the nodes and edges on a floor update
+    }, [nodesOnActiveFloor, edgesOnActiveFloor]);
 
     // Update the path drawing for internal pathfinding
     useEffect(() => {
