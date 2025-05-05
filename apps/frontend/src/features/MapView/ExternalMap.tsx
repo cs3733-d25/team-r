@@ -34,6 +34,27 @@ interface ExternalMapProps {
 const MapController = ({ selectedLocation }: { selectedLocation: string }) => {
     const map = useMap();
 
+    // automatically zoom in when selectedLocation changes
+    useEffect(() => {
+        if (map && selectedLocation) {
+            const geocoder = new google.maps.Geocoder();
+
+            geocoder
+                .geocode({ address: selectedLocation })
+                .then((response) => {
+                    const { results } = response;
+                    if (results[0]) {
+                        const location = results[0].geometry.location;
+                        map.panTo(location);
+                        map.setZoom(17);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Geocoding error:', error);
+                });
+        }
+    }, [map, selectedLocation]);
+
     /**
      * broken useEffect, will flash screen with zoomed in locations before displaying
      */
