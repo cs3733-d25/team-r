@@ -141,15 +141,6 @@ export function NavbarMGH(props: NavBarProps) {
                 {/* Icons on right */}
                 {props.userType && props.userType != 'Guest' && (
                     <div className="ml-auto flex items-center gap-2">
-                        {/* Bell currently non-functional*/}
-                        {/*<Button*/}
-                        {/*    variant="ghost"*/}
-                        {/*    size="icon"*/}
-                        {/*    className="rounded-full"*/}
-                        {/*    onClick={() => alert("This button doesn't work yet! - Akaash")}*/}
-                        {/*>*/}
-                        {/*    <Bell className="h-5 w-5" />*/}
-                        {/*</Button>*/}
                         <Notifications />
 
                         {/* User Profile Popover */}

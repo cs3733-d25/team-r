@@ -4,37 +4,40 @@ import client from "../../bin/prisma-client.ts";
 const router: Router = express.Router();
 
 // get notifs for the current user
-router.post("/user", async function (req: Request, res: Response): Promise<void> {
-  const { email } = req.body;
+router.post(
+  "/user",
+  async function (req: Request, res: Response): Promise<void> {
+    const { email } = req.body;
 
-  try {
-    const user = await client.user.findUnique({
-      where: { email },
-      include: {employee: true},
-    });
+    try {
+      const user = await client.user.findUnique({
+        where: { email },
+        include: { employee: true },
+      });
 
-    if (!user || !user.employee) {
-      res.status(404).json({ error: "User not found" });
-      return;
+      if (!user || !user.employee) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
+
+      const now = new Date();
+
+      // get notifs that haven't expired
+      const notifications = await client.notification.findMany({
+        where: {
+          userId: user.employee.id,
+          OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
+        },
+        orderBy: { createdAt: "desc" },
+      });
+
+      res.status(200).json(notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-
-    const now = new Date();
-
-    // get notifs that haven't expired
-    const notifications = await client.notification.findMany({
-      where: {
-        userId: user.employee.id,
-        OR: [{ expiresAt: null }, { expiresAt: { gt: now } }],
-      },
-      orderBy: { createdAt: "desc" },
-    });
-
-    res.status(200).json(notifications);
-  } catch (error) {
-    console.error("Error fetching notifications:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+  },
+);
 
 // mark notifs as read
 router.put("/:id/read", async function (req: Request, res: Response) {

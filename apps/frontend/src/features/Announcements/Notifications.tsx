@@ -3,7 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import { Bell } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -64,15 +63,15 @@ export function Notifications() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
-                    <Bell className="h-5 w-5" />
+            <DropdownMenuTrigger>
+                <div className="inline-flex items-center justify-center rounded-md text-sm font-medium text-white bg-transparent hover:bg-primary-foreground/10 h-10 w-10 relative cursor-pointer">
+                    <Bell className="h-4 w-4" />
                     {unreadCount > 0 && (
                         <Badge className="absolute -top-1 -right-1 px-1.5 py-0.5 min-w-[18px] h-[18px] flex items-center justify-center">
                             {unreadCount}
                         </Badge>
                     )}
-                </Button>
+                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-80">
                 <div className="p-2 font-medium border-b">Notifications</div>
