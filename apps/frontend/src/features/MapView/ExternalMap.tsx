@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
     Select,
     SelectContent,
@@ -135,6 +135,31 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     const status = location.state?.status;
     const username = location.state?.username;
     const userType = location.state?.userType;
+    const [searchParams] = useSearchParams();
+    const locationParam = searchParams.get('location');
+
+    // this effect will run when the component mounts or the locationParam changes
+    useEffect(() => {
+        if (locationParam) {
+            switch(locationParam) {
+                case 'patriotPlace20':
+                    setSelectedLocation(patriotPlace20);
+                    break;
+                case 'patriotPlace22':
+                    setSelectedLocation(patriotPlace22);
+                    break;
+                case 'chestnutHill':
+                    setSelectedLocation(chestnutHill);
+                    break;
+                case 'faulkner':
+                    setSelectedLocation(faulkner);
+                    break;
+                case 'mainCampus':
+                    setSelectedLocation(mainCampus);
+                    break;
+            }
+        }
+    }, [locationParam]);
 
     /**
      * getBuildingIdentifier function, turns the location string into a building identifier
@@ -281,6 +306,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-patriotPlace20"
                                         onClick={() => setSelectedLocation(patriotPlace20)}
                                     >
                                         Healthcare Center (20 Patriot Place)
@@ -291,6 +317,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-patriotPlace22"
                                         onClick={() => setSelectedLocation(patriotPlace22)}
                                     >
                                         Healthcare Center (22 Patriot Place)
@@ -301,6 +328,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-chestnutHill"
                                         onClick={() => setSelectedLocation(chestnutHill)}
                                     >
                                         Healthcare Center (Chestnut Hill)
@@ -311,6 +339,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-faulkner"
                                         onClick={() => setSelectedLocation(faulkner)}
                                     >
                                         Faulkner Hospital
@@ -321,6 +350,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-mainCampus"
                                         onClick={() => setSelectedLocation(mainCampus)}
                                     >
                                         Main Campus Hospital
