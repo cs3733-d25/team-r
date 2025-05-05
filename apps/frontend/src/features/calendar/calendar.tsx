@@ -54,7 +54,7 @@ export default function Dashboard() {
         <div className="flex gap-6">
             {/* Calendar */}
             <Calendar selected={selectedDate} onSelect={setSelectedDate} modifiers={{ event: eventDates }}
-                      modifiersClassNames={{ event: "bg-white text-primary-foreground" }}/>
+                      modifiersClassNames={{ event: "bg-background !text-black" }}/>
 
             {/* Events Card */}
             <div className="flex-1">
