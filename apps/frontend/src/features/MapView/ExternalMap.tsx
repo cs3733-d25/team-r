@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
     Select,
     SelectContent,
@@ -151,11 +151,6 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     } | null>(null);
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
-    const location = useLocation();
-    //props passed from login.tsx
-    const status = location.state?.status;
-    const username = location.state?.username;
-    const userType = location.state?.userType;
     const [searchParams] = useSearchParams();
     const locationParam = searchParams.get('location');
 
@@ -199,7 +194,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
      * Gets the user's current location
      * @returns {void}
      */
-    const getLocation = () => {
+    const getLocation = (): void => {
         if (!navigator.geolocation) {
             alert('Geolocation is not supported by your browser');
             return;
