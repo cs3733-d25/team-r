@@ -167,6 +167,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
     onNodeDrag,
     onToggle,
     selectedEdgeNodes,
+    showLayerControl = false,
 }) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
@@ -625,15 +626,17 @@ const InternalMap: React.FC<InternalMapProps> = ({
             L.imageOverlay(womens, boundsWomens).addTo(floorLayerWomens);
 
             // layer controls
-            L.control.layers({
-                '20 Patriot Place - Floor 1': floorLayer20_1,
-                '22 Patriot Place - Floor 1': floorLayer22_1,
-                '22 Patriot Place - Floor 3': floorLayer22_3,
-                '22 Patriot Place - Floor 4': floorLayer22_4,
-                'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
-                'Faulkner Hospital': floorLayerFaulkner,
-                'Main Campus Hospital': floorLayerWomens,
-            }, {}).addTo(map);
+            if (showLayerControl) {
+                L.control.layers({
+                    '20 Patriot Place - Floor 1': floorLayer20_1,
+                    '22 Patriot Place - Floor 1': floorLayer22_1,
+                    '22 Patriot Place - Floor 3': floorLayer22_3,
+                    '22 Patriot Place - Floor 4': floorLayer22_4,
+                    'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
+                    'Faulkner Hospital': floorLayerFaulkner,
+                    'Main Campus Hospital': floorLayerWomens,
+                }, {}).addTo(map);
+            }
 
             // add a default layer
             if (location.building.includes('20')) {

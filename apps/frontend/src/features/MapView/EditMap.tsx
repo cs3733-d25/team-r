@@ -26,11 +26,6 @@ export function EditMap({ status }: EditMapProps) {
         building: 'Healthcare Center (20 Patriot Pl.)',
         floor: 1,
     });
-    // "Faulkner 1st Floor"
-    //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
-    // );
-    // const [building, setBuilding] = useState<string>('Faulkner');
-    // const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null); // coordinates that were last clicked
     const [editcoordinates, setEditCoordinates] = useState<{ x: string; y: string } | null>({
@@ -123,9 +118,7 @@ export function EditMap({ status }: EditMapProps) {
 
     // check if the instructions should be opened
     useEffect(() => {
-        if (true) {
-            setDialogOpen(true);
-        }
+        setDialogOpen(true);
     }, []);
 
     // function from mapService that makes axios request
@@ -415,7 +408,6 @@ export function EditMap({ status }: EditMapProps) {
                         building: selectedLocation.building,
                         floor: selectedLocation.floor,
                     }}
-                    // floor={currentFloor}
                     onNodeDelete={deleteNode}
                     promiseNodeCreate={requestPromise}
                     promiseEdgeCreate={edgeCreatePromise}
@@ -429,6 +421,7 @@ export function EditMap({ status }: EditMapProps) {
                     onNodeEdit={editNode}
                     onToggle={setToggle}
                     selectedEdgeNodes={edgeNodes}
+                    showLayerControl={true}
                 />
 
                 <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[calc(100vh-95px)] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
