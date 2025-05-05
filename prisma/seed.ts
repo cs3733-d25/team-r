@@ -766,6 +766,43 @@ async function main() {
         }
     });
 
+    // Announcements
+    await client.announcement.create({
+        data: {
+            id: 'ann1',
+            title: 'Updated COVID-19 Protocol',
+            content: 'Effective immediately, all staff must wear N95 masks when working with immunocompromised patients. Updated PPE guidelines are available on the intranet.',
+            date: new Date('2023-11-15'),
+            author: 'Sarayu',
+            type: 'urgent',
+            expirationDate: new Date('2024-01-15')
+        }
+    });
+
+    await client.announcement.create({
+        data: {
+            id: 'ann2',
+            title: 'Annual Staff Appreciation Week',
+            content: 'Staff Appreciation Week will be held December 4-8. Activities include a catered lunch on Monday, wellness workshop on Wednesday, and department awards on Friday.',
+            date: new Date('2023-11-20'),
+            author: 'Owen',
+            type: 'general',
+            expirationDate: new Date('2023-12-09')
+        }
+    });
+
+    await client.announcement.create({
+        data: {
+            id: 'ann3',
+            title: 'EHR System Maintenance',
+            content: 'The Electronic Health Record system will be down for maintenance on Sunday, November 26th from 2AM-6AM. Please complete all critical documentation before this time.',
+            date: new Date('2023-11-22'),
+            author: 'Brian',
+            type: 'bulletin',
+            expirationDate: null
+        }
+    });
+
     console.log('Users and Requests seeded successfully!');
 
     await client.algorithm.create({

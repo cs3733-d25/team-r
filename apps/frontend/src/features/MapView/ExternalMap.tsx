@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
     Select,
     SelectContent,
@@ -35,6 +35,27 @@ interface ExternalMapProps {
 const MapController = ({ selectedLocation }: { selectedLocation: string }) => {
     const map = useMap();
 
+    // automatically zoom in when selectedLocation changes
+    useEffect(() => {
+        if (map && selectedLocation) {
+            const geocoder = new google.maps.Geocoder();
+
+            geocoder
+                .geocode({ address: selectedLocation })
+                .then((response) => {
+                    const { results } = response;
+                    if (results[0]) {
+                        const location = results[0].geometry.location;
+                        map.panTo(location);
+                        map.setZoom(17);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Geocoding error:', error);
+                });
+        }
+    }, [map, selectedLocation]);
+
     /**
      * broken useEffect, will flash screen with zoomed in locations before displaying
      */
@@ -60,7 +81,7 @@ const MapController = ({ selectedLocation }: { selectedLocation: string }) => {
 
     return (
         displayInfo(
-            <div className="mt-4 pt-2">
+            <div className="mt-2 relative -top-14 right-0">
                 <Button
                     variant="unselected"
                     disabled={selectedLocation === ''}
@@ -131,11 +152,31 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
     } | null>(null);
     const [travelMode, setTravelMode] = useState<string>('DRIVING');
     const navigate = useNavigate();
-    const location = useLocation();
-    //props passed from login.tsx
-    const status = location.state?.status;
-    const username = location.state?.username;
-    const userType = location.state?.userType;
+    const [searchParams] = useSearchParams();
+    const locationParam = searchParams.get('location');
+
+    // this effect will run when the component mounts or the locationParam changes
+    useEffect(() => {
+        if (locationParam) {
+            switch(locationParam) {
+                case 'patriotPlace20':
+                    setSelectedLocation(patriotPlace20);
+                    break;
+                case 'patriotPlace22':
+                    setSelectedLocation(patriotPlace22);
+                    break;
+                case 'chestnutHill':
+                    setSelectedLocation(chestnutHill);
+                    break;
+                case 'faulkner':
+                    setSelectedLocation(faulkner);
+                    break;
+                case 'mainCampus':
+                    setSelectedLocation(mainCampus);
+                    break;
+            }
+        }
+    }, [locationParam]);
 
     /**
      * getBuildingIdentifier function, turns the location string into a building identifier
@@ -154,7 +195,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
      * Gets the user's current location
      * @returns {void}
      */
-    const getLocation = () => {
+    const getLocation = (): void => {
         if (!navigator.geolocation) {
             alert('Geolocation is not supported by your browser');
             return;
@@ -285,6 +326,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-patriotPlace20"
                                         onClick={() => setSelectedLocation(patriotPlace20)}
                                     >
                                         Healthcare Center (20 Patriot Place)
@@ -295,6 +337,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-patriotPlace22"
                                         onClick={() => setSelectedLocation(patriotPlace22)}
                                     >
                                         Healthcare Center (22 Patriot Place)
@@ -305,6 +348,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-chestnutHill"
                                         onClick={() => setSelectedLocation(chestnutHill)}
                                     >
                                         Healthcare Center (Chestnut Hill)
@@ -315,6 +359,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-faulkner"
                                         onClick={() => setSelectedLocation(faulkner)}
                                     >
                                         Faulkner Hospital
@@ -325,6 +370,7 @@ export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapPr
                                                 ? 'unselected'
                                                 : 'secondary'
                                         }
+                                        id="location-mainCampus"
                                         onClick={() => setSelectedLocation(mainCampus)}
                                     >
                                         Main Campus Hospital

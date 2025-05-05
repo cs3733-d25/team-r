@@ -59,13 +59,24 @@ export function NavbarMGH(props: NavBarProps) {
                     <HoverPopoverNavLink
                         label={'Navigate'}
                         href={'/external-map'}
+                        popoverWidth="18rem"
                         items={
                             props.userType === 'Admin'
                                 ? [
-                                    { label: 'Find a Location', href: '/external-map' },
+                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
+                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
+                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
+                                    { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
                                     { label: 'Edit Map', href: '/edit-map' },
                                 ]
-                                : [{ label: 'Find a Location', href: '/external-map' }]
+                                : [
+                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
+                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
+                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
+                                    { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
+                                ]
                         }
                     />
 
@@ -75,6 +86,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 <HoverPopoverNavLink
                                     label={'Request a Service'}
                                     href={'/requests'}
+                                    popoverWidth="14rem"
                                     items={[
                                         { label: 'Sanitation', href: '/sanitation' },
                                         { label: 'Medical Device', href: '/devicerequest' },
@@ -91,6 +103,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 <HoverPopoverNavLink
                                     label={'Database'}
                                     href={'/csv'}
+                                    popoverWidth="10rem"
                                     items={[
                                         { label: 'Import a CSV', href: '/csv' },
                                         { label: 'Export CSV', href: '/csv' },
@@ -102,6 +115,7 @@ export function NavbarMGH(props: NavBarProps) {
                                 <HoverPopoverNavLink
                                     label={'Announcements'}
                                     href={'/announcements'}
+                                    popoverWidth="10rem"
                                     items={[
                                         { label: 'Create New', href: '/announcementform' },
                                         { label: 'View All', href: '/announcements?tab=all' },
@@ -114,6 +128,7 @@ export function NavbarMGH(props: NavBarProps) {
                     <HoverPopoverNavLink
                         label={'About'}
                         href={'/about'}
+                        popoverWidth="10rem"
                         items={[
                             { label: 'Credits', href: '/credits' },
                             { label: 'Our Team', href: '/about' },]}

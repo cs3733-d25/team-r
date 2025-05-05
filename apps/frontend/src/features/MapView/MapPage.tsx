@@ -32,17 +32,6 @@ declare global {
     }
 }
 
-const blankNode = {
-    nodeID: '',
-    nodeType: '',
-    building: '',
-    floor: 0,
-    xcoord: 0,
-    ycoord: 0,
-    longName: '',
-    shortName: '',
-};
-
 export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
@@ -61,14 +50,27 @@ export function MapPage() {
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
 
     /**
-     * This function gets the parking lots and departments and then sorts the departments alphabetically.
+     * This function gets the parking lots and departments, removes duplicates, then sorts the departments alphabetically.
      */
     function getParkingAndDepartments() {
         const mapData = useMapData(selectedBuilding);
+        const dups : string[] = [];
+        //filter to remove duplicates
+        mapData.departments = mapData.departments.filter((dep) => {
+            if (dups.includes(dep.name)) {
+                console.log("duplicate!");
+                return false;
+            } else {
+                dups.push(dep.name);
+                return true;
+            }
+        })
+        //sorting alphabetically by name
         mapData.departments = mapData.departments.sort((a, b) => {
             if (a.name > b.name) return 1;
             else return -1;
         });
+
         return mapData;
     }
     const { parkingLots, departments } = getParkingAndDepartments();
@@ -118,15 +120,6 @@ export function MapPage() {
             calculateTextDirections(lastUsedNodes, useMeters);
         }
     }, [useMeters]);
-
-    //from iteration 3
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            console.log('parking lot: ', selectedParkinglot);
-            console.log('department lot: ', selectedDepartment);
-        } catch {}
-    };
 
     // Main “Get Directions” handler
     const handleGetDirections = async (e?: React.FormEvent) => {
@@ -193,7 +186,7 @@ export function MapPage() {
             //set last use nodes
             setLastUsedNodes(nodes);
             // set the floors that need to flash
-            floorsTraveled(nodes);
+            await floorsTraveled(nodes);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -202,6 +195,7 @@ export function MapPage() {
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
      * @param nodes - an array of nodes (path)
+     * @param useMeters
      */
     const calculateTextDirections = async (nodes: Node[], useMeters: boolean) => {
         /**
@@ -368,7 +362,7 @@ export function MapPage() {
 
 
                 {/* Sidebar controls */}
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-108 max-h-[90%] overflow-y-auto z-10">
+                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="font-bold text-xl">Selected Location</Label>
