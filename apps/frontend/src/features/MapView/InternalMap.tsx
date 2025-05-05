@@ -728,6 +728,29 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 // Only draw the path if this floor actually has a path segment
                 if (pathByFloor && pathByFloor[floor] && pathByFloor[floor].length > 1) {
                     drawPath(pathByFloor[floor], map);
+                } else if (floor === 1 && pathByFloor && Object.keys(pathByFloor).length > 0) {
+                    // check if there's any path data
+                    // ensures we don't clear paths on floor 1 if there's path data for other floors
+                    const hasPathOnAnyFloor = Object.values(pathByFloor).some(path => path.length > 1);
+                    if (hasPathOnAnyFloor && pathByFloor[1] && pathByFloor[1].length > 0) {
+                        drawPath(pathByFloor[1], map);
+                        return;
+                    }
+
+                    // clear if no valid path exists for floor 1
+                    if (routeLayer.current) {
+                        routeLayer.current.remove();
+                        routeLayer.current = null;
+                    }
+
+                    if (map.startMarker) {
+                        map.startMarker.remove();
+                        map.startMarker = null;
+                    }
+                    if (map.endMarker) {
+                        map.endMarker.remove();
+                        map.endMarker = null;
+                    }
                 } else {
                     // Clear any existing path if this floor doesn't have a path segment
                     if (routeLayer.current) {
