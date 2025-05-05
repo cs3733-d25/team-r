@@ -49,7 +49,7 @@ export default function CreateAnnouncement() {
                 isSubmitted={isSubmitted}
                 announcement={announcement}
                 onDismiss={handleDismiss}
-                onViewAll={() => navigate('/announcements')}
+                onViewAll={() => navigate('/announcements?tab=all')}
             />
         </div>
     )
