@@ -90,7 +90,8 @@ export function Notifications() {
                         notifications.map(notification => (
                             <DropdownMenuItem
                                 key={notification.id}
-                                className={`p-3 cursor-pointer border-b ${!notification.isRead ? 'bg-muted/50' : ''}`}
+                                //variant={"destructive"}
+                                className={`p-3 cursor-pointer border-b hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-100 ${!notification.isRead ? 'bg-muted/50' : ''}`}
                                 onClick={() => markAsRead(notification.id)}
                             >
                                 <div className="flex flex-col gap-1">
