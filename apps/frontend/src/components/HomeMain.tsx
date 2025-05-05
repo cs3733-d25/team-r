@@ -41,12 +41,12 @@ export function HomeMain(props: HomeMainProps) {
                         <Label className={'text-5xl text-white font-bold mb-10'}>
                             Welcome to Mass General Brigham
                         </Label>
-                        {(!props.userType || props.status != 'logged-in') && (
-                            <Label className={'text-white font-bold mb-4 mx-10'}>
-                                Log in to locate a department using our pathfinding page so that we
-                                can help you navigate toward any service that you may need.
-                            </Label>
-                        )}
+                        {/*{(!props.userType || props.status != 'logged-in') && (*/}
+                        {/*    <Label className={'text-white font-bold mb-4 mx-10'}>*/}
+                        {/*        Log in to locate a department using our pathfinding page so that we*/}
+                        {/*        can help you navigate toward any service that you may need.*/}
+                        {/*    </Label>*/}
+                        {/*)}*/}
                     </div>
                     <div className={'justify-self-center'}>
                         <Button

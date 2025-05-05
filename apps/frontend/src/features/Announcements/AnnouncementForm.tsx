@@ -14,35 +14,33 @@ export interface AnnouncementFormProps {
         title: string;
         content: string;
         author: string;
-        priority: string;
-        type: string;
+        type: 'urgent' | 'general' | 'bulletin';
         expirationDate?: string;
         timestamp: string;
     };
+    defaultType?: 'urgent' | 'general' | 'bulletin';
     onSubmit: (data: {
         title: string;
         content: string;
         author: string;
-        priority: string;
-        type: string;
+        type: 'urgent' | 'general' | 'bulletin';
         expirationDate?: string;
     }) => Promise<void>;
 }
 
-export default function AnnouncementForm({ initialData, onSubmit }: AnnouncementFormProps) {
+export default function AnnouncementForm({ initialData, defaultType, onSubmit }: AnnouncementFormProps) {
     const navigate = useNavigate();
-    const { user } = useAuth0();
+    const {user} = useAuth0();
     const [userName, setUserName] = useState('');
     const [formData, setFormData] = useState({
         title: initialData?.title || '',
         content: initialData?.content || '',
         author: initialData?.author || '',
-        priority: initialData?.priority || 'medium',
-        type: initialData?.type || 'general',
+        type: initialData?.type || defaultType || 'general',
         expirationDate: initialData?.expirationDate || '',
     });
 
-    // In create mode, fetch current user's name
+    // in create mode, fetch current user's name
     useEffect(() => {
         if (!initialData && user) {
             axios
@@ -53,37 +51,30 @@ export default function AnnouncementForm({ initialData, onSubmit }: Announcement
 
     useEffect(() => {
         if (!initialData && userName) {
-            setFormData((prev) => ({ ...prev, author: userName }));
+            setFormData(prev => ({...prev, author: userName}))
         }
     }, [initialData, userName]);
 
     const handleTypeChange = (value: string) => {
-        setFormData((prev) => {
-            let priority = 'medium';
-            if (value === 'urgent') priority = 'High';
-            if (value === 'bulletin') priority = 'Low';
-            return { ...prev, type: value, priority };
-        });
+        const type = value as 'urgent' | 'general' | 'bulletin';
+        setFormData(prev => ({...prev, type}))
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const {name, value} = e.target;
+        setFormData((prev) => ({...prev, [name]: value}));
     };
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        await onSubmit({
-            ...formData,
-            priority: formData.priority.toString(),
-        });
+        await onSubmit({...formData})
     };
 
     return (
         <Tabs
             defaultValue={formData.type}
             value={formData.type}
-            onValueChange={handleTypeChange}
+            onValueChange={(value) => handleTypeChange(value)}
             className="mb-6"
         >
             <TabsList className="grid grid-cols-3">

@@ -1,6 +1,6 @@
 import Directions from '@/features/MapView/Directions.tsx';
 import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -58,16 +58,18 @@ const MapController = ({ selectedLocation }: { selectedLocation: string }) => {
     };
 
     return (
-        <div className="mt-4 pt-2">
-            <Button
-                variant="unselected"
-                disabled={selectedLocation === ''}
-                className={'rounded-full'}
-                onClick={zoomIn}
-            >
-                <ZoomIn />
-            </Button>
-        </div>
+        displayInfo(
+            <div className="mt-2 relative -top-14 right-0">
+                <Button
+                    variant="unselected"
+                    disabled={selectedLocation === ''}
+                    className={'rounded-full'}
+                    onClick={zoomIn}
+                >
+                    <ZoomIn />
+                </Button>
+            </div>,
+            "Once a path has been entered, click this to zoom into your destination.")
     );
 };
 

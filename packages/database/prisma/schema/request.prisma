@@ -114,7 +114,6 @@ model Announcement {
   content        String
   date           DateTime
   author         String
-  priority       String
   type           String
   expirationDate DateTime?
 }
