@@ -141,9 +141,9 @@ router.delete(
   },
 );
 
-//get anouncements for certain day
+//get announcements for certain day
 router.get(
-  "/:selectedDate",
+  "/date/:selectedDate",
   async function (req: Request, res: Response): Promise<void> {
     const { selectedDate } = req.params;
     try {
@@ -161,4 +161,5 @@ router.get(
     }
   },
 );
+
 export default router;
