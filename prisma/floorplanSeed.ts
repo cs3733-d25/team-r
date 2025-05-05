@@ -795,7 +795,7 @@ async function main() {
                 "xcoord": 719.67,
                 "ycoord": 313,
                 "longName": "THE Faulkner Hospital Parking Lot",
-                "shortName": "Faulkner Hospital Parking Lot"
+                "shortName": "Main Parking Lot"
             },
             {
                 "nodeID": "Hallway-1745469182158",
@@ -856,8 +856,67 @@ async function main() {
                 "ycoord": 291,
                 "longName": "",
                 "shortName": "Dialysis Reception"
-            }
-
+            },
+            {
+                "nodeID": "Alternate Parking Lot F",
+                "nodeType": "Parking",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 150.01,
+                "ycoord": 468,
+                "longName": "Alternate Parking Lot",
+                "shortName": "Alternate Parking Lot"
+            },
+            {
+                "nodeID": "Alternate Parking Sidewalk F",
+                "nodeType": "Sidewalk",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 229.94,
+                "ycoord": 664.5,
+                "longName": "Alternate Parking Sidewalk",
+                "shortName": "Alternate Parking Sidewalk"
+            },
+            {
+                "nodeID": "Alternate Sidewalk Curve F",
+                "nodeType": "Sidewalk",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 228.01,
+                "ycoord": 966,
+                "longName": "Alternate Sidewalk Curve",
+                "shortName": "Alternate Sidewalk Curve"
+            },
+            {
+                "nodeID": "Alternate Sidewalk Corner F",
+                "nodeType": "Sidewalk",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 340.51,
+                "ycoord": 1058,
+                "longName": "Alternate Sidewalk Corner",
+                "shortName": "Alternate Sidewalk Corner"
+            },
+            {
+                "nodeID": "Street Sidewalk F",
+                "nodeType": "Sidewalk",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 655.85,
+                "ycoord": 979,
+                "longName": "Street Sidewalk",
+                "shortName": "Street Sidewalk"
+            },
+            {
+                "nodeID": "Outside Entrance Sidewalk F",
+                "nodeType": "Sidewalk",
+                "building": "Faulkner Hospital",
+                "floor": 1,
+                "xcoord": 746.41,
+                "ycoord": 793.5,
+                "longName": "Outside Entrance Sidewalk",
+                "shortName": "Outside Entrance Sidewalk"
+            },
         ],
         skipDuplicates: true
     });
@@ -3660,6 +3719,30 @@ async function main() {
             {
                 "fromID": "Dialysis Entrance Sidewalk F",
                 "toID": "Dialysis Entrance"
+            },
+            {
+                "fromID": "Faulkner Hospital Entrance",
+                "toID": "Outside Entrance Sidewalk F"
+            },
+            {
+                "fromID": "Outside Entrance Sidewalk F",
+                "toID": "Street Sidewalk F"
+            },
+            {
+                "fromID": "Alternate Sidewalk Corner F",
+                "toID": "Street Sidewalk F"
+            },
+            {
+                "fromID": "Alternate Sidewalk Corner F",
+                "toID": "Alternate Sidewalk Curve F"
+            },
+            {
+                "fromID": "Alternate Sidewalk Curve F",
+                "toID": "Alternate Parking Sidewalk F"
+            },
+            {
+                "fromID": "Alternate Parking Sidewalk F",
+                "toID": "Alternate Parking Lot F"
             }
         ]
     });
