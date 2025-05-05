@@ -362,7 +362,7 @@ export function MapPage() {
 
 
                 {/* Sidebar controls */}
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
+                <div className="absolute top-4 left-4 bg-white dark:bg-background rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
                     <div className="mb-4">
                         <div className="flex items-center justify-between mb-2">
                             <Label className="font-bold text-xl">Selected Location</Label>
