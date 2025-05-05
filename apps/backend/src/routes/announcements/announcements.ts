@@ -141,25 +141,21 @@ router.delete(
   },
 );
 
-//get announcements for certain day
-router.get(
-  "/date/:selectedDate",
-  async function (req: Request, res: Response): Promise<void> {
-    const { selectedDate } = req.params;
-    try {
-      const announcement = await client.announcement.findMany({
-        where: { date: selectedDate },
-      });
-      if (!announcement) {
-        res.status(404).json({ error: "Announcement not found" });
-      }
-      console.log("here is anounce: ", announcement);
-      res.status(200).json(announcement);
-    } catch (error) {
-      console.error("Error fetching announcement:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+//get anouncements for certain day
+router.get("/:selectedDate", async function (req: Request, res: Response): Promise<void> {
+  const { selectedDate } = req.params;
+  try {
+    const announcement = await client.announcement.findMany({
+      where: { date: selectedDate },
+    });
+    if (!announcement) {
+      res.status(404).json({ error: "Announcement not found" });
     }
-  },
-);
-
+    console.log("here is anounce: ", announcement);
+    res.status(200).json(announcement);
+  } catch (error) {
+    console.error("Error fetching announcement:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 export default router;
