@@ -2070,14 +2070,14 @@ async function main() {
     await PrismaClient.node.createMany({
         data: [
             {
-                "nodeID": "Parking-1745977271629",
+                "nodeID": "Patient Parking MC",
                 "nodeType": "Parking",
                 "building": "Main Campus Hospital (75 Francis St.)",
                 "floor": 1,
                 "xcoord": 505.92,
                 "ycoord": 668.45,
-                "longName": "",
-                "shortName": "Valet Parking"
+                "longName": "Patient Parking",
+                "shortName": "Patient Parking"
             },
             {
                 "nodeID": "Entrance-1745978697506",
@@ -3752,7 +3752,7 @@ async function main() {
         data: [
             {
                 "fromID": "Entrance-1745978697506",
-                "toID": "Parking-1745977271629"
+                "toID": "Patient Parking MC"
             },
             {
                 "fromID": "Hallway-1745978726808",
@@ -3851,7 +3851,7 @@ async function main() {
                 "toID": "Reception-1745979202834"
             },
             {
-                "fromID": "Parking-1745977271629",
+                "fromID": "Patient Parking MC",
                 "toID": "Sidewalk-1745979230530"
             },
             {
