@@ -52,6 +52,8 @@ model Employee {
   deviceAssigned DeviceRequest[] @relation("deviceRequestAssigned")
 
 
+
+  Notification Notification[]
 }
 
 model Patient {
