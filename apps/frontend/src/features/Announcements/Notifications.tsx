@@ -91,7 +91,7 @@ export function Notifications() {
                             <DropdownMenuItem
                                 key={notification.id}
                                 //variant={"destructive"}
-                                className={`p-3 cursor-pointer border-b hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-100 ${!notification.isRead ? 'bg-muted/50' : ''}`}
+                                className={`p-3 cursor-pointer border-b hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-100 dark:hover:bg-primary darK:focus:bg-primary dark:active:bg-primary ${!notification.isRead ? 'bg-muted/50' : ''}`}
                                 onClick={() => markAsRead(notification.id)}
                             >
                                 <div className="flex flex-col gap-1">
