@@ -109,27 +109,27 @@ export function RequestPage() {
                     </TabsContent>
 
                     {/* All Requests Table */}
-                    <TabsContent value="all">
+                    <TabsContent value="all" className="dark:bg-background dark:border-gray-600">
                         <AllRequestsTable />
                     </TabsContent>
 
                     {/* Individual Service Tabs */}
-                    <TabsContent value="medical-device">
+                    <TabsContent value="medical-device" className="dark:bg-background dark:border-gray-600">
                         <DeviceReqPage />
                     </TabsContent>
-                    <TabsContent value="prescription">
+                    <TabsContent value="prescription" className="dark:bg-background dark:border-gray-600">
                         <PrescriptionPage />
                     </TabsContent>
-                    <TabsContent value="patient">
+                    <TabsContent value="patient" className="dark:bg-background dark:border-gray-600">
                         <PatientRequestPage />
                     </TabsContent>
-                    <TabsContent value="transport">
+                    <TabsContent value="transport" className="dark:bg-background dark:border-gray-600">
                         <PatientTransportPage />
                     </TabsContent>
-                    <TabsContent value="sanitation">
+                    <TabsContent value="sanitation" className="dark:bg-background dark:border-gray-600">
                         <SanitationRequestPage />
                     </TabsContent>
-                    <TabsContent value="translator">
+                    <TabsContent value="translator" className="dark:bg-background dark:border-gray-600">
                         <TranslateRequestPage />
                     </TabsContent>
                 </Tabs>
