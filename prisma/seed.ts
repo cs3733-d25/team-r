@@ -772,10 +772,10 @@ async function main() {
             id: 'ann1',
             title: 'Updated COVID-19 Protocol',
             content: 'Effective immediately, all staff must wear N95 masks when working with immunocompromised patients. Updated PPE guidelines are available on the intranet.',
-            date: new Date('2023-11-15'),
+            date: new Date('2025-05-03'),
             author: 'Sarayu',
             type: 'urgent',
-            expirationDate: new Date('2024-01-15')
+            expirationDate: null
         }
     });
 
@@ -783,11 +783,11 @@ async function main() {
         data: {
             id: 'ann2',
             title: 'Annual Staff Appreciation Week',
-            content: 'Staff Appreciation Week will be held December 4-8. Activities include a catered lunch on Monday, wellness workshop on Wednesday, and department awards on Friday.',
-            date: new Date('2023-11-20'),
+            content: 'Staff Appreciation Week will be held May 5-9. Activities include a catered lunch on Monday, wellness workshop on Wednesday, and department awards on Friday.',
+            date: new Date('2025-05-03'),
             author: 'Owen',
             type: 'general',
-            expirationDate: new Date('2023-12-09')
+            expirationDate: new Date('2025-05-10')
         }
     });
 
@@ -795,11 +795,11 @@ async function main() {
         data: {
             id: 'ann3',
             title: 'EHR System Maintenance',
-            content: 'The Electronic Health Record system will be down for maintenance on Sunday, November 26th from 2AM-6AM. Please complete all critical documentation before this time.',
-            date: new Date('2023-11-22'),
+            content: 'The Electronic Health Record system will be down for maintenance on June 2nd from 2AM-6AM. Please complete all critical documentation before this time.',
+            date: new Date('2025-06-02'),
             author: 'Brian',
             type: 'bulletin',
-            expirationDate: null
+            expirationDate: new Date('2025-06-03')
         }
     });
 
