@@ -32,17 +32,6 @@ declare global {
     }
 }
 
-const blankNode = {
-    nodeID: '',
-    nodeType: '',
-    building: '',
-    floor: 0,
-    xcoord: 0,
-    ycoord: 0,
-    longName: '',
-    shortName: '',
-};
-
 export function MapPage() {
     const location = useLocation();
     const selectedLocation = location.state?.selectedLocation || '';
@@ -119,15 +108,6 @@ export function MapPage() {
         }
     }, [useMeters]);
 
-    //from iteration 3
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            console.log('parking lot: ', selectedParkinglot);
-            console.log('department lot: ', selectedDepartment);
-        } catch {}
-    };
-
     // Main “Get Directions” handler
     const handleGetDirections = async (e?: React.FormEvent) => {
         e?.preventDefault();
@@ -193,7 +173,7 @@ export function MapPage() {
             //set last use nodes
             setLastUsedNodes(nodes);
             // set the floors that need to flash
-            floorsTraveled(nodes);
+            await floorsTraveled(nodes);
         } catch (err) {
             console.error('Error fetching path:', err);
         }
@@ -202,6 +182,7 @@ export function MapPage() {
     /**
      * Given a string array of nodeIDs, this function converts them to their shortNames
      * @param nodes - an array of nodes (path)
+     * @param useMeters
      */
     const calculateTextDirections = async (nodes: Node[], useMeters: boolean) => {
         /**
