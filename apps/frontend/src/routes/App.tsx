@@ -29,16 +29,26 @@ import PatientTransport from '@/features/Requests/PatientTransport/PatientTransp
 import SettingsPage from '@/features/ThemeSwitcher/SettingsPage.tsx';
 import { useTheme } from '../hooks/useTheme';
 import Footer from '../components/Footer';
-import {AnnouncementPage} from '@/features/Announcements/AnnouncementPage.tsx';
-import CreateAnnouncement from '@/features/Announcements/CreateAnnouncement.tsx';
+import { AnnouncementPage } from '@/features/Announcements/AnnouncementPage.tsx';
+import AnnouncementForm from '@/features/Announcements/AnnouncementForm.tsx';
+import PageNotFound from '@/features/PageNotFound.tsx';
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState('Guest');
     const [userFirstName, setUserFirstName] = useState('');
     const { theme } = useTheme();
+    const [noFooter, setNoFooter] = useState(false);
 
     console.log('APP IS RENDERED');
+
+    // only show the footer on certain pages
+    // external map doesn't need a footer since it interferes with the zoom functionality
+    useEffect(() => {
+        const pathsWithoutFooter = ['/external-map'];
+        const shouldHideFooter = pathsWithoutFooter.includes(location.pathname);
+        setNoFooter(shouldHideFooter);
+    }, [location]);
 
     // Get the user type from the database after the user has logged in
     useEffect(() => {
@@ -80,58 +90,14 @@ function App() {
     const router = createBrowserRouter([
         {
             path: '/',
-            errorElement: (
-                <div className={'bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover'}>
-                    <p className={'font-trade'}>Page not found</p>
-                </div>
-            ),
+            errorElement: <PageNotFound />,
             children: [
-                {
-                    index: true,
-                    element: (
-                        <>
-                            <HomeMain userType={userType} />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'home',
-                    element: (
-                        <>
-                            <HomeMain userType={userType} status={'logged-in'} />
-                            <Footer />
-                        </>
-                    ),
-                },
+                { index: true, element: <HomeMain userType={userType} /> },
+                { path: 'home', element: <HomeMain userType={userType} status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
-                {
-                    path: 'directory',
-                    element: (
-                        <>
-                            <Directory />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'about',
-                    element: (
-                        <>
-                            <AboutPage />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'credits',
-                    element: (
-                        <>
-                            <CreditsPage />
-                            <Footer />
-                        </>
-                    ),
-                },
+                { path: 'directory', element: <Directory /> },
+                { path: 'about', element: <AboutPage /> },
+                { path: 'credits', element: <CreditsPage /> },
                 { path: 'external-map', element: <ExternalMap /> },
                 {
                     path: 'edit-map',
@@ -144,190 +110,71 @@ function App() {
                     ),
                 },
                 { path: 'internal-map', element: <MapPage /> },
-                {
-                    path: 'sanitation',
-                    element: (
-                        <>
-                            <SanitationRequestTabs />
-                            <Footer />
-                        </>
-                    ),
-                },
+                { path: 'sanitation', element: <SanitationRequestTabs /> },
                 {
                     path: 'csv',
                     element: (
                         <>
                             <TourProvider>
                                 <CSVTabPage />
-                                <Footer />
                             </TourProvider>
                         </>
                     ),
                 },
-                {
-                    path: 'sanitationpage',
-                    element: (
-                        <>
-                            <SanitationRequestPage />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'testing',
-                    element: (
-                        <>
-                            <TestPage />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'profile',
-                    element: (
-                        <>
-                            <p>Profile</p>
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'settings',
-                    element: (
-                        <>
-                            <SettingsPage />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'prescription',
-                    element: (
-                        <>
-                            <Prescription />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'patientrequestpage',
-                    element: (
-                        <>
-                            <AllPatientRequests />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'patientrequest',
-                    element: (
-                        <>
-                            <PatientRequest />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'transport',
-                    element: (
-                        <>
-                            <PatientTransport />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'devicerequest',
-                    element: (
-                        <>
-                            <DeviceReq />
-                            <Footer />
-                        </>
-                    ),
-                },
-                {
-                    path: 'translation',
-                    element: (
-                        <>
-                            <TourProvider>
-                                <Translate />
-                                <Footer />
-                            </TourProvider>
-                        </>
-                    ),
-                },
-                {
-                    path: 'upload-translate',
-                    element: (
-                        <>
-                            <FileTranslator />
-                            <Footer />
-                        </>
-                    ),
-                },
+                { path: 'sanitationpage', element: <SanitationRequestPage /> },
+                { path: 'testing', element: <TestPage /> },
+                { path: 'profile', element: <p>Profile</p> },
+                { path: 'settings', element: <SettingsPage /> },
+                { path: 'prescription', element: <Prescription /> },
+                { path: 'patientrequestpage', element: <AllPatientRequests /> },
+                { path: 'patientrequest', element: <PatientRequest /> },
+                { path: 'transport', element: <PatientTransport /> },
+                { path: 'devicerequest', element: <DeviceReq /> },
+                { path: 'translation', element: <Translate /> },
+                { path: 'upload-translate', element: <FileTranslator /> },
                 {
                     path: 'requests',
                     element: (
                         <TourProvider>
                             <RequestPage />
-                            <Footer />
                         </TourProvider>
                     ),
                 },
-                {
-                    path: 'announcements',
-                    element: (
-                        <>
-                            <TourProvider>
-                                <AnnouncementPage />
-                                <Footer />
-                            </TourProvider>
-                        </>
-                    ),
-                },
+                { path: 'announcements', element: <AnnouncementPage /> },
                 {
                     path: 'announcementform',
                     element: (
-                        <>
-                            <CreateAnnouncement />
-                            <Footer />
-                        </>
+                        <AnnouncementForm
+                            onSubmit={function (data: {
+                                title: string;
+                                content: string;
+                                author: string;
+                                type: 'urgent' | 'general' | 'bulletin';
+                                expirationDate?: string;
+                            }): Promise<void> {
+                                throw new Error('Function not implemented.');
+                            }}
+                        />
                     ),
                 },
-                {
-                    path: 'urgentannouncements',
-                    element: (
-                        <>
-                            <AnnouncementPage defaultTab="urgent" />
-                            <Footer />
-                        </>
-                    ),
-                },
+                { path: 'urgentannouncements', element: <AnnouncementPage defaultTab="urgent" /> },
                 {
                     path: 'generalannouncements',
-                    element: (
-                        <>
-                            <AnnouncementPage defaultTab="general" />
-                            <Footer />
-                        </>
-                    ),
+                    element: <AnnouncementPage defaultTab="general" />,
                 },
                 {
                     path: 'bulletinannouncements',
-                    element: (
-                        <>
-                            <AnnouncementPage defaultTab="bulletin" />
-                            <Footer />
-                        </>
-                    ),
+                    element: <AnnouncementPage defaultTab="bulletin" />,
                 },
             ],
         },
     ]);
+
     return (
         <div className={`${theme} min-h-screen`}>
             <NavbarMGH userType={userType} userName={userFirstName} />
             <RouterProvider router={router} />
+            {!noFooter && <Footer />}
         </div>
     );
 }

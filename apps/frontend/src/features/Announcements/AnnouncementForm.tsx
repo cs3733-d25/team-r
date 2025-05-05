@@ -78,21 +78,21 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
             className="mb-6"
         >
             <TabsList className="grid grid-cols-3">
-                <TabsTrigger value="urgent">Urgent Announcements</TabsTrigger>
-                <TabsTrigger value="general">General Announcements</TabsTrigger>
-                <TabsTrigger value="bulletin">Bulletin Announcements</TabsTrigger>
+                <TabsTrigger value="urgent" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Urgent Announcements</TabsTrigger>
+                <TabsTrigger value="general" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">General Announcements</TabsTrigger>
+                <TabsTrigger value="bulletin" className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300">Bulletin Announcements</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="urgent">{renderForm(true)}</TabsContent>
-            <TabsContent value="general">{renderForm()}</TabsContent>
-            <TabsContent value="bulletin">{renderForm(false, true)}</TabsContent>
+            <TabsContent value="urgent" className={"dark:border-gray-600 dark:bg-background"}>{renderForm(true)}</TabsContent>
+            <TabsContent value="general" className={"dark:border-gray-600 dark:bg-background"}>{renderForm()}</TabsContent>
+            <TabsContent value="bulletin" className={"dark:border-gray-600 dark:bg-background"}>{renderForm(false, true)}</TabsContent>
         </Tabs>
     );
 
     function renderForm(isUrgent = false, isBulletin = false) {
         return (
             <>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6 dark:bg-background">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Title */}
                         <div className="md:col-span-2">
@@ -114,7 +114,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
                                 required
                             />
                         </div>
-
+                      
                         {/* Expiration */}
                         <div className={!isUrgent && !isBulletin ? '' : 'md:col-span-2'}>
                             <Label className="text-sm font-semibold mb-2">

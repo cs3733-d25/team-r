@@ -17,8 +17,9 @@ import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
 import inlineTranslateRouter from "./routes/servicereqs/translationService.ts";
-import announcementRouter from "./routes/announcements.ts";
+import announcementRouter from "./routes/announcements/announcements.ts";
 import uploadTranslateRouter from "./routes/servicereqs/uploadTranslate.ts";
+import notificationsRouter from "./routes/announcements/notifications.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -78,6 +79,7 @@ app.use(API_ROUTES.TRANSLATE, translateRouter);
 app.use(API_ROUTES.INLINETRANSLATOR, inlineTranslateRouter);
 app.use(API_ROUTES.UPLOADTRANSLATE, uploadTranslateRouter);
 app.use(API_ROUTES.ANNOUNCEMENTS, announcementRouter);
+app.use(API_ROUTES.NOTIFICATIONS, notificationsRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

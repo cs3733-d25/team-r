@@ -73,9 +73,9 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
 
     return (
         steps.length > 0 && (
-        <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
+        <div className="absolute top-4 right-4 bg-white dark:bg-background rounded-lg shadow-lg p-4 w-80 max-h-[90%] overflow-y-auto z-10">
             <div className="flex justify-between mb-4 text-sm text-gray-600">
-                <Label className="font-bold text-xl text-black">
+                <Label className="font-bold text-xl text-black dark:text-white">
                     {isInternal ? "Directions" : `${distance} - ${duration}`}
                 </Label>
 
@@ -83,6 +83,7 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
                     {isInternal && (
                     <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">Feet</span>
+                        {displayInfo(
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input
                                 type="checkbox"
@@ -90,8 +91,9 @@ function TextDirections({ steps, distance, duration, useMeters, onUseMetersChang
                                 checked={useMeters}
                                 onChange={() => onUseMetersChange?.(!useMeters)}
                             />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-black after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
-                        </label>
+                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
+                        </label>,
+                        "Click on this button to switch between feet and meters in text directions.")}
                         <span className="text-sm font-medium">Meters</span>
                     </div>)}
                 {displayInfo(

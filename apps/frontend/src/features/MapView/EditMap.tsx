@@ -26,11 +26,6 @@ export function EditMap({ status }: EditMapProps) {
         building: 'Healthcare Center (20 Patriot Pl.)',
         floor: 1,
     });
-    // "Faulkner 1st Floor"
-    //'Multispecialty Clinic, 20 Patriot Pl 3rd Floor, Foxborough, MA 02035'
-    // );
-    // const [building, setBuilding] = useState<string>('Faulkner');
-    // const [currentFloor, setCurrentFloor] = useState<number>(1); // TODO: this be the problem
 
     const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null); // coordinates that were last clicked
     const [editcoordinates, setEditCoordinates] = useState<{ x: string; y: string } | null>({
@@ -123,9 +118,7 @@ export function EditMap({ status }: EditMapProps) {
 
     // check if the instructions should be opened
     useEffect(() => {
-        if (true) {
-            setDialogOpen(true);
-        }
+        setDialogOpen(true);
     }, []);
 
     // function from mapService that makes axios request
@@ -415,7 +408,6 @@ export function EditMap({ status }: EditMapProps) {
                         building: selectedLocation.building,
                         floor: selectedLocation.floor,
                     }}
-                    // floor={currentFloor}
                     onNodeDelete={deleteNode}
                     promiseNodeCreate={requestPromise}
                     promiseEdgeCreate={edgeCreatePromise}
@@ -429,12 +421,14 @@ export function EditMap({ status }: EditMapProps) {
                     onNodeEdit={editNode}
                     onToggle={setToggle}
                     selectedEdgeNodes={edgeNodes}
+                    showLayerControl={true}
                 />
 
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg w-90 h-155 max-h-[calc(100vh-95px)] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
+
+                <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-90 h-155 max-h-[100%] overflow-y-auto overflow-x-hidden z-10 flex flex-col justify-start">
                     <div className="flex  flex-col justify-start float-left">
                         <Label
-                            className="font-bold text-2xl pt-4 pl-4 pb-4"
+                            className="font-bold text-2xl pt-4 pl-4 pb-4 dark:text-white"
                             id={TOUR_STEP_IDS.CLICK_START}
                         >
                             Edit Map
@@ -446,27 +440,27 @@ export function EditMap({ status }: EditMapProps) {
                                 onValueChange={setActiveTab}
                                 className="w-full flex flex-col"
                             >
-                                <TabsList className="w-80 flex">
+                                <TabsList className="w-80 flex dark:bg-aceent">
                                     <TabsTrigger
                                         value="place-node"
-                                        className="border border-gray-300 data-[state=active]:bg-white data-[state=active]:text-black"
+                                        className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
                                     >
                                         Place Node
                                     </TabsTrigger>
                                     <TabsTrigger
                                         value="edit-node"
-                                        className="border border-gray-300 data-[state=active]:bg-white data-[state=active]:text-black"
+                                        className="border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"
                                     >
                                         Edit Node
                                     </TabsTrigger>
                                 </TabsList>
 
                                 <div className={'w-80 flex flex-col'}>
-                                    <TabsContent value="place-node" className="space-y-4">
-                                        <div className="bg-gray-100 p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
-                                            <Label>Click on map to select node location</Label>
+                                    <TabsContent value="place-node" className="space-y-4 dark:bg-background">
+                                        <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md" id={TOUR_STEP_IDS.CLICK_DESCRIPTOR}>
+                                            <Label className="dark:text-white">Click on map to select node location</Label>
                                             {coordinates && (
-                                                <div className="mt-2 text-sm">
+                                                <div className="mt-2 text-sm dark:text-gray-300">
                                                     <p>X: {coordinates.x.toFixed(2)}</p>
                                                     <p>Y: {coordinates.y.toFixed(2)}</p>
                                                     <p>Building: {selectedLocation.building}</p>
@@ -477,29 +471,31 @@ export function EditMap({ status }: EditMapProps) {
 
                                         <div className="space-y-3">
                                             <div id={TOUR_STEP_IDS.NODE_NAME}>
-                                                <Label>Node Name (Optional)</Label>
+                                                <Label className="dark:text-white">Node Name (Optional)</Label>
                                                 <Input
                                                     value={nodeName}
                                                     onChange={(e) => setNodeName(e.target.value)}
                                                     placeholder="Enter node name"
+                                                    className="dark:border-gray-600 dark:text-white dark:bg-gray-700"
                                                 />
                                             </div>
 
                                             <div id={TOUR_STEP_IDS.NODE_TYPE}>
-                                                <Label>Node Type</Label>
+                                                <Label className="dark:text-white">Node Type</Label>
                                                 <Select
                                                     onValueChange={setNodeType}
                                                     value={nodeType}
                                                 >
-                                                    <SelectTrigger>
+                                                    <SelectTrigger className="dark:border-gray-600 dark:text-white dark:bg-gray-700">
                                                         <SelectValue placeholder="Select node type" />
                                                     </SelectTrigger>
-                                                    <SelectContent>
+                                                    <SelectContent className="dark:bg-gray-800">
                                                         <SelectGroup>
                                                             {nodeTypes.map((type) => (
                                                                 <SelectItem
                                                                     key={type.name}
                                                                     value={type.name}
+                                                                    className="dark:hover:bg-gray-700 dark:text-white"
                                                                 >
                                                                     {type.name}
                                                                 </SelectItem>
@@ -519,11 +515,11 @@ export function EditMap({ status }: EditMapProps) {
                                             Save Node
                                         </Button>
 
-                                        <div className="mt-1 pt-4 border-t border-gray-200" id={TOUR_STEP_IDS.SAVE_EDGE}>
-                                            <div className="bg-gray-100 p-3 rounded-md">
-                                                <Label>Click on two nodes to create an edge</Label>
+                                        <div className="mt-1 pt-4 border-t border-gray-200 dark:border-gray-600" id={TOUR_STEP_IDS.SAVE_EDGE}>
+                                            <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md">
+                                                <Label className="dark:text-white">Click on two nodes to create an edge</Label>
                                                 {edgeNodes.length > 0 ? (
-                                                    <div className="mt-2 text-sm">
+                                                    <div className="mt-2 text-sm dark:text-gray-300">
                                                         <p>Node 1: {edgeNodes[0]}</p>
                                                         <p>Node 2: {edgeNodes[1]}</p>
                                                     </div>
@@ -539,15 +535,15 @@ export function EditMap({ status }: EditMapProps) {
                                         </div>
                                     </TabsContent>
 
-                                    <TabsContent value="edit-node" className="space-y-4">
-                                        <div className="bg-gray-100 p-3 rounded-md">
-                                            <Label>Selected Node to Edit</Label>
+                                    <TabsContent value="edit-node" className="space-y-4 dark:bg-background">
+                                        <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-md">
+                                            <Label className="dark:text-white">Selected Node to Edit</Label>
                                             {nodeID !== '' ? (
-                                                <div className="mt-2 text-sm">
+                                                <div className="mt-2 text-sm dark:text-gray-300">
                                                     <p>Selected Node: {nodeID}</p>
                                                 </div>
                                             ) : (
-                                                <p className="text-sm text-gray-500">
+                                                <p className="text-sm text-gray-500 dark:text-gray-400">
                                                     Click on a node to select it for editing
                                                 </p>
                                             )}
@@ -555,31 +551,33 @@ export function EditMap({ status }: EditMapProps) {
 
                                         <div className="space-y-3">
                                             <div>
-                                                <Label>Change Node Name</Label>
+                                                <Label className="dark:text-white">Change Node Name</Label>
                                                 <Input
                                                     value={editnodeName}
                                                     onChange={(e) =>
                                                         setEditNodeName(e.target.value)
                                                     }
                                                     placeholder="Enter new node name"
+                                                    className="dark:border-gray-600 dark:text-white dark:bg-gray-700"
                                                 />
                                             </div>
 
                                             <div>
-                                                <Label>Change Node Type</Label>
+                                                <Label className="dark:text-white">Change Node Type</Label>
                                                 <Select
                                                     onValueChange={setEditNodeType}
                                                     value={editnodeType}
                                                 >
-                                                    <SelectTrigger>
+                                                    <SelectTrigger className="dark:border-gray-600 dark:text-white dark:bg-gray-700">
                                                         <SelectValue placeholder="Select node type" />
                                                     </SelectTrigger>
-                                                    <SelectContent>
+                                                    <SelectContent className="dark:bg-gray-800">
                                                         <SelectGroup>
                                                             {nodeTypes.map((type) => (
                                                                 <SelectItem
                                                                     key={type.name}
                                                                     value={type.name}
+                                                                    className="dark:hover:bg-gray-700 dark:text-white"
                                                                 >
                                                                     {type.name}
                                                                 </SelectItem>
@@ -592,21 +590,22 @@ export function EditMap({ status }: EditMapProps) {
                                             {editcoordinates != null ? (
                                                 <>
                                                     <div>
-                                                        <Label>Change X Coordinate</Label>
+                                                        <Label className="dark:text-white">Change X Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.x}
                                                             onChange={(e) => {
                                                                 setEditCoordinates({
-                                                                x: e.target.value,
-                                                                y: editcoordinates.y,
+                                                                    x: e.target.value,
+                                                                    y: editcoordinates.y,
                                                                 })
                                                             }}
                                                             placeholder="Enter new X Coordinate"
+                                                            className="dark:border-gray-600 dark:text-white dark:bg-gray-700"
                                                         />
                                                     </div>
 
                                                     <div>
-                                                        <Label>Change Y Coordinate</Label>
+                                                        <Label className="dark:text-white">Change Y Coordinate</Label>
                                                         <Input
                                                             value={editcoordinates.y}
                                                             onChange={(e) =>
@@ -616,6 +615,7 @@ export function EditMap({ status }: EditMapProps) {
                                                                 })
                                                             }
                                                             placeholder="Enter new Y Coordinate"
+                                                            className="dark:border-gray-600 dark:text-white dark:bg-gray-700"
                                                         />
                                                     </div>
                                                 </>
@@ -631,21 +631,21 @@ export function EditMap({ status }: EditMapProps) {
                                         </Button>
                                     </TabsContent>
                                     <div className="flex flex-col space-y-2 mt-4">
-                                        <Label>Algorithm</Label>
+                                        <Label className="dark:text-white">Algorithm</Label>
                                         <Select
                                             value={algorithm}
                                             onValueChange={(value: string) =>
                                                 saveAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')
                                             }
                                         >
-                                            <SelectTrigger>
+                                            <SelectTrigger className="dark:border-gray-600 dark:text-white dark:bg-gray-700">
                                                 <SelectValue placeholder="Select algorithm" />
                                             </SelectTrigger>
-                                            <SelectContent>
+                                            <SelectContent className="dark:bg-gray-800">
                                                 <SelectGroup>
-                                                    <SelectItem value="bfs">BFS</SelectItem>
-                                                    <SelectItem value="dfs">DFS</SelectItem>
-                                                    <SelectItem value="dijkstra">
+                                                    <SelectItem value="bfs" className="dark:hover:bg-gray-700 dark:text-white">BFS</SelectItem>
+                                                    <SelectItem value="dfs" className="dark:hover:bg-gray-700 dark:text-white">DFS</SelectItem>
+                                                    <SelectItem value="dijkstra" className="dark:hover:bg-gray-700 dark:text-white">
                                                         Dijkstra's
                                                     </SelectItem>
                                                 </SelectGroup>
@@ -655,7 +655,7 @@ export function EditMap({ status }: EditMapProps) {
                                     <Button
                                         onClick={resetMap}
                                         variant="ghostDestructive"
-                                        className="w-full mt-4 mb-6"
+                                        className="w-full mt-4 mb-6 dark:text-red-400"
                                     >
                                         Reset Map to Default
                                     </Button>

@@ -24,6 +24,7 @@ interface HoverPopoverNavLinkProps {
     label: string;
     href: string;
     items: PopoverItem[];
+    popoverWidth?: string;
 }
 
 /**
@@ -31,9 +32,10 @@ interface HoverPopoverNavLinkProps {
  * @param label - The text to display for the link
  * @param href - The link for the main button
  * @param items - An array of PopoverItem objects, which can be used to create a list of items in the popover
+ * @param popoverWidth
  * @constructor
  */
-export function HoverPopoverNavLink({ label, href, items }: HoverPopoverNavLinkProps) {
+export function HoverPopoverNavLink({ label, href, items, popoverWidth = "auto" }: HoverPopoverNavLinkProps) {
     const [isOpen, setIsOpen] = React.useState(false);
     const closeTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -68,7 +70,7 @@ export function HoverPopoverNavLink({ label, href, items }: HoverPopoverNavLinkP
                         <a href={href}>{label}</a>
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent>
+                <PopoverContent className="p-0" style={{ width: popoverWidth }}>
                     <div className="grid gap-2 p-2">
                         {items.map((item, index) =>
                             item.href ? (

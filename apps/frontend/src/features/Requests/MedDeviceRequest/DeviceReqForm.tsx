@@ -154,7 +154,7 @@ export const DeviceReqForm = () => {
     return (
         <>
 
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto dark:bg-background">
                 <div className=" rounded-lg mt-3">
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-6">

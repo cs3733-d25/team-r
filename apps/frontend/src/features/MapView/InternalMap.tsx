@@ -61,10 +61,7 @@ declare module 'leaflet' {
 interface InternalMapProps {
     pathCoordinates?: [number, number][];
     pathByFloor?: Record<number, [number, number][]>;
-    // currentFloor?: number; // don't need?
-    // this location is dynamic, but does not have to be updated (onLocationChange is optional)
     location: { building: string; floor: number };
-    // floor?: number;
     onLocationChange?: (building: string, floor: number) => void;
     onDataChange?: (name: string, value: string | number) => void; // for actions that are triggered in the internal map using data from the internal map
     onNodeDelete?: (nodeID: string) => Promise<void>; // for actions that are triggered in the internal map using data from the internal map
@@ -79,6 +76,7 @@ interface InternalMapProps {
     onNodeEdit?: (x: number, y: number, nodeID: string) => void;
     onToggle?: (bool: boolean) => void;
     selectedEdgeNodes?: string[];
+    showLayerControl?: boolean; // controls leaflet layer control box visibility
 }
 
 // persistent leaflet elements
@@ -103,15 +101,6 @@ const violetIcon = new L.Icon({
 const blackIcon = new L.Icon({
     iconUrl:
         'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-});
-const orangeIcon = new L.Icon({
-    iconUrl:
-        'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
@@ -163,15 +152,12 @@ const nodePlaceholderOptions = {
     radius: 5,
 };
 
-// we should seriously not use destructuring with this many props... - Akaash
 const InternalMap: React.FC<InternalMapProps> = ({
     pathCoordinates,
     pathByFloor,
     location,
     onLocationChange,
-    onDataChange,
     onNodeDelete,
-    onEdgeDelete,
     promiseNodeCreate,
     promiseEdgeCreate,
     onNodeSelect,
@@ -179,21 +165,15 @@ const InternalMap: React.FC<InternalMapProps> = ({
     showNodes,
     onCoordSelect,
     onNodeDrag,
-    onNodeEdit,
     onToggle,
     selectedEdgeNodes,
+    showLayerControl = false,
 }) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
     const routeLayer = useRef<L.Polyline | null>(null);
     const lastLoadedLocation = useRef({ building: '', floor: -1 });
-    // TODO: needs to match with all the other layer stuff, look at onLocationChange. Just use old one
-    // const activeLayerInfo = useRef<{building: string, floor: number}>({
-    //     building: 'Patriot Place 20',
-    //     floor: 1
-    // });
-    // store the node data and the marker objects for each node
-    // in this way, we can filter markers using node data
+
     const [nodesOnActiveFloor, setNodesOnActiveFloor] = useState<
         { nodeData: Node; marker: L.Marker }[]
     >([]);
@@ -201,10 +181,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
         { edgeData: Edge; polyLine: L.Polyline }[]
     >([]);
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
     const highlightedNodeLayers = useRef<L.Circle[]>([]);
-    const [open, setOpen] = useState(false);
 
     const selectedNodeStyle = {
         color: '#2563eb',
@@ -230,10 +207,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
     const floorLayerWomens = L.layerGroup();
 
     // ******* FUNCTIONS ********
-    // get current active layer info
-    // const getActiveLayerInfo = () => {
-    //     return activeLayerInfo.current;
-    // };
+
     // callback function for clicking on nodes
     function clickMarker(data: Node, marker: L.Marker): void {
         marker.on('click', () => {
@@ -266,7 +240,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
     function dragMarker(node: Node, marker: L.Marker, e: LeafletEvent): void {
         marker.on('drag', () => {
             // parse the new coordinates
-            // super ugly way of truncating to two digits
             const marker = e.target as L.Marker;
             const draggedLatlng = marker.getLatLng();
             const x = parseFloat(draggedLatlng.lat.toFixed(2));
@@ -284,15 +257,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
     console.log('App Update');
     console.log(location.building + ' ' + location.floor);
 
-    function clickEdge(edge: Edge, pLine: L.Polyline) {
-        pLine.on('contextmenu', () => {
-            console.log('delete edge ' + edge.edgeID);
-            if (onEdgeDelete) {
-                onEdgeDelete(edge.edgeID).then(loadAll);
-            }
-        });
-    }
-
     // get all nodes for the current floor and create markers for them as well
     const loadAllNodes = async () => {
         if (
@@ -302,13 +266,12 @@ const InternalMap: React.FC<InternalMapProps> = ({
             return;
         } else {
             try {
-                // const data = await fetchAll();
                 // gets all type of nodes for the floor
                 console.log('Loading nodes');
                 const nodes = (
                     await fetchNodes({ building: location.building, floor: location.floor })
                 ).data;
-                console.log('recieved nodes');
+                console.log('received nodes');
                 console.log(nodes);
 
                 // create fullNodes that have the data of the node and a marker object
@@ -331,9 +294,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
                     }
                 });
 
-                // setAllMarkers(response.data);
-                // console.log(data);
-
                 setNodesOnActiveFloor(fullNodes);
                 lastLoadedLocation.current.floor = fullNodes.floor;
                 lastLoadedLocation.current.building = fullNodes.building;
@@ -350,8 +310,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
             return;
         }
         try {
-            // const data = await fetchAll();
-
             console.log('Loading nodes');
             const edges = (await fetchEdges({ building: location.building, floor: location.floor }))
                 .data;
@@ -368,9 +326,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
             setEdgesOnActiveFloor(fullEdges);
             lastLoadedLocation.current.floor = fullEdges.floor;
             lastLoadedLocation.current.building = fullEdges.building;
-
-            // setAllMarkers(response.data);
-            // console.log(data);
         } catch (err) {
             console.error('Error fetching parking lots:', err);
         }
@@ -379,7 +334,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
     function loadAll() {
         Promise.all([loadAllEdges(), loadAllNodes()]);
         console.log('Loading nodes');
-        // await loadEdges();
     }
 
     function getIcon(nodeType: string) {
@@ -419,7 +373,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
         }
     }
 
-    // return whether or not that marker type should be displayed or not (using Icon
+    // return whether that marker type should be displayed or not (using Icon
     function isFiltered(nodeType: string) {
         switch (nodeType) {
             case 'Entrance':
@@ -501,7 +455,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
      * @param map - the map to draw on
      * @returns {void}
      */
-    const drawPath = (currentFloorPath: [number, number][], map: L.Map) => {
+    const drawPath = (currentFloorPath: [number, number][], map: L.Map): void => {
         // Remove existing route if present
         if (routeLayer.current) {
             routeLayer.current.remove();
@@ -542,11 +496,13 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 title: 'Start',
                 icon: L.divIcon({ className: 'start-marker' }),
             }).addTo(map);
+            map.startMarker.bindPopup(`Starting Point at Coordinates ${currentFloorPath[0]}`).openPopup();
 
             map.endMarker = L.marker(currentFloorPath[currentFloorPath.length - 1], {
                 title: 'End',
                 icon: L.divIcon({ className: 'end-marker' }),
             }).addTo(map);
+            map.endMarker.bindPopup(`Ending Point at Coordinates ${currentFloorPath[1]}`).openPopup();
         }
     };
 
@@ -559,7 +515,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
         if (promiseNodeCreate) {
             console.log(promiseNodeCreate);
             promiseNodeCreate.then(async () => {
-                await loadAll();
+                loadAll();
                 console.log('loaded all stuff');
             });
         }
@@ -571,7 +527,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
             console.log(promiseEdgeCreate);
             promiseEdgeCreate.then(async () => {
                 console.log('Created stuff');
-                await loadAll();
+                loadAll();
                 console.log('loaded all stuff');
             });
         }
@@ -672,42 +628,35 @@ const InternalMap: React.FC<InternalMapProps> = ({
             L.imageOverlay(womens, boundsWomens).addTo(floorLayerWomens);
 
             // layer controls
-            L.control
-                .layers(
-                    {
-                        '20 Patriot Place - Floor 1': floorLayer20_1,
-                        '22 Patriot Place - Floor 1': floorLayer22_1,
-                        '22 Patriot Place - Floor 3': floorLayer22_3,
-                        '22 Patriot Place - Floor 4': floorLayer22_4,
-                        'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
-                        'Faulkner Hospital': floorLayerFaulkner,
-                        'Main Campus Hospital': floorLayerWomens,
-                    },
-                    {}
-                )
-                .addTo(map);
-
-            // tracking layer changes
+            if (showLayerControl) {
+                L.control.layers({
+                    '20 Patriot Place - Floor 1': floorLayer20_1,
+                    '22 Patriot Place - Floor 1': floorLayer22_1,
+                    '22 Patriot Place - Floor 3': floorLayer22_3,
+                    '22 Patriot Place - Floor 4': floorLayer22_4,
+                    'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
+                    'Faulkner Hospital': floorLayerFaulkner,
+                    'Main Campus Hospital': floorLayerWomens,
+                }, {}).addTo(map);
+            }
 
             // add a default layer
-            if (typeof location.building === 'string') {
-                if (location.building.includes('20')) {
-                    floorLayer20_1.addTo(map);
-                } else if (location.building.includes('22')) {
-                    if (location.floor == 1) {
-                        floorLayer22_1.addTo(map);
-                    } else if (location.floor == 3) {
-                        floorLayer22_3.addTo(map);
-                    } else if (location.floor == 4) {
-                        floorLayer22_4.addTo(map);
-                    }
-                } else if (location.building.includes('Chestnut Hill')) {
-                    floorLayerChestnutHill.addTo(map);
-                } else if (location.building.includes('Faulkner')) {
-                    floorLayerFaulkner.addTo(map);
-                } else if (location.building.includes('Main')) {
-                    floorLayerWomens.addTo(map);
+            if (location.building.includes('20')) {
+                floorLayer20_1.addTo(map);
+            } else if (location.building.includes('22')) {
+                if (location.floor == 1) {
+                    floorLayer22_1.addTo(map);
+                } else if (location.floor == 3) {
+                    floorLayer22_3.addTo(map);
+                } else if (location.floor == 4) {
+                    floorLayer22_4.addTo(map);
                 }
+            } else if (location.building.includes('Chestnut Hill')) {
+                floorLayerChestnutHill.addTo(map);
+            } else if (location.building.includes('Faulkner')) {
+                floorLayerFaulkner.addTo(map);
+            } else if (location.building.includes('Main')) {
+                floorLayerWomens.addTo(map);
             }
             map.on('baselayerchange', function (e) {
                 // extract info from layer name
@@ -728,7 +677,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
                     building = 'Main Campus Hospital (75 Francis St.)';
                 }
 
-                // activeLayerInfo.current = {building, floor};
                 console.log('Layer changed to:' + building + floor);
                 location.building = building;
                 location.floor = floor;
@@ -740,7 +688,6 @@ const InternalMap: React.FC<InternalMapProps> = ({
 
             map.on('click', function (e) {
                 // parse the new coordinates
-                // super ugly way of truncating to two digits
                 const x = parseFloat(e.latlng.lat.toFixed(2));
                 const y = parseFloat(e.latlng.lng.toFixed(2));
                 console.log('[' + x + ', ' + y + ']');
@@ -775,6 +722,29 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 // Only draw the path if this floor actually has a path segment
                 if (pathByFloor && pathByFloor[floor] && pathByFloor[floor].length > 1) {
                     drawPath(pathByFloor[floor], map);
+                } else if (floor === 1 && pathByFloor && Object.keys(pathByFloor).length > 0) {
+                    // check if there's any path data
+                    // ensures we don't clear paths on floor 1 if there's path data for other floors
+                    const hasPathOnAnyFloor = Object.values(pathByFloor).some(path => path.length > 1);
+                    if (hasPathOnAnyFloor && pathByFloor[1] && pathByFloor[1].length > 0) {
+                        drawPath(pathByFloor[1], map);
+                        return;
+                    }
+
+                    // clear if no valid path exists for floor 1
+                    if (routeLayer.current) {
+                        routeLayer.current.remove();
+                        routeLayer.current = null;
+                    }
+
+                    if (map.startMarker) {
+                        map.startMarker.remove();
+                        map.startMarker = null;
+                    }
+                    if (map.endMarker) {
+                        map.endMarker.remove();
+                        map.endMarker = null;
+                    }
                 } else {
                     // Clear any existing path if this floor doesn't have a path segment
                     if (routeLayer.current) {
@@ -800,8 +770,8 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 mapInstance.current = null;
             }
         };
-        // update when the nodes and edges on a floor update (idk why buy this works)
-    }, [nodesOnActiveFloor, edgesOnActiveFloor]); //entrances, checkIn, hallways, edges20_1, edges22_1, edges22_3, edges22_4, edgesChestnut, edgesFaulkner
+        // update when the nodes and edges on a floor update
+    }, [nodesOnActiveFloor, edgesOnActiveFloor]);
 
     // Update the path drawing for internal pathfinding
     useEffect(() => {
@@ -943,7 +913,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
                             </Card>
                         </AccordionItem>
                     </Accordion>
-                    <ToggleGroup type={'multiple'} className={'bg-white shadow-md'}>
+                    <ToggleGroup type={'multiple'} className={'bg-white dark:bg-background shadow-md'}>
                         <div className={'flex flex-col p-2 space-y-2'}>
                             <Label className="text-center w-full font-medium">Filter Nodes</Label>
                             <div className={'flex space-x-2 justify-center'}>

@@ -10,30 +10,30 @@ function TranslateRequestTabs() {
             <h1 className="text-3xl font-bold mb-6 text-center pt-12">Translator Request</h1>
             <Tabs defaultValue="translateRequestForm">
                 <TabsList>
-                    <TabsTrigger value="translateRequestForm">
+                    <TabsTrigger value="translateRequestForm" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         Translator Request Form
                     </TabsTrigger>
-                    <TabsTrigger value="translateRequestTable">
+                    <TabsTrigger value="translateRequestTable" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         View All Requests
                     </TabsTrigger>
-                    <TabsTrigger value="translateRequestGraph">
+                    <TabsTrigger value="translateRequestGraph" className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         View Graphs
                     </TabsTrigger>
-                    <TabsTrigger value='inlineTranslator'>
+                    <TabsTrigger value='inlineTranslator' className={"border border-gray-300 dark:border-gray-600 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-black dark:data-[state=active]:text-white dark:text-gray-300"}>
                         Quick Translator
                     </TabsTrigger>
                 </TabsList>
                 <div>
-                    <TabsContent value="translateRequestForm">
+                    <TabsContent value="translateRequestForm" className="dark:bg-background dark:border-gray-600">
                         <TranslateRequestForm />
                     </TabsContent>
-                    <TabsContent value="translateRequestTable">
+                    <TabsContent value="translateRequestTable" className="dark:bg-background dark:border-gray-600">
                         <TranslateRequestPage />
                     </TabsContent>
-                    <TabsContent value="translateRequestGraph">
+                    <TabsContent value="translateRequestGraph" className="dark:bg-background dark:border-gray-600">
                         <Graphs requestType="Translate"/>
                     </TabsContent>
-                    <TabsContent value='inlineTranslator'>
+                    <TabsContent value='inlineTranslator' className="dark:bg-background dark:border-gray-600">
                         <InlineTranslator />
                     </TabsContent>
                 </div>

@@ -1,4 +1,4 @@
-import {Bar, BarChart, XAxis, YAxis} from "recharts"
+import {Bar, BarChart, Cell, LabelList, XAxis, YAxis} from "recharts"
 import { Pie, PieChart } from "recharts"
 
 import {ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/components/ui/chart.tsx"
@@ -18,6 +18,13 @@ export function Graphs({requestType}:{requestType:string}) {
     const priorityOrder :{[key:string]:number}={Low:0, Medium:1, High:2, Urgent:3}
     const [locationData, setLocationData] = useState([])
     const locationCount:Record<string, number> = {}
+    const locationColor:Record<string,string>={
+"Healthcare Center (20 Patriot Pl.)":"#6C8EB1",
+        "Faulkner Hospital": "#304269",
+        "Healthcare Center (22 Patriot Pl.)":"#64748BFF",
+        "Healthcare Center (Chestnut Hill)":"#1E293BFF",
+        "Main Campus Hospital (75 Francis St.)":"#3B82F6FF",
+    }
 
     useEffect(() => {
         retrieveFromDatabase();
@@ -140,16 +147,21 @@ console.log("priority Count: ",priorityCount);
     }))
     const sortedPriority =[...priorityChart].sort((a,b) => priorityOrder[a.priority] - priorityOrder[b.priority])
 console.log("Priority Chart:",priorityChart);
+    const total = priorityChart.reduce((sum,current)=>sum + current.count,0)
+    const priorityPercent = sortedPriority.map(current=>({...current, percent: ((current.count/total)*100).toFixed(0)+'%'}))
+    const locationPercent = locationChart.map(current=>({...current, labeled: `${current.location} ${((current.counts/total)*100).toFixed(0)+'%'}`}))
+
+
     return(
-        <div className ="h-64 flex flex-col justify-center mt-100 mb-100 w-200 mx-auto">
+        <div className ="h-64 flex flex-col justify-center mt-70 mb-70 w-150 mx-auto">
             <h1 className={"text-center text-2xl"}>Priority</h1>
         <ChartContainer config={chartConfig}>
-            <BarChart data={sortedPriority}>
+            <BarChart data={priorityPercent}>
                 <ChartTooltip content={<ChartTooltipContent />}>
 
                 </ChartTooltip>
             <Bar dataKey ="count" fill = "#304269">
-
+<LabelList dataKey ="percent" position="inside" fill="white" ></LabelList>
             </Bar>
                 <XAxis
                     dataKey="priority"
@@ -168,28 +180,20 @@ console.log("Priority Chart:",priorityChart);
         </ChartContainer>
             <h1 className={"text-center text-2xl"}>Location</h1>
             <ChartContainer config={chartConfig} >
-                <BarChart data={locationChart}>
+                <PieChart>
                     <ChartTooltip content={<ChartTooltipContent />}>
 
                     </ChartTooltip>
-                    <Bar dataKey ="counts" fill = "#304269">
+                    <Pie data={locationPercent} dataKey ="counts" nameKey = "location" >
+                        <LabelList dataKey="labeled" position="inside"></LabelList>
+                        {locationChart.map((place)=>(
+                            <Cell  fill={locationColor[place.location]}></Cell>
 
-                    </Bar>
-                    <XAxis
-                        dataKey="location"
-                        tickLine={false}
-                        tickMargin={10}
-                        axisLine={false}
-                        tickFormatter={(value) => value.slice(0, 21)}
+                        ))}
+                    </Pie>
 
-                    ></XAxis>
-                    <YAxis
-                        dataKey="counts"
-                        tickLine={false}
-                        tickMargin={10}
-                        axisLine={false}
-                    ></YAxis>
-                </BarChart>
+
+                </PieChart>
             </ChartContainer>
         </div>
     )
