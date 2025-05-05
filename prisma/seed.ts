@@ -1,4 +1,35 @@
-import client from "../apps/backend/src/bin/prisma-client.ts";
+import client from '../apps/backend/src/bin/prisma-client.ts';
+
+async function createAnnouncementWithNotifications(announcementData: {
+    id: string;
+    title: string;
+    content: string;
+    date: Date;
+    author: string;
+    type: string;
+    expirationDate: Date | null;
+}) {
+    const newAnnouncement = await client.announcement.create({
+        data: announcementData,
+    });
+
+    const employees = await client.employee.findMany();
+
+    await client.notification.createMany({
+        data: employees.map((employee) => ({
+            userId: employee.id,
+            title: `New ${announcementData.type} Announcement: ${announcementData.title}`,
+            content:
+                announcementData.content.substring(0, 100) +
+                (announcementData.content.length > 100 ? '...' : ''),
+            type: 'ANNOUNCEMENT',
+            sourceId: newAnnouncement.id,
+            expiresAt: announcementData.expirationDate || null,
+        })),
+    });
+
+    return newAnnouncement;
+}
 
 async function main() {
     // Create user type
@@ -6,45 +37,44 @@ async function main() {
         data: [
             { id: 'Employee', name: 'Employee' },
             { id: 'Patient', name: 'Patient' },
-            { id: 'Admin', name: 'Admin' }
+            { id: 'Admin', name: 'Admin' },
         ],
-        skipDuplicates: true
+        skipDuplicates: true,
     });
 
-        // 3. Create user
-        await client.user.create({
-            data: {
-                id: 'admin',
-                email: 'softengd25r@gmail.com',
-                firstName: 'admin',
-                lastName: 'adminlast',
-                userType: 'Admin'
-            }
-        });
+    // 3. Create user
+    await client.user.create({
+        data: {
+            id: 'admin',
+            email: 'softengd25r@gmail.com',
+            firstName: 'admin',
+            lastName: 'adminlast',
+            userType: 'Admin',
+        },
+    });
 
-        // 4. Create employee (after department is available)
-        await client.employee.create({
-            data: {
-                id: 'admin',
-                firstName: 'admin',
-                lastName: 'adminlast',
-                departmentId: 'Urology PP20-1',
-                role: 'Admin',
-                onShift: true,
-            }
+    // 4. Create employee (after department is available)
+    await client.employee.create({
+        data: {
+            id: 'admin',
+            firstName: 'admin',
+            lastName: 'adminlast',
+            departmentId: 'Urology PP20-1',
+            role: 'Admin',
+            onShift: true,
+        },
+    });
 
-        });
-
-        //admin
-        await client.user.create({
-            data: {
-                id: 'Staff',
-                email: 'staffd25r@gmail.com',
-                firstName: 'Staff',
-                lastName: 'Staff',
-                userType: 'Admin',
-            }
-        });
+    //admin
+    await client.user.create({
+        data: {
+            id: 'Staff',
+            email: 'staffd25r@gmail.com',
+            firstName: 'Staff',
+            lastName: 'Staff',
+            userType: 'Admin',
+        },
+    });
     await client.employee.create({
         data: {
             id: 'Staff',
@@ -53,10 +83,10 @@ async function main() {
             departmentId: 'Blood Draw/Phlebotomy PP20-1',
             role: 'Administrator',
             onShift: true,
-        }
+        },
     });
 
-        //employees
+    //employees
     await client.user.create({
         data: {
             id: 'Nora',
@@ -64,7 +94,7 @@ async function main() {
             userType: 'Employee',
             firstName: 'Nora',
             lastName: 'Cleary',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -74,7 +104,7 @@ async function main() {
             departmentId: 'Pharmacy PP20-1',
             role: 'Maintenance',
             onShift: true,
-        }
+        },
     });
 
     //nora admin
@@ -85,7 +115,7 @@ async function main() {
             userType: 'Admin',
             firstName: 'Nora',
             lastName: 'Cleary',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -95,7 +125,7 @@ async function main() {
             departmentId: 'Pharmacy PP20-1',
             role: 'Admin',
             onShift: true,
-        }
+        },
     });
 
     await client.user.create({
@@ -105,7 +135,7 @@ async function main() {
             firstName: 'Akaash',
             lastName: 'Walker',
             userType: 'Employee',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -115,7 +145,7 @@ async function main() {
             departmentId: 'Radiology CH-1',
             role: 'Doctor',
             onShift: true,
-        }
+        },
     });
     //akaash admin
     await client.user.create({
@@ -125,7 +155,7 @@ async function main() {
             firstName: 'Akaash',
             lastName: 'Walker',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -135,7 +165,7 @@ async function main() {
             departmentId: 'Radiology CH-1',
             role: 'Admin',
             onShift: true,
-        }
+        },
     });
 
     await client.user.create({
@@ -145,7 +175,7 @@ async function main() {
             firstName: 'Sarayu',
             lastName: 'Vijayanagaram',
             userType: 'Employee',
-        }
+        },
     });
 
     await client.employee.create({
@@ -156,7 +186,7 @@ async function main() {
             departmentId: 'Vein Care Services PP22-3',
             role: 'Doctor',
             onShift: true,
-        }
+        },
     });
 
     //sarayu admin
@@ -167,7 +197,7 @@ async function main() {
             firstName: 'Sarayu',
             lastName: 'Vijayanagaram',
             userType: 'Admin',
-        }
+        },
     });
 
     await client.employee.create({
@@ -178,7 +208,7 @@ async function main() {
             departmentId: 'Vein Care Services PP22-3',
             role: 'Admin',
             onShift: true,
-        }
+        },
     });
 
     await client.user.create({
@@ -188,7 +218,7 @@ async function main() {
             firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Employee',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -198,7 +228,7 @@ async function main() {
             departmentId: 'Vein Care Services PP22-3',
             role: 'Doctor',
             onShift: true,
-        }
+        },
     });
 
     //owen admin
@@ -209,7 +239,7 @@ async function main() {
             firstName: 'Owen',
             lastName: 'Miller',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -219,7 +249,7 @@ async function main() {
             departmentId: 'Vein Care Services PP22-3',
             role: 'Admin',
             onShift: true,
-        }
+        },
     });
 
     //Eployee not on shift - Brian, Riley, Daksh
@@ -230,7 +260,7 @@ async function main() {
             firstName: 'Brian',
             lastName: 'Grande',
             userType: 'Employee',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -240,7 +270,7 @@ async function main() {
             departmentId: 'Primary Care PP22-4',
             role: 'Doctor',
             onShift: false,
-        }
+        },
     });
 
     //brian - admin
@@ -251,7 +281,7 @@ async function main() {
             firstName: 'Brian',
             lastName: 'Grande',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -261,7 +291,7 @@ async function main() {
             departmentId: 'Primary Care PP22-4',
             role: 'Admin',
             onShift: false,
-        }
+        },
     });
 
     await client.user.create({
@@ -271,7 +301,7 @@ async function main() {
             firstName: 'Riley',
             lastName: 'Meyers',
             userType: 'Employee',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -281,7 +311,7 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'IT Support',
             onShift: false,
-        }
+        },
     });
 
     //riley admin
@@ -292,7 +322,7 @@ async function main() {
             firstName: 'Riley',
             lastName: 'Meyers',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -302,7 +332,7 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Admin',
             onShift: false,
-        }
+        },
     });
 
     await client.user.create({
@@ -312,7 +342,7 @@ async function main() {
             firstName: 'Daksh',
             lastName: 'Gajaria',
             userType: 'Employee',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -322,7 +352,7 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Nurse',
             onShift: false,
-        }
+        },
     });
 
     //daksh admin
@@ -333,7 +363,7 @@ async function main() {
             firstName: 'Daksh',
             lastName: 'Gajaria',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -343,10 +373,8 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Admin',
             onShift: false,
-        }
+        },
     });
-
-
 
     //Patient
     await client.user.create({
@@ -356,7 +384,7 @@ async function main() {
             firstName: 'Josh',
             lastName: 'Gifford',
             userType: 'Patient',
-        }
+        },
     });
     await client.patient.create({
         data: {
@@ -365,8 +393,8 @@ async function main() {
             lastName: 'Gifford',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'Akaash'
-        }
+            assignedDoctorId: 'Akaash',
+        },
     });
 
     //josh admin
@@ -377,7 +405,7 @@ async function main() {
             firstName: 'Josh',
             lastName: 'Gifford',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -387,7 +415,7 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Admin',
             onShift: false,
-        }
+        },
     });
 
     await client.user.create({
@@ -397,7 +425,7 @@ async function main() {
             firstName: 'Alex',
             lastName: 'lowczyk',
             userType: 'Patient',
-        }
+        },
     });
     await client.patient.create({
         data: {
@@ -406,8 +434,8 @@ async function main() {
             lastName: 'Lowczyk',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'Akaash'
-        }
+            assignedDoctorId: 'Akaash',
+        },
     });
 
     //alex admin
@@ -418,7 +446,7 @@ async function main() {
             firstName: 'Alex',
             lastName: 'Lowczyk',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -428,7 +456,7 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Admin',
             onShift: false,
-        }
+        },
     });
 
     await client.user.create({
@@ -438,7 +466,7 @@ async function main() {
             firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Patient',
-        }
+        },
     });
     await client.patient.create({
         data: {
@@ -447,8 +475,8 @@ async function main() {
             lastName: 'Hitt',
             dateOfBirth: new Date('1990-05-15'),
             phone: '123-456-7890',
-            assignedDoctorId: 'Owen'
-        }
+            assignedDoctorId: 'Owen',
+        },
     });
 
     //keagan admin
@@ -459,7 +487,7 @@ async function main() {
             firstName: 'Keagan',
             lastName: 'Hitt',
             userType: 'Admin',
-        }
+        },
     });
     await client.employee.create({
         data: {
@@ -469,9 +497,8 @@ async function main() {
             departmentId: 'Kidney (Renal) Medicine PP22-3',
             role: 'Admin',
             onShift: false,
-        }
+        },
     });
-
 
     //Requests
     await client.deviceRequest.create({
@@ -480,15 +507,14 @@ async function main() {
             priority: 'High',
             building: 'Healthcare Center (Chestnut Hill)',
             room: '111',
-            department: "Endoscopy Center",
+            department: 'Endoscopy Center',
             //requestTime:
-            comments: "Please hurry",
+            comments: 'Please hurry',
             employeeID: 'Riley',
             /*employeeName: */
             status: 'Accepted',
             assignedEmployeeID: 'Owen',
-
-        }
+        },
     });
     await client.deviceRequest.create({
         data: {
@@ -496,14 +522,14 @@ async function main() {
             priority: 'Medium',
             building: 'Faulkner Hospital',
             room: '121',
-            department: "Blood Drawing Lab",
+            department: 'Blood Drawing Lab',
             //requestTime:
-            comments: "Need it promptly",
+            comments: 'Need it promptly',
             employeeID: 'Daksh',
             /*employeeName: */
             status: 'In Progress',
             assignedEmployeeID: 'Brian',
-        }
+        },
     });
     await client.deviceRequest.create({
         data: {
@@ -511,17 +537,15 @@ async function main() {
             priority: 'High',
             building: 'Healthcare Center (20 Patriot Pl.)',
             room: '125',
-            department: "Urgent Care Center",
+            department: 'Urgent Care Center',
             //requestTime:
             comments: "Don't waste time on this",
             employeeID: 'Akaash',
             /*employeeName: */
             status: 'Accepted',
             assignedEmployeeID: 'Owen',
-
-        }
+        },
     });
-
 
     await client.pharmacyRequest.create({
         data: {
@@ -529,7 +553,7 @@ async function main() {
             /*employeeName: */
             priority: 'Medium',
             building: 'Healthcare Center (22 Patriot Pl.)',
-            department: "Allergy",
+            department: 'Allergy',
             patientID: 'Josh',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
             drugName: 'Zantac',
@@ -542,7 +566,7 @@ async function main() {
             refills: 2,
             additionalInstructions: 'Take by mouth',
             status: 'In Progress',
-            assignedEmployeeID: 'Brian'
+            assignedEmployeeID: 'Brian',
         },
     });
     await client.pharmacyRequest.create({
@@ -551,7 +575,7 @@ async function main() {
             /*employeeName: */
             priority: 'Low',
             building: 'Faulkner Hospital',
-            department: "Cardiac Rehab",
+            department: 'Cardiac Rehab',
             patientID: 'Keagan',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
             drugName: 'Tylenol',
@@ -564,7 +588,7 @@ async function main() {
             refills: 0,
             additionalInstructions: 'Take by mouth',
             status: 'Complete',
-            assignedEmployeeID: 'Sarayu'
+            assignedEmployeeID: 'Sarayu',
         },
     });
     await client.pharmacyRequest.create({
@@ -573,7 +597,7 @@ async function main() {
             /*employeeName: */
             priority: 'High',
             building: 'Faulkner Hospital',
-            department: "Foot and Ankle Center",
+            department: 'Foot and Ankle Center',
             patientID: 'Alex',
             // patient: { connect: { id: parseInt(request.patientID) } }, // connect to whatever patient has that ID number
             drugName: 'Acetaminophen',
@@ -586,10 +610,9 @@ async function main() {
             refills: 1,
             additionalInstructions: 'Take by mouth',
             status: 'In Progress',
-            assignedEmployeeID: 'Daksh'
+            assignedEmployeeID: 'Daksh',
         },
     });
-
 
     await client.patientRequest.create({
         data: {
@@ -631,10 +654,8 @@ async function main() {
             request: 'Food',
             comment: 'Hungry patient',
             assignedEmployeeID: 'Nora',
-
         },
     });
-
 
     await client.transportRequest.create({
         data: {
@@ -736,71 +757,64 @@ async function main() {
             status: 'Pending',
             priority: 'Medium',
             comments: 'N/A',
-            assignedEmployeeID: 'Nora'
-        }
+            assignedEmployeeID: 'Nora',
+        },
     });
     await client.translateRequest.create({
         data: {
             employeeID: 'Daksh',
             language: 'Mandarin',
             building: 'Healthcare Center (Chestnut Hill)',
-            department:  "Endoscopy Center",
+            department: 'Endoscopy Center',
             roomNumber: '20',
             status: 'Canceled',
             priority: 'High',
             comments: 'Patient needs written instructions in mandarin.',
             assignedEmployeeID: 'Riley',
-        }
+        },
     });
     await client.translateRequest.create({
         data: {
             employeeID: 'Riley',
             language: 'Polish',
             building: 'Healthcare Center (Chestnut Hill)',
-            department:  "Endoscopy Center",
+            department: 'Endoscopy Center',
             roomNumber: '120',
             status: 'Accepted',
             priority: 'Low',
             comments: 'N/A',
             assignedEmployeeID: 'Sarayu',
-        }
+        },
     });
 
-    // Announcements
-    await client.announcement.create({
-        data: {
-            id: 'ann1',
-            title: 'Updated COVID-19 Protocol',
-            content: 'Effective immediately, all staff must wear N95 masks when working with immunocompromised patients. Updated PPE guidelines are available on the intranet.',
-            date: new Date('2023-11-15'),
-            author: 'Sarayu',
-            type: 'urgent',
-            expirationDate: new Date('2024-01-15')
-        }
+    await createAnnouncementWithNotifications({
+        id: 'ann1',
+        title: 'Updated COVID-19 Protocol',
+        content: 'Effective immediately, all staff must wear N95 masks...',
+        date: new Date('2025-05-03'),
+        author: 'Sarayu',
+        type: 'urgent',
+        expirationDate: null,
     });
 
-    await client.announcement.create({
-        data: {
-            id: 'ann2',
-            title: 'Annual Staff Appreciation Week',
-            content: 'Staff Appreciation Week will be held December 4-8. Activities include a catered lunch on Monday, wellness workshop on Wednesday, and department awards on Friday.',
-            date: new Date('2023-11-20'),
-            author: 'Owen',
-            type: 'general',
-            expirationDate: new Date('2023-12-09')
-        }
+    await createAnnouncementWithNotifications({
+        id: 'ann2',
+        title: 'Annual Staff Appreciation Week',
+        content: 'Staff Appreciation Week will be held May 5-9. Activities include a catered lunch on Monday, wellness workshop on Wednesday, and department awards on Friday.',
+        date: new Date('2025-05-03'),
+        author: 'Owen',
+        type: 'general',
+        expirationDate: new Date('2025-05-10'),
     });
 
-    await client.announcement.create({
-        data: {
-            id: 'ann3',
-            title: 'EHR System Maintenance',
-            content: 'The Electronic Health Record system will be down for maintenance on Sunday, November 26th from 2AM-6AM. Please complete all critical documentation before this time.',
-            date: new Date('2023-11-22'),
-            author: 'Brian',
-            type: 'bulletin',
-            expirationDate: null
-        }
+    await createAnnouncementWithNotifications({
+        id: 'ann3',
+        title: 'EHR System Maintenance',
+        content: 'The Electronic Health Record system will be down for maintenance on June 2nd from 2AM-6AM. Please complete all critical documentation before this time.',
+        date: new Date('2025-06-02'),
+        author: 'Brian',
+        type: 'bulletin',
+        expirationDate: new Date('2025-06-03'),
     });
 
     console.log('Users and Requests seeded successfully!');
@@ -808,8 +822,8 @@ async function main() {
     await client.algorithm.create({
         data: {
             algo: 'bfs',
-        }
-    })
+        },
+    });
 }
 
 main()
