@@ -23,7 +23,7 @@ import { useLocation } from 'react-router-dom';
 import { fetchPath, useMapData } from '@/features/MapView/mapService';
 import { VoiceControl } from '@/components/VoiceControl.tsx';
 import { Node } from '../../../../backend/src/routes/maps/mapData.ts';
-import {displayInfo} from "@/features/MapView/DisplayInformation.tsx";
+import { displayInfo } from '@/features/MapView/DisplayInformation.tsx';
 
 
 declare global {
@@ -55,7 +55,7 @@ export function MapPage() {
     const [currentFloor, setCurrentFloor] = useState<number>(1);
     // the building name (e.g. "Healthcare Center (20 Patriot Pl.)")
     const [selectedBuilding] = useState<string>(
-        buildingIdentifier || getBuildingFromLocation(selectedLocation)
+        buildingIdentifier || getBuildingFromLocation(selectedLocation),
     );
     const [accessibleRoute, setAccessibleRoute] = useState<boolean>(false);
     const [pathCoordinates, setPathCoordinates] = useState<[number, number][]>([]);
@@ -71,6 +71,7 @@ export function MapPage() {
         });
         return mapData;
     }
+
     const { parkingLots, departments } = getParkingAndDepartments();
     const [directionStrings, setDirectionStrings] = useState<string[]>([]);
     const [lastUsedNodes, setLastUsedNodes] = useState<Node[] | null>(null);
@@ -107,7 +108,7 @@ export function MapPage() {
 
             // keep the parking lot if its name matches the one of the selected building
             return buildingMap[selectedBuilding]?.some((buildingName) =>
-                lot.building.toUpperCase().includes(buildingName.toUpperCase())
+                lot.building.toUpperCase().includes(buildingName.toUpperCase()),
             );
         });
         setFilterParkingLots(filtered);
@@ -125,7 +126,8 @@ export function MapPage() {
         try {
             console.log('parking lot: ', selectedParkinglot);
             console.log('department lot: ', selectedDepartment);
-        } catch {}
+        } catch {
+        }
     };
 
     // Main “Get Directions” handler
@@ -230,7 +232,7 @@ export function MapPage() {
             return useMeters
                 ? `${(feet * 0.3048).toFixed(1)} meters`
                 : `${Math.round(feet)} feet`;
-        }
+        };
 
 
         try {
@@ -260,7 +262,6 @@ export function MapPage() {
                 const distanceText = convertDistance(rawDistance);
 
 
-
                 if (currentNode.floor !== prevNode.floor) {
                     const goingUp = currentNode.floor > prevNode.floor;
                     const direction = goingUp ? 'up' : 'down';
@@ -274,7 +275,7 @@ export function MapPage() {
                 }
                 const directionChange = calculateDirectionChange(prevNode, currentNode, nextNode);
                 enhancedDirections.push(
-                    `In ${distanceText}, ${directionChange} toward ${nextNode.shortName}`
+                    `In ${distanceText}, ${directionChange} toward ${nextNode.shortName}`,
                 );
             }
 
@@ -299,12 +300,12 @@ export function MapPage() {
         // Calculate vectors for previous and current segments
         const prevVector = {
             dx: current.xcoord - prev.xcoord,
-            dy: current.ycoord - prev.ycoord
+            dy: current.ycoord - prev.ycoord,
         };
 
         const currentVector = {
             dx: next.xcoord - current.xcoord,
-            dy: next.ycoord - current.ycoord
+            dy: next.ycoord - current.ycoord,
         };
 
         // Calculate angle between vectors using atan2
@@ -320,11 +321,11 @@ export function MapPage() {
 
         // Determine direction based on angle difference
         if (angleDiff >= 30 && angleDiff < 150) {
-            return "turn right";
+            return 'turn right';
         } else if (angleDiff <= -30 && angleDiff > -150) {
-            return "turn left";
+            return 'turn left';
         } else {
-            return "continue straight";
+            return 'continue straight';
         }
     };
 
@@ -353,26 +354,21 @@ export function MapPage() {
     return (
         <div className="flex flex-col h-[calc(100vh-65px)] overflow-hidden">
             <div className="flex-1 w-full relative">
-                {/* Internal map with the computed path overlaid */}
+                {/* Internal map */}
                 <InternalMap
-                    location={{
-                        building: selectedBuilding,
-                        floor: currentFloor,
-                    }}
+                    location={{ building: selectedBuilding, floor: currentFloor }}
                     pathCoordinates={pathCoordinates}
                     pathByFloor={pathByFloor}
                     showEdges={false}
                     showNodes={false}
                 />
 
-
-
                 {/* Sidebar controls */}
-                <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-4 w-108 max-h-[90%] overflow-y-auto z-10">
-                    <div className="mb-4">
-                        <div className="flex items-center justify-between mb-2">
-                            <Label className="font-bold text-xl">Selected Location</Label>
-                            {displayInfo(
+                <details className="absolute top-4 left-4 z-10 bg-white rounded-lg shadow-lg w-108">
+                    <summary className="px-4 py-2 cursor-pointer font-bold">Controls</summary>
+                    <div className="p-4 max-h-[90%] overflow-y-auto">
+                        <Label className="font-bold text-xl">Selected Location</Label>
+                        {displayInfo(
                             <VoiceControl
                                 selectedBuilding={buildingIdentifier}
                                 onParkingLotSelected={setSelectedParkinglot}
@@ -383,66 +379,61 @@ export function MapPage() {
                                     handleGetDirections();
                                 }}
                             />,
-                                "Click on this button to enable microphone use for voice control. To find a path, say something like, \"Take me from Patient Parking to Dialysis\".")}
-                        </div>
-                        <div className={'font-bold text-secondary text-lg'}>
-                            {getShortLocationName(selectedLocation)}
-                        </div>
+                            'Click on this button to enable microphone use for voice control. To find a path, say something like, "Take me from Patient Parking to Dialysis".',
+                        )}
                     </div>
+                    <div className={'font-bold text-secondary text-lg'}>
+                        {getShortLocationName(selectedLocation)}
+                    </div>
+                </details>
 
-                    <div className="space-y-4">
-                        <Label>
-                            Select a parking lot and department to get directions to the appropriate check-in desk.
-                        </Label>
-                        {/* Parking lot picker */}
-                        <Select
-                            value={selectedParkinglot}
-                            onValueChange={setSelectedParkinglot}
-                        >
-                            <div>
-                                {displayInfo(
+                <div className="space-y-4">
+                    <Label>
+                        Select a parking lot and department to get directions to the appropriate check-in desk.
+                    </Label>
+                    {/* Parking lot picker */}
+                    <Select value={selectedParkinglot} onValueChange={setSelectedParkinglot}>
+                        <div>
+                            {displayInfo(
                                 <SelectTrigger>
                                     <SelectValue placeholder="Parking Lot" />
                                 </SelectTrigger>,
-                                "Click here to choose a parking lot as a starting location.")}
-                            </div>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {filterParkingLots.map((lot) => (
-                                        <SelectItem key={lot.nodeID} value={lot.nodeID}>
-                                            {lot.shortName}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                                'Click here to choose a parking lot as a starting location.')}
+                        </div>
+                        <SelectContent>
+                            <SelectGroup>
+                                {filterParkingLots.map((lot) => (
+                                    <SelectItem key={lot.nodeID} value={lot.nodeID}>
+                                        {lot.shortName}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
 
-                        {/* Department picker */}
-                        <Select
-                            value={selectedDepartment}
-                            onValueChange={setSelectedDepartment}
-                        >
-                            <div>
-                                {displayInfo(
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Department" />
-                                    </SelectTrigger>,
-                                    "Click here to choose a department as a destination."
-                                )}
-                            </div>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {departments.map((dept) => (
-                                        <SelectItem key={dept.id} value={dept.id}>
-                                            {dept.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
-
+                    {/* Department picker */}
+                    <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
                         <div>
                             {displayInfo(
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Department" />
+                                </SelectTrigger>,
+                                'Click here to choose a department as a destination.',
+                            )}
+                        </div>
+                        <SelectContent>
+                            <SelectGroup>
+                                {departments.map((dept) => (
+                                    <SelectItem key={dept.id} value={dept.id}>
+                                        {dept.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+
+                    <div>
+                        {displayInfo(
                             <div className="flex items-center space-x-2">
                                 <Checkbox
                                     id="accessibleRoute"
@@ -453,19 +444,19 @@ export function MapPage() {
                                     Show Accessible Route
                                 </Label>
                             </div>,
-                            "Click on this checkbox to select only accessible routes.")}
-                        </div>
+                            'Click on this checkbox to select only accessible routes.')}
+                    </div>
 
-                        {/* Trigger pathfinding */}
-                        {displayInfo(
+                    {/* Trigger pathfinding */}
+                    {displayInfo(
                         <Button className="w-full" onClick={handleGetDirections}>
                             Get Directions
                         </Button>,
-                        "Once a parking lot and department are selected, click here to display directions.")}
-                    </div>
+                        'Once a parking lot and department are selected, click here to display directions.')}
+                </div>
 
-                    {/* Floor navigation */}
-                    {selectedBuilding.includes("22") &&
+                {/* Floor navigation */}
+                {selectedBuilding.includes('22') && (
                     <div className="mt-4 pt-4 border-t">
                         <Label className="font-bold mb-2">Floors</Label>
                         {availableFloors.map((floor) => (
@@ -484,7 +475,7 @@ export function MapPage() {
                                         setCurrentFloor(floor);
                                         window.goToFloor?.(
                                             floor,
-                                            getBuildingConstant(selectedBuilding)
+                                            getBuildingConstant(selectedBuilding),
                                         );
 
                                         if (flashingFloors?.includes(floor)) {
@@ -494,19 +485,19 @@ export function MapPage() {
                                 >
                                     Floor {floor}
                                 </Button>,
-                                `Click here to display the route on Floor ${floor}.`)
+                                    `Click here to display the route on Floor ${floor}.`
+                            )
                         ))}
-                    </div>}
-                </div>
-                {showDirections && (
-                    <div>
-                        <TextDirections
-                            steps={directionStrings}
-                            useMeters={useMeters}
-                            onUseMetersChange={(useMeters) => setUseMeters(useMeters)}
-                            isInternal={true}
-                        />
                     </div>
+                )}
+
+                {showDirections && (
+                    <details className="absolute bottom-4 right-4 z-10 bg-white rounded-lg shadow-lg w-80">
+                        <summary className="px-4 py-2 cursor-pointer font-bold">Directions</summary>
+                        <div className="p-4 space-y-4 max-h-[90%] overflow-y-auto">
+                            <TextDirections steps={directionStrings} />
+                        </div>
+                    </details>
                 )}
             </div>
         </div>
