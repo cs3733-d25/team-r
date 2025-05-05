@@ -4,16 +4,18 @@ import client from "../../bin/prisma-client.ts";
 const router: Router = express.Router();
 
 // get notifs for the current user
-router.post("/user", async function (req: Request, res: Response) {
+router.post("/user", async function (req: Request, res: Response): Promise<void> {
   const { email } = req.body;
 
   try {
-    const user = await client.employee.findFirst({
+    const user = await client.user.findUnique({
       where: { email },
+      include: {employee: true},
     });
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
+    if (!user || !user.employee) {
+      res.status(404).json({ error: "User not found" });
+      return;
     }
 
     const now = new Date();
