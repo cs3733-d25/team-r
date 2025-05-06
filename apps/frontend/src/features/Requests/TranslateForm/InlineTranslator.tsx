@@ -250,7 +250,7 @@ export function InlineTranslator() {
     }, [setSteps]);
 
     return (
-        <div className="bg-white dark:bg-background dark:border-grey-600 rounded-lg shadow-lg p-4 max-w-2xl mx-auto">
+        <div>
             <h2 className="text-xl font-bold mb-4" id={TOUR_STEPS_IDS_TRANS.CLICK_START}>Quick Translator</h2>
 
             <div className="flex space-x-2 mb-4" id={TOUR_STEPS_IDS_TRANS.CHOOSE}>
@@ -280,7 +280,7 @@ export function InlineTranslator() {
                                     value={sourceText}
                                     onChange={(e) => setSourceText(e.target.value)}
                                     placeholder="Enter text to translate..."
-                                    className="h-24"
+                                    className="w-full h-48 px-4 py-2 rounded-md border border-border bg-input"
                                 />
                             </div>
                             {speechSupported && (
