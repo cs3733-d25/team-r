@@ -348,7 +348,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localOptions,
                                             employeeID: e.target.value
                                         })}
-                                        placeholder="Enter ID"
+                                        placeholder="Enter employee name"
                                         className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
                                     />
                                     <Button
