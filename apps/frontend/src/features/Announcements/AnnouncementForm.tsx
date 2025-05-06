@@ -104,9 +104,9 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit, i
                     Announcement Confirmation
                 </div>
                 <div className="p-4">
-                    <h3 className="text-lg font-semibold mb-2">
+                    <Label className="text-lg font-semibold mb-2">
                         Your announcement has been published
-                    </h3>
+                    </Label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                         <div>
                             <span className="font-semibold">Title:</span>{' '}
@@ -133,7 +133,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit, i
                     </div>
                     <div className="mt-4">
                         <span className="font-semibold">Content:</span>{' '}
-                        <p className="mt-1 p-2 bg-background/50 rounded">{announcement.content}</p>
+                        <Label className="mt-1 p-2 bg-background/50 rounded">{announcement.content}</Label>
                     </div>
                     <div className="mt-3 text-sm text-secondary-foreground">
                         The announcement has been published and is now visible to all users.
@@ -207,7 +207,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit, i
                         </div>
                       
                         {/* Expiration */}
-                        <div className={!isUrgent && !isBulletin ? '' : 'md:col-span-2'}>
+                        <div className={'md:col-span-2'}>
                             <Label className="text-sm font-semibold mb-2">
                                 Expiration Date
                                 <span
@@ -217,7 +217,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit, i
                                             : 'text-xs text-secondary-foreground block'
                                     }
                                 >
-                                    {isUrgent ? '*' : 'Optional'}
+                                    {isUrgent ? '*' : '(Optional)'}
                                 </span>
                             </Label>
                             <Input
@@ -241,7 +241,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit, i
                             value={formData.content}
                             onChange={handleChange}
                             placeholder={`Enter ${isUrgent ? 'urgent alert' : isBulletin ? 'bulletin' : 'announcement'} content`}
-                            rows={isUrgent ? 4 : 6}
+                            // rows={isUrgent ? 4 : 6} // not sure if this is good since it doesn't follow the design
                             className={`w-full px-4 py-2 rounded-md border ${
                                 isUrgent
                                     ? 'border-red-500'
@@ -257,7 +257,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit, i
                     <div className="flex justify-end gap-4">
                         <Button
                             type="button"
-                            variant="outline"
+                            variant="unselected"
                             onClick={() => navigate('/announcements')}
                         >
                             Cancel
