@@ -57,7 +57,7 @@ export function NavbarMGH(props: NavBarProps) {
 
                 {/* Desktop Navigation - Non-Guests */}
                 <nav
-                    className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                    className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-3">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
                     </Button>
