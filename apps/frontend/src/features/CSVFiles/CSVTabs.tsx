@@ -6,8 +6,8 @@ import {Label} from "@/components/ui/label";
 
 function CSVTabPage() {
     return(
-        <div className="container mx-auto">
-            <Label className="text-3xl font-bold mb-6 justify-center" id={TOUR_STEPS_IDS_CSV.CLICK_START}>
+        <div className="container mx-auto pt-12 pb-8">
+            <Label className="text-3xl font-bold mb-2 justify-center" id={TOUR_STEPS_IDS_CSV.CLICK_START}>
                 Import/Export CSV Files
             </Label>
 
