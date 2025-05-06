@@ -1,16 +1,16 @@
 // Full file with Settings link fixed and everything else untouched
 
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx';
 import { Label } from '@/components/ui/label.tsx';
-import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
-import {useAuth0} from "@auth0/auth0-react";
+import { HoverPopoverNavLink } from '@/components/HoverPopoverNavLink.tsx';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Notifications } from '@/features/Announcements/Notifications.tsx';
 import { ThemeSwitcher } from '@/features/ThemeSwitcher/ThemeSwitcher';
-import {useTheme} from "@/hooks/useTheme.tsx";
+import { useTheme } from '@/hooks/useTheme.tsx';
 
 interface NavBarProps {
     page?: string;
@@ -23,14 +23,14 @@ interface NavBarProps {
 export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
-    const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0();
+    const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
 
     async function handleLogout() {
         try {
-            console.log("Logging user out");
+            console.log('Logging user out');
             logout(); //auth0 logout
         } catch (error) {
-            console.log("Error: ", error);
+            console.log('Error: ', error);
         }
     }
 
@@ -56,7 +56,8 @@ export function NavbarMGH(props: NavBarProps) {
                 </div>
 
                 {/* Desktop Navigation - Non-Guests */}
-                <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
+                <nav
+                    className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 min-[1152px]:flex items-center gap-6">
                     <Button variant="ghost" asChild>
                         <a href="/directory">Directories</a>
                     </Button>
@@ -68,17 +69,35 @@ export function NavbarMGH(props: NavBarProps) {
                         items={
                             props.userType === 'Admin'
                                 ? [
-                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
-                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
-                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    {
+                                        label: 'Healthcare Center (20 Patriot Pl.)',
+                                        href: '/external-map?location=patriotPlace20',
+                                    },
+                                    {
+                                        label: 'Healthcare Center (22 Patriot Pl.)',
+                                        href: '/external-map?location=patriotPlace22',
+                                    },
+                                    {
+                                        label: 'Healthcare Center (Chestnut Hill)',
+                                        href: '/external-map?location=chestnutHill',
+                                    },
                                     { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
                                     { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
                                     { label: 'Edit Map', href: '/edit-map' },
                                 ]
                                 : [
-                                    { label: 'Healthcare Center (20 Patriot Pl.)', href: '/external-map?location=patriotPlace20' },
-                                    { label: 'Healthcare Center (22 Patriot Pl.)', href: '/external-map?location=patriotPlace22' },
-                                    { label: 'Healthcare Center (Chestnut Hill)', href: '/external-map?location=chestnutHill' },
+                                    {
+                                        label: 'Healthcare Center (20 Patriot Pl.)',
+                                        href: '/external-map?location=patriotPlace20',
+                                    },
+                                    {
+                                        label: 'Healthcare Center (22 Patriot Pl.)',
+                                        href: '/external-map?location=patriotPlace22',
+                                    },
+                                    {
+                                        label: 'Healthcare Center (Chestnut Hill)',
+                                        href: '/external-map?location=chestnutHill',
+                                    },
                                     { label: 'Faulkner Hospital', href: '/external-map?location=faulkner' },
                                     { label: 'Main Campus Hospital', href: '/external-map?location=mainCampus' },
                                 ]
@@ -136,15 +155,14 @@ export function NavbarMGH(props: NavBarProps) {
                         popoverWidth="10rem"
                         items={[
                             { label: 'Credits', href: '/credits' },
-                            { label: 'Our Team', href: '/about' },]}
+                            { label: 'Our Team', href: '/about' }]}
                     />
                 </nav>
 
 
-
                 {/* Icons on right */}
 
-                <div className="ml-auto flex items-center gap-2">
+                <div className="ml-auto mr-4 flex items-center">
                     {/*Dark mode toggle, using props from App.tsx*/}
                     <ThemeSwitcher
                         className="text-white"
@@ -154,6 +172,9 @@ export function NavbarMGH(props: NavBarProps) {
                         }
                         }
                     />
+                </div>
+
+                <div className="flex items-center gap-2">
                     {props.userType && props.userType != 'Guest' && (
                         <>
                             <Notifications />
@@ -214,7 +235,8 @@ export function NavbarMGH(props: NavBarProps) {
 
                     {/* Only display login button in logged-out home page */}
                     {!isAuthenticated && (
-                        <Button variant="ghost" onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}>
+                        <Button variant="ghost"
+                                onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}>
                             Login
                         </Button>
                     )}
@@ -225,7 +247,7 @@ export function NavbarMGH(props: NavBarProps) {
             <div
                 className={cn(
                     'fixed inset-0 z-50 bg-primary min-[1152px]:hidden',
-                    isOpen ? 'flex flex-col' : 'hidden'
+                    isOpen ? 'flex flex-col' : 'hidden',
                 )}
             >
                 <div className="flex items-center justify-between p-4 border-b">
