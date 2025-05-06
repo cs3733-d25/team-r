@@ -74,7 +74,8 @@ export default function AboutPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen dark:bg-gray-900 py-8">
-            <HeadingLabel className="text-4xl mb-6">About us</HeadingLabel>
+            <HeadingLabel className="text-4xl mb-6">About Us</HeadingLabel>
+            <HeadingLabel className="text-4xl mb-6">Lead Software Engineer</HeadingLabel>
             {/* Lead section - special case for single card */}
             <div className="flex justify-center w-full max-w-7xl mx-auto px-4">
                 {lead.map((member) => (
