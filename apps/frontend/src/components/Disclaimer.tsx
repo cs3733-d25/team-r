@@ -8,7 +8,7 @@ interface DisclaimerPopupProps {
 const DisclaimerPopup: React.FC<DisclaimerPopupProps> = ({ message }) => {
     return (
         <div className="fixed top-20 inset-x-0 mx-auto bg-white border border-gray-300 rounded-xl shadow-lg p-4 flex items-center w-1/2 z-50">
-            <div className="text-red-600 mr-3 animate-flash">
+            <div className="text-red-600 mr-3 animate-flash-slow">
                 <ExclamationTriangle size={64} />
             </div>
 
