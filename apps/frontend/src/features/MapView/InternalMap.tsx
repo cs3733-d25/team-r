@@ -68,11 +68,11 @@ interface InternalMapProps {
     onEdgeDelete?: (edgeID: string) => Promise<void>;
     promiseNodeCreate?: Promise<void>; // for actions that are triggered in the map page using map page data but need to trigger events in the internal map
     promiseEdgeCreate?: Promise<void>;
-    onNodeSelect?: (nodeID: string, nodeName:string, nodeType:string) => void;
+    onNodeSelect?: (nodeID: string, nodeName: string, nodeType: string) => void;
     showEdges?: boolean;
     showNodes?: boolean;
     onCoordSelect?: (x: number, y: number) => void;
-    onNodeDrag?: (x: number, y: number, nodeID: string, nodeType: string, nodeName:string) => void;
+    onNodeDrag?: (x: number, y: number, nodeID: string, nodeType: string, nodeName: string) => void;
     onNodeEdit?: (x: number, y: number, nodeID: string) => void;
     onToggle?: (bool: boolean) => void;
     selectedEdgeNodes?: string[];
@@ -471,7 +471,7 @@ const InternalMap: React.FC<InternalMapProps> = ({
             pulseColor: '#FFFFFF',
             paused: false,
             reverse: false,
-            hardwareAccelerated: true,
+            hardwareAccelerated: false,
         };
 
         // @ts-expect-error missing type definitions for antPath method from leaflet-ant-path
@@ -496,13 +496,11 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 title: 'Start',
                 icon: L.divIcon({ className: 'start-marker' }),
             }).addTo(map);
-            map.startMarker.bindPopup(`Starting Point at Coordinates ${currentFloorPath[0]}`).openPopup();
 
             map.endMarker = L.marker(currentFloorPath[currentFloorPath.length - 1], {
                 title: 'End',
                 icon: L.divIcon({ className: 'end-marker' }),
             }).addTo(map);
-            map.endMarker.bindPopup(`Ending Point at Coordinates ${currentFloorPath[1]}`).openPopup();
         }
     };
 
@@ -629,15 +627,20 @@ const InternalMap: React.FC<InternalMapProps> = ({
 
             // layer controls
             if (showLayerControl) {
-                L.control.layers({
-                    '20 Patriot Place - Floor 1': floorLayer20_1,
-                    '22 Patriot Place - Floor 1': floorLayer22_1,
-                    '22 Patriot Place - Floor 3': floorLayer22_3,
-                    '22 Patriot Place - Floor 4': floorLayer22_4,
-                    'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
-                    'Faulkner Hospital': floorLayerFaulkner,
-                    'Main Campus Hospital': floorLayerWomens,
-                }, {}).addTo(map);
+                L.control
+                    .layers(
+                        {
+                            '20 Patriot Place - Floor 1': floorLayer20_1,
+                            '22 Patriot Place - Floor 1': floorLayer22_1,
+                            '22 Patriot Place - Floor 3': floorLayer22_3,
+                            '22 Patriot Place - Floor 4': floorLayer22_4,
+                            'Chestnut Hill Healthcare Center': floorLayerChestnutHill,
+                            'Faulkner Hospital': floorLayerFaulkner,
+                            'Main Campus Hospital': floorLayerWomens,
+                        },
+                        {}
+                    )
+                    .addTo(map);
             }
 
             // add a default layer
@@ -725,7 +728,9 @@ const InternalMap: React.FC<InternalMapProps> = ({
                 } else if (floor === 1 && pathByFloor && Object.keys(pathByFloor).length > 0) {
                     // check if there's any path data
                     // ensures we don't clear paths on floor 1 if there's path data for other floors
-                    const hasPathOnAnyFloor = Object.values(pathByFloor).some(path => path.length > 1);
+                    const hasPathOnAnyFloor = Object.values(pathByFloor).some(
+                        (path) => path.length > 1
+                    );
                     if (hasPathOnAnyFloor && pathByFloor[1] && pathByFloor[1].length > 0) {
                         drawPath(pathByFloor[1], map);
                         return;
@@ -913,7 +918,10 @@ const InternalMap: React.FC<InternalMapProps> = ({
                             </Card>
                         </AccordionItem>
                     </Accordion>
-                    <ToggleGroup type={'multiple'} className={'bg-white dark:bg-background shadow-md'}>
+                    <ToggleGroup
+                        type={'multiple'}
+                        className={'bg-white dark:bg-background shadow-md'}
+                    >
                         <div className={'flex flex-col p-2 space-y-2'}>
                             <Label className="text-center w-full font-medium">Filter Nodes</Label>
                             <div className={'flex space-x-2 justify-center'}>

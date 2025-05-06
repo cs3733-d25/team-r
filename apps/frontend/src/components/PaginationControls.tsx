@@ -34,7 +34,7 @@ export function PaginationControls({currentPage, totalPages, itemsPerPage, total
 
                 <div className="flex items-center space-x-2">
                     <Button
-                        variant="outline"
+                        variant="secondary"
                         size="sm"
                         onClick={() => onPageChange(currentPage - 1)}
                         disabled={currentPage === 1}
@@ -45,7 +45,7 @@ export function PaginationControls({currentPage, totalPages, itemsPerPage, total
             Page {currentPage} of {totalPages || 1}
           </span>
                     <Button
-                        variant="outline"
+                        variant="secondary"
                         size="sm"
                         onClick={() => onPageChange(currentPage + 1)}
                         disabled={currentPage >= totalPages}

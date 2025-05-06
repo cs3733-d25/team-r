@@ -12,6 +12,7 @@ import PatientTransportPage from '@/features/Requests/PatientTransport/PatientTr
 import TranslateRequestPage from './TranslateForm/TranslateRequestPage';
 import { TourAlertDialog, useTour, TourStep } from '@/components/tour';
 import { TOUR_STEPS_IDS_SERVICE_REQS } from '@/lib/tour-constants.ts';
+import { Label } from '@/components/ui/label.tsx';
 
 export function RequestPage() {
     const [activeTab, setActiveTab] = useState('overview'); // Default to Overview
@@ -62,9 +63,9 @@ export function RequestPage() {
     return (
         <div className="min-h-screen bg-background">
             <div className="container mx-auto pt-12 pb-8">
-                <h1 className="text-3xl font-bold mb-6 text-center" id={TOUR_STEPS_IDS_SERVICE_REQS.CLICK_START}>
+                <Label className="text-3xl font-bold mb-6 justify-center" id={TOUR_STEPS_IDS_SERVICE_REQS.CLICK_START}>
                     Service Request Dashboard
-                </h1>
+                </Label>
 
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="mb-0 border-l border-gray-300 shadow-none" id={TOUR_STEPS_IDS_SERVICE_REQS.FILTER_REQUEST}>
@@ -86,7 +87,7 @@ export function RequestPage() {
                                         <CardTitle>{type.name} Requests</CardTitle>
                                     </CardHeader>
                                     <CardContent className="pt-6 px-6 pb-6 bg-white h-full flex flex-col dark:border-gray-600 dark:bg-background">
-                                        <p className="text-muted-foreground mb-4 min-h-[3rem]">{type.description}</p>
+                                        <Label className="text-muted-foreground mb-4 min-h-[3rem]">{type.description}</Label>
                                         <div className="flex flex-col space-y-2 mt-auto">
                                             <Button variant="secondary" onClick={() => setActiveTab(type.tab)}>
                                                 View {type.name} Requests

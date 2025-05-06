@@ -9,14 +9,16 @@ interface AboutCardProps {
     quoteAuthor: string;
 }
 
-export function AboutCard({ name, role, photoURL, quote, quoteAuthor}: AboutCardProps) {
+export function AboutCard({ name, role, photoURL, quote, quoteAuthor }: AboutCardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
     return (
         <div
             className="relative w-96 h-48 transition-transform duration-300 hover:scale-105 cursor-pointer perspective-1000"
             onClick={() => setIsFlipped(!isFlipped)}
         >
-            <div className={`absolute w-full h-full transition-all duration-500 preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
+            <div
+                className={`absolute w-full h-full transition-all duration-500 preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}
+            >
                 {/* Front of card */}
                 <div className="absolute w-full h-full backface-hidden bg-white dark:bg-card shadow-md rounded-2xl p-4 flex flex-row items-center space-x-4">
                     <div className="flex-shrink-0">
@@ -36,10 +38,22 @@ export function AboutCard({ name, role, photoURL, quote, quoteAuthor}: AboutCard
 
                 {/* Back of card */}
                 <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-white dark:bg-card shadow-md rounded-2xl p-6 flex flex-col justify-center items-center">
-                    <Label className="text-center italic">"{quote}"</Label>
+                    {quote.toLowerCase() === 'disastrous.' ? (
+                        <Label
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                window.open('https://youtu.be/-59jGD4WrmE?si=3FkivLOQc9fF9n6h', '_blank');
+                            }}
+                            className="cursor-pointer hover:underline text-center italic"
+                        >
+                            "Disastrous".
+                        </Label>
+                    ) : (
+                        <Label className="text-center italic">"{quote}"</Label>
+                    )}
                     <Label className="text-right font-semibold mt-3">- {quoteAuthor}</Label>
                 </div>
             </div>
         </div>
     );
-};
+}

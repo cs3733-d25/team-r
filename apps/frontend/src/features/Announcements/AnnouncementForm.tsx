@@ -26,9 +26,20 @@ export interface AnnouncementFormProps {
         type: 'urgent' | 'general' | 'bulletin';
         expirationDate?: string;
     }) => Promise<void>;
+    isSubmitted?: boolean;
+    announcement?: {
+        title: string;
+        content: string;
+        author: string;
+        type: string;
+        date: string;
+        expirationDate?: string;
+    } | null;
+    onDismiss?: () => void;
+    onViewAll?: () => void;
 }
 
-export default function AnnouncementForm({ initialData, defaultType, onSubmit }: AnnouncementFormProps) {
+export default function AnnouncementForm({ initialData, defaultType, onSubmit, isSubmitted, announcement, onDismiss, onViewAll }: AnnouncementFormProps) {
     const navigate = useNavigate();
     const {user} = useAuth0();
     const [userName, setUserName] = useState('');
@@ -69,6 +80,82 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
         e.preventDefault();
         await onSubmit({...formData})
     };
+
+    function renderConfirmation() {
+        if (!isSubmitted || !announcement) return null;
+
+        return (
+            <div className="mt-8 mb-6 rounded-lg shadow-md overflow-hidden border-2 border-primary text-foreground">
+                <div className="bg-primary text-primary-foreground font-bold px-4 py-2 flex items-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                        />
+                    </svg>
+                    Announcement Confirmation
+                </div>
+                <div className="p-4">
+                    <Label className="text-lg font-semibold mb-2">
+                        Your announcement has been published
+                    </Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                        <div>
+                            <span className="font-semibold">Title:</span>{' '}
+                            {announcement.title}
+                        </div>
+                        <div>
+                            <span className="font-semibold">Type:</span>{' '}
+                            {announcement.type}
+                        </div>
+                        <div>
+                            <span className="font-semibold">Author:</span>{' '}
+                            {announcement.author}
+                        </div>
+                        <div>
+                            <span className="font-semibold">Date:</span>{' '}
+                            {new Date(announcement.date).toLocaleString()}
+                        </div>
+                        {announcement.expirationDate && (
+                            <div>
+                                <span className="font-semibold">Expires:</span>{' '}
+                                {new Date(announcement.expirationDate).toLocaleString()}
+                            </div>
+                        )}
+                    </div>
+                    <div className="mt-4">
+                        <span className="font-semibold">Content:</span>{' '}
+                        <Label className="mt-1 p-2 bg-background/50 rounded">{announcement.content}</Label>
+                    </div>
+                    <div className="mt-3 text-sm text-secondary-foreground">
+                        The announcement has been published and is now visible to all users.
+                    </div>
+                    <div className="flex gap-4 mt-4">
+                        <Button
+                            onClick={onDismiss}
+                            variant="outline"
+                        >
+                            Dismiss
+                        </Button>
+                        <Button
+                            onClick={onViewAll}
+                            variant="default"
+                        >
+                            View All Announcements
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -120,7 +207,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
                         </div>
                       
                         {/* Expiration */}
-                        <div className={!isUrgent && !isBulletin ? '' : 'md:col-span-2'}>
+                        <div className={'md:col-span-2'}>
                             <Label className="text-sm font-semibold mb-2">
                                 Expiration Date
                                 <span
@@ -130,7 +217,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
                                             : 'text-xs text-secondary-foreground block'
                                     }
                                 >
-                                    {isUrgent ? '*' : 'Optional'}
+                                    {isUrgent ? '*' : '(Optional)'}
                                 </span>
                             </Label>
                             <Input
@@ -154,7 +241,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
                             value={formData.content}
                             onChange={handleChange}
                             placeholder={`Enter ${isUrgent ? 'urgent alert' : isBulletin ? 'bulletin' : 'announcement'} content`}
-                            rows={isUrgent ? 4 : 6}
+                            // rows={isUrgent ? 4 : 6} // not sure if this is good since it doesn't follow the design
                             className={`w-full px-4 py-2 rounded-md border ${
                                 isUrgent
                                     ? 'border-red-500'
@@ -170,7 +257,7 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
                     <div className="flex justify-end gap-4">
                         <Button
                             type="button"
-                            variant="outline"
+                            variant="unselected"
                             onClick={() => navigate('/announcements')}
                         >
                             Cancel
@@ -191,6 +278,8 @@ export default function AnnouncementForm({ initialData, defaultType, onSubmit }:
                         </Button>
                     </div>
                 </form>
+
+                {renderConfirmation()}
             </>
         );
     }

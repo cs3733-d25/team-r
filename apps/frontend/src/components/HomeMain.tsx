@@ -11,7 +11,6 @@ interface HomeMainProps {
 }
 
 export function HomeMain(props: HomeMainProps) {
-
     const navigate = useNavigate();
     const handleNavigateToMap = () => {
         navigate('/external-map', {

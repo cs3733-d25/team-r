@@ -279,6 +279,9 @@
     .animate-flash {
         animation: flash 1s linear infinite;
     }
+    .animate-flash-slow {
+        animation: flash 2s linear infinite;
+    }
     .animate-fade-in {
         animation: fade-in 0.8s ease-in-out;
     }
