@@ -19,6 +19,7 @@
         "migrate:resolve:wpi": "dotenv -e ${PROJECT_CWD}/.env.wpi -- prisma migrate resolve",
         "migrate:resolve:prod": "dotenv -e ${PROJECT_CWD}/.env.prod -- prisma migrate resolve",
         "push": "dotenv -e ${PROJECT_CWD}/.env pnpify prisma db push --force-reset",
+        "push-AWS": "dotenv -e ${PROJECT_CWD}/.env.aws pnpify prisma db push",
         "push:wpi": "dotenv -e ${PROJECT_CWD}/.env.wpi pnpify prisma db push",
         "push:prod": "dotenv -e ${PROJECT_CWD}/.env.prod pnpify prisma db push",
         "studio": "dotenv -e ${PROJECT_CWD}/.env prisma studio",
