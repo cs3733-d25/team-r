@@ -54,7 +54,8 @@ export default function Dashboard() {
                 selected={selectedDate}
                 onSelect={setSelectedDate}
                 modifiers={{ event: eventDates }}
-                modifiersClassNames={{ event: 'bg-background !text-black' }}
+                modifiersClassNames={{ event: '!bg-gray-200 !text-black font-bold dark:!bg-slate-800 dark:!text-white' }}
+                className="dark:text-white"
             />
 
             {/* Events Card */}
