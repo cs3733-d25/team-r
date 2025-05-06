@@ -38,8 +38,14 @@ function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState('Guest');
     const [userFirstName, setUserFirstName] = useState('');
-    const { theme } = useTheme();
     const [noFooter, setNoFooter] = useState(false);
+    //dark mode variable
+    const { theme, setTheme } = useTheme();
+
+    const onDarkChange = () => {
+        const newTheme = (theme === 'dark') ? 'light' : 'dark'; //flip theme
+        setTheme(newTheme);
+    };
 
     console.log('APP IS RENDERED');
 
@@ -161,7 +167,7 @@ function App() {
 
     return (
         <div className={`${theme} min-h-screen`}>
-            <NavbarMGH userType={userType} userName={userFirstName} />
+            <NavbarMGH userType={userType} userName={userFirstName} useDark={(theme !== 'light')} onDarkChange={onDarkChange}/>
             <RouterProvider router={router} />
             {!noFooter && <Footer />}
         </div>
