@@ -27,7 +27,7 @@ export const ThemeSwitcher = ({useDark, onDarkChange, className}: ThemeSwitcherP
         // </div>
 
         <span className={'font-trade text-base flex items-center justify-center space-x-2 ' + className}>
-            <Sun></Sun>
+            <Sun className={'h-5 w-5'}></Sun>
             <label className="relative inline-flex items-center cursor-pointer ">
 
                 <input
@@ -41,7 +41,7 @@ export const ThemeSwitcher = ({useDark, onDarkChange, className}: ThemeSwitcherP
                 />
                 <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-background after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
             </label>
-            <Moon></Moon>
+            <Moon className={'h-5 w-5'}></Moon>
         </span>
     );
 };
