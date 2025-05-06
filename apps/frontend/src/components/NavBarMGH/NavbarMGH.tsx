@@ -147,6 +147,16 @@ export function NavbarMGH(props: NavBarProps) {
                 <div className="ml-auto flex items-center gap-2">
                     {props.userType && props.userType != 'Guest' && (
                         <>
+                            {/*Dark mode toggle, using props from App.tsx*/}
+                            <ThemeSwitcher
+                                className="text-white"
+                                useDark={props.useDark}
+                                onDarkChange={(e) => {
+                                    props.onDarkChange?.(!props.useDark);
+                                }
+                                }
+                            />
+
                             <Notifications />
 
                             {/* User Profile Popover */}
@@ -179,16 +189,6 @@ export function NavbarMGH(props: NavBarProps) {
                                         {/*    <a href="/settings">Settings</a>*/}
                                         {/*</Button>*/}
                                         {/*<div className="border-t"></div>*/}
-
-                                        {/*Dark mode toggle, using props from App.tsx*/}
-                                        <ThemeSwitcher
-                                            useDark={props.useDark}
-                                            onDarkChange={(e) => {
-                                                props.onDarkChange?.(!props.useDark);
-                                            }
-                                            }
-                                        />
-                                        <div className="border-t"></div>
 
                                         <Button variant={'ghostDestructive'} asChild>
                                             <a href={'/'} onClick={(e) => handleLogout()}>

@@ -4,10 +4,11 @@ import { Sun, Moon } from "lucide-react"
 interface ThemeSwitcherProps {
     useDark?: boolean;
     onDarkChange?: (useMeters: boolean) => void;
+    className?: string;
 
 }
 
-export const ThemeSwitcher = ({useDark, onDarkChange}: ThemeSwitcherProps) => {
+export const ThemeSwitcher = ({useDark, onDarkChange, className}: ThemeSwitcherProps) => {
     // const { theme, setTheme } = useTheme();
 
     return (
@@ -25,9 +26,9 @@ export const ThemeSwitcher = ({useDark, onDarkChange}: ThemeSwitcherProps) => {
         //     </select>
         // </div>
 
-        <span className={'font-trade text-base flex items-center justify-center space-x-2'}>
+        <span className={'font-trade text-base flex items-center justify-center space-x-2 ' + className}>
             <Sun></Sun>
-            <label className="relative inline-flex items-center cursor-pointer">
+            <label className="relative inline-flex items-center cursor-pointer ">
 
                 <input
                     type="checkbox"
@@ -38,7 +39,7 @@ export const ThemeSwitcher = ({useDark, onDarkChange}: ThemeSwitcherProps) => {
                     }
                 }
                 />
-                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
+                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-background after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
             </label>
             <Moon></Moon>
         </span>

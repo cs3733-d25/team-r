@@ -39,23 +39,15 @@ function App() {
     const [userType, setUserType] = useState('Guest');
     const [userFirstName, setUserFirstName] = useState('');
     const [noFooter, setNoFooter] = useState(false);
-
-    //dark mode toggle variables
-    const [useDark, setUseDark] = React.useState(false);
+    //dark mode variable
     const { theme, setTheme } = useTheme();
 
     const onDarkChange = () => {
-        const newUseDark = !useDark;
-        setUseDark(newUseDark);
-
-        const newTheme = useDark ? 'light' : 'dark'; //flip theme
+        const newTheme = (theme === 'dark') ? 'light' : 'dark'; //flip theme
         setTheme(newTheme);
-        console.log('updated useDark in onDarkChange to:', useDark);
     };
 
     console.log('APP IS RENDERED');
-    console.log('on reload useDark:', useDark);
-    console.log('on reload theme:', theme);
 
     // only show the footer on certain pages
     // external map doesn't need a footer since it interferes with the zoom functionality
@@ -175,7 +167,7 @@ function App() {
 
     return (
         <div className={`${theme} min-h-screen`}>
-            <NavbarMGH userType={userType} userName={userFirstName} useDark={useDark} onDarkChange={onDarkChange}/>
+            <NavbarMGH userType={userType} userName={userFirstName} useDark={(theme !== 'light')} onDarkChange={onDarkChange}/>
             <RouterProvider router={router} />
             {!noFooter && <Footer />}
         </div>
