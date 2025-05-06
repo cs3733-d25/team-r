@@ -21,7 +21,7 @@ export default function AboutPage() {
             role: 'Assistant Software Engineer / Back-End Developer',
             photoURL: root + '/nora.png',
             quote: 'Disastrous.',
-            quoteAuthor: 'Wilson Wong'
+            quoteAuthor: 'Dr. Wong'
         },
         {
             name: 'Akaash Walker',
