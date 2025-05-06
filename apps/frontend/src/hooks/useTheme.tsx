@@ -14,6 +14,7 @@ export const useTheme = () => {
     }, []);
 
     const applyTheme = (newTheme: Theme) => {
+        console.log('applyTheme: ', newTheme);
         const root = document.documentElement;
         root.classList.remove('light', 'dark');
         root.classList.add(newTheme);

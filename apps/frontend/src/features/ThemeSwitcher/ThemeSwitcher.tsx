@@ -1,12 +1,14 @@
 import { useTheme } from '@/hooks/useTheme';
-import { Label } from 'recharts';
+import { Sun, Moon } from "lucide-react"
 
 interface ThemeSwitcherProps {
     useDark?: boolean;
+    onDarkChange?: (useMeters: boolean) => void;
+
 }
 
-export const ThemeSwitcher = ({useDark}: ThemeSwitcherProps) => {
-    const { theme, setTheme } = useTheme();
+export const ThemeSwitcher = ({useDark, onDarkChange}: ThemeSwitcherProps) => {
+    // const { theme, setTheme } = useTheme();
 
     return (
         // <div className="flex items-center gap-2">
@@ -22,8 +24,9 @@ export const ThemeSwitcher = ({useDark}: ThemeSwitcherProps) => {
         //         {/*<option value="theme-sepia">Sepia</option>*/}
         //     </select>
         // </div>
+
         <span className={'font-trade text-base flex items-center justify-center space-x-2'}>
-            <span>Light</span>
+            <Sun></Sun>
             <label className="relative inline-flex items-center cursor-pointer">
 
                 <input
@@ -31,14 +34,13 @@ export const ThemeSwitcher = ({useDark}: ThemeSwitcherProps) => {
                     className="sr-only peer"
                     checked={useDark}
                     onChange={(e) => {
-                        useDark = !e.target.checked;
-                        setTheme(useDark ? 'light' : 'dark');
+                        onDarkChange?.(!useDark);
                     }
                 }
                 />
                 <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />
             </label>
-            <span>Dark</span>
+            <Moon></Moon>
         </span>
     );
 };

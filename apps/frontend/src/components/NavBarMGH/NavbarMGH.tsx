@@ -1,6 +1,6 @@
 // Full file with Settings link fixed and everything else untouched
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { cn } from '@/lib/utils.ts';
 import { Bell, Menu, User } from 'lucide-react';
@@ -10,6 +10,7 @@ import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import { Notifications } from '@/features/Announcements/Notifications.tsx';
 import { ThemeSwitcher } from '@/features/ThemeSwitcher/ThemeSwitcher';
+import {useTheme} from "@/hooks/useTheme.tsx";
 
 interface NavBarProps {
     page?: string;
@@ -21,7 +22,15 @@ export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
     const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0();
-    // const ?
+    //dark mode toggle variables
+    const [useDark, setUseDark] = React.useState(false);
+    const { theme, setTheme } = useTheme();
+
+    //every time useDark bool changes, update theme
+    useEffect(() => {
+        console.log('useDark:', useDark);
+        setTheme(useDark ? 'dark' : 'light');
+    }, [useDark]);
 
     async function handleLogout() {
         try {
@@ -141,73 +150,82 @@ export function NavbarMGH(props: NavBarProps) {
 
 
                 {/* Icons on right */}
-                {props.userType && props.userType != 'Guest' && (
-                    <div className="ml-auto flex items-center gap-2">
-                        <Notifications />
 
-                        {/* User Profile Popover */}
-                        <Popover>
-                            <PopoverTrigger>
-                                <Button variant="ghost" size="icon" className="rounded-full">
-                                    <User className="h-5 w-5" />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-56" align="end" sideOffset={5}>
-                                <div className="grid gap-3 p-2">
-                                    <Label className={'font-trade text-base justify-center'}>
-                                        Hi, {props.userName}!
-                                    </Label>
-                                    <div className="border-t"></div>
-                                    {/*<Button*/}
-                                    {/*    variant={'ghostPopover'}*/}
-                                    {/*    onClick={() =>*/}
-                                    {/*        alert("This button doesn't work yet!")*/}
-                                    {/*    }*/}
-                                    {/*>*/}
-                                    {/*    Profile*/}
-                                    {/*</Button>*/}
-                                    {/*<div className="border-t"></div>*/}
+                <div className="ml-auto flex items-center gap-2">
+                    {props.userType && props.userType != 'Guest' && (
+                        <>
+                            <Notifications />
 
-                                    {/*<Button*/}
-                                    {/*    variant={'ghostPopover'}*/}
-                                    {/*    asChild*/}
-                                    {/*>*/}
-                                    {/*    <a href="/settings">Settings</a>*/}
-                                    {/*</Button>*/}
-                                    {/*<div className="border-t"></div>*/}
-
-                                    {/*Dark mode toggle*/}
-                                    <ThemeSwitcher />
-                                    <div className="border-t"></div>
-
-                                    <Button variant={'ghostDestructive'} asChild>
-                                        <a href={'/'} onClick={(e) => handleLogout()}>
-                                            Sign out
-                                        </a>
+                            {/* User Profile Popover */}
+                            <Popover>
+                                <PopoverTrigger>
+                                    <Button variant="ghost" size="icon" className="rounded-full">
+                                        <User className="h-5 w-5" />
                                     </Button>
-                                </div>
-                            </PopoverContent>
-                        </Popover>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-56" align="end" sideOffset={5}>
+                                    <div className="grid gap-3 p-2">
+                                        <Label className={'font-trade text-base justify-center'}>
+                                            Hi, {props.userName}!
+                                        </Label>
+                                        <div className="border-t"></div>
+                                        {/*<Button*/}
+                                        {/*    variant={'ghostPopover'}*/}
+                                        {/*    onClick={() =>*/}
+                                        {/*        alert("This button doesn't work yet!")*/}
+                                        {/*    }*/}
+                                        {/*>*/}
+                                        {/*    Profile*/}
+                                        {/*</Button>*/}
+                                        {/*<div className="border-t"></div>*/}
 
-                        {/* Mobile Menu Button */}
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="min-[1152px]:hidden"
-                            onClick={() => setIsOpen(!isOpen)}
-                        >
-                            <Menu className="h-5 w-5" />
-                        </Button>
-                    </div>
-                )}
-                {/* Only display login button in logged-out home page */}
-                {!isAuthenticated && (
-                    <div className="ml-auto flex items-center gap-2">
+                                        {/*<Button*/}
+                                        {/*    variant={'ghostPopover'}*/}
+                                        {/*    asChild*/}
+                                        {/*>*/}
+                                        {/*    <a href="/settings">Settings</a>*/}
+                                        {/*</Button>*/}
+                                        {/*<div className="border-t"></div>*/}
+
+                                        {/*Dark mode toggle*/}
+                                        <ThemeSwitcher
+                                            useDark={useDark}
+                                            onDarkChange={(useDark) => {
+                                                setUseDark(useDark);
+                                            }}
+                                        />
+                                        <div className="border-t"></div>
+
+                                        <Button variant={'ghostDestructive'} asChild>
+                                            <a href={'/'} onClick={(e) => handleLogout()}>
+                                                Sign out
+                                            </a>
+                                        </Button>
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
+
+                            {/* Mobile Menu Button */}
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="min-[1152px]:hidden"
+                                onClick={() => setIsOpen(!isOpen)}
+                            >
+                                <Menu className="h-5 w-5" />
+                            </Button>
+
+
+                        </>
+                    )}
+
+                    {/* Only display login button in logged-out home page */}
+                    {!isAuthenticated && (
                         <Button variant="ghost" onClick={() => loginWithRedirect({ appState: { returnTo: window.location.pathname } })}>
                             Login
                         </Button>
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
 
             {/* Mobile Navigation */}
