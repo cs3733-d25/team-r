@@ -74,7 +74,7 @@ export function FileTranslator() {
                 <Button variant="unselected" onClick={() => fileInputRef.current?.click()}>
                     {file ? 'Change File' : 'Choose File'}
                 </Button>
-                {file && <span className="text-gray-700">{file.name}</span>}
+                {file && <span className="text-foreground">{file.name}</span>}
             </div>
 
             <div className="space-y-1">
@@ -100,7 +100,7 @@ export function FileTranslator() {
             {translatedText && (
                 <div>
                     <Label>Result</Label>
-                    <pre className="bg-gray-100 p-4 rounded overflow-auto max-h-64 whitespace-pre-wrap break-words">
+                    <pre className="bg-input p-4 rounded overflow-auto max-h-64 whitespace-pre-wrap break-words text-foreground">
                         {translatedText}
                     </pre>
                 </div>
