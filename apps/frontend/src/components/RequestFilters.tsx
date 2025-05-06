@@ -1,6 +1,8 @@
 import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import values from '@/constant-values';
+import { Label } from '@/components/ui/label.tsx';
+import { Input } from '@/components/ui/input.tsx';
 
 export interface FilterOptions {
     employeeID: string;
@@ -137,7 +139,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
             {(activeFilters.length > 0 || sortField) && (
                 <div className="mb-4">
                     <div className="flex flex-wrap items-center">
-                        <span className="mr-2 text-sm font-medium">Active Filters:</span>
+                        <Label className="mr-2 text-sm font-medium">Active Filters:</Label>
                         {activeFilters.map((filter, index) => (
                             <FilterPill
                                 key={`${filter.type}-${index}`}
@@ -149,9 +151,9 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                         {sortField && (
                             <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
-                                <span className="mr-1 font-medium">Sort:</span>
+                                <Label className="mr-1 font-medium">Sort:</Label>
                                 {sortField} ({sortDirection === 'asc' ? '↑' : '↓'})
-                                <button onClick={resetSort} className="ml-2 hover:text-gray-200">×</button>
+                                <Button onClick={resetSort} className="ml-2 hover:text-gray-200">×</Button>
                             </div>
                         )}
 
@@ -171,14 +173,14 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
             )}
 
             {/* Filter cards UI */}
-            <div className="bg-muted/40 rounded-lg p-4">
+            <div className="bg-background rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <h3 className="text-sm font-medium">Location Filters</h3>
+                        <Label className="text-lg font-bold">Location Filters</Label>
                         <div className="space-y-3">
                             {/*building filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <label htmlFor="building">Building</label>
+                                <Label htmlFor="building">Building</Label>
                                 <div className="flex space-x-2">
                                     <select
                                         id="building"
@@ -191,7 +193,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                                 department: ''
                                             });
                                         }}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
                                     >
                                         <option value="">All Buildings</option>
                                         {values.building.map((building) => (
@@ -201,13 +203,13 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                         ))}
                                     </select>
                                     <Button
-                                        variant={localState.filterByBuilding ? 'default' : 'outline'}
+                                        variant={localState.filterByBuilding ? 'default' : 'secondary'}
                                         size="sm"
                                         onClick={() => setLocalState({
                                             ...localState,
                                             filterByBuilding: !localState.filterByBuilding
                                         })}
-                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+                                        className=" dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByBuilding ? 'Applied' : 'Apply'}
                                     </Button>
@@ -216,7 +218,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                             {/*department filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <label htmlFor="department">Department</label>
+                                <Label htmlFor="department">Department</Label>
                                 <div className="flex space-x-2">
                                     <select
                                         id="department"
@@ -225,7 +227,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localOptions,
                                             department: e.target.value
                                         })}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
                                     >
                                         <option value="">All Departments</option>
                                         {availableDepartments.map((dept) => (
@@ -235,13 +237,13 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                         ))}
                                     </select>
                                     <Button
-                                        variant={localState.filterByDepartment ? 'default' : 'outline'}
+                                        variant={localState.filterByDepartment ? 'default' : 'secondary'}
                                         size="sm"
                                         onClick={() => setLocalState({
                                             ...localState,
                                             filterByDepartment: !localState.filterByDepartment
                                         })}
-                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+                                        className=" dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByDepartment ? 'Applied' : 'Apply'}
                                     </Button>
@@ -252,11 +254,11 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                     {/*status filters group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <h3 className="text-sm font-medium">Request Status</h3>
+                        <Label className="text-lg font-bold">Request Status</Label>
                         <div className="space-y-3">
                             {/*status filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <label htmlFor="status">Status</label>
+                                <Label htmlFor="status">Status</Label>
                                 <div className="flex space-x-2">
                                     <select
                                         id="status"
@@ -265,7 +267,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localOptions,
                                             status: e.target.value
                                         })}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
                                     >
                                         <option value="">All Statuses</option>
                                         <option value="Pending">Pending</option>
@@ -275,13 +277,13 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                         <option value="Accepted">Accepted</option>
                                     </select>
                                     <Button
-                                        variant={localState.filterByStatus ? 'default' : 'outline'}
+                                        variant={localState.filterByStatus ? 'default' : 'secondary'}
                                         size="sm"
                                         onClick={() => setLocalState({
                                             ...localState,
                                             filterByStatus: !localState.filterByStatus
                                         })}
-                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+                                        className=" dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByStatus ? 'Applied' : 'Apply'}
                                     </Button>
@@ -290,7 +292,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                             {/*priority filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <label htmlFor="priority">Priority</label>
+                                <Label htmlFor="priority">Priority</Label>
                                 <div className="flex space-x-2">
                                     <select
                                         id="priority"
@@ -299,7 +301,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localOptions,
                                             priority: e.target.value
                                         })}
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
+                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
                                     >
                                         <option value="">All Priorities</option>
                                         <option value="Low">Low</option>
@@ -308,13 +310,13 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                         <option value="Urgent">Urgent</option>
                                     </select>
                                     <Button
-                                        variant={localState.filterByPriority ? 'default' : 'outline'}
+                                        variant={localState.filterByPriority ? 'default' : 'secondary'}
                                         size="sm"
                                         onClick={() => setLocalState({
                                             ...localState,
                                             filterByPriority: !localState.filterByPriority
                                         })}
-                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+                                        className=" dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByPriority ? 'Applied' : 'Apply'}
                                     </Button>
@@ -325,13 +327,13 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                     {/*personnel filter group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <h3 className="text-sm font-medium">Personnel</h3>
+                        <Label className="text-lg font-bold">Personnel</Label>
                         <div className="space-y-3">
                             {/*employee filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <label htmlFor="employeeID">Employee ID</label>
+                                <Label htmlFor="employeeID">Employee ID</Label>
                                 <div className="flex space-x-2">
-                                    <input
+                                    <Input
                                         id="employeeID"
                                         value={localOptions.employeeID}
                                         onChange={(e) => setLocalOptions({
@@ -339,16 +341,15 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             employeeID: e.target.value
                                         })}
                                         placeholder="Enter ID"
-                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
                                     />
                                     <Button
-                                        variant={localState.filterByEmployee ? 'default' : 'outline'}
+                                        variant={localState.filterByEmployee ? 'default' : 'secondary'}
                                         size="sm"
                                         onClick={() => setLocalState({
                                             ...localState,
                                             filterByEmployee: !localState.filterByEmployee
                                         })}
-                                        className="hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-gray-100"
+                                        className=" dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByEmployee ? 'Applied' : 'Apply'}
                                     </Button>
