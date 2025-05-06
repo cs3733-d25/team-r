@@ -38,26 +38,24 @@ function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState('Guest');
     const [userFirstName, setUserFirstName] = useState('');
-    //const { theme } = useTheme();
     const [noFooter, setNoFooter] = useState(false);
 
     //dark mode toggle variables
     const [useDark, setUseDark] = React.useState(false);
     const { theme, setTheme } = useTheme();
 
-    //every time useDark bool changes, update theme
-    useEffect(() => {
-        console.log('useDark:', useDark);
-        //setTheme(useDark ? 'dark' : 'light');
-    }, [useDark]);
-
     const onDarkChange = () => {
-        console.log('useDark in onDarkChange:', useDark);
-        setUseDark(!useDark);
-        setTheme(useDark ? 'dark' : 'light');
+        const newUseDark = !useDark;
+        setUseDark(newUseDark);
+
+        const newTheme = useDark ? 'light' : 'dark'; //flip theme
+        setTheme(newTheme);
+        console.log('updated useDark in onDarkChange to:', useDark);
     };
 
     console.log('APP IS RENDERED');
+    console.log('on reload useDark:', useDark);
+    console.log('on reload theme:', theme);
 
     // only show the footer on certain pages
     // external map doesn't need a footer since it interferes with the zoom functionality
