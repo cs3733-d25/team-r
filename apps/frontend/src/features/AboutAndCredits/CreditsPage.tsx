@@ -13,6 +13,8 @@ export const CreditsPage = () => {
         {name: 'Vite', link: 'https://vite.dev/', image: 'vite.svg'},
         {name: 'Tailwind', link: 'https://tailwindcss.com/', image: 'tailwind.svg'},
         {name: 'Shadcn', link: 'https://ui.shadcn.com/', image: 'shadcn-ui.svg'},
+        {name: 'Axios', link: 'https://axios-http.com/docs/intro', image: 'axios.svg'},
+        {name: 'Leaflet', link: 'https://leafletjs.com/', image: 'leaflet.svg'},
         {name: 'GitHub', link: 'https://github.com/', image: 'github.svg'},
         {name: 'Docker', link: 'https://www.docker.com/', image: 'docker.svg'},
         {name: 'Webstorm', link: 'https://www.jetbrains.com/webstorm/', image: 'WebStorm.svg'},
@@ -34,7 +36,7 @@ export const CreditsPage = () => {
             </p>
             <div className='w-full flex flex-wrap justify-center gap-10 p-10'>
                 {devTools.map((tool)  => (
-                <Card key={tool.name} className='w-48 h-48'>
+                <Card key={tool.name} className='w-48 h-48 transition-transform duration-300 hover:scale-105 cursor-pointer perspective-1000'>
                     <a className='flex-grow flex items-end justify-center' href={tool.link}> <img src={root + tool.image} alt={tool.name} className='w-30 h-30'/> </a>
                     <CardHeader className='justify-center px-0'>
                         <CardTitle>{tool.name}</CardTitle>
