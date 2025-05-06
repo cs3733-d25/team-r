@@ -1,6 +1,8 @@
+
 import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button.tsx";
 import values from '@/constant-values';
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import { Input } from '@/components/ui/input.tsx';
 
@@ -63,7 +65,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
     // filter pills
     const FilterPill = ({ label, value, onRemove }: { label: string; value: string; onRemove: () => void }) => (
         <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
-            <span className="mr-1 font-medium">{label}:</span> {value}
+            <span className="mr-1 text-inherit font-trade">{label}:</span> {value}
             <button onClick={onRemove} className="ml-2 hover:text-gray-200">×</button>
         </div>
     );
@@ -139,7 +141,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
             {(activeFilters.length > 0 || sortField) && (
                 <div className="mb-4">
                     <div className="flex flex-wrap items-center">
-                        <Label className="mr-2 text-sm font-medium">Active Filters:</Label>
+                        <span className="mr-2 text-sm font-medium">Active Filters:</span>
                         {activeFilters.map((filter, index) => (
                             <FilterPill
                                 key={`${filter.type}-${index}`}
@@ -151,23 +153,11 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                         {sortField && (
                             <div className="inline-flex items-center px-3 py-1 mr-2 mb-2 bg-primary text-primary-foreground rounded-full text-sm">
-                                <Label className="mr-1 font-medium">Sort:</Label>
+                                <span className="mr-1 font-medium">Sort:</span>
                                 {sortField} ({sortDirection === 'asc' ? '↑' : '↓'})
-                                <Button onClick={resetSort} className="ml-2 hover:text-gray-200">×</Button>
+                                <button onClick={resetSort} className="ml-2 hover:text-gray-200">×</button>
                             </div>
                         )}
-
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                                onClearFilters();
-                                resetSort();
-                            }}
-                            className="ml-2 text-sm"
-                        >
-                            Clear All
-                        </Button>
                     </div>
                 </div>
             )}
@@ -176,32 +166,35 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
             <div className="bg-background rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <Label className="text-lg font-bold">Location Filters</Label>
+                        <Label className="text-inherit text-lg font-bold">Location Filters</Label>
                         <div className="space-y-3">
                             {/*building filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="building">Building</Label>
+                                <label htmlFor="building">Building</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="building"
+                                    <Select
                                         value={localOptions.building}
-                                        onChange={(e) => {
-                                            const newBuilding = e.target.value;
+                                        onValueChange={(value) => {
                                             setLocalOptions({
                                                 ...localOptions,
-                                                building: newBuilding,
-                                                department: ''
+                                                building: value,
+                                                department: '',
                                             });
                                         }}
-                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
                                     >
-                                        <option value="">All Buildings</option>
-                                        {values.building.map((building) => (
-                                            <option key={building} value={building}>
-                                                {building}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Buildings" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {values.building.map((building) => (
+                                                    <SelectItem key={building} value={building}>
+                                                        {building}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByBuilding ? 'default' : 'secondary'}
                                         size="sm"
@@ -209,7 +202,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             ...localState,
                                             filterByBuilding: !localState.filterByBuilding
                                         })}
-                                        className=" dark:hover:bg-gray-800 dark:hover:text-gray-100"
+                                        className=":hover:bg-gray-800 dark:hover:text-gray-100"
                                     >
                                         {localState.filterByBuilding ? 'Applied' : 'Apply'}
                                     </Button>
@@ -218,24 +211,27 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                             {/*department filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="department">Department</Label>
+                                <label htmlFor="building">Department</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="department"
+                                    <Select
                                         value={localOptions.department}
-                                        onChange={(e) => setLocalOptions({
-                                            ...localOptions,
-                                            department: e.target.value
-                                        })}
-                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
+                                        onValueChange={(value) =>
+                                            setLocalOptions({ ...localOptions, department: value })
+                                        }
                                     >
-                                        <option value="">All Departments</option>
-                                        {availableDepartments.map((dept) => (
-                                            <option key={dept} value={dept}>
-                                                {dept}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Departments" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {availableDepartments.map((dept) => (
+                                                    <SelectItem key={dept} value={dept}>
+                                                        {dept}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByDepartment ? 'default' : 'secondary'}
                                         size="sm"
@@ -254,28 +250,34 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                     {/*status filters group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <Label className="text-lg font-bold">Request Status</Label>
+                        <Label className="text-inherit text-lg font-bold">Request Status</Label>
                         <div className="space-y-3">
                             {/*status filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="status">Status</Label>
+                                <label htmlFor="status">Status</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="status"
+                                    <Select
                                         value={localOptions.status}
-                                        onChange={(e) => setLocalOptions({
-                                            ...localOptions,
-                                            status: e.target.value
-                                        })}
-                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
+                                        onValueChange={(value) => {
+                                            setLocalOptions({
+                                                ...localOptions,
+                                                status: value,
+                                            });
+                                        }}
                                     >
-                                        <option value="">All Statuses</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Completed">Completed</option>
-                                        <option value="Canceled">Canceled</option>
-                                        <option value="Accepted">Accepted</option>
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Statuses" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="Pending">Pending</SelectItem>
+                                                <SelectItem value="In Progress">In Progress</SelectItem>
+                                                <SelectItem value="Completed">Completed</SelectItem>
+                                                <SelectItem value="Canceled">Canceled</SelectItem>
+                                                <SelectItem value="Accepted">Accepted</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByStatus ? 'default' : 'secondary'}
                                         size="sm"
@@ -292,23 +294,29 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                             {/*priority filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="priority">Priority</Label>
+                                <label htmlFor="priority">Priority</label>
                                 <div className="flex space-x-2">
-                                    <select
-                                        id="priority"
+                                    <Select
                                         value={localOptions.priority}
-                                        onChange={(e) => setLocalOptions({
-                                            ...localOptions,
-                                            priority: e.target.value
-                                        })}
-                                        className="rounded-md font-trade border h-10 px-3 py-2 flex-1 min-w-0"
+                                        onValueChange={(value) => {
+                                            setLocalOptions({
+                                                ...localOptions,
+                                                priority: value,
+                                            });
+                                        }}
                                     >
-                                        <option value="">All Priorities</option>
-                                        <option value="Low">Low</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="High">High</option>
-                                        <option value="Urgent">Urgent</option>
-                                    </select>
+                                        <SelectTrigger className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0">
+                                            <SelectValue placeholder="All Priorities" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="Low">Low</SelectItem>
+                                                <SelectItem value="Medium">Medium</SelectItem>
+                                                <SelectItem value="High">High</SelectItem>
+                                                <SelectItem value="Urgent">Urgent</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                     <Button
                                         variant={localState.filterByPriority ? 'default' : 'secondary'}
                                         size="sm"
@@ -327,11 +335,11 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
 
                     {/*personnel filter group*/}
                     <div className="space-y-4 p-3 border border-muted-foreground/20 rounded-md">
-                        <Label className="text-lg font-bold">Personnel</Label>
+                        <Label className="text-inherit text-lg font-bold">Personnel</Label>
                         <div className="space-y-3">
                             {/*employee filter*/}
                             <div className="flex flex-col space-y-1.5">
-                                <Label htmlFor="employeeID">Employee ID</Label>
+                                <label htmlFor="employeeID">Employee</label>
                                 <div className="flex space-x-2">
                                     <Input
                                         id="employeeID"
@@ -341,6 +349,7 @@ export function RequestFilters({options, filterState, onFilterChange, onClearFil
                                             employeeID: e.target.value
                                         })}
                                         placeholder="Enter ID"
+                                        className="rounded-md border h-10 px-3 py-2 flex-1 min-w-0"
                                     />
                                     <Button
                                         variant={localState.filterByEmployee ? 'default' : 'secondary'}

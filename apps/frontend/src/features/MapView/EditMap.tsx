@@ -44,7 +44,7 @@ export function EditMap({ status }: EditMapProps) {
     const [edgeNodes, setEdgeNodes] = useState<string[]>([]); // stores two nodes in a buffer so that an edge can be created
     const [activeTab, setActiveTab] = useState<string>('place-node');
     //for algo selection
-    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'dijkstra'>('bfs');
+    const [algorithm, setAlgorithm] = useState<'dfs' | 'bfs' | 'aStar'>('bfs');
     // for map editing instructions
     const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -99,7 +99,7 @@ export function EditMap({ status }: EditMapProps) {
         // Add more steps here
     ];
 
-    async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'dijkstra') {
+    async function saveAlgorithm(algo: 'dfs' | 'bfs' | 'aStar') {
         try {
             const response = await axios.post(`/api/algo/setalgo`, {
                 algo,
@@ -635,7 +635,7 @@ export function EditMap({ status }: EditMapProps) {
                                         <Select
                                             value={algorithm}
                                             onValueChange={(value: string) =>
-                                                saveAlgorithm(value as 'bfs' | 'dfs' | 'dijkstra')
+                                                saveAlgorithm(value as 'bfs' | 'dfs' | 'aStar')
                                             }
                                         >
                                             <SelectTrigger className="dark:border-gray-600 dark:text-white dark:bg-gray-700">
@@ -645,9 +645,7 @@ export function EditMap({ status }: EditMapProps) {
                                                 <SelectGroup>
                                                     <SelectItem value="bfs" className="dark:hover:bg-gray-700 dark:text-white">BFS</SelectItem>
                                                     <SelectItem value="dfs" className="dark:hover:bg-gray-700 dark:text-white">DFS</SelectItem>
-                                                    <SelectItem value="dijkstra" className="dark:hover:bg-gray-700 dark:text-white">
-                                                        Dijkstra's
-                                                    </SelectItem>
+                                                    <SelectItem value="aStar" className="dark:hover:bg-gray-700 dark:text-white">A*</SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>

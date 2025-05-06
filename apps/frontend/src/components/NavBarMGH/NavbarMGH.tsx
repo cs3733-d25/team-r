@@ -156,14 +156,14 @@ export function NavbarMGH(props: NavBarProps) {
                                         Hi, {props.userName}!
                                     </Label>
                                     <div className="border-t"></div>
-                                    <Button
-                                        variant={'ghostPopover'}
-                                        onClick={() =>
-                                            alert("This button doesn't work yet! - Akaash")
-                                        }
-                                    >
-                                        Profile
-                                    </Button>
+                                    {/*<Button*/}
+                                    {/*    variant={'ghostPopover'}*/}
+                                    {/*    onClick={() =>*/}
+                                    {/*        alert("This button doesn't work yet!")*/}
+                                    {/*    }*/}
+                                    {/*>*/}
+                                    {/*    Profile*/}
+                                    {/*</Button>*/}
 
                                     <Button
                                         variant={'ghostPopover'}
@@ -172,6 +172,20 @@ export function NavbarMGH(props: NavBarProps) {
                                         <a href="/settings">Settings</a>
                                     </Button>
                                     <div className="border-t"></div>
+
+                                    {/*Dark mode toggle*/}
+                                    {/*<label className=" relative inline-flex items-center cursor-pointer">*/}
+
+                                    {/*    <input*/}
+                                    {/*        type="checkbox"*/}
+                                    {/*        className="sr-only peer"*/}
+                                    {/*        //checked={useMeters}*/}
+                                    {/*        //onChange={() => onUseMetersChange?.(!useMeters)}*/}
+                                    {/*    />*/}
+                                    {/*    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />*/}
+                                    {/*</label>*/}
+                                    {/*<div className="border-t"></div>*/}
+
                                     <Button variant={'ghostDestructive'} asChild>
                                         <a href={'/'} onClick={(e) => handleLogout()}>
                                             Sign out
