@@ -38,8 +38,24 @@ function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
     const [userType, setUserType] = useState('Guest');
     const [userFirstName, setUserFirstName] = useState('');
-    const { theme } = useTheme();
+    //const { theme } = useTheme();
     const [noFooter, setNoFooter] = useState(false);
+
+    //dark mode toggle variables
+    const [useDark, setUseDark] = React.useState(false);
+    const { theme, setTheme } = useTheme();
+
+    //every time useDark bool changes, update theme
+    useEffect(() => {
+        console.log('useDark:', useDark);
+        //setTheme(useDark ? 'dark' : 'light');
+    }, [useDark]);
+
+    const onDarkChange = () => {
+        console.log('useDark in onDarkChange:', useDark);
+        setUseDark(!useDark);
+        setTheme(useDark ? 'dark' : 'light');
+    };
 
     console.log('APP IS RENDERED');
 
@@ -161,7 +177,7 @@ function App() {
 
     return (
         <div className={`${theme} min-h-screen`}>
-            <NavbarMGH userType={userType} userName={userFirstName} />
+            <NavbarMGH userType={userType} userName={userFirstName} useDark={useDark} onDarkChange={onDarkChange}/>
             <RouterProvider router={router} />
             {!noFooter && <Footer />}
         </div>

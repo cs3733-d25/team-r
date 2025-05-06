@@ -16,21 +16,14 @@ interface NavBarProps {
     page?: string;
     userType?: string;
     userName?: string;
+    useDark?: boolean;
+    onDarkChange?: (useDark: boolean) => void;
 }
 
 export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
     const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0();
-    //dark mode toggle variables
-    const [useDark, setUseDark] = React.useState(false);
-    const { theme, setTheme } = useTheme();
-
-    //every time useDark bool changes, update theme
-    useEffect(() => {
-        console.log('useDark:', useDark);
-        setTheme(useDark ? 'dark' : 'light');
-    }, [useDark]);
 
     async function handleLogout() {
         try {
@@ -187,12 +180,13 @@ export function NavbarMGH(props: NavBarProps) {
                                         {/*</Button>*/}
                                         {/*<div className="border-t"></div>*/}
 
-                                        {/*Dark mode toggle*/}
+                                        {/*Dark mode toggle, using props from App.tsx*/}
                                         <ThemeSwitcher
-                                            useDark={useDark}
-                                            onDarkChange={(useDark) => {
-                                                setUseDark(useDark);
-                                            }}
+                                            useDark={props.useDark}
+                                            onDarkChange={(e) => {
+                                                props.onDarkChange?.(!props.useDark);
+                                            }
+                                            }
                                         />
                                         <div className="border-t"></div>
 
