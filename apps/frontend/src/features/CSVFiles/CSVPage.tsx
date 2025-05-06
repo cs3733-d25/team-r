@@ -141,8 +141,6 @@ export function CSVPage() {
 
     return (
         <div>
-            <h1 className={'bold text-3xl text-center'} id={TOUR_STEPS_IDS_CSV.CLICK_START}>Import/Export CSV Files</h1>
-            <br />
             <div>
                 <Label htmlFor="ImportCSV" className={"mb-1"}>Import CSV File: </Label>
                 <Input
