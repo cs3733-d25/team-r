@@ -29,9 +29,9 @@ export default defineConfig({
             output: {
                 manualChunks: {
                     leaflet: ['leaflet'],
-                        vendor: ['react', 'react-dom'] // if using React
-                    }
+                    vendor: ['react', 'react-dom'] // if using React
                 }
+            }
         }
     },
     cacheDir: '.vite',

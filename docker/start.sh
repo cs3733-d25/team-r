@@ -13,7 +13,7 @@ export POSTGRES_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRE
 echo "POSTGRES_URL: ${POSTGRES_URL}"
 
 # Push schema to DB
-yarn workspace database push
+yarn workspace database push --force-reset
 
 # Build the frontend
 echo "NOT Building frontend..."
