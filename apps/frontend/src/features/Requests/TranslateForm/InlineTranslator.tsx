@@ -343,7 +343,7 @@ export function InlineTranslator() {
                             <div className="relative">
                                 <div
                                     id="translatedText"
-                                    className="p-3 border rounded-md bg-slate-50 min-h-24"
+                                    className="p-3 border rounded-md bg-input-50 min-h-24"
                                 >
                                     {translatedText}
                                 </div>

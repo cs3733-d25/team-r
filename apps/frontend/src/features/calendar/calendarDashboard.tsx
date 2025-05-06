@@ -1,64 +1,67 @@
-import React, {useEffect, useState} from "react"
-import { Calendar } from "@/components/ui/calendar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import React, { useEffect, useState } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import axios from 'axios';
 
 type Announcement = {
-    id: string
-    title: string
-    content: string
-    date: string
-    author: string
-    type: string
-    expirationDate: string
-
-}
-async function getAnnouncements(){
-    try{
-        const announcements = await axios.get("/:selectedDate");
-        return announcements;
+    id: string;
+    title: string;
+    content: string;
+    date: string;
+    author: string;
+    type: string;
+    expirationDate: string;
+};
+async function getAnnouncements() {
+    try {
+        return await axios.get('/:selectedDate');
     } catch (error) {
         console.log(error);
-        return "no announcements found";
+        return 'no announcements found';
     }
 }
 
 export default function Dashboard() {
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-    const [announcements, setAnnouncements] = useState<Announcement[]>([])
-    const [loading, setLoading] = useState(true)
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchAnnouncements() {
             try {
-                const res = await axios.get("/api/announcements") // Update the endpoint!
-                setAnnouncements(res.data)
+                const res = await axios.get('/api/announcements'); // Update the endpoint!
+                setAnnouncements(res.data);
             } catch (error) {
-                console.error("Error fetching announcements:", error)
-                setAnnouncements([])
+                console.error('Error fetching announcements:', error);
+                setAnnouncements([]);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
         }
 
-        fetchAnnouncements()
-    }, [])
+        fetchAnnouncements();
+    }, []);
 
-    const eventsForSelectedDate = announcements.filter(event =>
-        new Date(event.date).toDateString() === selectedDate?.toDateString()
-    )
-    const eventDates = announcements.map(event => new Date(event.date))
+    const eventsForSelectedDate = announcements.filter(
+        (event) => new Date(event.date).toDateString() === selectedDate?.toDateString()
+    );
+    const eventDates = announcements.map((event) => new Date(event.date));
 
     return (
         <div className="flex gap-6">
             {/* Calendar */}
-            <Calendar selected={selectedDate} onSelect={setSelectedDate} modifiers={{ event: eventDates }}
-                      modifiersClassNames={{ event: "bg-background !text-black" }}/>
+            <Calendar
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                modifiers={{ event: eventDates }}
+                modifiersClassNames={{ event: '!bg-gray-200 !text-black font-bold dark:!bg-slate-800 dark:!text-white' }}
+                className="dark:text-white"
+            />
 
             {/* Events Card */}
             <div className="flex-1">
                 {eventsForSelectedDate.length > 0 ? (
-                    eventsForSelectedDate.map(event => (
+                    eventsForSelectedDate.map((event) => (
                         <Card key={event.id} className="mb-4">
                             <CardHeader>
                                 <CardTitle>{event.title}</CardTitle>
@@ -75,7 +78,5 @@ export default function Dashboard() {
                 )}
             </div>
         </div>
-    )
+    );
 }
-
-

@@ -1,23 +1,21 @@
 // Dashboard.tsx or wherever you're using the Calendar
-import React, {useEffect, useState} from "react"
-import { Calendar } from "@/components/ui/calendar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import React, { useEffect, useState } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import axios from 'axios';
 
 type Announcement = {
-    id: string
-    title: string
-    content: string
-    date: string
-    author: string
-    type: string
-    expirationDate: string
-
-}
+    id: string;
+    title: string;
+    content: string;
+    date: string;
+    author: string;
+    type: string;
+    expirationDate: string;
+};
 async function getAnnouncements(){
     try{
-        const announcements = await axios.get("/:selectedDate");
-        return announcements;
+        return await axios.get('/:selectedDate');
     } catch (error) {
         console.log(error);
         return "no announcements found";
@@ -53,8 +51,13 @@ export default function Dashboard() {
     return (
         <div className="flex gap-6">
             {/* Calendar */}
-            <Calendar selected={selectedDate} onSelect={setSelectedDate} modifiers={{ event: eventDates }}
-                      modifiersClassNames={{ event: "bg-background !text-black" }}/>
+            <Calendar
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                modifiers={{ event: eventDates }}
+                modifiersClassNames={{ event: '!bg-gray-200 !text-black font-bold dark:!bg-slate-800 dark:!text-white' }}
+                className="dark:text-white"
+            />
 
             {/* Events Card */}
             <div className="flex-1">

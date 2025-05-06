@@ -55,7 +55,7 @@ export function Directory() {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold text-center mb-8">Directory</h1>
+            <h1 className="text-4xl font-bold text-center mb-8">Directories</h1>
             <div className="flex flex-col md:flex-row gap-6 h-full">
                 <div className="w-full md:w-1/4 h-full">
                     <div className="flex flex-col space-y-2 bg-white dark:bg-card p-4 rounded-lg shadow-sm h-full">
