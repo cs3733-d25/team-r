@@ -45,7 +45,7 @@ function App() {
     // only show the footer on certain pages
     // external map doesn't need a footer since it interferes with the zoom functionality
     useEffect(() => {
-        const pathsWithoutFooter = ['/external-map'];
+        const pathsWithoutFooter = ['/external-map', '/internal-map', '/edit-map'];
         const shouldHideFooter = pathsWithoutFooter.includes(location.pathname);
         setNoFooter(shouldHideFooter);
     }, [location]);
