@@ -8,7 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Label } from '@/components/ui/label.tsx';
 import {HoverPopoverNavLink} from "@/components/HoverPopoverNavLink.tsx";
 import {useAuth0} from "@auth0/auth0-react";
-import {Notifications} from '@/features/Announcements/Notifications.tsx';
+import { Notifications } from '@/features/Announcements/Notifications.tsx';
+import { ThemeSwitcher } from '@/features/ThemeSwitcher/ThemeSwitcher';
 
 interface NavBarProps {
     page?: string;
@@ -20,6 +21,7 @@ export function NavbarMGH(props: NavBarProps) {
     // State to control the mobile menu and popover in navbar
     const [isOpen, setIsOpen] = React.useState(false);
     const {loginWithRedirect, isAuthenticated, user, logout} = useAuth0();
+    // const ?
 
     async function handleLogout() {
         try {
@@ -164,27 +166,19 @@ export function NavbarMGH(props: NavBarProps) {
                                     {/*>*/}
                                     {/*    Profile*/}
                                     {/*</Button>*/}
+                                    {/*<div className="border-t"></div>*/}
 
-                                    <Button
-                                        variant={'ghostPopover'}
-                                        asChild
-                                    >
-                                        <a href="/settings">Settings</a>
-                                    </Button>
-                                    <div className="border-t"></div>
+                                    {/*<Button*/}
+                                    {/*    variant={'ghostPopover'}*/}
+                                    {/*    asChild*/}
+                                    {/*>*/}
+                                    {/*    <a href="/settings">Settings</a>*/}
+                                    {/*</Button>*/}
+                                    {/*<div className="border-t"></div>*/}
 
                                     {/*Dark mode toggle*/}
-                                    {/*<label className=" relative inline-flex items-center cursor-pointer">*/}
-
-                                    {/*    <input*/}
-                                    {/*        type="checkbox"*/}
-                                    {/*        className="sr-only peer"*/}
-                                    {/*        //checked={useMeters}*/}
-                                    {/*        //onChange={() => onUseMetersChange?.(!useMeters)}*/}
-                                    {/*    />*/}
-                                    {/*    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full" />*/}
-                                    {/*</label>*/}
-                                    {/*<div className="border-t"></div>*/}
+                                    <ThemeSwitcher />
+                                    <div className="border-t"></div>
 
                                     <Button variant={'ghostDestructive'} asChild>
                                         <a href={'/'} onClick={(e) => handleLogout()}>
