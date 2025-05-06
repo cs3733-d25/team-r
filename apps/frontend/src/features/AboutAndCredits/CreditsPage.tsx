@@ -1,5 +1,6 @@
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from '@/components/ui/card'
 import React from 'react'
+import { Label } from '@/components/ui/label.tsx';
 
 
 
@@ -22,16 +23,16 @@ export const CreditsPage = () => {
     ]
     
     return (
-        <div>
-            <h1 className='p-4 text-4xl font-bold text-center space-y-1'>Credits</h1>
+        <div className='flex flex-col items-center justify-center'>
+            <Label className='p-4 text-4xl font-bold text-center space-y-1'>Credits</Label>
             {/*<Label/>*/}
-            <p className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center text-center'> This web application was developed using the PERN (PostgreSQL, Express, React, Node.js) stack with
+            <Label className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center text-center'> This web application was developed using the PERN (PostgreSQL, Express, React, Node.js) stack with
                 Typescript, Prisma ORM, Shadcn and Tailwind. Deployment on the cloud was accomplished using AWS EC, a
                 Docker container, and AWS RDS to run the PostgreSQL server.
-            </p>
-            <p className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center'>
+            </Label>
+            <Label className='max-w-3xl p-2 text-1xl font-bold font-trade mb-0 place-self-center'>
                 <br/> Click on any of the icons below to learn more.
-            </p>
+            </Label>
             <div className='w-full flex flex-wrap justify-center gap-10 p-10'>
                 {devTools.map((tool)  => (
                 <Card key={tool.name} className='w-48 h-48'>
