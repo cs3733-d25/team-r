@@ -69,6 +69,7 @@ const RAW_RUNTIME_STATE =
           ["@types/cors", "npm:2.8.17"],\
           ["@types/express", "npm:5.0.1"],\
           ["@types/express-session", "npm:1.17.0"],\
+          ["@types/leaflet", "npm:1.9.17"],\
           ["@types/multer", "npm:1.4.12"],\
           ["@types/node", "npm:22.13.13"],\
           ["@types/react", "npm:19.1.0"],\
@@ -87,6 +88,7 @@ const RAW_RUNTIME_STATE =
           ["express-openid-connect", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.18.0"],\
           ["express-session", "npm:1.17.0"],\
           ["husky", "npm:9.1.7"],\
+          ["leaflet", "npm:1.9.4"],\
           ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["multer", "npm:1.4.5-lts.2"],\
           ["postcss", "npm:8.5.3"],\
@@ -8273,7 +8275,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.4.19"],\
           ["input-otp", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.4.2"],\
           ["leaflet", "npm:1.9.4"],\
-          ["leaflet-ant-path", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
+          ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["localforage", "npm:1.10.0"],\
           ["lucide-react", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:0.487.0"],\
           ["match-sorter", "npm:6.3.4"],\
@@ -9345,19 +9347,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/__virtual__/leaflet-ant-path-virtual-b4125fad15/0/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
         "packageDependencies": [\
           ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
-          ["@types/leaflet", null],\
-          ["leaflet", null]\
-        ],\
-        "packagePeers": [\
-          "@types/leaflet",\
-          "leaflet"\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0", {\
-        "packageLocation": "./.yarn/__virtual__/leaflet-ant-path-virtual-413a392f0e/0/cache/leaflet-ant-path-npm-1.3.0-af9cfb5dfa-4f77a629ed.zip/node_modules/leaflet-ant-path/",\
-        "packageDependencies": [\
-          ["leaflet-ant-path", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:1.3.0"],\
           ["@types/leaflet", "npm:1.9.17"],\
           ["leaflet", "npm:1.9.4"]\
         ],\
@@ -12391,6 +12380,7 @@ const RAW_RUNTIME_STATE =
           ["@types/cors", "npm:2.8.17"],\
           ["@types/express", "npm:5.0.1"],\
           ["@types/express-session", "npm:1.17.0"],\
+          ["@types/leaflet", "npm:1.9.17"],\
           ["@types/multer", "npm:1.4.12"],\
           ["@types/node", "npm:22.13.13"],\
           ["@types/react", "npm:19.1.0"],\
@@ -12409,6 +12399,7 @@ const RAW_RUNTIME_STATE =
           ["express-openid-connect", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:2.18.0"],\
           ["express-session", "npm:1.17.0"],\
           ["husky", "npm:9.1.7"],\
+          ["leaflet", "npm:1.9.4"],\
           ["leaflet-ant-path", "virtual:3154e7e2502d6821f7eea9434c4cdb00a42b4ad928bf283b9f5a1183af99307a4f66aca3e46a37d196a6c6b81c948321e804193e2cbecf9304b80a7023c19290#npm:1.3.0"],\
           ["multer", "npm:1.4.5-lts.2"],\
           ["postcss", "npm:8.5.3"],\

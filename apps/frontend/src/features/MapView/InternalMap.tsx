@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import L, { LeafletEvent } from 'leaflet';
-// import 'leaflet/dist/leaflet.css';
+import L, { LeafletEvent } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20patriot1.svg';
 import patriot22Floor1 from '../../../public/22patriot1.svg';
 import patriot22Floor3 from '../../../public/22patriot3.svg';

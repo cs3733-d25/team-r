@@ -1,4 +1,4 @@
-// import L, { LayerGroup } from 'leaflet';
+import { LayerGroup } from 'leaflet';
 
 export function goToFloor(
     floor: number,
@@ -9,7 +9,7 @@ export function goToFloor(
     floorLayer22_4?: LayerGroup | null,
     floorLayerChestnutHill?: LayerGroup | null,
     floorLayerFaulkner?: LayerGroup | null,
-    floorLayerWomens?: L.LayerGroup | null,
+    floorLayerWomens?: LayerGroup | null,
     building?: string
 ) {
     if (floorLayer20_1) map.removeLayer(floorLayer20_1);
