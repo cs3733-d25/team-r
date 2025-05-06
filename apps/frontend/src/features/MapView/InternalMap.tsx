@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import L, { LeafletEvent } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+// import 'leaflet/dist/leaflet.css';
 import patriot20Floor1 from '../../../public/20patriot1.svg';
 import patriot22Floor1 from '../../../public/22patriot1.svg';
 import patriot22Floor3 from '../../../public/22patriot3.svg';
@@ -9,7 +9,7 @@ import chestnutHill from '../../../public/chestnutHill1.svg';
 import faulkner from '../../../public/faulkner1.svg';
 import womens from '../../../public/womens2.svg';
 import { goToFloor } from '../MapView/floorNavigation.ts';
-import './leaflet.css';
+// import './leaflet.css';
 import { fetchEdges, fetchNodes } from '@/features/MapView/mapService.ts';
 import { Edge, Node } from '../../../../backend/src/routes/maps/mapData.ts';
 import 'leaflet-ant-path';
