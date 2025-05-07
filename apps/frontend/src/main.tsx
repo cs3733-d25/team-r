@@ -7,7 +7,9 @@ import { AppState } from '@auth0/auth0-react';
 
 //use import.meta.env not process.env when in frontend
 const domain = import.meta.env.VITE_AUTH_DOMAIN;
+console.log(domain);
 const clientID = import.meta.env.VITE_AUTH_CLIENT_ID
+console.log(clientID);
 
 const onRedirectCallback = (appState: AppState | undefined) => {
     window.history.replaceState(

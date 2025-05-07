@@ -132,6 +132,7 @@ function ReverseGeocoder({
  */
 export function ExternalMap({ selectedLocation: initialLocation }: ExternalMapProps) {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    console.log(apiKey);
     const patriotPlace20 = 'Mass General Brigham, 20 Patriot Pl, Foxborough, MA 02035';
     const patriotPlace22 = 'Multispecialty Clinic, 22 Patriot Pl 3rd Floor, Foxborough, MA 02035';
     const chestnutHill = '850 Boylston St, Chestnut Hill, MA 02467';
