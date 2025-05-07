@@ -5,41 +5,57 @@ import Directory from '../features/Directory/Directory.tsx';
 import Login from '../features/Login/Login.tsx';
 import AboutPage from '../features/AboutAndCredits/AboutPage.tsx';
 import CreditsPage from '../features/AboutAndCredits/CreditsPage.tsx';
-import SanitationRequestForm from '../features/Requests/SanitationForm/SanitationRequestForm.tsx';
 import { HomeMain } from '../components/HomeMain.tsx';
 import CSVTabPage from '../features/CSVFiles/CSVTabs.tsx';
 import TestPage from '../features/TestPage.tsx';
-import SanitationRequestPage from "../features/Requests/SanitationForm/SanitationRequestPage.tsx";
-import PatientRequest, { AllPatientRequests } from "../features/Requests/PatientRequest/AllPatientRequests.tsx";
-import { PatientRequestForm } from "@/features/Requests/PatientRequest/PatientRequestForm.tsx";
-import PatientRequestPage from "../features/Requests/PatientRequest/PatientRequestPage.tsx";
-import { ExternalMap } from "../features/MapView/ExternalMap.tsx";
-import { MapPage } from "../features/MapView/MapPage.tsx";
-import PatientTransportPage from "../features/Requests/PatientTransport/PatientTransportPage.tsx";
-import Prescription from "../features/Requests/PrescriptionForm/Prescription.tsx";
-import SanitationRequestTabs from "../features/Requests/SanitationForm/SanitationTabs.tsx";
-import { DeviceReq } from "../features/Requests/MedDeviceRequest/DeviceReq.tsx";
-import { EditMap } from "../features/MapView/EditMap.tsx";
-import RequestPage from "../features/Requests/RequestPage.tsx";
+import SanitationRequestPage from '../features/Requests/SanitationForm/SanitationRequestPage.tsx';
+import PatientRequest, {
+    AllPatientRequests,
+} from '../features/Requests/PatientRequest/AllPatientRequests.tsx';
+import { ExternalMap } from '../features/MapView/ExternalMap.tsx';
+import { MapPage } from '../features/MapView/MapPage.tsx';
+import Prescription from '../features/Requests/PrescriptionForm/Prescription.tsx';
+import SanitationRequestTabs from '../features/Requests/SanitationForm/SanitationTabs.tsx';
+import { DeviceReq } from '../features/Requests/MedDeviceRequest/DeviceReq.tsx';
+import { EditMap } from '../features/MapView/EditMap.tsx';
+import RequestPage from '../features/Requests/RequestPage.tsx';
 import { NavbarMGH } from '../components/NavBarMGH/NavbarMGH.tsx';
-import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 import { TourProvider } from '@/components/tour.tsx';
-import TranslateRequestForm from "@/features/Requests/TranslateForm/TranslateRequestForm.tsx";
-import TranslateRequestPage from "@/features/Requests/TranslateForm/TranslateRequestPage.tsx";
-import Translate from "@/features/Requests/TranslateForm/Translate.tsx";
-import PatientTransport from "@/features/Requests/PatientTransport/PatientTransport.tsx";
-import SettingsPage from "@/features/ThemeSwitcher/SettingsPage.tsx"
+import Translate from '@/features/Requests/TranslateForm/Translate.tsx';
+import FileTranslator from '@/features/Requests/TranslateForm/FileTranslator.tsx';
+import PatientTransport from '@/features/Requests/PatientTransport/PatientTransport.tsx';
+import SettingsPage from '@/features/ThemeSwitcher/SettingsPage.tsx';
 import { useTheme } from '../hooks/useTheme';
-
+import Footer from '../components/Footer';
+import { AnnouncementPage } from '@/features/Announcements/AnnouncementPage.tsx';
+// import AnnouncementForm from '@/features/Announcements/AnnouncementForm.tsx';
+import PageNotFound from '@/features/PageNotFound.tsx';
+import CreateAnnouncement from "@/features/Announcements/CreateAnnouncement.tsx";
 
 function App() {
     const { isAuthenticated, user, isLoading } = useAuth0();
-    const [userType, setUserType] = useState("Guest");
-    const [userFirstName, setUserFirstName] = useState("");
-    const { theme } = useTheme();
+    const [userType, setUserType] = useState('Guest');
+    const [userFirstName, setUserFirstName] = useState('');
+    const [noFooter, setNoFooter] = useState(false);
+    //dark mode variable
+    const { theme, setTheme } = useTheme();
+
+    const onDarkChange = () => {
+        const newTheme = (theme === 'dark') ? 'light' : 'dark'; //flip theme
+        setTheme(newTheme);
+    };
 
     console.log('APP IS RENDERED');
+
+    // only show the footer on certain pages
+    // external map doesn't need a footer since it interferes with the zoom functionality
+    useEffect(() => {
+        const pathsWithoutFooter = ['/external-map', '/internal-map', '/edit-map'];
+        const shouldHideFooter = pathsWithoutFooter.includes(location.pathname);
+        setNoFooter(shouldHideFooter);
+    }, [location]);
 
     // Get the user type from the database after the user has logged in
     useEffect(() => {
@@ -53,7 +69,8 @@ function App() {
         console.log('user', user);
         console.log('isAuthenticated', isAuthenticated);
         if (isAuthenticated && !isLoading && user) {
-            console.log("in if statement");
+            console.log('in if statement');
+
             //navigate to neck page
             async function getUserType() {
                 try {
@@ -62,7 +79,7 @@ function App() {
                         { email: user?.email },
                         { withCredentials: true }
                     );
-                    console.log("firstName: ", response.data.firstName);
+                    console.log('firstName: ', response.data.firstName);
                     const userType = response.data.userType;
                     const firstName = response.data.firstName;
                     setUserType(userType);
@@ -72,6 +89,7 @@ function App() {
                     console.log(error);
                 }
             }
+
             getUserType();
         }
     }, [isAuthenticated, user, isLoading]);
@@ -79,22 +97,37 @@ function App() {
     const router = createBrowserRouter([
         {
             path: '/',
-            errorElement:
-                <div className={"bg-[url(/wong-pyramid.gif)] h-screen bg-no-repeat bg-cover"}>
-                    <p className={'font-trade'}>Page not found</p>
-                </div>,
+            errorElement: <PageNotFound />,
             children: [
                 { index: true, element: <HomeMain userType={userType} /> },
-                { path: 'home', element: <HomeMain userType={userType} status={"logged-in"} /> },
+                { path: 'home', element: <HomeMain userType={userType} status={'logged-in'} /> },
                 { path: 'login', element: <Login /> },
                 { path: 'directory', element: <Directory /> },
                 { path: 'about', element: <AboutPage /> },
                 { path: 'credits', element: <CreditsPage /> },
                 { path: 'external-map', element: <ExternalMap /> },
-                { path: 'edit-map', element: <><TourProvider><EditMap /></TourProvider></> },
+                {
+                    path: 'edit-map',
+                    element: (
+                        <>
+                            <TourProvider>
+                                <EditMap />
+                            </TourProvider>
+                        </>
+                    ),
+                },
                 { path: 'internal-map', element: <MapPage /> },
-                { path: 'sanitation', element: <SanitationRequestTabs/> },
-                { path: 'csv', element: <><TourProvider><CSVTabPage /></TourProvider></> },
+                { path: 'sanitation', element: <SanitationRequestTabs /> },
+                {
+                    path: 'csv',
+                    element: (
+                        <>
+                            <TourProvider>
+                                <CSVTabPage />
+                            </TourProvider>
+                        </>
+                    ),
+                },
                 { path: 'sanitationpage', element: <SanitationRequestPage /> },
                 { path: 'testing', element: <TestPage /> },
                 { path: 'profile', element: <p>Profile</p> },
@@ -104,16 +137,39 @@ function App() {
                 { path: 'patientrequest', element: <PatientRequest /> },
                 { path: 'transport', element: <PatientTransport /> },
                 { path: 'devicerequest', element: <DeviceReq /> },
-                { path: 'translation', element: <Translate /> },
-                { path: 'requests', element: <RequestPage /> }
+                { path: 'translation', element: <TourProvider><Translate /></TourProvider> },
+                { path: 'upload-translate', element: <FileTranslator /> },
+                {
+                    path: 'requests',
+                    element: (
+                        <TourProvider>
+                            <RequestPage />
+                        </TourProvider>
+                    ),
+                },
+                { path: 'announcements', element: <TourProvider><AnnouncementPage /></TourProvider> },
+                {
+                    path: 'announcementform',
+                    element: <CreateAnnouncement />
+                },
+                { path: 'urgentannouncements', element: <AnnouncementPage defaultTab="urgent" /> },
+                {
+                    path: 'generalannouncements',
+                    element: <AnnouncementPage defaultTab="general" />,
+                },
+                {
+                    path: 'bulletinannouncements',
+                    element: <AnnouncementPage defaultTab="bulletin" />,
+                },
             ],
         },
     ]);
 
     return (
         <div className={`${theme} min-h-screen`}>
-            <NavbarMGH userType={userType} userName={userFirstName} />
+            <NavbarMGH userType={userType} userName={userFirstName} useDark={(theme !== 'light')} onDarkChange={onDarkChange}/>
             <RouterProvider router={router} />
+            {!noFooter && <Footer />}
         </div>
     );
 }

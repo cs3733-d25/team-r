@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { useNavigate } from 'react-router-dom';
 import Disclaimer from '../components/Disclaimer';
 import { Label } from '@/components/ui/label.tsx';
+import { GeoAltFill } from 'react-bootstrap-icons';
 
 interface HomeMainProps {
     status?: string;
@@ -10,8 +11,6 @@ interface HomeMainProps {
 }
 
 export function HomeMain(props: HomeMainProps) {
-    console.log('USER TYPE', props.userType, '- Keagan');
-
     const navigate = useNavigate();
     const handleNavigateToMap = () => {
         navigate('/external-map', {
@@ -28,7 +27,7 @@ export function HomeMain(props: HomeMainProps) {
             {/* Hero page image is a photo taken by our incredible AKAASH WALKER */}
             <div
                 className={
-                    'flex-col bg-[url(/mgb-bg.png)] bg-no-repeat bg-cover h-11/12 content-center'
+                    'flex-col bg-[url(/mgb-bg.png)] bg-no-repeat bg-cover h-full content-center'
                 }
             >
                 <div
@@ -42,19 +41,18 @@ export function HomeMain(props: HomeMainProps) {
                             Welcome to Mass General Brigham
                         </Label>
                         {(!props.userType || props.status != 'logged-in') && (
-                            <Label className={'text-white font-bold mb-4 mx-10'}>
-                                Log in to locate a department using our pathfinding page so that we
-                                can help you navigate toward any service that you may need.
+                            <Label className={'text-white mb-4 mx-10'}>
+                                Use our interactive map to find your way around the hospital.
                             </Label>
                         )}
                     </div>
                     <div className={'justify-self-center'}>
                         <Button
-                            variant="ghost"
-                            className={'bg-primary hover:bg-foreground hover:text-white mt-10'}
+                            variant="default"
                             onClick={handleNavigateToMap}
                         >
                             Find a Location
+                            <GeoAltFill/>
                         </Button>
                     </div>
                 </div>

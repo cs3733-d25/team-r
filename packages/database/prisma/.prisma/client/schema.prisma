@@ -157,13 +157,36 @@ model TranslateRequest {
   employeeName       Employee @relation(fields: [employeeID], references: [id])
   language           String
   building           String
-  roomNumber         Int
+  roomNumber         String
   status             String
   comments           String
   priority           String
   department         String
   assignedEmployeeID String
   assignedEmployee   Employee @relation("translateRequestAssigned", fields: [assignedEmployeeID], references: [id])
+}
+
+model Announcement {
+  id             String    @id @default(cuid())
+  title          String
+  content        String
+  date           DateTime
+  author         String
+  type           String
+  expirationDate DateTime?
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String
+  content   String    @db.Text
+  createdAt DateTime  @default(now())
+  isRead    Boolean   @default(false)
+  type      String // "announcement"
+  sourceId  String // announcement id
+  expiresAt DateTime?
+  employee  Employee  @relation(fields: [userId], references: [id])
 }
 
 generator client {
@@ -230,6 +253,8 @@ model Employee {
   transportAssigned      TransportRequest[]  @relation("transportRequestAssigned")
   translateAssigned      TranslateRequest[]  @relation("translateRequestAssigned")
   deviceAssigned         DeviceRequest[]     @relation("deviceRequestAssigned")
+
+  Notification Notification[]
 }
 
 model Patient {

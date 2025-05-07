@@ -188,38 +188,48 @@
 /*---break---*/
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --background: #0f172a; /* deep blue */
+    --foreground: #f1f5f9; /* very light slate */
+
+    --card: #1e293b;
+    --card-foreground: #f1f5f9;
+
+    --popover: #1e293b;
+    --popover-foreground: #f1f5f9;
+
+    --primary: #6C8EB1;
+    --primary-foreground: #ffffff;
+
+    --secondary: #64748b;
+    --secondary-foreground: #f1f5f9;
+
+    --muted: #475569;
+    --muted-foreground: #cbd5e1;
+
+    --accent: #30426A;
+    --accent-foreground: #ffffff;
+
+    --destructive: #ef4444;
+    --border: #334155;
+    --input: #334155;
+    --ring: #3b82f6;
+
+    --chart-1: #60a5fa;
+    --chart-2: #38bdf8;
+    --chart-3: #818cf8;
+    --chart-4: #a78bfa;
+    --chart-5: #f472b6;
+
+    --sidebar: #1e293b;
+    --sidebar-foreground: #f1f5f9;
+    --sidebar-primary: #3b82f6;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #2563eb;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #334155;
+    --sidebar-ring: #3b82f6;
 }
+
 
 /*---break---*/
 
@@ -253,6 +263,8 @@
     /* Optional font-style helpers */
     .italic { font-style: italic; }
     .not-italic { font-style: normal; }
+
+    /* keyframes */
     @keyframes flash {
         0% { opacity: 1; }
         50% { opacity: 0; }
@@ -262,8 +274,13 @@
         0% { opacity: 0; }
         100% { opacity: 1; }
     }
+
+    /* Animation utilities */
     .animate-flash {
         animation: flash 1s linear infinite;
+    }
+    .animate-flash-slow {
+        animation: flash 2s linear infinite;
     }
     .animate-fade-in {
         animation: fade-in 0.8s ease-in-out;
@@ -273,5 +290,23 @@
         animation-delay: 1s;
         opacity: 0;
         animation-fill-mode: forwards;
+    }
+
+
+    /* Card flip utilities */
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    .backface-hidden {
+        backface-visibility: hidden;
+    }
+
+    .rotate-y-180 {
+        transform: rotateY(180deg);
     }
 }

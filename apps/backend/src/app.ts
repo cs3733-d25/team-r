@@ -5,7 +5,6 @@ import session from "express-session";
 import logger from "morgan";
 import healthcheckRouter from "./routes/uselessroutes/healthcheck.ts";
 import employeeRouter from "./routes/userdata/employee.ts";
-//import servicereqRouter from "./routes/servicereqs.ts";
 import assignedRouter from "./routes/uselessroutes/assigned.ts";
 import csvRouter from "./routes/csv/csv.ts";
 import loginRouter from "./routes/userdata/login.ts";
@@ -17,6 +16,10 @@ import transportRequestRouter from "./routes/servicereqs/transportreqs.ts";
 import deviceRequestRouter from "./routes/servicereqs/devicereqs.ts";
 import mapRouter from "./routes/maps/mapData.ts";
 import translateRouter from "./routes/servicereqs/translatereq.ts";
+import inlineTranslateRouter from "./routes/servicereqs/translationService.ts";
+import announcementRouter from "./routes/announcements/announcements.ts";
+import uploadTranslateRouter from "./routes/servicereqs/uploadTranslate.ts";
+import notificationsRouter from "./routes/announcements/notifications.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
@@ -48,8 +51,8 @@ if (secret) {
       resave: false,
       saveUninitialized: false,
       cookie: {
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
     }),
@@ -73,6 +76,10 @@ app.use(API_ROUTES.TRANSPORT, transportRequestRouter);
 app.use(API_ROUTES.DEVICE, deviceRequestRouter);
 app.use(API_ROUTES.MAP, mapRouter);
 app.use(API_ROUTES.TRANSLATE, translateRouter);
+app.use(API_ROUTES.INLINETRANSLATOR, inlineTranslateRouter);
+app.use(API_ROUTES.UPLOADTRANSLATE, uploadTranslateRouter);
+app.use(API_ROUTES.ANNOUNCEMENTS, announcementRouter);
+app.use(API_ROUTES.NOTIFICATIONS, notificationsRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

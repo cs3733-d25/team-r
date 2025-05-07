@@ -2,6 +2,8 @@ import express, { Router, Request, Response } from "express";
 import client from "../../bin/prisma-client.ts";
 import { Prisma } from "database";
 import PrismaClientValidationError = Prisma.PrismaClientValidationError;
+import { TranslationServiceClient } from "@google-cloud/translate";
+import { translateText } from "./translationService.ts";
 
 const router: Router = express.Router();
 
@@ -14,6 +16,32 @@ router.get("/", async function (req: Request, res: Response) {
     res.status(200).json(requests); // Send sanitation data as JSON
   } catch (error) {
     console.error("Error fetching translate request data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.get("/priority", async function (req: Request, res: Response) {
+  try {
+    const requests = await client.translateRequest.findMany({
+      orderBy: { priority: "asc" },
+    });
+    const priorities = requests.map((request) => request.priority);
+    console.log(priorities);
+    res.status(200).json(priorities); // Send priorities data as JSON
+  } catch (error) {
+    console.error("Error fetching sanitation priorities data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.get("/location", async function (req: Request, res: Response) {
+  try {
+    const requests = await client.translateRequest.findMany({
+      orderBy: { priority: "asc" },
+    });
+    const locations = requests.map((request) => request.building);
+    console.log(locations);
+    res.status(200).json(locations); // Send priorities data as JSON
+  } catch (error) {
+    console.error("Error fetching sanitation priorities data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -39,7 +67,7 @@ router.post("/", async function (req: Request, res: Response) {
         department,
         building,
         status,
-        roomNumber: parseInt(roomNumber, 10),
+        roomNumber,
         employeeName: {
           connect: {
             id: employeeName,
@@ -78,9 +106,30 @@ router.post("/single-request", async function (req: Request, res: Response) {
     console.log("Got request TRANSLATE", request);
     res.status(200).json(request);
   } catch (error) {
-    console.error("Error fetching pharmacy request data:", error);
+    console.error("Error fetching translate request data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+router.post(
+  "/translation/inline",
+  async function (req: Request, res: Response): Promise<void> {
+    try {
+      const { text, targetLanguage } = req.body;
+
+      if (!text || !targetLanguage) {
+        res.status(400).json({ error: "Missing required parameters" });
+      }
+
+      // call API
+      const translatedText = await translateText(text, targetLanguage);
+
+      res.status(200).json({ translatedText });
+    } catch (error) {
+      console.error("Translation error:", error);
+      res.status(500).json({ error: "Translation failed" });
+    }
+  },
+);
 
 export default router;

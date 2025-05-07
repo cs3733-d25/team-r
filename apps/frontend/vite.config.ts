@@ -25,6 +25,14 @@ export default defineConfig({
     },
     build: {
         outDir: 'build',
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    leaflet: ['leaflet'],
+                    vendor: ['react', 'react-dom'] // if using React
+                }
+            }
+        }
     },
     cacheDir: '.vite',
     plugins: [

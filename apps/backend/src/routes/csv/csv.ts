@@ -15,16 +15,80 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 },
 }); // Limit file size to 10MB
 
+/**
+ * This function filters the directory to the four fields, whether from Directory or CSVDatabase.
+ * @param directoryData the data from the database
+ */
+function filterDirectory(
+  directoryData:
+    | { id: number; name: string; floorNumber: number; building: string }[]
+    | {
+        id: number;
+        name: string;
+        floorNumber: number;
+        building: string;
+        receptionNodeID: string | null;
+      }[],
+) {
+  return directoryData.map((directory) => {
+    return {
+      id: directory.id,
+      name: removeCommas(directory.name),
+      floorNumber: directory.floorNumber,
+      building: removeCommas(directory.building),
+    };
+  });
+}
+
+/**
+ * This function takes in a string and returns the same string but with no double quotes.
+ * @param str the string that should not have double quotes
+ */
+function removeDoubleQuotes(str: string) {
+  const regex = new RegExp('"', "g");
+  return str.replace(regex, "");
+}
+
+/**
+ * This function takes in a string and returns the same string but with no commas.
+ * @param str the string that should not have commas
+ */
+function removeCommas(str: string) {
+  const regex = new RegExp(",", "g");
+  return str.replace(regex, "");
+}
+
 // export directory data as CSV
 router.get("/export", async (req: Request, res: Response) => {
   try {
-    const directoryData = await client.cSVDatabase.findMany();
-    const csv = toCSV(directoryData);
+    //returns directory info if there is nothing in the CSV database
+    if ((await client.cSVDatabase.count()) < 1) {
+      const directoryData = await client.directory.findMany();
+      //filters directory data since it includes reception ids, which shouldn't be in the CSV database
+      const directoryDataFiltered = filterDirectory(directoryData);
+      const csv = toCSV(directoryDataFiltered);
 
-    // set response headers
-    res.setHeader("Content-Type", "text/csv");
-    res.setHeader("Content-Disposition", "attachment; filename=directory.csv");
-    res.status(200).send(csv);
+      // set response headers
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=directory.csv",
+      );
+      res.status(200).send(csv);
+    } else {
+      //otherwise, gets and exports the CSV file that was imported
+      const directoryData = await client.cSVDatabase.findMany();
+      const directoryDataFiltered = filterDirectory(directoryData);
+      const csv = toCSV(directoryDataFiltered);
+
+      // set response headers
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader(
+        "Content-Disposition",
+        "attachment; filename=directory.csv",
+      );
+      res.status(200).send(csv);
+    }
   } catch (error) {
     console.error("Error exporting directory data:", error);
     res.sendStatus(500);
@@ -53,11 +117,12 @@ router.post(
         // Parse the CSV data
         const records = parseCSV(csvData);
 
+        //removes double quotes to stop any errors caused by adding the double quotes in export
         const transformation = records.map((row) => ({
           id: parseInt(row.id),
-          name: row.name,
+          name: removeDoubleQuotes(row.name),
           floorNumber: parseInt(row.floorNumber),
-          building: row.building,
+          building: removeDoubleQuotes(row.building),
         }));
 
         //checks if transformed correctly
@@ -66,7 +131,7 @@ router.post(
             !row.name ||
             !row.building ||
             Number.isNaN(row.id) ||
-            Number.isNaN(row.building)
+            Number.isNaN(row.floorNumber)
           ) {
             throw new Error("File not formatted correctly.");
           }
@@ -100,16 +165,42 @@ router.post(
 //get all data for display
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const currentDirectory = await client.cSVDatabase.findMany({
-      orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
-    });
-    //console.log("current directory", currentDirectory);
-    if (currentDirectory != null) {
-      res.status(200).json({
-        currentDirectory,
+    //displays directoy data instead of CSV database data if there is nothing imported
+    if ((await client.cSVDatabase.count()) < 1) {
+      //gets data and sorts by building and then floor number
+      const currentDirectoryUnfiltered = await client.directory.findMany({
+        orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
       });
+      //has to filter the directory database since it has reception in addition to the other fields
+      const currentDirectory = currentDirectoryUnfiltered.map((directory) => {
+        return {
+          id: directory.id,
+          name: directory.name,
+          floorNumber: directory.floorNumber,
+          building: directory.building,
+        };
+      });
+      //this is shared code between this and the else statement, but not sure how to combine without causing errors
+      if (currentDirectory != null) {
+        res.status(200).json({
+          currentDirectory,
+        });
+      } else {
+        res.sendStatus(200).json({ message: "Directory not found" });
+      }
     } else {
-      res.sendStatus(200).json({ message: "Directory not found" });
+      //gets data and sorts by building and then floor number
+      const currentDirectory = await client.cSVDatabase.findMany({
+        orderBy: [{ building: "asc" }, { floorNumber: "asc" }],
+      });
+
+      if (currentDirectory != null) {
+        res.status(200).json({
+          currentDirectory,
+        });
+      } else {
+        res.sendStatus(200).json({ message: "Directory not found" });
+      }
     }
   } catch (error) {
     console.log("error in /");

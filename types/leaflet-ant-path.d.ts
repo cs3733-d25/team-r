@@ -1,4 +1,4 @@
-import * as L from 'leaflet';
+// import * as L from 'leaflet';
 
 declare module 'leaflet' {
     interface AntPathOptions extends L.PathOptions {

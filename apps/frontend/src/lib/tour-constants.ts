@@ -15,3 +15,27 @@ export const TOUR_STEPS_IDS_CSV = {
     EXPORT: "export",
     VIEW_DB_TABLE: "view database table",
 };
+
+export const TOUR_STEPS_IDS_SERVICE_REQS = {
+    CLICK_START: "start",
+    DASHBOARD: "dashboard",
+    MAKE_REQUEST: "make request",
+    FILTER_REQUEST: "filter request",
+    EMPLOYEE_ID: "employee id",
+};
+
+export const TOUR_STEPS_IDS_ANNS = {
+    CLICK_START: "click start",
+    CREATE: "create announcements",
+    ALL: "all announcements",
+    TYPES: "anouncement types",
+};
+
+export const TOUR_STEPS_IDS_TRANS = {
+    CLICK_START: "click start",
+    CHOOSE: "choose translate type",
+    TEXT: "enter text",
+    MIC: "microphone",
+    LANGUAGE: "choose language",
+    TRANSLATE: "click translate",
+};

@@ -8,6 +8,7 @@ import {SanitationTable} from "@/features/Requests/SanitationForm/SanitationTabl
 import {PatientRequestTable} from "@/features/Requests/PatientRequest/PatientRequestTable.tsx";
 import {PatientTransportTable} from "@/features/Requests/PatientTransport/PatientTransportTable.tsx";
 import {TranslateTable} from "@/features/Requests/TranslateForm/TranslateTable.tsx";
+import { InfoCircle } from 'react-bootstrap-icons';
 
 interface RequestInfoButtonProps {
     id: number | null;
@@ -192,7 +193,7 @@ export function RequestInfoButton(props: RequestInfoButtonProps) {
         <div>
             <Popover>
                 <PopoverTrigger>
-                    <Button onClick={updateRequests}>i</Button>
+                    <InfoCircle onClick={updateRequests} className="h-5 w-5 text-gray-500 hover:text-gray-700 cursor-pointer" />
                 </PopoverTrigger>
                 <PopoverContent className={"w-150 mr-5"}>
                     <RequestInfo />
