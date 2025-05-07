@@ -137,19 +137,19 @@ export const DeviceReqForm = () => {
     };
 
     //call backend for username
-    const [username, setusername] = useState("");
-    useEffect(() => {
-        async function getName() {
-            try {
-                const response = await axios.get("api/login/session");
-                setusername(response.data.username);
-            } catch (err) {
-                console.error("Error fetching username:", err);
-            }
-        }
-
-        getName();
-    }, []);
+    // const [username, setusername] = useState("");
+    // useEffect(() => {
+    //     async function getName() {
+    //         try {
+    //             const response = await axios.get("api/login/session");
+    //             setusername(response.data.username);
+    //         } catch (err) {
+    //             console.error("Error fetching username:", err);
+    //         }
+    //     }
+    //
+    //     getName();
+    // }, []);
 
     return (
         <>
