@@ -23,6 +23,9 @@ import notificationsRouter from "./routes/announcements/notifications.ts";
 
 import { API_ROUTES } from "common/src/constants";
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const secret = process.env.SESSION_SECRET;
 
 const app: Express = express(); // Setup the backend
